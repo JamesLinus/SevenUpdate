@@ -395,17 +395,6 @@ namespace SevenUpdate.Sdk.Pages
         private void ChangeDescription(object sender, RoutedEventArgs e)
         {
             var textBox = (InfoTextBox)sender;
-            if (String.IsNullOrWhiteSpace(textBox.Text))
-            {
-                textBox.HasError = true;
-                textBox.ToolTip = Properties.Resources.InputRequired;
-            }
-            else
-            {
-                textBox.HasError = false;
-                textBox.ToolTip = null;
-            }
-
             Core.UpdateLocaleStrings(textBox.Text, Core.AppInfo.Description);
         }
 
@@ -415,17 +404,6 @@ namespace SevenUpdate.Sdk.Pages
         private void ChangePublisher(object sender, RoutedEventArgs e)
         {
             var textBox = (InfoTextBox)sender;
-            if (String.IsNullOrWhiteSpace(textBox.Text))
-            {
-                textBox.HasError = true;
-                textBox.ToolTip = Properties.Resources.InputRequired;
-            }
-            else
-            {
-                textBox.HasError = false;
-                textBox.ToolTip = null;
-            }
-
             Core.UpdateLocaleStrings(textBox.Text, Core.AppInfo.Publisher);
         }
 
@@ -435,6 +413,13 @@ namespace SevenUpdate.Sdk.Pages
         private void ChangeName(object sender, RoutedEventArgs e)
         {
             var textBox = (InfoTextBox)sender;
+            Core.UpdateLocaleStrings(textBox.Text, Core.AppInfo.Name);
+        }
+
+        private void ValidateTextBox(object sender, TextChangedEventArgs e)
+        {
+            var textBox = (InfoTextBox)sender;
+
             if (String.IsNullOrWhiteSpace(textBox.Text))
             {
                 textBox.HasError = true;
@@ -445,8 +430,6 @@ namespace SevenUpdate.Sdk.Pages
                 textBox.HasError = false;
                 textBox.ToolTip = null;
             }
-
-            Core.UpdateLocaleStrings(textBox.Text, Core.AppInfo.Name);
         }
 
         #endregion

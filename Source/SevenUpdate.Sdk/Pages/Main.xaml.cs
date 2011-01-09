@@ -37,14 +37,6 @@ namespace SevenUpdate.Sdk.Pages
     /// <summary>Interaction logic for Main.xaml</summary>
     public sealed partial class Main
     {
-
-        #region Constants and Fields
-
-        /// <summary>The last index for the treview used.</summary>
-        private static int lastIndex;
-
-        #endregion
-       
         #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref = "Main" /> class.</summary>

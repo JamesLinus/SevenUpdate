@@ -31,7 +31,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Seven Software")]
 [assembly: AssemblyProduct("Seven Update")]
-[assembly: AssemblyCopyright("Copyright © Seven Software 2007-10")]
+[assembly: AssemblyCopyright("Copyright © Seven Software")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyVersion("1.0.0.1")]

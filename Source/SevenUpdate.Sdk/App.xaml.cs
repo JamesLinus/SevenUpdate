@@ -180,13 +180,7 @@ namespace SevenUpdate.Sdk
 
             if (Core.Projects != null)
             {
-                var startIndex = Core.Projects.Count - 2;
-                if (startIndex < 0)
-                {
-                    startIndex = 0;
-                }
-
-                for (var x = startIndex; x < Core.Projects.Count; x++)
+                for (var x = 0; x < 2; x++)
                 {
                     jumpTask = new JumpTask
                         {
@@ -212,6 +206,10 @@ namespace SevenUpdate.Sdk
 
                         jumpList.JumpItems.Add(jumpTask);
                     }
+
+
+                    if (x + 1 == Core.Projects.Count)
+                        break;
                 }
             }
 

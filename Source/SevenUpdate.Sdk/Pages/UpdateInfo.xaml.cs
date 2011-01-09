@@ -203,24 +203,12 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        #endregion
-
         /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
         /// <param name="sender">The sender</param>
         /// <param name="e">The event data</param>
         private void ChangeName(object sender, RoutedEventArgs e)
         {
             var textBox = (InfoTextBox)sender;
-            if (String.IsNullOrWhiteSpace(textBox.Text))
-            {
-                textBox.HasError = true;
-                textBox.ToolTip = Properties.Resources.InputRequired;
-            }
-            else
-            {
-                textBox.HasError = false;
-                textBox.ToolTip = null;
-            }
 
             Core.UpdateLocaleStrings(textBox.Text, Core.UpdateInfo.Name);
         }
@@ -232,6 +220,13 @@ namespace SevenUpdate.Sdk.Pages
         {
             var textBox = (InfoTextBox)sender;
 
+            Core.UpdateLocaleStrings(textBox.Text, Core.UpdateInfo.Description);
+        }
+
+        private void ValidateTextBox(object sender, TextChangedEventArgs e)
+        {
+            var textBox = (InfoTextBox)sender;
+
             if (String.IsNullOrWhiteSpace(textBox.Text))
             {
                 textBox.HasError = true;
@@ -242,8 +237,8 @@ namespace SevenUpdate.Sdk.Pages
                 textBox.HasError = false;
                 textBox.ToolTip = null;
             }
-
-            Core.UpdateLocaleStrings(textBox.Text, Core.UpdateInfo.Description);
         }
+
+        #endregion
     }
 }

@@ -337,7 +337,7 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        #endregion
+
 
         /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
         /// <param name="sender">The sender</param>
@@ -345,17 +345,6 @@ namespace SevenUpdate.Sdk.Pages
         private void ChangeName(object sender, RoutedEventArgs e)
         {
             var textBox = (InfoTextBox)sender;
-            if (String.IsNullOrWhiteSpace(textBox.Text))
-            {
-                textBox.HasError = true;
-                textBox.ToolTip = Properties.Resources.InputRequired;
-            }
-            else
-            {
-                textBox.HasError = false;
-                textBox.ToolTip = null;
-            }
-
             Core.UpdateLocaleStrings(textBox.Text, Core.UpdateInfo.Shortcuts[Core.SelectedShortcut].Name);
         }
 
@@ -365,6 +354,13 @@ namespace SevenUpdate.Sdk.Pages
         private void ChangeDescription(object sender, RoutedEventArgs e)
         {
             var textBox = (InfoTextBox)sender;
+            Core.UpdateLocaleStrings(textBox.Text, Core.UpdateInfo.Shortcuts[Core.SelectedShortcut].Description);
+        }
+
+        private void ValidateTextBox(object sender, TextChangedEventArgs e)
+        {
+            var textBox = (InfoTextBox)sender;
+
             if (String.IsNullOrWhiteSpace(textBox.Text))
             {
                 textBox.HasError = true;
@@ -375,8 +371,8 @@ namespace SevenUpdate.Sdk.Pages
                 textBox.HasError = false;
                 textBox.ToolTip = null;
             }
-
-            Core.UpdateLocaleStrings(textBox.Text, Core.UpdateInfo.Shortcuts[Core.SelectedShortcut].Description);
         }
+        
+        #endregion
     }
 }

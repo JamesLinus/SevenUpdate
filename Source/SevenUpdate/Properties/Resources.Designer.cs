@@ -1051,7 +1051,7 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Seven Update is licensed under the GNU GPL 3.0 © 2007-2010.
+        ///   Looks up a localized string similar to Seven Update is licensed under the GNU GPL 3.0 © 2007-2011.
         /// </summary>
         public static string SevenUpdateLicense {
             get {
