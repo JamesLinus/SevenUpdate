@@ -285,7 +285,7 @@ namespace SevenUpdate.Sdk
 
             project.ExportedSuiFileName = suiFileName ?? appName;
             var fileName = SaveFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), project.ExportedSuiFileName, @"sui");
-            
+
             if (fileName == null)
             {
                 Projects.Insert(0, project);
@@ -299,7 +299,7 @@ namespace SevenUpdate.Sdk
             {
                 project.ExportedSuaFileName = suaFileName ?? appName;
                 fileName = SaveFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), project.ExportedSuaFileName, @"sua");
-                
+
                 if (fileName == null)
                 {
                     Projects.Insert(0, project);
@@ -651,9 +651,7 @@ namespace SevenUpdate.Sdk
             }
         }
 
-        /// <summary>
-        /// Resets the pages to default status
-        /// </summary>
+        /// <summary>Resets the pages to default status</summary>
         private static void ResetPages()
         {
             AppInfoPage = null; // new AppInfo();

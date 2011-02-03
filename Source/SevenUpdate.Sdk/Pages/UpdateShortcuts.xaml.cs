@@ -337,8 +337,6 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-
-
         /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
         /// <param name="sender">The sender</param>
         /// <param name="e">The event data</param>
@@ -357,6 +355,9 @@ namespace SevenUpdate.Sdk.Pages
             Core.UpdateLocaleStrings(textBox.Text, Core.UpdateInfo.Shortcuts[Core.SelectedShortcut].Description);
         }
 
+        /// <summary>Validates the textbox content</summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="e">The event data</param>
         private void ValidateTextBox(object sender, TextChangedEventArgs e)
         {
             var textBox = (InfoTextBox)sender;
@@ -372,7 +373,7 @@ namespace SevenUpdate.Sdk.Pages
                 textBox.ToolTip = null;
             }
         }
-        
+
         #endregion
     }
 }

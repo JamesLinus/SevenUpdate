@@ -23,7 +23,6 @@
 // ***********************************************************************
 namespace SevenUpdate.Sdk.Pages
 {
-    using System;
     using System.Collections.Generic;
     using System.IO;
     using System.Threading.Tasks;

@@ -207,9 +207,10 @@ namespace SevenUpdate.Sdk
                         jumpList.JumpItems.Add(jumpTask);
                     }
 
-
                     if (x + 1 == Core.Projects.Count)
+                    {
                         break;
+                    }
                 }
             }
 

@@ -370,8 +370,8 @@ namespace WPFLocalizeExtension.Extensions
         /// <returns>Returns a Lookup Table</returns>
         private static Dictionary<decimal, string> GetUKOddsFormatLookupTable()
         {
-            var dictionary = new Dictionary<decimal, string> 
-            {
+            var dictionary = new Dictionary<decimal, string>
+                {
                     { 11.00m, "10/1" },
                     { 10.00m, "9/1" },
                     { 9.50m, "17/2" },

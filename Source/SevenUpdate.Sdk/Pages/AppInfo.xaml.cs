@@ -416,6 +416,9 @@ namespace SevenUpdate.Sdk.Pages
             Core.UpdateLocaleStrings(textBox.Text, Core.AppInfo.Name);
         }
 
+        /// <summary>Validates the textbox content.</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The data for the event</param>
         private void ValidateTextBox(object sender, TextChangedEventArgs e)
         {
             var textBox = (InfoTextBox)sender;

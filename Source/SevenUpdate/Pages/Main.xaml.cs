@@ -178,7 +178,7 @@ namespace SevenUpdate.Pages
 
             init = true;
 
-            DataContext = Core.Instance;
+            this.DataContext = Core.Instance;
 
             // Subscribe to events
             RestoreUpdates.RestoredHiddenUpdate += SettingsChanged;

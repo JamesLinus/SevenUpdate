@@ -95,11 +95,11 @@ namespace SevenUpdate
                 }
 
                 if (ErrorOccurred != null)
-                    {
-                        ErrorOccurred(null, new ErrorOccurredEventArgs(ex.Message, ErrorType.FatalNetworkError));
-                    }
+                {
+                    ErrorOccurred(null, new ErrorOccurredEventArgs(ex.Message, ErrorType.FatalNetworkError));
+                }
 
-                    return;
+                return;
             }
 
             if (applications == null)

@@ -628,18 +628,18 @@ namespace SevenUpdate
             private uint fileSizeLow;
 
             /// <summary>Reserved data</summary>
-            private uint Reserved0;
+            private uint reserved0;
 
             /// <summary>Reserved data</summary>
-            private uint Reserved1;
+            private uint reserved1;
 
             /// <summary>The name of the file</summary>
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = MaxPath)]
-            private string FileName;
+            private string fileName;
 
             /// <summary>The alternate name of the file</summary>
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 14)]
-            private string AlternateFileName;
+            private string alternateFileName;
         }
 
         /// <summary>The c shell link.</summary>

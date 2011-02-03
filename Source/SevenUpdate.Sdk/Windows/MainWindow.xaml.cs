@@ -50,7 +50,7 @@ namespace SevenUpdate.Sdk.Windows
             AeroGlass.CompositionChanged += this.ChangeWindowChrome;
             NavService = this.NavigationService;
             App.ProcessArgs(App.Args);
-            Navigate(Core.MainPage);
+            this.Navigate(Core.MainPage);
         }
 
         #endregion

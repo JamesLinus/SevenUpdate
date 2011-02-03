@@ -46,11 +46,21 @@ namespace System.Windows
         {
             get
             {
+                if (Environment.OSVersion.Version.Major < 6)
+                {
+                    return false;
+                }
+
                 return NativeMethods.DwmIsCompositionEnabled();
             }
 
             set
             {
+                if (Environment.OSVersion.Version.Major < 6)
+                {
+                    return;
+                }
+
                 NativeMethods.DwmEnableComposition(value);
             }
         }
@@ -72,6 +82,11 @@ namespace System.Windows
         /// <param name="region">The area to add the blur to</param>
         public static void EnableBlur(IntPtr windowHandle, IntPtr region)
         {
+            if (Environment.OSVersion.Version.Major < 6)
+            {
+                return;
+            }
+
             var blur = new DwmBlurBehind { RegionBlur = region, Flags = BlurBehindOptions.BlurBehindRegion };
 
             if (NativeMethods.DwmEnableBlurBehindWindow(windowHandle, ref blur) != 0)
@@ -80,7 +95,7 @@ namespace System.Windows
             }
         }
 
-        /// <summary>Enables Aero Glass on a WPF window</summary>
+        /// <summary>Enables Aero Glass on a WPF window, no exception thrown if OS does not support DWM.</summary>
         /// <param name="window">The window to enable glass</param>
         /// <param name="margins">The region to add glass</param>
         public static void EnableGlass(Window window, Margins margins)

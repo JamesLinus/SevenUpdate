@@ -235,6 +235,7 @@ namespace SevenUpdate
                     return false;
                 }
             }
+
 #else
             if (Process.GetProcessesByName("SevenUpdate.Admin.vshost").Length < 1 && Process.GetProcessesByName("SevenUpdate.Admin").Length < 1)
             {
