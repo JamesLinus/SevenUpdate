@@ -67,10 +67,9 @@ namespace SevenUpdate.Sdk.ValidationRules
 
             if (this.IsRegistryPath)
             {
-                if (Regex.IsMatch(input, RegistryPattern, RegexOptions.IgnoreCase))
-                {
-                    return Utilities.CheckRegistryKey(input, Core.AppInfo.Is64Bit) ? new ValidationResult(true, null) : new ValidationResult(false, Resources.PathDoesNotExist);
-                }
+                return Regex.IsMatch(input, RegistryPattern, RegexOptions.IgnoreCase)
+                           ? (Utilities.CheckRegistryKey(input, Core.AppInfo.Is64Bit) ? new ValidationResult(true, null) : new ValidationResult(false, Resources.PathDoesNotExist))
+                           : new ValidationResult(false, Resources.PathDoesNotExist);
             }
 
             input = Core.AppInfo.Directory == null

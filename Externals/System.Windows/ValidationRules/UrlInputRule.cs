@@ -26,6 +26,7 @@ namespace System.Windows.ValidationRules
     using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.IO;
+    using System.Text.RegularExpressions;
     using System.Windows.Controls;
     using System.Windows.Properties;
 
@@ -49,19 +50,30 @@ namespace System.Windows.ValidationRules
         /// <returns>A <see cref="T:System.Windows.Controls.ValidationResult"/> object.</returns>
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
-            var url = value as string;
+            var input = value as string;
 
-            if (String.IsNullOrWhiteSpace(url))
+            if (input == null)
             {
                 return this.IsRequired ? new ValidationResult(false, Resources.UrilInvalid) : new ValidationResult(true, null);
             }
 
-            if (File.Exists(url) || Directory.Exists(url))
+            if (String.IsNullOrWhiteSpace(input))
+            {
+                return this.IsRequired ? new ValidationResult(false, Resources.UrilInvalid) : new ValidationResult(true, null);
+            }
+
+            if ((File.Exists(input) || Directory.Exists(input)) && input.Length > 3)
             {
                 return new ValidationResult(true, null);
             }
 
-            return Uri.IsWellFormedUriString(url, UriKind.Absolute) ? new ValidationResult(true, null) : new ValidationResult(false, Resources.UrilInvalid);
+            if (Uri.IsWellFormedUriString(input, UriKind.Absolute) && input.Length > 3)
+            {
+               return new ValidationResult(true, null);
+            }
+
+            var r = new Regex(@"^(([a-zA-Z]\:)|(\\))(\\{1}|((\\{1})[^\\]([^/:*?<>""|]*))+)$");
+            return r.IsMatch(input) ? new ValidationResult(true, null) : new ValidationResult(false, Resources.UrilInvalid);
         }
 
         #endregion

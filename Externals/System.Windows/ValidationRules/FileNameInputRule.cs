@@ -25,6 +25,7 @@ namespace System.Windows.ValidationRules
 {
     using System.Globalization;
     using System.IO;
+    using System.Text.RegularExpressions;
     using System.Windows.Controls;
     using System.Windows.Properties;
 
@@ -52,6 +53,15 @@ namespace System.Windows.ValidationRules
             if (String.IsNullOrWhiteSpace(input))
             {
                 return this.IsRequired ? new ValidationResult(false, Resources.FilePathInvalid) : new ValidationResult(true, null);
+            }
+
+            var r = new Regex(@"^(([a-zA-Z]\:)|(\\))(\\{1}|((\\{1})[^\\]([^/:*?<>""|]*))+)$");
+            if (input != null)
+            {
+                if (!r.IsMatch(input))
+                {
+                    return new ValidationResult(false, Resources.FilePathInvalid);
+                }
             }
 
             var fileName = Path.GetFileName(input);

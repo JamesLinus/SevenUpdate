@@ -54,7 +54,10 @@ namespace SevenUpdate.Sdk.ValidationRules
 
             if (!result)
             {
-                return new ValidationResult(false, Resources.FilePathInvalid);
+                if (!Utilities.IsValidPath(input))
+                {
+                    return new ValidationResult(false, Resources.FilePathInvalid);
+                }
             }
 
             var fileName = Path.GetFileName(input);

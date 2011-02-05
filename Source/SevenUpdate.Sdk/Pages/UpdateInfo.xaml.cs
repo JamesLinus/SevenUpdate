@@ -29,6 +29,7 @@ namespace SevenUpdate.Sdk.Pages
     using System.Windows.Controls;
     using System.Windows.Dialogs;
     using System.Windows.Media;
+    using System.Windows.ValidationRules;
 
     using SevenUpdate.Sdk.Windows;
 
@@ -152,10 +153,12 @@ namespace SevenUpdate.Sdk.Pages
                 this.tbxUpdateName.ToolTip = null;
             }
 
-            // ReSharper disable PossibleNullReferenceException
-            this.tbxSourceLocation.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            var urlRule = new UrlInputRule() { IsRequired = true };
+            tbxSourceLocation.HasError = !urlRule.Validate(tbxSourceLocation.Text, null).IsValid;
+            urlRule.IsRequired = false;
 
-            // ReSharper restore PossibleNullReferenceException
+            tbxLicenseUrl.HasError = !urlRule.Validate(tbxLicenseUrl.Text, null).IsValid;
+            tbxUpdateInfoUrl.HasError = !urlRule.Validate(tbxUpdateInfoUrl.Text, null).IsValid;
 
             // Load Values
             foreach (var t in Core.UpdateInfo.Description.Where(t => t.Lang == Utilities.Locale))
@@ -223,10 +226,10 @@ namespace SevenUpdate.Sdk.Pages
             Core.UpdateLocaleStrings(textBox.Text, Core.UpdateInfo.Description);
         }
 
-        /// <summary>The validate text box.</summary>
+        /// <summary>Validates the textbox to see if required input exists</summary>
         /// <param name="sender">The sender</param>
         /// <param name="e">The event data</param>
-        private void ValidateTextBox(object sender, TextChangedEventArgs e)
+        private void ValidateInputRequired(object sender, TextChangedEventArgs e)
         {
             var textBox = (InfoTextBox)sender;
 
@@ -240,6 +243,23 @@ namespace SevenUpdate.Sdk.Pages
                 textBox.HasError = false;
                 textBox.ToolTip = null;
             }
+        }
+
+
+        /// <summary>Validates input to see if it's a valid URL</summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="e">The event data</param>
+        private void ValidateUrlInput(object sender, TextChangedEventArgs e)
+        {
+            var textBox = (InfoTextBox)sender;
+
+            if (textBox == null)
+            {
+                return;
+            }
+
+            textBox.HasError = !new UrlInputRule { IsRequired = textBox.Name == @"tbxSourceLocation" } .Validate(textBox.Text, null).IsValid;
+            textBox.ToolTip = textBox.HasError ? Properties.Resources.UrlNotValid : null;
         }
 
         #endregion

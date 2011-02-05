@@ -1,250 +1,250 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:controls="clr-namespace:System.Windows.Controls">
-	<BooleanToVisibilityConverter x:Key="VisibilityOfBool" />
+    <BooleanToVisibilityConverter x:Key="VisibilityOfBool" />
 
-	<!--CommandLink Style-->
-	<Style TargetType="controls:CommandLink">
-		<Setter Property="MinWidth" Value="325" />
-		<Setter Property="MinHeight" Value="63" />
-		<Setter Property="Margin" Value="0,0,0,12" />
-		<Setter Property="HorizontalAlignment" Value="Left" />
-		<Setter Property="VerticalAlignment" Value="Top" />
-		<Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate TargetType="controls:CommandLink">
-					<Border Name="Border" CornerRadius="2" BorderBrush="Transparent" BorderThickness="1" SnapsToDevicePixels="True">
-						<Border Name="InnerBorder" CornerRadius="2" BorderBrush="Transparent" BorderThickness="1" SnapsToDevicePixels="True">
-							<Border.Background>
-								<LinearGradientBrush EndPoint="0,1">
-									<GradientStop Offset="0" />
-									<GradientStop Offset="0.05" />
-									<GradientStop Offset="0.05" />
-									<GradientStop Offset="1" />
-								</LinearGradientBrush>
-							</Border.Background>
-							<StackPanel Margin="7,7,7,7" Orientation="Horizontal">
-								<Image Name="Icon" Source="/System.Windows;component/Images/GreenArrow.png" RenderOptions.BitmapScalingMode="NearestNeighbor" HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="None" Margin="0,4,5,0" Width="18" Height="20" />
-								<StackPanel Margin="6,0,0,10">
-									<TextBlock Name="InstructionText" FontFamily="Segoe" FontSize="16" Foreground="#282671" Text="{TemplateBinding Content}">
-										<TextBlock.Style>
-											<Style>
-												<Style.Triggers>
-													<DataTrigger Binding="{Binding Source={x:Static controls:CommandLink.RunningOnXP}}" Value="False">
-														<Setter Property="TextBlock.Effect">
-															<Setter.Value>
-																<DropShadowEffect Color="White" BlurRadius="10" RenderingBias="Performance" ShadowDepth="0" Direction="0" />
-															</Setter.Value>
-														</Setter>
-													</DataTrigger>
-												</Style.Triggers>
-											</Style>
-										</TextBlock.Style>
-									</TextBlock>
-									<TextBlock Name="Note" FontFamily="Segoe" FontSize="12" Foreground="#282671" Text="{Binding Path=Note, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
-										<TextBlock.Style>
-											<Style>
-												<Style.Triggers>
-													<DataTrigger Binding="{Binding Source={x:Static controls:CommandLink.RunningOnXP}}" Value="5">
-														<Setter Property="TextBlock.Effect">
-															<Setter.Value>
-																<DropShadowEffect Color="White" BlurRadius="10" RenderingBias="Performance" ShadowDepth="0" Direction="0" />
-															</Setter.Value>
-														</Setter>
-													</DataTrigger>
-												</Style.Triggers>
-											</Style>
-										</TextBlock.Style>
-									</TextBlock>
-								</StackPanel>
-							</StackPanel>
-						</Border>
-					</Border>
-					<ControlTemplate.Triggers>
-						<Trigger Property="UseShield" Value="True">
-							<Setter TargetName="Icon" Property="Image.Source" Value="/System.Windows;component/Images/Shield.png" />
-						</Trigger>
-						<MultiTrigger>
-							<MultiTrigger.Conditions>
-								<Condition Property="IsMouseOver" Value="True" />
-								<Condition Property="UseShield" Value="False" />
-							</MultiTrigger.Conditions>
-							<Setter TargetName="Icon" Property="Image.Source" Value="/System.Windows;component/Images/GreenArrowHover.png" />
-						</MultiTrigger>
-						<MultiTrigger>
-							<MultiTrigger.Conditions>
-								<Condition Property="IsPressed" Value="True" />
-								<Condition Property="UseShield" Value="False" />
-							</MultiTrigger.Conditions>
-							<Setter TargetName="Icon" Property="Image.Source" Value="/System.Windows;component/Images/GreenArrow.png" />
-						</MultiTrigger>
-						<MultiTrigger>
-							<MultiTrigger.Conditions>
-								<Condition Property="IsDefaulted" Value="True" />
-								<Condition Property="IsPressed" Value="False" />
-								<Condition Property="IsMouseOver" Value="False" />
-							</MultiTrigger.Conditions>
-							<Setter TargetName="Border" Property="BorderBrush" Value="#66e0ff" />
-							<Setter TargetName="InstructionText" Property="Foreground" Value="#282671" />
-							<Setter TargetName="Note" Property="Foreground" Value="#282671" />
-						</MultiTrigger>
-						<MultiTrigger>
-							<MultiTrigger.Conditions>
-								<Condition Property="IsKeyboardFocused" Value="True" />
-								<Condition Property="IsPressed" Value="False" />
-								<Condition Property="IsMouseOver" Value="False" />
-							</MultiTrigger.Conditions>
-							<Setter TargetName="Border" Property="BorderBrush" Value="#66e0ff" />
-							<Setter TargetName="InstructionText" Property="Foreground" Value="#282671" />
-							<Setter TargetName="Note" Property="Foreground" Value="#282671" />
-						</MultiTrigger>
-						<MultiTrigger>
-							<MultiTrigger.Conditions>
-								<Condition Property="IsDefaulted" Value="True" />
-								<Condition Property="IsMouseOver" Value="True" />
-							</MultiTrigger.Conditions>
-							<MultiTrigger.EnterActions>
-								<BeginStoryboard>
-									<Storyboard>
-										<ColorAnimation Duration="0:0:.5" To="#5380f6" Storyboard.TargetName="InstructionText" Storyboard.TargetProperty="Foreground.Color" />
-										<ColorAnimation Duration="0:0:.5" To="#5380f6" Storyboard.TargetName="Note" Storyboard.TargetProperty="Foreground.Color" />
-										<ColorAnimation Duration="0:0:.5" From="#66e0ff" To="#c6c6c6" Storyboard.TargetName="Border" Storyboard.TargetProperty="BorderBrush.Color" />
-										<ColorAnimation Duration="0:0:.5" To="White" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="BorderBrush.Color" />
-										<ColorAnimation Duration="0:0:.5" To="#ffffff" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Background.GradientStops[2].Color" />
-										<ColorAnimation Duration="0:0:.5" To="#f4f4f4" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Background.GradientStops[3].Color" />
-									</Storyboard>
-								</BeginStoryboard>
-							</MultiTrigger.EnterActions>
-							<MultiTrigger.ExitActions>
-								<BeginStoryboard>
-									<Storyboard>
-										<ColorAnimation Duration="0:0:.5" From="#5380f6" Storyboard.TargetName="InstructionText" Storyboard.TargetProperty="Foreground.Color" />
-										<ColorAnimation Duration="0:0:.5" From="#5380f6" Storyboard.TargetName="Note" Storyboard.TargetProperty="Foreground.Color" />
-										<ColorAnimation Duration="0:0:.5" From="#c6c6c6" To="#66e0ff" Storyboard.TargetName="Border" Storyboard.TargetProperty="BorderBrush.Color" />
-										<ColorAnimation Duration="0:0:.5" From="White" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="BorderBrush.Color" />
-										<ColorAnimation Duration="0:0:.5" From="#ffffff" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Background.GradientStops[2].Color" />
-										<ColorAnimation Duration="0:0:.5" From="#f4f4f4" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Background.GradientStops[3].Color" />
-									</Storyboard>
-								</BeginStoryboard>
-							</MultiTrigger.ExitActions>
-						</MultiTrigger>
-						<MultiTrigger>
-							<MultiTrigger.Conditions>
-								<Condition Property="IsKeyboardFocused" Value="True" />
-								<Condition Property="IsMouseOver" Value="True" />
-							</MultiTrigger.Conditions>
-							<MultiTrigger.EnterActions>
-								<BeginStoryboard>
-									<Storyboard>
-										<ColorAnimation Duration="0:0:.5" To="#5380f6" Storyboard.TargetName="InstructionText" Storyboard.TargetProperty="Foreground.Color" />
-										<ColorAnimation Duration="0:0:.5" To="#5380f6" Storyboard.TargetName="Note" Storyboard.TargetProperty="Foreground.Color" />
-										<ColorAnimation Duration="0:0:.5" From="#66e0ff" To="#c6c6c6" Storyboard.TargetName="Border" Storyboard.TargetProperty="BorderBrush.Color" />
-										<ColorAnimation Duration="0:0:.5" To="White" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="BorderBrush.Color" />
-										<ColorAnimation Duration="0:0:.5" To="#ffffff" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Background.GradientStops[2].Color" />
-										<ColorAnimation Duration="0:0:.5" To="#f4f4f4" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Background.GradientStops[3].Color" />
-									</Storyboard>
-								</BeginStoryboard>
-							</MultiTrigger.EnterActions>
-							<MultiTrigger.ExitActions>
-								<BeginStoryboard>
-									<Storyboard>
-										<ColorAnimation Duration="0:0:.5" From="#5380f6" Storyboard.TargetName="InstructionText" Storyboard.TargetProperty="Foreground.Color" />
-										<ColorAnimation Duration="0:0:.5" From="#5380f6" Storyboard.TargetName="Note" Storyboard.TargetProperty="Foreground.Color" />
-										<ColorAnimation Duration="0:0:.5" From="#c6c6c6" To="#66e0ff" Storyboard.TargetName="Border" Storyboard.TargetProperty="BorderBrush.Color" />
-										<ColorAnimation Duration="0:0:.5" From="White" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="BorderBrush.Color" />
-										<ColorAnimation Duration="0:0:.5" From="#ffffff" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Background.GradientStops[2].Color" />
-										<ColorAnimation Duration="0:0:.5" From="#f4f4f4" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Background.GradientStops[3].Color" />
-									</Storyboard>
-								</BeginStoryboard>
-							</MultiTrigger.ExitActions>
-						</MultiTrigger>
-						<MultiTrigger>
-							<MultiTrigger.Conditions>
-								<Condition Property="IsDefaulted" Value="False" />
-								<Condition Property="IsKeyboardFocused" Value="False" />
-								<Condition Property="IsMouseOver" Value="True" />
-							</MultiTrigger.Conditions>
-							<MultiTrigger.EnterActions>
-								<BeginStoryboard>
-									<Storyboard>
-										<ColorAnimation Duration="0:0:.5" To="#5380f6" Storyboard.TargetName="InstructionText" Storyboard.TargetProperty="Foreground.Color" />
-										<ColorAnimation Duration="0:0:.5" To="#5380f6" Storyboard.TargetName="Note" Storyboard.TargetProperty="Foreground.Color" />
-										<ColorAnimation Duration="0:0:.5" To="#c6c6c6" Storyboard.TargetName="Border" Storyboard.TargetProperty="BorderBrush.Color" />
-										<ColorAnimation Duration="0:0:.5" To="White" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="BorderBrush.Color" />
-										<ColorAnimation Duration="0:0:.5" To="#ffffff" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Background.GradientStops[2].Color" />
-										<ColorAnimation Duration="0:0:.5" To="#f4f4f4" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Background.GradientStops[3].Color" />
-									</Storyboard>
-								</BeginStoryboard>
-							</MultiTrigger.EnterActions>
-							<MultiTrigger.ExitActions>
-								<BeginStoryboard>
-									<Storyboard>
-										<ColorAnimation Duration="0:0:.5" From="#5380f6" Storyboard.TargetName="InstructionText" Storyboard.TargetProperty="Foreground.Color" />
-										<ColorAnimation Duration="0:0:.5" From="#5380f6" Storyboard.TargetName="Note" Storyboard.TargetProperty="Foreground.Color" />
-										<ColorAnimation Duration="0:0:.5" From="#c6c6c6" Storyboard.TargetName="Border" Storyboard.TargetProperty="BorderBrush.Color" />
-										<ColorAnimation Duration="0:0:.5" From="White" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="BorderBrush.Color" />
-										<ColorAnimation Duration="0:0:.5" From="#ffffff" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Background.GradientStops[2].Color" />
-										<ColorAnimation Duration="0:0:.5" From="#f4f4f4" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Background.GradientStops[3].Color" />
-									</Storyboard>
-								</BeginStoryboard>
-							</MultiTrigger.ExitActions>
-						</MultiTrigger>
-						<Trigger Property="IsPressed" Value="True">
-							<Trigger.EnterActions>
-								<BeginStoryboard>
-									<Storyboard>
-										<ColorAnimation Duration="0:0:.5" To="#294073" Storyboard.TargetName="InstructionText" Storyboard.TargetProperty="Foreground.Color" />
-										<ColorAnimation Duration="0:0:.5" To="#294073" Storyboard.TargetName="Note" Storyboard.TargetProperty="Foreground.Color" />
-										<ColorAnimation Duration="0:0:.5" To="#a8a8a8" Storyboard.TargetName="Border" Storyboard.TargetProperty="BorderBrush.Color" />
-										<ColorAnimation Duration="0:0:.5" To="#e8e9e9" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="BorderBrush.Color" />
-										<ColorAnimation Duration="0:0:.5" To="#dadada" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Background.GradientStops[0].Color" />
-										<ColorAnimation Duration="0:0:.5" To="#f0f1f1" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Background.GradientStops[1].Color" />
-										<ColorAnimation Duration="0:0:.5" To="#f0f1f1" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Background.GradientStops[2].Color" />
-										<ColorAnimation Duration="0:0:.5" To="#f0f1f1" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Background.GradientStops[3].Color" />
-									</Storyboard>
-								</BeginStoryboard>
-							</Trigger.EnterActions>
-							<Trigger.ExitActions>
-								<BeginStoryboard>
-									<Storyboard>
-										<ColorAnimation Duration="0:0:.5" From="#294073" Storyboard.TargetName="InstructionText" Storyboard.TargetProperty="Foreground.Color" />
-										<ColorAnimation Duration="0:0:.5" From="#294073" Storyboard.TargetName="Note" Storyboard.TargetProperty="Foreground.Color" />
-										<ColorAnimation Duration="0:0:.5" From="#a8a8a8" Storyboard.TargetName="Border" Storyboard.TargetProperty="BorderBrush.Color" />
-										<ColorAnimation Duration="0:0:.5" From="#e8e9e9" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="BorderBrush.Color" />
-										<ColorAnimation Duration="0:0:.5" From="Gainsboro" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Background.GradientStops[0].Color" />
-										<ColorAnimation Duration="0:0:.5" From="#f0f1f1" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Background.GradientStops[1].Color" />
-										<ColorAnimation Duration="0:0:.5" From="#f0f1f1" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Background.GradientStops[2].Color" />
-										<ColorAnimation Duration="0:0:.5" From="#f0f1f1" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Background.GradientStops[3].Color" />
-									</Storyboard>
-								</BeginStoryboard>
-							</Trigger.ExitActions>
-						</Trigger>
-					</ControlTemplate.Triggers>
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
-	</Style>
+    <!--CommandLink Style-->
+    <Style TargetType="controls:CommandLink">
+        <Setter Property="MinWidth" Value="325" />
+        <Setter Property="MinHeight" Value="63" />
+        <Setter Property="Margin" Value="0,0,0,12" />
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:CommandLink">
+                    <Border Name="Border" CornerRadius="2" BorderBrush="Transparent" BorderThickness="1" SnapsToDevicePixels="True">
+                        <Border Name="InnerBorder" CornerRadius="2" BorderBrush="Transparent" BorderThickness="1" SnapsToDevicePixels="True">
+                            <Border.Background>
+                                <LinearGradientBrush EndPoint="0,1">
+                                    <GradientStop Offset="0" />
+                                    <GradientStop Offset="0.05" />
+                                    <GradientStop Offset="0.05" />
+                                    <GradientStop Offset="1" />
+                                </LinearGradientBrush>
+                            </Border.Background>
+                            <StackPanel Margin="7,7,7,7" Orientation="Horizontal">
+                                <Image Name="Icon" Source="/System.Windows;component/Images/GreenArrow.png" RenderOptions.BitmapScalingMode="NearestNeighbor" HorizontalAlignment="Left" VerticalAlignment="Top" Stretch="None" Margin="0,4,5,0" Width="18" Height="20" />
+                                <StackPanel Margin="6,0,0,10">
+                                    <TextBlock Name="InstructionText" FontFamily="Segoe" FontSize="16" Foreground="#282671" Text="{TemplateBinding Content}">
+                                        <TextBlock.Style>
+                                            <Style>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Source={x:Static controls:CommandLink.RunningOnXP}}" Value="False">
+                                                        <Setter Property="TextBlock.Effect">
+                                                            <Setter.Value>
+                                                                <DropShadowEffect Color="White" BlurRadius="10" RenderingBias="Performance" ShadowDepth="0" Direction="0" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                    <TextBlock Name="Note" FontFamily="Segoe" FontSize="12" Foreground="#282671" Text="{Binding Path=Note, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                                        <TextBlock.Style>
+                                            <Style>
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Source={x:Static controls:CommandLink.RunningOnXP}}" Value="5">
+                                                        <Setter Property="TextBlock.Effect">
+                                                            <Setter.Value>
+                                                                <DropShadowEffect Color="White" BlurRadius="10" RenderingBias="Performance" ShadowDepth="0" Direction="0" />
+                                                            </Setter.Value>
+                                                        </Setter>
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+                    </Border>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="UseShield" Value="True">
+                            <Setter TargetName="Icon" Property="Image.Source" Value="/System.Windows;component/Images/Shield.png" />
+                        </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsMouseOver" Value="True" />
+                                <Condition Property="UseShield" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Icon" Property="Image.Source" Value="/System.Windows;component/Images/GreenArrowHover.png" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsPressed" Value="True" />
+                                <Condition Property="UseShield" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Icon" Property="Image.Source" Value="/System.Windows;component/Images/GreenArrow.png" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsDefaulted" Value="True" />
+                                <Condition Property="IsPressed" Value="False" />
+                                <Condition Property="IsMouseOver" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Border" Property="BorderBrush" Value="#66e0ff" />
+                            <Setter TargetName="InstructionText" Property="Foreground" Value="#282671" />
+                            <Setter TargetName="Note" Property="Foreground" Value="#282671" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsKeyboardFocused" Value="True" />
+                                <Condition Property="IsPressed" Value="False" />
+                                <Condition Property="IsMouseOver" Value="False" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Border" Property="BorderBrush" Value="#66e0ff" />
+                            <Setter TargetName="InstructionText" Property="Foreground" Value="#282671" />
+                            <Setter TargetName="Note" Property="Foreground" Value="#282671" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsDefaulted" Value="True" />
+                                <Condition Property="IsMouseOver" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Duration="0:0:.5" To="#5380f6" Storyboard.TargetName="InstructionText" Storyboard.TargetProperty="Foreground.Color" />
+                                        <ColorAnimation Duration="0:0:.5" To="#5380f6" Storyboard.TargetName="Note" Storyboard.TargetProperty="Foreground.Color" />
+                                        <ColorAnimation Duration="0:0:.5" From="#66e0ff" To="#c6c6c6" Storyboard.TargetName="Border" Storyboard.TargetProperty="BorderBrush.Color" />
+                                        <ColorAnimation Duration="0:0:.5" To="White" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="BorderBrush.Color" />
+                                        <ColorAnimation Duration="0:0:.5" To="#ffffff" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Background.GradientStops[2].Color" />
+                                        <ColorAnimation Duration="0:0:.5" To="#f4f4f4" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Background.GradientStops[3].Color" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.EnterActions>
+                            <MultiTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Duration="0:0:.5" From="#5380f6" Storyboard.TargetName="InstructionText" Storyboard.TargetProperty="Foreground.Color" />
+                                        <ColorAnimation Duration="0:0:.5" From="#5380f6" Storyboard.TargetName="Note" Storyboard.TargetProperty="Foreground.Color" />
+                                        <ColorAnimation Duration="0:0:.5" From="#c6c6c6" To="#66e0ff" Storyboard.TargetName="Border" Storyboard.TargetProperty="BorderBrush.Color" />
+                                        <ColorAnimation Duration="0:0:.5" From="White" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="BorderBrush.Color" />
+                                        <ColorAnimation Duration="0:0:.5" From="#ffffff" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Background.GradientStops[2].Color" />
+                                        <ColorAnimation Duration="0:0:.5" From="#f4f4f4" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Background.GradientStops[3].Color" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.ExitActions>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsKeyboardFocused" Value="True" />
+                                <Condition Property="IsMouseOver" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Duration="0:0:.5" To="#5380f6" Storyboard.TargetName="InstructionText" Storyboard.TargetProperty="Foreground.Color" />
+                                        <ColorAnimation Duration="0:0:.5" To="#5380f6" Storyboard.TargetName="Note" Storyboard.TargetProperty="Foreground.Color" />
+                                        <ColorAnimation Duration="0:0:.5" From="#66e0ff" To="#c6c6c6" Storyboard.TargetName="Border" Storyboard.TargetProperty="BorderBrush.Color" />
+                                        <ColorAnimation Duration="0:0:.5" To="White" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="BorderBrush.Color" />
+                                        <ColorAnimation Duration="0:0:.5" To="#ffffff" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Background.GradientStops[2].Color" />
+                                        <ColorAnimation Duration="0:0:.5" To="#f4f4f4" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Background.GradientStops[3].Color" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.EnterActions>
+                            <MultiTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Duration="0:0:.5" From="#5380f6" Storyboard.TargetName="InstructionText" Storyboard.TargetProperty="Foreground.Color" />
+                                        <ColorAnimation Duration="0:0:.5" From="#5380f6" Storyboard.TargetName="Note" Storyboard.TargetProperty="Foreground.Color" />
+                                        <ColorAnimation Duration="0:0:.5" From="#c6c6c6" To="#66e0ff" Storyboard.TargetName="Border" Storyboard.TargetProperty="BorderBrush.Color" />
+                                        <ColorAnimation Duration="0:0:.5" From="White" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="BorderBrush.Color" />
+                                        <ColorAnimation Duration="0:0:.5" From="#ffffff" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Background.GradientStops[2].Color" />
+                                        <ColorAnimation Duration="0:0:.5" From="#f4f4f4" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Background.GradientStops[3].Color" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.ExitActions>
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="IsDefaulted" Value="False" />
+                                <Condition Property="IsKeyboardFocused" Value="False" />
+                                <Condition Property="IsMouseOver" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <MultiTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Duration="0:0:.5" To="#5380f6" Storyboard.TargetName="InstructionText" Storyboard.TargetProperty="Foreground.Color" />
+                                        <ColorAnimation Duration="0:0:.5" To="#5380f6" Storyboard.TargetName="Note" Storyboard.TargetProperty="Foreground.Color" />
+                                        <ColorAnimation Duration="0:0:.5" To="#c6c6c6" Storyboard.TargetName="Border" Storyboard.TargetProperty="BorderBrush.Color" />
+                                        <ColorAnimation Duration="0:0:.5" To="White" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="BorderBrush.Color" />
+                                        <ColorAnimation Duration="0:0:.5" To="#ffffff" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Background.GradientStops[2].Color" />
+                                        <ColorAnimation Duration="0:0:.5" To="#f4f4f4" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Background.GradientStops[3].Color" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.EnterActions>
+                            <MultiTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Duration="0:0:.5" From="#5380f6" Storyboard.TargetName="InstructionText" Storyboard.TargetProperty="Foreground.Color" />
+                                        <ColorAnimation Duration="0:0:.5" From="#5380f6" Storyboard.TargetName="Note" Storyboard.TargetProperty="Foreground.Color" />
+                                        <ColorAnimation Duration="0:0:.5" From="#c6c6c6" Storyboard.TargetName="Border" Storyboard.TargetProperty="BorderBrush.Color" />
+                                        <ColorAnimation Duration="0:0:.5" From="White" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="BorderBrush.Color" />
+                                        <ColorAnimation Duration="0:0:.5" From="#ffffff" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Background.GradientStops[2].Color" />
+                                        <ColorAnimation Duration="0:0:.5" From="#f4f4f4" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Background.GradientStops[3].Color" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </MultiTrigger.ExitActions>
+                        </MultiTrigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Trigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Duration="0:0:.5" To="#294073" Storyboard.TargetName="InstructionText" Storyboard.TargetProperty="Foreground.Color" />
+                                        <ColorAnimation Duration="0:0:.5" To="#294073" Storyboard.TargetName="Note" Storyboard.TargetProperty="Foreground.Color" />
+                                        <ColorAnimation Duration="0:0:.5" To="#a8a8a8" Storyboard.TargetName="Border" Storyboard.TargetProperty="BorderBrush.Color" />
+                                        <ColorAnimation Duration="0:0:.5" To="#e8e9e9" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="BorderBrush.Color" />
+                                        <ColorAnimation Duration="0:0:.5" To="#dadada" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Background.GradientStops[0].Color" />
+                                        <ColorAnimation Duration="0:0:.5" To="#f0f1f1" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Background.GradientStops[1].Color" />
+                                        <ColorAnimation Duration="0:0:.5" To="#f0f1f1" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Background.GradientStops[2].Color" />
+                                        <ColorAnimation Duration="0:0:.5" To="#f0f1f1" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Background.GradientStops[3].Color" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.EnterActions>
+                            <Trigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <ColorAnimation Duration="0:0:.5" From="#294073" Storyboard.TargetName="InstructionText" Storyboard.TargetProperty="Foreground.Color" />
+                                        <ColorAnimation Duration="0:0:.5" From="#294073" Storyboard.TargetName="Note" Storyboard.TargetProperty="Foreground.Color" />
+                                        <ColorAnimation Duration="0:0:.5" From="#a8a8a8" Storyboard.TargetName="Border" Storyboard.TargetProperty="BorderBrush.Color" />
+                                        <ColorAnimation Duration="0:0:.5" From="#e8e9e9" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="BorderBrush.Color" />
+                                        <ColorAnimation Duration="0:0:.5" From="Gainsboro" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Background.GradientStops[0].Color" />
+                                        <ColorAnimation Duration="0:0:.5" From="#f0f1f1" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Background.GradientStops[1].Color" />
+                                        <ColorAnimation Duration="0:0:.5" From="#f0f1f1" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Background.GradientStops[2].Color" />
+                                        <ColorAnimation Duration="0:0:.5" From="#f0f1f1" Storyboard.TargetName="InnerBorder" Storyboard.TargetProperty="Background.GradientStops[3].Color" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </Trigger.ExitActions>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
-	<!--Back Button Style-->
-	<Style TargetType="controls:BackButton">
-		<Setter Property="HorizontalAlignment" Value="Left" />
-		<Setter Property="VerticalAlignment" Value="Center" />
-		<Setter Property="Template">
-			<Setter.Value>
-				<ControlTemplate TargetType="controls:BackButton">
-					<Canvas MinWidth="28" MinHeight="28">
-						<Image Name="Normal" Source="/System.Windows;component/Images/BackArrow.png" RenderOptions.BitmapScalingMode="HighQuality" Stretch="None" Opacity="1" />
-						<Image Name="Hover" Source="/System.Windows;component/Images/BackArrowHover.png" RenderOptions.BitmapScalingMode="HighQuality" Stretch="None" Opacity="0" />
-						<Image Name="Pressed" Source="/System.Windows;component/Images/BackArrowPressed.png" RenderOptions.BitmapScalingMode="HighQuality" Stretch="None" Opacity="0" />
-						<Image Name="Selected" Source="/System.Windows;component/Images/BackArrowPressed.png" RenderOptions.BitmapScalingMode="HighQuality" Stretch="None" Opacity="0" />
-						<Image Name="Disabled" Source="/System.Windows;component/Images/BackArrowDisabled.png" RenderOptions.BitmapScalingMode="HighQuality" Stretch="None" Opacity="0" />
-					</Canvas>
-					<ControlTemplate.Triggers>
-						<DataTrigger Value="False" Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}}">
-							<DataTrigger.Setters>
-								<Setter TargetName="Disabled" Property="Image.Opacity" Value=".7" />
-								<Setter TargetName="Normal" Property="Image.Opacity" Value="0" />
-							</DataTrigger.Setters>
-						</DataTrigger>
-						<!--<DataTrigger Value="True" Binding="{Binding Path=IsChecked, RelativeSource={RelativeSource Self}}">
+    <!--Back Button Style-->
+    <Style TargetType="controls:BackButton">
+        <Setter Property="HorizontalAlignment" Value="Left" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="controls:BackButton">
+                    <Canvas MinWidth="28" MinHeight="28">
+                        <Image Name="Normal" Source="/System.Windows;component/Images/BackArrow.png" RenderOptions.BitmapScalingMode="HighQuality" Stretch="None" Opacity="1" />
+                        <Image Name="Hover" Source="/System.Windows;component/Images/BackArrowHover.png" RenderOptions.BitmapScalingMode="HighQuality" Stretch="None" Opacity="0" />
+                        <Image Name="Pressed" Source="/System.Windows;component/Images/BackArrowPressed.png" RenderOptions.BitmapScalingMode="HighQuality" Stretch="None" Opacity="0" />
+                        <Image Name="Selected" Source="/System.Windows;component/Images/BackArrowPressed.png" RenderOptions.BitmapScalingMode="HighQuality" Stretch="None" Opacity="0" />
+                        <Image Name="Disabled" Source="/System.Windows;component/Images/BackArrowDisabled.png" RenderOptions.BitmapScalingMode="HighQuality" Stretch="None" Opacity="0" />
+                    </Canvas>
+                    <ControlTemplate.Triggers>
+                        <DataTrigger Value="False" Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}}">
+                            <DataTrigger.Setters>
+                                <Setter TargetName="Disabled" Property="Image.Opacity" Value=".7" />
+                                <Setter TargetName="Normal" Property="Image.Opacity" Value="0" />
+                            </DataTrigger.Setters>
+                        </DataTrigger>
+                        <!--<DataTrigger Value="True" Binding="{Binding Path=IsChecked, RelativeSource={RelativeSource Self}}">
                             <DataTrigger.EnterActions>
                                 <BeginStoryboard>
                                     <Storyboard Storyboard.TargetName="Selected" Storyboard.TargetProperty="Opacity">
@@ -260,314 +260,314 @@
                                 </BeginStoryboard>
                             </DataTrigger.ExitActions>
                         </DataTrigger>-->
-						<EventTrigger RoutedEvent="Button.MouseEnter">
-							<EventTrigger.Actions>
-								<BeginStoryboard>
-									<Storyboard Storyboard.TargetName="Hover" Storyboard.TargetProperty="Opacity">
-										<DoubleAnimation To="1" Duration="0:0:0.2" />
-									</Storyboard>
-								</BeginStoryboard>
-							</EventTrigger.Actions>
-						</EventTrigger>
-						<EventTrigger RoutedEvent="Button.MouseLeave">
-							<EventTrigger.Actions>
-								<BeginStoryboard>
-									<Storyboard Storyboard.TargetName="Hover" Storyboard.TargetProperty="Opacity">
-										<DoubleAnimation To="0" Duration="0:0:0.2" />
-									</Storyboard>
-								</BeginStoryboard>
-							</EventTrigger.Actions>
-						</EventTrigger>
-						<EventTrigger RoutedEvent="Button.PreviewMouseLeftButtonDown">
-							<EventTrigger.Actions>
-								<BeginStoryboard>
-									<Storyboard Storyboard.TargetName="Pressed" Storyboard.TargetProperty="Opacity">
-										<DoubleAnimation To="1" Duration="0:0:0.2" />
-									</Storyboard>
-								</BeginStoryboard>
-							</EventTrigger.Actions>
-						</EventTrigger>
-						<EventTrigger RoutedEvent="Button.PreviewMouseLeftButtonUp">
-							<EventTrigger.Actions>
-								<BeginStoryboard>
-									<Storyboard Storyboard.TargetName="Pressed" Storyboard.TargetProperty="Opacity">
-										<DoubleAnimation To="0" Duration="0:0:0.5" />
-									</Storyboard>
-								</BeginStoryboard>
-							</EventTrigger.Actions>
-						</EventTrigger>
-					</ControlTemplate.Triggers>
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
-	</Style>
+                        <EventTrigger RoutedEvent="Button.MouseEnter">
+                            <EventTrigger.Actions>
+                                <BeginStoryboard>
+                                    <Storyboard Storyboard.TargetName="Hover" Storyboard.TargetProperty="Opacity">
+                                        <DoubleAnimation To="1" Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger.Actions>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Button.MouseLeave">
+                            <EventTrigger.Actions>
+                                <BeginStoryboard>
+                                    <Storyboard Storyboard.TargetName="Hover" Storyboard.TargetProperty="Opacity">
+                                        <DoubleAnimation To="0" Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger.Actions>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Button.PreviewMouseLeftButtonDown">
+                            <EventTrigger.Actions>
+                                <BeginStoryboard>
+                                    <Storyboard Storyboard.TargetName="Pressed" Storyboard.TargetProperty="Opacity">
+                                        <DoubleAnimation To="1" Duration="0:0:0.2" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger.Actions>
+                        </EventTrigger>
+                        <EventTrigger RoutedEvent="Button.PreviewMouseLeftButtonUp">
+                            <EventTrigger.Actions>
+                                <BeginStoryboard>
+                                    <Storyboard Storyboard.TargetName="Pressed" Storyboard.TargetProperty="Opacity">
+                                        <DoubleAnimation To="0" Duration="0:0:0.5" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger.Actions>
+                        </EventTrigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
-	<!--Progress Indicator-->
-	<Style x:Key="EllipseStyle" TargetType="Ellipse">
-		<Style.Setters>
-			<Setter Property="Width" Value="20" />
-			<Setter Property="Height" Value="20" />
-			<Setter Property="Fill">
-				<Setter.Value>
-					<RadialGradientBrush>
-						<GradientStop Color="#CA2C8DDE" Offset="0.634" />
-						<GradientStop Color="#39FFFFFF" Offset="1" />
-						<GradientStop Color="#CA2C64DE" Offset="0.33" />
-						<GradientStop Color="#B56A8FDE" Offset="0.062" />
-					</RadialGradientBrush>
-				</Setter.Value>
-			</Setter>
-			<Setter Property="RenderTransform">
-				<Setter.Value>
-					<ScaleTransform ScaleX="0" ScaleY="0" CenterX="12.5" CenterY="12.5" />
-				</Setter.Value>
-			</Setter>
-		</Style.Setters>
-	</Style>
+    <!--Progress Indicator-->
+    <Style x:Key="EllipseStyle" TargetType="Ellipse">
+        <Style.Setters>
+            <Setter Property="Width" Value="20" />
+            <Setter Property="Height" Value="20" />
+            <Setter Property="Fill">
+                <Setter.Value>
+                    <RadialGradientBrush>
+                        <GradientStop Color="#CA2C8DDE" Offset="0.634" />
+                        <GradientStop Color="#39FFFFFF" Offset="1" />
+                        <GradientStop Color="#CA2C64DE" Offset="0.33" />
+                        <GradientStop Color="#B56A8FDE" Offset="0.062" />
+                    </RadialGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="RenderTransform">
+                <Setter.Value>
+                    <ScaleTransform ScaleX="0" ScaleY="0" CenterX="12.5" CenterY="12.5" />
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
 
-	<Style TargetType="controls:ProgressIndicator">
-		<Style.Setters>
-			<Setter Property="Height" Value="20" />
-			<Setter Property="Width" Value="20" />
-			<Setter Property="ElementStoryboard">
-				<Setter.Value>
-					<Storyboard>
-						<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)">
-							<SplineDoubleKeyFrame KeyTime="00:00:00" Value="0" />
-							<SplineDoubleKeyFrame KeyTime="00:00:00.5" Value="1" />
-							<SplineDoubleKeyFrame KeyTime="00:00:01" Value="1" />
-							<SplineDoubleKeyFrame KeyTime="00:00:01.5" Value="0" />
-						</DoubleAnimationUsingKeyFrames>
-						<DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)">
-							<SplineDoubleKeyFrame KeyTime="00:00:00" Value="0" />
-							<SplineDoubleKeyFrame KeyTime="00:00:00.5" Value="1" />
-							<SplineDoubleKeyFrame KeyTime="00:00:01" Value="1" />
-							<SplineDoubleKeyFrame KeyTime="00:00:01.5" Value="0" />
-						</DoubleAnimationUsingKeyFrames>
-					</Storyboard>
-				</Setter.Value>
-			</Setter>
-			<Setter Property="Template">
-				<Setter.Value>
-					<ControlTemplate TargetType="controls:ProgressIndicator">
-						<Grid Visibility="{TemplateBinding IsRunning, Converter={StaticResource VisibilityOfBool}}">
-							<Canvas x:Name="PART_Canvas" SnapsToDevicePixels="True" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
-								<Ellipse Style="{StaticResource EllipseStyle}" />
-								<Ellipse Style="{StaticResource EllipseStyle}" />
-								<Ellipse Style="{StaticResource EllipseStyle}" />
-								<Ellipse Style="{StaticResource EllipseStyle}" />
-								<Ellipse Style="{StaticResource EllipseStyle}" />
-								<Ellipse Style="{StaticResource EllipseStyle}" />
-								<Ellipse Style="{StaticResource EllipseStyle}" />
-								<Ellipse Style="{StaticResource EllipseStyle}" />
-							</Canvas>
-							<TextBlock Name="LoadingTextBlock" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IndeterminateText}" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" />
-							<TextBlock Name="ProgressTextBlock" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Value}" HorizontalAlignment="Center" VerticalAlignment="Center" />
-						</Grid>
-						<ControlTemplate.Triggers>
-							<Trigger Property="IsIndeterminate" Value="True">
-								<Setter Property="Visibility" TargetName="ProgressTextBlock" Value="Hidden" />
-							</Trigger>
-							<Trigger Property="IsIndeterminate" Value="False">
-								<Setter Property="Visibility" TargetName="LoadingTextBlock" Value="Hidden" />
-							</Trigger>
-						</ControlTemplate.Triggers>
-					</ControlTemplate>
-				</Setter.Value>
-			</Setter>
-		</Style.Setters>
-	</Style>
+    <Style TargetType="controls:ProgressIndicator">
+        <Style.Setters>
+            <Setter Property="Height" Value="20" />
+            <Setter Property="Width" Value="20" />
+            <Setter Property="ElementStoryboard">
+                <Setter.Value>
+                    <Storyboard>
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)">
+                            <SplineDoubleKeyFrame KeyTime="00:00:00" Value="0" />
+                            <SplineDoubleKeyFrame KeyTime="00:00:00.5" Value="1" />
+                            <SplineDoubleKeyFrame KeyTime="00:00:01" Value="1" />
+                            <SplineDoubleKeyFrame KeyTime="00:00:01.5" Value="0" />
+                        </DoubleAnimationUsingKeyFrames>
+                        <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)">
+                            <SplineDoubleKeyFrame KeyTime="00:00:00" Value="0" />
+                            <SplineDoubleKeyFrame KeyTime="00:00:00.5" Value="1" />
+                            <SplineDoubleKeyFrame KeyTime="00:00:01" Value="1" />
+                            <SplineDoubleKeyFrame KeyTime="00:00:01.5" Value="0" />
+                        </DoubleAnimationUsingKeyFrames>
+                    </Storyboard>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="controls:ProgressIndicator">
+                        <Grid Visibility="{TemplateBinding IsRunning, Converter={StaticResource VisibilityOfBool}}">
+                            <Canvas x:Name="PART_Canvas" SnapsToDevicePixels="True" Width="{TemplateBinding Width}" Height="{TemplateBinding Height}">
+                                <Ellipse Style="{StaticResource EllipseStyle}" />
+                                <Ellipse Style="{StaticResource EllipseStyle}" />
+                                <Ellipse Style="{StaticResource EllipseStyle}" />
+                                <Ellipse Style="{StaticResource EllipseStyle}" />
+                                <Ellipse Style="{StaticResource EllipseStyle}" />
+                                <Ellipse Style="{StaticResource EllipseStyle}" />
+                                <Ellipse Style="{StaticResource EllipseStyle}" />
+                                <Ellipse Style="{StaticResource EllipseStyle}" />
+                            </Canvas>
+                            <TextBlock Name="LoadingTextBlock" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IndeterminateText}" HorizontalAlignment="Center" VerticalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" />
+                            <TextBlock Name="ProgressTextBlock" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Value}" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsIndeterminate" Value="True">
+                                <Setter Property="Visibility" TargetName="ProgressTextBlock" Value="Hidden" />
+                            </Trigger>
+                            <Trigger Property="IsIndeterminate" Value="False">
+                                <Setter Property="Visibility" TargetName="LoadingTextBlock" Value="Hidden" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style.Setters>
+    </Style>
 
-	<!--ErrorIcon-->
-	<DrawingBrush x:Key="ErrorIcon" Stretch="Uniform">
-		<DrawingBrush.Drawing>
-			<DrawingGroup>
-				<DrawingGroup.Children>
-					<GeometryDrawing Geometry="F1 M 15.188,-0.310669C 14.1173,-0.305336 13.0867,0.39333 12.304,1.17733L 2.31733,11.1627C 1.652,11.828 0.748,13.036 0.74,14.2853L 0.74,14.32C 0.744,14.932 0.965334,15.552 1.536,16.124L 1.536,16.124C 5.21467,19.8013 14.6013,29.1867 15.5227,30.1093L 15.5227,30.1093C 14.6013,31.028 5.31867,40.308 1.66933,43.9627L 1.66933,43.9627C 3.97364e-007,45.6293 1.484,47.9533 2.48533,48.9547L 2.48533,48.9547C 3.48533,49.956 11.64,58.1093 12.4733,58.944L 12.4733,58.944C 13.3067,59.776 16.0373,61.3333 17.5373,59.8333L 17.5373,59.8333C 21.1893,56.18 30.4733,46.8973 31.3933,45.9787L 31.3933,45.9787C 32.332,46.9187 42.3587,56.9453 45.9747,60.564L 45.9747,60.564C 46.452,61.04 46.992,61.2347 47.5413,61.2427L 47.612,61.2427C 48.7667,61.2267 49.952,60.4067 50.6733,59.6827L 50.6733,59.6827C 51.7547,58.6013 59.7467,50.6107 60.6613,49.6947L 60.6613,49.6947C 61.28,49.076 62.1973,47.7827 62.232,46.5213L 62.232,46.376C 62.216,45.8253 62.0227,45.2867 61.5533,44.8173L 47.0227,30.2853C 47.94,29.3653 56.9533,20.3533 60.4467,16.8613L 60.4467,16.8613C 61.8613,15.4453 60.8307,13.252 59.4987,11.9213L 49.4293,1.85067C 48.3453,0.767998 46.0067,-0.409332 44.424,1.17066L 44.424,1.17066C 40.7987,4.79866 31.9573,13.6 31.048,14.5013L 31.048,14.5013C 30.132,13.5853 20.7747,4.22533 17.1027,0.553333L 17.1027,0.553333C 16.4907,-0.05867 15.848,-0.305336 15.2187,-0.310669L 15.188,-0.310669 Z ">
-						<GeometryDrawing.Brush>
-							<RadialGradientBrush RadiusX="3.42362" RadiusY="3.42362" Center="2.34619,-1.20416" GradientOrigin="2.34619,-1.20416">
-								<RadialGradientBrush.GradientStops>
-									<GradientStop Color="#FFFFFFFF" Offset="0" />
-									<GradientStop Color="#FFF7C393" Offset="0.0396847" />
-									<GradientStop Color="#FFEF8728" Offset="0.305267" />
-									<GradientStop Color="#FFC92A02" Offset="0.705261" />
-									<GradientStop Color="#FFB72101" Offset="0.760478" />
-									<GradientStop Color="#FFA61900" Offset="0.863159" />
-									<GradientStop Color="#FF871201" Offset="0.973679" />
-									<GradientStop Color="#FF871201" Offset="1" />
-								</RadialGradientBrush.GradientStops>
-								<RadialGradientBrush.RelativeTransform>
-									<TransformGroup>
-										<SkewTransform CenterX="2.34619" CenterY="-1.20416" AngleX="-0.0571115" AngleY="0" />
-										<RotateTransform CenterX="2.34619" CenterY="-1.20416" Angle="44.9714" />
-									</TransformGroup>
-								</RadialGradientBrush.RelativeTransform>
-							</RadialGradientBrush>
-						</GeometryDrawing.Brush>
-					</GeometryDrawing>
-					<GeometryDrawing Geometry="F1 M 13.2467,2.116L 3.256,12.104C 2.80667,12.556 1.41333,14.1133 2.48133,15.1787L 16.4653,29.1653L 17.4053,30.1067L 16.4653,31.048L 2.608,44.9053C 1.47733,46.032 3.408,47.9933 3.42533,48.012L 13.416,58C 14.0013,58.5853 15.9053,59.5787 16.5933,58.8907L 30.4493,45.0333L 31.3933,44.0933L 32.332,45.0333L 46.9187,59.62C 47.8733,60.576 49.716,58.7613 49.7333,58.7427L 59.72,48.756C 60.1067,48.3693 61.476,46.624 60.612,45.7587L 46.08,31.228L 45.1373,30.2853L 46.08,29.3427L 59.504,15.9187C 60.2693,15.1507 59.3307,13.6347 58.556,12.8613L 48.4853,2.79066C 48.0853,2.38933 46.38,1.104 45.3667,2.11333L 45.3667,2.11333C 41.8933,5.59067 33.6187,13.8227 32.1427,15.296L 31.9893,15.4467L 31.048,16.384L 30.1093,15.4453L 26.9027,12.2387L 16.16,1.49333C 16.0107,1.344 15.7,1.03333 15.18,1.03333L 15.18,1.03333C 14.7147,1.03333 14.0813,1.28133 13.2467,2.116 Z ">
-						<GeometryDrawing.Brush>
-							<LinearGradientBrush StartPoint="0.508777,-0.0570523" EndPoint="0.486102,1.37568">
-								<LinearGradientBrush.GradientStops>
-									<GradientStop Color="#FFFFFFFF" Offset="0" />
-									<GradientStop Color="#FFF7C393" Offset="0.0396847" />
-									<GradientStop Color="#FFEF8728" Offset="0.305267" />
-									<GradientStop Color="#FFC92A02" Offset="0.705261" />
-									<GradientStop Color="#FFB72101" Offset="0.760478" />
-									<GradientStop Color="#FFA61900" Offset="0.863159" />
-									<GradientStop Color="#FF871201" Offset="0.973679" />
-									<GradientStop Color="#FF871201" Offset="1" />
-								</LinearGradientBrush.GradientStops>
-							</LinearGradientBrush>
-						</GeometryDrawing.Brush>
-					</GeometryDrawing>
-					<GeometryDrawing Geometry="F1 M 14.1893,3.06L 4.2,13.048C 3.62667,13.62 3.41067,14.1213 3.42133,14.2387L 17.4053,28.224L 18.3453,29.1653L 19.288,30.1067L 18.3453,31.048L 17.4053,31.992L 3.588,45.7627C 3.56933,45.9947 3.97067,46.6573 4.36933,47.072L 14.356,57.0587C 14.644,57.3467 15.432,57.7267 15.8147,57.784L 29.5067,44.0933L 30.4467,43.1507L 31.3893,42.2067L 32.332,43.1507L 33.272,44.0933L 47.7147,58.5373C 47.9893,58.44 48.468,58.112 48.7907,57.8L 58.7787,47.812C 59.0667,47.5227 59.4627,46.896 59.5467,46.5773L 45.14,32.172L 44.1947,31.2253L 43.2507,30.2827L 44.1947,29.3413L 45.1373,28.4L 58.4427,15.0933C 58.3827,14.8213 58.0747,14.2653 57.6147,13.804L 47.5467,3.73333C 47.2093,3.4 46.5,3.028 46.3093,3.05733L 46.3093,3.05733C 44.2053,5.16 40.3427,9.012 37.2933,12.048L 33.0747,16.252L 32.9293,16.3933L 31.9853,17.3293L 31.0467,18.2667L 30.1067,17.328L 29.1653,16.3867L 25.96,13.1813L 15.1813,2.36933C 15.176,2.36933 14.8533,2.392 14.1893,3.06 Z ">
-						<GeometryDrawing.Brush>
-							<RadialGradientBrush RadiusX="2.78644" RadiusY="2.78644" Center="1.78504,-0.697458" GradientOrigin="1.78504,-0.697458">
-								<RadialGradientBrush.GradientStops>
-									<GradientStop Color="#FFFFFFFF" Offset="0" />
-									<GradientStop Color="#FFF7C393" Offset="0.0396847" />
-									<GradientStop Color="#FFEF8728" Offset="0.305267" />
-									<GradientStop Color="#FFC92A02" Offset="0.705261" />
-									<GradientStop Color="#FFB72101" Offset="0.760478" />
-									<GradientStop Color="#FFA61900" Offset="0.863159" />
-									<GradientStop Color="#FF871201" Offset="0.973679" />
-									<GradientStop Color="#FF871201" Offset="1" />
-								</RadialGradientBrush.GradientStops>
-								<RadialGradientBrush.RelativeTransform>
-									<TransformGroup>
-										<SkewTransform CenterX="1.78504" CenterY="-0.697458" AngleX="-0.0431643" AngleY="0" />
-										<RotateTransform CenterX="1.78504" CenterY="-0.697458" Angle="44.9784" />
-									</TransformGroup>
-								</RadialGradientBrush.RelativeTransform>
-							</RadialGradientBrush>
-						</GeometryDrawing.Brush>
-					</GeometryDrawing>
-					<GeometryDrawing Geometry="F1 M 4.2,13.048C 3.62667,13.62 3.41067,14.1213 3.42133,14.2387L 17.4053,28.224L 18.3453,29.1653L 19.288,30.1067L 18.3453,31.048L 17.4053,31.992L 3.588,45.7627C 3.56933,45.9947 3.97067,46.6573 4.36933,47.072L 14.356,57.0587C 14.644,57.3467 15.432,57.7267 15.8147,57.784L 29.5067,44.0933L 30.4467,43.1507L 31.3893,42.2067L 32.332,43.1507L 33.272,44.0933L 47.7147,58.5373C 47.9893,58.44 48.468,58.112 48.7907,57.8L 55.5867,51.0013C 47.3507,46.312 38.7013,39.7187 30.536,31.5507L 30.536,31.5507C 22.296,23.3147 15.6613,14.5853 10.9653,6.28266L 4.2,13.048 Z ">
-						<GeometryDrawing.Brush>
-							<RadialGradientBrush RadiusX="1.78134" RadiusY="1.78134" Center="0.47168,-0.387954" GradientOrigin="0.47168,-0.387954">
-								<RadialGradientBrush.GradientStops>
-									<GradientStop Color="#FFFFFFFF" Offset="0" />
-									<GradientStop Color="#FFF7C393" Offset="0.0396847" />
-									<GradientStop Color="#FFEF8728" Offset="0.305267" />
-									<GradientStop Color="#FFC92A02" Offset="0.705261" />
-									<GradientStop Color="#FFB72101" Offset="0.760478" />
-									<GradientStop Color="#FFA61900" Offset="0.863159" />
-									<GradientStop Color="#FF871201" Offset="0.973679" />
-									<GradientStop Color="#FF871201" Offset="1" />
-								</RadialGradientBrush.GradientStops>
-								<RadialGradientBrush.RelativeTransform>
-									<TransformGroup>
-										<SkewTransform CenterX="0.47168" CenterY="-0.387954" AngleX="-0.0976351" AngleY="0" />
-										<RotateTransform CenterX="0.47168" CenterY="-0.387954" Angle="44.9512" />
-									</TransformGroup>
-								</RadialGradientBrush.RelativeTransform>
-							</RadialGradientBrush>
-						</GeometryDrawing.Brush>
-					</GeometryDrawing>
-					<GeometryDrawing Geometry="F1 M 14.1893,3.06L 10.9653,6.28266C 15.6613,14.5853 22.296,23.3147 30.536,31.5507L 30.536,31.5507C 38.7013,39.7187 47.3507,46.312 55.5867,51.0013L 58.7787,47.812C 59.0667,47.5227 59.4627,46.896 59.5467,46.5773L 45.14,32.172L 44.1947,31.2253L 43.2507,30.2827L 44.1947,29.3413L 45.1373,28.4L 58.4427,15.0933C 58.3827,14.8213 58.0747,14.2653 57.6147,13.804L 47.5467,3.73333C 47.2093,3.4 46.5,3.028 46.3093,3.05733L 46.3093,3.05733C 44.2053,5.16 40.3427,9.012 37.2933,12.048L 33.0747,16.252L 32.9293,16.3933L 31.9853,17.3293L 31.0467,18.2667L 30.1067,17.328L 29.1653,16.3867L 25.96,13.1813L 15.1813,2.36933C 15.176,2.36933 14.8533,2.392 14.1893,3.06 Z ">
-						<GeometryDrawing.Brush>
-							<RadialGradientBrush RadiusX="3.21869" RadiusY="3.21869" Center="1.90697,-0.80555" GradientOrigin="1.90697,-0.80555">
-								<RadialGradientBrush.GradientStops>
-									<GradientStop Color="#FFFFFFFF" Offset="0" />
-									<GradientStop Color="#FFF7C393" Offset="0.0396847" />
-									<GradientStop Color="#FFEF8728" Offset="0.305267" />
-									<GradientStop Color="#FFC92A02" Offset="0.705261" />
-									<GradientStop Color="#FFB72101" Offset="0.760478" />
-									<GradientStop Color="#FFA61900" Offset="0.863159" />
-									<GradientStop Color="#FF871201" Offset="0.973679" />
-									<GradientStop Color="#FF871201" Offset="1" />
-								</RadialGradientBrush.GradientStops>
-								<RadialGradientBrush.RelativeTransform>
-									<TransformGroup>
-										<SkewTransform CenterX="1.90697" CenterY="-0.80555" AngleX="-0.0597275" AngleY="0" />
-										<RotateTransform CenterX="1.90697" CenterY="-0.80555" Angle="44.9701" />
-									</TransformGroup>
-								</RadialGradientBrush.RelativeTransform>
-							</RadialGradientBrush>
-						</GeometryDrawing.Brush>
-					</GeometryDrawing>
-					<GeometryDrawing Geometry="F1 M 14.1893,3.06L 10.9653,6.28266C 15.6613,14.5853 22.296,23.3147 30.536,31.5507L 30.536,31.5507C 38.7013,39.7187 47.3507,46.312 55.5867,51.0013L 58.7787,47.812C 59.0667,47.5227 59.4627,46.896 59.5467,46.5773L 45.14,32.172L 44.1947,31.2253L 43.2507,30.2827L 44.1947,29.3413L 45.1373,28.4L 58.4427,15.0933C 58.3827,14.8213 58.0747,14.2653 57.6147,13.804L 47.5467,3.73333C 47.2093,3.4 46.5,3.028 46.3093,3.05733L 46.3093,3.05733C 44.2053,5.16 40.3427,9.012 37.2933,12.048L 33.0747,16.252L 32.9293,16.3933L 31.9853,17.3293L 31.0467,18.2667L 30.1067,17.328L 29.1653,16.3867L 25.96,13.1813L 15.1813,2.36933C 15.176,2.36933 14.8533,2.392 14.1893,3.06 Z ">
-						<GeometryDrawing.Brush>
-							<RadialGradientBrush RadiusX="1.91337" RadiusY="1.91337" Center="0.351187,-0.336372" GradientOrigin="0.351187,-0.336372">
-								<RadialGradientBrush.GradientStops>
-									<GradientStop Color="#FFFFFFFF" Offset="0" />
-									<GradientStop Color="#FFF7C393" Offset="0.0396847" />
-									<GradientStop Color="#FFEF8728" Offset="0.305267" />
-									<GradientStop Color="#FFC92A02" Offset="0.705261" />
-									<GradientStop Color="#FFB72101" Offset="0.760478" />
-									<GradientStop Color="#FFA61900" Offset="0.863159" />
-									<GradientStop Color="#FF871201" Offset="0.973679" />
-									<GradientStop Color="#FF871201" Offset="1" />
-								</RadialGradientBrush.GradientStops>
-								<RadialGradientBrush.RelativeTransform>
-									<TransformGroup>
-										<SkewTransform CenterX="0.351187" CenterY="-0.336372" AngleX="-0.0597275" AngleY="0" />
-										<RotateTransform CenterX="0.351187" CenterY="-0.336372" Angle="44.9701" />
-									</TransformGroup>
-								</RadialGradientBrush.RelativeTransform>
-							</RadialGradientBrush>
-						</GeometryDrawing.Brush>
-					</GeometryDrawing>
-				</DrawingGroup.Children>
-			</DrawingGroup>
-		</DrawingBrush.Drawing>
-	</DrawingBrush>
+    <!--ErrorIcon-->
+    <DrawingBrush x:Key="ErrorIcon" Stretch="Uniform">
+        <DrawingBrush.Drawing>
+            <DrawingGroup>
+                <DrawingGroup.Children>
+                    <GeometryDrawing Geometry="F1 M 15.188,-0.310669C 14.1173,-0.305336 13.0867,0.39333 12.304,1.17733L 2.31733,11.1627C 1.652,11.828 0.748,13.036 0.74,14.2853L 0.74,14.32C 0.744,14.932 0.965334,15.552 1.536,16.124L 1.536,16.124C 5.21467,19.8013 14.6013,29.1867 15.5227,30.1093L 15.5227,30.1093C 14.6013,31.028 5.31867,40.308 1.66933,43.9627L 1.66933,43.9627C 3.97364e-007,45.6293 1.484,47.9533 2.48533,48.9547L 2.48533,48.9547C 3.48533,49.956 11.64,58.1093 12.4733,58.944L 12.4733,58.944C 13.3067,59.776 16.0373,61.3333 17.5373,59.8333L 17.5373,59.8333C 21.1893,56.18 30.4733,46.8973 31.3933,45.9787L 31.3933,45.9787C 32.332,46.9187 42.3587,56.9453 45.9747,60.564L 45.9747,60.564C 46.452,61.04 46.992,61.2347 47.5413,61.2427L 47.612,61.2427C 48.7667,61.2267 49.952,60.4067 50.6733,59.6827L 50.6733,59.6827C 51.7547,58.6013 59.7467,50.6107 60.6613,49.6947L 60.6613,49.6947C 61.28,49.076 62.1973,47.7827 62.232,46.5213L 62.232,46.376C 62.216,45.8253 62.0227,45.2867 61.5533,44.8173L 47.0227,30.2853C 47.94,29.3653 56.9533,20.3533 60.4467,16.8613L 60.4467,16.8613C 61.8613,15.4453 60.8307,13.252 59.4987,11.9213L 49.4293,1.85067C 48.3453,0.767998 46.0067,-0.409332 44.424,1.17066L 44.424,1.17066C 40.7987,4.79866 31.9573,13.6 31.048,14.5013L 31.048,14.5013C 30.132,13.5853 20.7747,4.22533 17.1027,0.553333L 17.1027,0.553333C 16.4907,-0.05867 15.848,-0.305336 15.2187,-0.310669L 15.188,-0.310669 Z ">
+                        <GeometryDrawing.Brush>
+                            <RadialGradientBrush RadiusX="3.42362" RadiusY="3.42362" Center="2.34619,-1.20416" GradientOrigin="2.34619,-1.20416">
+                                <RadialGradientBrush.GradientStops>
+                                    <GradientStop Color="#FFFFFFFF" Offset="0" />
+                                    <GradientStop Color="#FFF7C393" Offset="0.0396847" />
+                                    <GradientStop Color="#FFEF8728" Offset="0.305267" />
+                                    <GradientStop Color="#FFC92A02" Offset="0.705261" />
+                                    <GradientStop Color="#FFB72101" Offset="0.760478" />
+                                    <GradientStop Color="#FFA61900" Offset="0.863159" />
+                                    <GradientStop Color="#FF871201" Offset="0.973679" />
+                                    <GradientStop Color="#FF871201" Offset="1" />
+                                </RadialGradientBrush.GradientStops>
+                                <RadialGradientBrush.RelativeTransform>
+                                    <TransformGroup>
+                                        <SkewTransform CenterX="2.34619" CenterY="-1.20416" AngleX="-0.0571115" AngleY="0" />
+                                        <RotateTransform CenterX="2.34619" CenterY="-1.20416" Angle="44.9714" />
+                                    </TransformGroup>
+                                </RadialGradientBrush.RelativeTransform>
+                            </RadialGradientBrush>
+                        </GeometryDrawing.Brush>
+                    </GeometryDrawing>
+                    <GeometryDrawing Geometry="F1 M 13.2467,2.116L 3.256,12.104C 2.80667,12.556 1.41333,14.1133 2.48133,15.1787L 16.4653,29.1653L 17.4053,30.1067L 16.4653,31.048L 2.608,44.9053C 1.47733,46.032 3.408,47.9933 3.42533,48.012L 13.416,58C 14.0013,58.5853 15.9053,59.5787 16.5933,58.8907L 30.4493,45.0333L 31.3933,44.0933L 32.332,45.0333L 46.9187,59.62C 47.8733,60.576 49.716,58.7613 49.7333,58.7427L 59.72,48.756C 60.1067,48.3693 61.476,46.624 60.612,45.7587L 46.08,31.228L 45.1373,30.2853L 46.08,29.3427L 59.504,15.9187C 60.2693,15.1507 59.3307,13.6347 58.556,12.8613L 48.4853,2.79066C 48.0853,2.38933 46.38,1.104 45.3667,2.11333L 45.3667,2.11333C 41.8933,5.59067 33.6187,13.8227 32.1427,15.296L 31.9893,15.4467L 31.048,16.384L 30.1093,15.4453L 26.9027,12.2387L 16.16,1.49333C 16.0107,1.344 15.7,1.03333 15.18,1.03333L 15.18,1.03333C 14.7147,1.03333 14.0813,1.28133 13.2467,2.116 Z ">
+                        <GeometryDrawing.Brush>
+                            <LinearGradientBrush StartPoint="0.508777,-0.0570523" EndPoint="0.486102,1.37568">
+                                <LinearGradientBrush.GradientStops>
+                                    <GradientStop Color="#FFFFFFFF" Offset="0" />
+                                    <GradientStop Color="#FFF7C393" Offset="0.0396847" />
+                                    <GradientStop Color="#FFEF8728" Offset="0.305267" />
+                                    <GradientStop Color="#FFC92A02" Offset="0.705261" />
+                                    <GradientStop Color="#FFB72101" Offset="0.760478" />
+                                    <GradientStop Color="#FFA61900" Offset="0.863159" />
+                                    <GradientStop Color="#FF871201" Offset="0.973679" />
+                                    <GradientStop Color="#FF871201" Offset="1" />
+                                </LinearGradientBrush.GradientStops>
+                            </LinearGradientBrush>
+                        </GeometryDrawing.Brush>
+                    </GeometryDrawing>
+                    <GeometryDrawing Geometry="F1 M 14.1893,3.06L 4.2,13.048C 3.62667,13.62 3.41067,14.1213 3.42133,14.2387L 17.4053,28.224L 18.3453,29.1653L 19.288,30.1067L 18.3453,31.048L 17.4053,31.992L 3.588,45.7627C 3.56933,45.9947 3.97067,46.6573 4.36933,47.072L 14.356,57.0587C 14.644,57.3467 15.432,57.7267 15.8147,57.784L 29.5067,44.0933L 30.4467,43.1507L 31.3893,42.2067L 32.332,43.1507L 33.272,44.0933L 47.7147,58.5373C 47.9893,58.44 48.468,58.112 48.7907,57.8L 58.7787,47.812C 59.0667,47.5227 59.4627,46.896 59.5467,46.5773L 45.14,32.172L 44.1947,31.2253L 43.2507,30.2827L 44.1947,29.3413L 45.1373,28.4L 58.4427,15.0933C 58.3827,14.8213 58.0747,14.2653 57.6147,13.804L 47.5467,3.73333C 47.2093,3.4 46.5,3.028 46.3093,3.05733L 46.3093,3.05733C 44.2053,5.16 40.3427,9.012 37.2933,12.048L 33.0747,16.252L 32.9293,16.3933L 31.9853,17.3293L 31.0467,18.2667L 30.1067,17.328L 29.1653,16.3867L 25.96,13.1813L 15.1813,2.36933C 15.176,2.36933 14.8533,2.392 14.1893,3.06 Z ">
+                        <GeometryDrawing.Brush>
+                            <RadialGradientBrush RadiusX="2.78644" RadiusY="2.78644" Center="1.78504,-0.697458" GradientOrigin="1.78504,-0.697458">
+                                <RadialGradientBrush.GradientStops>
+                                    <GradientStop Color="#FFFFFFFF" Offset="0" />
+                                    <GradientStop Color="#FFF7C393" Offset="0.0396847" />
+                                    <GradientStop Color="#FFEF8728" Offset="0.305267" />
+                                    <GradientStop Color="#FFC92A02" Offset="0.705261" />
+                                    <GradientStop Color="#FFB72101" Offset="0.760478" />
+                                    <GradientStop Color="#FFA61900" Offset="0.863159" />
+                                    <GradientStop Color="#FF871201" Offset="0.973679" />
+                                    <GradientStop Color="#FF871201" Offset="1" />
+                                </RadialGradientBrush.GradientStops>
+                                <RadialGradientBrush.RelativeTransform>
+                                    <TransformGroup>
+                                        <SkewTransform CenterX="1.78504" CenterY="-0.697458" AngleX="-0.0431643" AngleY="0" />
+                                        <RotateTransform CenterX="1.78504" CenterY="-0.697458" Angle="44.9784" />
+                                    </TransformGroup>
+                                </RadialGradientBrush.RelativeTransform>
+                            </RadialGradientBrush>
+                        </GeometryDrawing.Brush>
+                    </GeometryDrawing>
+                    <GeometryDrawing Geometry="F1 M 4.2,13.048C 3.62667,13.62 3.41067,14.1213 3.42133,14.2387L 17.4053,28.224L 18.3453,29.1653L 19.288,30.1067L 18.3453,31.048L 17.4053,31.992L 3.588,45.7627C 3.56933,45.9947 3.97067,46.6573 4.36933,47.072L 14.356,57.0587C 14.644,57.3467 15.432,57.7267 15.8147,57.784L 29.5067,44.0933L 30.4467,43.1507L 31.3893,42.2067L 32.332,43.1507L 33.272,44.0933L 47.7147,58.5373C 47.9893,58.44 48.468,58.112 48.7907,57.8L 55.5867,51.0013C 47.3507,46.312 38.7013,39.7187 30.536,31.5507L 30.536,31.5507C 22.296,23.3147 15.6613,14.5853 10.9653,6.28266L 4.2,13.048 Z ">
+                        <GeometryDrawing.Brush>
+                            <RadialGradientBrush RadiusX="1.78134" RadiusY="1.78134" Center="0.47168,-0.387954" GradientOrigin="0.47168,-0.387954">
+                                <RadialGradientBrush.GradientStops>
+                                    <GradientStop Color="#FFFFFFFF" Offset="0" />
+                                    <GradientStop Color="#FFF7C393" Offset="0.0396847" />
+                                    <GradientStop Color="#FFEF8728" Offset="0.305267" />
+                                    <GradientStop Color="#FFC92A02" Offset="0.705261" />
+                                    <GradientStop Color="#FFB72101" Offset="0.760478" />
+                                    <GradientStop Color="#FFA61900" Offset="0.863159" />
+                                    <GradientStop Color="#FF871201" Offset="0.973679" />
+                                    <GradientStop Color="#FF871201" Offset="1" />
+                                </RadialGradientBrush.GradientStops>
+                                <RadialGradientBrush.RelativeTransform>
+                                    <TransformGroup>
+                                        <SkewTransform CenterX="0.47168" CenterY="-0.387954" AngleX="-0.0976351" AngleY="0" />
+                                        <RotateTransform CenterX="0.47168" CenterY="-0.387954" Angle="44.9512" />
+                                    </TransformGroup>
+                                </RadialGradientBrush.RelativeTransform>
+                            </RadialGradientBrush>
+                        </GeometryDrawing.Brush>
+                    </GeometryDrawing>
+                    <GeometryDrawing Geometry="F1 M 14.1893,3.06L 10.9653,6.28266C 15.6613,14.5853 22.296,23.3147 30.536,31.5507L 30.536,31.5507C 38.7013,39.7187 47.3507,46.312 55.5867,51.0013L 58.7787,47.812C 59.0667,47.5227 59.4627,46.896 59.5467,46.5773L 45.14,32.172L 44.1947,31.2253L 43.2507,30.2827L 44.1947,29.3413L 45.1373,28.4L 58.4427,15.0933C 58.3827,14.8213 58.0747,14.2653 57.6147,13.804L 47.5467,3.73333C 47.2093,3.4 46.5,3.028 46.3093,3.05733L 46.3093,3.05733C 44.2053,5.16 40.3427,9.012 37.2933,12.048L 33.0747,16.252L 32.9293,16.3933L 31.9853,17.3293L 31.0467,18.2667L 30.1067,17.328L 29.1653,16.3867L 25.96,13.1813L 15.1813,2.36933C 15.176,2.36933 14.8533,2.392 14.1893,3.06 Z ">
+                        <GeometryDrawing.Brush>
+                            <RadialGradientBrush RadiusX="3.21869" RadiusY="3.21869" Center="1.90697,-0.80555" GradientOrigin="1.90697,-0.80555">
+                                <RadialGradientBrush.GradientStops>
+                                    <GradientStop Color="#FFFFFFFF" Offset="0" />
+                                    <GradientStop Color="#FFF7C393" Offset="0.0396847" />
+                                    <GradientStop Color="#FFEF8728" Offset="0.305267" />
+                                    <GradientStop Color="#FFC92A02" Offset="0.705261" />
+                                    <GradientStop Color="#FFB72101" Offset="0.760478" />
+                                    <GradientStop Color="#FFA61900" Offset="0.863159" />
+                                    <GradientStop Color="#FF871201" Offset="0.973679" />
+                                    <GradientStop Color="#FF871201" Offset="1" />
+                                </RadialGradientBrush.GradientStops>
+                                <RadialGradientBrush.RelativeTransform>
+                                    <TransformGroup>
+                                        <SkewTransform CenterX="1.90697" CenterY="-0.80555" AngleX="-0.0597275" AngleY="0" />
+                                        <RotateTransform CenterX="1.90697" CenterY="-0.80555" Angle="44.9701" />
+                                    </TransformGroup>
+                                </RadialGradientBrush.RelativeTransform>
+                            </RadialGradientBrush>
+                        </GeometryDrawing.Brush>
+                    </GeometryDrawing>
+                    <GeometryDrawing Geometry="F1 M 14.1893,3.06L 10.9653,6.28266C 15.6613,14.5853 22.296,23.3147 30.536,31.5507L 30.536,31.5507C 38.7013,39.7187 47.3507,46.312 55.5867,51.0013L 58.7787,47.812C 59.0667,47.5227 59.4627,46.896 59.5467,46.5773L 45.14,32.172L 44.1947,31.2253L 43.2507,30.2827L 44.1947,29.3413L 45.1373,28.4L 58.4427,15.0933C 58.3827,14.8213 58.0747,14.2653 57.6147,13.804L 47.5467,3.73333C 47.2093,3.4 46.5,3.028 46.3093,3.05733L 46.3093,3.05733C 44.2053,5.16 40.3427,9.012 37.2933,12.048L 33.0747,16.252L 32.9293,16.3933L 31.9853,17.3293L 31.0467,18.2667L 30.1067,17.328L 29.1653,16.3867L 25.96,13.1813L 15.1813,2.36933C 15.176,2.36933 14.8533,2.392 14.1893,3.06 Z ">
+                        <GeometryDrawing.Brush>
+                            <RadialGradientBrush RadiusX="1.91337" RadiusY="1.91337" Center="0.351187,-0.336372" GradientOrigin="0.351187,-0.336372">
+                                <RadialGradientBrush.GradientStops>
+                                    <GradientStop Color="#FFFFFFFF" Offset="0" />
+                                    <GradientStop Color="#FFF7C393" Offset="0.0396847" />
+                                    <GradientStop Color="#FFEF8728" Offset="0.305267" />
+                                    <GradientStop Color="#FFC92A02" Offset="0.705261" />
+                                    <GradientStop Color="#FFB72101" Offset="0.760478" />
+                                    <GradientStop Color="#FFA61900" Offset="0.863159" />
+                                    <GradientStop Color="#FF871201" Offset="0.973679" />
+                                    <GradientStop Color="#FF871201" Offset="1" />
+                                </RadialGradientBrush.GradientStops>
+                                <RadialGradientBrush.RelativeTransform>
+                                    <TransformGroup>
+                                        <SkewTransform CenterX="0.351187" CenterY="-0.336372" AngleX="-0.0597275" AngleY="0" />
+                                        <RotateTransform CenterX="0.351187" CenterY="-0.336372" Angle="44.9701" />
+                                    </TransformGroup>
+                                </RadialGradientBrush.RelativeTransform>
+                            </RadialGradientBrush>
+                        </GeometryDrawing.Brush>
+                    </GeometryDrawing>
+                </DrawingGroup.Children>
+            </DrawingGroup>
+        </DrawingBrush.Drawing>
+    </DrawingBrush>
 
-	<!--InfoTextBox-->
-	<Style x:Key="shadowedLabelStyle">
-		<Setter Property="TextBlock.Foreground" Value="{x:Static SystemColors.ControlDarkBrush}" />
-		<Setter Property="FrameworkElement.Opacity" Value="0.8" />
-		<Setter Property="TextBlock.FontSize" Value="12" />
-		<Setter Property="TextBlock.FontStyle" Value="Italic" />
-		<Setter Property="TextBlock.Margin" Value="8,4,4,4" />
-	</Style>
+    <!--InfoTextBox-->
+    <Style x:Key="shadowedLabelStyle">
+        <Setter Property="TextBlock.Foreground" Value="{x:Static SystemColors.ControlDarkBrush}" />
+        <Setter Property="FrameworkElement.Opacity" Value="0.8" />
+        <Setter Property="TextBlock.FontSize" Value="12" />
+        <Setter Property="TextBlock.FontStyle" Value="Italic" />
+        <Setter Property="TextBlock.Margin" Value="8,4,4,4" />
+    </Style>
 
-	<Style TargetType="controls:InfoTextBox">
-		<Setter Property="FontSize" Value="14" />
-		<Setter Property="NoteStyle" Value="{StaticResource shadowedLabelStyle}" />
-		<Setter Property="Validation.ErrorTemplate">
-			<Setter.Value>
-				<ControlTemplate>
-					<Grid>
-						<AdornedElementPlaceholder x:Name="PART_ContentHost" />
-						<Rectangle Fill="{StaticResource ErrorIcon}" Width="18" HorizontalAlignment="Right" Margin="0,0,4,0" />
-					</Grid>
-				</ControlTemplate>
-			</Setter.Value>
-		</Setter>
-		<Style.Triggers>
-			<Trigger Property="Validation.HasError" Value="true">
-				<Setter Property="BorderThickness" Value="0" />
-				<Setter Property="Template">
-					<Setter.Value>
-						<ControlTemplate TargetType="controls:InfoTextBox">
-							<Grid>
-								<Border BorderBrush="DarkRed" x:Name="Bd" BorderThickness="1" CornerRadius="1" Padding="1" SnapsToDevicePixels="True">
-									<ScrollViewer x:Name="PART_ContentHost" />
-								</Border>
-								<Rectangle Fill="{StaticResource ErrorIcon}" Width="18" HorizontalAlignment="Right" Margin="0,0,4,0" />
-							</Grid>
-						</ControlTemplate>
-					</Setter.Value>
-				</Setter>
-				<Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)[0].ErrorContent}" />
-			</Trigger>
-			<Trigger Property="HasError" Value="true">
-				<Setter Property="BorderThickness" Value="0" />
-				<Setter Property="Template">
-					<Setter.Value>
-						<ControlTemplate TargetType="controls:InfoTextBox">
-							<Grid>
-								<Border BorderBrush="DarkRed" x:Name="Bd" BorderThickness="1" CornerRadius="1" Padding="1" SnapsToDevicePixels="True">
-									<ScrollViewer x:Name="PART_ContentHost" />
-								</Border>
-								<Rectangle Fill="{StaticResource ErrorIcon}" Width="18" HorizontalAlignment="Right" Margin="0,0,4,0" />
-							</Grid>
-						</ControlTemplate>
-					</Setter.Value>
-				</Setter>
-			</Trigger>
-		</Style.Triggers>
-	</Style>
+    <Style TargetType="controls:InfoTextBox">
+        <Setter Property="FontSize" Value="14" />
+        <Setter Property="NoteStyle" Value="{StaticResource shadowedLabelStyle}" />
+        <Setter Property="Validation.ErrorTemplate">
+            <Setter.Value>
+                <ControlTemplate>
+                    <!--<Grid>
+                        <AdornedElementPlaceholder x:Name="PART_ContentHost" />
+                        <Rectangle Fill="{StaticResource ErrorIcon}" Width="18" HorizontalAlignment="Right" Margin="0,0,4,0" />
+                    </Grid>-->
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+        <Style.Triggers>
+            <Trigger Property="Validation.HasError" Value="true">
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="controls:InfoTextBox">
+                            <Grid>
+                                <Border BorderBrush="DarkRed" x:Name="Bd" BorderThickness="1" CornerRadius="1" Padding="1" SnapsToDevicePixels="True">
+                                    <ScrollViewer x:Name="PART_ContentHost" />
+                                </Border>
+                                <Rectangle Fill="{StaticResource ErrorIcon}" Width="18" HorizontalAlignment="Right" Margin="0,0,4,0" />
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+                <Setter Property="ToolTip" Value="{Binding RelativeSource={x:Static RelativeSource.Self}, Path=(Validation.Errors)[0].ErrorContent}" />
+            </Trigger>
+            <Trigger Property="HasError" Value="true">
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="controls:InfoTextBox">
+                            <Grid>
+                                <Border BorderBrush="DarkRed" x:Name="Bd" BorderThickness="1" CornerRadius="1" Padding="1" SnapsToDevicePixels="True">
+                                    <ScrollViewer x:Name="PART_ContentHost" />
+                                </Border>
+                                <Rectangle Fill="{StaticResource ErrorIcon}" Width="18" HorizontalAlignment="Right" Margin="0,0,4,0" />
+                            </Grid>
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Trigger>
+        </Style.Triggers>
+    </Style>
 </ResourceDictionary>

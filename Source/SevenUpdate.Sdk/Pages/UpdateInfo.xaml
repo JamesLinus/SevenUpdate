@@ -64,44 +64,44 @@
 
 		<TextBlock Text="{LocText SevenUpdate.Sdk:Resources:UpdateName}" Padding="2" HorizontalAlignment="Left" ToolTip="{LocText SevenUpdate.Sdk:Resources:UpdateNameToolTip}" Margin="0,10,0,0" Grid.Column="1" Grid.Row="1" />
 
-		<InfoTextBox Text="{Binding Path=Name, Converter={StaticResource stringToLocaleString}, Mode=OneWay}" MaxLength="100" Note="{LocText SevenUpdate.Sdk:Resources:UpdateNameNote}" TabIndex="0" Name="tbxUpdateName" Grid.Column="1" Grid.Row="2" LostFocus="ChangeName" TextChanged="ValidateTextBox" />
+		<InfoTextBox Text="{Binding Path=Name, Converter={StaticResource stringToLocaleString}, Mode=OneWay}" MaxLength="100" Note="{LocText SevenUpdate.Sdk:Resources:UpdateNameNote}" TabIndex="0" Name="tbxUpdateName" Grid.Column="1" Grid.Row="2" LostFocus="ChangeName" TextChanged="ValidateInputRequired" />
 
 		<TextBlock Text="{LocText SevenUpdate.Sdk:Resources:UpdateDetails}" Padding="2" Grid.Column="1" Grid.Row="3" Margin="0,10,0,0" HorizontalAlignment="Left" />
 
-		<InfoTextBox Text="{Binding Path=Description, Converter={StaticResource stringToLocaleString}, Mode=OneWay}" MaxLength="300" TextWrapping="Wrap" MaxLines="7" Note="{LocText SevenUpdate.Sdk:Resources:UpdateDetailsNote}" TabIndex="1" Name="tbxUpdateDetails" Grid.Column="1" Grid.Row="4" LostFocus="ChangeDescription" TextChanged="ValidateTextBox" />
+		<InfoTextBox Text="{Binding Path=Description, Converter={StaticResource stringToLocaleString}, Mode=OneWay}" MaxLength="300" TextWrapping="Wrap" MaxLines="7" Note="{LocText SevenUpdate.Sdk:Resources:UpdateDetailsNote}" TabIndex="1" Name="tbxUpdateDetails" Grid.Column="1" Grid.Row="4" LostFocus="ChangeDescription" TextChanged="ValidateInputRequired" />
 
 		<TextBlock Text="{LocText SevenUpdate.Sdk:Resources:UpdateInformationURL}" Padding="2" HorizontalAlignment="Left" ToolTip="{LocText SevenUpdate.Sdk:Resources:UpdateInformationURLToolTip}" Grid.Column="1" Grid.Row="5" Margin="0,10,0,0" />
 
-		<InfoTextBox Note="{LocText SevenUpdate.Sdk:Resources:UpdateDetailsUrlNote}" TabIndex="2" Grid.Column="1" Grid.Row="6">
+		<InfoTextBox Note="{LocText SevenUpdate.Sdk:Resources:UpdateDetailsUrlNote}" TabIndex="2" Grid.Column="1" Grid.Row="6" TextChanged="ValidateUrlInput" Name="tbxUpdateInfoUrl">
 			<InfoTextBox.Text>
 				<Binding Path="InfoUrl" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-					<Binding.ValidationRules>
+					<!--<Binding.ValidationRules>
 						<ValidationRules:UrlInputRule />
-					</Binding.ValidationRules>
+					</Binding.ValidationRules>-->
 				</Binding>
 			</InfoTextBox.Text>
 		</InfoTextBox>
 
 		<TextBlock Text="{LocText SevenUpdate.Sdk:Resources:SoftwareLicenseURL}" Padding="2" HorizontalAlignment="Left" ToolTip="{LocText SevenUpdate.Sdk:Resources:SoftwareLicenseURLToolTip}" Grid.Column="1" Grid.Row="7" Margin="0,10,0,0" />
 
-		<InfoTextBox Note="{LocText SevenUpdate.Sdk:Resources:LicenseUrlNote}" TabIndex="3" Grid.Column="1" Grid.Row="8">
+		<InfoTextBox Note="{LocText SevenUpdate.Sdk:Resources:LicenseUrlNote}" TabIndex="3" Grid.Column="1" Grid.Row="8" TextChanged="ValidateUrlInput" Name="tbxLicenseUrl">
 			<InfoTextBox.Text>
 				<Binding Path="LicenseUrl" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-					<Binding.ValidationRules>
+					<!--<Binding.ValidationRules>
 						<ValidationRules:UrlInputRule />
-					</Binding.ValidationRules>
+					</Binding.ValidationRules>-->
 				</Binding>
 			</InfoTextBox.Text>
 		</InfoTextBox>
 
 		<TextBlock Text="{LocText SevenUpdate.Sdk:Resources:SourceDownloadLocation}" Padding="2" HorizontalAlignment="Left" ToolTip="{LocText SevenUpdate.Sdk:Resources:SourceDownloadLocationToolTip}" Grid.Column="1" Grid.Row="9" Margin="0,10,0,0" />
 
-		<InfoTextBox Note="http://myapp.com/updates/testupdate1" TabIndex="4" Grid.Column="1" Grid.Row="10" Name="tbxSourceLocation">
+		<InfoTextBox Note="http://myapp.com/updates/testupdate1" TabIndex="4" Grid.Column="1" Grid.Row="10" Name="tbxSourceLocation" TextChanged="ValidateUrlInput">
 			<InfoTextBox.Text>
 				<Binding Path="DownloadUrl" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
-					<Binding.ValidationRules>
+					<!--<Binding.ValidationRules>
 						<ValidationRules:UrlInputRule IsRequired="True" />
-					</Binding.ValidationRules>
+					</Binding.ValidationRules>-->
 				</Binding>
 			</InfoTextBox.Text>
 		</InfoTextBox>

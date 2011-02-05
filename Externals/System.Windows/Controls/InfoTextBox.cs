@@ -27,13 +27,13 @@ namespace System.Windows.Controls
     using System.ComponentModel;
     using System.Windows.Documents;
 
-    /// <summary>A <see cref="TextBox"/> that included help text</summary>
+    /// <summary>A <see cref="TextBox"/> that includes help text and error indicators</summary>
     public sealed class InfoTextBox : TextBox
     {
         #region Constants and Fields
 
         /// <summary>The text to display when there is no text in the <see cref = "InfoTextBox" /></summary>
-        private static readonly DependencyProperty NoteProperty = DependencyProperty.Register("Note", typeof(string), typeof(InfoTextBox), new UIPropertyMetadata(string.Empty, LabelPropertyChanged));
+        private static readonly DependencyProperty NoteProperty = DependencyProperty.Register("Note", typeof(string), typeof(InfoTextBox), new UIPropertyMetadata(string.Empty, NotePropertyChanged));
 
         /// <summary>The style of the Note</summary>
         private static readonly DependencyProperty NoteStyleProperty = DependencyProperty.Register("NoteStyle", typeof(Style), typeof(InfoTextBox), new UIPropertyMetadata(null));
@@ -230,7 +230,7 @@ namespace System.Windows.Controls
         /// <summary>Updates the adorner when the label changes</summary>
         /// <param name="d">The dependency object</param>
         /// <param name="e">The <see cref="System.Windows.DependencyPropertyChangedEventArgs"/> instance containing the event data.</param>
-        private static void LabelPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        private static void NotePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var infoTextBox = d as InfoTextBox;
 

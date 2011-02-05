@@ -386,6 +386,15 @@ namespace SevenUpdate
             return localeStrings[0].Value;
         }
 
+        /// <summary>Gets whether the specified path is a valid absolute file path.</summary>
+        /// <param name="path">Any path. OK if null or empty.</param>
+        /// <returns>true if path is valid</returns>
+        public static bool IsValidPath(string path)
+        {
+            var r = new Regex(@"^(([a-zA-Z]\:)|(\\))(\\{1}|((\\{1})[^\\]([^/:*?<>""|]*))+)$");
+            return r.IsMatch(path);
+        }
+
         /// <summary>Converts the registry key</summary>
         /// <param name="registryKey">The registry key</param>
         /// <param name="is64Bit">if set to <see langword="true"/> the application is 64 bit</param>

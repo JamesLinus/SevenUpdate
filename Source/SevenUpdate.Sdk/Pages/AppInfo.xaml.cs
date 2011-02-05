@@ -33,6 +33,7 @@ namespace SevenUpdate.Sdk.Pages
     using System.Windows.Forms;
     using System.Windows.Input;
     using System.Windows.Media;
+    using System.Windows.ValidationRules;
 
     using SevenUpdate.Sdk.ValidationRules;
     using SevenUpdate.Sdk.Windows;
@@ -116,15 +117,11 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             }
 
-            this.tbxAppLocation.Text = null;
-            var rule = new AppDirectoryRule { IsRegistryPath = false };
-
-            // ReSharper disable PossibleNullReferenceException
-            this.tbxAppLocation.GetBindingExpression(TextBox.TextProperty).ParentBinding.ValidationRules.Clear();
-            this.tbxAppLocation.GetBindingExpression(TextBox.TextProperty).ParentBinding.ValidationRules.Add(rule);
-
-            // ReSharper restore PossibleNullReferenceException
+            this.tbxAppLocation.Note = @"%PROGRAMFILES%\My Company\My App";
             Core.AppInfo.ValueName = null;
+
+            var rule = new AppDirectoryRule { IsRegistryPath = false };
+            this.tbxAppLocation.HasError = !rule.Validate(tbxAppLocation.Text, null).IsValid;
         }
 
         /// <summary>Changes the UI to show the registry application location</summary>
@@ -137,14 +134,11 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             }
 
-            this.tbxAppLocation.Text = null;
+            Core.AppInfo.Directory = null;
+            this.tbxAppLocation.Note = @"HKLM\Software\MyCompany\MyApp";
+
             var rule = new AppDirectoryRule { IsRegistryPath = true };
-
-            // ReSharper disable PossibleNullReferenceException
-            this.tbxAppLocation.GetBindingExpression(TextBox.TextProperty).ParentBinding.ValidationRules.Clear();
-            this.tbxAppLocation.GetBindingExpression(TextBox.TextProperty).ParentBinding.ValidationRules.Add(rule);
-
-            // ReSharper restore PossibleNullReferenceException
+            this.tbxAppLocation.HasError = !rule.Validate(tbxAppLocation.Text, null).IsValid;
         }
 
         /// <summary>Converts the application location path to system variables</summary>
@@ -209,14 +203,20 @@ namespace SevenUpdate.Sdk.Pages
                 this.tbxPublisher.ToolTip = null;
             }
 
-            // ReSharper disable PossibleNullReferenceException
-            this.tbxAppLocation.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-            this.tbxValueName.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-            this.tbxAppUrl.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-            this.tbxHelpUrl.GetBindingExpression(TextBox.TextProperty).UpdateSource();
-            this.tbxSuiUrl.GetBindingExpression(TextBox.TextProperty).UpdateSource();
+            var urlRule = new UrlInputRule { IsRequired = true };
 
-            // ReSharper restore PossibleNullReferenceException
+            this.tbxValueName.HasError = !new RequiredInputRule().Validate(this.tbxValueName.Text, null).IsValid;
+            this.tbxAppLocation.HasError = !new AppDirectoryRule { IsRegistryPath = this.rbtnRegistry.IsChecked.GetValueOrDefault() } .Validate(tbxAppLocation.Text, null).IsValid;
+            this.tbxSuiUrl.HasError = !new SuiLocationRule().Validate(this.tbxSuiUrl.Text, null).IsValid;
+            this.tbxAppUrl.HasError = !urlRule.Validate(this.tbxAppUrl.Text, null).IsValid;
+            this.tbxHelpUrl.HasError = !urlRule.Validate(this.tbxHelpUrl.Text, null).IsValid;
+
+            this.tbxValueName.ToolTip = this.tbxValueName.HasError ? Properties.Resources.InputRequired : null;
+            this.tbxAppLocation.ToolTip = this.tbxAppLocation.HasError ? Properties.Resources.UrlSui : null;
+            this.tbxSuiUrl.ToolTip = this.tbxSuiUrl.HasError ? Properties.Resources.FilePathInvalid : null;
+            this.tbxAppUrl.ToolTip = this.tbxAppUrl.HasError ? Properties.Resources.UrlNotValid : null;
+            this.tbxHelpUrl.ToolTip = this.tbxHelpUrl.HasError ? Properties.Resources.UrlNotValid : null;
+
             // Load Values
             foreach (var t in Core.AppInfo.Name.Where(t => t.Lang == Utilities.Locale))
             {
@@ -419,7 +419,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <summary>Validates the textbox content.</summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The data for the event</param>
-        private void ValidateTextBox(object sender, TextChangedEventArgs e)
+        private void ValidateRequiredInput(object sender, TextChangedEventArgs e)
         {
             var textBox = (InfoTextBox)sender;
 
@@ -436,5 +436,55 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         #endregion
+
+        /// <summary>Validates the textbox against the AppDirectory Validation Rule</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The data for the event.</param>
+        private void ValidateAppDirectory(object sender, TextChangedEventArgs e)
+        {
+            var textBox = sender as InfoTextBox;
+
+            if (textBox == null)
+            {
+                return;
+            }
+
+            var rule = new AppDirectoryRule { IsRegistryPath = this.rbtnRegistry.IsChecked.GetValueOrDefault() };
+
+            textBox.HasError = !rule.Validate(textBox.Text, null).IsValid;
+            textBox.ToolTip = textBox.HasError ? Properties.Resources.FilePathInvalid : null;
+        }
+
+        /// <summary>Validates the textbox against the AppDirectory Validation Rule</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The data for the event.</param>
+        private void ValidateUrlInput(object sender, TextChangedEventArgs e)
+        {
+            var textBox = sender as InfoTextBox;
+
+            if (textBox == null)
+            {
+                return;
+            }
+
+            textBox.HasError = !new UrlInputRule { IsRequired = true } .Validate(textBox.Text, null).IsValid;
+            textBox.ToolTip = textBox.HasError ? Properties.Resources.UrlNotValid : null;
+        }
+
+        /// <summary>Validates the textbox against the Sui Validation Rule</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The data for the event.</param>
+        private void ValidateSuiLocation(object sender, TextChangedEventArgs e)
+        {
+            var textBox = sender as InfoTextBox;
+
+            if (textBox == null)
+            {
+                return;
+            }
+
+            textBox.HasError = !new SuiLocationRule().Validate(textBox.Text, null).IsValid;
+            textBox.ToolTip = textBox.HasError ? Properties.Resources.UrlSui : null;
+        }
     }
 }

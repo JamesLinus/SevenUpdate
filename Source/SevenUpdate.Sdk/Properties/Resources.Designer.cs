@@ -1600,7 +1600,7 @@ namespace SevenUpdate.Sdk.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The url that leads to the SUI file where Seven Update will download and read to determine if your software has updates.
+        ///   Looks up a localized string similar to The url that leads to the SUI file where Seven Update will download and read to determine if your software has updates..
         /// </summary>
         public static string UpdateFileLocationToolTip {
             get {

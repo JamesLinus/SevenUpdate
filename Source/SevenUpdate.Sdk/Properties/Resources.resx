@@ -358,7 +358,7 @@
     <comment>TextBlock.Text</comment>
   </data>
   <data name="UpdateFileLocationToolTip" xml:space="preserve">
-    <value>The url that leads to the SUI file where Seven Update will download and read to determine if your software has updates</value>
+    <value>The url that leads to the SUI file where Seven Update will download and read to determine if your software has updates.</value>
     <comment>TextBlock.ToolTip</comment>
   </data>
   <data name="ApplicationDescription" xml:space="preserve">

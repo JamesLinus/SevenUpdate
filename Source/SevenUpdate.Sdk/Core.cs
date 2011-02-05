@@ -124,11 +124,6 @@ namespace SevenUpdate.Sdk
             {
                 return mainPage ?? (mainPage = new Main());
             }
-
-            private set
-            {
-                mainPage = value;
-            }
         }
 
         /// <summary>Gets the UpdateFiles page</summary>
@@ -210,8 +205,12 @@ namespace SevenUpdate.Sdk
         internal static void SaveProject(bool export = false)
         {
             var appUpdates = new Collection<Update>();
-
             var appName = Utilities.GetLocaleString(AppInfo.Name);
+
+            if (Projects == null)
+            {
+                Projects = new Collection<Project>();
+            }
 
             if (AppInfo.Is64Bit)
             {
@@ -226,8 +225,8 @@ namespace SevenUpdate.Sdk
 
             var updateNames = new ObservableCollection<string>();
 
-            var suiFileName = Projects[AppIndex].ExportedSuiFileName;
-            var suaFileName = Projects[AppIndex].ExportedSuaFileName;
+            var suiFileName = appName;
+            var suaFileName = appName;
 
             // If SUA exists lets remove the old info
             if (AppIndex > -1)
@@ -236,6 +235,9 @@ namespace SevenUpdate.Sdk
                 {
                     appUpdates = Utilities.Deserialize<Collection<Update>>(Path.Combine(App.UserStore, Projects[AppIndex].ApplicationName + ".sui"));
                 }
+
+                suiFileName = Projects[AppIndex].ExportedSuiFileName;
+                suaFileName = Projects[AppIndex].ExportedSuaFileName;
 
                 updateNames = Projects[AppIndex].UpdateNames;
                 Projects.RemoveAt(AppIndex);
@@ -372,6 +374,7 @@ namespace SevenUpdate.Sdk
         /// <summary>Creates a new update for the selected project</summary>
         internal static void NewUpdate()
         {
+            ResetPages();
             IsNewProject = false;
             AppInfo = Utilities.Deserialize<Sua>(Path.Combine(App.UserStore, Projects[AppIndex].ApplicationName + ".sua"));
             UpdateInfo = new Update();
