@@ -184,7 +184,7 @@ namespace System.Windows
             // Extend the Frame into client area
             if (NativeMethods.DwmExtendFrameIntoClientArea(handle, ref margins) != 0)
             {
-                throw new InvalidOperationException();
+                // throw new InvalidOperationException();
             }
         }
 
@@ -208,7 +208,7 @@ namespace System.Windows
 
             if (NativeMethods.DwmExtendFrameIntoClientArea(windowHandle, ref margins) != 0)
             {
-                throw new InvalidOperationException();
+                // throw new InvalidOperationException();
             }
         }
 
