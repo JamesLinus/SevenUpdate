@@ -1,5 +1,5 @@
 !define PRODUCT_NAME "Seven Update SDK"
-!define PRODUCT_VERSION "1.2.0.3"
+!define PRODUCT_VERSION "1.2.1.2"
 !define PRODUCT_PUBLISHER "Seven Software"
 !define PRODUCT_WEB_SITE "http://sevenupdate.com"
 !define PRODUCT_DIR_REGKEY "Software\Microsoft\Windows\CurrentVersion\App Paths\SevenUpdate.Sdk.exe"
@@ -134,21 +134,6 @@ FunctionEnd
   System::Call 'shell32.dll::SHChangeNotify(i, i, i, i) v (${SHCNE_ASSOCCHANGED}, ${SHCNF_IDLIST}, 0, 0)'
 FunctionEnd
 
-!macro DownloadFile SOURCE DEST 
-  DetailPrint "Downloading: ${SOURCE}"
-  inetc::get /TIMEOUT=30000 "${SOURCE}" "${DEST}" /END
-  Pop $0 ;Get the return value
-  StrCmp $0 "OK" +3
-  StrCmp $0 "cancelled" +6
-  inetc::get /TIMEOUT=30000 /NOPROXY "${SOURCE}" "${DEST}" /END
-  Pop $0
-  DetailPrint "Result: $0"
-  StrCmp $0 "OK" +3
-  MessageBox MB_OK "Download failed: $0"
-  Quit
-  
-!macroend
-
 !include "WordFunc.nsh"
 !insertmacro VersionCompare
  
@@ -158,7 +143,18 @@ FunctionEnd
   ${If} ${DOTNETVER_4_0} HasDotNetClientProfile 1
 		DetailPrint "Microsoft .NET Framework 4.0 (Client Profile) Installed."
   ${Else}
-		!insertmacro DownloadFile ${DOTNET_URL} "$TEMP\dotnetfx40.exe"
+		inetc::get /TIMEOUT=30000 ${DOTNET_URL} "$TEMP\dotnetfx40.exe" /END
+		Pop $0 ;Get the return value
+		StrCmp $0 "OK" +3
+		StrCmp $0 "cancelled" +6
+		inetc::get /TIMEOUT=30000 /NOPROXY ${DOTNET_URL} "$TEMP\dotnetfx40.exe" /END
+		Pop $0
+		DetailPrint "Result: $0"
+		StrCmp $0 "OK" +4
+		MessageBox MB_OK "Download failed: $0"
+		RMDir /r /REBOOTOK $INSTDIR
+		Quit
+  
 		DetailPrint "Pausing installation while downloaded .NET Framework installer runs."
 		ExecWait '$TEMP\dotnetfx40.exe /q /norestart /c:"install /q"'
 		DetailPrint "Completed .NET Framework install/update. Removing .NET Framework installer."
@@ -183,12 +179,27 @@ Section "Main Section" SEC01
   RMDir /r $INSTDIR
   
   DetailPrint "Downloading $(^Name)..."
-  !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdateSDK/SevenUpdate.Sdk.exe" "$INSTDIR\SevenUpdate.Sdk.exe"
-  !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdateSDK/SevenUpdate.Sdk.exe.config" "$INSTDIR\SevenUpdate.Sdk.exe.config"
-  !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdateSDK/SevenUpdate.Base.dll" "$INSTDIR\SevenUpdate.Base.dll"
-  !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdateSDK/System.Windows.dll" "$INSTDIR\System.Windows.dll"
-  !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdateSDK/protobuf-net.dll" "$INSTDIR\protobuf-net.dll"
-  !insertmacro DownloadFile "http://sevenupdate.com/apps/SevenUpdateSDK/WPFLocalizeExtension.dll" "$INSTDIR\WPFLocalizeExtension.dll"
+  inetc::get /TIMEOUT=30000 "http://sevenupdate.com/apps/SevenUpdateSDK/SevenUpdate.Sdk.exe" "$INSTDIR\SevenUpdate.Sdk.exe" \
+  "http://sevenupdate.com/apps/SevenUpdateSDK/SevenUpdate.Sdk.exe.config" "$INSTDIR\SevenUpdate.Sdk.exe.config" \
+  "http://sevenupdate.com/apps/SevenUpdateSDK/SevenUpdate.Base.dll" "$INSTDIR\SevenUpdate.Base.dll" \
+  "http://sevenupdate.com/apps/SevenUpdateSDK/System.Windows.dll" "$INSTDIR\System.Windows.dll" \
+  "http://sevenupdate.com/apps/SevenUpdateSDK/protobuf-net.dll" "$INSTDIR\protobuf-net.dll" \
+  "http://sevenupdate.com/apps/SevenUpdateSDK/WPFLocalizeExtension.dll" "$INSTDIR\WPFLocalizeExtension.dll" /END
+  Pop $0 ;Get the return value
+  StrCmp $0 "OK" +8
+  StrCmp $0 "cancelled" +11
+  inetc::get /TIMEOUT=30000 /NOPROXY "http://sevenupdate.com/apps/SevenUpdateSDK/SevenUpdate.Sdk.exe" "$INSTDIR\SevenUpdate.Sdk.exe" \
+  "http://sevenupdate.com/apps/SevenUpdateSDK/SevenUpdate.Sdk.exe.config" "$INSTDIR\SevenUpdate.Sdk.exe.config" \
+  "http://sevenupdate.com/apps/SevenUpdateSDK/SevenUpdate.Base.dll" "$INSTDIR\SevenUpdate.Base.dll" \
+  "http://sevenupdate.com/apps/SevenUpdateSDK/System.Windows.dll" "$INSTDIR\System.Windows.dll" \
+  "http://sevenupdate.com/apps/SevenUpdateSDK/protobuf-net.dll" "$INSTDIR\protobuf-net.dll" \
+  "http://sevenupdate.com/apps/SevenUpdateSDK/WPFLocalizeExtension.dll" "$INSTDIR\WPFLocalizeExtension.dll" /END
+  Pop $0
+  DetailPrint "Result: $0"
+  StrCmp $0 "OK" +4
+  MessageBox MB_OK "Download failed: $0"
+  RMDir /r /REBOOTOK $INSTDIR
+  Quit
   
   DetailPrint "Creating shortcuts..."
   SetShellVarContext current

@@ -91,7 +91,7 @@ namespace System.Windows
 
             if (NativeMethods.DwmEnableBlurBehindWindow(windowHandle, ref blur) != 0)
             {
-                throw new InvalidOperationException();
+                // throw new InvalidOperationException();
             }
         }
 

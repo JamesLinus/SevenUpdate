@@ -270,7 +270,6 @@ namespace SevenUpdate
                 if (!(ex is CommunicationObjectAbortedException || ex is CommunicationObjectFaultedException || ex is ObjectDisposedException || ex is FaultException))
                 {
                     ErrorOccurred(null, new ErrorOccurredEventArgs(Utilities.GetExceptionAsString(ex), ErrorType.FatalError));
-                    throw;
                 }
             }
 

@@ -101,7 +101,6 @@ namespace SevenUpdate
                     if (!(ex is CommunicationObjectAbortedException || ex is CommunicationObjectFaultedException || ex is ObjectDisposedException))
                     {
                         Utilities.ReportError(ex, ErrorType.FatalError);
-                        throw;
                     }
                 }
             }
