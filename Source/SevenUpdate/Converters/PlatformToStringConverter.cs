@@ -1,5 +1,5 @@
 // ***********************************************************************
-// <copyright file="Is64BitToStringConverter.cs"
+// <copyright file="PlatformToStringConverter.cs"
 //            project="SevenUpdate"
 //            assembly="SevenUpdate"
 //            solution="SevenUpdate"
@@ -30,7 +30,7 @@ namespace SevenUpdate.Converters
 
     /// <summary>Converts a Boolean to a readable string</summary>
     [ValueConversion(typeof(bool), typeof(string))]
-    internal sealed class Is64BitToStringConverter : IValueConverter
+    internal sealed class PlatformToStringConverter : IValueConverter
     {
         #region Implemented Interfaces
 
@@ -44,10 +44,14 @@ namespace SevenUpdate.Converters
         /// <returns>the converted object</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            // If Is64Bit
-            if ((bool)value)
+            switch ((Platform)value)
             {
-                return "x64";
+                case Platform.AnyCPU:
+                    return "x86|x64";
+                case Platform.x86:
+                    return "x86";
+                case Platform.x64:
+                    return "x64";
             }
 
             return "x86";
