@@ -58,7 +58,7 @@ namespace SevenUpdate.Sdk.ValidationRules
 
             if (Regex.IsMatch(input, RegistryPattern, RegexOptions.IgnoreCase))
             {
-                if (Utilities.CheckRegistryKey(input, Core.AppInfo.Is64Bit))
+                if (Utilities.CheckRegistryKey(input, Core.AppInfo.Platform))
                 {
                     return new ValidationResult(true, null);
                 }

@@ -43,7 +43,7 @@ namespace SevenUpdate
         [ProtoEnum, EnumMember]
         x86 = 0,
 
-        /// <summary>Indicates that the application can only run on 64 bit platforms/summary>
+        /// <summary>Indicates that the application can only run on 64 bit platforms</summary>
         [ProtoEnum, EnumMember]
         x64 = 1,
     }
@@ -220,22 +220,22 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets a value indicating whether if the application is 64 bit</summary>
         /// <value><see langword = "true" /> if the application is 64 bit; otherwise, <see langword = "false" />.</value>
-        //[ProtoMember(4), DataMember, Obsolete]
-        //public bool Is64Bit
-        //{
-        //    get
-        //    {
-        //        return this.is64Bit;
-        //    }
+        [ProtoMember(4), DataMember, Obsolete]
+        public bool Is64Bit
+        {
+            get
+            {
+                return this.is64Bit;
+            }
 
-        //    set
-        //    {
-        //        this.is64Bit = value;
+            set
+            {
+                this.is64Bit = value;
 
-        //        // Call OnPropertyChanged whenever the property is updated
-        //        this.OnPropertyChanged("Is64Bit");
-        //    }
-        //}
+                // Call OnPropertyChanged whenever the property is updated
+                this.OnPropertyChanged("Is64Bit");
+            }
+        }
 
         /// <summary>Gets or sets a value indicating whether the SUA is enabled with Seven Update (SDK does not use this value)</summary>
         /// <value><see langword = "true" /> if this instance is enabled; otherwise, <see langword = "false" />.</value>

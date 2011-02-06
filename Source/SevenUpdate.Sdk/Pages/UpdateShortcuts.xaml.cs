@@ -81,17 +81,17 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             }
 
-            var fileLocation = Utilities.ConvertPath(source.Text, true, Core.AppInfo.Is64Bit);
+            var fileLocation = Utilities.ConvertPath(source.Text, true, Core.AppInfo.Platform);
             var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
-                                       ? Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
+                                       ? Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Platform)
                                        : Core.AppInfo.Directory;
 
-            installDirectory = Utilities.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
+            installDirectory = Utilities.ConvertPath(installDirectory, true, Core.AppInfo.Platform);
 
             var installUrl = fileLocation.Replace(installDirectory, @"%INSTALLDIR%\", true);
             installUrl = installUrl.Replace(@"\\", @"\");
 
-            source.Text = Utilities.ConvertPath(installUrl, false, Core.AppInfo.Is64Bit);
+            source.Text = Utilities.ConvertPath(installUrl, false, Core.AppInfo.Platform);
         }
 
         /// <summary>Deletes the selected UpdateShortcut from the collection</summary>
@@ -153,10 +153,10 @@ namespace SevenUpdate.Sdk.Pages
 
             var importedShortcut = Shortcut.GetShortcutData(file[0]);
 
-            var path = Utilities.ConvertPath(Path.GetDirectoryName(importedShortcut.Location), false, Core.AppInfo.Is64Bit);
+            var path = Utilities.ConvertPath(Path.GetDirectoryName(importedShortcut.Location), false, Core.AppInfo.Platform);
             path = path.Replace(Core.AppInfo.Directory, "%INSTALLDIR%");
 
-            var icon = Utilities.ConvertPath(importedShortcut.Icon, false, Core.AppInfo.Is64Bit);
+            var icon = Utilities.ConvertPath(importedShortcut.Icon, false, Core.AppInfo.Platform);
             icon = icon.Replace(Core.AppInfo.Directory, "%INSTALLDIR%");
             var shortcut = new Shortcut
                 {
@@ -164,7 +164,7 @@ namespace SevenUpdate.Sdk.Pages
                     Icon = icon,
                     Location = path,
                     Action = ShortcutAction.Update,
-                    Target = Utilities.ConvertPath(importedShortcut.Target, false, Core.AppInfo.Is64Bit),
+                    Target = Utilities.ConvertPath(importedShortcut.Target, false, Core.AppInfo.Platform),
                 };
 
             shortcut.Name.Add(new LocaleString(Path.GetFileNameWithoutExtension(file[0]), Utilities.Locale));
@@ -222,10 +222,10 @@ namespace SevenUpdate.Sdk.Pages
         private void LocateIcon(object sender, MouseButtonEventArgs e)
         {
             var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
-                                       ? Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
+                                       ? Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Platform)
                                        : Core.AppInfo.Directory;
 
-            installDirectory = Utilities.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
+            installDirectory = Utilities.ConvertPath(installDirectory, true, Core.AppInfo.Platform);
 
             var shortcut = Core.OpenFileDialog(installDirectory);
 
@@ -245,10 +245,10 @@ namespace SevenUpdate.Sdk.Pages
         private void LocateShortcutLocation(object sender, MouseButtonEventArgs e)
         {
             var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
-                                       ? Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
+                                       ? Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Platform)
                                        : Core.AppInfo.Directory;
 
-            installDirectory = Utilities.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
+            installDirectory = Utilities.ConvertPath(installDirectory, true, Core.AppInfo.Platform);
             var shortcut = Core.OpenFileDialog(installDirectory, null, false, "lnk", true);
 
             if (shortcut == null)
@@ -269,10 +269,10 @@ namespace SevenUpdate.Sdk.Pages
         private void LocateShortcutTarget(object sender, MouseButtonEventArgs e)
         {
             var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
-                                       ? Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Is64Bit)
+                                       ? Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Platform)
                                        : Core.AppInfo.Directory;
 
-            installDirectory = Utilities.ConvertPath(installDirectory, true, Core.AppInfo.Is64Bit);
+            installDirectory = Utilities.ConvertPath(installDirectory, true, Core.AppInfo.Platform);
             var files = Core.OpenFileDialog(installDirectory);
             var fileUrl = files[0].Replace(installDirectory, @"%INSTALLDIR%\", true);
             fileUrl = fileUrl.Replace(@"\\", @"\");

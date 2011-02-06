@@ -212,7 +212,7 @@ namespace SevenUpdate.Sdk
                 Projects = new Collection<Project>();
             }
 
-            if (AppInfo.Is64Bit)
+            if (AppInfo.Platform == Platform.AnyCPU)
             {
                 if (!appName.Contains("x64") && !appName.Contains("X64"))
                 {

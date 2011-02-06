@@ -102,7 +102,7 @@ namespace SevenUpdate.Sdk.Pages
             {
                 if (folderBrowserDialog.ShowDialog(Application.Current.MainWindow.GetIWin32Window()) == DialogResult.OK)
                 {
-                    this.tbxAppLocation.Text = Utilities.ConvertPath(folderBrowserDialog.SelectedPath, false, Core.AppInfo.Is64Bit);
+                    this.tbxAppLocation.Text = Utilities.ConvertPath(folderBrowserDialog.SelectedPath, false, Core.AppInfo.Platform);
                 }
             }
         }
@@ -148,7 +148,7 @@ namespace SevenUpdate.Sdk.Pages
         {
             if (this.rbtnFileSystem.IsChecked.GetValueOrDefault())
             {
-                this.tbxAppLocation.Text = Utilities.ConvertPath(this.tbxAppLocation.Text, false, Core.AppInfo.Is64Bit);
+                this.tbxAppLocation.Text = Utilities.ConvertPath(this.tbxAppLocation.Text, false, Core.AppInfo.Platform);
             }
         }
 
@@ -233,7 +233,7 @@ namespace SevenUpdate.Sdk.Pages
                 this.tbxPublisher.Text = t.Value;
             }
 
-            platform = Core.AppInfo.Is64Bit;
+            platform = Core.AppInfo.Platform;
         }
 
         /// <summary>Loads the <see cref="LocaleString"/>'s for the <see cref="Sua"/> into the UI</summary>
@@ -321,7 +321,7 @@ namespace SevenUpdate.Sdk.Pages
                 {
                     var appName = Utilities.GetLocaleString(Core.AppInfo.Name);
                     File.Delete(Path.Combine(App.UserStore, appName + ".sua"));
-                    if (Core.AppInfo.Is64Bit)
+                    if (Core.AppInfo.Platform == Platform.x64)
                     {
                         if (!appName.Contains("x64") && !appName.Contains("X64"))
                         {

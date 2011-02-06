@@ -162,23 +162,24 @@ FunctionEnd
 !insertmacro VersionCompare
 
 !macro DownloadDotNet DotNetReqVer
-!define DOTNET_URL "http://download.microsoft.com/download/5/6/2/562A10F9-C9F4-4313-A044-9C94E0A8FAC8/dotNetFx40_Client_x86_x64.exe"
+  !define DOTNET_URL "http://download.microsoft.com/download/5/6/2/562A10F9-C9F4-4313-A044-9C94E0A8FAC8/dotNetFx40_Client_x86_x64.exe"
   DetailPrint "Checking your .NET Framework version..."
   ${If} ${DOTNETVER_4_0} HasDotNetClientProfile 1
 		DetailPrint "Microsoft .NET Framework 4.0 (Client Profile) Installed."
   ${Else}
 		inetc::get /TIMEOUT=30000 ${DOTNET_URL} "$TEMP\dotnetfx40.exe" /END
 		Pop $0 ;Get the return value
-		StrCmp $0 "OK" +3
-		StrCmp $0 "cancelled" +6
+		StrCmp $0 "OK" netinstall
+		StrCmp $0 "cancelled" abort
 		inetc::get /TIMEOUT=30000 /NOPROXY ${DOTNET_URL} "$TEMP\dotnetfx40.exe" /END
 		Pop $0
 		DetailPrint "Result: $0"
-		StrCmp $0 "OK" +4
+		StrCmp $0 "OK" netinstall
 		MessageBox MB_OK "Download failed: $0"
+		abort:
 		RMDir /r /REBOOTOK $INSTDIR
 		Quit
-  
+		netinstall:
 		DetailPrint "Pausing installation while downloaded .NET Framework installer runs."
 		ExecWait '$TEMP\dotnetfx40.exe /q /norestart /c:"install /q"'
 		DetailPrint "Completed .NET Framework install/update. Removing .NET Framework installer."
@@ -187,24 +188,7 @@ FunctionEnd
   ${EndIf}
 !macroend
 
-Section "Main Section" SEC01
-  MessageBox MB_YESNO|MB_ICONSTOP "You are about to install the Development Channel of Seven Update. It may contain bugs, crash, or do worse. This is intended for bug testers and developers who want to check out any new features and test any changes. By installing this dev channel, you agree to not hold Seven Software, Robert Baker, or any of it's developers or partners responsible for data corruption, data loss, or other failures resulting in installing this software. Are you sure you would like to install the dev channel?" IDYES +2
-  Quit
-  
-  ${If} ${RunningX64}
-	SetRegView 64
-  ${EndIf}
-  SetOutPath $INSTDIR
-  SetShellVarContext all
-  SetOverwrite on
-  SectionIn RO
-  Call ConnectInternet
-  !insertmacro DownloadDotNet "4.0"
-  Call CloseSevenUpdate
-  
-  DetailPrint "Removing old installation files"
-  RMDir /r $INSTDIR
-  
+Function DownloadApp
   DetailPrint "Downloading $(^Name)..."
   inetc::get /TIMEOUT=30000 "http://sevenupdate.com/apps/SevenUpdate-dev/SevenUpdate.exe" "$INSTDIR\SevenUpdate.exe" \
   "http://sevenupdate.com/apps/SevenUpdate-dev/SevenUpdate.exe.config" "$INSTDIR\SevenUpdate.exe.config" \
@@ -217,8 +201,8 @@ Section "Main Section" SEC01
   "http://sevenupdate.com/apps/SevenUpdate-dev/protobuf-net.dll" "$INSTDIR\protobuf-net.dll" \
   "http://sevenupdate.com/apps/SevenUpdate-dev/WPFLocalizeExtension.dll" "$INSTDIR\WPFLocalizeExtension.dll" /END
   Pop $0 ;Get the return value
-  StrCmp $0 "OK" +12
-  StrCmp $0 "cancelled" +16
+  StrCmp $0 "OK" install
+  StrCmp $0 "cancelled" abort
   inetc::get /TIMEOUT=30000 /NOPROXY "http://sevenupdate.com/apps/SevenUpdate-dev/SevenUpdate.exe" "$INSTDIR\SevenUpdate.exe" \
   "http://sevenupdate.com/apps/SevenUpdate-dev/SevenUpdate.exe.config" "$INSTDIR\SevenUpdate.exe.config" \
   "http://sevenupdate.com/apps/SevenUpdate-dev/SevenUpdate.Admin.exe" "$INSTDIR\SevenUpdate.Admin.exe" \
@@ -231,36 +215,61 @@ Section "Main Section" SEC01
   "http://sevenupdate.com/apps/SevenUpdate-dev/WPFLocalizeExtension.dll" "$INSTDIR\WPFLocalizeExtension.dll" /END
   Pop $0
   DetailPrint "Result: $0"
-  StrCmp $0 "OK" +4
+  StrCmp $0 "OK" install
   MessageBox MB_OK "Download failed: $0"
+  abort:
   RMDir /r /REBOOTOK $INSTDIR
   Quit
+  install:
+FunctionEnd
 
-	  
+Function InstallService
   ${If} ${AtMostWinXP}
 	  WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Run" 'Seven Update Automatic Checking' '$INSTDIR\SevenUpdate.Helper.exe' 
   ${Else}
   	DetailPrint "Installing $(^Name) service..."
   
-    inetc::get /TIMEOUT=30000 "http://sevenupdate.com/apps/SevenUpdate-dev/SevenUpdate.xml" "$TEMP\SevenUpdate.xml" \
-    "http://sevenupdate.com/apps/SevenUpdate-dev/SevenUpdate.Admin.xml" "$TEMP\SevenUpdate.Admin.xml" /END
+    inetc::get /TIMEOUT=30000 "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.xml" "$TEMP\SevenUpdate.xml" \
+    "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Admin.xml" "$TEMP\SevenUpdate.Admin.xml" /END
 	Pop $0 ;Get the return value
-	StrCmp $0 "OK" +4
-	StrCmp $0 "cancelled" +7
-	inetc::get /TIMEOUT=30000 /NOPROXY"http://sevenupdate.com/apps/SevenUpdate-dev/SevenUpdate.xml" "$TEMP\SevenUpdate.xml" \
-	"http://sevenupdate.com/apps/SevenUpdate-dev/SevenUpdate.Admin.xml" "$TEMP\SevenUpdate.Admin.xml" /END
+	StrCmp $0 "OK" installservice
+	StrCmp $0 "cancelled" abort
+	inetc::get /TIMEOUT=30000 /NOPROXY"http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.xml" "$TEMP\SevenUpdate.xml" \
+	"http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Admin.xml" "$TEMP\SevenUpdate.Admin.xml" /END
 	Pop $0
 	DetailPrint "Result: $0"
-	StrCmp $0 "OK" +4
+	StrCmp $0 "OK" installservice
 	MessageBox MB_OK "Download failed: $0"
+	abort:
 	RMDir /r /REBOOTOK $INSTDIR
 	Quit
+	installservice:
   
 	  nsExec::Exec '"$SYSDIR\schtasks.exe" /delete /TN "SevenUpdate" /F"'
 	  nsExec::Exec '"$SYSDIR\schtasks.exe" /delete /TN "SevenUpdate.Admin" /F"'
 	  nsExec::Exec '"$SYSDIR\schtasks.exe" /create /XML "$TEMP\SevenUpdate.xml" /TN "SevenUpdate"'
 	  nsExec::Exec '"$SYSDIR\schtasks.exe" /create /XML "$TEMP\SevenUpdate.Admin.xml" /TN "SevenUpdate.Admin"'
   ${EndIf}
+FunctionEnd
+
+Section "Main Section" SEC01
+  ${If} ${RunningX64}
+	SetRegView 64
+  ${EndIf}
+  SetOutPath $INSTDIR
+  SetShellVarContext all
+  SetOverwrite on
+  SectionIn RO
+  
+  Call ConnectInternet
+  !insertmacro DownloadDotNet "4.0"
+  Call CloseSevenUpdate
+  
+  DetailPrint "Removing old installation files"
+  RMDir /r $INSTDIR
+  
+  Call DownloadApp
+  Call InstallService
   
   Delete "$APPDATA\Seven Software\Seven Update\updates.sui"
   

@@ -60,9 +60,9 @@ namespace SevenUpdate.CustomComparer
                         valueX = Utilities.GetLocaleString(first.Publisher);
                         valueY = Utilities.GetLocaleString(second.Publisher);
                         break;
-                    case "Is64Bit":
-                        valueX = first.Is64Bit.ToString(CultureInfo.CurrentCulture);
-                        valueY = second.Is64Bit.ToString(CultureInfo.CurrentCulture);
+                    case "Platform":
+                        valueX = first.Platform.ToString();
+                        valueY = second.Platform.ToString();
 
                         break;
                 }

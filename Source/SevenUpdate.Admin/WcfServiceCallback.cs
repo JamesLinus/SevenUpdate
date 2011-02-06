@@ -54,7 +54,7 @@ namespace SevenUpdate.Admin
                 sul = new Collection<Sua>();
             }
 
-            if (sul.Any(t => t.Directory == application.Directory && t.Is64Bit == application.Is64Bit))
+            if (sul.Any(t => t.Directory == application.Directory && t.Platform == application.Platform))
             {
                 return;
             }

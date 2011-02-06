@@ -115,7 +115,7 @@
     </Compile>
     <Compile Include="Converters\DateConverter.cs" />
     <Compile Include="Converters\ImportanceToStringConverter.cs" />
-    <Compile Include="Converters\Is64BitToStringConverter.cs" />
+    <Compile Include="Converters\PlatformToStringConverter.cs" />
     <Compile Include="Converters\LocaleStringToStringConverter.cs" />
     <Compile Include="Converters\UpdateStatusToStringConverter.cs" />
     <Compile Include="Core.cs" />

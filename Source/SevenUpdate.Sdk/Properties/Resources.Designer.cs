@@ -736,24 +736,6 @@ namespace SevenUpdate.Sdk.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to 64-bit application.
-        /// </summary>
-        public static string Is64Bit {
-            get {
-                return ResourceManager.GetString("Is64Bit", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Check this box if your software is native x64..
-        /// </summary>
-        public static string Is64BitToolTip {
-            get {
-                return ResourceManager.GetString("Is64BitToolTip", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Japanese.
         /// </summary>
         public static string Japanese {
@@ -894,6 +876,24 @@ namespace SevenUpdate.Sdk.Properties {
         public static string PathDoesNotExist {
             get {
                 return ResourceManager.GetString("PathDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 64-bit application.
+        /// </summary>
+        public static string Platform {
+            get {
+                return ResourceManager.GetString("Platform", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Check this box if your software is native x64..
+        /// </summary>
+        public static string PlatformToolTip {
+            get {
+                return ResourceManager.GetString("PlatformToolTip", resourceCulture);
             }
         }
         

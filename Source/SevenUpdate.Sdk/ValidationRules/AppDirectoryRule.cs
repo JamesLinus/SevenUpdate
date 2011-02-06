@@ -68,13 +68,13 @@ namespace SevenUpdate.Sdk.ValidationRules
             if (this.IsRegistryPath)
             {
                 return Regex.IsMatch(input, RegistryPattern, RegexOptions.IgnoreCase)
-                           ? (Utilities.CheckRegistryKey(input, Core.AppInfo.Is64Bit) ? new ValidationResult(true, null) : new ValidationResult(false, Resources.PathDoesNotExist))
+                           ? (Utilities.CheckRegistryKey(input, Core.AppInfo.Platform) ? new ValidationResult(true, null) : new ValidationResult(false, Resources.PathDoesNotExist))
                            : new ValidationResult(false, Resources.PathDoesNotExist);
             }
 
             input = Core.AppInfo.Directory == null
-                        ? Utilities.ConvertPath(input, true, Core.AppInfo.Is64Bit)
-                        : Utilities.ConvertPath(input, Core.AppInfo.Directory, Core.AppInfo.Is64Bit, Core.AppInfo.ValueName);
+                        ? Utilities.ConvertPath(input, true, Core.AppInfo.Platform)
+                        : Utilities.ConvertPath(input, Core.AppInfo.Directory, Core.AppInfo.Platform, Core.AppInfo.ValueName);
             if (File.Exists(input) || Directory.Exists(input))
             {
                 return new ValidationResult(true, null);

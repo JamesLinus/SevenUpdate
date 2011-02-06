@@ -162,23 +162,24 @@ FunctionEnd
 !insertmacro VersionCompare
 
 !macro DownloadDotNet DotNetReqVer
-!define DOTNET_URL "http://download.microsoft.com/download/5/6/2/562A10F9-C9F4-4313-A044-9C94E0A8FAC8/dotNetFx40_Client_x86_x64.exe"
+  !define DOTNET_URL "http://download.microsoft.com/download/5/6/2/562A10F9-C9F4-4313-A044-9C94E0A8FAC8/dotNetFx40_Client_x86_x64.exe"
   DetailPrint "Checking your .NET Framework version..."
   ${If} ${DOTNETVER_4_0} HasDotNetClientProfile 1
 		DetailPrint "Microsoft .NET Framework 4.0 (Client Profile) Installed."
   ${Else}
 		inetc::get /TIMEOUT=30000 ${DOTNET_URL} "$TEMP\dotnetfx40.exe" /END
 		Pop $0 ;Get the return value
-		StrCmp $0 "OK" +3
-		StrCmp $0 "cancelled" +6
+		StrCmp $0 "OK" netinstall
+		StrCmp $0 "cancelled" abort
 		inetc::get /TIMEOUT=30000 /NOPROXY ${DOTNET_URL} "$TEMP\dotnetfx40.exe" /END
 		Pop $0
 		DetailPrint "Result: $0"
-		StrCmp $0 "OK" +4
+		StrCmp $0 "OK" netinstall
 		MessageBox MB_OK "Download failed: $0"
+		abort:
 		RMDir /r /REBOOTOK $INSTDIR
 		Quit
-  
+		netinstall:
 		DetailPrint "Pausing installation while downloaded .NET Framework installer runs."
 		ExecWait '$TEMP\dotnetfx40.exe /q /norestart /c:"install /q"'
 		DetailPrint "Completed .NET Framework install/update. Removing .NET Framework installer."
@@ -186,6 +187,70 @@ FunctionEnd
 		DetailPrint ".NET Framework installer removed."
   ${EndIf}
 !macroend
+
+Function DownloadApp
+  DetailPrint "Downloading $(^Name)..."
+  inetc::get /TIMEOUT=30000 "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.exe" "$INSTDIR\SevenUpdate.exe" \
+  "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.exe.config" "$INSTDIR\SevenUpdate.exe.config" \
+  "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Admin.exe" "$INSTDIR\SevenUpdate.Admin.exe" \
+  "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Helper.exe" "$INSTDIR\SevenUpdate.Helper.exe" \
+  "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Base.dll" "$INSTDIR\SevenUpdate.Base.dll" \
+  "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Service.dll" "$INSTDIR\SevenUpdate.Service.dll" \
+  "http://sevenupdate.com/apps/SevenUpdate/System.Windows.dll" "$INSTDIR\System.Windows.dll" \
+  "http://sevenupdate.com/apps/SevenUpdate/SharpBits.Base.dll" "$INSTDIR\SharpBits.Base.dll" \
+  "http://sevenupdate.com/apps/SevenUpdate/protobuf-net.dll" "$INSTDIR\protobuf-net.dll" \
+  "http://sevenupdate.com/apps/SevenUpdate/WPFLocalizeExtension.dll" "$INSTDIR\WPFLocalizeExtension.dll" /END
+  Pop $0 ;Get the return value
+  StrCmp $0 "OK" install
+  StrCmp $0 "cancelled" abort
+  inetc::get /TIMEOUT=30000 /NOPROXY "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.exe" "$INSTDIR\SevenUpdate.exe" \
+  "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.exe.config" "$INSTDIR\SevenUpdate.exe.config" \
+  "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Admin.exe" "$INSTDIR\SevenUpdate.Admin.exe" \
+  "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Helper.exe" "$INSTDIR\SevenUpdate.Helper.exe" \
+  "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Base.dll" "$INSTDIR\SevenUpdate.Base.dll" \
+  "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Service.dll" "$INSTDIR\SevenUpdate.Service.dll" \
+  "http://sevenupdate.com/apps/SevenUpdate/System.Windows.dll" "$INSTDIR\System.Windows.dll" \
+  "http://sevenupdate.com/apps/SevenUpdate/SharpBits.Base.dll" "$INSTDIR\SharpBits.Base.dll" \
+  "http://sevenupdate.com/apps/SevenUpdate/protobuf-net.dll" "$INSTDIR\protobuf-net.dll" \
+  "http://sevenupdate.com/apps/SevenUpdate/WPFLocalizeExtension.dll" "$INSTDIR\WPFLocalizeExtension.dll" /END
+  Pop $0
+  DetailPrint "Result: $0"
+  StrCmp $0 "OK" install
+  MessageBox MB_OK "Download failed: $0"
+  abort:
+  RMDir /r /REBOOTOK $INSTDIR
+  Quit
+  install:
+FunctionEnd
+
+Function InstallService
+  ${If} ${AtMostWinXP}
+	  WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Run" 'Seven Update Automatic Checking' '$INSTDIR\SevenUpdate.Helper.exe' 
+  ${Else}
+  	DetailPrint "Installing $(^Name) service..."
+  
+    inetc::get /TIMEOUT=30000 "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.xml" "$TEMP\SevenUpdate.xml" \
+    "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Admin.xml" "$TEMP\SevenUpdate.Admin.xml" /END
+	Pop $0 ;Get the return value
+	StrCmp $0 "OK" installservice
+	StrCmp $0 "cancelled" abort
+	inetc::get /TIMEOUT=30000 /NOPROXY"http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.xml" "$TEMP\SevenUpdate.xml" \
+	"http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Admin.xml" "$TEMP\SevenUpdate.Admin.xml" /END
+	Pop $0
+	DetailPrint "Result: $0"
+	StrCmp $0 "OK" installservice
+	MessageBox MB_OK "Download failed: $0"
+	abort:
+	RMDir /r /REBOOTOK $INSTDIR
+	Quit
+	installservice:
+  
+	  nsExec::Exec '"$SYSDIR\schtasks.exe" /delete /TN "SevenUpdate" /F"'
+	  nsExec::Exec '"$SYSDIR\schtasks.exe" /delete /TN "SevenUpdate.Admin" /F"'
+	  nsExec::Exec '"$SYSDIR\schtasks.exe" /create /XML "$TEMP\SevenUpdate.xml" /TN "SevenUpdate"'
+	  nsExec::Exec '"$SYSDIR\schtasks.exe" /create /XML "$TEMP\SevenUpdate.Admin.xml" /TN "SevenUpdate.Admin"'
+  ${EndIf}
+FunctionEnd
 
 Section "Main Section" SEC01
   ${If} ${RunningX64}
@@ -202,62 +267,8 @@ Section "Main Section" SEC01
   DetailPrint "Removing old installation files"
   RMDir /r $INSTDIR
   
-  DetailPrint "Downloading $(^Name)..."
-  inetc::get /TIMEOUT=30000 "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.exe" "$INSTDIR\SevenUpdate.exe" \
-  "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.exe.config" "$INSTDIR\SevenUpdate.exe.config" \
-  "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Admin.exe" "$INSTDIR\SevenUpdate.Admin.exe" \
-  "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Helper.exe" "$INSTDIR\SevenUpdate.Helper.exe" \
-  "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Base.dll" "$INSTDIR\SevenUpdate.Base.dll" \
-  "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Service.dll" "$INSTDIR\SevenUpdate.Service.dll" \
-  "http://sevenupdate.com/apps/SevenUpdate/System.Windows.dll" "$INSTDIR\System.Windows.dll" \
-  "http://sevenupdate.com/apps/SevenUpdate/SharpBits.Base.dll" "$INSTDIR\SharpBits.Base.dll" \
-  "http://sevenupdate.com/apps/SevenUpdate/protobuf-net.dll" "$INSTDIR\protobuf-net.dll" \
-  "http://sevenupdate.com/apps/SevenUpdate/WPFLocalizeExtension.dll" "$INSTDIR\WPFLocalizeExtension.dll" /END
-  Pop $0 ;Get the return value
-  StrCmp $0 "OK" +12
-  StrCmp $0 "cancelled" +16
-  inetc::get /TIMEOUT=30000 /NOPROXY "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.exe" "$INSTDIR\SevenUpdate.exe" \
-  "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.exe.config" "$INSTDIR\SevenUpdate.exe.config" \
-  "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Admin.exe" "$INSTDIR\SevenUpdate.Admin.exe" \
-  "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Helper.exe" "$INSTDIR\SevenUpdate.Helper.exe" \
-  "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Base.dll" "$INSTDIR\SevenUpdate.Base.dll" \
-  "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Service.dll" "$INSTDIR\SevenUpdate.Service.dll" \
-  "http://sevenupdate.com/apps/SevenUpdate/System.Windows.dll" "$INSTDIR\System.Windows.dll" \
-  "http://sevenupdate.com/apps/SevenUpdate/SharpBits.Base.dll" "$INSTDIR\SharpBits.Base.dll" \
-  "http://sevenupdate.com/apps/SevenUpdate/protobuf-net.dll" "$INSTDIR\protobuf-net.dll" \
-  "http://sevenupdate.com/apps/SevenUpdate/WPFLocalizeExtension.dll" "$INSTDIR\WPFLocalizeExtension.dll" /END
-  Pop $0
-  DetailPrint "Result: $0"
-  StrCmp $0 "OK" +4
-  MessageBox MB_OK "Download failed: $0"
-  RMDir /r /REBOOTOK $INSTDIR
-  Quit
-
-	  
-  ${If} ${AtMostWinXP}
-	  WriteRegStr HKLM "SOFTWARE\Microsoft\Windows\CurrentVersion\Run" 'Seven Update Automatic Checking' '$INSTDIR\SevenUpdate.Helper.exe' 
-  ${Else}
-  	DetailPrint "Installing $(^Name) service..."
-  
-    inetc::get /TIMEOUT=30000 "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.xml" "$TEMP\SevenUpdate.xml" \
-    "http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Admin.xml" "$TEMP\SevenUpdate.Admin.xml" /END
-	Pop $0 ;Get the return value
-	StrCmp $0 "OK" +4
-	StrCmp $0 "cancelled" +7
-	inetc::get /TIMEOUT=30000 /NOPROXY"http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.xml" "$TEMP\SevenUpdate.xml" \
-	"http://sevenupdate.com/apps/SevenUpdate/SevenUpdate.Admin.xml" "$TEMP\SevenUpdate.Admin.xml" /END
-	Pop $0
-	DetailPrint "Result: $0"
-	StrCmp $0 "OK" +4
-	MessageBox MB_OK "Download failed: $0"
-	RMDir /r /REBOOTOK $INSTDIR
-	Quit
-  
-	  nsExec::Exec '"$SYSDIR\schtasks.exe" /delete /TN "SevenUpdate" /F"'
-	  nsExec::Exec '"$SYSDIR\schtasks.exe" /delete /TN "SevenUpdate.Admin" /F"'
-	  nsExec::Exec '"$SYSDIR\schtasks.exe" /create /XML "$TEMP\SevenUpdate.xml" /TN "SevenUpdate"'
-	  nsExec::Exec '"$SYSDIR\schtasks.exe" /create /XML "$TEMP\SevenUpdate.Admin.xml" /TN "SevenUpdate.Admin"'
-  ${EndIf}
+  Call DownloadApp
+  Call InstallService
   
   Delete "$APPDATA\Seven Software\Seven Update\updates.sui"
   

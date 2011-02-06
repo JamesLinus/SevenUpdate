@@ -121,8 +121,8 @@ namespace SevenUpdate.Pages
                 for (var x = 0; x < machineAppList.Count; x++)
                 {
                     if (Directory.Exists(Utilities.IsRegistryKey(machineAppList[x].Directory)
-                                ? Utilities.GetRegistryValue(machineAppList[x].Directory, machineAppList[x].ValueName, machineAppList[x].Is64Bit)
-                                : Utilities.ConvertPath(machineAppList[x].Directory, true, machineAppList[x].Is64Bit)) && machineAppList[x].IsEnabled)
+                                ? Utilities.GetRegistryValue(machineAppList[x].Directory, machineAppList[x].ValueName, machineAppList[x].Platform)
+                                : Utilities.ConvertPath(machineAppList[x].Directory, true, machineAppList[x].Platform)) && machineAppList[x].IsEnabled)
                     {
                         continue;
                     }
@@ -138,8 +138,8 @@ namespace SevenUpdate.Pages
                 for (var x = 0; x < officialApplicationList.Count; x++)
                 {
                     if (!Directory.Exists(Utilities.IsRegistryKey(officialApplicationList[x].Directory)
-                                ? Utilities.GetRegistryValue(officialApplicationList[x].Directory, officialApplicationList[x].ValueName, officialApplicationList[x].Is64Bit)
-                                : Utilities.ConvertPath(officialApplicationList[x].Directory, true, officialApplicationList[x].Is64Bit)))
+                                ? Utilities.GetRegistryValue(officialApplicationList[x].Directory, officialApplicationList[x].ValueName, officialApplicationList[x].Platform)
+                                : Utilities.ConvertPath(officialApplicationList[x].Directory, true, officialApplicationList[x].Platform)))
                     {
                         // Remove the application from the list if it is not installed
                         officialApplicationList.RemoveAt(x);
@@ -155,7 +155,7 @@ namespace SevenUpdate.Pages
                         for (var y = 0; y < machineAppList.Count; y++)
                         {
                             // Check if the app in both lists are the same
-                            if (officialApplicationList[x].Directory == machineAppList[y].Directory && officialApplicationList[x].Is64Bit == machineAppList[y].Is64Bit)
+                            if (officialApplicationList[x].Directory == machineAppList[y].Directory && officialApplicationList[x].Platform == machineAppList[y].Platform)
                             {
                                 // if (officialAppList[x].Source != machineAppList[y].Source)
                                 // continue;

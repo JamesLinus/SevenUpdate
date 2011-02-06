@@ -245,7 +245,6 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-
         /// <summary>Validates input to see if it's a valid URL</summary>
         /// <param name="sender">The sender</param>
         /// <param name="e">The event data</param>

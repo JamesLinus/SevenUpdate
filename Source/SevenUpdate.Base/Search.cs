@@ -120,20 +120,19 @@ namespace SevenUpdate
                     {
                         // Loads a SUI that was downloaded
                         app = Utilities.Deserialize<Sui>(Utilities.DownloadFile(t.SuiUrl));
+                        app.AppInfo = t;
+
+                        // Check to see if any updates are available
+                        if (CheckForUpdates(ref app))
+                        {
+                            applicationsFound.Add(app);
+                        }
                     }
                     catch (Exception ex)
                     {
                         Utilities.ReportError(ex, ErrorType.SearchError);
-                        throw;
-                        continue;
-                    }
 
-                    app.AppInfo = t;
-
-                    // Check to see if any updates are available
-                    if (CheckForUpdates(ref app))
-                    {
-                        applicationsFound.Add(app);
+                        // throw;
                     }
                 }
             }

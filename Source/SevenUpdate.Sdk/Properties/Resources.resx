@@ -305,11 +305,11 @@
     <value>The name of the application to be updated.</value>
     <comment>TextBlock.ToolTip</comment>
   </data>
-  <data name="Is64Bit" xml:space="preserve">
+  <data name="Platform" xml:space="preserve">
     <value>64-bit application</value>
     <comment>CheckBox.Content</comment>
   </data>
-  <data name="Is64BitToolTip" xml:space="preserve">
+  <data name="PlatformToolTip" xml:space="preserve">
     <value>Check this box if your software is native x64.</value>
     <comment>CheckBox.ToolTip</comment>
   </data>
