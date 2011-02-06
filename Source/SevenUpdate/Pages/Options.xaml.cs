@@ -120,9 +120,7 @@ namespace SevenUpdate.Pages
             {
                 for (var x = 0; x < machineAppList.Count; x++)
                 {
-                    if (
-                        Directory.Exists(
-                            Utilities.IsRegistryKey(machineAppList[x].Directory)
+                    if (Directory.Exists(Utilities.IsRegistryKey(machineAppList[x].Directory)
                                 ? Utilities.GetRegistryValue(machineAppList[x].Directory, machineAppList[x].ValueName, machineAppList[x].Is64Bit)
                                 : Utilities.ConvertPath(machineAppList[x].Directory, true, machineAppList[x].Is64Bit)) && machineAppList[x].IsEnabled)
                     {
@@ -139,9 +137,7 @@ namespace SevenUpdate.Pages
             {
                 for (var x = 0; x < officialApplicationList.Count; x++)
                 {
-                    if (
-                        !Directory.Exists(
-                            Utilities.IsRegistryKey(officialApplicationList[x].Directory)
+                    if (!Directory.Exists(Utilities.IsRegistryKey(officialApplicationList[x].Directory)
                                 ? Utilities.GetRegistryValue(officialApplicationList[x].Directory, officialApplicationList[x].ValueName, officialApplicationList[x].Is64Bit)
                                 : Utilities.ConvertPath(officialApplicationList[x].Directory, true, officialApplicationList[x].Is64Bit)))
                     {

@@ -1,7 +1,7 @@
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Converters="clr-namespace:SevenUpdate.Converters">
 	<Converters:FileSizeConverter x:Key="fileSizeConverter" />
 	<Converters:LocaleStringToStringConverter x:Key="localeStringToString" />
-	<Converters:Is64BitToStringConverter x:Key="is64BitToString" />
+	<Converters:Is64BitToStringConverter x:Key="platformToString" />
 	<Converters:ImportanceToStringConverter x:Key="importanceToString" />
 	<Converters:UpdateStatusToStringConverter x:Key="statusToString" />
 	<Converters:UpdateStatusToBooleanConverter x:Key="statusToBool" />

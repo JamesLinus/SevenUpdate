@@ -106,38 +106,38 @@ namespace SevenUpdate
         /// <returns>a string of the path expanded</returns>
         public static string ConvertPath(string path, string directory)
         {
-            return ConvertPath(path, directory, false);
+            return ConvertPath(path, directory, Platform.x86, null);
         }
 
         /// <summary>Expands the file location variables and expands the %INSTALLDIR% variable</summary>
         /// <param name="path">a string that contains a file path</param>
         /// <param name="directory">a string that contains a directory</param>
-        /// <param name="is64Bit">if set to <see langword="true"/> the application is 64 bit</param>
+        /// <param name="platform">a value that indicates what cpu architecture the application supports</param>
         /// <returns>a string of the path expanded</returns>
-        public static string ConvertPath(string path, string directory, bool is64Bit)
+        public static string ConvertPath(string path, string directory, Platform platform)
         {
-            return ConvertPath(path, directory, is64Bit, null);
+            return ConvertPath(path, directory, platform, null);
         }
 
         /// <summary>Expands the file location variables and expands the %INSTALLDIR% variable</summary>
         /// <param name="path">a string that contains a file path</param>
         /// <param name="directory">a string that contains a directory</param>
-        /// <param name="is64Bit">if set to <see langword="true"/> the application is 64 bit</param>
+        /// <param name="platform">a value that indicates what cpu architecture the application supports</param>
         /// <param name="valueName">a string that contains a value name of the registry key that contains the directory location, this parameter is optional and can be <see langword="null"/></param>
         /// <returns>a string of the path expanded</returns>
-        public static string ConvertPath(string path, string directory, bool is64Bit, string valueName)
+        public static string ConvertPath(string path, string directory, Platform platform, string valueName)
         {
-            path = path.Replace("%INSTALLDIR%", !IsRegistryKey(directory) ? ConvertPath(directory, true, is64Bit) : ConvertPath(GetRegistryValue(directory, valueName, is64Bit), true, is64Bit), true);
-            path = path.Replace("%DOWNLOADURL%", ConvertPath(directory, true, is64Bit), true);
-            return ConvertPath(path, true, is64Bit);
+            path = path.Replace("%INSTALLDIR%", !IsRegistryKey(directory) ? ConvertPath(directory, true, platform) : ConvertPath(GetRegistryValue(directory, valueName, platform), true, platform), true);
+            path = path.Replace("%DOWNLOADURL%", ConvertPath(directory, true, platform), true);
+            return ConvertPath(path, true, platform);
         }
 
         /// <summary>Expands the system variables in a string, not for use with InstallDir or DownloadUri variables</summary>
         /// <param name="path">a string that contains a file path</param>
         /// <param name="expand"><see langword="true"/> to expand system variable, <see langword="false"/> to converts paths into system variables</param>
-        /// <param name="is64Bit">if set to <see langword="true"/> the application is 64 bit</param>
+        /// <param name="platform">a value that indicates what cpu architecture the application supports</param>
         /// <returns>a string of the path expanded</returns>
-        public static string ConvertPath(string path, bool expand, bool is64Bit)
+        public static string ConvertPath(string path, bool expand, Platform platform)
         {
             if (path == null)
             {
@@ -158,7 +158,7 @@ namespace SevenUpdate
                 if (8 == IntPtr.Size || (!String.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"))))
                 {
                     // ReSharper disable AssignNullToNotNullAttribute
-                    if (is64Bit)
+                    if (platform)
                     {
                         stringBuilder = stringBuilder.Replace(Environment.GetEnvironmentVariable("ProgramFiles"), "%PROGRAMFILES%", true);
                         stringBuilder = stringBuilder.Replace(Environment.GetEnvironmentVariable("COMMONPROGRAMFILES"), "%COMMONPROGRAMFILES%", true);
@@ -212,7 +212,7 @@ namespace SevenUpdate
                 {
                     stringBuilder = stringBuilder.Replace("%COMMONPROGRAMFILES(x86)%", Environment.GetEnvironmentVariable("COMMONPROGRAMFILES(x86)"), true);
                     stringBuilder = stringBuilder.Replace("%PROGRAMFILES(x86)%", Environment.GetEnvironmentVariable("ProgramFiles(x86)"), true);
-                    if (is64Bit)
+                    if (platform)
                     {
                         stringBuilder = stringBuilder.Replace("%COMMONPROGRAMFILES%", Environment.GetEnvironmentVariable("COMMONPROGRAMFILES"), true);
                         stringBuilder = stringBuilder.Replace("%PROGRAMFILES%", Environment.GetEnvironmentVariable("ProgramFiles"), true);
@@ -397,13 +397,13 @@ namespace SevenUpdate
 
         /// <summary>Converts the registry key</summary>
         /// <param name="registryKey">The registry key</param>
-        /// <param name="is64Bit">if set to <see langword="true"/> the application is 64 bit</param>
+        /// <param name="platform">a value that indicates what cpu architecture the application supports</param>
         /// <returns>The parsed registry key</returns>
-        public static string ParseRegistryKey(string registryKey, bool is64Bit)
+        public static string ParseRegistryKey(string registryKey, Platform platform)
         {
             if (8 == IntPtr.Size || (!String.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"))))
             {
-                if (!is64Bit)
+                if (!platform)
                 {
                     if (!registryKey.Contains(@"SOFTWARE\Wow6432Node", StringComparison.OrdinalIgnoreCase))
                     {
@@ -422,13 +422,13 @@ namespace SevenUpdate
         /// <summary>Gets a string from a registry path</summary>
         /// <param name="registryKey">The path to the registry key</param>
         /// <param name="valueName">The value name to get the data from</param>
-        /// <param name="is64Bit">if set to <see langword="true"/> the application is 64 bit</param>
+        /// <param name="platform">a value that indicates what cpu architecture the application supports</param>
         /// <returns>The value retrieved from the registry path, returns null if the registry path does not exist</returns>
-        public static string GetRegistryValue(string registryKey, string valueName, bool is64Bit)
+        public static string GetRegistryValue(string registryKey, string valueName, Platform platform)
         {
             if (8 == IntPtr.Size || (!String.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"))))
             {
-                if (!is64Bit)
+                if (!platform)
                 {
                     if (!registryKey.Contains(@"SOFTWARE\Wow6432Node", StringComparison.OrdinalIgnoreCase))
                     {
@@ -467,11 +467,11 @@ namespace SevenUpdate
 
         /// <summary>Checks if a registry key exists</summary>
         /// <param name="registryKey">The path to the registry key</param>
-        /// <param name="is64Bit">if set to <see langword="true"/> the application is 64 bit</param>
+        /// <param name="platform">a value that indicates what cpu architecture the application supports</param>
         /// <returns><see langword="true"/> if exists; otherwise, <see langword="false"/></returns>
-        public static bool CheckRegistryKey(string registryKey, bool is64Bit)
+        public static bool CheckRegistryKey(string registryKey, Platform platform)
         {
-            return GetRegistryValue(registryKey, null, is64Bit) != null;
+            return GetRegistryValue(registryKey, null, platform) != null;
         }
 
         /// <summary>Checks to see if path is a registry key</summary>

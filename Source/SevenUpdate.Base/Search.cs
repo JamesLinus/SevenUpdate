@@ -195,8 +195,8 @@ namespace SevenUpdate
         private static bool CheckForUpdates(ref Sui app)
         {
             app.AppInfo.Directory = Utilities.IsRegistryKey(app.AppInfo.Directory)
-                                        ? Utilities.GetRegistryValue(app.AppInfo.Directory, app.AppInfo.ValueName, app.AppInfo.Is64Bit)
-                                        : Utilities.ConvertPath(app.AppInfo.Directory, true, app.AppInfo.Is64Bit);
+                                        ? Utilities.GetRegistryValue(app.AppInfo.Directory, app.AppInfo.ValueName, app.AppInfo.Platform)
+                                        : Utilities.ConvertPath(app.AppInfo.Directory, true, app.AppInfo.Platform);
 
             if (!Directory.Exists(app.AppInfo.Directory))
             {
@@ -207,7 +207,7 @@ namespace SevenUpdate
             {
                 var updates = app.Updates[y];
 
-                var size = IterateUpdate(ref updates, app.AppInfo.Directory, app.AppInfo.ValueName, app.AppInfo.Is64Bit);
+                var size = IterateUpdate(ref updates, app.AppInfo.Directory, app.AppInfo.ValueName, app.AppInfo.Platform);
 
                 app.Updates[y] = updates;
 
@@ -219,9 +219,9 @@ namespace SevenUpdate
                     // ReSharper disable ForCanBeConvertedToForeach
                     for (var z = 0; z < app.Updates[y].Files.Count; z++)
                     {
-                        app.Updates[y].Files[z].Destination = Utilities.ConvertPath(app.Updates[y].Files[z].Destination, app.AppInfo.Directory, app.AppInfo.Is64Bit, app.AppInfo.ValueName);
+                        app.Updates[y].Files[z].Destination = Utilities.ConvertPath(app.Updates[y].Files[z].Destination, app.AppInfo.Directory, app.AppInfo.Platform, app.AppInfo.ValueName);
 
-                        app.Updates[y].Files[z].Source = Utilities.ConvertPath(app.Updates[y].Files[z].Source, app.Updates[y].DownloadUrl, app.AppInfo.Is64Bit);
+                        app.Updates[y].Files[z].Source = Utilities.ConvertPath(app.Updates[y].Files[z].Source, app.Updates[y].DownloadUrl, app.AppInfo.Platform);
 
                         if (app.Updates[y].Files[z].Action != FileAction.ExecuteThenDelete)
                         {
@@ -277,14 +277,14 @@ namespace SevenUpdate
         /// <param name="update">The update to iterate</param>
         /// <param name="directory">The Uri or registry key to the application directory </param>
         /// <param name="valueName">The name of the registry value, can be <see langword="null"/></param>
-        /// <param name="is64Bit">if set to <see langword="true"/> the application is 64 bit</param>
+        /// <param name="platform">a value that indicates what cpu architecture the application supports</param>
         /// <returns>The current download size of the update</returns>
-        private static ulong IterateUpdate(ref Update update, string directory, string valueName, bool is64Bit)
+        private static ulong IterateUpdate(ref Update update, string directory, string valueName, Platform platform)
         {
             ulong size = 0;
             for (var z = 0; z < update.Files.Count; z++)
             {
-                update.Files[z].Destination = Utilities.ConvertPath(update.Files[z].Destination, directory, is64Bit, valueName);
+                update.Files[z].Destination = Utilities.ConvertPath(update.Files[z].Destination, directory, platform, valueName);
                 var downloadFile = Path.Combine(downloadDirectory, update.Name[0].Value, Path.GetFileName(update.Files[z].Destination));
 
                 // Checks to see if the file needs updated, if it doesn't it removes it from the list.

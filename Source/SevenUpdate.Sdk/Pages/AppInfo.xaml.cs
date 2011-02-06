@@ -47,7 +47,7 @@ namespace SevenUpdate.Sdk.Pages
         #region Fields
 
         /// <summary>Indicates if the application is 64 bit</summary>
-        private static bool is64Bit;
+        private static Platform platform;
 
         #endregion
 
@@ -233,7 +233,7 @@ namespace SevenUpdate.Sdk.Pages
                 this.tbxPublisher.Text = t.Value;
             }
 
-            is64Bit = Core.AppInfo.Is64Bit;
+            platform = Core.AppInfo.Is64Bit;
         }
 
         /// <summary>Loads the <see cref="LocaleString"/>'s for the <see cref="Sua"/> into the UI</summary>
@@ -353,7 +353,7 @@ namespace SevenUpdate.Sdk.Pages
                         }
                     }
 
-                    if (Core.AppInfo.Is64Bit != is64Bit)
+                    if (Core.AppInfo.Platform != platform)
                     {
                         project.UpdateNames.Clear();
                         File.Delete(Path.Combine(App.UserStore, appName + ".sui"));

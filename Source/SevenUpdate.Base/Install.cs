@@ -120,7 +120,7 @@ namespace SevenUpdate
                     currentUpdateName = Utilities.GetLocaleString(applications[x].Updates[y].Name);
 
                     // TODO: Remove this code and test executing SevenUpdate.Helper as a FileAction in the Seven Update SUI file
-                    if (applications[x].AppInfo.Directory == Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, applications[x].AppInfo.Is64Bit))
+                    if (applications[x].AppInfo.Directory == Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, applications[x].AppInfo.Platform))
                     {
                         try
                         {
@@ -137,7 +137,7 @@ namespace SevenUpdate
 
                     ReportProgress(5);
 
-                    SetRegistryItems(applications[x].Updates[y].RegistryItems, applications[x].AppInfo.Is64Bit);
+                    SetRegistryItems(applications[x].Updates[y].RegistryItems, applications[x].AppInfo.Platform);
 
                     ReportProgress(25);
 
@@ -160,7 +160,7 @@ namespace SevenUpdate
                         AddHistory(applications[x], applications[x].Updates[y]);
                     }
 
-                    if (applications[x].AppInfo.Directory == Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, true))
+                    if (applications[x].AppInfo.Directory == Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, Platform.AnyCPU))
                     {
                         UpdateSevenUpdate(applications[x].Updates[y].Files);
                     }
@@ -284,8 +284,8 @@ namespace SevenUpdate
 
         /// <summary>Sets the registry items of an update</summary>
         /// <param name="regItems">The registry changes to install on the system</param>
-        /// <param name="is64Bit">Indicates if the application is 64 bit</param>
-        private static void SetRegistryItems(IList<RegistryItem> regItems, bool is64Bit)
+        /// <param name="platform">a value that indicates what cpu architecture the application supports</param>
+        private static void SetRegistryItems(IList<RegistryItem> regItems, Platform platform)
         {
             RegistryKey key;
             if (regItems == null)
@@ -295,7 +295,7 @@ namespace SevenUpdate
 
             for (var x = 0; x < regItems.Count; x++)
             {
-                var keyPath = Utilities.ParseRegistryKey(regItems[x].Key, is64Bit);
+                var keyPath = Utilities.ParseRegistryKey(regItems[x].Key, platform);
                 switch (keyPath)
                 {
                     case "HKEY_CLASSES_ROOT":
@@ -385,7 +385,7 @@ namespace SevenUpdate
             // Choose the path for the shortcut
             for (var x = 0; x < shortcuts.Count; x++)
             {
-                shortcuts[x].Location = Utilities.ConvertPath(shortcuts[x].Location, appInfo.Directory, appInfo.Is64Bit, appInfo.ValueName);
+                shortcuts[x].Location = Utilities.ConvertPath(shortcuts[x].Location, appInfo.Directory, appInfo.Platform, appInfo.ValueName);
                 var linkName = Utilities.GetLocaleString(shortcuts[x].Name);
 
                 if (shortcuts[x].Action == ShortcutAction.Add || (shortcuts[x].Action == ShortcutAction.Update && File.Exists(Path.Combine(shortcuts[x].Location, linkName + ".lnk"))))
