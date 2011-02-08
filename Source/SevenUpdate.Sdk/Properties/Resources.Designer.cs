@@ -826,6 +826,15 @@ namespace SevenUpdate.Sdk.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to 32-bit/64-bit application.
+        /// </summary>
+        public static string NativeApp {
+            get {
+                return ResourceManager.GetString("NativeApp", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to New Registry Item.
         /// </summary>
         public static string NewRegistryItem {
@@ -1821,6 +1830,24 @@ namespace SevenUpdate.Sdk.Properties {
         public static string WPFLocalizeExtensionLicense {
             get {
                 return ResourceManager.GetString("WPFLocalizeExtensionLicense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 64-bit application.
+        /// </summary>
+        public static string X64App {
+            get {
+                return ResourceManager.GetString("X64App", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 32-bit application.
+        /// </summary>
+        public static string X86App {
+            get {
+                return ResourceManager.GetString("X86App", resourceCulture);
             }
         }
     }

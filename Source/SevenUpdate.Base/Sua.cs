@@ -32,20 +32,20 @@ namespace SevenUpdate
     using ProtoBuf;
 
     /// <summary>The current status of the update</summary>
-    [ProtoContract, DataContract, DefaultValue(x86)]
+    [ProtoContract, DataContract, DefaultValue(X86)]
     public enum Platform
     {
         /// <summary>Indicates that the application can run on 32bit or 64bit natively depending on the OS</summary>
         [ProtoEnum, EnumMember]
-        AnyCPU = 2,
+        AnyCpu = 2,
 
         /// <summary>Indicates that the application is native 32 bit</summary>
         [ProtoEnum, EnumMember]
-        x86 = 0,
+        X86 = 0,
 
         /// <summary>Indicates that the application can only run on 64 bit platforms</summary>
         [ProtoEnum, EnumMember]
-        x64 = 1,
+        X64 = 1,
     }
 
     /// <summary>Seven Update Application information</summary>

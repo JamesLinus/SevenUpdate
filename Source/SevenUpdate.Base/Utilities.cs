@@ -64,6 +64,15 @@ namespace SevenUpdate
         /// <value>The locale.</value>
         public static string Locale { get; set; }
 
+        /// <summary>Gets a value indicating whether the OS is 64 bit</summary>
+        public static bool IsRunning64BitOS
+        {
+            get
+            {
+                return IntPtr.Size == 8 || !String.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"));
+            }
+        }
+
         /// <summary>Gets a value indicating whether if a reboot is needed</summary>
         /// <value><see langword = "true" /> if a reboot is needed otherwise, <see langword = "false" />.</value>
         public static bool RebootNeeded { get; internal set; }
@@ -106,7 +115,7 @@ namespace SevenUpdate
         /// <returns>a string of the path expanded</returns>
         public static string ConvertPath(string path, string directory)
         {
-            return ConvertPath(path, directory, Platform.x86, null);
+            return ConvertPath(path, directory, Platform.X86, null);
         }
 
         /// <summary>Expands the file location variables and expands the %INSTALLDIR% variable</summary>
@@ -185,18 +194,18 @@ namespace SevenUpdate
                 stringBuilder = stringBuilder.Replace("%MUSIC%", Environment.GetFolderPath(Environment.SpecialFolder.MyMusic), true);
                 stringBuilder = stringBuilder.Replace("%PICTURES%", Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), true);
 
-                if (8 == IntPtr.Size || (!String.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"))))
+                if (IsRunning64BitOS)
                 {
                     switch (platform)
                     {
-                        case Platform.AnyCPU:
-                        case Platform.x64:
+                        case Platform.AnyCpu:
+                        case Platform.X64:
                             stringBuilder = stringBuilder.Replace("%COMMONPROGRAMFILES%", Environment.GetEnvironmentVariable("COMMONPROGRAMFILES"), true);
                             stringBuilder = stringBuilder.Replace("%PROGRAMFILES%", Environment.GetEnvironmentVariable("ProgramFiles"), true);
                             stringBuilder = stringBuilder.Replace("%PROGRAMFILES(x86)%", Environment.GetEnvironmentVariable("ProgramFiles(x86)"), true);
                             stringBuilder = stringBuilder.Replace("%COMMONPROGRAMFILES(x86)%", Environment.GetEnvironmentVariable("COMMONPROGRAMFILES(x86)"), true);
                             break;
-                        case Platform.x86:
+                        case Platform.X86:
                             stringBuilder = stringBuilder.Replace("%COMMONPROGRAMFILES(x86)%", Environment.GetEnvironmentVariable("COMMONPROGRAMFILES(x86)"), true);
                             stringBuilder = stringBuilder.Replace("%PROGRAMFILES(x86)%", Environment.GetEnvironmentVariable("ProgramFiles(x86)"), true);
                             stringBuilder = stringBuilder.Replace("%COMMONPROGRAMFILES%", Environment.GetEnvironmentVariable("COMMONPROGRAMFILES(x86)"), true);
@@ -384,7 +393,7 @@ namespace SevenUpdate
         {
             if (8 == IntPtr.Size || (!String.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"))))
             {
-                if (platform == Platform.x86)
+                if (platform == Platform.X86)
                 {
                     if (!registryKey.Contains(@"SOFTWARE\Wow6432Node", StringComparison.OrdinalIgnoreCase))
                     {
@@ -409,7 +418,7 @@ namespace SevenUpdate
         {
             if (8 == IntPtr.Size || (!String.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"))))
             {
-                if (platform == Platform.x86)
+                if (platform == Platform.X86)
                 {
                     if (!registryKey.Contains(@"SOFTWARE\Wow6432Node", StringComparison.OrdinalIgnoreCase))
                     {

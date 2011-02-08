@@ -137,6 +137,11 @@ namespace SevenUpdate.Pages
             {
                 for (var x = 0; x < officialApplicationList.Count; x++)
                 {
+                    if (officialApplicationList[x].Is64Bit)
+                    {
+                        officialApplicationList[x].Platform = Platform.X64;
+                    }
+
                     if (!Directory.Exists(Utilities.IsRegistryKey(officialApplicationList[x].Directory)
                                 ? Utilities.GetRegistryValue(officialApplicationList[x].Directory, officialApplicationList[x].ValueName, officialApplicationList[x].Platform)
                                 : Utilities.ConvertPath(officialApplicationList[x].Directory, true, officialApplicationList[x].Platform)))

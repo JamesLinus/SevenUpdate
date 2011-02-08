@@ -663,4 +663,16 @@
   <data name="ReportBugs" xml:space="preserve">
     <value>Please report all bugs found or issues at:</value>
   </data>
+  <data name="Not64BitCompat" xml:space="preserve">
+    <value>{0} is a 64-Bit application and not compatible with your operating system.</value>
+  </data>
+  <data name="x64" xml:space="preserve">
+    <value>64-Bit</value>
+  </data>
+  <data name="x86" xml:space="preserve">
+    <value>32-Bit</value>
+  </data>
+  <data name="x86x64" xml:space="preserve">
+    <value>32 &amp; 64-Bit</value>
+  </data>
 </root>

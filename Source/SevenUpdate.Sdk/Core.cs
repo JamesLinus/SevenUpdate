@@ -212,7 +212,7 @@ namespace SevenUpdate.Sdk
                 Projects = new Collection<Project>();
             }
 
-            if (AppInfo.Platform == Platform.AnyCPU)
+            if (AppInfo.Platform == Platform.AnyCpu)
             {
                 if (!appName.Contains("x64") && !appName.Contains("X64"))
                 {
@@ -329,6 +329,10 @@ namespace SevenUpdate.Sdk
             if (File.Exists(Path.Combine(App.UserStore, Projects[AppIndex].ApplicationName + ".sua")))
             {
                 AppInfo = Utilities.Deserialize<Sua>(Path.Combine(App.UserStore, Projects[AppIndex].ApplicationName + ".sua"));
+                if (AppInfo.Is64Bit)
+                {
+                    AppInfo.Platform = Platform.X64;
+                }
             }
             else
             {

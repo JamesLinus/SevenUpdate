@@ -49,9 +49,9 @@
 				<ListView.View>
 					<GridView>
 						<GridViewColumn CellTemplate="{StaticResource itemCheckBox}" Width="25" />
-						<GridViewColumn CellTemplate="{StaticResource itemLink}" Header="{LocText SevenUpdate:Resources:Program}" Width="350" ListViewSorter.PropertyName="Name" />
-						<GridViewColumn DisplayMemberBinding="{Binding Path=Publisher, Mode=OneWay, Converter={StaticResource localeStringToString}}" Header="{LocText SevenUpdate:Resources:Publisher}" Width="250" ListViewSorter.PropertyName="Publisher" />
-						<GridViewColumn Header="{LocText SevenUpdate:Resources:Architecture}" Width="125" DisplayMemberBinding="{Binding Path=Is64Bit, Mode=OneWay, Converter={StaticResource platformToString}}" ListViewSorter.PropertyName="Is64Bit" />
+						<GridViewColumn CellTemplate="{StaticResource itemLink}" Header="{LocText SevenUpdate:Resources:Program}" Width="375" ListViewSorter.PropertyName="Name" />
+						<GridViewColumn DisplayMemberBinding="{Binding Path=Publisher, Mode=OneWay, Converter={StaticResource localeStringToString}}" Header="{LocText SevenUpdate:Resources:Publisher}" Width="300" ListViewSorter.PropertyName="Publisher" />
+						<GridViewColumn Header="{LocText SevenUpdate:Resources:Architecture}" Width="85" DisplayMemberBinding="{Binding Path=Platform, Mode=OneWay, Converter={StaticResource platformToString}}" ListViewSorter.PropertyName="Is64Bit" />
 					</GridView>
 				</ListView.View>
 				<ListView.ItemContainerStyle>

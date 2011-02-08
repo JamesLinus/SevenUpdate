@@ -121,6 +121,10 @@ namespace SevenUpdate
                         // Loads a SUI that was downloaded
                         app = Utilities.Deserialize<Sui>(Utilities.DownloadFile(t.SuiUrl));
                         app.AppInfo = t;
+                        if (app.AppInfo.Is64Bit)
+                        {
+                            app.AppInfo.Platform = Platform.X64;
+                        }
 
                         // Check to see if any updates are available
                         if (CheckForUpdates(ref app))

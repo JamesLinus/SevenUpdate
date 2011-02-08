@@ -118,7 +118,6 @@ namespace SevenUpdate.Sdk.Pages
             }
 
             this.tbxAppLocation.Note = @"%PROGRAMFILES%\My Company\My App";
-            Core.AppInfo.ValueName = null;
 
             var rule = new AppDirectoryRule { IsRegistryPath = false };
             this.tbxAppLocation.HasError = !rule.Validate(tbxAppLocation.Text, null).IsValid;
@@ -134,7 +133,6 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             }
 
-            Core.AppInfo.Directory = null;
             this.tbxAppLocation.Note = @"HKLM\Software\MyCompany\MyApp";
 
             var rule = new AppDirectoryRule { IsRegistryPath = true };
@@ -321,7 +319,7 @@ namespace SevenUpdate.Sdk.Pages
                 {
                     var appName = Utilities.GetLocaleString(Core.AppInfo.Name);
                     File.Delete(Path.Combine(App.UserStore, appName + ".sua"));
-                    if (Core.AppInfo.Platform == Platform.x64)
+                    if (Core.AppInfo.Platform == Platform.X64)
                     {
                         if (!appName.Contains("x64") && !appName.Contains("X64"))
                         {
@@ -435,8 +433,6 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        #endregion
-
         /// <summary>Validates the textbox against the AppDirectory Validation Rule</summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The data for the event.</param>
@@ -486,5 +482,7 @@ namespace SevenUpdate.Sdk.Pages
             textBox.HasError = !new SuiLocationRule().Validate(textBox.Text, null).IsValid;
             textBox.ToolTip = textBox.HasError ? Properties.Resources.UrlSui : null;
         }
+
+        #endregion
     }
 }

@@ -160,7 +160,7 @@ namespace SevenUpdate
                         AddHistory(applications[x], applications[x].Updates[y]);
                     }
 
-                    if (applications[x].AppInfo.Directory == Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, Platform.AnyCPU))
+                    if (applications[x].AppInfo.Directory == Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, Platform.AnyCpu))
                     {
                         UpdateSevenUpdate(applications[x].Updates[y].Files);
                     }

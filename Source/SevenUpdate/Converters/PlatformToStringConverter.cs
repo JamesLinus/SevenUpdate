@@ -28,6 +28,8 @@ namespace SevenUpdate.Converters
     using System.Windows;
     using System.Windows.Data;
 
+    using SevenUpdate.Properties;
+
     /// <summary>Converts a Boolean to a readable string</summary>
     [ValueConversion(typeof(bool), typeof(string))]
     internal sealed class PlatformToStringConverter : IValueConverter
@@ -46,15 +48,15 @@ namespace SevenUpdate.Converters
         {
             switch ((Platform)value)
             {
-                case Platform.AnyCPU:
-                    return "x86|x64";
-                case Platform.x86:
-                    return "x86";
-                case Platform.x64:
-                    return "x64";
+                case Platform.AnyCpu:
+                    return Resources.x86x64;
+                case Platform.X86:
+                    return Resources.x86;
+                case Platform.X64:
+                    return Resources.x64;
             }
 
-            return "x86";
+            return Resources.x86;
         }
 
         /// <summary>Converts a converted object back into it's original form</summary>

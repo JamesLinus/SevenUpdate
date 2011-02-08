@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -887,5 +887,17 @@
   </data>
   <data name="PathDoesNotExist" xml:space="preserve">
     <value>The path entered does not exist on this machine</value>
+  </data>
+  <data name="X86App" xml:space="preserve">
+    <value>32-bit application</value>
+    <comment>ComboBoxItem.Content</comment>
+  </data>
+  <data name="X64App" xml:space="preserve">
+    <value>64-bit application</value>
+    <comment>ComboBoxItem.Content</comment>
+  </data>
+  <data name="NativeApp" xml:space="preserve">
+    <value>32-bit/64-bit application</value>
+    <comment>ComboBoxItem.Content</comment>
   </data>
 </root>

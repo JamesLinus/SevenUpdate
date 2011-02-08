@@ -709,6 +709,15 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to {0} is a 64-Bit application and not compatible with your operating system..
+        /// </summary>
+        public static string Not64BitCompat {
+            get {
+                return ResourceManager.GetString("Not64BitCompat", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Not Available.
         /// </summary>
         public static string NotAvailable {
@@ -1344,6 +1353,33 @@ namespace SevenUpdate.Properties {
         public static string WPFLocalizeExtensionLicense {
             get {
                 return ResourceManager.GetString("WPFLocalizeExtensionLicense", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 64-Bit.
+        /// </summary>
+        public static string x64 {
+            get {
+                return ResourceManager.GetString("x64", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 32-Bit.
+        /// </summary>
+        public static string x86 {
+            get {
+                return ResourceManager.GetString("x86", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to 32 &amp; 64-Bit.
+        /// </summary>
+        public static string x86x64 {
+            get {
+                return ResourceManager.GetString("x86x64", resourceCulture);
             }
         }
     }

@@ -193,9 +193,9 @@ namespace SevenUpdate
                 var app = new Sua(name, publisher)
                     {
                         AppUrl = @"http://sevenupdate.com/",
-                        Directory = Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, Platform.AnyCPU),
+                        Directory = Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, Platform.AnyCpu),
                         HelpUrl = @"http://sevenupdate.com/support/",
-                        Platform = Platform.AnyCPU,
+                        Platform = Platform.AnyCpu,
                         IsEnabled = true,
                         SuiUrl = SevenUpdateSui
                     };
