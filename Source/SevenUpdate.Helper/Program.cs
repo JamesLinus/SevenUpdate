@@ -122,7 +122,7 @@ namespace SevenUpdate.Helper
             {
                 try
                 {
-                    File.Copy(t.FullName, AppDir + t.Name, true);
+                    File.Copy(t.FullName, Path.Combine(AppDir, t.Name), true);
 
                     try
                     {
@@ -143,7 +143,7 @@ namespace SevenUpdate.Helper
                         throw;
                     }
 
-                    NativeMethods.MoveFileExW(t.FullName, AppDir + t.Name, MoveOnReboot);
+                    NativeMethods.MoveFileExW(t.FullName, Path.Combine(AppDir, t.Name), MoveOnReboot);
 
                     if (!File.Exists(Path.Combine(AllUsersStore, "reboot.lock")))
                     {
