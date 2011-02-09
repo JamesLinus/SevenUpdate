@@ -39,15 +39,14 @@ namespace SevenUpdate.Sdk.Pages
     using SevenUpdate.Sdk.Windows;
 
     using Application = System.Windows.Application;
-    using TextBox = System.Windows.Controls.TextBox;
 
     /// <summary>Interaction logic for AppInfo.xaml</summary>
     public sealed partial class AppInfo
     {
         #region Fields
 
-        /// <summary>Indicates if the application is 64 bit</summary>
-        private static Platform platform;
+        /// <summary>Indicates the platform of the application before editing</summary>
+        private static Platform oldPlatform;
 
         #endregion
 
@@ -231,7 +230,7 @@ namespace SevenUpdate.Sdk.Pages
                 this.tbxPublisher.Text = t.Value;
             }
 
-            platform = Core.AppInfo.Platform;
+            oldPlatform = Core.AppInfo.Platform;
         }
 
         /// <summary>Loads the <see cref="LocaleString"/>'s for the <see cref="Sua"/> into the UI</summary>
@@ -318,7 +317,8 @@ namespace SevenUpdate.Sdk.Pages
                 else
                 {
                     var appName = Utilities.GetLocaleString(Core.AppInfo.Name);
-                    File.Delete(Path.Combine(App.UserStore, appName + ".sua"));
+                    var oldAppName = appName;
+
                     if (Core.AppInfo.Platform == Platform.X64)
                     {
                         if (!appName.Contains("x64") && !appName.Contains("X64"))
@@ -327,7 +327,22 @@ namespace SevenUpdate.Sdk.Pages
                         }
                     }
 
-                    File.Delete(Path.Combine(App.UserStore, appName + ".sua"));
+                    if (oldPlatform == Platform.X64)
+                    {
+                        if (!oldAppName.Contains("x64") && !oldAppName.Contains("X64"))
+                        {
+                            oldAppName += " (x64)";
+                        }
+                    }
+
+                    File.Delete(Path.Combine(App.UserStore, oldAppName + ".sua"));
+
+                    if (Core.AppInfo.Platform != oldPlatform && String.Compare(oldAppName, appName, StringComparison.OrdinalIgnoreCase) != 0)
+                    {
+                        File.Copy(Path.Combine(App.UserStore, oldAppName + ".sui"), Path.Combine(App.UserStore, appName + ".sui"), true);
+                        File.Delete(Path.Combine(App.UserStore, oldAppName + ".sui"));
+                        File.Delete(Path.Combine(App.UserStore, oldAppName + ".sua"));
+                    }
 
                     ObservableCollection<string> updateNames = null;
 
@@ -349,12 +364,6 @@ namespace SevenUpdate.Sdk.Pages
                         {
                             project.UpdateNames.Add(t);
                         }
-                    }
-
-                    if (Core.AppInfo.Platform != platform)
-                    {
-                        project.UpdateNames.Clear();
-                        File.Delete(Path.Combine(App.UserStore, appName + ".sui"));
                     }
 
                     Core.Projects.Insert(0, project);

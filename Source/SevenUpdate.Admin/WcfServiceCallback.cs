@@ -54,11 +54,19 @@ namespace SevenUpdate.Admin
                 sul = new Collection<Sua>();
             }
 
-            if (sul.Any(t => t.Directory == application.Directory && t.Platform == application.Platform))
+            for (int x = 0; x < sul.Count; x++)
             {
-                return;
+                if (sul[x].Platform != application.Platform || sul[x].Directory != application.Directory)
+                {
+                    continue;
+                }
+
+                sul.RemoveAt(x);
+                x--;
+                continue;
             }
 
+            application.IsEnabled = true;
             sul.Add(application);
 
             Utilities.Serialize(sul, App.ApplicationsFile);

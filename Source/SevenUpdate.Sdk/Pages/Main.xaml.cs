@@ -253,7 +253,9 @@ namespace SevenUpdate.Sdk.Pages
 
             Utilities.Serialize(Core.Projects, Core.ProjectsFile);
 
-            File.Copy(Path.Combine(App.UserStore, Core.Projects[Core.AppIndex].ApplicationName + ".sua"), fileName, true);
+            var appName = Core.Projects[Core.AppIndex].ApplicationName;
+
+            File.Copy(Path.Combine(App.UserStore, appName + ".sua"), fileName, true);
         }
 
         /// <summary>Opens a dialog and saves the Sui for the selected project</summary>
@@ -274,7 +276,9 @@ namespace SevenUpdate.Sdk.Pages
 
             Utilities.Serialize(Core.Projects, Core.ProjectsFile);
 
-            File.Copy(Path.Combine(App.UserStore, Core.Projects[Core.AppIndex].ApplicationName + ".sui"), fileName, true);
+            var appName = Core.Projects[Core.AppIndex].ApplicationName;
+
+            File.Copy(Path.Combine(App.UserStore, appName + ".sui"), fileName, true);
         }
 
         /// <summary>Selects the <see cref="TreeViewItem"/> when right clicking on the <see cref="TreeView"/></summary>

@@ -69,7 +69,7 @@ namespace SevenUpdate
         {
             get
             {
-                return IntPtr.Size == 8 || !String.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"));
+                return IntPtr.Size == 8  || !String.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"));
             }
         }
 

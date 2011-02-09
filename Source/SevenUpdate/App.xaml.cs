@@ -159,6 +159,7 @@ namespace SevenUpdate
                         SevenUpdate.Properties.Resources.Add,
                         true) != TaskDialogResult.Cancel)
                     {
+                        app.IsEnabled = true;
                         WcfService.AddSua(app);
                     }
                     else

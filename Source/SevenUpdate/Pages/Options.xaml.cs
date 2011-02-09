@@ -42,6 +42,8 @@ namespace SevenUpdate.Pages
         /// <summary>A collection of <see cref = "Sua" /> that Seven Update can update</summary>
         private static ObservableCollection<Sua> machineAppList;
 
+        private static ObservableCollection<Sua> apps;
+
         /// <summary>The program configuration</summary>
         private Config config;
 
@@ -63,12 +65,11 @@ namespace SevenUpdate.Pages
         #region Methods
 
         /// <summary>Downloads the Seven Update Application List</summary>
-        private void DownloadSul()
+        private static void DownloadSul()
         {
             try
             {
-                var apps = Utilities.Deserialize<ObservableCollection<Sua>>(Utilities.DownloadFile(App.SulLocation));
-                this.LoadSul(apps);
+                apps = Utilities.Deserialize<ObservableCollection<Sua>>(Utilities.DownloadFile(App.SulLocation));
             }
             catch (Exception ex)
             {
@@ -77,8 +78,6 @@ namespace SevenUpdate.Pages
                 {
                     throw;
                 }
-
-                this.LoadSul();
             }
         }
 
@@ -90,19 +89,18 @@ namespace SevenUpdate.Pages
             this.lvApps.Cursor = Cursors.Wait;
             this.config = Core.Settings;
             this.DataContext = this.config;
-
-            Task.Factory.StartNew(this.DownloadSul);
-        }
-
-        /// <summary>Loads the list of Seven Update applications and sets the UI, if no application list was downloaded, load the stored list on the system</summary>
-        private void LoadSul()
-        {
-            this.LoadSul(null);
+            this.lvApps.ItemsSource = null;
+            machineAppList = null;
+            Task.Factory.StartNew(DownloadSul).ContinueWith(
+                delegate
+                    {
+                        this.Dispatcher.BeginInvoke(() => this.LoadSul(apps));
+                    });
         }
 
         /// <summary>Loads the list of Seven Update applications and sets the UI, if no application list was downloaded, load the stored list on the system</summary>
         /// <param name="officialApplicationList">The official application list from the server.</param>
-        private void LoadSul(ObservableCollection<Sua> officialApplicationList)
+        private void LoadSul(ObservableCollection<Sua> officialApplicationList = null)
         {
             try
             {
@@ -120,16 +118,24 @@ namespace SevenUpdate.Pages
             {
                 for (var x = 0; x < machineAppList.Count; x++)
                 {
-                    if (Directory.Exists(Utilities.IsRegistryKey(machineAppList[x].Directory)
-                                ? Utilities.GetRegistryValue(machineAppList[x].Directory, machineAppList[x].ValueName, machineAppList[x].Platform)
-                                : Utilities.ConvertPath(machineAppList[x].Directory, true, machineAppList[x].Platform)) && machineAppList[x].IsEnabled)
+                    if (machineAppList[x].Platform == Platform.X64 && !Utilities.IsRunning64BitOS)
                     {
-                        continue;
+                    }
+                    else
+                    {
+                        if (Directory.Exists(
+                                Utilities.IsRegistryKey(machineAppList[x].Directory)
+                                    ? Utilities.GetRegistryValue(machineAppList[x].Directory, machineAppList[x].ValueName, machineAppList[x].Platform)
+                                    : Utilities.ConvertPath(machineAppList[x].Directory, true, machineAppList[x].Platform)) && machineAppList[x].IsEnabled)
+                        {
+                            continue;
+                        }
                     }
 
                     // Remove the application from the list if it is no longer installed or not enabled
                     machineAppList.RemoveAt(x);
                     x--;
+                    continue;
                 }
             }
 
@@ -137,40 +143,42 @@ namespace SevenUpdate.Pages
             {
                 for (var x = 0; x < officialApplicationList.Count; x++)
                 {
-                    if (officialApplicationList[x].Is64Bit)
+                    if (officialApplicationList[x].Platform == Platform.X64 && !Utilities.IsRunning64BitOS)
                     {
-                        officialApplicationList[x].Platform = Platform.X64;
+                        officialApplicationList.RemoveAt(x);
+                        x--;
+                        continue;
                     }
 
-                    if (!Directory.Exists(Utilities.IsRegistryKey(officialApplicationList[x].Directory)
+                    if (!Directory.Exists(
+                            Utilities.IsRegistryKey(officialApplicationList[x].Directory)
                                 ? Utilities.GetRegistryValue(officialApplicationList[x].Directory, officialApplicationList[x].ValueName, officialApplicationList[x].Platform)
                                 : Utilities.ConvertPath(officialApplicationList[x].Directory, true, officialApplicationList[x].Platform)))
                     {
                         // Remove the application from the list if it is not installed
                         officialApplicationList.RemoveAt(x);
                         x--;
+                        continue;
                     }
-                    else
+
+                    if (machineAppList == null)
                     {
-                        if (machineAppList == null)
+                        continue;
+                    }
+
+                    for (var y = 0; y < machineAppList.Count; y++)
+                    {
+                        // Check if the app in both lists are the same
+                        if (officialApplicationList[x].Directory == machineAppList[y].Directory && officialApplicationList[x].Platform == machineAppList[y].Platform)
                         {
-                            continue;
+                            // if (officialAppList[x].Source != machineAppList[y].Source)
+                            // continue;
+                            officialApplicationList[x].IsEnabled = machineAppList[y].IsEnabled;
+                            machineAppList.RemoveAt(y);
+                            y--;
                         }
 
-                        for (var y = 0; y < machineAppList.Count; y++)
-                        {
-                            // Check if the app in both lists are the same
-                            if (officialApplicationList[x].Directory == machineAppList[y].Directory && officialApplicationList[x].Platform == machineAppList[y].Platform)
-                            {
-                                // if (officialAppList[x].Source != machineAppList[y].Source)
-                                // continue;
-                                officialApplicationList[x].IsEnabled = machineAppList[y].IsEnabled;
-                                machineAppList.RemoveAt(y);
-                                y--;
-                            }
-
-                            continue;
-                        }
+                        continue;
                     }
                 }
 

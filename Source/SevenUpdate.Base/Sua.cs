@@ -35,10 +35,6 @@ namespace SevenUpdate
     [ProtoContract, DataContract, DefaultValue(X86)]
     public enum Platform
     {
-        /// <summary>Indicates that the application can run on 32bit or 64bit natively depending on the OS</summary>
-        [ProtoEnum, EnumMember]
-        AnyCpu = 2,
-
         /// <summary>Indicates that the application is native 32 bit</summary>
         [ProtoEnum, EnumMember]
         X86 = 0,
@@ -46,6 +42,10 @@ namespace SevenUpdate
         /// <summary>Indicates that the application can only run on 64 bit platforms</summary>
         [ProtoEnum, EnumMember]
         X64 = 1,
+        
+        /// <summary>Indicates that the application can run on 32bit or 64bit natively depending on the OS</summary>
+        [ProtoEnum, EnumMember]
+        AnyCpu = 2,
     }
 
     /// <summary>Seven Update Application information</summary>
