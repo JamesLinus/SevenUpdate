@@ -547,7 +547,7 @@ namespace SevenUpdate
 
                 var x1 = x;
                 var x2 = x;
-                Task.Factory.StartNew(() => UpdateFile(files[x1])).ContinueWith(
+                var task = Task.Factory.StartNew(() => UpdateFile(files[x1])).ContinueWith(
                     delegate
                         {
                             var installProgress = (x2 * 100) / files.Count;
@@ -558,6 +558,7 @@ namespace SevenUpdate
 
                             ReportProgress(installProgress);
                         });
+                task.Wait();
             }
         }
 
