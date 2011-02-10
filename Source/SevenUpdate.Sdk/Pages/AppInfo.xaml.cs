@@ -118,8 +118,7 @@ namespace SevenUpdate.Sdk.Pages
 
             this.tbxAppLocation.Note = @"%PROGRAMFILES%\My Company\My App";
 
-            var rule = new AppDirectoryRule { IsRegistryPath = false };
-            this.tbxAppLocation.HasError = !rule.Validate(tbxAppLocation.Text, null).IsValid;
+            this.tbxAppLocation.HasError = !new AppDirectoryRule().Validate(tbxAppLocation.Text, null).IsValid;
         }
 
         /// <summary>Changes the UI to show the registry application location</summary>
@@ -134,8 +133,7 @@ namespace SevenUpdate.Sdk.Pages
 
             this.tbxAppLocation.Note = @"HKLM\Software\MyCompany\MyApp";
 
-            var rule = new AppDirectoryRule { IsRegistryPath = true };
-            this.tbxAppLocation.HasError = !rule.Validate(tbxAppLocation.Text, null).IsValid;
+            this.tbxAppLocation.HasError = !new RegistryPathRule().Validate(tbxAppLocation.Text, null).IsValid;
         }
 
         /// <summary>Converts the application location path to system variables</summary>
@@ -203,7 +201,16 @@ namespace SevenUpdate.Sdk.Pages
             var urlRule = new UrlInputRule { IsRequired = true };
 
             this.tbxValueName.HasError = !new RequiredInputRule().Validate(this.tbxValueName.Text, null).IsValid;
-            this.tbxAppLocation.HasError = !new AppDirectoryRule { IsRegistryPath = this.rbtnRegistry.IsChecked.GetValueOrDefault() } .Validate(tbxAppLocation.Text, null).IsValid;
+
+            if (this.rbtnRegistry.IsChecked.GetValueOrDefault())
+            {
+                this.tbxAppLocation.HasError = !new RegistryPathRule().Validate(tbxAppLocation.Text, null).IsValid;
+            }
+            else
+            {
+                this.tbxAppLocation.HasError = !new AppDirectoryRule().Validate(tbxAppLocation.Text, null).IsValid;
+            }
+
             this.tbxSuiUrl.HasError = !new SuiLocationRule().Validate(this.tbxSuiUrl.Text, null).IsValid;
             this.tbxAppUrl.HasError = !urlRule.Validate(this.tbxAppUrl.Text, null).IsValid;
             this.tbxHelpUrl.HasError = !urlRule.Validate(this.tbxHelpUrl.Text, null).IsValid;
@@ -454,21 +461,16 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             }
 
-            var rule = new AppDirectoryRule { IsRegistryPath = this.rbtnRegistry.IsChecked.GetValueOrDefault() };
-
-            textBox.HasError = !rule.Validate(textBox.Text, null).IsValid;
-            string errorMsg;
-
             if (this.rbtnRegistry.IsChecked.GetValueOrDefault())
             {
-                errorMsg = Properties.Resources.RegistryKeyInvalid;
+                textBox.HasError = !new RegistryPathRule().Validate(textBox.Text, null).IsValid;
+                textBox.ToolTip = textBox.HasError ? Properties.Resources.RegistryKeyInvalid : null;
             }
             else
             {
-                errorMsg = Properties.Resources.FilePathInvalid;
+                textBox.HasError = !new AppDirectoryRule().Validate(textBox.Text, null).IsValid;
+                textBox.ToolTip = textBox.HasError ? Properties.Resources.FilePathInvalid : null;
             }
-
-            textBox.ToolTip = textBox.HasError ? errorMsg : null;
         }
 
         /// <summary>Validates the textbox against the AppDirectory Validation Rule</summary>

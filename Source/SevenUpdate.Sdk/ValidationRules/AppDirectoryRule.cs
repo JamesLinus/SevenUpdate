@@ -36,21 +36,6 @@ namespace SevenUpdate.Sdk.ValidationRules
     [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "ValidationRule")]
     internal sealed class AppDirectoryRule : ValidationRule
     {
-        #region Constants and Fields
-
-        /// <summary>A regex to detect a registry root key</summary>
-        private const string RegistryPattern = @"^HKLM\\|^HKEY_CLASSES_ROOT\\|^HKEY_CURRENT_USER\\|^HKEY_LOCAL_MACHINE\\|^HKEY_USERS\\|^HKU\\|^HKCR\\";
-
-        #endregion
-
-        #region Properties
-
-        /// <summary>Gets or sets a value indicating whether this instance is registry path.</summary>
-        /// <value><see langword = "true" /> if this instance is registry path; otherwise, <see langword = "false" />.</value>
-        internal bool IsRegistryPath { private get; set; }
-
-        #endregion
-
         #region Public Methods
 
         /// <summary>When overridden in a derived class, performs validation checks on a value.</summary>
@@ -63,15 +48,6 @@ namespace SevenUpdate.Sdk.ValidationRules
             if (input == null)
             {
                 return new ValidationResult(false, Resources.FilePathInvalid);
-            }
-
-            if (this.IsRegistryPath)
-            {
-                if (Regex.IsMatch(input, RegistryPattern, RegexOptions.IgnoreCase))
-                {
-                    return  new ValidationResult(true, null);
-                }
-                return new ValidationResult(false, Resources.PathDoesNotExist);
             }
 
             input = Core.AppInfo.Directory == null

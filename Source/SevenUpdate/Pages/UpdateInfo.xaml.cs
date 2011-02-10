@@ -220,10 +220,20 @@ namespace SevenUpdate.Pages
             if (DisplayOptionalUpdates)
             {
                 expander.IsExpanded = expander.Tag.ToString() == Properties.Resources.Optional;
+
+                if (!Core.Settings.IncludeRecommended && expander.Tag.ToString() == Properties.Resources.Recommended)
+                {
+                    expander.IsExpanded = true;
+                }
             }
             else
             {
                 expander.IsExpanded = expander.Tag.ToString() == Properties.Resources.Important;
+
+                if (Core.Settings.IncludeRecommended && expander.Tag.ToString() == Properties.Resources.Recommended)
+                {
+                    expander.IsExpanded = true;
+                }
             }
         }
 

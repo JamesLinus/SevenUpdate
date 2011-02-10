@@ -24,7 +24,6 @@
 namespace SevenUpdate.Sdk.ValidationRules
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.Text.RegularExpressions;
     using System.Windows.Controls;
@@ -32,7 +31,6 @@ namespace SevenUpdate.Sdk.ValidationRules
     using SevenUpdate.Sdk.Properties;
 
     /// <summary>Validates a value and determines if the value is a registry path</summary>
-    [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "ValidationRule")]
     public class RegistryPathRule : ValidationRule
     {
         #region Constants and Fields
@@ -56,15 +54,7 @@ namespace SevenUpdate.Sdk.ValidationRules
                 return new ValidationResult(false, Resources.FilePathInvalid);
             }
 
-            if (Regex.IsMatch(input, RegistryPattern, RegexOptions.IgnoreCase))
-            {
-                if (Utilities.CheckRegistryKey(input, Core.AppInfo.Platform))
-                {
-                    return new ValidationResult(true, null);
-                }
-            }
-
-            return new ValidationResult(false, Resources.FilePathInvalid);
+            return Regex.IsMatch(input, RegistryPattern, RegexOptions.IgnoreCase) ? new ValidationResult(true, null) : new ValidationResult(false, Resources.RegistryKeyInvalid);
         }
 
         #endregion
