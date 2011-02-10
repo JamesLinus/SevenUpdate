@@ -457,7 +457,18 @@ namespace SevenUpdate.Sdk.Pages
             var rule = new AppDirectoryRule { IsRegistryPath = this.rbtnRegistry.IsChecked.GetValueOrDefault() };
 
             textBox.HasError = !rule.Validate(textBox.Text, null).IsValid;
-            textBox.ToolTip = textBox.HasError ? Properties.Resources.FilePathInvalid : null;
+            string errorMsg;
+
+            if (this.rbtnRegistry.IsChecked.GetValueOrDefault())
+            {
+                errorMsg = Properties.Resources.RegistryKeyInvalid;
+            }
+            else
+            {
+                errorMsg = Properties.Resources.FilePathInvalid;
+            }
+
+            textBox.ToolTip = textBox.HasError ? errorMsg : null;
         }
 
         /// <summary>Validates the textbox against the AppDirectory Validation Rule</summary>

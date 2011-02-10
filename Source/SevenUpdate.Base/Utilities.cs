@@ -49,6 +49,9 @@ namespace SevenUpdate
         /// <summary>The application directory of the current assembly</summary>
         public static readonly string AppDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 
+        /// <summary>Indicates if a system reboot is needed</summary>
+        private static bool rebootNeeded;
+
         #endregion
 
         #region Events
@@ -75,7 +78,22 @@ namespace SevenUpdate
 
         /// <summary>Gets a value indicating whether if a reboot is needed</summary>
         /// <value><see langword = "true" /> if a reboot is needed otherwise, <see langword = "false" />.</value>
-        public static bool RebootNeeded { get; internal set; }
+        public static bool RebootNeeded
+        {
+            get
+            {
+                var rebootLock = Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "reboot.lock");
+                if (File.Exists(rebootLock))
+                    return true;
+
+                return rebootNeeded;
+            }
+
+            set
+            {
+                rebootNeeded = value;
+            }
+        }
 
         #endregion
 

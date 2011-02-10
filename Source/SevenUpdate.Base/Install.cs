@@ -175,7 +175,15 @@ namespace SevenUpdate
 
             if (Utilities.RebootNeeded)
             {
-                NativeMethods.MoveFileExW(Path.Combine(Environment.ExpandEnvironmentVariables("%tmp%"), "reboot.lock"), null, MoveOnReboot);
+                if (!File.Exists(Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "reboot.lock")))
+                {
+                    using (var file = File.Create(Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "reboot.lock")))
+                    {
+                        file.WriteByte(0);
+                    }
+                }
+
+                NativeMethods.MoveFileExW(Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "reboot.lock"), null, MoveOnReboot);
 
                 if (Directory.Exists(downloadDirectory))
                 {

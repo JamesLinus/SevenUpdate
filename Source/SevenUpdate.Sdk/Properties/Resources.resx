@@ -900,4 +900,7 @@
     <value>32-bit/64-bit application</value>
     <comment>ComboBoxItem.Content</comment>
   </data>
+  <data name="RegistryKeyInvalid" xml:space="preserve">
+    <value>The registry key you have entered is not valid.</value>
+  </data>
 </root>

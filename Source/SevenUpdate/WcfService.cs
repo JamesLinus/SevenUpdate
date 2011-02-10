@@ -360,6 +360,9 @@ namespace SevenUpdate
                     {
                         try
                         {
+                            if (context == null)
+                                Install();
+
                             context.InstallUpdates(Core.Applications);
                         }
                         catch (CommunicationObjectAbortedException)
@@ -374,6 +377,8 @@ namespace SevenUpdate
                         }
                         catch (Exception e)
                         {
+                            context = null;
+                            IsConnected = false;
                             ErrorOccurred(null, new ErrorOccurredEventArgs(Utilities.GetExceptionAsString(e), ErrorType.FatalError));
                             throw;
                         }

@@ -1042,6 +1042,15 @@ namespace SevenUpdate.Sdk.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to The registry key you have entered is not valid..
+        /// </summary>
+        public static string RegistryKeyInvalid {
+            get {
+                return ResourceManager.GetString("RegistryKeyInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Registry.
         /// </summary>
         public static string RegistryTitle {

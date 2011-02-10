@@ -67,9 +67,11 @@ namespace SevenUpdate.Sdk.ValidationRules
 
             if (this.IsRegistryPath)
             {
-                return Regex.IsMatch(input, RegistryPattern, RegexOptions.IgnoreCase)
-                           ? (Utilities.CheckRegistryKey(input, Core.AppInfo.Platform) ? new ValidationResult(true, null) : new ValidationResult(false, Resources.PathDoesNotExist))
-                           : new ValidationResult(false, Resources.PathDoesNotExist);
+                if (Regex.IsMatch(input, RegistryPattern, RegexOptions.IgnoreCase))
+                {
+                    return  new ValidationResult(true, null);
+                }
+                return new ValidationResult(false, Resources.PathDoesNotExist);
             }
 
             input = Core.AppInfo.Directory == null
@@ -90,7 +92,7 @@ namespace SevenUpdate.Sdk.ValidationRules
                 return new ValidationResult(false, Resources.FilePathInvalid);
             }
 
-            return new ValidationResult(true, null);
+            return new ValidationResult(false, Resources.FilePathInvalid);
         }
 
         #endregion

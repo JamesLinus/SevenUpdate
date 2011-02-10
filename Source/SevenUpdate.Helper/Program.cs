@@ -68,7 +68,7 @@ namespace SevenUpdate.Helper
 
                 try
                 {
-                    File.Delete(Path.Combine(AllUsersStore, "reboot.lock"));
+                    File.Delete(Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "reboot.lock"));
                 }
                 catch (Exception e)
                 {
@@ -145,9 +145,9 @@ namespace SevenUpdate.Helper
 
                     NativeMethods.MoveFileExW(t.FullName, Path.Combine(AppDir, t.Name), MoveOnReboot);
 
-                    if (!File.Exists(Path.Combine(AllUsersStore, "reboot.lock")))
+                    if (!File.Exists(Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "reboot.lock")))
                     {
-                        using (var file = File.Create(Path.Combine(AllUsersStore, "reboot.lock")))
+                        using (var file = File.Create(Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "reboot.lock")))
                         {
                             file.WriteByte(0);
                         }
@@ -155,7 +155,7 @@ namespace SevenUpdate.Helper
                 }
             }
 
-            if (!File.Exists(Path.Combine(AllUsersStore, "reboot.lock")))
+            if (!File.Exists(Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "reboot.lock")))
             {
                 try
                 {
@@ -172,7 +172,7 @@ namespace SevenUpdate.Helper
             }
             else
             {
-                NativeMethods.MoveFileExW(Path.Combine(AllUsersStore, "reboot.lock"), null, MoveOnReboot);
+                NativeMethods.MoveFileExW(Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "reboot.lock"), null, MoveOnReboot);
             }
         }
 
