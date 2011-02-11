@@ -409,6 +409,15 @@ namespace SevenUpdate.Admin
 
             if (Applications.Count > 0)
             {
+                if (Applications[0].AppInfo.SuiUrl == @"http://sevenupdate.com/apps/SevenUpdate.sui" || Applications[0].AppInfo.SuiUrl == @"http://sevenupdate.com/apps/SevenUpdate-dev.sui")
+                {
+                    var sevenUpdate = Applications[0];
+                    Applications.Clear();
+                    Applications.Add(sevenUpdate);
+                    e.OptionalCount = 0;
+                    e.ImportantCount = 1;
+                }
+
                 Utilities.Serialize(Applications, Path.Combine(AllUserStore, "updates.sui"));
 
                 Utilities.StartProcess(@"cacls.exe", "\"" + Path.Combine(AllUserStore, "updates.sui") + "\" /c /e /g Users:F");

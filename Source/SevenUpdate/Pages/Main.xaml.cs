@@ -533,6 +533,41 @@ namespace SevenUpdate.Pages
 
             if (Core.Applications.Count > 0)
             {
+                if (Core.Settings.IncludeRecommended)
+                {
+                    e.ImportantCount += e.RecommendedCount;
+                }
+                else
+                {
+                    e.OptionalCount += e.RecommendedCount;
+                }
+
+                var sevenUpdateSui = @"http://sevenupdate.com/apps/SevenUpdate";
+
+                if (App.IsDev)
+                {
+                    sevenUpdateSui += @"-dev.sui";
+                }
+
+                if (App.IsBeta)
+                {
+                    sevenUpdateSui += @"-beta.sui";
+                }
+
+                if (!App.IsDev && !App.IsBeta)
+                {
+                    sevenUpdateSui += @".sui";
+                }
+
+                if (Core.Applications[0].AppInfo.SuiUrl == sevenUpdateSui)
+                {
+                    var sevenUpdate = Core.Applications[0];
+                    Core.Applications.Clear();
+                    Core.Applications.Add(sevenUpdate);
+                    e.OptionalCount = 0;
+                    e.ImportantCount = 1;
+                }
+
                 try
                 {
                     Utilities.Serialize(Core.Applications, Path.Combine(App.AllUserStore, "updates.sui"));
@@ -541,15 +576,6 @@ namespace SevenUpdate.Pages
                 }
                 catch (IOException)
                 {
-                }
-
-                if (Core.Settings.IncludeRecommended)
-                {
-                    e.ImportantCount += e.RecommendedCount;
-                }
-                else
-                {
-                    e.OptionalCount += e.RecommendedCount;
                 }
 
                 if (e.ImportantCount > 0 || e.OptionalCount > 0)

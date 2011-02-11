@@ -105,7 +105,6 @@ namespace SevenUpdate.Pages
         {
             var selectedUpdates = new ObservableCollection<Update>();
             this.appIndices = new List<int>();
-
             for (var x = 0; x < Core.Applications.Count; x++)
             {
                 this.appIndices.Add(x);
