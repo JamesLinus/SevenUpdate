@@ -39,9 +39,10 @@ namespace SevenUpdate.Pages
     {
         #region Constants and Fields
 
-        /// <summary>A collection of <see cref = "Sua" /> that Seven Update can update</summary>
+        /// <summary>The local collection of the apps that Seven Update can update</summary>
         private static ObservableCollection<Sua> machineAppList;
 
+        /// <summary>The offical collection of the applications that Seven Update can update</summary>
         private static ObservableCollection<Sua> apps;
 
         /// <summary>The program configuration</summary>

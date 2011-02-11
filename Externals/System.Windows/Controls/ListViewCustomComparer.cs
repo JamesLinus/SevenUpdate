@@ -98,7 +98,10 @@ namespace System.Windows.Controls
         /// <summary>Clears the sort columns</summary>
         private void ClearSort()
         {
-            this.SortColumns.Clear();
+            if (this.SortColumns != null)
+            {
+                this.SortColumns.Clear();
+            }
         }
 
         #endregion

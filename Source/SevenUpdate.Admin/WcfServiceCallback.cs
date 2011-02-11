@@ -26,7 +26,6 @@ namespace SevenUpdate.Admin
     using System;
     using System.Collections.ObjectModel;
     using System.IO;
-    using System.Linq;
     using System.ServiceModel;
     using System.Threading;
     using System.Threading.Tasks;
@@ -54,7 +53,7 @@ namespace SevenUpdate.Admin
                 sul = new Collection<Sua>();
             }
 
-            for (int x = 0; x < sul.Count; x++)
+            for (var x = 0; x < sul.Count; x++)
             {
                 if (sul[x].Platform != application.Platform || sul[x].Directory != application.Directory)
                 {

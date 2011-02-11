@@ -76,17 +76,14 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Gets a value indicating whether if a reboot is needed</summary>
+        /// <summary>Gets or sets a value indicating whether if a reboot is needed</summary>
         /// <value><see langword = "true" /> if a reboot is needed otherwise, <see langword = "false" />.</value>
         public static bool RebootNeeded
         {
             get
             {
                 var rebootLock = Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "reboot.lock");
-                if (File.Exists(rebootLock))
-                    return true;
-
-                return rebootNeeded;
+                return File.Exists(rebootLock) || rebootNeeded;
             }
 
             set

@@ -24,16 +24,13 @@
 namespace SevenUpdate.Sdk.ValidationRules
 {
     using System;
-    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.IO;
-    using System.Text.RegularExpressions;
     using System.Windows.Controls;
 
     using SevenUpdate.Sdk.Properties;
 
     /// <summary>Validates a value and determines if the value is a application location</summary>
-    [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "ValidationRule")]
     internal sealed class AppDirectoryRule : ValidationRule
     {
         #region Public Methods

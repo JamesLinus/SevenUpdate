@@ -46,12 +46,7 @@ namespace System.Windows
         {
             get
             {
-                if (Environment.OSVersion.Version.Major < 6)
-                {
-                    return false;
-                }
-
-                return NativeMethods.DwmIsCompositionEnabled();
+                return Environment.OSVersion.Version.Major >= 6 && NativeMethods.DwmIsCompositionEnabled();
             }
 
             set

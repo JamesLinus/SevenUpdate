@@ -25,7 +25,6 @@ namespace SevenUpdate.CustomComparer
 {
     using System;
     using System.ComponentModel;
-    using System.Globalization;
     using System.Windows.Controls;
 
     /// <summary>Sorts the SUA class</summary>

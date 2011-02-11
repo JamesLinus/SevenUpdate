@@ -153,7 +153,7 @@ namespace SevenUpdate.Sdk.Pages
                 this.tbxUpdateName.ToolTip = null;
             }
 
-            var urlRule = new UrlInputRule() { IsRequired = true };
+            var urlRule = new UrlInputRule { IsRequired = true };
             tbxSourceLocation.HasError = !urlRule.Validate(tbxSourceLocation.Text, null).IsValid;
             urlRule.IsRequired = false;
 

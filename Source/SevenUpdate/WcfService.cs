@@ -355,15 +355,21 @@ namespace SevenUpdate
                 return false;
             }
 
+            var connected = false;
             Task.Factory.StartNew(WaitForAdmin).ContinueWith(
                 delegate
                     {
                         try
                         {
                             if (context == null)
-                                Install();
-
-                            context.InstallUpdates(Core.Applications);
+                            {
+                                connected = false;
+                            }
+                            else
+                            {
+                                context.InstallUpdates(Core.Applications);
+                                connected = true;
+                            }
                         }
                         catch (CommunicationObjectAbortedException)
                         {
@@ -384,7 +390,7 @@ namespace SevenUpdate
                         }
                     });
 
-            return true;
+            return connected;
         }
 
         /// <summary>Save the settings and call <see cref="SevenUpdate"/>.Admin to commit them.</summary>

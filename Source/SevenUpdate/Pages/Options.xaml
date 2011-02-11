@@ -78,7 +78,7 @@
 			<ComboBoxItem Content="{LocText SevenUpdate:Resources:CheckUpdatesButChooseToDownload}" Tag="{x:Static SevenUpdate:AutoUpdateOption.Notify}" />
 			<ComboBoxItem Content="{LocText SevenUpdate:Resources:NeverCheckForUpdates}" Tag="{x:Static SevenUpdate:AutoUpdateOption.Never}" />
 		</ComboBox>
-		<Rectangle Height="48" Stretch="None" Width="48" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" Margin="10">
+		<Rectangle Height="48" Stretch="Fill" Width="48" Grid.Column="1" Grid.Row="6" HorizontalAlignment="Left" Margin="10">
 			<Rectangle.Style>
 				<Style TargetType="Rectangle">
 					<Setter Property="Fill" Value="{StaticResource GreenShield}" />

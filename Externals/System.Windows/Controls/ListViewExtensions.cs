@@ -45,9 +45,9 @@ namespace System.Windows.Controls
 
             if (!string.IsNullOrEmpty((string)header.Column.Header))
             {
-                if (header.Column.ActualWidth < 125)
+                if (header.Column.ActualWidth < 100)
                 {
-                    header.Column.Width = 125;
+                    header.Column.Width = 100;
                 }
             }
             else
