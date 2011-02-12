@@ -248,5 +248,14 @@ namespace SevenUpdate.Pages
         }
 
         #endregion
+
+        /// <summary>Navigates to the Seven Update privacy policy</summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="e">The event data</param>
+        private void GoToPrivacyPolicy(object sender, RequestNavigateEventArgs e)
+        {
+            Utilities.StartProcess("http://sevenupdate.com/privacy", null, false, true);
+            e.Handled = true;
+        }
     }
 }

@@ -349,6 +349,15 @@ namespace SevenUpdate.Sdk.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copyright:.
+        /// </summary>
+        public static string Copyright {
+            get {
+                return ResourceManager.GetString("Copyright", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Fix all errors to continue.
         /// </summary>
         public static string CorrectErrors {
@@ -637,6 +646,15 @@ namespace SevenUpdate.Sdk.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to GNU GPL 3.0.
+        /// </summary>
+        public static string GPL {
+            get {
+                return ResourceManager.GetString("GPL", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Help &amp; Support.
         /// </summary>
         public static string HelpSupport {
@@ -912,15 +930,6 @@ namespace SevenUpdate.Sdk.Properties {
         public static string Polish {
             get {
                 return ResourceManager.GetString("Polish", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Portions of code use the following libraries:.
-        /// </summary>
-        public static string PortionsOfCode {
-            get {
-                return ResourceManager.GetString("PortionsOfCode", resourceCulture);
             }
         }
         
@@ -1222,7 +1231,7 @@ namespace SevenUpdate.Sdk.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Seven Update SDK is licensed under the GNU GPL 3.0 © 2007-2011.
+        ///   Looks up a localized string similar to Seven Update is licensed under the.
         /// </summary>
         public static string SevenUpdateLicense {
             get {
@@ -1515,6 +1524,15 @@ namespace SevenUpdate.Sdk.Properties {
         public static string Tasks {
             get {
                 return ResourceManager.GetString("Tasks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use of this program is subject to the following software licenses:.
+        /// </summary>
+        public static string TermsAgreement {
+            get {
+                return ResourceManager.GetString("TermsAgreement", resourceCulture);
             }
         }
         

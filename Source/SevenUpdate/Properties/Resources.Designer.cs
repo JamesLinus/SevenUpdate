@@ -268,6 +268,15 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Copyright:.
+        /// </summary>
+        public static string Copyright {
+            get {
+                return ResourceManager.GetString("Copyright", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Could not connect to the Seven Update server.
         /// </summary>
         public static string CouldNotConnect {
@@ -444,6 +453,15 @@ namespace SevenUpdate.Properties {
         public static string GiveRecommendedUpdates {
             get {
                 return ResourceManager.GetString("GiveRecommendedUpdates", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to GNU GPL 3.0.
+        /// </summary>
+        public static string GPL {
+            get {
+                return ResourceManager.GetString("GPL", resourceCulture);
             }
         }
         
@@ -826,15 +844,6 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Portions of code use the following libraries:.
-        /// </summary>
-        public static string PortionsOfCode {
-            get {
-                return ResourceManager.GetString("PortionsOfCode", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Preparing to download updates....
         /// </summary>
         public static string PreparingDownload {
@@ -849,6 +858,24 @@ namespace SevenUpdate.Properties {
         public static string PreparingInstall {
             get {
                 return ResourceManager.GetString("PreparingInstall", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Your privacy is important to us, read our.
+        /// </summary>
+        public static string PrivacyStatement {
+            get {
+                return ResourceManager.GetString("PrivacyStatement", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to privacy statement online.
+        /// </summary>
+        public static string PrivacyStatementOnline {
+            get {
+                return ResourceManager.GetString("PrivacyStatementOnline", resourceCulture);
             }
         }
         
@@ -1060,7 +1087,7 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Seven Update is licensed under the GNU GPL 3.0 © 2007-2011.
+        ///   Looks up a localized string similar to Seven Update is licensed under the.
         /// </summary>
         public static string SevenUpdateLicense {
             get {
@@ -1155,6 +1182,15 @@ namespace SevenUpdate.Properties {
         public static string Tasks {
             get {
                 return ResourceManager.GetString("Tasks", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Use of this program is subject to the following software licenses:.
+        /// </summary>
+        public static string TermsAgreement {
+            get {
+                return ResourceManager.GetString("TermsAgreement", resourceCulture);
             }
         }
         

@@ -836,7 +836,7 @@
     <comment>RegistryValueDataType</comment>
   </data>
   <data name="SevenUpdateLicense" xml:space="preserve">
-    <value>Seven Update SDK is licensed under the GNU GPL 3.0 © 2007-2011</value>
+    <value>Seven Update is licensed under the</value>
     <comment>Run.Text</comment>
   </data>
   <data name="DevelopmentTeam" xml:space="preserve">
@@ -845,10 +845,6 @@
   </data>
   <data name="AppCreator" xml:space="preserve">
     <value>Robert Baker (sevenalive) - Creator and Lead Developer</value>
-    <comment>Run.Text</comment>
-  </data>
-  <data name="PortionsOfCode" xml:space="preserve">
-    <value>Portions of code use the following libraries:</value>
     <comment>Run.Text</comment>
   </data>
   <data name="SharpBitsLicense" xml:space="preserve">
@@ -902,5 +898,14 @@
   </data>
   <data name="RegistryKeyInvalid" xml:space="preserve">
     <value>The registry key you have entered is not valid.</value>
+  </data>
+  <data name="Copyright" xml:space="preserve">
+    <value>Copyright:</value>
+  </data>
+  <data name="GPL" xml:space="preserve">
+    <value>GNU GPL 3.0</value>
+  </data>
+  <data name="TermsAgreement" xml:space="preserve">
+    <value>Use of this program is subject to the following software licenses:</value>
   </data>
 </root>

@@ -1,7 +1,7 @@
 // ***********************************************************************
 // <copyright file="About.xaml.cs"
-//            project="SevenUpdate.Sdk"
-//            assembly="SevenUpdate.Sdk"
+//            project="SevenUpdate"
+//            assembly="SevenUpdate"
 //            solution="SevenUpdate"
 //            company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
@@ -54,10 +54,10 @@ namespace SevenUpdate.Sdk.Windows
             this.Close();
         }
 
-        /// <summary>Opens a web browser and navigates to the specified url</summary>
+        /// <summary>Opens a browser and navigates to the Uri</summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.Navigation.RequestNavigateEventArgs"/> instance containing the event data.</param>
-        private void NavigateToUrl(object sender, RequestNavigateEventArgs e)
+        private void NavigateToUri(object sender, RequestNavigateEventArgs e)
         {
             Utilities.StartProcess(e.Uri.AbsoluteUri);
             e.Handled = true;

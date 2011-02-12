@@ -380,7 +380,7 @@ namespace WPFLocalizeExtension.Engine
                     string.Format(
                         CultureInfo.CurrentCulture, "No resource key with name '{0}' in dictionary '{1}' in assembly '{2}' found! ({2}.{1}.{0})", resourceKey, resourceDictionary, resourceAssembly));
             }
-
+            
             // finally, return the searched object as type of the generic type
             return retVal as TType;
         }
