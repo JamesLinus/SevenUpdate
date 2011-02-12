@@ -28,7 +28,7 @@
             <Run Text="{LocText SevenUpdate.Sdk:Resources:TermsAgreement}" />
             <LineBreak />
             <LineBreak />
-            <Run Text="{LocText SevenUpdate.Sdk:Resources:SevenUpdateLicense}" />
+            <Run Text="{LocText SevenUpdate.Sdk:Resources:SevenUpdateSDKLicense}" />
             <Hyperlink NavigateUri="http://www.gnu.org/licenses/gpl-3.0-standalone.html" RequestNavigate="NavigateToUri" Foreground="#FF0066CC">
                 <Run Text="{LocText SevenUpdate.Sdk:Resources:GPL}" />
             </Hyperlink>

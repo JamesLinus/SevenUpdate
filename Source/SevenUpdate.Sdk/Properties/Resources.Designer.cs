@@ -1231,20 +1231,20 @@ namespace SevenUpdate.Sdk.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Seven Update is licensed under the.
-        /// </summary>
-        public static string SevenUpdateLicense {
-            get {
-                return ResourceManager.GetString("SevenUpdateLicense", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Seven Update SDK.
         /// </summary>
         public static string SevenUpdateSDK {
             get {
                 return ResourceManager.GetString("SevenUpdateSDK", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Seven Update SDK is licensed under the.
+        /// </summary>
+        public static string SevenUpdateSDKLicense {
+            get {
+                return ResourceManager.GetString("SevenUpdateSDKLicense", resourceCulture);
             }
         }
         
