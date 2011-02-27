@@ -851,7 +851,7 @@
     <value>SharpBITS.NET is licensed under the</value>
     <comment>Run.Text</comment>
   </data>
-  <data name="BSDlicense" xml:space="preserve">
+  <data name="BSDLicense" xml:space="preserve">
     <value>BSD license</value>
     <comment>Run.Text</comment>
   </data>

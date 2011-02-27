@@ -288,9 +288,9 @@ namespace SevenUpdate.Sdk.Properties {
         /// <summary>
         ///   Looks up a localized string similar to BSD license.
         /// </summary>
-        public static string BSDlicense {
+        public static string BSDLicense {
             get {
-                return ResourceManager.GetString("BSDlicense", resourceCulture);
+                return ResourceManager.GetString("BSDLicense", resourceCulture);
             }
         }
         

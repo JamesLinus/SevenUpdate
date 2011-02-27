@@ -35,7 +35,7 @@ using System.Windows;
 [assembly: AssemblyCopyright("Copyright © Seven Software")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
-[assembly: AssemblyVersion("1.2.1.3")]
+[assembly: AssemblyVersion("1.2.1.4")]
 [assembly: AssemblyFileVersion("11.2.26")]
 [assembly: CLSCompliant(false)]
 [assembly: ComVisible(false)]

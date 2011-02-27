@@ -38,7 +38,6 @@ namespace SevenUpdate.Sdk.Pages
 
     using Application = System.Windows.Application;
     using KeyEventArgs = System.Windows.Input.KeyEventArgs;
-    using TextBox = System.Windows.Controls.TextBox;
 
     /// <summary>Interaction logic for UpdateFiles.xaml</summary>
     public sealed partial class UpdateFiles
@@ -216,7 +215,6 @@ namespace SevenUpdate.Sdk.Pages
             var updateFile = this.listBox.SelectedItem as UpdateFile;
 
             // ReSharper disable PossibleNullReferenceException
-            this.tbxDownloadUrl.GetBindingExpression(TextBox.TextProperty).ParentBinding.ValidationRules.Clear();
             switch (updateFile.Action)
             {
                 case FileAction.CompareOnly:
@@ -229,14 +227,12 @@ namespace SevenUpdate.Sdk.Pages
                     break;
 
                 default:
-                    var rule = new AppDirectoryRule();
-                    this.tbxDownloadUrl.GetBindingExpression(TextBox.TextProperty).ParentBinding.ValidationRules.Add(rule);
                     this.tbxArgs.IsEnabled = true;
                     this.tbxDownloadUrl.IsEnabled = true;
+                    this.tbxDownloadUrl.HasError = !new AppDirectoryRule().Validate(this.tbxDownloadUrl.Text, null).IsValid;
+                    this.tbxDownloadUrl.ToolTip = this.tbxDownloadUrl.HasError ? Properties.Resources.FilePathInvalid : null;
                     break;
             }
-
-            this.tbxDownloadUrl.GetBindingExpression(TextBox.TextProperty).UpdateSource();
 
             // ReSharper restore PossibleNullReferenceException
         }
@@ -421,5 +417,48 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         #endregion
+
+        /// <summary>Validates the install directory</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The data for the event</param>
+        private void ValidateInstallDirectory(object sender, TextChangedEventArgs e)
+        {
+            var textBox = sender as InfoTextBox;
+
+            if (textBox == null)
+            {
+                return;
+            }
+
+            textBox.HasError = !new AppDirectoryRule().Validate(textBox.Text, null).IsValid;
+            textBox.ToolTip = textBox.HasError ? Properties.Resources.FilePathInvalid : null;
+
+            if (!textBox.HasError)
+            {
+                ((UpdateFile)listBox.SelectedItem).Destination = textBox.Text;
+            }
+        }
+
+        /// <summary>Validates the download directory</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The data for the event</param>
+        private void ValidateDownloadDirectory(object sender, TextChangedEventArgs e)
+        {
+            var textBox = sender as InfoTextBox;
+
+            if (textBox == null)
+            {
+                return;
+            }
+
+            textBox.HasError = !new AppDirectoryRule().Validate(textBox.Text, null).IsValid;
+            textBox.ToolTip = textBox.HasError ? Properties.Resources.FilePathInvalid : null;
+
+
+            if (!textBox.HasError)
+            {
+                ((UpdateFile)listBox.SelectedItem).Source = textBox.Text;
+            }
+        }
     }
 }
