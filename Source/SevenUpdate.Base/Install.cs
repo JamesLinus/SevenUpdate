@@ -101,6 +101,8 @@ namespace SevenUpdate
                 throw new ArgumentNullException("applications");
             }
 
+            bool selfUpdate = false;
+
             IsInstalling = true;
             updateCount = applications.Sum(t => t.Updates.Count);
             int completedUpdates = 0, failedUpdates = 0;
@@ -162,7 +164,7 @@ namespace SevenUpdate
 
                     if (applications[x].AppInfo.Directory == Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, Platform.AnyCpu))
                     {
-                        UpdateSevenUpdate(applications[x].Updates[y].Files);
+                        selfUpdate = true;
                     }
 
                     ReportProgress(100);
@@ -208,6 +210,12 @@ namespace SevenUpdate
                 }
             }
 
+            if (selfUpdate)
+            {
+                Utilities.StartProcess(Path.Combine(Utilities.AppDir, @"SevenUpdate.Helper.exe"), "-cleanup");
+            }
+
+
             IsInstalling = false;
             if (InstallCompleted != null)
             {
@@ -220,42 +228,6 @@ namespace SevenUpdate
         #endregion
 
         #region Methods
-
-        /// <summary>Updates Seven Update</summary>
-        /// <param name="updateFiles">The collection of files that will update Seven Update</param>
-        private static void UpdateSevenUpdate(IEnumerable<UpdateFile> updateFiles)
-        {
-            foreach (var t in updateFiles)
-            {
-                switch (t.Action)
-                {
-                    case FileAction.Delete:
-                    case FileAction.UnregisterThenDelete:
-                        try
-                        {
-                            File.Delete(t.Destination);
-                        }
-                        catch (Exception e)
-                        {
-                            if (!(e is UnauthorizedAccessException || e is InvalidOperationException))
-                            {
-                                Utilities.ReportError(e, ErrorType.FatalError);
-                                throw;
-                            }
-
-                            NativeMethods.MoveFileExW(t.Destination, null, MoveOnReboot);
-                        }
-
-                        break;
-                    default:
-                        break;
-                }
-            }
-
-            Utilities.StartProcess(Path.Combine(Utilities.AppDir, @"SevenUpdate.Helper.exe"), "\"" + currentUpdateName + "\"");
-            IsInstalling = false;
-            return;
-        }
 
         /// <summary>Adds an update to the update history</summary>
         /// <param name="appInfo">the application information</param>
@@ -477,31 +449,47 @@ namespace SevenUpdate
                     {
                         try
                         {
+                            if (File.Exists(file.Destination + @".bak"))
+                            {
+                                File.Delete(file.Destination + @".bak");
+                            }
+
                             if (File.Exists(file.Destination))
                             {
-                                File.Copy(file.Destination, file.Destination + @".bak", true);
-                                File.Delete(file.Destination);
+                                File.Move(file.Destination, file.Destination + @".bak");
                             }
 
                             File.Move(file.Source, file.Destination);
 
                             if (File.Exists(file.Destination + @".bak"))
                             {
-                                File.Delete(file.Destination + @".bak");
+                                try
+                                {
+                                    File.Delete(file.Destination + @".bak");
+                                }
+                                catch (Exception e)
+                                {
+                                    if (!(e is UnauthorizedAccessException || e is IOException))
+                                    {
+                                        Utilities.ReportError(e, ErrorType.InstallationError);
+                                    }
+
+                                    Utilities.RebootNeeded = true;
+                                    NativeMethods.MoveFileExW(file.Source, file.Destination, MoveOnReboot);
+                                    NativeMethods.MoveFileExW(file.Source, file.Destination + ".bak", MoveOnReboot);
+                                }
                             }
                         }
-                        catch (IOException)
+                        catch (Exception e)
                         {
-                            Utilities.RebootNeeded = true;
-                            NativeMethods.MoveFileExW(file.Source, file.Destination, MoveOnReboot);
-                            File.Delete(file.Destination + @".bak");
-                        }
-                        catch (UnauthorizedAccessException)
-                        {
-                            Utilities.RebootNeeded = true;
+                            if (!(e is UnauthorizedAccessException || e is IOException))
+                            {
+                                Utilities.ReportError(e, ErrorType.InstallationError);
+                            }
 
+                            Utilities.RebootNeeded = true;
                             NativeMethods.MoveFileExW(file.Source, file.Destination, MoveOnReboot);
-                            File.Delete(file.Destination + @".bak");
+                            NativeMethods.MoveFileExW(file.Source, file.Destination + ".bak", MoveOnReboot);
                         }
                     }
                     else

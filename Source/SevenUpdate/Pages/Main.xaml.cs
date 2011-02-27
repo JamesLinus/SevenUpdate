@@ -105,8 +105,12 @@ namespace SevenUpdate.Pages
                     {
                         File.Delete(Path.Combine(App.AllUserStore, @"updates.sui"));
                     }
-                    catch (IOException)
+                    catch (Exception e)
                     {
+                        if (!(e is UnauthorizedAccessException || e is IOException))
+                        {
+                            Utilities.ReportError(e, ErrorType.GeneralError);
+                        }
                     }
 
                     Core.Instance.UpdateAction = isInstallOnly ? UpdateAction.Installing : UpdateAction.Downloading;
@@ -238,12 +242,11 @@ namespace SevenUpdate.Pages
                     {
                         File.Delete(Path.Combine(App.AllUserStore, "updates.sui"));
                     }
-                    catch (Exception ex)
+                    catch (Exception f)
                     {
-                        if (!(ex is IOException || ex is UnauthorizedAccessException))
+                        if (!(f is UnauthorizedAccessException || f is IOException))
                         {
-                            Utilities.ReportError(ex, ErrorType.FatalError);
-                            throw;
+                            Utilities.ReportError(f, ErrorType.GeneralError);
                         }
                     }
 
@@ -574,8 +577,12 @@ namespace SevenUpdate.Pages
                     Utilities.StartProcess(@"cacls.exe", "\"" + Path.Combine(App.AllUserStore, "updates.sui") + "\" /c /e /g Users:F");
                     Utilities.StartProcess(@"cacls.exe", "\"" + Path.Combine(App.AllUserStore, "updates.sui") + "\" /c /e /r " + Environment.UserName);
                 }
-                catch (IOException)
+                catch (Exception ex)
                 {
+                    if (!(ex is UnauthorizedAccessException || ex is IOException))
+                    {
+                        Utilities.ReportError(ex, ErrorType.GeneralError);
+                    }
                 }
 
                 if (e.ImportantCount > 0 || e.OptionalCount > 0)

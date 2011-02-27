@@ -45,9 +45,6 @@ namespace SevenUpdate.Helper
         /// <summary>The current directory the application resides in</summary>
         private static readonly string AppDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 
-        /// <summary>The all users app data location</summary>
-        private static readonly string AllUsersStore = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Seven Software", "Seven Update");
-
         #endregion
 
         #region Methods
@@ -59,8 +56,6 @@ namespace SevenUpdate.Helper
         {
             if (args.Length > 0)
             {
-                var downloadDir = Path.Combine(AllUsersStore, "downloads", args[0]);
-
                 KillProcess("SevenUpdate");
                 KillProcess("SevenUpdate.Admin");
 
@@ -76,19 +71,35 @@ namespace SevenUpdate.Helper
                     {
                         throw;
                     }
+
+                    NativeMethods.MoveFileExW(Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "reboot.lock"), null, MoveOnReboot);
                 }
 
-                Thread.Sleep(1000);
+                var files = Directory.GetFiles(AppDir, "*.bak");
 
-                DeleteFiles(downloadDir);
+                foreach (var t in files)
+                {
+                    try
+                    {
+                        File.Delete(t);
+                    }
+                    catch (Exception e)
+                    {
+                        if (!(e is UnauthorizedAccessException || e is IOException))
+                        {
+                        }
+
+                        NativeMethods.MoveFileExW(t, null, MoveOnReboot);
+                    }
+                }
 
                 if (Environment.OSVersion.Version.Major < 6)
                 {
-                    Process.Start(Path.Combine(AppDir, "SevenUpdate.exe"), "Auto");
+                    StartProcess(Path.Combine(AppDir, "SevenUpdate.exe"), "Auto");
                 }
                 else
                 {
-                    Process.Start(@"schtasks.exe", "/Run /TN \"SevenUpdate\"");
+                    StartProcess(@"schtasks.exe", "/Run /TN \"SevenUpdate\"");
                 }
 
                 Environment.Exit(0);
@@ -112,68 +123,48 @@ namespace SevenUpdate.Helper
             }
         }
 
-        /// <summary>Deletes files from the specified folder</summary>
-        /// <param name="folder">The folder to delete the files</param>
-        private static void DeleteFiles(string folder)
+        /// <summary>Starts a process on the system</summary>
+        /// <param name="fileName">The file to execute</param>
+        /// <param name="arguments">The arguments to execute with the file</param>
+        /// <param name="wait">if set to <see langword="true"/> the calling thread will be blocked until process has exited</param>
+        /// <param name="hidden">if set to <see langword="true"/> the process will execute with no UI</param>
+        /// <returns><see langword="true"/> if the process has executed successfully</returns>
+        private static bool StartProcess(string fileName, string arguments, bool wait = false, bool hidden = true)
         {
-            var files = new DirectoryInfo(folder).GetFiles();
-
-            foreach (var t in files)
+            using (var process = new Process())
             {
+                process.StartInfo.FileName = fileName;
+                if (arguments != null)
+                {
+                    process.StartInfo.Arguments = arguments;
+                }
+
+                if (hidden)
+                {
+                    process.StartInfo.CreateNoWindow = true;
+                    process.StartInfo.WindowStyle = ProcessWindowStyle.Hidden;
+                }
+
                 try
                 {
-                    File.Copy(t.FullName, Path.Combine(AppDir, t.Name), true);
+                    process.Start();
+                    if (wait)
+                    {
+                        process.WaitForExit();
+                    }
 
-                    try
-                    {
-                        File.Delete(t.FullName);
-                    }
-                    catch (Exception e)
-                    {
-                        if (!(e is UnauthorizedAccessException || e is IOException))
-                        {
-                            throw;
-                        }
-                    }
+                    return true;
                 }
                 catch (Exception e)
                 {
-                    if (!(e is UnauthorizedAccessException || e is IOException))
-                    {
-                        throw;
-                    }
-
-                    NativeMethods.MoveFileExW(t.FullName, Path.Combine(AppDir, t.Name), MoveOnReboot);
-
-                    if (!File.Exists(Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "reboot.lock")))
-                    {
-                        using (var file = File.Create(Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "reboot.lock")))
-                        {
-                            file.WriteByte(0);
-                        }
-                    }
-                }
-            }
-
-            if (!File.Exists(Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "reboot.lock")))
-            {
-                try
-                {
-                    Directory.Delete(Path.Combine(AllUsersStore, folder), true);
-                    Directory.Delete(Path.Combine(AllUsersStore, "downloads"), true);
-                }
-                catch (Exception e)
-                {
-                    if (!(e is OperationCanceledException || e is UnauthorizedAccessException || e is InvalidOperationException || e is NotSupportedException))
+                    if (!(e is OperationCanceledException || e is UnauthorizedAccessException || e is InvalidOperationException || e is NotSupportedException || e is Win32Exception))
                     {
                         throw;
                     }
                 }
             }
-            else
-            {
-                NativeMethods.MoveFileExW(Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "reboot.lock"), null, MoveOnReboot);
-            }
+
+            return false;
         }
 
         /// <summary>Stops a running process</summary>

@@ -612,7 +612,6 @@ namespace SevenUpdate
             using (var process = new Process())
             {
                 process.StartInfo.FileName = fileName;
-                process.StartInfo.UseShellExecute = true;
                 if (arguments != null)
                 {
                     process.StartInfo.Arguments = arguments;
