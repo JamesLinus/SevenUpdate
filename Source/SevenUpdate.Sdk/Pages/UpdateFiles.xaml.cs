@@ -97,13 +97,15 @@ namespace SevenUpdate.Sdk.Pages
 
         /// <summary>Adds a file to the list</summary>
         /// <param name="fullName">The full path to the file</param>
-        private void AddFile(string fullName)
+        /// <param name="pathToFiles">The full directory path of the files being added</param>
+        /// <param name="impersonateAppDirectory">true to use use %INSTALLDIR% instead of real location of the file</param>
+        private void AddFile(string fullName, string pathToFiles, bool impersonateAppDirectory)
         {
             var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
                                        ? Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Platform)
                                        : Core.AppInfo.Directory;
 
-            installDirectory = Utilities.ConvertPath(installDirectory, true, Core.AppInfo.Platform);
+            installDirectory = impersonateAppDirectory ? pathToFiles : Utilities.ConvertPath(installDirectory, true, Core.AppInfo.Platform);
 
             var installUrl = fullName.Replace(installDirectory, @"%INSTALLDIR%\", true);
             installUrl = installUrl.Replace(@"\\", @"\");
@@ -122,22 +124,25 @@ namespace SevenUpdate.Sdk.Pages
 
             var file = new UpdateFile { Action = FileAction.Update, Destination = installUrl, Hash = Properties.Resources.CalculatingHash, Source = downloadUrl };
 
-            Core.UpdateInfo.Files.Add(file);
+            Core.UpdateInfo.Files.Add(file); 
+
 
             this.tbHashCalculating.Visibility = Visibility.Visible;
 
-            this.CalculateHash(ref file);
-            GetFileSize(ref file);
+            this.CalculateHash(ref file, fullName);
+            GetFileSize(ref file, fullName);
         }
 
         /// <summary>Adds multiple files to the <see cref="UpdateFile"/> collection</summary>
-        /// <param name="files">The files.</param>
-        private void AddFiles(IList<string> files)
+        /// <param name="files">A list of files to add to the update</param>
+        /// <param name="pathToFiles">The full directory path of the files being added</param>
+        /// <param name="impersonateAppDirectory">true to use use %INSTALLDIR% instead of real location of the file</param>
+        private void AddFiles(IList<string> files, string pathToFiles, bool impersonateAppDirectory)
         {
-            this.AddFile(files[0]);
+            this.AddFile(files[0], pathToFiles, impersonateAppDirectory);
             for (var x = 1; x < files.Count; x++)
             {
-                this.AddFile(files[x]);
+                this.AddFile(files[x], pathToFiles, impersonateAppDirectory);
             }
 
             this.listBox.SelectedIndex = 0;
@@ -148,6 +153,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void BrowseFolder(object sender, RoutedEventArgs e)
         {
+            var impersonate = Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift);
             var directory = !Utilities.IsRegistryKey(Core.AppInfo.Directory)
                                 ? Utilities.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Platform)
                                 : Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Platform);
@@ -157,7 +163,7 @@ namespace SevenUpdate.Sdk.Pages
 
                 if (folderBrowserDialog.ShowDialog(Application.Current.MainWindow.GetIWin32Window()) == DialogResult.OK)
                 {
-                    this.AddFiles(Directory.GetFiles(folderBrowserDialog.SelectedPath, "*.*", SearchOption.AllDirectories));
+                    this.AddFiles(Directory.GetFiles(folderBrowserDialog.SelectedPath, "*.*", SearchOption.AllDirectories), folderBrowserDialog.SelectedPath, impersonate);
                 }
             }
         }
@@ -167,6 +173,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void BrowseForFile(object sender, RoutedEventArgs e)
         {
+            var impersonate = Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift);
             var directory = !Utilities.IsRegistryKey(Core.AppInfo.Directory)
                                 ? Utilities.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Platform)
                                 : Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Platform);
@@ -177,7 +184,7 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             }
 
-            this.AddFiles(files);
+            this.AddFiles(files, Path.GetDirectoryName(files[0]), impersonate);
         }
 
         /// <summary>Calculates the hash.</summary>

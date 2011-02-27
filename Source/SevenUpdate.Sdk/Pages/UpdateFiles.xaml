@@ -153,6 +153,9 @@
         <TextBlock Text="{LocText SevenUpdate.Sdk:Resources:SHA2Hash}" HorizontalAlignment="Left" Padding="2" Grid.Column="1" Grid.Row="8"
                 Margin="0,10"
                 Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=LostFocus, Converter={StaticResource intToVisibility}}" />
+        <TextBlock Style="{StaticResource glassText}" HorizontalAlignment="Left" Padding="2"
+                Text="{LocText SevenUpdate.Sdk:Resources:CalculatingHash}" Grid.Row="10" VerticalAlignment="Center"
+                Margin="30,0,0,0" Grid.ColumnSpan="2" Name="tbHashCalculating" Visibility="Collapsed" />
         <TextBlock
                 IsEnabled="{Binding ElementName=listBox, Path=SelectedItem.Hash, Converter={StaticResource stringToBool}, ConverterParameter=True}"
                 Padding="2" Foreground="#FF0066CC" MouseDown="UpdateHash" Style="{StaticResource underlineTextBlock}"
@@ -160,8 +163,5 @@
                 ToolTip="{LocText SevenUpdate.Sdk:Resources:SHA2HashToolTip}" Cursor="Hand" Grid.Column="2" Grid.Row="8" Margin="5,10"
                 Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=LostFocus, Converter={StaticResource intToVisibility}}"
                 Focusable="True" />
-        <TextBlock Style="{StaticResource glassText}" HorizontalAlignment="Left" Padding="2"
-                Text="{LocText SevenUpdate.Sdk:Resources:CalculatingHash}" Grid.Row="10" VerticalAlignment="Center" Margin="30,0,0,0"
-                Grid.ColumnSpan="2" Name="tbHashCalculating" Visibility="Collapsed" />
     </Grid>
 </Page>
