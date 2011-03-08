@@ -7,7 +7,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="415*" />
-            <RowDefinition Height="44" />
+            <RowDefinition Height="41" />
         </Grid.RowDefinitions>
         <TextBlock FontSize="16" Foreground="#FF003399" HorizontalAlignment="Left" Padding="2"
                 Text="{LocText SevenUpdate:Resources:ReviewUpdateHistory}" VerticalAlignment="Top" Margin="24,12,0,5" />
@@ -45,7 +45,7 @@
 
         <Rectangle Fill="#FFf0f0f0" Grid.Row="2" />
         <Button Content="{LocText SevenUpdate:Resources:OK}" HorizontalAlignment="Right" HorizontalContentAlignment="Center"
-                IsDefault="True" Padding="5,1" VerticalAlignment="Bottom" VerticalContentAlignment="Center" Margin="0,0,10,12" Grid.Row="2"
+                IsDefault="True" Padding="5,1" VerticalAlignment="Bottom" VerticalContentAlignment="Center" Margin="0,0,11,10" Grid.Row="2"
                 MinWidth="75" MinHeight="23" TabIndex="1" Click="NavigateToMainPage" />
         <Line Stroke="#FFdfdfdf" VerticalAlignment="Top" Grid.Row="2"
                 X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="1" Stretch="Fill" />

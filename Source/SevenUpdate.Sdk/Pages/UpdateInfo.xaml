@@ -31,7 +31,7 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="129*" />
-            <RowDefinition Height="44" />
+            <RowDefinition Height="41" />
         </Grid.RowDefinitions>
 
         <Rectangle Grid.Row="1" Grid.ColumnSpan="3" Fill="White" Grid.RowSpan="12" />
@@ -49,11 +49,11 @@
         <Rectangle Grid.ColumnSpan="3" Grid.Row="13" Fill="#FFF0F0F0" Name="rectangle" />
 
         <StackPanel Grid.Column="1" Grid.Row="13" HorizontalAlignment="Right" VerticalAlignment="Bottom" Orientation="Horizontal"
-                Margin="0,0,10,12" Grid.ColumnSpan="2">
+                Margin="0,0,11,10" Grid.ColumnSpan="2">
             <Button HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Padding="5,1"
                     VerticalContentAlignment="Center" Content="{LocText SevenUpdate.Sdk:Resources:Next}" Click="MoveOn" TabIndex="7" />
             <Button Content="{LocText SevenUpdate.Sdk:Resources:Cancel}" HorizontalContentAlignment="Center" IsDefault="False"
-                    MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Margin="6,0,0,0" IsCancel="True"
+                    MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Margin="8,0,0,0" IsCancel="True"
                     Click="NavigateToMainPage" TabIndex="8" />
         </StackPanel>
 

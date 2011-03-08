@@ -8,15 +8,14 @@
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="12" />
-			<ColumnDefinition Width="596*" />
-			<ColumnDefinition Width="10" />
+            <ColumnDefinition Width="606*" />
 		</Grid.ColumnDefinitions>
 		<TextBlock FontSize="16" Foreground="#FF003399" HorizontalAlignment="Left" Name="tbHeading" Padding="2" Text="{LocText SevenUpdate:Resources:DownloadingLicenseAgreement}" VerticalAlignment="Bottom" Grid.Column="1" Margin="0,0,0,12" />
 		<StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,1,0,0">
 			<RadioButton Content="{LocText SevenUpdate:Resources:AcceptTerms}" Name="rbtnAccept" Padding="4,0,0,7" MinHeight="17" IsEnabled="False" />
 			<RadioButton Content="{LocText SevenUpdate:Resources:Decline}" Name="rbtnDecline" MinHeight="17" IsEnabled="False" />
 		</StackPanel>
-		<StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Bottom" Grid.Column="1" Grid.Row="2" Margin="0,0,0,12">
+		<StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Bottom" Grid.Column="1" Grid.Row="2" Margin="0,0,11,10">
 			<UacButton IsDefault="True" MinHeight="23" MinWidth="75" Name="btnAction" Padding="5,1" Click="PerformAction" ButtonText="{LocText SevenUpdate:Resources:Finish}">
 				<UacButton.Style>
 					<Style TargetType="UacButton">
@@ -31,8 +30,8 @@
 					</Style>
 				</UacButton.Style>
 			</UacButton>
-			<Button Content="{LocText SevenUpdate:Resources:Cancel}" IsDefault="False" Margin="6,0,0,0" MinHeight="23" MinWidth="75" Name="btnCancel" Padding="5,1" IsCancel="True" Click="Cancel" />
+			<Button Content="{LocText SevenUpdate:Resources:Cancel}" IsDefault="False" Margin="8,0,0,0" MinHeight="23" MinWidth="75" Name="btnCancel" Padding="5,1" IsCancel="True" Click="Cancel" />
 		</StackPanel>
-		<RichTextBox Grid.Row="1" Name="rtbSLA" Grid.Column="1" Margin="0,0,2,10" BorderThickness="1" BorderBrush="#FFF0F0F0" IsReadOnly="True" AutoWordSelection="False" AcceptsReturn="False" IsUndoEnabled="False" Focusable="False" Cursor="Wait" />
+		<RichTextBox Grid.Row="1" Name="rtbSLA" Grid.Column="1" Margin="0,0,12,10" BorderThickness="1" BorderBrush="#FFF0F0F0" IsReadOnly="True" AutoWordSelection="False" AcceptsReturn="False" IsUndoEnabled="False" Focusable="False" Cursor="Wait" />
 	</Grid>
 </Window>
