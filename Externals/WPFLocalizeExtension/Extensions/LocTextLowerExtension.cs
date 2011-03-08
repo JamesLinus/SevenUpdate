@@ -17,8 +17,7 @@ namespace WPFLocalizeExtension.Extensions
 
     using WPFLocalizeExtension.Engine;
 
-    /// <summary><c>BaseLocalizeExtension</c> for string objects.
-    /// This strings will be converted to lower case.</summary>
+    /// <summary><c>BaseLocalizeExtension</c> for string objects.This strings will be converted to lower case.</summary>
     [MarkupExtensionReturnType(typeof(string))]
     public class LocTextLowerExtension : LocTextExtension
     {
@@ -42,8 +41,6 @@ namespace WPFLocalizeExtension.Extensions
         /// <summary>Provides the Value for the first Binding as <see cref="System.String"/></summary>
         /// <param name="serviceProvider">The <see cref="System.Windows.Markup.IProvideValueTarget"/> provided from the <see cref="MarkupExtension"/></param>
         /// <returns>The found item from the .resx directory or <see langword="null"/> if not found</returns>
-        /// <exception cref="System.InvalidOperationException">thrown if <paramref name="serviceProvider"/> is not type of <see cref="System.Windows.Markup.IProvideValueTarget"/></exception>
-        /// <exception cref="System.NotSupportedException">thrown if the found object is not type of <see cref="System.String"/></exception>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             var obj = base.ProvideValue(serviceProvider);
@@ -71,8 +68,7 @@ namespace WPFLocalizeExtension.Extensions
 
         #region Methods
 
-        /// <summary>This method formats the localized text.
-        /// If the passed target text is <see langword="null"/>, string.empty will be returned.</summary>
+        /// <summary>This method formats the localized text.If the passed target text is <see langword="null"/>, string.empty will be returned.</summary>
         /// <param name="target">The text to format.</param>
         /// <returns>Returns the formated text or string.empty, if the target text was <see langword="null"/>.</returns>
         protected override string FormatText(string target)

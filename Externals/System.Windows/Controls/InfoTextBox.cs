@@ -32,17 +32,17 @@ namespace System.Windows.Controls
     {
         #region Constants and Fields
 
-        /// <summary>The text to display when there is no text in the <see cref = "InfoTextBox" /></summary>
-        private static readonly DependencyProperty NoteProperty = DependencyProperty.Register("Note", typeof(string), typeof(InfoTextBox), new UIPropertyMetadata(string.Empty, NotePropertyChanged));
-
-        /// <summary>The style of the Note</summary>
-        private static readonly DependencyProperty NoteStyleProperty = DependencyProperty.Register("NoteStyle", typeof(Style), typeof(InfoTextBox), new UIPropertyMetadata(null));
-
         /// <summary>Indicates if the <see cref = "InfoTextBox" /> has an error</summary>
         private static readonly DependencyProperty HasErrorProperty = DependencyProperty.Register("HasError", typeof(bool), typeof(InfoTextBox), new PropertyMetadata(false, HasErrorPropertyChanged));
 
         /// <summary>Indicates if the <see cref = "InfoTextBox" /> has text</summary>
         private static readonly DependencyProperty HasTextProperty = DependencyProperty.Register("HasText", typeof(bool), typeof(InfoTextBox), new PropertyMetadata(false));
+
+        /// <summary>The text to display when there is no text in the <see cref = "InfoTextBox" /></summary>
+        private static readonly DependencyProperty NoteProperty = DependencyProperty.Register("Note", typeof(string), typeof(InfoTextBox), new UIPropertyMetadata(string.Empty, NotePropertyChanged));
+
+        /// <summary>The style of the Note</summary>
+        private static readonly DependencyProperty NoteStyleProperty = DependencyProperty.Register("NoteStyle", typeof(Style), typeof(InfoTextBox), new UIPropertyMetadata(null));
 
         /// <summary>The adorner label</summary>
         private AdornerLabel myAdornerLabel;
@@ -151,7 +151,7 @@ namespace System.Windows.Controls
             if (focusProp != null)
             {
                 focusProp.AddValueChanged(
-                    this,
+                    this, 
                     delegate
                         {
                             this.UpdateAdorner(this);
@@ -162,7 +162,7 @@ namespace System.Windows.Controls
             if (containsTextProp != null)
             {
                 containsTextProp.AddValueChanged(
-                    this,
+                    this, 
                     delegate
                         {
                             this.UpdateAdorner(this);
@@ -206,6 +206,13 @@ namespace System.Windows.Controls
             base.OnTextChanged(e);
         }
 
+        /// <summary>Updates the style when the HasError property changes</summary>
+        /// <param name="d">The dependency object</param>
+        /// <param name="e">The <see cref="System.Windows.DependencyPropertyChangedEventArgs"/> instance containing the event data.</param>
+        private static void HasErrorPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+        }
+
         /// <summary>Determines whether the <see cref="InfoTextBox"/> is Visible</summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
@@ -218,13 +225,6 @@ namespace System.Windows.Controls
             }
 
             infoTextBox.UpdateAdorner(infoTextBox, !infoTextBox.IsVisible);
-        }
-
-        /// <summary>Updates the style when the HasError property changes</summary>
-        /// <param name="d">The dependency object</param>
-        /// <param name="e">The <see cref="System.Windows.DependencyPropertyChangedEventArgs"/> instance containing the event data.</param>
-        private static void HasErrorPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
         }
 
         /// <summary>Updates the adorner when the label changes</summary>

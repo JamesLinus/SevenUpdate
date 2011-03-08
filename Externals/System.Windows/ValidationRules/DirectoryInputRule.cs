@@ -63,7 +63,7 @@ namespace System.Windows.ValidationRules
                     return new ValidationResult(false, Resources.FilePathInvalid);
                 }
             }
-            
+
             var directoryName = Path.GetDirectoryName(input);
             if (string.IsNullOrEmpty(directoryName))
             {

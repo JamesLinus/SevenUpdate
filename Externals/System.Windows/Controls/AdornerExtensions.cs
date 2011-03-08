@@ -31,10 +31,10 @@ namespace System.Windows.Controls
         #region Public Methods
 
         /// <summary>Determines whether the adorner layer contains an element</summary>
-        /// <typeparam name="T">The type of element to check</typeparam>
         /// <param name="adorner">The adorner.</param>
         /// <param name="element">The element</param>
         /// <returns><see langword="true"/> if the adorner layer contains the element otherwise, <see langword="false"/>.</returns>
+        /// <typeparam name="T">The object to look for</typeparam>
         public static bool Contains<T>(this AdornerLayer adorner, UIElement element)
         {
             if (adorner == null)
@@ -61,10 +61,10 @@ namespace System.Windows.Controls
         }
 
         /// <summary>Removes the adorners</summary>
-        /// <typeparam name="T">The adorner control to remove</typeparam>
         /// <param name="adorner">The adorner</param>
         /// <param name="element">The element</param>
         /// <typeparameter name="T">The type of element</typeparameter>
+        /// <typeparam name="T">The type of element</typeparam>
         public static void RemoveAdorners<T>(this AdornerLayer adorner, UIElement element)
         {
             if (adorner == null)

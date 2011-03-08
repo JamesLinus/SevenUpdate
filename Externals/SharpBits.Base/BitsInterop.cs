@@ -16,8 +16,7 @@ namespace SharpBits.Base
     using System.Runtime.InteropServices;
     using System.Security.Permissions;
 
-    /// <summary>Use the IBackgroundCopyManager interface to create transfer jobs,
-    /// retrieve an enumerator object that contains the jobs in the queue, and to retrieve individual jobs from the queue.</summary>
+    /// <summary>Use the IBackgroundCopyManager interface to create transfer jobs,retrieve an enumerator object that contains the jobs in the queue, and to retrieve individual jobs from the queue.</summary>
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown), GuidAttribute("5CE34C0D-0DC9-4C1F-897C-DAA1B78CEE7C"), ComImportAttribute]
     internal interface IBackgroundCopyManager
     {
@@ -45,8 +44,7 @@ namespace SharpBits.Base
         void GetErrorDescription([MarshalAs(UnmanagedType.Error)] int result, uint languageId, [MarshalAs(UnmanagedType.LPWStr)] out string errorDescription);
     }
 
-    /// <summary>Implement the IBackgroundCopyCallback interface to receive notification that a job is complete, has been modified, or
-    /// is in error. Clients use this interface instead of polling for the status of the job.</summary>
+    /// <summary>Implement the IBackgroundCopyCallback interface to receive notification that a job is complete, has been modified, oris in error. Clients use this interface instead of polling for the status of the job.</summary>
     [ComImport, Guid("97EA99C7-0186-4AD4-8DF9-C5B4E0ED6B22"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     internal interface IBackgroundCopyCallback
     {
@@ -65,8 +63,7 @@ namespace SharpBits.Base
         void JobModification([MarshalAs(UnmanagedType.Interface)] IBackgroundCopyJob job, uint reserved);
     }
 
-    /// <summary>Use the IBackgroundCopyJob interface to add files to the job, set the priority level of the job, determine the state
-    /// of the job, and to start and stop the job.</summary>
+    /// <summary>Use the IBackgroundCopyJob interface to add files to the job, set the priority level of the job, determine the stateof the job, and to start and stop the job.</summary>
     [InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown), GuidAttribute("37668D37-507E-4160-9316-26306D150B12"), ComImportAttribute]
     internal interface IBackgroundCopyJob
     {
@@ -156,8 +153,7 @@ namespace SharpBits.Base
         /// <param name="val">Identifies the events that your application receives. The following table lists the event notification flag values.</param>
         void GetNotifyFlags(out BGJobNotificationTypes val);
 
-        /// <summary>Specifies a pointer to your implementation of the<see cref="IBackgroundCopyCallback"/> interface (callbacks). The
-        /// interface receives notification based on the event notification flags you set</summary>
+        /// <summary>Specifies a pointer to your implementation of the<see cref="IBackgroundCopyCallback"/> interface (callbacks). Theinterface receives notification based on the event notification flags you set</summary>
         /// <param name="val">An <see cref="IBackgroundCopyCallback"/> interface pointer. To remove the current callback interface pointer, set this parameter to <see langword="null"/>.</param>
         void SetNotifyInterface([MarshalAs(UnmanagedType.IUnknown)] object val);
 
@@ -201,8 +197,7 @@ namespace SharpBits.Base
         void TakeOwnership();
     }
 
-    /// <summary>Use the IBackgroundCopyJob2 interface to retrieve reply data from an upload-reply job, determine the progress of the
-    /// reply data transfer to the client, request command line execution, and provide credentials for proxy and remote server authentication requests.</summary>
+    /// <summary>Use the IBackgroundCopyJob2 interface to retrieve reply data from an upload-reply job, determine the progress of thereply data transfer to the client, request command line execution, and provide credentials for proxy and remote server authentication requests.</summary>
     [ComImport, InterfaceType(ComInterfaceType.InterfaceIsIUnknown), Guid("54B50739-686F-45EB-9DFF-D6A9A0FAA9AF")]
     internal interface IBackgroundCopyJob2
     {
@@ -292,8 +287,7 @@ namespace SharpBits.Base
         /// <param name="val">Identifies the events that your application receives. The following table lists the event notification flag values. </param>
         void GetNotifyFlags(out uint val);
 
-        /// <summary>Specifies a pointer to your implementation of the <see cref="IBackgroundCopyCallback"/> interface (callbacks). 
-        /// The interface receives notification based on the event notification flags you set</summary>
+        /// <summary>Specifies a pointer to your implementation of the <see cref="IBackgroundCopyCallback"/> interface (callbacks). The interface receives notification based on the event notification flags you set</summary>
         /// <param name="val">An <see cref="IBackgroundCopyCallback"/> interface pointer. To remove the current callback interface pointer, set this parameter to <see langword="null"/>.</param>
         void SetNotifyInterface([MarshalAs(UnmanagedType.IUnknown)] object val);
 
@@ -387,8 +381,7 @@ namespace SharpBits.Base
         /// <param name="localName"><see langword="null"/>-terminated string that contains the name of the file on the server. For information on specifying the remote name, see the RemoteName member and Remarks section of the <see cref="BGFileInfo"/> structure. </param>
         void AddFile([MarshalAs(UnmanagedType.LPWStr)] string remoteUrl, [MarshalAs(UnmanagedType.LPWStr)] string localName);
 
-        /// <summary>Returns an interface pointer to an enumerator
-        /// object that you use to enumerate the files in the job</summary>
+        /// <summary>Returns an interface pointer to an enumeratorobject that you use to enumerate the files in the job</summary>
         /// <param name="enum"><see cref="IEnumBackgroundCopyFiles"/> interface pointer that you use to enumerate the files in the job. Release enumFiles when done. </param>
         void EnumFiles([MarshalAs(UnmanagedType.Interface)] out IEnumBackgroundCopyFiles @enum);
 
@@ -408,19 +401,15 @@ namespace SharpBits.Base
         /// <param name="val">GUID that identifies the job within the BITS queue.</param>
         void GetId(out Guid val);
 
-        /// <summary>Retrieves the type of transfer being performed, 
-        /// such as a file download</summary>
+        /// <summary>Retrieves the type of transfer being performed, such as a file download</summary>
         /// <param name="val">Type of transfer being performed. For a list of transfer types, see the BGJob_TYPE enumeration type. </param>
         void GetType(out BGJobType val);
 
-        /// <summary>Retrieves job-related progress information, 
-        /// such as the number of bytes and files transferred 
-        /// to the client</summary>
+        /// <summary>Retrieves job-related progress information, such as the number of bytes and files transferred to the client</summary>
         /// <param name="val">Contains data that you can use to calculate the percentage of the job that is complete. For more information, see <see cref="BGJobProgress"/>. </param>
         void GetProgress(out BGJobProgress val);
 
-        /// <summary>Retrieves timestamps for activities related
-        /// to the job, such as the time the job was created</summary>
+        /// <summary>Retrieves timestamps for activities relatedto the job, such as the time the job was created</summary>
         /// <param name="val">Contains job-related time stamps. For available time stamps, see the BGJob_TIMES structure.</param>
         void GetTimes(out BGJobTimes val);
 
@@ -428,8 +417,7 @@ namespace SharpBits.Base
         /// <param name="val">Current state of the job. For example, the state reflects whether the job is in error, transferring data, or suspended. For a list of job states, see the <see cref="BGJobState"/> enumeration type. </param>
         void GetState(out BGJobState val);
 
-        /// <summary>Retrieves an interface pointer to 
-        /// the error object after an error occurs</summary>
+        /// <summary>Retrieves an interface pointer to the error object after an error occurs</summary>
         /// <param name="error">Error interface that provides the error code, a description of the error, and the context in which the error occurred. This parameter also identifies the file being transferred at the time the error occurred. Release error when done. </param>
         void GetError([MarshalAs(UnmanagedType.Interface)] out IBackgroundCopyError error);
 
@@ -437,8 +425,7 @@ namespace SharpBits.Base
         /// <param name="val"><see langword="null"/>-terminated string that contains the string version of the SID that identifies the job's owner. Call the CoTaskMemFree function to free ppOwner when done. </param>
         void GetOwner([MarshalAs(UnmanagedType.LPWStr)] out string val);
 
-        /// <summary>Specifies a display name that identifies the job in 
-        /// a user interface</summary>
+        /// <summary>Specifies a display name that identifies the job in a user interface</summary>
         /// <param name="val"><see langword="null"/>-terminated string that identifies the job. Must not be <see langword="null"/>. The length of the string is limited to 256 characters, not including the <see langword="null"/> terminator. </param>
         void SetDisplayName([MarshalAs(UnmanagedType.LPWStr)] string val);
 
@@ -454,8 +441,7 @@ namespace SharpBits.Base
         /// <param name="val"><see langword="null"/>-terminated string that contains a short description of the job. Call the CoTaskMemFree function to free ppDescription when done. </param>
         void GetDescription([MarshalAs(UnmanagedType.LPWStr)] out string val);
 
-        /// <summary>Specifies the priority of the job relative to 
-        /// other jobs in the transfer queue</summary>
+        /// <summary>Specifies the priority of the job relative to other jobs in the transfer queue</summary>
         /// <param name="val">Specifies the priority level of your job relative to other jobs in the transfer queue. The default is BGJobPriorityNormal. For a list of priority levels, see the <see cref="BGJobPriority"/> enumeration. </param>
         void SetPriority(BGJobPriority val);
 
@@ -467,47 +453,35 @@ namespace SharpBits.Base
         /// <param name="val">Set one or more of the following flags to identify the events that you want to receive. </param>
         void SetNotifyFlags([MarshalAs(UnmanagedType.U4)] BGJobNotificationTypes val);
 
-        /// <summary>Retrieves the event notification (callback) flags 
-        /// you have set for your application.</summary>
+        /// <summary>Retrieves the event notification (callback) flags you have set for your application.</summary>
         /// <param name="val">Identifies the events that your application receives. The following table lists the event notification flag values. </param>
         void GetNotifyFlags(out uint val);
 
-        /// <summary>Specifies a pointer to your implementation of the <see cref="IBackgroundCopyCallback"/> interface (callbacks). The 
-        /// interface receives notification based on the event 
-        /// notification flags you set</summary>
+        /// <summary>Specifies a pointer to your implementation of the <see cref="IBackgroundCopyCallback"/> interface (callbacks). The interface receives notification based on the event notification flags you set</summary>
         /// <param name="val">An <see cref="IBackgroundCopyCallback"/> interface pointer. To remove the current callback interface pointer, set this parameter to <see langword="null"/>.</param>
         void SetNotifyInterface([MarshalAs(UnmanagedType.IUnknown)] object val);
 
-        /// <summary>Retrieves a pointer to your implementation 
-        /// of the <see cref="IBackgroundCopyCallback"/> interface (callbacks).</summary>
+        /// <summary>Retrieves a pointer to your implementation of the <see cref="IBackgroundCopyCallback"/> interface (callbacks).</summary>
         /// <param name="val">Interface pointer to your implementation of the <see cref="IBackgroundCopyCallback"/> interface. When done, release ppNotifyInterface.</param>
         void GetNotifyInterface([MarshalAs(UnmanagedType.IUnknown)] out object val);
 
-        /// <summary>Specifies the minimum length of time that BITS waits after 
-        /// encountering a transient error condition before trying to 
-        /// transfer the file</summary>
+        /// <summary>Specifies the minimum length of time that BITS waits after encountering a transient error condition before trying to transfer the file</summary>
         /// <param name="seconds">Minimum length of time, in seconds, that BITS waits after encountering a transient error before trying to transfer the file. The default retry delay is 600 seconds (10 minutes). The minimum retry delay that you can specify is 60 seconds. If you specify a value less than 60 seconds, BITS changes the value to 60 seconds. If the value exceeds the no-progress-timeout value retrieved from the <see cref="GetNoProgressTimeout"/> method, BITS will not retry the transfer and moves the job to the BGJobStateError state. </param>
         void SetMinimumRetryDelay(uint seconds);
 
-        /// <summary>Retrieves the minimum length of time that BITS waits after 
-        /// encountering a transient error condition before trying to 
-        /// transfer the file</summary>
+        /// <summary>Retrieves the minimum length of time that BITS waits after encountering a transient error condition before trying to transfer the file</summary>
         /// <param name="seconds">Length of time, in seconds, that the service waits after encountering a transient error before trying to transfer the file. </param>
         void GetMinimumRetryDelay(out uint seconds);
 
-        /// <summary>Specifies the length of time that BITS continues to try to 
-        /// transfer the file after encountering a transient error 
-        /// condition</summary>
+        /// <summary>Specifies the length of time that BITS continues to try to transfer the file after encountering a transient error condition</summary>
         /// <param name="seconds">Length of time, in seconds, that BITS tries to transfer the file after the first transient error occurs. The default retry period is 1,209,600 seconds (14 days). Set the retry period to 0 to prevent retries and to force the job into the BGJobStateError state for all errors. If the retry period value exceeds the JobInactivityTimeout Group Policy value (90-day default), BITS cancels the job after the policy value is exceeded.</param>
         void SetNoProgressTimeout(uint seconds);
 
-        /// <summary>Retrieves the length of time that BITS continues to try to 
-        /// transfer the file after encountering a transient error condition</summary>
+        /// <summary>Retrieves the length of time that BITS continues to try to transfer the file after encountering a transient error condition</summary>
         /// <param name="seconds">Length of time, in seconds, that the service tries to transfer the file after a transient error occurs. </param>
         void GetNoProgressTimeout(out uint seconds);
 
-        /// <summary>Retrieves the number of times the job was interrupted by 
-        /// network failure or server unavailability</summary>
+        /// <summary>Retrieves the number of times the job was interrupted by network failure or server unavailability</summary>
         /// <param name="errors">Number of errors that occurred while BITS tried to transfer the job. The count increases when the job moves from the BGJobStateTransferring state to the BGJobStateTransientError or BGJobStateError state.</param>
         void GetErrorCount(out ulong errors);
 
@@ -598,8 +572,7 @@ namespace SharpBits.Base
         /// <param name="localName"><see langword="null"/>-terminated string that contains the name of the file on the server. For information on specifying the remote name, see the RemoteName member and Remarks section of the <see cref="BGFileInfo"/> structure.</param>
         void AddFile([MarshalAs(UnmanagedType.LPWStr)] string remoteUrl, [MarshalAs(UnmanagedType.LPWStr)] string localName);
 
-        /// <summary>Returns an interface pointer to an enumerator
-        /// object that you use to enumerate the files in the job</summary>
+        /// <summary>Returns an interface pointer to an enumeratorobject that you use to enumerate the files in the job</summary>
         /// <param name="enum"><see cref="IEnumBackgroundCopyFiles"/> interface pointer that you use to enumerate the files in the job. Release enumFiles when done.</param>
         void EnumFiles([MarshalAs(UnmanagedType.Interface)] out IEnumBackgroundCopyFiles @enum);
 
@@ -619,19 +592,15 @@ namespace SharpBits.Base
         /// <param name="val">GUID that identifies the job within the BITS queue.</param>
         void GetId(out Guid val);
 
-        /// <summary>Retrieves the type of transfer being performed,
-        /// such as a file download</summary>
+        /// <summary>Retrieves the type of transfer being performed,such as a file download</summary>
         /// <param name="val">Type of transfer being performed. For a list of transfer types, see the BGJob_TYPE enumeration type.</param>
         void GetType(out BGJobType val);
 
-        /// <summary>Retrieves job-related progress information,
-        /// such as the number of bytes and files transferred
-        /// to the client</summary>
+        /// <summary>Retrieves job-related progress information,such as the number of bytes and files transferredto the client</summary>
         /// <param name="val">Contains data that you can use to calculate the percentage of the job that is complete. For more information, see <see cref="BGJobProgress"/>.</param>
         void GetProgress(out BGJobProgress val);
 
-        /// <summary>Retrieves timestamps for activities related
-        /// to the job, such as the time the job was created</summary>
+        /// <summary>Retrieves timestamps for activities relatedto the job, such as the time the job was created</summary>
         /// <param name="val">Contains job-related time stamps. For available time stamps, see the BGJob_TIMES structure.</param>
         void GetTimes(out BGJobTimes val);
 
@@ -639,8 +608,7 @@ namespace SharpBits.Base
         /// <param name="val">Current state of the job. For example, the state reflects whether the job is in error, transferring data, or suspended. For a list of job states, see the <see cref="BGJobState"/> enumeration type.</param>
         void GetState(out BGJobState val);
 
-        /// <summary>Retrieves an interface pointer to
-        /// the error object after an error occurs</summary>
+        /// <summary>Retrieves an interface pointer tothe error object after an error occurs</summary>
         /// <param name="error">Error interface that provides the error code, a description of the error, and the context in which the error occurred. This parameter also identifies the file being transferred at the time the error occurred. Release error when done.</param>
         void GetError([MarshalAs(UnmanagedType.Interface)] out IBackgroundCopyError error);
 
@@ -648,8 +616,7 @@ namespace SharpBits.Base
         /// <param name="val"><see langword="null"/>-terminated string that contains the string version of the SID that identifies the job's owner. Call the CoTaskMemFree function to free ppOwner when done.</param>
         void GetOwner([MarshalAs(UnmanagedType.LPWStr)] out string val);
 
-        /// <summary>Specifies a display name that identifies the job in 
-        /// a user interface</summary>
+        /// <summary>Specifies a display name that identifies the job in a user interface</summary>
         /// <param name="val"><see langword="null"/>-terminated string that identifies the job. Must not be <see langword="null"/>. The length of the string is limited to 256 characters, not including the <see langword="null"/> terminator. </param>
         void SetDisplayName([MarshalAs(UnmanagedType.LPWStr)] string val);
 
@@ -665,8 +632,7 @@ namespace SharpBits.Base
         /// <param name="val"><see langword="null"/>-terminated string that contains a short description of the job. Call the CoTaskMemFree function to free ppDescription when done. </param>
         void GetDescription([MarshalAs(UnmanagedType.LPWStr)] out string val);
 
-        /// <summary>Specifies the priority of the job relative to 
-        /// other jobs in the transfer queue</summary>
+        /// <summary>Specifies the priority of the job relative to other jobs in the transfer queue</summary>
         /// <param name="val">Specifies the priority level of your job relative to other jobs in the transfer queue. The default is BGJobPriorityNormal. For a list of priority levels, see the <see cref="BGJobPriority"/> enumeration. </param>
         void SetPriority(BGJobPriority val);
 
@@ -678,47 +644,35 @@ namespace SharpBits.Base
         /// <param name="val">Set one or more of the following flags to identify the events that you want to receive. </param>
         void SetNotifyFlags([MarshalAs(UnmanagedType.U4)] BGJobNotificationTypes val);
 
-        /// <summary>Retrieves the event notification (callback) flags 
-        /// you have set for your application.</summary>
+        /// <summary>Retrieves the event notification (callback) flags you have set for your application.</summary>
         /// <param name="val">Identifies the events that your application receives. The following table lists the event notification flag values. </param>
         void GetNotifyFlags(out uint val);
 
-        /// <summary>Specifies a pointer to your implementation of the <see cref="IBackgroundCopyCallback"/> interface (callbacks). The 
-        /// interface receives notification based on the event 
-        /// notification flags you set</summary>
+        /// <summary>Specifies a pointer to your implementation of the <see cref="IBackgroundCopyCallback"/> interface (callbacks). The interface receives notification based on the event notification flags you set</summary>
         /// <param name="val">An <see cref="IBackgroundCopyCallback"/> interface pointer. To remove the current callback interface pointer, set this parameter to <see langword="null"/>.</param>
         void SetNotifyInterface([MarshalAs(UnmanagedType.IUnknown)] object val);
 
-        /// <summary>Retrieves a pointer to your implementation 
-        /// of the <see cref="IBackgroundCopyCallback"/> interface (callbacks).</summary>
+        /// <summary>Retrieves a pointer to your implementation of the <see cref="IBackgroundCopyCallback"/> interface (callbacks).</summary>
         /// <param name="val">Interface pointer to your implementation of the <see cref="IBackgroundCopyCallback"/> interface. When done, release ppNotifyInterface.</param>
         void GetNotifyInterface([MarshalAs(UnmanagedType.IUnknown)] out object val);
 
-        /// <summary>Specifies the minimum length of time that BITS waits after 
-        /// encountering a transient error condition before trying to 
-        /// transfer the file</summary>
+        /// <summary>Specifies the minimum length of time that BITS waits after encountering a transient error condition before trying to transfer the file</summary>
         /// <param name="seconds">Minimum length of time, in seconds, that BITS waits after encountering a transient error before trying to transfer the file. The default retry delay is 600 seconds (10 minutes). The minimum retry delay that you can specify is 60 seconds. If you specify a value less than 60 seconds, BITS changes the value to 60 seconds. If the value exceeds the no-progress-timeout value retrieved from the <see cref="GetNoProgressTimeout"/> method, BITS will not retry the transfer and moves the job to the BGJobStateError state. </param>
         void SetMinimumRetryDelay(uint seconds);
 
-        /// <summary>Retrieves the minimum length of time that BITS waits after 
-        /// encountering a transient error condition before trying to 
-        /// transfer the file</summary>
+        /// <summary>Retrieves the minimum length of time that BITS waits after encountering a transient error condition before trying to transfer the file</summary>
         /// <param name="seconds">Length of time, in seconds, that the service waits after encountering a transient error before trying to transfer the file. </param>
         void GetMinimumRetryDelay(out uint seconds);
 
-        /// <summary>Specifies the length of time that BITS continues to try to 
-        /// transfer the file after encountering a transient error 
-        /// condition</summary>
+        /// <summary>Specifies the length of time that BITS continues to try to transfer the file after encountering a transient error condition</summary>
         /// <param name="seconds">Length of time, in seconds, that BITS tries to transfer the file after the first transient error occurs. The default retry period is 1,209,600 seconds (14 days). Set the retry period to 0 to prevent retries and to force the job into the BGJobStateError state for all errors. If the retry period value exceeds the JobInactivityTimeout Group Policy value (90-day default), BITS cancels the job after the policy value is exceeded.</param>
         void SetNoProgressTimeout(uint seconds);
 
-        /// <summary>Retrieves the length of time that BITS continues to try to 
-        /// transfer the file after encountering a transient error condition</summary>
+        /// <summary>Retrieves the length of time that BITS continues to try to transfer the file after encountering a transient error condition</summary>
         /// <param name="seconds">Length of time, in seconds, that the service tries to transfer the file after a transient error occurs. </param>
         void GetNoProgressTimeout(out uint seconds);
 
-        /// <summary>Retrieves the number of times the job was interrupted by 
-        /// network failure or server unavailability</summary>
+        /// <summary>Retrieves the number of times the job was interrupted by network failure or server unavailability</summary>
         /// <param name="errors">Number of errors that occurred while BITS tried to transfer the job. The count increases when the job moves from the BGJobStateTransferring state to the BGJobStateTransientError or BGJobStateError state.</param>
         void GetErrorCount(out ulong errors);
 
@@ -819,19 +773,16 @@ namespace SharpBits.Base
         void GetMaximumDownloadTime([Out] out ulong timeout);
     }
 
-    /// <summary>Use the information in the IBackgroundCopyError interface to determine the cause of the error and if the transfer
-    /// process can proceed.</summary>
+    /// <summary>Use the information in the IBackgroundCopyError interface to determine the cause of the error and if the transferprocess can proceed.</summary>
     [GuidAttribute("19C613A0-FCB8-4F28-81AE-897C3D078F81"), InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown), ComImportAttribute]
     internal interface IBackgroundCopyError
     {
-        /// <summary>Retrieves the error code and identify the context
-        /// in which the error occurred</summary>
+        /// <summary>Retrieves the error code and identify the contextin which the error occurred</summary>
         /// <param name="context">Context in which the error occurred. For a list of context values, see the <see cref="BGErrorContext"/> enumeration.</param>
         /// <param name="code">Error code of the error that occurred.</param>
         void GetError(out BGErrorContext context, [MarshalAs(UnmanagedType.Error)] out int code);
 
-        /// <summary>Retrieves an interface pointer to the file object
-        /// associated with the error</summary>
+        /// <summary>Retrieves an interface pointer to the file objectassociated with the error</summary>
         /// <param name="val">An <see cref="IBackgroundCopyFile"/> interface pointer whose methods you use to determine the local and remote file names associated with the error. The file parameter is set to <see langword="null"/> if the error is not associated with the local or remote file. When done, release file.</param>
         void GetFile([MarshalAs(UnmanagedType.Interface)] out IBackgroundCopyFile val);
 
@@ -867,8 +818,7 @@ namespace SharpBits.Base
         /// <summary>Resets the enumeration sequence to the beginning.</summary>
         void Reset();
 
-        /// <summary>Creates another enumerator that contains the same 
-        /// enumeration state as the current one</summary>
+        /// <summary>Creates another enumerator that contains the same enumeration state as the current one</summary>
         /// <param name="enum">Receives the interface pointer to the enumeration object. If the method is unsuccessful, the value of this output variable is undefined. You must release enumJobs when done.</param>
         void Clone([MarshalAs(UnmanagedType.Interface)] out IEnumBackgroundCopyJobs @enum);
 
@@ -877,8 +827,7 @@ namespace SharpBits.Base
         void GetCount(out uint count);
     }
 
-    /// <summary>Use the IEnumBackgroundCopyFiles interface to enumerate the files
-    /// that a job contains. To get an IEnumBackgroundCopyFiles interface pointer, call the <see cref="IBackgroundCopyJob"/>::EnumFiles method.</summary>
+    /// <summary>Use the IEnumBackgroundCopyFiles interface to enumerate the filesthat a job contains. To get an IEnumBackgroundCopyFiles interface pointer, call the <see cref="IBackgroundCopyJob"/>::EnumFiles method.</summary>
     [InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown), GuidAttribute("CA51E165-C365-424C-8D41-24AAA4FF3C40"), ComImportAttribute]
     internal interface IEnumBackgroundCopyFiles
     {
@@ -895,8 +844,7 @@ namespace SharpBits.Base
         /// <summary>Resets the enumeration sequence to the beginning</summary>
         void Reset();
 
-        /// <summary>Creates another enumerator that contains the same 
-        /// enumeration state as the current enumerator</summary>
+        /// <summary>Creates another enumerator that contains the same enumeration state as the current enumerator</summary>
         /// <param name="enum">Receives the interface pointer to the enumeration object. If the method is unsuccessful, the value of this output variable is undefined. You must release enumFiles when done.</param>
         void Clone([MarshalAs(UnmanagedType.Interface)] out IEnumBackgroundCopyFiles @enum);
 
@@ -905,9 +853,7 @@ namespace SharpBits.Base
         void GetCount(out uint count);
     }
 
-    /// <summary>The IBackgroundCopyFile interface contains information about a file
-    /// that is part of a job. For example, you can use the interfaces methods to retrieve the local and remote names of the
-    /// file and transfer progress information.</summary>
+    /// <summary>The IBackgroundCopyFile interface contains information about a filethat is part of a job. For example, you can use the interfaces methods to retrieve the local and remote names of thefile and transfer progress information.</summary>
     [GuidAttribute("01B7BD23-FB88-4A77-8490-5891D3E4653A"), InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown), ComImportAttribute]
     internal interface IBackgroundCopyFile
     {
@@ -924,9 +870,7 @@ namespace SharpBits.Base
         void GetProgress(out BGFileProgress val);
     }
 
-    /// <summary>The IBackgroundCopyFile2 interface contains information about a file
-    /// that is part of a job. The IBackgroundCopyFile2 interface is used to specify a new remote name for the file and
-    /// retrieve the list of ranges to download.</summary>
+    /// <summary>The IBackgroundCopyFile2 interface contains information about a filethat is part of a job. The IBackgroundCopyFile2 interface is used to specify a new remote name for the file andretrieve the list of ranges to download.</summary>
     [GuidAttribute("83E81B93-0873-474D-8A8C-F2018B1A939C"), InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown), ComImportAttribute]
     internal interface IBackgroundCopyFile2
     {

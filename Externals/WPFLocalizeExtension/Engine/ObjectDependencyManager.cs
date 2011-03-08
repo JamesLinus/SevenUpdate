@@ -31,9 +31,6 @@ namespace WPFLocalizeExtension.Engine
         /// <param name="weakRef">The <see cref="WeakReference"/>, which ensures the live cycle of <paramref name="value"/></param>
         /// <param name="value">The object, which should stay alive as long <paramref name="weakRef"/> is alive</param>
         /// <returns><see langword="true"/>, if the binding was successfully, otherwise <see langword="false"/></returns>
-        /// <exception cref="System.ArgumentNullException">The <paramref name="value"/> cannot be <see langword="null"/></exception>
-        /// <exception cref="System.ArgumentException"><paramref name="value"/> cannot be type of <see cref="WeakReference"/></exception>
-        /// <exception cref="System.InvalidOperationException">The <see cref="WeakReference"/>.Target cannot be the same as <paramref name="value"/></exception>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public static bool AddObjectDependency(WeakReference weakRef, object value)
         {

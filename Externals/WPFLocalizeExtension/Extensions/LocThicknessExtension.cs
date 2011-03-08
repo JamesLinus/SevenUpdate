@@ -43,8 +43,6 @@ namespace WPFLocalizeExtension.Extensions
         /// <summary>Provides the Value for the first Binding as Thickness</summary>
         /// <param name="serviceProvider">The <see cref="System.Windows.Markup.IProvideValueTarget"/> provided from the <see cref="MarkupExtension"/></param>
         /// <returns>The found item from the .resx directory or <see langword="null"/> if not found</returns>
-        /// <exception cref="System.InvalidOperationException">thrown if <paramref name="serviceProvider"/> is not type of <see cref="System.Windows.Markup.IProvideValueTarget"/></exception>
-        /// <exception cref="System.NotSupportedException">thrown if the found object is not type of Thickness</exception>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             var obj = base.ProvideValue(serviceProvider);

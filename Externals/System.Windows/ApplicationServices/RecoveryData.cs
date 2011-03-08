@@ -10,20 +10,14 @@
 // ***********************************************************************
 namespace System.Windows.ApplicationServices
 {
-    /// <summary>The <see cref="System.Delegate"/> that represents the callback method invoked
-    /// by the system when an application has registered for 
-    /// application recovery.</summary>
+    /// <summary>The <see cref="System.Delegate"/> that represents the callback method invokedby the system when an application has registered for application recovery.</summary>
     /// <param name="state">An application-defined state object that is passed to the callback method.</param>
     /// <returns>The result code</returns>
-    /// <remarks>The callback method will be invoked
-    /// prior to the application being terminated by Windows Error Reporting (WER). To keep WER from terminating the application before 
-    /// the callback method completes, the callback method must
-    /// periodically call the <see cref="ApplicationRestartRecoveryManager.ApplicationRecoveryInProgress"/> method.</remarks>
+    /// <remarks>The callback method will be invokedprior to the application being terminated by Windows Error Reporting (WER). To keep WER from terminating the application before the callback method completes, the callback method mustperiodically call the <see cref="ApplicationRestartRecoveryManager.ApplicationRecoveryInProgress"/> method.</remarks>
     /// <seealso cref="ApplicationRestartRecoveryManager.RegisterForApplicationRecovery(RecoverySettings)"/>
     public delegate int RecoveryCallback(object state);
 
-    /// <summary>Defines a class that contains a callback delegate and properties of the application
-    /// as defined by the user.</summary>
+    /// <summary>Defines a class that contains a callback delegate and properties of the applicationas defined by the user.</summary>
     public class RecoveryData
     {
         #region Constructors and Destructors

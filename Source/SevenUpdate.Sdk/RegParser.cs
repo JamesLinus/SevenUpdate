@@ -139,10 +139,7 @@ namespace SevenUpdate.Sdk
 
         /// <summary>Apply fixes to the line</summary>
         /// <param name="line">Line to apply fixes to</param>
-        /// <param name="skipQuotesConversion">
-        /// REG_MULTI_SZ, REG_SZ (hex notation) and REG_EXPAND_SZalready put the quotes correctly so if you fix them again you will damage the value, so for
-        ///   those put <see langword="true"/> here to skip that part and only to do the double-quote and percent fixes.
-        /// </param>
+        /// <param name="skipQuotesConversion">REG_MULTI_SZ, REG_SZ (hex notation) and REG_EXPAND_SZalready put the quotes correctly so if you fix them again you will damage the value, so forthose put <see langword="true"/> here to skip that part and only to do the double-quote and percent fixes.</param>
         /// <returns>The line with the fixes applied</returns>
         private static string ApplyFixes(string line, bool skipQuotesConversion)
         {

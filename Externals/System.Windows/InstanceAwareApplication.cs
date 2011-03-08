@@ -29,7 +29,7 @@ namespace System.Windows
     public enum ApplicationInstanceAwareness
     {
         /// <summary>The awareness is global, meaning that the first application instance is aware of any other instances running on the host.</summary>
-        Host = 0x00,
+        Host = 0x00, 
 
         /// <summary>The awareness is local, meaning that the first application instance is aware only of other instances running in the current user session.</summary>
         UserSession = 0x01
@@ -100,7 +100,6 @@ namespace System.Windows
 
         /// <summary>Initializes a new instance of the <see cref="InstanceAwareApplication"/> class.</summary>
         /// <param name="awareness">The instance awareness of the application.</param>
-        /// <exception cref="T:System.InvalidOperationException">More than one instance of the <see cref="T:System.Windows.Application"/> class is created per <see cref="T:System.AppDomain"/>.</exception>
         public InstanceAwareApplication(ApplicationInstanceAwareness awareness)
         {
             this.awareness = awareness;
@@ -122,7 +121,7 @@ namespace System.Windows
 
         #region Events
 
-        /// <summary>Represents the method that handles the <see cref="InstanceAwareApplication.StartupNextInstance"/> event.</summary>
+        /// <summary>Represents the method that handles the <see cref = "InstanceAwareApplication.StartupNextInstance" /> event.</summary>
         public event EventHandler<StartupNextInstanceEventArgs> StartupNextInstance;
 
         #endregion
@@ -146,12 +145,18 @@ namespace System.Windows
 
         #endregion
 
+        #region Implemented Interfaces
+
+        #region IDisposable
+
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
         public void Dispose()
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
         }
+
+        #endregion
 
         #region IPriorApplicationInstance
 
@@ -166,6 +171,8 @@ namespace System.Windows
             // Since the method is called asynchronously, invoke the function using the dispatcher!
             this.Dispatcher.BeginInvoke(onStartupNextApplication, DispatcherPriority.Background, (object)args);
         }
+
+        #endregion
 
         #endregion
 

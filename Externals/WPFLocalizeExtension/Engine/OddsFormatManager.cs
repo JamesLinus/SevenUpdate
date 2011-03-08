@@ -56,6 +56,15 @@ namespace WPFLocalizeExtension.Engine
 
         #region Properties
 
+        /// <summary>Gets the default <see cref = "OddsFormatType" /> to initialize the <see cref = "OddsFormatManager" />.<see cref = "OddsFormatType" />.</summary>
+        public static OddsFormatType DefaultOddsFormatType
+        {
+            get
+            {
+                return OddsFormatType.EU;
+            }
+        }
+
         /// <summary>Gets the <see cref = "OddsFormatManager" /> singleton.If the underlying instance is <see langword = "null" />, a instance will be created.</summary>
         public static OddsFormatManager Instance
         {
@@ -84,15 +93,6 @@ namespace WPFLocalizeExtension.Engine
             }
         }
 
-        /// <summary>Gets the default <see cref = "OddsFormatType" /> to initialize the <see cref = "OddsFormatManager" />.<see cref = "OddsFormatType" />.</summary>
-        public static OddsFormatType DefaultOddsFormatType
-        {
-            get
-            {
-                return OddsFormatType.EU;
-            }
-        }
-
         /// <summary>Gets a value indicating whether the status of the design mode</summary>
         /// <returns><see langword = "true" /> if in design mode, else <see langword = "false" /></returns>
         public bool IsInDesignMode
@@ -105,9 +105,9 @@ namespace WPFLocalizeExtension.Engine
 
         /// <summary>Gets or sets the OddsFormatType for localization.On set, <see cref = "OnOddsFormatChanged" /> is raised.</summary>
         /// <exception cref = "System.InvalidOperationException">
-        /// You have to set <see cref = "OddsFormatManager" />.<see cref = "OddsFormatType" /> first or 
-        /// wait until MainWindow is created.
-        /// Otherwise you will get an Exception.</exception>
+        ///   You have to set <see cref = "OddsFormatManager" />.<see cref = "OddsFormatType" /> first or 
+        ///   wait until MainWindow is created.
+        ///   Otherwise you will get an Exception.</exception>
         /// <exception cref = "System.ArgumentNullException">thrown if OddsFormatType is not defined</exception>
         public OddsFormatType OddsFormatType
         {
@@ -147,9 +147,7 @@ namespace WPFLocalizeExtension.Engine
             WeakOddsFormatChangedEventManager.AddListener(listener);
         }
 
-        /// <summary>Getter of <see cref="DependencyProperty"/> DesignOddsFormat.
-        /// Only supported at DesignTime.
-        /// If its in Runtime, the current <see cref="OddsFormatType"/> will be returned.</summary>
+        /// <summary>Getter of <see cref="DependencyProperty"/> DesignOddsFormat.Only supported at DesignTime.If its in Runtime, the current <see cref="OddsFormatType"/> will be returned.</summary>
         /// <param name="obj">The dependency object to get the odds format type from.</param>
         /// <returns>The design odds format at design time or the current odds format at runtime.</returns>
         [DesignOnly(true)]
@@ -161,6 +159,19 @@ namespace WPFLocalizeExtension.Engine
             }
 
             return Instance.IsInDesignMode ? (OddsFormatType)obj.GetValue(DesignOddsFormatProperty) : Instance.OddsFormatType;
+        }
+
+        /// <summary>Detach an WeakEventListener to the <see cref="OddsFormatManager"/></summary>
+        /// <param name="listener">The listener to detach</param>
+        public static void RemoveEventListener(IWeakEventListener listener)
+        {
+            if (listener == null)
+            {
+                throw new ArgumentNullException("listener");
+            }
+
+            // calls RemoveListener from the inline WeakOddsFormatChangedEventManager
+            WeakOddsFormatChangedEventManager.RemoveListener(listener);
         }
 
         /// <summary>Setter of <see cref="DependencyProperty"/> DesignOddsFormat. Only supported at DesignTime.</summary>
@@ -180,25 +191,11 @@ namespace WPFLocalizeExtension.Engine
             }
         }
 
-        /// <summary>Detach an WeakEventListener to the <see cref="OddsFormatManager"/></summary>
-        /// <param name="listener">The listener to detach</param>
-        public static void RemoveEventListener(IWeakEventListener listener)
-        {
-            if (listener == null)
-            {
-                throw new ArgumentNullException("listener");
-            }
-
-            // calls RemoveListener from the inline WeakOddsFormatChangedEventManager
-            WeakOddsFormatChangedEventManager.RemoveListener(listener);
-        }
-
         #endregion
 
         #region Methods
 
-        /// <summary>Callback function. Used to set the <see cref="OddsFormatManager"/>.<see cref="OddsFormatType"/> if set in Xaml.
-        /// Only supported at DesignTime.</summary>
+        /// <summary>Callback function. Used to set the <see cref="OddsFormatManager"/>.<see cref="OddsFormatType"/> if set in Xaml.Only supported at DesignTime.</summary>
         /// <param name="obj">The dependency object to set the odds format to.</param>
         /// <param name="args">The <see cref="System.Windows.DependencyPropertyChangedEventArgs"/> instance containing the event data.</param>
         [DesignOnly(true)]

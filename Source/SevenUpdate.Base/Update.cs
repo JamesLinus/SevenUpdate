@@ -52,8 +52,7 @@ namespace SevenUpdate
     }
 
     /// <summary>Information on how to install a software update</summary>
-    [ProtoContract, DataContract(IsReference = true), KnownType(typeof(ObservableCollection<LocaleString>)), KnownType(typeof(UpdateFile)), KnownType(typeof(RegistryItem)), KnownType(typeof(Shortcut))
-    , KnownType(typeof(Importance))]
+    [ProtoContract, DataContract(IsReference = true), KnownType(typeof(ObservableCollection<LocaleString>)), KnownType(typeof(UpdateFile)), KnownType(typeof(RegistryItem)), KnownType(typeof(Shortcut)), KnownType(typeof(Importance))]
     public sealed class Update : INotifyPropertyChanged
     {
         #region Constants and Fields

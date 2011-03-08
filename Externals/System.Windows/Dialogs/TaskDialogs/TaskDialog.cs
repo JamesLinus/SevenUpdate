@@ -18,9 +18,7 @@ namespace System.Windows.Dialogs
     using System.Windows.Internal;
     using System.Windows.Interop;
 
-    /// <summary>Encapsulates a new-to-Vista Win32 TaskDialog window 
-    /// - a powerful successor to the <see cref="MessageBox"/> available
-    /// in previous versions of Windows.</summary>
+    /// <summary>Encapsulates a new-to-Vista Win32 TaskDialog window - a powerful successor to the <see cref="MessageBox"/> availablein previous versions of Windows.</summary>
     [SecurityPermission(SecurityAction.InheritanceDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
     public sealed class TaskDialog : IDialogControlHost, IDisposable
     {
@@ -531,7 +529,6 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>Close <see cref="TaskDialog"/></summary>
-        /// <exception cref="InvalidOperationException">if <see cref="TaskDialog"/> is not showing.</exception>
         public void Close()
         {
             if (!this.NativeDialogShowing)
@@ -547,7 +544,6 @@ namespace System.Windows.Dialogs
 
         /// <summary>Close <see cref="TaskDialog"/> with a given <see cref="TaskDialogResult"/></summary>
         /// <param name="closingResult"><see cref="TaskDialogResult"/> to return from the <see cref="TaskDialog"/>.Show() method</param>
-        /// <exception cref="InvalidOperationException">if <see cref="TaskDialog"/> is not showing.</exception>
         public void Close(TaskDialogResult closingResult)
         {
             if (!this.NativeDialogShowing)
@@ -632,12 +628,14 @@ namespace System.Windows.Dialogs
             // property would not have been changed.
         }
 
-        /// <summary>Called when a control currently in the collection
-        /// has a property changed.
-        /// Called when a control currently in the collection has a property changing - this is basically to screen out property changes that cannot occur while the dialog is showing
-        /// because the Win32 API has no way for us to propagate the changes until we re-invoke the Win32 call.
-        /// Called when a control currently in the collection has a property changed - this handles propagating the new property values to the Win32 API. 
-        /// If there isn't a way to change the Win32 value, then we should have already screened out the property set  in NotifyControlPropertyChanging.</summary>
+        /// <summary>
+        /// Called when a control currently in the collection
+        ///   has a property changed.
+        ///   Called when a control currently in the collection has a property changing - this is basically to screen out property changes that cannot occur while the dialog is showing
+        ///   because the Win32 API has no way for us to propagate the changes until we re-invoke the Win32 call.
+        ///   Called when a control currently in the collection has a property changed - this handles propagating the new property values to the Win32 API. 
+        ///   If there isn't a way to change the Win32 value, then we should have already screened out the property set  in NotifyControlPropertyChanging.
+        /// </summary>
         /// <param name="propertyName">The name of the property changed.</param>
         /// <param name="control">The control whose property has changed.</param>
         void IDialogControlHost.ApplyControlPropertyChange(string propertyName, DialogControl control)
@@ -720,12 +718,14 @@ namespace System.Windows.Dialogs
             Debug.Assert(true, "Control property changed notification not handled properly - being ignored");
         }
 
-        /// <summary>Handle notifications of pseudo-controls being added
-        /// or removed from the collection.
-        /// PreFilter should throw if a control cannot
-        /// be added/removed in the dialog's current state.
-        /// PostProcess should pass on changes to native control,
-        /// if appropriate.</summary>
+        /// <summary>
+        /// Handle notifications of pseudo-controls being added
+        ///   or removed from the collection.
+        ///   PreFilter should throw if a control cannot
+        ///   be added/removed in the dialog's current state.
+        ///   PostProcess should pass on changes to native control,
+        ///   if appropriate.
+        /// </summary>
         /// <returns><see langword="true"/> if collection change is allowed.</returns>
         bool IDialogControlHost.IsCollectionChangeAllowed()
         {
@@ -733,12 +733,14 @@ namespace System.Windows.Dialogs
             return !this.NativeDialogShowing;
         }
 
-        /// <summary>Handle notifications of individual child
-        /// pseudo-controls' properties changing..
-        /// Pre filter should throw if the property
-        /// cannot be set in the dialog's current state.
-        /// PostProcess should pass on changes to native control,
-        /// if appropriate.</summary>
+        /// <summary>
+        /// Handle notifications of individual child
+        ///   pseudo-controls' properties changing..
+        ///   Pre filter should throw if the property
+        ///   cannot be set in the dialog's current state.
+        ///   PostProcess should pass on changes to native control,
+        ///   if appropriate.
+        /// </summary>
         /// <param name="propertyName">The name of the property.</param>
         /// <param name="control">The control <paramref name="propertyName"/> applies to.</param>
         /// <returns><see langword="true"/> if the property change is allowed.</returns>
@@ -820,9 +822,7 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>Raises the closing event.
-        /// Gives event subscriber a chance to prevent the dialog from closing, based on the current state of the application and the button used to commit. 
-        /// Note that we don't have full access at this stage to the full dialog state.</summary>
+        /// <summary>Raises the closing event.Gives event subscriber a chance to prevent the dialog from closing, based on the current state of the application and the button used to commit. Note that we don't have full access at this stage to the full dialog state.</summary>
         /// <param name="id">The id for the <see cref="TaskDialog"/></param>
         /// <returns>An integer</returns>
         internal int RaiseClosingEvent(int id)

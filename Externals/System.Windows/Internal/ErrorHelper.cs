@@ -10,28 +10,26 @@
 // ***********************************************************************
 namespace System.Windows.Internal
 {
-    /// <summary>HRESULT Wrapper
-    /// This is intended for Library Internal use only.</summary>
+    /// <summary>HRESULT WrapperThis is intended for Library Internal use only.</summary>
     public enum Result : uint
     {
         /// <summary>Result returns false</summary>
-        False = 0x0001,
+        False = 0x0001, 
 
         /// <summary>Returns OK</summary>
-        Ok = 0x0000,
+        Ok = 0x0000, 
 
         /// <summary>Returns invalid argument</summary>
-        InvalidArg = 0x80070057,
+        InvalidArg = 0x80070057, 
 
         /// <summary>Returns out of memory</summary>
-        OutOfMemory = 0x8007000E,
+        OutOfMemory = 0x8007000E, 
 
         /// <summary>Returns operation failed</summary>
-        Fail = 0x80004005,
+        Fail = 0x80004005, 
     }
 
-    /// <summary>Provide Error Message Helper Methods.
-    /// This is intended for Library Internal use only.</summary>
+    /// <summary>Provide Error Message Helper Methods.This is intended for Library Internal use only.</summary>
     public static class ErrorHelper
     {
         #region Constants and Fields

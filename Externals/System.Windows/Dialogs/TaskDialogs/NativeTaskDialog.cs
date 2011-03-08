@@ -25,18 +25,6 @@ namespace System.Windows.Dialogs
     {
         #region Constants and Fields
 
-        /// <summary>The native dialog configuration</summary>
-        private TaskDialogNativeMethods.TaskDialogConfig nativeDialogConfig;
-
-        /// <summary>The outer dialog</summary>
-        private TaskDialog outerDialog;
-
-        /// <summary>The dialog settings</summary>
-        private NativeTaskDialogSettings settings;
-
-        /// <summary>The strings for the dialog</summary>
-        private IntPtr[] updatedStrings = new IntPtr[Enum.GetNames(typeof(TaskDialogNativeMethods.TaskDialogElement)).Length];
-
         /// <summary>The collection of buttons</summary>
         private IntPtr buttonArray;
 
@@ -52,6 +40,12 @@ namespace System.Windows.Dialogs
         /// <summary>Indicates if the first radio button is clicked</summary>
         private bool firstRadioButtonClicked = true;
 
+        /// <summary>The native dialog configuration</summary>
+        private TaskDialogNativeMethods.TaskDialogConfig nativeDialogConfig;
+
+        /// <summary>The outer dialog</summary>
+        private TaskDialog outerDialog;
+
         /// <summary>The collection of radio buttons</summary>
         private IntPtr radioButtonArray;
 
@@ -63,8 +57,14 @@ namespace System.Windows.Dialogs
         /// <summary>The selected radio button id</summary>
         private int selectedRadioButtonID;
 
+        /// <summary>The dialog settings</summary>
+        private NativeTaskDialogSettings settings;
+
         /// <summary>The state of the dialog</summary>
         private DialogShowState showState = DialogShowState.PreShow;
+
+        /// <summary>The strings for the dialog</summary>
+        private IntPtr[] updatedStrings = new IntPtr[Enum.GetNames(typeof(TaskDialogNativeMethods.TaskDialogElement)).Length];
 
         #endregion
 
@@ -156,11 +156,13 @@ namespace System.Windows.Dialogs
             Debug.Assert(this.showState == DialogShowState.Showing, "Update*() methods should only be called while native dialog is showing");
         }
 
-        /// <summary>The new task dialog does not support the existing
-        /// Win32 functions for closing (e.g. EndDialog()); instead,
-        /// a "click button" message is sent. In this case, we're
-        /// abstracting out to say that the <see cref="TaskDialog"/> consumer can
-        /// simply call "Close" and we'll "click" the cancel button.</summary>
+        /// <summary>
+        /// The new task dialog does not support the existing
+        ///   Win32 functions for closing (e.g. EndDialog()); instead,
+        ///   a "click button" message is sent. In this case, we're
+        ///   abstracting out to say that the <see cref="TaskDialog"/> consumer can
+        ///   simply call "Close" and we'll "click" the cancel button.
+        /// </summary>
         /// <param name="result">The result to give when closing the dialog</param>
         internal void NativeClose(TaskDialogResult result)
         {
@@ -194,7 +196,7 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>Shows the native dialog</summary>
-        [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)",
+        [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)", 
             Justification = "We are not currently handling globalization or localization")]
         internal void NativeShow()
         {

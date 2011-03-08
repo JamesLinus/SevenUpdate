@@ -69,7 +69,7 @@ namespace System.Windows.ValidationRules
 
             if (Uri.IsWellFormedUriString(input, UriKind.Absolute) && input.Length > 3)
             {
-               return new ValidationResult(true, null);
+                return new ValidationResult(true, null);
             }
 
             var r = new Regex(@"^(([a-zA-Z]\:)|(\\))(\\{1}|((\\{1})[^\\]([^/:*?<>""|]*))+)$");

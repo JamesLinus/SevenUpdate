@@ -26,6 +26,8 @@ namespace System.Windows.Controls
     /// <summary>Contains methods that extend the <see cref="TreeView"/> control</summary>
     public static class TreeViewExtensions
     {
+        #region Public Methods
+
         /// <summary>Finds the parent TreeViewItem of the current TreeViewItem</summary>
         /// <param name="treeView">The treeview control</param>
         /// <param name="predicate">The TreeViewItem to use as a starting point</param>
@@ -34,6 +36,10 @@ namespace System.Windows.Controls
         {
             return FindTreeViewItem(treeView.ItemContainerGenerator, treeView.Items, predicate);
         }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>Finds the TreeViewItem from the collection</summary>
         /// <param name="parentItemContainerGenerator">The parent item container</param>
@@ -65,5 +71,7 @@ namespace System.Windows.Controls
 
             return null;
         }
+
+        #endregion
     }
 }

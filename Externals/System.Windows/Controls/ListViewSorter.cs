@@ -67,22 +67,6 @@ namespace System.Windows.Controls
 
         #region Public Methods
 
-        /// <summary>Sets the sort glyph ascending.</summary>
-        /// <param name="obj">The dependency object</param>
-        /// <param name="value">The value.</param>
-        public static void SetSortGlyphAscending(DependencyObject obj, ImageSource value)
-        {
-            obj.SetValue(SortGlyphAscendingProperty, value);
-        }
-
-        /// <summary>Sets the sort glyph descending.</summary>
-        /// <param name="obj">The dependency object</param>
-        /// <param name="value">The value.</param>
-        public static void SetSortGlyphDescending(DependencyObject obj, ImageSource value)
-        {
-            obj.SetValue(SortGlyphDescendingProperty, value);
-        }
-
         /// <summary>Sets the auto sort.</summary>
         /// <param name="obj">The dependency object</param>
         /// <param name="value">if set to <see langword="true"/> auto sorting will be used</param>
@@ -130,6 +114,22 @@ namespace System.Windows.Controls
             }
 
             obj.SetValue(PropertyNameProperty, name);
+        }
+
+        /// <summary>Sets the sort glyph ascending.</summary>
+        /// <param name="obj">The dependency object</param>
+        /// <param name="value">The value.</param>
+        public static void SetSortGlyphAscending(DependencyObject obj, ImageSource value)
+        {
+            obj.SetValue(SortGlyphAscendingProperty, value);
+        }
+
+        /// <summary>Sets the sort glyph descending.</summary>
+        /// <param name="obj">The dependency object</param>
+        /// <param name="value">The value.</param>
+        public static void SetSortGlyphDescending(DependencyObject obj, ImageSource value)
+        {
+            obj.SetValue(SortGlyphDescendingProperty, value);
         }
 
         /// <summary>Sets the sorted column header.</summary>
@@ -250,7 +250,7 @@ namespace System.Windows.Controls
             }
 
             view.SortDescriptions.Add(new SortDescription(propertyName, direction));
-            
+
             AddSortGlyph(sortedColumnHeader, direction, direction == ListSortDirection.Ascending ? GetSortGlyphAscending(listView) : GetSortGlyphDescending(listView));
 
             SetSortedColumnHeader(listView, sortedColumnHeader);
@@ -318,10 +318,10 @@ namespace System.Windows.Controls
         }
 
         /// <summary>Gets the ancestor.</summary>
-        /// <typeparam name="T">The type of the ancestor to get</typeparam>
         /// <typeparameter name="T">The Ancestor class</typeparameter>
         /// <param name="reference">The reference.</param>
         /// <returns>Returns the ancestor class</returns>
+        /// <typeparam name="T">The ancestor class</typeparam>
         private static T GetAncestor<T>(DependencyObject reference) where T : DependencyObject
         {
             var parent = VisualTreeHelper.GetParent(reference);
@@ -398,8 +398,6 @@ namespace System.Windows.Controls
             }
         }
 
-
-
         /// <summary>Handles the Click event of the <see cref="GridViewColumnHeader"/> control.</summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
@@ -446,6 +444,12 @@ namespace System.Windows.Controls
         {
             #region Constants and Fields
 
+            /// <summary>The ascending arrow</summary>
+            private static readonly Geometry AscGeometry = Geometry.Parse("M 0,0 L 10,0 L 5,5 Z");
+
+            /// <summary>The descending arrow</summary>
+            private static readonly Geometry DescGeometry = Geometry.Parse("M 0,5 L 10,5 L 5,0 Z");
+
             /// <summary>The column header</summary>
             private readonly GridViewColumnHeader columnHeader;
 
@@ -454,12 +458,6 @@ namespace System.Windows.Controls
 
             /// <summary>The sort glyph image</summary>
             private readonly ImageSource sortGlyph;
-
-            /// <summary>The ascending arrow</summary>
-            private static readonly Geometry AscGeometry = Geometry.Parse("M 0,0 L 10,0 L 5,5 Z");
-
-            /// <summary>The descending arrow</summary>
-            private static readonly Geometry DescGeometry = Geometry.Parse("M 0,5 L 10,5 L 5,0 Z");
 
             #endregion
 
@@ -500,12 +498,12 @@ namespace System.Windows.Controls
                 }
                 else
                 {
-                    if (AdornedElement.RenderSize.Width < 20)
+                    if (this.AdornedElement.RenderSize.Width < 20)
                     {
                         return;
                     }
 
-                    drawingContext.PushTransform(new TranslateTransform(AdornedElement.RenderSize.Width - 15, (AdornedElement.RenderSize.Height - 5) / 2));
+                    drawingContext.PushTransform(new TranslateTransform(this.AdornedElement.RenderSize.Width - 15, (this.AdornedElement.RenderSize.Height - 5) / 2));
 
                     drawingContext.DrawGeometry(Brushes.LightGray, new Pen(Brushes.Gray, 1.0), currentSortDirection == ListSortDirection.Ascending ? AscGeometry : DescGeometry);
 

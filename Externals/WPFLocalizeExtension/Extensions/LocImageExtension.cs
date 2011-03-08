@@ -45,8 +45,6 @@ namespace WPFLocalizeExtension.Extensions
         /// <summary>Provides the Value for the first Binding as <see cref="System.Windows.Media.Imaging.BitmapSource"/></summary>
         /// <param name="serviceProvider">The <see cref="System.Windows.Markup.IProvideValueTarget"/> provided from the <see cref="MarkupExtension"/></param>
         /// <returns>The found item from the .resx directory or <see langword="null"/> if not found</returns>
-        /// <exception cref="System.InvalidOperationException">thrown if <paramref name="serviceProvider"/> is not type of <see cref="System.Windows.Markup.IProvideValueTarget"/></exception>
-        /// <exception cref="System.NotSupportedException">thrown if the found object is not type of <see cref="System.Drawing.Bitmap"/></exception>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             var obj = base.ProvideValue(serviceProvider);
@@ -73,8 +71,7 @@ namespace WPFLocalizeExtension.Extensions
 
         #region Methods
 
-        /// <summary>Creates a <see cref="System.Windows.Media.Imaging.BitmapSource"/> from a <see cref="System.Drawing.Bitmap"/>.
-        /// This extension does NOT support a DesignValue.</summary>
+        /// <summary>Creates a <see cref="System.Windows.Media.Imaging.BitmapSource"/> from a <see cref="System.Drawing.Bitmap"/>.This extension does NOT support a DesignValue.</summary>
         /// <param name="input">The <see cref="System.Drawing.Bitmap"/> to convert</param>
         /// <returns>The converted <see cref="System.Windows.Media.Imaging.BitmapSource"/></returns>
         protected override object FormatOutput(object input)

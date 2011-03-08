@@ -27,8 +27,7 @@ namespace System.Windows
     using System.Windows.Interop;
     using System.Windows.Media;
 
-    /// <summary>WPF Glass Window
-    /// Inherit from this window class to enable glass on a WPF window</summary>
+    /// <summary>WPF Glass WindowInherit from this window class to enable glass on a WPF window</summary>
     public static class AeroGlass
     {
         #region Events
@@ -133,9 +132,7 @@ namespace System.Windows
         /// <summary>Excludes a UI element from the Aero Glass frame.</summary>
         /// <param name="element">The element to exclude.</param>
         /// <param name="window">The window the element resides in</param>
-        /// <remarks>c
-        /// Many non-WPF rendered controls (i.e., the ExplorerBrowser control) will not
-        /// render properly on top of an Aero Glass frame.</remarks>
+        /// <remarks>cMany non-WPF rendered controls (i.e., the ExplorerBrowser control) will notrender properly on top of an Aero Glass frame.</remarks>
         public static void ExcludeElementFromAeroGlass(FrameworkElement element, Window window)
         {
             if (element == null)

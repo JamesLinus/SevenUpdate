@@ -35,16 +35,16 @@ namespace System.Windows.Controls
 
         /// <summary>Dependency Property - Specifies the text to display on the button</summary>
         private static readonly DependencyProperty ButtonTextProperty = DependencyProperty.Register(
-            "ButtonText",
-            typeof(string),
-            typeof(UacButton),
+            "ButtonText", 
+            typeof(string), 
+            typeof(UacButton), 
             new FrameworkPropertyMetadata(null, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsRender, OnButtonTextChanged));
 
         /// <summary>Dependency Property - Indicates if the UAC Shield is desired on the button</summary>
         private static readonly DependencyProperty IsShieldNeededProperty = DependencyProperty.Register(
-            "IsShieldNeeded",
-            typeof(bool),
-            typeof(UacButton),
+            "IsShieldNeeded", 
+            typeof(bool), 
+            typeof(UacButton), 
             new FrameworkPropertyMetadata(true, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsRender, OnIsShieldNeededChanged));
 
         /// <summary>The UAC shield</summary>
@@ -238,10 +238,9 @@ namespace System.Windows.Controls
         }
 
         /// <summary>Returns current "actual" <see cref="ToolTip"/></summary>
-        /// <returns>If both <see cref="ToolTipElevated"/> and <see cref="ToolTipNotElevated"/> are <see langword="null"/>,<see cref="Button.ToolTip"/> is returned.
-        /// Otherwise <see cref="ToolTipElevated"/> or <see cref="ToolTipNotElevated"/> is returned
-        /// based on <see cref="IsShieldNeeded"/></returns>
-        /// <remarks></remarks>
+        /// <returns>If both <see cref="ToolTipElevated"/> and <see cref="ToolTipNotElevated"/> are <see langword="null"/>,<see cref="Button.ToolTip"/> is returned.Otherwise <see cref="ToolTipElevated"/> or <see cref="ToolTipNotElevated"/> is returnedbased on <see cref="IsShieldNeeded"/></returns>
+        /// <remarks>
+        /// </remarks>
         private object GetToolTip()
         {
             if (this.ToolTipElevated == null && this.ToolTipNotElevated == null)

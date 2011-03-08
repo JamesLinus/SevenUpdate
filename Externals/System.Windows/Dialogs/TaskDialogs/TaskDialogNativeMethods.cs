@@ -14,9 +14,7 @@ namespace System.Windows.Dialogs
     using System.Windows.Controls;
     using System.Windows.Internal;
 
-    /// <summary>Internal class containing most native interop declarations used
-    /// throughout the library.
-    /// Functions that are not performance intensive belong in this class.</summary>
+    /// <summary>Internal class containing most native interop declarations usedthroughout the library.Functions that are not performance intensive belong in this class.</summary>
     internal static class TaskDialogNativeMethods
     {
         /// <summary>The <see cref="TaskDialog"/> callback</summary>
@@ -35,19 +33,19 @@ namespace System.Windows.Dialogs
         internal enum TaskDialogCommonButtonFlags
         {
             /// <summary>The task dialog contains the push button: OK.</summary>
-            OkButton = 0x0001,
+            OkButton = 0x0001, 
 
             /// <summary>The task dialog contains the push button: Yes.</summary>
-            YesButton = 0x0002,
+            YesButton = 0x0002, 
 
             /// <summary>The task dialog contains the push button: No.</summary>
-            NoButton = 0x0004,
+            NoButton = 0x0004, 
 
             /// <summary>The task dialog contains the push button: Cancel. If this button is specified, the task dialog will respond to typical cancel actions (Alt-F4 and Escape).</summary>
-            CancelButton = 0x0008,
+            CancelButton = 0x0008, 
 
             /// <summary>The task dialog contains the push button: Retry.</summary>
-            RetryButton = 0x0010,
+            RetryButton = 0x0010, 
 
             /// <summary>The task dialog contains the push button: Close.</summary>
             CloseButton = 0x0020
@@ -57,25 +55,25 @@ namespace System.Windows.Dialogs
         internal enum TaskDialogCommonButtonReturnID
         {
             /// <summary>The button returned OK</summary>
-            OK = 1,
+            OK = 1, 
 
             /// <summary>The button returned cancel</summary>
-            Cancel = 2,
+            Cancel = 2, 
 
             /// <summary>The button return abort</summary>
-            Abort = 3,
+            Abort = 3, 
 
             /// <summary>The button returned retry</summary>
-            Retry = 4,
+            Retry = 4, 
 
             /// <summary>The button was ignored</summary>
-            Ignore = 5,
+            Ignore = 5, 
 
             /// <summary>The button returned yes</summary>
-            Yes = 6,
+            Yes = 6, 
 
             /// <summary>The button returned no</summary>
-            No = 7,
+            No = 7, 
 
             /// <summary>The button returned close</summary>
             Close = 8
@@ -85,13 +83,13 @@ namespace System.Windows.Dialogs
         internal enum TaskDialogElement
         {
             /// <summary>The main portion of the dialog</summary>
-            Content,
+            Content, 
 
             /// <summary>Content in the expander</summary>
-            ExpandedInformation,
+            ExpandedInformation, 
 
             /// <summary>The footer of the dialog</summary>
-            Footer,
+            Footer, 
 
             /// <summary>The main instructions for the dialog</summary>
             MainInstruction
@@ -102,49 +100,49 @@ namespace System.Windows.Dialogs
         internal enum TaskDialogFlags
         {
             /// <summary>Empty dialog</summary>
-            None = 0,
+            None = 0, 
 
             /// <summary>Enables hyperlink processing for the strings specified in the pszContent, pszExpandedInformation and pszFooter members.</summary>
-            EnableHyperlinks = 0x0001,
+            EnableHyperlinks = 0x0001, 
 
             /// <summary>Indicates that the dialog should use the icon referenced by the handle in the MainIcon member as the primary icon in the task dialog. If this flag is specified, the MainIcon member is ignored.</summary>
-            UseIconMain = 0x0002,
+            UseIconMain = 0x0002, 
 
             /// <summary>Indicates that the dialog should use the icon referenced by the handle in the FooterIcon member as the footer icon in the task dialog. If this flag is specified, the FooterIcon member is ignored.</summary>
-            UseIconFooter = 0x0004,
+            UseIconFooter = 0x0004, 
 
             /// <summary>Indicates that the dialog should be able to be closed using Alt-F4, Escape, and the title bar's close button even if no cancel button is specified in either the CommonButtons or Buttons members.</summary>
-            AllowDialogCancellation = 0x0008,
+            AllowDialogCancellation = 0x0008, 
 
             /// <summary>Indicates that the buttons specified in the Buttons member are to be displayed as command links (using a standard task dialog glyph) instead of push buttons. When using command links, all characters up to the first new line character in the pszButtonText member will be treated as the command link's main text, and the remainder will be treated as the command link's note. This flag is ignored if the Buttons member is zero.</summary>
-            UseCommandLinks = 0x0010,
+            UseCommandLinks = 0x0010, 
 
             /// <summary>Indicates that the buttons specified in the Buttons member are to be displayed as command links (without a glyph) instead of push buttons. When using command links, all characters up to the first new line character in the ButtonText member will be treated as the command link's main text, and the remainder will be treated as the command link's note. This flag is ignored if the Buttons member is zero.</summary>
-            UseCommandLinksNoIcon = 0x0020,
+            UseCommandLinksNoIcon = 0x0020, 
 
             /// <summary>Indicates that the string specified by the ExpandedInformation member is displayed at the bottom of the dialog's footer area instead of immediately after the dialog's content. This flag is ignored if the ExpandedInformation member is null.</summary>
-            ExpandFooterArea = 0x0040,
+            ExpandFooterArea = 0x0040, 
 
             /// <summary>Indicates that the string specified by the ExpandedInformation member is displayed when the dialog is initially displayed. This flag is ignored if the ExpandedInformation member is <see langword = "null" />.</summary>
-            ExpandedByDefault = 0x0080,
+            ExpandedByDefault = 0x0080, 
 
             /// <summary>Indicates that the verification checkbox in the dialog is checked when the dialog is initially displayed. This flag is ignored if the VerificationText parameter is null.</summary>
-            VerificationFlagChecked = 0x0100,
+            VerificationFlagChecked = 0x0100, 
 
             /// <summary>Indicates that a Progress Bar is to be displayed.</summary>
-            ShowProgressBar = 0x0200,
+            ShowProgressBar = 0x0200, 
 
             /// <summary>Indicates that an Marquee Progress Bar is to be displayed.</summary>
-            ShowMarqueeProgressBar = 0x0400,
+            ShowMarqueeProgressBar = 0x0400, 
 
             /// <summary>Indicates that the task dialog's callback is to be called approximately every 200 milliseconds.</summary>
-            CallbackTimer = 0x0800,
+            CallbackTimer = 0x0800, 
 
             /// <summary>Indicates that the task dialog is positioned (centered) relative to the window specified by Parent. If the flag is not supplied (or no Parent member is specified), the task dialog is positioned (centered) relative to the monitor.</summary>
-            PositionRelativeToWindow = 0x1000,
+            PositionRelativeToWindow = 0x1000, 
 
             /// <summary>Indicates that text is displayed reading right to left.</summary>
-            RtlLayout = 0x2000,
+            RtlLayout = 0x2000, 
 
             /// <summary>Indicates that no default item will be selected.</summary>
             NoDefaultRadioButton = 0x4000
@@ -154,7 +152,7 @@ namespace System.Windows.Dialogs
         internal enum TaskDialogIconElement
         {
             /// <summary>The main icon</summary>
-            IconMain,
+            IconMain, 
 
             /// <summary>The footer icon</summary>
             IconFooter
@@ -164,46 +162,46 @@ namespace System.Windows.Dialogs
         internal enum TaskDialogMessage
         {
             /// <summary>Recreates a task dialog with new contents, simulating the functionality of a multi-page wizard.</summary>
-            NavigatePage = NativeMethods.WmUser + 101,
+            NavigatePage = NativeMethods.WmUser + 101, 
 
             /// <summary>Simulates the action of a button click in a dialog.</summary>
-            ClickButton = NativeMethods.WmUser + 102,
+            ClickButton = NativeMethods.WmUser + 102, 
 
             /// <summary>parameter = 0 (nonMarque) parameter != 0 (Marquee)</summary>
-            SetMarqueeProgressBar = NativeMethods.WmUser + 103,
+            SetMarqueeProgressBar = NativeMethods.WmUser + 103, 
 
             /// <summary>Sets the current state of the progress bar.</summary>
-            SetProgressBarState = NativeMethods.WmUser + 104,
+            SetProgressBarState = NativeMethods.WmUser + 104, 
 
             /// <summary>Sets the minimum and maximum values for the hosted progress bar.</summary>
-            SetProgressBarRange = NativeMethods.WmUser + 105,
+            SetProgressBarRange = NativeMethods.WmUser + 105, 
 
             /// <summary>Sets the current position for a progress bar.</summary>
-            SetProgressBarPos = NativeMethods.WmUser + 106,
+            SetProgressBarPos = NativeMethods.WmUser + 106, 
 
             /// <summary>Indicates whether the hosted progress bar should be displayed in marquee mode.</summary>
-            SetProgressBarMarquee = NativeMethods.WmUser + 107,
+            SetProgressBarMarquee = NativeMethods.WmUser + 107, 
 
             /// <summary>Updates a text element in a task dialog.</summary>
-            SetElementText = NativeMethods.WmUser + 108,
+            SetElementText = NativeMethods.WmUser + 108, 
 
             /// <summary>Simulates the action of a radio button click in a task dialog.</summary>
-            ClickRadioButton = NativeMethods.WmUser + 110,
+            ClickRadioButton = NativeMethods.WmUser + 110, 
 
             /// <summary>Enables or disables a push button in a task dialog.</summary>
-            EnableButton = NativeMethods.WmUser + 111,
+            EnableButton = NativeMethods.WmUser + 111, 
 
             /// <summary>Enables or disables a radio button in a task dialog.</summary>
-            EnableRadioButton = NativeMethods.WmUser + 112,
+            EnableRadioButton = NativeMethods.WmUser + 112, 
 
             /// <summary>Simulates the action of a verification checkbox click in a task dialog.</summary>
-            ClickVerification = NativeMethods.WmUser + 113,
+            ClickVerification = NativeMethods.WmUser + 113, 
 
             /// <summary>Updates a text element in a task dialog.</summary>
-            UpdateElementText = NativeMethods.WmUser + 114,
+            UpdateElementText = NativeMethods.WmUser + 114, 
 
             /// <summary>Specifies whether a given task dialog button or command link should have a UAC shield icon; that is, whether the action invoked by the button requires elevation.</summary>
-            SetButtonElevationRequiredState = NativeMethods.WmUser + 115,
+            SetButtonElevationRequiredState = NativeMethods.WmUser + 115, 
 
             /// <summary>Refreshes the icon of a task dialog.</summary>
             UpdateIcon = NativeMethods.WmUser + 116
@@ -213,34 +211,34 @@ namespace System.Windows.Dialogs
         internal enum TaskDialogNotification
         {
             /// <summary>Sent by a task dialog after the dialog has been created and before it is displayed. This notification code is received only through the task dialog callback function, which can be registered using the TaskDialogIndirect method.</summary>
-            Created = 0,
+            Created = 0, 
 
             /// <summary>Sent by a task dialog when a navigation has occurred. This notification code is received only through the task dialog callback function, which can be registered using the TaskDialogIndirect method.</summary>
-            Navigated = 1,
+            Navigated = 1, 
 
             /// <summary>Sent by a task dialog when the user selects a button or command link in the task dialog. This notification code is received only through the task dialog callback function, which can be registered using the TaskDialogIndirect method.</summary>
-            ButtonClicked = 2,
+            ButtonClicked = 2, 
 
             /// <summary>Sent by a task dialog when the user clicks a hyperlink in the task dialog content. This notification code is received only through the task dialog callback function, which can be registered using the TaskDialogIndirect method.</summary>
-            HyperlinkClicked = 3,
+            HyperlinkClicked = 3, 
 
             /// <summary>Sent by a task dialog approximately every 200 milliseconds. This notification code is sent when the CallbackTimer flag has been set in the flags member of the TaskDialog structure that was passed to the TaskDialogIndirect function. This notification code is received only through the task dialog callback function, which can be registered using the TaskDialogIndirect method.</summary>
-            Timer = 4,
+            Timer = 4, 
 
             /// <summary>Sent by a task dialog when it is destroyed and its window handle is no longer valid. This notification code is received only through the task dialog callback function, which can be registered using the TaskDialogIndirect method.</summary>
-            Destroyed = 5,
+            Destroyed = 5, 
 
             /// <summary>Sent by a task dialog when the user selects a button or command link in the task dialog. This notification code is received only through the task dialog callback function, which can be registered using the TaskDialogIndirect method.</summary>
-            RadioButtonClicked = 6,
+            RadioButtonClicked = 6, 
 
             /// <summary>Sent by a task dialog after the dialog has been created and before it is displayed. This notification code is received only through the task dialog callback function, which can be registered using the TaskDialogIndirect method.</summary>
-            DialogConstructed = 7,
+            DialogConstructed = 7, 
 
             /// <summary>Sent by the task dialog when the user clicks the task dialog verification check box. This notification code is received only through the task dialog callback function, which can be registered using the TaskDialogIndirect method.</summary>
-            VerificationClicked = 8,
+            VerificationClicked = 8, 
 
             /// <summary>Sent by a task dialog when the user presses F1 on the keyboard while the dialog has focus. This notification code is received only through the task dialog callback function, which can be registered using the TaskDialogIndirect method.</summary>
-            Help = 9,
+            Help = 9, 
 
             /// <summary>Sent by a task dialog when the user clicks on the dialog's expanded button. This notification code is received only through the task dialog callback function, which can be registered using the TaskDialogIndirect method.</summary>
             ExpandButtonClicked = 10
@@ -250,13 +248,13 @@ namespace System.Windows.Dialogs
         internal enum TaskDialogIcon
         {
             /// <summary>An exclamation-point icon appears in the task dialog.</summary>
-            WarningIcon = 65535,
+            WarningIcon = 65535, 
 
             /// <summary>A stop-sign icon appears in the task dialog.</summary>
-            ErrorIcon = 65534,
+            ErrorIcon = 65534, 
 
             /// <summary>An icon consisting of a lowercase letter i in a circle appears in the task dialog.</summary>
-            InformationIcon = 65533,
+            InformationIcon = 65533, 
 
             /// <summary>A shield icon appears in the task dialog.</summary>
             ShieldIcon = 65532

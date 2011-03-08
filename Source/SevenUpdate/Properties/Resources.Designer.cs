@@ -452,8 +452,7 @@ namespace SevenUpdate.Properties {
             }
         }
         
-        /// <summary>Looks up a localized string similar to Installing {0}
-{1} out of {2}, {3}% complete.</summary>
+        /// <summary>Looks up a localized string similar to Installing {0} {1} out of {2}, {3}% complete.</summary>
         public static string InstallExtendedProgress {
             get {
                 return ResourceManager.GetString("InstallExtendedProgress", resourceCulture);

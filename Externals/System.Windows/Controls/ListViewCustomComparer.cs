@@ -32,9 +32,6 @@ namespace System.Windows.Controls
     {
         #region Properties
 
-        /// <summary>Gets a dictionary of SortColumns</summary>
-        protected Dictionary<string, ListSortDirection> SortColumns { get; private set; }
-
         /// <summary>Gets a List of strings from a column that needs to be sorted</summary>
         /// <returns>A collection of columns that are sorted</returns>
         protected IEnumerable<string> SortColumnList
@@ -57,6 +54,9 @@ namespace System.Windows.Controls
                 return result;
             }
         }
+
+        /// <summary>Gets a dictionary of SortColumns</summary>
+        protected Dictionary<string, ListSortDirection> SortColumns { get; private set; }
 
         #endregion
 
@@ -86,7 +86,6 @@ namespace System.Windows.Controls
         /// <param name="x">The first object to compare.</param>
         /// <param name="y">The second object to compare.</param>
         /// <returns>A signed integer that indicates the relative values of <paramref name="x"/> and <paramref name="y"/>, as shown in the following table.Value Meaning Less than zero <paramref name="x"/> is less than <paramref name="y"/>. Zero <paramref name="x"/> equals <paramref name="y"/>. Greater than zero <paramref name="x"/> is greater than <paramref name="y"/>.</returns>
-        /// <exception cref="T:System.ArgumentException">Neither <paramref name="x"/> nor <paramref name="y"/> implements the <see cref="T:System.IComparable"/> interface.-or- <paramref name="x"/> and <paramref name="y"/> are of different types and neither one can handle comparisons with the other. </exception>
         public abstract int Compare(object x, object y);
 
         #endregion

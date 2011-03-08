@@ -200,25 +200,13 @@ namespace SevenUpdate
 
             /// <summary>Opens the specified file and initializes an object from the file contents.</summary>
             /// <param name="fileName">The absolute path of the file to be opened.</param>
-            /// <param name="mode">
-            /// The access mode to be used when opening the file. Possible values are taken from the Stgm enumeration. 
-            ///   The method can treat this value as a suggestion, adding more restrictive permissions if necessary. 
-            ///   If mode is 0, the implementation should open the file using whatever default permissions are used when a user opens the file.
-            /// </param>
+            /// <param name="mode">The access mode to be used when opening the file. Possible values are taken from the Stgm enumeration. The method can treat this value as a suggestion, adding more restrictive permissions if necessary. If mode is 0, the implementation should open the file using whatever default permissions are used when a user opens the file.</param>
             [PreserveSig]
             void Load([MarshalAs(UnmanagedType.LPWStr)] string fileName, uint mode);
 
             /// <summary>Saves a copy of the object to the specified file.</summary>
-            /// <param name="fileName">
-            /// The absolute path of the file to which the object should be saved.
-            ///   If fileName is null, the object should save its data to the current file, if there is one.
-            /// </param>
-            /// <param name="remember">
-            /// Indicates whether the fileName parameter is to be used as the current working file.
-            ///   If true, fileName becomes the current file and the object should clear its dirty flag after the save.
-            ///   If false, this save operation is a Save A Copy As ... operation. In this case, the current file is unchanged and the object should not clear its dirty flag.
-            ///   If fileName is null, the implementation should ignore the remember flag.
-            /// </param>
+            /// <param name="fileName">The absolute path of the file to which the object should be saved.If fileName is null, the object should save its data to the current file, if there is one.</param>
+            /// <param name="remember">Indicates whether the fileName parameter is to be used as the current working file.If true, fileName becomes the current file and the object should clear its dirty flag after the save.If false, this save operation is a Save A Copy As ... operation. In this case, the current file is unchanged and the object should not clear its dirty flag.If fileName is null, the implementation should ignore the remember flag.</param>
             [PreserveSig]
             void Save([MarshalAs(UnmanagedType.LPWStr)] string fileName, [MarshalAs(UnmanagedType.Bool)] bool remember);
 
