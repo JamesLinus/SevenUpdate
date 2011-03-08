@@ -70,6 +70,24 @@ namespace SevenUpdate.Sdk.Pages
 
         #region Methods
 
+        /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="e">The event data</param>
+        private void ChangeDescription(object sender, RoutedEventArgs e)
+        {
+            var textBox = (InfoTextBox)sender;
+            Core.UpdateLocaleStrings(textBox.Text, Core.UpdateInfo.Shortcuts[Core.SelectedShortcut].Description);
+        }
+
+        /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="e">The event data</param>
+        private void ChangeName(object sender, RoutedEventArgs e)
+        {
+            var textBox = (InfoTextBox)sender;
+            Core.UpdateLocaleStrings(textBox.Text, Core.UpdateInfo.Shortcuts[Core.SelectedShortcut].Name);
+        }
+
         /// <summary>Converts a path to system variables</summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.Input.KeyboardFocusChangedEventArgs"/> instance containing the event data.</param>
@@ -119,14 +137,6 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        /// <summary>Navigates to the main page</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
-        private void NavigateToMainPage(object sender, RoutedEventArgs e)
-        {
-            MainWindow.NavService.Navigate(Core.MainPage);
-        }
-
         /// <summary>Determines whether this instance has errors.</summary>
         /// <returns><see langword="true"/> if this instance has errors; otherwise, <see langword="false"/>.</returns>
         private bool HasErrors()
@@ -160,11 +170,11 @@ namespace SevenUpdate.Sdk.Pages
             icon = icon.Replace(Core.AppInfo.Directory, "%INSTALLDIR%");
             var shortcut = new Shortcut
                 {
-                    Arguments = importedShortcut.Arguments,
-                    Icon = icon,
-                    Location = path,
-                    Action = ShortcutAction.Update,
-                    Target = Utilities.ConvertPath(importedShortcut.Target, false, Core.AppInfo.Platform),
+                    Arguments = importedShortcut.Arguments, 
+                    Icon = icon, 
+                    Location = path, 
+                    Action = ShortcutAction.Update, 
+                    Target = Utilities.ConvertPath(importedShortcut.Target, false, Core.AppInfo.Platform), 
                 };
 
             shortcut.Name.Add(new LocaleString(Path.GetFileNameWithoutExtension(file[0]), Utilities.Locale));
@@ -294,6 +304,14 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
+        /// <summary>Navigates to the main page</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        private void NavigateToMainPage(object sender, RoutedEventArgs e)
+        {
+            MainWindow.NavService.Navigate(Core.MainPage);
+        }
+
         /// <summary>Removes all Shortcuts from the collection</summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
@@ -335,24 +353,6 @@ namespace SevenUpdate.Sdk.Pages
                 this.line.Visibility = Visibility.Collapsed;
                 this.rectangle.Visibility = Visibility.Collapsed;
             }
-        }
-
-        /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
-        /// <param name="sender">The sender</param>
-        /// <param name="e">The event data</param>
-        private void ChangeName(object sender, RoutedEventArgs e)
-        {
-            var textBox = (InfoTextBox)sender;
-            Core.UpdateLocaleStrings(textBox.Text, Core.UpdateInfo.Shortcuts[Core.SelectedShortcut].Name);
-        }
-
-        /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
-        /// <param name="sender">The sender</param>
-        /// <param name="e">The event data</param>
-        private void ChangeDescription(object sender, RoutedEventArgs e)
-        {
-            var textBox = (InfoTextBox)sender;
-            Core.UpdateLocaleStrings(textBox.Text, Core.UpdateInfo.Shortcuts[Core.SelectedShortcut].Description);
         }
 
         /// <summary>Validates the textbox content</summary>

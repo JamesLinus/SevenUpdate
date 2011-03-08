@@ -36,11 +36,11 @@ namespace SevenUpdate
     {
         /// <summary>Adds a registry entry to the machine</summary>
         [ProtoEnum, EnumMember]
-        Add = 0,
+        Add = 0, 
 
         /// <summary>Deletes a registry key on the machine</summary>
         [ProtoEnum, EnumMember]
-        DeleteKey = 1,
+        DeleteKey = 1, 
 
         /// <summary>Deletes a value of a registry key on the machine</summary>
         [ProtoEnum, EnumMember]

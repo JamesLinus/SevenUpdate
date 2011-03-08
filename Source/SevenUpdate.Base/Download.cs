@@ -35,20 +35,20 @@ namespace SevenUpdate
     {
         #region Constants and Fields
 
+        /// <summary>Gets a value indicating whether to cancel the current download</summary>
+        private static bool cancelDownload;
+
         /// <summary>The directory containing the app update files</summary>
         private static string downloadDirectory;
 
         /// <summary>Gets a value indicating whether an error has occurred</summary>
         private static bool errorOccurred;
 
-        /// <summary>Manager for Background Intelligent Transfer Service</summary>
-        private static BitsManager manager;
-
-        /// <summary>Gets a value indicating whether to cancel the current download</summary>
-        private static bool cancelDownload;
-
         /// <summary>The download job name</summary>
         private static string jobName;
+
+        /// <summary>Manager for Background Intelligent Transfer Service</summary>
+        private static BitsManager manager;
 
         #endregion
 

@@ -90,7 +90,8 @@ namespace SevenUpdate.Sdk.Pages
             Task.Factory.StartNew(
                 () =>
                     {
-                        updateFile.FileSize = Utilities.GetFileSize(Utilities.ConvertPath(fileLocation ?? updateFile.Destination, Core.AppInfo.Directory, Core.AppInfo.Platform, Core.AppInfo.ValueName));
+                        updateFile.FileSize = Utilities.GetFileSize(
+                            Utilities.ConvertPath(fileLocation ?? updateFile.Destination, Core.AppInfo.Directory, Core.AppInfo.Platform, Core.AppInfo.ValueName));
                     });
         }
 
@@ -123,8 +124,7 @@ namespace SevenUpdate.Sdk.Pages
 
             var file = new UpdateFile { Action = FileAction.Update, Destination = installUrl, Hash = Properties.Resources.CalculatingHash, Source = downloadUrl };
 
-            Core.UpdateInfo.Files.Add(file); 
-
+            Core.UpdateInfo.Files.Add(file);
 
             this.tbHashCalculating.Visibility = Visibility.Visible;
 
@@ -297,14 +297,6 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        /// <summary>Navigates to the main page</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
-        private void NavigateToMainPage(object sender, RoutedEventArgs e)
-        {
-            MainWindow.NavService.Navigate(Core.MainPage);
-        }
-
         /// <summary>Determines whether this instance has errors.</summary>
         /// <returns><see langword="true"/> if this instance has errors; otherwise, <see langword="false"/>.</returns>
         private bool HasErrors()
@@ -333,6 +325,14 @@ namespace SevenUpdate.Sdk.Pages
             {
                 Core.ShowMessage(Properties.Resources.CorrectErrors, TaskDialogStandardIcon.Error);
             }
+        }
+
+        /// <summary>Navigates to the main page</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        private void NavigateToMainPage(object sender, RoutedEventArgs e)
+        {
+            MainWindow.NavService.Navigate(Core.MainPage);
         }
 
         /// <summary>Removes all files from the <see cref="UpdateFile"/> collection</summary>
@@ -416,7 +416,26 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        #endregion
+        /// <summary>Validates the download directory</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The data for the event</param>
+        private void ValidateDownloadDirectory(object sender, TextChangedEventArgs e)
+        {
+            var textBox = sender as InfoTextBox;
+
+            if (textBox == null)
+            {
+                return;
+            }
+
+            textBox.HasError = !new AppDirectoryRule().Validate(textBox.Text, null).IsValid;
+            textBox.ToolTip = textBox.HasError ? Properties.Resources.FilePathInvalid : null;
+
+            if (!textBox.HasError)
+            {
+                ((UpdateFile)this.listBox.SelectedItem).Source = textBox.Text;
+            }
+        }
 
         /// <summary>Validates the install directory</summary>
         /// <param name="sender">The sender.</param>
@@ -435,30 +454,10 @@ namespace SevenUpdate.Sdk.Pages
 
             if (!textBox.HasError)
             {
-                ((UpdateFile)listBox.SelectedItem).Destination = textBox.Text;
+                ((UpdateFile)this.listBox.SelectedItem).Destination = textBox.Text;
             }
         }
 
-        /// <summary>Validates the download directory</summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The data for the event</param>
-        private void ValidateDownloadDirectory(object sender, TextChangedEventArgs e)
-        {
-            var textBox = sender as InfoTextBox;
-
-            if (textBox == null)
-            {
-                return;
-            }
-
-            textBox.HasError = !new AppDirectoryRule().Validate(textBox.Text, null).IsValid;
-            textBox.ToolTip = textBox.HasError ? Properties.Resources.FilePathInvalid : null;
-
-
-            if (!textBox.HasError)
-            {
-                ((UpdateFile)listBox.SelectedItem).Source = textBox.Text;
-            }
-        }
+        #endregion
     }
 }

@@ -42,10 +42,7 @@ namespace System.Windows.Properties
             }
         }
         
-        /// <summary>
-        /// Overrides the current thread's CurrentUICulture property for all
-        /// resource lookups using this strongly typed resource class.
-        /// </summary>
+        /// <summary>Overrides the current thread's CurrentUICulture property for allresource lookups using this strongly typed resource class.</summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
         public static global::System.Globalization.CultureInfo Culture {
             get {

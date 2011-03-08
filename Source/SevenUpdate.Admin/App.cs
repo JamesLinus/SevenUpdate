@@ -85,16 +85,16 @@ namespace SevenUpdate.Admin
         private enum NotifyType
         {
             /// <summary>Indicates searching is completed</summary>
-            SearchComplete,
+            SearchComplete, 
 
             /// <summary>Indicates the downloading of updates has started</summary>
-            DownloadStarted,
+            DownloadStarted, 
 
             /// <summary>Indicates download has completed</summary>
-            DownloadComplete,
+            DownloadComplete, 
 
             /// <summary>Indicates that the installation of updates has begun</summary>
-            InstallStarted,
+            InstallStarted, 
 
             /// <summary>Indicates that the installation of updates has completed</summary>
             InstallCompleted
@@ -122,6 +122,58 @@ namespace SevenUpdate.Admin
         #endregion
 
         #region Methods
+
+        /// <summary>Adds an update to the history</summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="e">The event data</param>
+        private static void AddHistory(object sender, UpdateInstalledEventArgs e)
+        {
+            var history = File.Exists(HistoryFile) ? Utilities.Deserialize<Collection<Suh>>(HistoryFile) : new Collection<Suh>();
+            history.Add(e.Update);
+            Utilities.Serialize(history, HistoryFile);
+        }
+
+        /// <summary>Checks if Seven Update is running</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Timers.ElapsedEventArgs"/> instance containing the event data.</param>
+        private static void CheckIfRunning(object sender, ElapsedEventArgs e)
+        {
+            Task.Factory.StartNew(
+                () =>
+                    {
+                        if (File.Exists(Path.Combine(AllUserStore, "abort.lock")))
+                        {
+                            Download.CancelDownload();
+                            Install.CancelInstall();
+                            try
+                            {
+                                File.Delete(Path.Combine(AllUserStore, "abort.lock"));
+                            }
+                            catch (IOException)
+                            {
+                            }
+                        }
+
+                        if (client == null)
+                        {
+                            StartWcfHost();
+                        }
+
+                        if (IsInstalling)
+                        {
+                            return;
+                        }
+
+                        if (Process.GetProcessesByName("SevenUpdate").Length > 0 || waiting)
+                        {
+                            return;
+                        }
+
+#if (!DEBUG)
+                        ShutdownApp();
+#endif
+                    });
+        }
 
         /// <summary>Reports that the download has completed and starts update installation if necessary</summary>
         /// <param name="sender">The source of the event.</param>
@@ -264,14 +316,24 @@ namespace SevenUpdate.Admin
             SystemEvents.SessionEnding -= PreventClose;
         }
 
-        /// <summary>Adds an update to the history</summary>
-        /// <param name="sender">The sender</param>
-        /// <param name="e">The event data</param>
-        private static void AddHistory(object sender, UpdateInstalledEventArgs e)
+        /// <summary>Prevents the system from shutting down until the installation is safely stopped</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="Microsoft.Win32.SessionEndingEventArgs"/> instance containing the event data.</param>
+        private static void PreventClose(object sender, SessionEndingEventArgs e)
         {
-            var history = File.Exists(HistoryFile) ? Utilities.Deserialize<Collection<Suh>>(HistoryFile) : new Collection<Suh>();
-            history.Add(e.Update);
-            Utilities.Serialize(history, HistoryFile);
+            if (notifyIcon != null)
+            {
+                notifyIcon.Visible = false;
+                notifyIcon.Dispose();
+                notifyIcon = null;
+            }
+
+            using (var fs = File.Create(Path.Combine(AllUserStore, "abort.lock")))
+            {
+                fs.WriteByte(0);
+            }
+
+            e.Cancel = true;
         }
 
         /// <summary>Processes the command line arguments</summary>
@@ -346,26 +408,6 @@ namespace SevenUpdate.Admin
                     ShutdownApp();
                 }
             }
-        }
-
-        /// <summary>Prevents the system from shutting down until the installation is safely stopped</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="Microsoft.Win32.SessionEndingEventArgs"/> instance containing the event data.</param>
-        private static void PreventClose(object sender, SessionEndingEventArgs e)
-        {
-            if (notifyIcon != null)
-            {
-                notifyIcon.Visible = false;
-                notifyIcon.Dispose();
-                notifyIcon = null;
-            }
-
-            using (var fs = File.Create(Path.Combine(AllUserStore, "abort.lock")))
-            {
-                fs.WriteByte(0);
-            }
-
-            e.Cancel = true;
         }
 
         /// <summary>Starts Seven Update UI</summary>
@@ -494,48 +536,6 @@ namespace SevenUpdate.Admin
                 client = null;
                 isClientConnected = false;
             }
-        }
-
-        /// <summary>Checks if Seven Update is running</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Timers.ElapsedEventArgs"/> instance containing the event data.</param>
-        private static void CheckIfRunning(object sender, ElapsedEventArgs e)
-        {
-            Task.Factory.StartNew(
-                () =>
-                    {
-                        if (File.Exists(Path.Combine(AllUserStore, "abort.lock")))
-                        {
-                            Download.CancelDownload();
-                            Install.CancelInstall();
-                            try
-                            {
-                                File.Delete(Path.Combine(AllUserStore, "abort.lock"));
-                            }
-                            catch (IOException)
-                            {
-                            }
-                        }
-
-                        if (client == null)
-                        {
-                            StartWcfHost();
-                        }
-
-                        if (IsInstalling)
-                        {
-                            return;
-                        }
-
-                        if (Process.GetProcessesByName("SevenUpdate").Length > 0 || waiting)
-                        {
-                            return;
-                        }
-
-#if (!DEBUG)
-                        ShutdownApp();
-#endif
-                    });
         }
 
         /// <summary>Updates the notify icon text</summary>

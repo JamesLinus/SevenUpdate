@@ -125,14 +125,6 @@ namespace SevenUpdate.Pages
             this.lvUpdates.SelectedIndex = 0;
         }
 
-        /// <summary>Navigates back to the Main page</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
-        private void NavigateToMainPage(object sender, RoutedEventArgs e)
-        {
-            Core.NavigateToMainPage();
-        }
-
         /// <summary>Launches the Help <c>Url</c> of the update</summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
@@ -147,6 +139,14 @@ namespace SevenUpdate.Pages
         private void NavigateToInfoUrl(object sender, MouseButtonEventArgs e)
         {
             Utilities.StartProcess(((Update)this.lvUpdates.SelectedItem).InfoUrl);
+        }
+
+        /// <summary>Navigates back to the Main page</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        private void NavigateToMainPage(object sender, RoutedEventArgs e)
+        {
+            Core.NavigateToMainPage();
         }
 
         /// <summary>Saves the selection of updates and navigates back to the Main page</summary>
@@ -251,13 +251,13 @@ namespace SevenUpdate.Pages
 
             var hnh = new Suh(update.Name, Core.Applications[appIndex].AppInfo.Publisher, update.Description)
                 {
-                    HelpUrl = Core.Applications[appIndex].AppInfo.HelpUrl,
-                    InfoUrl = update.InfoUrl,
-                    AppUrl = Core.Applications[appIndex].AppInfo.AppUrl,
-                    ReleaseDate = update.ReleaseDate,
-                    Status = UpdateStatus.Hidden,
-                    UpdateSize = Core.GetUpdateSize(update.Files),
-                    Importance = update.Importance,
+                    HelpUrl = Core.Applications[appIndex].AppInfo.HelpUrl, 
+                    InfoUrl = update.InfoUrl, 
+                    AppUrl = Core.Applications[appIndex].AppInfo.AppUrl, 
+                    ReleaseDate = update.ReleaseDate, 
+                    Status = UpdateStatus.Hidden, 
+                    UpdateSize = Core.GetUpdateSize(update.Files), 
+                    Importance = update.Importance, 
                 };
 
             if (!update.Hidden)

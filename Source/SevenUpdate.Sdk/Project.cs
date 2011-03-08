@@ -69,6 +69,14 @@ namespace SevenUpdate.Sdk
             }
         }
 
+        /// <summary>Gets or sets the last used sua filename when the project was exported</summary>
+        [ProtoMember(3), DataMember]
+        public string ExportedSuaFileName { get; set; }
+
+        /// <summary>Gets or sets the last used sui filename when the project was exported</summary>
+        [ProtoMember(4), DataMember]
+        public string ExportedSuiFileName { get; set; }
+
         /// <summary>Gets the update names.</summary>
         /// <value>The update names.</value>
         [ProtoMember(2), DataMember]
@@ -79,14 +87,6 @@ namespace SevenUpdate.Sdk
                 return this.updateNames;
             }
         }
-
-        /// <summary>Gets or sets the last used sua filename when the project was exported</summary>
-        [ProtoMember(3), DataMember]
-        public string ExportedSuaFileName { get; set; }
-
-        /// <summary>Gets or sets the last used sui filename when the project was exported</summary>
-        [ProtoMember(4), DataMember]
-        public string ExportedSuiFileName { get; set; }
 
         #endregion
 

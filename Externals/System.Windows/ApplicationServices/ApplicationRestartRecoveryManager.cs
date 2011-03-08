@@ -28,16 +28,10 @@ namespace System.Windows.ApplicationServices
         /// <summary>Do not restart when the application is hung.</summary>
         NotOnHang = 2,
 
-        /// <summary>
-        /// Do not restart when the application is terminated
-        /// due to a system update.
-        /// </summary>
+        /// <summary>Do not restart when the application is terminateddue to a system update.</summary>
         NotOnPatch = 4,
 
-        /// <summary>
-        /// Do not restart when the application is terminated 
-        /// because of a system reboot.
-        /// </summary>
+        /// <summary>Do not restart when the application is terminated because of a system reboot.</summary>
         NotOnReboot = 8
     }
 

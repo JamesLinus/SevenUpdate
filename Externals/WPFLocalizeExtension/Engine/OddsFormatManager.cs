@@ -22,10 +22,7 @@ namespace WPFLocalizeExtension.Engine
     {
         #region Constants and Fields
 
-        /// <summary>
-        /// <see cref = "DependencyProperty" /> DesignOddsFormat to set the <see cref = "OddsFormatType" />.
-        /// Only supported at DesignTime.
-        /// </summary>
+        /// <summary><see cref = "DependencyProperty" /> DesignOddsFormat to set the <see cref = "OddsFormatType" />.Only supported at DesignTime.</summary>
         [DesignOnly(true)]
         public static readonly DependencyProperty DesignOddsFormatProperty = DependencyProperty.RegisterAttached(
             "DesignOddsFormat", typeof(OddsFormatType), typeof(OddsFormatManager), new PropertyMetadata(DefaultOddsFormatType, SetOddsFormatFromDependencyProperty));
@@ -43,10 +40,7 @@ namespace WPFLocalizeExtension.Engine
 
         #region Constructors and Destructors
 
-        /// <summary>
-        /// Prevents a default instance of the <see cref = "OddsFormatManager" /> class from being created. 
-        /// Static Constructor
-        /// </summary>
+        /// <summary>Prevents a default instance of the <see cref = "OddsFormatManager" /> class from being created. Static Constructor</summary>
         private OddsFormatManager()
         {
         }
@@ -62,10 +56,7 @@ namespace WPFLocalizeExtension.Engine
 
         #region Properties
 
-        /// <summary>
-        /// Gets the <see cref = "OddsFormatManager" /> singleton.
-        /// If the underlying instance is <see langword = "null" />, a instance will be created.
-        /// </summary>
+        /// <summary>Gets the <see cref = "OddsFormatManager" /> singleton.If the underlying instance is <see langword = "null" />, a instance will be created.</summary>
         public static OddsFormatManager Instance
         {
             get
@@ -93,10 +84,7 @@ namespace WPFLocalizeExtension.Engine
             }
         }
 
-        /// <summary>
-        /// Gets the default <see cref = "OddsFormatType" /> to initialize the 
-        /// <see cref = "OddsFormatManager" />.<see cref = "OddsFormatType" />.
-        /// </summary>
+        /// <summary>Gets the default <see cref = "OddsFormatType" /> to initialize the <see cref = "OddsFormatManager" />.<see cref = "OddsFormatType" />.</summary>
         public static OddsFormatType DefaultOddsFormatType
         {
             get
@@ -115,10 +103,7 @@ namespace WPFLocalizeExtension.Engine
             }
         }
 
-        /// <summary>
-        /// Gets or sets the OddsFormatType for localization.
-        /// On set, <see cref = "OnOddsFormatChanged" /> is raised.
-        /// </summary>
+        /// <summary>Gets or sets the OddsFormatType for localization.On set, <see cref = "OnOddsFormatChanged" /> is raised.</summary>
         /// <exception cref = "System.InvalidOperationException">
         /// You have to set <see cref = "OddsFormatManager" />.<see cref = "OddsFormatType" /> first or 
         /// wait until MainWindow is created.

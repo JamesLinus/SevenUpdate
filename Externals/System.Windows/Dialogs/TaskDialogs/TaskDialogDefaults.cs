@@ -27,10 +27,7 @@ namespace System.Windows.Dialogs
         /// <summary>The main instruction</summary>
         internal const string MainInstruction = "";
 
-        /// <summary>
-        /// For generating control ID numbers that won't 
-        /// collide with the standard button return IDs.
-        /// </summary>
+        /// <summary>For generating control ID numbers that won't collide with the standard button return IDs.</summary>
         internal const int MinimumDialogControlId = (int)TaskDialogNativeMethods.TaskDialogCommonButtonReturnID.Close + 1;
 
         /// <summary>The progress bar max value</summary>

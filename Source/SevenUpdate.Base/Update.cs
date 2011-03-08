@@ -36,15 +36,15 @@ namespace SevenUpdate
     {
         /// <summary>Important update</summary>
         [ProtoEnum, EnumMember]
-        Important = 0,
+        Important = 0, 
 
         /// <summary>Locale or language</summary>
         [ProtoEnum, EnumMember]
-        Locale = 1,
+        Locale = 1, 
 
         /// <summary>Optional update</summary>
         [ProtoEnum, EnumMember]
-        Optional = 2,
+        Optional = 2, 
 
         /// <summary>Recommended update</summary>
         [ProtoEnum, EnumMember]
@@ -52,7 +52,8 @@ namespace SevenUpdate
     }
 
     /// <summary>Information on how to install a software update</summary>
-    [ProtoContract, DataContract(IsReference = true), KnownType(typeof(ObservableCollection<LocaleString>)), KnownType(typeof(UpdateFile)), KnownType(typeof(RegistryItem)), KnownType(typeof(Shortcut)), KnownType(typeof(Importance))]
+    [ProtoContract, DataContract(IsReference = true), KnownType(typeof(ObservableCollection<LocaleString>)), KnownType(typeof(UpdateFile)), KnownType(typeof(RegistryItem)), KnownType(typeof(Shortcut))
+    , KnownType(typeof(Importance))]
     public sealed class Update : INotifyPropertyChanged
     {
         #region Constants and Fields
@@ -92,10 +93,10 @@ namespace SevenUpdate
         /// <param name="registryItems">The collection of registry keys and values to perform actions on in the update</param>
         /// <param name="shortcuts">The collection of shortcuts to perform actions on in the update</param>
         public Update(
-            ObservableCollection<LocaleString> name,
-            ObservableCollection<LocaleString> description,
-            ObservableCollection<UpdateFile> files,
-            ObservableCollection<RegistryItem> registryItems,
+            ObservableCollection<LocaleString> name, 
+            ObservableCollection<LocaleString> description, 
+            ObservableCollection<UpdateFile> files, 
+            ObservableCollection<RegistryItem> registryItems, 
             ObservableCollection<Shortcut> shortcuts)
         {
             this.Name = name;

@@ -63,18 +63,18 @@ namespace SevenUpdate
 
         #region Properties
 
-        /// <summary>Gets or sets the ISO language code</summary>
-        /// <value>The locale.</value>
-        public static string Locale { get; set; }
-
         /// <summary>Gets a value indicating whether the OS is 64 bit</summary>
         public static bool IsRunning64BitOS
         {
             get
             {
-                return IntPtr.Size == 8  || !String.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"));
+                return IntPtr.Size == 8 || !String.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"));
             }
         }
+
+        /// <summary>Gets or sets the ISO language code</summary>
+        /// <value>The locale.</value>
+        public static string Locale { get; set; }
 
         /// <summary>Gets or sets a value indicating whether if a reboot is needed</summary>
         /// <value><see langword = "true" /> if a reboot is needed otherwise, <see langword = "false" />.</value>
@@ -95,6 +95,15 @@ namespace SevenUpdate
         #endregion
 
         #region Public Methods
+
+        /// <summary>Checks if a registry key exists</summary>
+        /// <param name="registryKey">The path to the registry key</param>
+        /// <param name="platform">a value that indicates what cpu architecture the application supports</param>
+        /// <returns><see langword="true"/> if exists; otherwise, <see langword="false"/></returns>
+        public static bool CheckRegistryKey(string registryKey, Platform platform)
+        {
+            return GetRegistryValue(registryKey, null, platform) != null;
+        }
 
         /// <summary>Converts bytes into the proper increments depending on size</summary>
         /// <param name="bytes">the fileSize in bytes</param>
@@ -151,7 +160,8 @@ namespace SevenUpdate
         /// <returns>a string of the path expanded</returns>
         public static string ConvertPath(string path, string directory, Platform platform, string valueName)
         {
-            path = path.Replace("%INSTALLDIR%", !IsRegistryKey(directory) ? ConvertPath(directory, true, platform) : ConvertPath(GetRegistryValue(directory, valueName, platform), true, platform), true);
+            path = path.Replace(
+                "%INSTALLDIR%", !IsRegistryKey(directory) ? ConvertPath(directory, true, platform) : ConvertPath(GetRegistryValue(directory, valueName, platform), true, platform), true);
             path = path.Replace("%DOWNLOADURL%", ConvertPath(directory, true, platform), true);
             return ConvertPath(path, true, platform);
         }
@@ -391,39 +401,6 @@ namespace SevenUpdate
             return localeStrings[0].Value;
         }
 
-        /// <summary>Gets whether the specified path is a valid absolute file path.</summary>
-        /// <param name="path">Any path. OK if null or empty.</param>
-        /// <returns>true if path is valid</returns>
-        public static bool IsValidPath(string path)
-        {
-            var r = new Regex(@"^(([a-zA-Z]\:)|(\\))(\\{1}|((\\{1})[^\\]([^/:*?<>""|]*))+)$");
-            return r.IsMatch(path);
-        }
-
-        /// <summary>Converts the registry key</summary>
-        /// <param name="registryKey">The registry key</param>
-        /// <param name="platform">a value that indicates what cpu architecture the application supports</param>
-        /// <returns>The parsed registry key</returns>
-        public static string ParseRegistryKey(string registryKey, Platform platform)
-        {
-            if (8 == IntPtr.Size || (!String.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"))))
-            {
-                if (platform == Platform.X86)
-                {
-                    if (!registryKey.Contains(@"SOFTWARE\Wow6432Node", StringComparison.OrdinalIgnoreCase))
-                    {
-                        registryKey = registryKey.Replace(@"SOFTWARE\", @"SOFTWARE\Wow6432Node\", true);
-                    }
-                }
-            }
-
-            registryKey = registryKey.Replace("HKLM", "HKEY_LOCAL_MACHINE", true);
-            registryKey = registryKey.Replace("HKCU", "HKEY_CURRENT_USER", true);
-            registryKey = registryKey.Replace("HKCR", "HKEY_CLASSES_ROOT", true);
-            registryKey = registryKey.Replace("HKU", "HKEY_USERS", true);
-            return registryKey;
-        }
-
         /// <summary>Gets a string from a registry path</summary>
         /// <param name="registryKey">The path to the registry key</param>
         /// <param name="valueName">The value name to get the data from</param>
@@ -470,21 +447,45 @@ namespace SevenUpdate
             return registryKey;
         }
 
-        /// <summary>Checks if a registry key exists</summary>
-        /// <param name="registryKey">The path to the registry key</param>
-        /// <param name="platform">a value that indicates what cpu architecture the application supports</param>
-        /// <returns><see langword="true"/> if exists; otherwise, <see langword="false"/></returns>
-        public static bool CheckRegistryKey(string registryKey, Platform platform)
-        {
-            return GetRegistryValue(registryKey, null, platform) != null;
-        }
-
         /// <summary>Checks to see if path is a registry key</summary>
         /// <param name="path">The path to check</param>
         /// <returns><see langword="true"/> if the path is a registry key otherwise, <see langword="false"/></returns>
         public static bool IsRegistryKey(string path)
         {
             return Regex.IsMatch(path, @"^HKLM\\|^HKEY_CLASSES_ROOT\\|^HKEY_CURRENT_USER\\|^HKEY_LOCAL_MACHINE\\|^HKEY_USERS\\|^HKU\\|^HKCR\\", RegexOptions.IgnoreCase);
+        }
+
+        /// <summary>Gets whether the specified path is a valid absolute file path.</summary>
+        /// <param name="path">Any path. OK if null or empty.</param>
+        /// <returns>true if path is valid</returns>
+        public static bool IsValidPath(string path)
+        {
+            var r = new Regex(@"^(([a-zA-Z]\:)|(\\))(\\{1}|((\\{1})[^\\]([^/:*?<>""|]*))+)$");
+            return r.IsMatch(path);
+        }
+
+        /// <summary>Converts the registry key</summary>
+        /// <param name="registryKey">The registry key</param>
+        /// <param name="platform">a value that indicates what cpu architecture the application supports</param>
+        /// <returns>The parsed registry key</returns>
+        public static string ParseRegistryKey(string registryKey, Platform platform)
+        {
+            if (8 == IntPtr.Size || (!String.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"))))
+            {
+                if (platform == Platform.X86)
+                {
+                    if (!registryKey.Contains(@"SOFTWARE\Wow6432Node", StringComparison.OrdinalIgnoreCase))
+                    {
+                        registryKey = registryKey.Replace(@"SOFTWARE\", @"SOFTWARE\Wow6432Node\", true);
+                    }
+                }
+            }
+
+            registryKey = registryKey.Replace("HKLM", "HKEY_LOCAL_MACHINE", true);
+            registryKey = registryKey.Replace("HKCU", "HKEY_CURRENT_USER", true);
+            registryKey = registryKey.Replace("HKCR", "HKEY_CLASSES_ROOT", true);
+            registryKey = registryKey.Replace("HKU", "HKEY_USERS", true);
+            return registryKey;
         }
 
         /// <summary>Replaces a string within a string</summary>

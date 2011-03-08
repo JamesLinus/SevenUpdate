@@ -32,6 +32,8 @@ namespace SevenUpdate.Service
     [ServiceContract(Namespace = "http://sevenupdate.com", CallbackContract = typeof(IElevatedProcess))]
     public interface IElevatedProcessCallback
     {
+        #region Public Methods
+
         /// <summary>Occurs when the process starts</summary>
         [OperationContract(IsOneWay = false), ProtoBehavior]
         void ElevatedProcessStarted();
@@ -69,12 +71,16 @@ namespace SevenUpdate.Service
         /// <param name="e">The event data</param>
         [OperationContract(IsOneWay = false), ProtoBehavior]
         void OnInstallProgressChanged(object sender, InstallProgressChangedEventArgs e);
+
+        #endregion
     }
 
     /// <summary>Contains callbacks/events to relay back to the client</summary>
     [ServiceContract(Namespace = "http://sevenupdate.com")]
     public interface IElevatedProcess
     {
+        #region Public Methods
+
         /// <summary>Adds an application to Seven Update, so it can manage updates for it.</summary>
         /// <param name="application">The application to add</param>
         [OperationContract(IsOneWay = false), ProtoBehavior]
@@ -110,5 +116,7 @@ namespace SevenUpdate.Service
         /// <summary>Requests shutdown of the admin process. App will only shutdown if it's not installing updates. To shutdown when updates are being installed, execute the admin process with the 'Abort' argument</summary>
         [OperationContract(IsOneWay = false), ProtoBehavior]
         void Shutdown();
+
+        #endregion
     }
 }

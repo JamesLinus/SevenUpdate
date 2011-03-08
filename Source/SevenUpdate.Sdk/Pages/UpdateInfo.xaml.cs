@@ -70,12 +70,24 @@ namespace SevenUpdate.Sdk.Pages
 
         #region Methods
 
-        /// <summary>Navigates to the main page</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
-        private void NavigateToMainPage(object sender, RoutedEventArgs e)
+        /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="e">The event data</param>
+        private void ChangeDescription(object sender, RoutedEventArgs e)
         {
-            MainWindow.NavService.Navigate(Core.MainPage);
+            var textBox = (InfoTextBox)sender;
+
+            Core.UpdateLocaleStrings(textBox.Text, Core.UpdateInfo.Description);
+        }
+
+        /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="e">The event data</param>
+        private void ChangeName(object sender, RoutedEventArgs e)
+        {
+            var textBox = (InfoTextBox)sender;
+
+            Core.UpdateLocaleStrings(textBox.Text, Core.UpdateInfo.Name);
         }
 
         /// <summary>Determines whether this instance has errors.</summary>
@@ -154,11 +166,11 @@ namespace SevenUpdate.Sdk.Pages
             }
 
             var urlRule = new UrlInputRule { IsRequired = true };
-            tbxSourceLocation.HasError = !urlRule.Validate(tbxSourceLocation.Text, null).IsValid;
+            this.tbxSourceLocation.HasError = !urlRule.Validate(this.tbxSourceLocation.Text, null).IsValid;
             urlRule.IsRequired = false;
 
-            tbxLicenseUrl.HasError = !urlRule.Validate(tbxLicenseUrl.Text, null).IsValid;
-            tbxUpdateInfoUrl.HasError = !urlRule.Validate(tbxUpdateInfoUrl.Text, null).IsValid;
+            this.tbxLicenseUrl.HasError = !urlRule.Validate(this.tbxLicenseUrl.Text, null).IsValid;
+            this.tbxUpdateInfoUrl.HasError = !urlRule.Validate(this.tbxUpdateInfoUrl.Text, null).IsValid;
 
             // Load Values
             foreach (var t in Core.UpdateInfo.Description.Where(t => t.Lang == Utilities.Locale))
@@ -187,6 +199,14 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
+        /// <summary>Navigates to the main page</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        private void NavigateToMainPage(object sender, RoutedEventArgs e)
+        {
+            MainWindow.NavService.Navigate(Core.MainPage);
+        }
+
         /// <summary>Updates the UI based on whether Aero Glass is enabled</summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="CompositionChangedEventArgs"/> instance containing the event data.</param>
@@ -204,26 +224,6 @@ namespace SevenUpdate.Sdk.Pages
                 this.line.Visibility = Visibility.Collapsed;
                 this.rectangle.Visibility = Visibility.Collapsed;
             }
-        }
-
-        /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
-        /// <param name="sender">The sender</param>
-        /// <param name="e">The event data</param>
-        private void ChangeName(object sender, RoutedEventArgs e)
-        {
-            var textBox = (InfoTextBox)sender;
-
-            Core.UpdateLocaleStrings(textBox.Text, Core.UpdateInfo.Name);
-        }
-
-        /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
-        /// <param name="sender">The sender</param>
-        /// <param name="e">The event data</param>
-        private void ChangeDescription(object sender, RoutedEventArgs e)
-        {
-            var textBox = (InfoTextBox)sender;
-
-            Core.UpdateLocaleStrings(textBox.Text, Core.UpdateInfo.Description);
         }
 
         /// <summary>Validates the textbox to see if required input exists</summary>
@@ -257,7 +257,7 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             }
 
-            textBox.HasError = !new UrlInputRule { IsRequired = textBox.Name == @"tbxSourceLocation" } .Validate(textBox.Text, null).IsValid;
+            textBox.HasError = !new UrlInputRule { IsRequired = textBox.Name == @"tbxSourceLocation" }.Validate(textBox.Text, null).IsValid;
             textBox.ToolTip = textBox.HasError ? Properties.Resources.UrlNotValid : null;
         }
 

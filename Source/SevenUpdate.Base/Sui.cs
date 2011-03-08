@@ -38,6 +38,10 @@ namespace SevenUpdate
         /// <summary>The application information</summary>
         private Sua appInfo;
 
+        #endregion
+
+        #region Constructors and Destructors
+
         /// <summary>Initializes a new instance of the <see cref="Sui"/> class</summary>
         /// <param name="updates">The collection of updates for the application</param>
         public Sui(ObservableCollection<Update> updates)
@@ -51,10 +55,6 @@ namespace SevenUpdate
 
             this.Updates = new ObservableCollection<Update>();
         }
-
-        #endregion
-
-        #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref = "Sui" /> class.</summary>
         public Sui()

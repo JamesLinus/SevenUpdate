@@ -63,7 +63,7 @@ namespace SevenUpdate.Sdk
 
         /// <summary>The regex that matches a sub key</summary>
         private static readonly Regex RegexSubKey = new Regex(
-            @"^\[-?(HKEY_LOCAL_MACHINE|HKEY_CURRENT_USER|HKEY_CLASSES_ROOT|HKEY_USERS|HKLM|HKCU|HKCR|HKU)\\(?<Subkey>.*)\]",
+            @"^\[-?(HKEY_LOCAL_MACHINE|HKEY_CURRENT_USER|HKEY_CLASSES_ROOT|HKEY_USERS|HKLM|HKCU|HKCR|HKU)\\(?<Subkey>.*)\]", 
             RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
 
         /// <summary>The regex that matches the split token</summary>
@@ -139,8 +139,10 @@ namespace SevenUpdate.Sdk
 
         /// <summary>Apply fixes to the line</summary>
         /// <param name="line">Line to apply fixes to</param>
-        /// <param name="skipQuotesConversion">REG_MULTI_SZ, REG_SZ (hex notation) and REG_EXPAND_SZalready put the quotes correctly so if you fix them again you will damage the value, so for
-        /// those put <see langword="true"/> here to skip that part and only to do the double-quote and percent fixes.</param>
+        /// <param name="skipQuotesConversion">
+        /// REG_MULTI_SZ, REG_SZ (hex notation) and REG_EXPAND_SZalready put the quotes correctly so if you fix them again you will damage the value, so for
+        ///   those put <see langword="true"/> here to skip that part and only to do the double-quote and percent fixes.
+        /// </param>
         /// <returns>The line with the fixes applied</returns>
         private static string ApplyFixes(string line, bool skipQuotesConversion)
         {
@@ -168,6 +170,313 @@ namespace SevenUpdate.Sdk
         private static bool EmptyString(string item)
         {
             return item.Length == 0;
+        }
+
+        /// <summary>Matches Binary data from the key/value</summary>
+        /// <param name="methodResult">The data from the match</param>
+        /// <param name="valueName">The name of the value</param>
+        /// <param name="valueData">The data for the value</param>
+        /// <returns><see langword="true"/> if it was a match, otherwise; <see langword="false"/></returns>
+        private static bool MatchBinary(ref RegistryItem methodResult, string valueName, string valueData)
+        {
+            if (Regex.IsMatch(valueData, @"^hex(\(0*3\))?:(([0-9|A-F]{2}),?)*", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Multiline))
+            {
+                // Put everything on one line
+                valueData = PutOnOneLineAndTrim(valueData);
+
+                // Remove hex: or hex(3): at the beginning
+                valueData = Regex.Replace(valueData, @"^hex(\(0*3\))?:", String.Empty, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline);
+                methodResult.ValueKind = RegistryValueKind.Binary;
+                methodResult.Data = valueData;
+                methodResult.KeyValue = valueName;
+
+                // Return Partial Line
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>Matches DWord from the key/value</summary>
+        /// <param name="methodResult">The data from the match</param>
+        /// <param name="valueName">The name of the value</param>
+        /// <param name="valueData">The data for the value</param>
+        /// <returns><see langword="true"/> if it was a match, otherwise; <see langword="false"/></returns>
+        private static bool MatchDWord(ref RegistryItem methodResult, string valueName, string valueData)
+        {
+            if (Regex.IsMatch(valueData, @"^(dword:([0-9A-Fa-f]){1,8})|(hex\(0*4\):([0-9A-Fa-f]{1,2},?)+)", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline))
+            {
+                // Remove dword: at the beginning
+                valueData = Regex.Replace(valueData, @"^(dword|hex\(0*4\)):", String.Empty, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline);
+
+                // Check for empty ValueData
+                if (String.IsNullOrEmpty(valueData.Trim()))
+                {
+                    methodResult.ValueKind = RegistryValueKind.DWord;
+                    methodResult.Data = valueData;
+                    methodResult.KeyValue = valueName;
+                    return true;
+                }
+
+                // In case of hex(4) notation, very little changes are needed - no
+                // reverse needed as in hex(4) they are already revered and in the correct format for INF
+                if (Regex.IsMatch(valueData, @"^([0-9A-Fa-f]{1,2},)+[0-9A-Fa-f]{1,2}$", RegexOptions.ExplicitCapture))
+                {
+                    valueData = valueData.TrimEnd(new[] { ',' });
+                }
+                else
+                {
+                    // Check if length is equal to 8, else pad with 0s to 8
+                    if (valueData.Length < 8)
+                    {
+                        var numberOfZeroesNeeded = 8 - valueData.Length;
+                        for (var i = 0; i < numberOfZeroesNeeded; i++)
+                        {
+                            valueData = "0" + valueData;
+                        }
+                    }
+
+                    // Put a comma after each 2 digits
+                    var digitsSeparated = new StringBuilder();
+                    var splitThem = Regex.Matches(valueData, @"(([0-9]|[A-F]){2})", RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.RightToLeft);
+                    digitsSeparated.Append(splitThem[0].Value + ",");
+                    digitsSeparated.Append(splitThem[1].Value + ",");
+                    digitsSeparated.Append(splitThem[2].Value + ",");
+                    digitsSeparated.Append(splitThem[3].Value);
+                    valueData = digitsSeparated.ToString();
+                }
+
+                methodResult.ValueKind = RegistryValueKind.DWord;
+                methodResult.Data = valueData;
+                methodResult.KeyValue = valueName;
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>Matches MutiString from the key/value</summary>
+        /// <param name="methodResult">The data from the match</param>
+        /// <param name="valueName">The name of the value</param>
+        /// <param name="valueData">The data for the value</param>
+        /// <returns><see langword="true"/> if it was a match, otherwise; <see langword="false"/></returns>
+        private static bool MatchMutiString(ref RegistryItem methodResult, string valueName, string valueData)
+        {
+            if (Regex.IsMatch(valueData, @"^hex\(0*7\):(([0-9|A-F]{2}),?)*", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Multiline))
+            {
+                // Put everything on one line
+                valueData = PutOnOneLineAndTrim(valueData);
+
+                // Remove hex(7): at the beginning
+                valueData = Regex.Replace(valueData, @"^hex\(0*7\):", String.Empty, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline);
+
+                // Remove trailing 00,00s is now done by the RegEx below the following block
+
+                // Check for empty ValueData
+                if (String.IsNullOrEmpty(valueData.Trim()))
+                {
+                    // Set Flag - Undocumented but used inside XP Setup's own files to specify 
+                    // REG_MULTI_SZ. The documented method seems to be to use 0x10000
+                    // Return Partial Line
+                    methodResult.Data = valueName;
+                    methodResult.ValueKind = RegistryValueKind.MultiString;
+                    return true;
+                }
+
+                // Create a List<string> for holding the split parts
+                var multiStringEntries = new List<string>(5);
+
+                // Create a StringBuilder for holding the semi-processed string
+                var valueDataBuilder = new StringBuilder(valueData.Length);
+
+                // Convert the bytes back to the string using the new
+                // UnicodeEncoding method for v5 signature (DBCS) and using
+                // the old method for v4 signature which uses SBCS.
+                if (regVersionSignature == 5)
+                {
+                    // RegEx match all pairs of bytes
+                    var readInTwos = Regex.Matches(valueData, @"[a-zA-Z0-9]{2},[a-zA-Z0-9]{2}", RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
+                    foreach (Match found in readInTwos)
+                    {
+                        if (String.Compare(found.Value, "00,00", StringComparison.CurrentCulture) != 0)
+                        {
+                            var z = new List<string>(found.Value.Split(new[] { ',' }));
+                            var y = z.ConvertAll(String2Byte);
+                            valueDataBuilder.Append(Encoding.Unicode.GetString(y.ToArray()));
+                        }
+                        else
+                        {
+                            valueDataBuilder.Append("\r\n");
+                        }
+                    }
+                }
+                else
+                {
+                    // Use old behavior - invalid and non-printable chars will convert to ? (63)
+                    // Convert 00 to a carriage return / line-feed (CR-LF): 0d 0a
+                    valueData = Regex.Replace(valueData, @"00", @"0d,0a", RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
+
+                    // Convert to byte and back to characters using ASCIIEncoding
+                    var z = new List<string>(valueData.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+                    var y = z.ConvertAll(String2ByteForAsciiAllowCrlf);
+                    valueDataBuilder.Append(Encoding.Default.GetString(y.ToArray()));
+                }
+
+                multiStringEntries.AddRange(Regex.Split(valueDataBuilder.ToString(), @"\r\n", RegexOptions.Singleline | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture));
+
+                // multiStringEntries.RemoveAt((multiStringEntries.Count-1));
+                multiStringEntries.RemoveAll(EmptyString);
+
+                // Re init StringBuilder to clear
+                valueDataBuilder = new StringBuilder(valueData.Length);
+
+                for (var i = 0; i < multiStringEntries.Count; i++)
+                {
+                    // Apply Fixes
+                    multiStringEntries[i] = ApplyFixes(multiStringEntries[i], true);
+
+                    // Append to StringBuilder
+                    if ((i + 1) == multiStringEntries.Count)
+                    {
+                        valueDataBuilder.Append("\"" + multiStringEntries[i] + "\"");
+                    }
+                    else
+                    {
+                        valueDataBuilder.Append("\"" + multiStringEntries[i] + "\",");
+                    }
+                }
+
+                // Set ValueData
+                valueData = valueDataBuilder.ToString();
+
+                // Set Flag - REG_MULTI_SZ overwrite
+                methodResult.ValueKind = RegistryValueKind.MultiString;
+                methodResult.Data = valueData;
+                methodResult.KeyValue = valueName;
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>Matches hex data from the key/value</summary>
+        /// <param name="methodResult">The data from the match</param>
+        /// <param name="valueName">The name of the value</param>
+        /// <param name="valueData">The data for the value</param>
+        /// <returns><see langword="true"/> if it was a match, otherwise; <see langword="false"/></returns>
+        private static bool MatchStringHex(ref RegistryItem methodResult, string valueName, string valueData)
+        {
+            if (Regex.IsMatch(valueData, @"^hex\(0*1\):(([0-9|A-F]{2}),?)*", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Multiline))
+            {
+                // Put everything on one line
+                valueData = PutOnOneLineAndTrim(valueData);
+
+                // Remove hex(1): at the beginning
+                valueData = Regex.Replace(valueData, @"^hex\(0*1\):", String.Empty, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline);
+
+                // Remove trailing 00,00s
+                valueData = Regex.Replace(valueData, @",00,00$", String.Empty, RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.ExplicitCapture);
+
+                // Check for empty ValueData
+                if (String.IsNullOrEmpty(valueData.Trim()))
+                {
+                    methodResult.ValueKind = RegistryValueKind.String;
+                    methodResult.Data = valueData;
+                    methodResult.KeyValue = valueName;
+                    return true;
+                }
+
+                // Get the string with UnicodeEncoding
+                // Create an array to hold the hex values
+                var temporaryArray = new List<string>(valueData.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+
+                // Treat as DBCS (Double byte characters)
+                var byteArray = temporaryArray.ConvertAll(String2Byte);
+                valueData = Encoding.Unicode.GetString(byteArray.ToArray());
+
+                // Apply Fixes
+                valueData = ApplyFixes(valueData, true);
+
+                // Look for CR + LF and append warning if found
+                if (valueData.Contains("\r\n"))
+                {
+                    valueData = valueData.Replace("\r\n", "_");
+                }
+
+                methodResult.ValueKind = RegistryValueKind.String;
+                methodResult.Data = valueData;
+                methodResult.KeyValue = valueName;
+                return true;
+            }
+
+            return false;
+        }
+
+        /// <summary>Matches ExpandString from the key/value</summary>
+        /// <param name="methodResult">The data from the match</param>
+        /// <param name="valueName">The name of the value</param>
+        /// <param name="valueData">The data for the value</param>
+        /// <returns><see langword="true"/> if it was a match, otherwise; <see langword="false"/></returns>
+        private static bool MathExpandString(ref RegistryItem methodResult, string valueName, string valueData)
+        {
+            if (Regex.IsMatch(valueData, @"^hex\(0*2\):(([0-9|A-F]{2}),?)*", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Multiline))
+            {
+                // Put everything on one line
+                valueData = PutOnOneLineAndTrim(valueData);
+
+                // Remove hex(2): at the beginning
+                valueData = Regex.Replace(valueData, @"^hex\(0*2\):", String.Empty, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline);
+
+                // Remove trailing 00,00s (v5) or 00s (v4)
+                valueData = Regex.Replace(valueData, @",00,00$", String.Empty, RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.ExplicitCapture);
+
+                // Check for empty ValueData
+                if (String.IsNullOrEmpty(valueData.Trim()))
+                {
+                    methodResult.ValueKind = RegistryValueKind.ExpandString;
+                    methodResult.Data = valueData;
+                    methodResult.KeyValue = valueName;
+                    return true;
+                }
+
+                // Get the string, with UnicodeEncoding if v5 else ASCIIEncoding
+                if (regVersionSignature == 5)
+                {
+                    // Create an array to hold the hex values
+                    var temporaryArray = new List<string>(valueData.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+
+                    // Treat as DBCS (Double byte characters)
+                    var byteArray = temporaryArray.ConvertAll(String2Byte);
+                    valueData = Encoding.Unicode.GetString(byteArray.ToArray());
+                }
+                else
+                {
+                    // Nuke all 00s to prevent conversion to null, if this line causes
+                    // changes ValueData then its 99% possible that the wrong REG signature
+                    // is present in the REG file being processed.
+                    valueData = Regex.Replace(valueData, @"00,?", String.Empty);
+
+                    // Create an array to hold the hex values
+                    var temporaryArray = new List<string>(valueData.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+
+                    // Treat as SBCS (Single byte characters)
+                    var byteArray = temporaryArray.ConvertAll(String2ByteForAscii);
+                    valueData = Encoding.Default.GetString(byteArray.ToArray());
+                }
+
+                // Apply Fixes
+                valueData = ApplyFixes(valueData, true);
+
+                // Set Flag
+
+                // Return Partial Line
+                methodResult.ValueKind = RegistryValueKind.ExpandString;
+                methodResult.Data = valueData;
+                methodResult.KeyValue = valueName;
+                return true;
+            }
+
+            return false;
         }
 
         /// <summary>Common processing for normal binary types</summary>
@@ -344,313 +653,6 @@ namespace SevenUpdate.Sdk
                        : methodResult;
 
             // Fallback in case nothing matches
-        }
-
-        /// <summary>Matches hex data from the key/value</summary>
-        /// <param name="methodResult">The data from the match</param>
-        /// <param name="valueName">The name of the value</param>
-        /// <param name="valueData">The data for the value</param>
-        /// <returns><see langword="true"/> if it was a match, otherwise; <see langword="false"/></returns>
-        private static bool MatchStringHex(ref RegistryItem methodResult, string valueName, string valueData)
-        {
-            if (Regex.IsMatch(valueData, @"^hex\(0*1\):(([0-9|A-F]{2}),?)*", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Multiline))
-            {
-                // Put everything on one line
-                valueData = PutOnOneLineAndTrim(valueData);
-
-                // Remove hex(1): at the beginning
-                valueData = Regex.Replace(valueData, @"^hex\(0*1\):", String.Empty, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline);
-
-                // Remove trailing 00,00s
-                valueData = Regex.Replace(valueData, @",00,00$", String.Empty, RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.ExplicitCapture);
-
-                // Check for empty ValueData
-                if (String.IsNullOrEmpty(valueData.Trim()))
-                {
-                    methodResult.ValueKind = RegistryValueKind.String;
-                    methodResult.Data = valueData;
-                    methodResult.KeyValue = valueName;
-                    return true;
-                }
-
-                // Get the string with UnicodeEncoding
-                // Create an array to hold the hex values
-                var temporaryArray = new List<string>(valueData.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
-
-                // Treat as DBCS (Double byte characters)
-                var byteArray = temporaryArray.ConvertAll(String2Byte);
-                valueData = Encoding.Unicode.GetString(byteArray.ToArray());
-
-                // Apply Fixes
-                valueData = ApplyFixes(valueData, true);
-
-                // Look for CR + LF and append warning if found
-                if (valueData.Contains("\r\n"))
-                {
-                    valueData = valueData.Replace("\r\n", "_");
-                }
-
-                methodResult.ValueKind = RegistryValueKind.String;
-                methodResult.Data = valueData;
-                methodResult.KeyValue = valueName;
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>Matches MutiString from the key/value</summary>
-        /// <param name="methodResult">The data from the match</param>
-        /// <param name="valueName">The name of the value</param>
-        /// <param name="valueData">The data for the value</param>
-        /// <returns><see langword="true"/> if it was a match, otherwise; <see langword="false"/></returns>
-        private static bool MatchMutiString(ref RegistryItem methodResult, string valueName, string valueData)
-        {
-            if (Regex.IsMatch(valueData, @"^hex\(0*7\):(([0-9|A-F]{2}),?)*", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Multiline))
-            {
-                // Put everything on one line
-                valueData = PutOnOneLineAndTrim(valueData);
-
-                // Remove hex(7): at the beginning
-                valueData = Regex.Replace(valueData, @"^hex\(0*7\):", String.Empty, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline);
-
-                // Remove trailing 00,00s is now done by the RegEx below the following block
-
-                // Check for empty ValueData
-                if (String.IsNullOrEmpty(valueData.Trim()))
-                {
-                    // Set Flag - Undocumented but used inside XP Setup's own files to specify 
-                    // REG_MULTI_SZ. The documented method seems to be to use 0x10000
-                    // Return Partial Line
-                    methodResult.Data = valueName;
-                    methodResult.ValueKind = RegistryValueKind.MultiString;
-                    return true;
-                }
-
-                // Create a List<string> for holding the split parts
-                var multiStringEntries = new List<string>(5);
-
-                // Create a StringBuilder for holding the semi-processed string
-                var valueDataBuilder = new StringBuilder(valueData.Length);
-
-                // Convert the bytes back to the string using the new
-                // UnicodeEncoding method for v5 signature (DBCS) and using
-                // the old method for v4 signature which uses SBCS.
-                if (regVersionSignature == 5)
-                {
-                    // RegEx match all pairs of bytes
-                    var readInTwos = Regex.Matches(valueData, @"[a-zA-Z0-9]{2},[a-zA-Z0-9]{2}", RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
-                    foreach (Match found in readInTwos)
-                    {
-                        if (String.Compare(found.Value, "00,00", StringComparison.CurrentCulture) != 0)
-                        {
-                            var z = new List<string>(found.Value.Split(new[] { ',' }));
-                            var y = z.ConvertAll(String2Byte);
-                            valueDataBuilder.Append(Encoding.Unicode.GetString(y.ToArray()));
-                        }
-                        else
-                        {
-                            valueDataBuilder.Append("\r\n");
-                        }
-                    }
-                }
-                else
-                {
-                    // Use old behavior - invalid and non-printable chars will convert to ? (63)
-                    // Convert 00 to a carriage return / line-feed (CR-LF): 0d 0a
-                    valueData = Regex.Replace(valueData, @"00", @"0d,0a", RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
-
-                    // Convert to byte and back to characters using ASCIIEncoding
-                    var z = new List<string>(valueData.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
-                    var y = z.ConvertAll(String2ByteForAsciiAllowCrlf);
-                    valueDataBuilder.Append(Encoding.Default.GetString(y.ToArray()));
-                }
-
-                multiStringEntries.AddRange(Regex.Split(valueDataBuilder.ToString(), @"\r\n", RegexOptions.Singleline | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture));
-
-                // multiStringEntries.RemoveAt((multiStringEntries.Count-1));
-                multiStringEntries.RemoveAll(EmptyString);
-
-                // Re init StringBuilder to clear
-                valueDataBuilder = new StringBuilder(valueData.Length);
-
-                for (var i = 0; i < multiStringEntries.Count; i++)
-                {
-                    // Apply Fixes
-                    multiStringEntries[i] = ApplyFixes(multiStringEntries[i], true);
-
-                    // Append to StringBuilder
-                    if ((i + 1) == multiStringEntries.Count)
-                    {
-                        valueDataBuilder.Append("\"" + multiStringEntries[i] + "\"");
-                    }
-                    else
-                    {
-                        valueDataBuilder.Append("\"" + multiStringEntries[i] + "\",");
-                    }
-                }
-
-                // Set ValueData
-                valueData = valueDataBuilder.ToString();
-
-                // Set Flag - REG_MULTI_SZ overwrite
-                methodResult.ValueKind = RegistryValueKind.MultiString;
-                methodResult.Data = valueData;
-                methodResult.KeyValue = valueName;
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>Matches ExpandString from the key/value</summary>
-        /// <param name="methodResult">The data from the match</param>
-        /// <param name="valueName">The name of the value</param>
-        /// <param name="valueData">The data for the value</param>
-        /// <returns><see langword="true"/> if it was a match, otherwise; <see langword="false"/></returns>
-        private static bool MathExpandString(ref RegistryItem methodResult, string valueName, string valueData)
-        {
-            if (Regex.IsMatch(valueData, @"^hex\(0*2\):(([0-9|A-F]{2}),?)*", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Multiline))
-            {
-                // Put everything on one line
-                valueData = PutOnOneLineAndTrim(valueData);
-
-                // Remove hex(2): at the beginning
-                valueData = Regex.Replace(valueData, @"^hex\(0*2\):", String.Empty, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline);
-
-                // Remove trailing 00,00s (v5) or 00s (v4)
-                valueData = Regex.Replace(valueData, @",00,00$", String.Empty, RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.ExplicitCapture);
-
-                // Check for empty ValueData
-                if (String.IsNullOrEmpty(valueData.Trim()))
-                {
-                    methodResult.ValueKind = RegistryValueKind.ExpandString;
-                    methodResult.Data = valueData;
-                    methodResult.KeyValue = valueName;
-                    return true;
-                }
-
-                // Get the string, with UnicodeEncoding if v5 else ASCIIEncoding
-                if (regVersionSignature == 5)
-                {
-                    // Create an array to hold the hex values
-                    var temporaryArray = new List<string>(valueData.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
-
-                    // Treat as DBCS (Double byte characters)
-                    var byteArray = temporaryArray.ConvertAll(String2Byte);
-                    valueData = Encoding.Unicode.GetString(byteArray.ToArray());
-                }
-                else
-                {
-                    // Nuke all 00s to prevent conversion to null, if this line causes
-                    // changes ValueData then its 99% possible that the wrong REG signature
-                    // is present in the REG file being processed.
-                    valueData = Regex.Replace(valueData, @"00,?", String.Empty);
-
-                    // Create an array to hold the hex values
-                    var temporaryArray = new List<string>(valueData.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
-
-                    // Treat as SBCS (Single byte characters)
-                    var byteArray = temporaryArray.ConvertAll(String2ByteForAscii);
-                    valueData = Encoding.Default.GetString(byteArray.ToArray());
-                }
-
-                // Apply Fixes
-                valueData = ApplyFixes(valueData, true);
-
-                // Set Flag
-
-                // Return Partial Line
-                methodResult.ValueKind = RegistryValueKind.ExpandString;
-                methodResult.Data = valueData;
-                methodResult.KeyValue = valueName;
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>Matches DWord from the key/value</summary>
-        /// <param name="methodResult">The data from the match</param>
-        /// <param name="valueName">The name of the value</param>
-        /// <param name="valueData">The data for the value</param>
-        /// <returns><see langword="true"/> if it was a match, otherwise; <see langword="false"/></returns>
-        private static bool MatchDWord(ref RegistryItem methodResult, string valueName, string valueData)
-        {
-            if (Regex.IsMatch(valueData, @"^(dword:([0-9A-Fa-f]){1,8})|(hex\(0*4\):([0-9A-Fa-f]{1,2},?)+)", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline))
-            {
-                // Remove dword: at the beginning
-                valueData = Regex.Replace(valueData, @"^(dword|hex\(0*4\)):", String.Empty, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline);
-
-                // Check for empty ValueData
-                if (String.IsNullOrEmpty(valueData.Trim()))
-                {
-                    methodResult.ValueKind = RegistryValueKind.DWord;
-                    methodResult.Data = valueData;
-                    methodResult.KeyValue = valueName;
-                    return true;
-                }
-
-                // In case of hex(4) notation, very little changes are needed - no
-                // reverse needed as in hex(4) they are already revered and in the correct format for INF
-                if (Regex.IsMatch(valueData, @"^([0-9A-Fa-f]{1,2},)+[0-9A-Fa-f]{1,2}$", RegexOptions.ExplicitCapture))
-                {
-                    valueData = valueData.TrimEnd(new[] { ',' });
-                }
-                else
-                {
-                    // Check if length is equal to 8, else pad with 0s to 8
-                    if (valueData.Length < 8)
-                    {
-                        var numberOfZeroesNeeded = 8 - valueData.Length;
-                        for (var i = 0; i < numberOfZeroesNeeded; i++)
-                        {
-                            valueData = "0" + valueData;
-                        }
-                    }
-
-                    // Put a comma after each 2 digits
-                    var digitsSeparated = new StringBuilder();
-                    var splitThem = Regex.Matches(valueData, @"(([0-9]|[A-F]){2})", RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.RightToLeft);
-                    digitsSeparated.Append(splitThem[0].Value + ",");
-                    digitsSeparated.Append(splitThem[1].Value + ",");
-                    digitsSeparated.Append(splitThem[2].Value + ",");
-                    digitsSeparated.Append(splitThem[3].Value);
-                    valueData = digitsSeparated.ToString();
-                }
-
-                methodResult.ValueKind = RegistryValueKind.DWord;
-                methodResult.Data = valueData;
-                methodResult.KeyValue = valueName;
-                return true;
-            }
-
-            return false;
-        }
-
-        /// <summary>Matches Binary data from the key/value</summary>
-        /// <param name="methodResult">The data from the match</param>
-        /// <param name="valueName">The name of the value</param>
-        /// <param name="valueData">The data for the value</param>
-        /// <returns><see langword="true"/> if it was a match, otherwise; <see langword="false"/></returns>
-        private static bool MatchBinary(ref RegistryItem methodResult, string valueName, string valueData)
-        {
-            if (Regex.IsMatch(valueData, @"^hex(\(0*3\))?:(([0-9|A-F]{2}),?)*", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Multiline))
-            {
-                // Put everything on one line
-                valueData = PutOnOneLineAndTrim(valueData);
-
-                // Remove hex: or hex(3): at the beginning
-                valueData = Regex.Replace(valueData, @"^hex(\(0*3\))?:", String.Empty, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline);
-                methodResult.ValueKind = RegistryValueKind.Binary;
-                methodResult.Data = valueData;
-                methodResult.KeyValue = valueName;
-
-                // Return Partial Line
-                return true;
-            }
-
-            return false;
         }
 
         /// <summary>Puts ValueData on single line and removes from the beginning and end the following: space, tab, CR, LF, extra commas</summary>

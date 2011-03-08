@@ -41,40 +41,40 @@ namespace SevenUpdate
     public enum UpdateAction
     {
         /// <summary>Canceled Updates</summary>
-        Canceled,
+        Canceled, 
 
         /// <summary>Check for updates</summary>
-        CheckForUpdates,
+        CheckForUpdates, 
 
         /// <summary>Checking for updates</summary>
-        CheckingForUpdates,
+        CheckingForUpdates, 
 
         /// <summary>When connecting to the admin service</summary>
-        ConnectingToService,
+        ConnectingToService, 
 
         /// <summary>When downloading of updates has been completed</summary>
-        DownloadCompleted,
+        DownloadCompleted, 
 
         /// <summary>Downloading updates</summary>
-        Downloading,
+        Downloading, 
 
         /// <summary>An Error Occurred when downloading/installing updates</summary>
-        ErrorOccurred,
+        ErrorOccurred, 
 
         /// <summary>When installation of updates have completed</summary>
-        InstallationCompleted,
+        InstallationCompleted, 
 
         /// <summary>Installing Updates</summary>
-        Installing,
+        Installing, 
 
         /// <summary>No updates have been found</summary>
-        NoUpdates,
+        NoUpdates, 
 
         /// <summary>A reboot is needed to finish installing updates</summary>
-        RebootNeeded,
+        RebootNeeded, 
 
         /// <summary>Updates have been found</summary>
-        UpdatesFound,
+        UpdatesFound, 
     }
 
     /// <summary>Contains properties and methods that are essential</summary>
@@ -192,11 +192,11 @@ namespace SevenUpdate
 
                 var app = new Sua(name, publisher)
                     {
-                        AppUrl = @"http://sevenupdate.com/",
-                        Directory = Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, Platform.AnyCpu),
-                        HelpUrl = @"http://sevenupdate.com/support/",
-                        Platform = Platform.AnyCpu,
-                        IsEnabled = true,
+                        AppUrl = @"http://sevenupdate.com/", 
+                        Directory = Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, Platform.AnyCpu), 
+                        HelpUrl = @"http://sevenupdate.com/support/", 
+                        Platform = Platform.AnyCpu, 
+                        IsEnabled = true, 
                         SuiUrl = SevenUpdateSui
                     };
                 if (App.IsDev)
@@ -222,12 +222,6 @@ namespace SevenUpdate
         #endregion
 
         #region Methods
-
-        /// <summary>Goes back to the Main page</summary>
-        internal static void NavigateToMainPage()
-        {
-            MainWindow.NavService.Navigate(MainPage);
-        }
 
         /// <summary>Checks for updates</summary>
         /// <param name="auto"><see langword="true"/> if it's called because of an auto update check, otherwise <see langword="false"/></param>
@@ -294,6 +288,12 @@ namespace SevenUpdate
             return files.Aggregate<UpdateFile, ulong>(0, (current, t) => current + t.FileSize);
         }
 
+        /// <summary>Goes back to the Main page</summary>
+        internal static void NavigateToMainPage()
+        {
+            MainWindow.NavService.Navigate(MainPage);
+        }
+
         /// <summary>Shows either a <see cref="TaskDialog"/> or a <see cref="MessageBox"/> if running legacy windows.</summary>
         /// <param name="instructionText">The main text to display (Blue 14pt for <see cref="TaskDialog"/>)</param>
         /// <param name="icon">The icon to display</param>
@@ -304,12 +304,12 @@ namespace SevenUpdate
         /// <param name="displayShieldOnButton">Indicates if a UAC shield is to be displayed on the defaultButton</param>
         /// <returns>Returns the result of the message</returns>
         internal static TaskDialogResult ShowMessage(
-            string instructionText,
-            TaskDialogStandardIcon icon,
-            TaskDialogStandardButtons standardButtons,
-            string description = null,
-            string footerText = null,
-            string defaultButtonText = null,
+            string instructionText, 
+            TaskDialogStandardIcon icon, 
+            TaskDialogStandardButtons standardButtons, 
+            string description = null, 
+            string footerText = null, 
+            string defaultButtonText = null, 
             bool displayShieldOnButton = false)
         {
             if (TaskDialog.IsPlatformSupported)

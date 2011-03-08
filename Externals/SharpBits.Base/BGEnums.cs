@@ -92,16 +92,10 @@ namespace SharpBits.Base
         /// <summary>Specifies that your job was successfully processed</summary>
         Transferred = 6,
 
-        /// <summary>
-        /// Specifies that you called the IBackgroundCopyJob::Complete method 
-        /// to acknowledge that your job completed successfully
-        /// </summary>
+        /// <summary>Specifies that you called the IBackgroundCopyJob::Complete method to acknowledge that your job completed successfully</summary>
         Acknowledged = 7,
 
-        /// <summary>
-        /// Specifies that you called the IBackgroundCopyJob::Cancel method to 
-        /// cancel the job (remove the job from the transfer queue)
-        /// </summary>
+        /// <summary>Specifies that you called the IBackgroundCopyJob::Cancel method to cancel the job (remove the job from the transfer queue)</summary>
         Canceled = 8,
 
         /// <summary>This is custom state not provided by BITS</summary>
@@ -144,10 +138,7 @@ namespace SharpBits.Base
     /// <summary>The BG_JOB_PROXY_USAGE enumeration type defines constant values that you use to specify which proxy to use for file transfers</summary>
     internal enum BGJobProxyUsage
     {
-        /// <summary>
-        /// Use the proxy and proxy bypass list settings defined by each 
-        /// user to transfer files
-        /// </summary>
+        /// <summary>Use the proxy and proxy bypass list settings defined by each user to transfer files</summary>
         PreConfig = 0,
 
         /// <summary>Do not use a proxy to transfer files</summary>
@@ -156,10 +147,7 @@ namespace SharpBits.Base
         /// <summary>Use the application's proxy and proxy bypass list to transfer files</summary>
         Override = 2,
 
-        /// <summary>
-        /// Automatically detect proxy settings. 
-        /// BITS detects proxy settings for each file in the job
-        /// </summary>
+        /// <summary>Automatically detect proxy settings. BITS detects proxy settings for each file in the job</summary>
         AutoDetect = 3,
     }
 
@@ -169,22 +157,13 @@ namespace SharpBits.Base
         /// <summary>Transfers the job in the foreground</summary>
         Foreground = 0,
 
-        /// <summary>
-        /// Transfers the job in the background. This is the highest background 
-        /// priority level.
-        /// </summary>
+        /// <summary>Transfers the job in the background. This is the highest background priority level.</summary>
         High = 1,
 
-        /// <summary>
-        /// Transfers the job in the background. This is the default priority 
-        /// level for a job
-        /// </summary>
+        /// <summary>Transfers the job in the background. This is the default priority level for a job</summary>
         Normal = 2,
 
-        /// <summary>
-        /// Transfers the job in the background. This is the lowest background 
-        /// priority level
-        /// </summary>
+        /// <summary>Transfers the job in the background. This is the lowest background priority level</summary>
         Low = 3,
     }
 
@@ -200,28 +179,16 @@ namespace SharpBits.Base
         /// <summary>The transfer queue manager generated the error</summary>
         GeneralQueueManager = 2,
 
-        /// <summary>
-        /// The error was generated while the queue manager was 
-        /// notifying the client of an event
-        /// </summary>
+        /// <summary>The error was generated while the queue manager was notifying the client of an event</summary>
         QueueManagerNotification = 3,
 
-        /// <summary>
-        /// The error was related to the specified local file. For example, 
-        /// permission was denied or the volume was unavailable
-        /// </summary>
+        /// <summary>The error was related to the specified local file. For example, permission was denied or the volume was unavailable</summary>
         LocalFile = 4,
 
-        /// <summary>
-        /// The error was related to the specified remote file. 
-        /// For example, the Url is not accessible
-        /// </summary>
+        /// <summary>The error was related to the specified remote file. For example, the Url is not accessible</summary>
         RemoteFile = 5,
 
-        /// <summary>
-        /// The transport layer generated the error. These errors are general 
-        /// transport failures; errors not specific to the remote file
-        /// </summary>
+        /// <summary>The transport layer generated the error. These errors are general transport failures; errors not specific to the remote file</summary>
         GeneralTransport = 6,
     }
 
@@ -321,10 +288,7 @@ namespace SharpBits.Base
         /// <summary>Number of bytes transferred.</summary>
         public ulong BytesTransferred;
 
-        /// <summary>
-        /// For downloads, the value is <see langword = "true" /> if the file is available to the user; 
-        /// otherwise, the value is <see langword = "false" />
-        /// </summary>
+        /// <summary>For downloads, the value is <see langword = "true" /> if the file is available to the user; otherwise, the value is <see langword = "false" /></summary>
         public int Completed;
     }
 

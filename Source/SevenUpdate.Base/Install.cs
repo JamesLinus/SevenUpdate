@@ -41,6 +41,9 @@ namespace SevenUpdate
         /// <summary>Gets an int that indicates to move a file on reboot</summary>
         private const int MoveOnReboot = 5;
 
+        /// <summary>Indicates if the installation of updates should be cancelled.</summary>
+        private static bool cancelInstall;
+
         /// <summary>The localized name of the current update being installed</summary>
         private static string currentUpdateName;
 
@@ -52,9 +55,6 @@ namespace SevenUpdate
 
         /// <summary>The index position of the current update being installed</summary>
         private static int updateIndex;
-
-        /// <summary>Indicates if the installation of updates should be cancelled.</summary>
-        private static bool cancelInstall;
 
         #endregion
 
@@ -101,7 +101,7 @@ namespace SevenUpdate
                 throw new ArgumentNullException("applications");
             }
 
-            bool selfUpdate = false;
+            var selfUpdate = false;
 
             IsInstalling = true;
             updateCount = applications.Sum(t => t.Updates.Count);
@@ -215,7 +215,6 @@ namespace SevenUpdate
                 Utilities.StartProcess(Path.Combine(Utilities.AppDir, @"SevenUpdate.Helper.exe"), "-cleanup");
             }
 
-
             IsInstalling = false;
             if (InstallCompleted != null)
             {
@@ -237,13 +236,13 @@ namespace SevenUpdate
         {
             var hist = new Suh(updateInfo.Name, appInfo.AppInfo.Publisher, updateInfo.Description)
                 {
-                    HelpUrl = appInfo.AppInfo.HelpUrl,
-                    AppUrl = appInfo.AppInfo.AppUrl,
-                    Status = failed == false ? UpdateStatus.Successful : UpdateStatus.Failed,
-                    InfoUrl = updateInfo.InfoUrl,
-                    InstallDate = DateTime.Now.ToShortDateString(),
-                    ReleaseDate = updateInfo.ReleaseDate,
-                    Importance = updateInfo.Importance,
+                    HelpUrl = appInfo.AppInfo.HelpUrl, 
+                    AppUrl = appInfo.AppInfo.AppUrl, 
+                    Status = failed == false ? UpdateStatus.Successful : UpdateStatus.Failed, 
+                    InfoUrl = updateInfo.InfoUrl, 
+                    InstallDate = DateTime.Now.ToShortDateString(), 
+                    ReleaseDate = updateInfo.ReleaseDate, 
+                    Importance = updateInfo.Importance, 
                 };
 
             if (UpdateInstalled != null)

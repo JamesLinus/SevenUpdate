@@ -93,14 +93,6 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        /// <summary>Navigates to the main page</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
-        private void NavigateToMainPage(object sender, RoutedEventArgs e)
-        {
-            MainWindow.NavService.Navigate(Core.MainPage);
-        }
-
         /// <summary>Determines whether this instance has errors.</summary>
         /// <returns><see langword="true"/> if this instance has errors; otherwise, <see langword="false"/>.</returns>
         private bool HasErrors()
@@ -155,6 +147,14 @@ namespace SevenUpdate.Sdk.Pages
             {
                 Core.ShowMessage(Properties.Resources.CorrectErrors, TaskDialogStandardIcon.Error);
             }
+        }
+
+        /// <summary>Navigates to the main page</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        private void NavigateToMainPage(object sender, RoutedEventArgs e)
+        {
+            MainWindow.NavService.Navigate(Core.MainPage);
         }
 
         /// <summary>Adds a new <see cref="RegistryItem"/></summary>

@@ -37,6 +37,9 @@ namespace SevenUpdate
     {
         #region Constants and Fields
 
+        /// <summary>The directory containing the app update files</summary>
+        private static string downloadDirectory;
+
         /// <summary>The number of important updates found</summary>
         private static int importantCount;
 
@@ -45,9 +48,6 @@ namespace SevenUpdate
 
         /// <summary>The number of recommended updates found</summary>
         private static int recommendedCount;
-
-        /// <summary>The directory containing the app update files</summary>
-        private static string downloadDirectory;
 
         #endregion
 

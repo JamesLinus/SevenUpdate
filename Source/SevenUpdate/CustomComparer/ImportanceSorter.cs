@@ -31,8 +31,7 @@ namespace SevenUpdate.CustomComparer
         /// <summary>Compares two <see cref="Importance"/> objects</summary>
         /// <param name="x">The first object to compare.</param>
         /// <param name="y">The second object to compare.</param>
-        /// <returns>Value Condition Less than zero <paramref name="x"/> is less than <paramref name="y"/>. Zero <paramref name="x"/> equals <paramref name="y"/>.
-        /// Greater than zero <paramref name="x"/> is greater than <paramref name="y"/>.</returns>
+        /// <returns>Value Condition Less than zero <paramref name="x"/> is less than <paramref name="y"/>. Zero <paramref name="x"/> equals <paramref name="y"/>.Greater than zero <paramref name="x"/> is greater than <paramref name="y"/>.</returns>
         internal static int CompareImportance(Importance x, Importance y)
         {
             var firstRank = 0;

@@ -8,7 +8,7 @@
 		</Grid.RowDefinitions>
 		<Grid.ColumnDefinitions>
 			<ColumnDefinition Width="12" />
-            <ColumnDefinition Width="606*" />
+			<ColumnDefinition Width="606*" />
 		</Grid.ColumnDefinitions>
 		<TextBlock FontSize="16" Foreground="#FF003399" HorizontalAlignment="Left" Name="tbHeading" Padding="2" Text="{LocText SevenUpdate:Resources:DownloadingLicenseAgreement}" VerticalAlignment="Bottom" Grid.Column="1" Margin="0,0,0,12" />
 		<StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,1,0,0">

@@ -40,6 +40,8 @@ namespace SevenUpdate
 
         #endregion
 
+        #region Methods
+
         /// <summary>Starts the service</summary>
         internal static void StartService()
         {
@@ -106,5 +108,7 @@ namespace SevenUpdate
 
             Instance = null;
         }
+
+        #endregion
     }
 }

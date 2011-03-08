@@ -39,11 +39,11 @@ namespace SevenUpdate.Pages
     {
         #region Constants and Fields
 
-        /// <summary>The local collection of the apps that Seven Update can update</summary>
-        private static ObservableCollection<Sua> machineAppList;
-
         /// <summary>The offical collection of the applications that Seven Update can update</summary>
         private static ObservableCollection<Sua> apps;
+
+        /// <summary>The local collection of the apps that Seven Update can update</summary>
+        private static ObservableCollection<Sua> machineAppList;
 
         /// <summary>The program configuration</summary>
         private Config config;
@@ -80,6 +80,15 @@ namespace SevenUpdate.Pages
                     throw;
                 }
             }
+        }
+
+        /// <summary>Navigates to the Seven Update privacy policy</summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="e">The event data</param>
+        private void GoToPrivacyPolicy(object sender, RequestNavigateEventArgs e)
+        {
+            Utilities.StartProcess("http://sevenupdate.com/privacy", null, false, true);
+            e.Handled = true;
         }
 
         /// <summary>Loads the settings and <see cref="Sua"/> list when the page is loaded</summary>
@@ -124,7 +133,8 @@ namespace SevenUpdate.Pages
                     }
                     else
                     {
-                        if (Directory.Exists(
+                        if (
+                            Directory.Exists(
                                 Utilities.IsRegistryKey(machineAppList[x].Directory)
                                     ? Utilities.GetRegistryValue(machineAppList[x].Directory, machineAppList[x].ValueName, machineAppList[x].Platform)
                                     : Utilities.ConvertPath(machineAppList[x].Directory, true, machineAppList[x].Platform)) && machineAppList[x].IsEnabled)
@@ -151,7 +161,8 @@ namespace SevenUpdate.Pages
                         continue;
                     }
 
-                    if (!Directory.Exists(
+                    if (
+                        !Directory.Exists(
                             Utilities.IsRegistryKey(officialApplicationList[x].Directory)
                                 ? Utilities.GetRegistryValue(officialApplicationList[x].Directory, officialApplicationList[x].ValueName, officialApplicationList[x].Platform)
                                 : Utilities.ConvertPath(officialApplicationList[x].Directory, true, officialApplicationList[x].Platform)))
@@ -200,6 +211,14 @@ namespace SevenUpdate.Pages
             this.Dispatcher.BeginInvoke(this.UpdateList);
         }
 
+        /// <summary>Goes back to the Main page</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        private void NavigateToMainPage(object sender, RoutedEventArgs e)
+        {
+            Core.NavigateToMainPage();
+        }
+
         /// <summary>Navigates to a Uri</summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="System.Windows.Navigation.RequestNavigateEventArgs"/> instance containing the event data.</param>
@@ -239,23 +258,6 @@ namespace SevenUpdate.Pages
             }
         }
 
-        /// <summary>Goes back to the Main page</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
-        private void NavigateToMainPage(object sender, RoutedEventArgs e)
-        {
-            Core.NavigateToMainPage();
-        }
-
         #endregion
-
-        /// <summary>Navigates to the Seven Update privacy policy</summary>
-        /// <param name="sender">The sender</param>
-        /// <param name="e">The event data</param>
-        private void GoToPrivacyPolicy(object sender, RequestNavigateEventArgs e)
-        {
-            Utilities.StartProcess("http://sevenupdate.com/privacy", null, false, true);
-            e.Handled = true;
-        }
     }
 }

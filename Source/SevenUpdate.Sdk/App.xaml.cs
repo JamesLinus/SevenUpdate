@@ -37,10 +37,14 @@ namespace SevenUpdate.Sdk
     /// <summary>Interaction logic for App.xaml</summary>
     public sealed partial class App
     {
-        #region Properties
+        #region Constants and Fields
 
         /// <summary>The user application data location</summary>
         public static readonly string UserStore = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Seven Software", "Seven Update SDK");
+
+        #endregion
+
+        #region Properties
 
         /// <summary>Gets the command line arguments passed to this instance</summary>
         internal static IList<string> Args { get; private set; }
@@ -83,6 +87,15 @@ namespace SevenUpdate.Sdk
             }
         }
 
+        /// <summary>Raises the Application.Exit event.</summary>
+        /// <param name="e">An ExitEventArgs that contains the event data.</param>
+        /// <param name="firstInstance">If set to <see langword="true"/> the current instance is the first application instance.</param>
+        protected override void OnExit(ExitEventArgs e, bool firstInstance)
+        {
+            UnregisterApplicationRecoveryAndRestart();
+            base.OnExit(e, firstInstance);
+        }
+
         /// <summary>Raises the <see cref="InstanceAwareApplication.Startup"/> event.</summary>
         /// <param name="e">The <see cref="System.Windows.StartupEventArgs"/> instance containing the event data.</param>
         /// <param name="isFirstInstance">If set to <see langword="true"/> the current instance is the first application instance.</param>
@@ -111,15 +124,6 @@ namespace SevenUpdate.Sdk
         {
             base.OnStartupNextInstance(e);
             ProcessArgs(e.GetArgs());
-        }
-
-        /// <summary>Raises the Application.Exit event.</summary>
-        /// <param name="e">An ExitEventArgs that contains the event data.</param>
-        /// <param name="firstInstance">If set to <see langword="true"/> the current instance is the first application instance.</param>
-        protected override void OnExit(ExitEventArgs e, bool firstInstance)
-        {
-            UnregisterApplicationRecoveryAndRestart();
-            base.OnExit(e, firstInstance);
         }
 
         /// <summary>Performs recovery by saving the state</summary>
@@ -159,18 +163,6 @@ namespace SevenUpdate.Sdk
             ApplicationRestartRecoveryManager.RegisterForApplicationRecovery(recoverySettings);
         }
 
-        /// <summary>The unregister application recovery and restart.</summary>
-        private static void UnregisterApplicationRecoveryAndRestart()
-        {
-            if (Environment.OSVersion.Version.Major < 6)
-            {
-                return;
-            }
-
-            ApplicationRestartRecoveryManager.UnregisterApplicationRestart();
-            ApplicationRestartRecoveryManager.UnregisterApplicationRecovery();
-        }
-
         /// <summary>Sets the Windows 7 <see cref="JumpList"/></summary>
         private static void SetJumpList()
         {
@@ -184,23 +176,23 @@ namespace SevenUpdate.Sdk
                 {
                     jumpTask = new JumpTask
                         {
-                            ApplicationPath = Path.Combine(Utilities.AppDir, "SevenUpdate.Sdk.exe"),
-                            IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"),
-                            IconResourceIndex = 7,
-                            Title = Sdk.Properties.Resources.CreateUpdate,
-                            CustomCategory = Core.Projects[x].ApplicationName,
-                            Arguments = @"-newupdate " + x,
+                            ApplicationPath = Path.Combine(Utilities.AppDir, "SevenUpdate.Sdk.exe"), 
+                            IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"), 
+                            IconResourceIndex = 7, 
+                            Title = Sdk.Properties.Resources.CreateUpdate, 
+                            CustomCategory = Core.Projects[x].ApplicationName, 
+                            Arguments = @"-newupdate " + x, 
                         };
                     jumpList.JumpItems.Add(jumpTask);
                     for (var y = 0; y < Core.Projects[x].UpdateNames.Count; y++)
                     {
                         jumpTask = new JumpTask
                             {
-                                ApplicationPath = Path.Combine(Utilities.AppDir, "SevenUpdate.Sdk.exe"),
-                                IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"),
-                                IconResourceIndex = 8,
-                                Title = String.Format(CultureInfo.CurrentCulture, Sdk.Properties.Resources.Edit, Core.Projects[x].UpdateNames[y]),
-                                CustomCategory = Core.Projects[x].ApplicationName,
+                                ApplicationPath = Path.Combine(Utilities.AppDir, "SevenUpdate.Sdk.exe"), 
+                                IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"), 
+                                IconResourceIndex = 8, 
+                                Title = String.Format(CultureInfo.CurrentCulture, Sdk.Properties.Resources.Edit, Core.Projects[x].UpdateNames[y]), 
+                                CustomCategory = Core.Projects[x].ApplicationName, 
                                 Arguments = @"-edit " + x + " " + y
                             };
 
@@ -217,15 +209,27 @@ namespace SevenUpdate.Sdk
             // Configure a new JumpTask
             jumpTask = new JumpTask
                 {
-                    ApplicationPath = Path.Combine(Utilities.AppDir, "SevenUpdate.Sdk.exe"),
-                    IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"),
-                    IconResourceIndex = 6,
-                    Title = Sdk.Properties.Resources.CreateProject,
-                    CustomCategory = Sdk.Properties.Resources.Tasks,
+                    ApplicationPath = Path.Combine(Utilities.AppDir, "SevenUpdate.Sdk.exe"), 
+                    IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"), 
+                    IconResourceIndex = 6, 
+                    Title = Sdk.Properties.Resources.CreateProject, 
+                    CustomCategory = Sdk.Properties.Resources.Tasks, 
                     Arguments = @"-newproject"
                 };
             jumpList.JumpItems.Add(jumpTask);
             JumpList.SetJumpList(Current, jumpList);
+        }
+
+        /// <summary>The unregister application recovery and restart.</summary>
+        private static void UnregisterApplicationRecoveryAndRestart()
+        {
+            if (Environment.OSVersion.Version.Major < 6)
+            {
+                return;
+            }
+
+            ApplicationRestartRecoveryManager.UnregisterApplicationRestart();
+            ApplicationRestartRecoveryManager.UnregisterApplicationRecovery();
         }
 
         #endregion

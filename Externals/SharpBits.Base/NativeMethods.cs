@@ -74,10 +74,7 @@ namespace SharpBits.Base
         /// <summary>Tells DCOM to use the valid capabilities from the call to CoInitializeSecurity. If CoInitializeSecurity was not called, EOAC_NONE will be used for the capabilities flag. This flag can be set only by clients in a call to IClientSecurity::SetBlanket or CoSetProxyBlanket.</summary>
         Default = 0x800,
 
-        /// <summary>
-        /// Authenticates distributed reference count calls to prevent malicious users from releasing objects that are still being used. If this flag is set, which can be done only in a call to CoInitializeSecurity by the client, the authentication level (in AuthLevel) cannot be set to none.
-        /// The server always authenticates Release calls. Setting this flag prevents an authenticated client from releasing the objects of another authenticated client. It is recommended that clients always set this flag, although performance is affected because of the overhead associated with the extra security.
-        /// </summary>
+        /// <summary>Authenticates distributed reference count calls to prevent malicious users from releasing objects that are still being used. If this flag is set, which can be done only in a call to CoInitializeSecurity by the client, the authentication level (in AuthLevel) cannot be set to none.The server always authenticates Release calls. Setting this flag prevents an authenticated client from releasing the objects of another authenticated client. It is recommended that clients always set this flag, although performance is affected because of the overhead associated with the extra security.</summary>
         SecureRefs = 0x02,
 
         /// <summary>The application ID</summary>

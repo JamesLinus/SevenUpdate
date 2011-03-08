@@ -54,10 +54,7 @@ namespace WPFLocalizeExtension.Extensions
             this.displayValue = displayValue;
         }
 
-        /// <summary>
-        /// Prevents a default instance of the <see cref = "OddsFormatExtension" /> class from being created. 
-        /// Initialize the <c>BaseLocalizeExtension</c>.
-        /// </summary>
+        /// <summary>Prevents a default instance of the <see cref = "OddsFormatExtension" /> class from being created. Initialize the <c>BaseLocalizeExtension</c>.</summary>
         private OddsFormatExtension()
         {
             // initialize the collection of the assigned dependency objects
@@ -97,10 +94,7 @@ namespace WPFLocalizeExtension.Extensions
         /// <summary>Gets or sets the <see cref = "OddsFormatType" /> to force a fixed output</summary>
         public OddsFormatType? ForceOddsFormatType { get; set; }
 
-        /// <summary>
-        /// Gets or sets the initialize value.
-        /// This is ONLY used to support the localize extension in blend!
-        /// </summary>
+        /// <summary>Gets or sets the initialize value.This is ONLY used to support the localize extension in blend!</summary>
         /// <value>The initialize value.</value>
         [EditorBrowsable(EditorBrowsableState.Never), ConstructorArgument("displayValue")]
         public decimal InitializeValue { get; set; }

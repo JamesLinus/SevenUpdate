@@ -43,10 +43,7 @@ namespace System.Windows.ApplicationServices
         /// <value>A <see cref = "System.String" /> object.</value>
         public string Command { get; private set; }
 
-        /// <summary>
-        /// Gets the set of conditions when the application 
-        /// should not be restarted.
-        /// </summary>
+        /// <summary>Gets the set of conditions when the application should not be restarted.</summary>
         /// <value>A set of <see cref = "RestartRestrictions" /> values.</value>
         public RestartRestrictions Restrictions { get; private set; }
 

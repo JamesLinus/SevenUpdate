@@ -34,39 +34,39 @@ namespace SevenUpdate
     {
         /// <summary>Updates a file</summary>
         [ProtoEnum, EnumMember]
-        Update = 0,
+        Update = 0, 
 
         /// <summary>Updates a file, only if it exist</summary>
         [ProtoEnum, EnumMember]
-        UpdateIfExist = 1,
+        UpdateIfExist = 1, 
 
         /// <summary>Updates a file, then registers the dll</summary>
         [ProtoEnum, EnumMember]
-        UpdateThenRegister = 2,
+        UpdateThenRegister = 2, 
 
         /// <summary>Updates a file, then executes it</summary>
         [ProtoEnum, EnumMember]
-        UpdateThenExecute = 3,
+        UpdateThenExecute = 3, 
 
         /// <summary>Compares a file, but does not update it</summary>
         [ProtoEnum, EnumMember]
-        CompareOnly = 4,
+        CompareOnly = 4, 
 
         /// <summary>Executes a file, can be on system or be downloaded</summary>
         [ProtoEnum, EnumMember]
-        Execute = 5,
+        Execute = 5, 
 
         /// <summary>Deletes a file</summary>
         [ProtoEnum, EnumMember]
-        Delete = 6,
+        Delete = 6, 
 
         /// <summary>Executes a file, then deletes it</summary>
         [ProtoEnum, EnumMember]
-        ExecuteThenDelete = 7,
+        ExecuteThenDelete = 7, 
 
         /// <summary>Unregisters a dll, then deletes it</summary>
         [ProtoEnum, EnumMember]
-        UnregisterThenDelete = 8,
+        UnregisterThenDelete = 8, 
     }
 
     /// <summary>Information about a file within an update</summary>

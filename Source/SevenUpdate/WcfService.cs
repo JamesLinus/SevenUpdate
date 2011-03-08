@@ -37,7 +37,7 @@ namespace SevenUpdate
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant, InstanceContextMode = InstanceContextMode.PerSession)]
     public class WcfService : IElevatedProcessCallback
     {
-        #region Fields
+        #region Constants and Fields
 
         /// <summary>The service callback context</summary>
         private static IElevatedProcess context;
@@ -76,7 +76,9 @@ namespace SevenUpdate
 
         #endregion
 
-        #region Public Methods
+        #region Implemented Interfaces
+
+        #region IElevatedProcessCallback
 
         /// <summary>Occurs when the process starts</summary>
         public void ElevatedProcessStarted()
@@ -145,6 +147,8 @@ namespace SevenUpdate
         {
             InstallProgressChanged(this, e);
         }
+
+        #endregion
 
         #endregion
 

@@ -43,7 +43,7 @@ namespace SevenUpdate.Sdk.Pages
     /// <summary>Interaction logic for AppInfo.xaml</summary>
     public sealed partial class AppInfo
     {
-        #region Fields
+        #region Constants and Fields
 
         /// <summary>Indicates the platform of the application before editing</summary>
         private static Platform oldPlatform;
@@ -106,6 +106,33 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
+        /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="e">The event data</param>
+        private void ChangeDescription(object sender, RoutedEventArgs e)
+        {
+            var textBox = (InfoTextBox)sender;
+            Core.UpdateLocaleStrings(textBox.Text, Core.AppInfo.Description);
+        }
+
+        /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="e">The event data</param>
+        private void ChangeName(object sender, RoutedEventArgs e)
+        {
+            var textBox = (InfoTextBox)sender;
+            Core.UpdateLocaleStrings(textBox.Text, Core.AppInfo.Name);
+        }
+
+        /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="e">The event data</param>
+        private void ChangePublisher(object sender, RoutedEventArgs e)
+        {
+            var textBox = (InfoTextBox)sender;
+            Core.UpdateLocaleStrings(textBox.Text, Core.AppInfo.Publisher);
+        }
+
         /// <summary>Changes the UI to show the file system application location</summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
@@ -118,7 +145,7 @@ namespace SevenUpdate.Sdk.Pages
 
             this.tbxAppLocation.Note = @"%PROGRAMFILES%\My Company\My App";
 
-            this.tbxAppLocation.HasError = !new AppDirectoryRule().Validate(tbxAppLocation.Text, null).IsValid;
+            this.tbxAppLocation.HasError = !new AppDirectoryRule().Validate(this.tbxAppLocation.Text, null).IsValid;
         }
 
         /// <summary>Changes the UI to show the registry application location</summary>
@@ -133,7 +160,7 @@ namespace SevenUpdate.Sdk.Pages
 
             this.tbxAppLocation.Note = @"HKLM\Software\MyCompany\MyApp";
 
-            this.tbxAppLocation.HasError = !new RegistryPathRule().Validate(tbxAppLocation.Text, null).IsValid;
+            this.tbxAppLocation.HasError = !new RegistryPathRule().Validate(this.tbxAppLocation.Text, null).IsValid;
         }
 
         /// <summary>Converts the application location path to system variables</summary>
@@ -204,11 +231,11 @@ namespace SevenUpdate.Sdk.Pages
 
             if (this.rbtnRegistry.IsChecked.GetValueOrDefault())
             {
-                this.tbxAppLocation.HasError = !new RegistryPathRule().Validate(tbxAppLocation.Text, null).IsValid;
+                this.tbxAppLocation.HasError = !new RegistryPathRule().Validate(this.tbxAppLocation.Text, null).IsValid;
             }
             else
             {
-                this.tbxAppLocation.HasError = !new AppDirectoryRule().Validate(tbxAppLocation.Text, null).IsValid;
+                this.tbxAppLocation.HasError = !new AppDirectoryRule().Validate(this.tbxAppLocation.Text, null).IsValid;
             }
 
             this.tbxSuiUrl.HasError = !new SuiLocationRule().Validate(this.tbxSuiUrl.Text, null).IsValid;
@@ -403,52 +430,6 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
-        /// <param name="sender">The sender</param>
-        /// <param name="e">The event data</param>
-        private void ChangeDescription(object sender, RoutedEventArgs e)
-        {
-            var textBox = (InfoTextBox)sender;
-            Core.UpdateLocaleStrings(textBox.Text, Core.AppInfo.Description);
-        }
-
-        /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
-        /// <param name="sender">The sender</param>
-        /// <param name="e">The event data</param>
-        private void ChangePublisher(object sender, RoutedEventArgs e)
-        {
-            var textBox = (InfoTextBox)sender;
-            Core.UpdateLocaleStrings(textBox.Text, Core.AppInfo.Publisher);
-        }
-
-        /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
-        /// <param name="sender">The sender</param>
-        /// <param name="e">The event data</param>
-        private void ChangeName(object sender, RoutedEventArgs e)
-        {
-            var textBox = (InfoTextBox)sender;
-            Core.UpdateLocaleStrings(textBox.Text, Core.AppInfo.Name);
-        }
-
-        /// <summary>Validates the textbox content.</summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The data for the event</param>
-        private void ValidateRequiredInput(object sender, TextChangedEventArgs e)
-        {
-            var textBox = (InfoTextBox)sender;
-
-            if (String.IsNullOrWhiteSpace(textBox.Text))
-            {
-                textBox.HasError = true;
-                textBox.ToolTip = Properties.Resources.InputRequired;
-            }
-            else
-            {
-                textBox.HasError = false;
-                textBox.ToolTip = null;
-            }
-        }
-
         /// <summary>Validates the textbox against the AppDirectory Validation Rule</summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The data for the event.</param>
@@ -473,20 +454,23 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        /// <summary>Validates the textbox against the AppDirectory Validation Rule</summary>
+        /// <summary>Validates the textbox content.</summary>
         /// <param name="sender">The sender.</param>
-        /// <param name="e">The data for the event.</param>
-        private void ValidateUrlInput(object sender, TextChangedEventArgs e)
+        /// <param name="e">The data for the event</param>
+        private void ValidateRequiredInput(object sender, TextChangedEventArgs e)
         {
-            var textBox = sender as InfoTextBox;
+            var textBox = (InfoTextBox)sender;
 
-            if (textBox == null)
+            if (String.IsNullOrWhiteSpace(textBox.Text))
             {
-                return;
+                textBox.HasError = true;
+                textBox.ToolTip = Properties.Resources.InputRequired;
             }
-
-            textBox.HasError = !new UrlInputRule { IsRequired = true } .Validate(textBox.Text, null).IsValid;
-            textBox.ToolTip = textBox.HasError ? Properties.Resources.UrlNotValid : null;
+            else
+            {
+                textBox.HasError = false;
+                textBox.ToolTip = null;
+            }
         }
 
         /// <summary>Validates the textbox against the Sui Validation Rule</summary>
@@ -503,6 +487,22 @@ namespace SevenUpdate.Sdk.Pages
 
             textBox.HasError = !new SuiLocationRule().Validate(textBox.Text, null).IsValid;
             textBox.ToolTip = textBox.HasError ? Properties.Resources.UrlSui : null;
+        }
+
+        /// <summary>Validates the textbox against the AppDirectory Validation Rule</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The data for the event.</param>
+        private void ValidateUrlInput(object sender, TextChangedEventArgs e)
+        {
+            var textBox = sender as InfoTextBox;
+
+            if (textBox == null)
+            {
+                return;
+            }
+
+            textBox.HasError = !new UrlInputRule { IsRequired = true }.Validate(textBox.Text, null).IsValid;
+            textBox.ToolTip = textBox.HasError ? Properties.Resources.UrlNotValid : null;
         }
 
         #endregion

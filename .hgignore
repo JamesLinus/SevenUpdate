@@ -13,3 +13,5 @@ glob:StyleCop.Cache
 glob:Source/SevenUpdate.Base/SevenUpdate.Base.aps
 glob:Source/SevenUpdate.Sdk.Tools
 glob:*.csproj.vs10x
+syntax: glob
+Source/SevenUpdate/Settings.StyleCop

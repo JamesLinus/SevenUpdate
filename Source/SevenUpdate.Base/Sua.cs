@@ -37,15 +37,15 @@ namespace SevenUpdate
     {
         /// <summary>Indicates that the application is native 32 bit</summary>
         [ProtoEnum, EnumMember]
-        X86 = 0,
+        X86 = 0, 
 
         /// <summary>Indicates that the application can only run on 64 bit platforms</summary>
         [ProtoEnum, EnumMember]
-        X64 = 1,
-        
+        X64 = 1, 
+
         /// <summary>Indicates that the application can run on 32bit or 64bit natively depending on the OS</summary>
         [ProtoEnum, EnumMember]
-        AnyCpu = 2,
+        AnyCpu = 2, 
     }
 
     /// <summary>Seven Update Application information</summary>
@@ -329,14 +329,6 @@ namespace SevenUpdate
         /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
         /// <param name="sender">The sender</param>
         /// <param name="e">The event data</param>
-        private void PublisherCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
-        {
-            this.OnPropertyChanged("Publisher");
-        }
-
-        /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
-        /// <param name="sender">The sender</param>
-        /// <param name="e">The event data</param>
         private void DescriptionCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             this.OnPropertyChanged("Description");
@@ -360,6 +352,14 @@ namespace SevenUpdate
             {
                 handler(this, new PropertyChangedEventArgs(propertyName));
             }
+        }
+
+        /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="e">The event data</param>
+        private void PublisherCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            this.OnPropertyChanged("Publisher");
         }
 
         #endregion

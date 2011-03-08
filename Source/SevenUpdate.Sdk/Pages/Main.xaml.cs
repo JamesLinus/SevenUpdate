@@ -2,7 +2,7 @@
 // <copyright file="Main.xaml.cs"
 //            project="SevenUpdate.Sdk"
 //            assembly="SevenUpdate.Sdk"
-//            solution="SevenUpdate"
+//            solution="SevenUpdate.Sdk"
 //            company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
@@ -166,14 +166,6 @@ namespace SevenUpdate.Sdk.Pages
             Core.EditItem();
         }
 
-        /// <summary>Opens a browser and opens the support page</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
-        private void NavigateToSupport(object sender, MouseButtonEventArgs e)
-        {
-            Utilities.StartProcess(@"http://sevenupdate.com/support");
-        }
-
         /// <summary>Loads the projects.</summary>
         private void LoadProjects()
         {
@@ -218,6 +210,14 @@ namespace SevenUpdate.Sdk.Pages
         private void LoadUI(object sender, RoutedEventArgs e)
         {
             this.LoadProjects();
+        }
+
+        /// <summary>Opens a browser and opens the support page</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
+        private void NavigateToSupport(object sender, MouseButtonEventArgs e)
+        {
+            Utilities.StartProcess(@"http://sevenupdate.com/support");
         }
 
         /// <summary>Creates a new project</summary>

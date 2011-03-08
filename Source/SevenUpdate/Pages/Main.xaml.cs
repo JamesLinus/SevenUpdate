@@ -42,11 +42,11 @@ namespace SevenUpdate.Pages
     {
         #region Constants and Fields
 
-        /// <summary>Indicates if Seven Update will only install updates</summary>
-        private static bool isInstallOnly;
-
         /// <summary><see langword = "true" /> if the page was already initialized</summary>
         private static bool init;
+
+        /// <summary>Indicates if Seven Update will only install updates</summary>
+        private static bool isInstallOnly;
 
         /// <summary>A timer to check if seven update is trying to connect</summary>
         private Timer timer;
@@ -64,6 +64,13 @@ namespace SevenUpdate.Pages
         #endregion
 
         #region Methods
+
+        /// <summary>Updates the UI when the downloading of updates completes</summary>
+        /// <param name="e">The <see cref="SevenUpdate.DownloadCompletedEventArgs"/> instance containing the event data.</param>
+        private static void DownloadCompleted(DownloadCompletedEventArgs e)
+        {
+            Core.Instance.UpdateAction = e.ErrorOccurred ? UpdateAction.ErrorOccurred : UpdateAction.Installing;
+        }
 
         /// <summary>Downloads updates</summary>
         private static void DownloadInstallUpdates()
@@ -127,13 +134,6 @@ namespace SevenUpdate.Pages
             }
         }
 
-        /// <summary>Updates the UI when the downloading of updates completes</summary>
-        /// <param name="e">The <see cref="SevenUpdate.DownloadCompletedEventArgs"/> instance containing the event data.</param>
-        private static void DownloadCompleted(DownloadCompletedEventArgs e)
-        {
-            Core.Instance.UpdateAction = e.ErrorOccurred ? UpdateAction.ErrorOccurred : UpdateAction.Installing;
-        }
-
         /// <summary>Checks for updates after settings were changed</summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
@@ -163,6 +163,101 @@ namespace SevenUpdate.Pages
             }
 
             WcfService.AdminError(new Exception(Properties.Resources.CouldNotConnectService));
+        }
+
+        /// <summary>Updates the UI when the downloading of updates has completed</summary>
+        /// <param name="sender">The sender</param>
+        /// <param name="e">The <see cref="SevenUpdate.DownloadCompletedEventArgs"/> instance containing the event data.</param>
+        private void DownloadCompleted(object sender, DownloadCompletedEventArgs e)
+        {
+            if (!this.Dispatcher.CheckAccess())
+            {
+                this.Dispatcher.BeginInvoke(DownloadCompleted, e);
+            }
+            else
+            {
+                DownloadCompleted(e);
+            }
+        }
+
+        /// <summary>Updates the UI when the download progress has changed</summary>
+        /// <param name="e">The DownloadProgress data</param>
+        private void DownloadProgressChanged(DownloadProgressChangedEventArgs e)
+        {
+            if (Core.IsReconnect)
+            {
+                Core.Instance.UpdateAction = UpdateAction.Downloading;
+                Core.IsReconnect = false;
+            }
+
+            if (e.BytesTotal > 0 && e.BytesTransferred > 0)
+            {
+                if (e.BytesTotal == e.BytesTransferred)
+                {
+                    return;
+                }
+
+                var progress = e.BytesTransferred * 100 / e.BytesTotal;
+                App.TaskBar.ProgressState = TaskbarItemProgressState.Normal;
+                App.TaskBar.ProgressValue = Convert.ToDouble(progress) / 100;
+                this.tbStatus.Text = String.Format(
+                    CultureInfo.CurrentCulture, Properties.Resources.DownloadPercentProgress, Utilities.ConvertFileSize(e.BytesTotal), progress.ToString("F0", CultureInfo.CurrentCulture));
+            }
+            else
+            {
+                App.TaskBar.ProgressState = TaskbarItemProgressState.Indeterminate;
+                this.tbStatus.Text = String.Format(CultureInfo.CurrentCulture, Properties.Resources.DownloadProgress, e.FilesTransferred, e.FilesTotal);
+            }
+        }
+
+        /// <summary>Updates the UI when the download progress has changed</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="SevenUpdate.DownloadProgressChangedEventArgs"/> instance containing the event data.</param>
+        private void DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        {
+            if (!this.Dispatcher.CheckAccess())
+            {
+                this.Dispatcher.BeginInvoke(this.DownloadProgressChanged, e);
+            }
+            else
+            {
+                this.DownloadProgressChanged(e);
+            }
+        }
+
+        /// <summary>Sets the UI when an error occurs</summary>
+        /// <param name="e">The <see cref="SevenUpdate.ErrorOccurredEventArgs"/> instance containing the event data.</param>
+        private void ErrorOccurred(ErrorOccurredEventArgs e)
+        {
+            Core.Instance.UpdateAction = UpdateAction.ErrorOccurred;
+            switch (e.ErrorType)
+            {
+                case ErrorType.FatalNetworkError:
+                    this.tbStatus.Text = Properties.Resources.CheckConnection;
+                    break;
+                case ErrorType.InstallationError:
+                case ErrorType.SearchError:
+                case ErrorType.DownloadError:
+                case ErrorType.GeneralError:
+                case ErrorType.FatalError:
+                    this.tbStatus.Text = e.Exception;
+                    break;
+            }
+        }
+
+        /// <summary>Sets the UI when an error has occurred</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="SevenUpdate.ErrorOccurredEventArgs"/> instance containing the event data.</param>
+        private void ErrorOccurred(object sender, ErrorOccurredEventArgs e)
+        {
+            if (!this.Dispatcher.CheckAccess())
+            {
+                this.Dispatcher.BeginInvoke(this.ErrorOccurred, e);
+            }
+            else
+            {
+                this.ErrorOccurred(e);
+            }
         }
 
         /// <summary>Loads settings and UI for the page</summary>
@@ -267,134 +362,6 @@ namespace SevenUpdate.Pages
             }
         }
 
-        /// <summary>Navigates to the Options page</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
-        private void NavigateToOptions(object sender, MouseButtonEventArgs e)
-        {
-            MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate;component/Pages/Options.xaml", UriKind.Relative));
-        }
-
-        /// <summary>Navigates to the Restore Updates page</summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
-        private void NavigateToRestoreUpdates(object sender, MouseButtonEventArgs e)
-        {
-            MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate;component/Pages/RestoreUpdates.xaml", UriKind.Relative));
-        }
-
-        /// <summary>Navigates to the Update History page</summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
-        private void NavigateToUpdateHistory(object sender, MouseButtonEventArgs e)
-        {
-            MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate;component/Pages/UpdateHistory.xaml", UriKind.Relative));
-        }
-
-        /// <summary>Shows the About Dialog window</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
-        private void ShowAboutDialog(object sender, MouseButtonEventArgs e)
-        {
-            var about = new About();
-            about.ShowDialog();
-        }
-
-        /// <summary>Updates the UI when the downloading of updates has completed</summary>
-        /// <param name="sender">The sender</param>
-        /// <param name="e">The <see cref="SevenUpdate.DownloadCompletedEventArgs"/> instance containing the event data.</param>
-        private void DownloadCompleted(object sender, DownloadCompletedEventArgs e)
-        {
-            if (!this.Dispatcher.CheckAccess())
-            {
-                this.Dispatcher.BeginInvoke(DownloadCompleted, e);
-            }
-            else
-            {
-                DownloadCompleted(e);
-            }
-        }
-
-        /// <summary>Updates the UI when the download progress has changed</summary>
-        /// <param name="e">The DownloadProgress data</param>
-        private void DownloadProgressChanged(DownloadProgressChangedEventArgs e)
-        {
-            if (Core.IsReconnect)
-            {
-                Core.Instance.UpdateAction = UpdateAction.Downloading;
-                Core.IsReconnect = false;
-            }
-
-            if (e.BytesTotal > 0 && e.BytesTransferred > 0)
-            {
-                if (e.BytesTotal == e.BytesTransferred)
-                {
-                    return;
-                }
-
-                var progress = e.BytesTransferred * 100 / e.BytesTotal;
-                App.TaskBar.ProgressState = TaskbarItemProgressState.Normal;
-                App.TaskBar.ProgressValue = Convert.ToDouble(progress) / 100;
-                this.tbStatus.Text = String.Format(
-                    CultureInfo.CurrentCulture, Properties.Resources.DownloadPercentProgress, Utilities.ConvertFileSize(e.BytesTotal), progress.ToString("F0", CultureInfo.CurrentCulture));
-            }
-            else
-            {
-                App.TaskBar.ProgressState = TaskbarItemProgressState.Indeterminate;
-                this.tbStatus.Text = String.Format(CultureInfo.CurrentCulture, Properties.Resources.DownloadProgress, e.FilesTransferred, e.FilesTotal);
-            }
-        }
-
-        /// <summary>Updates the UI when the download progress has changed</summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="SevenUpdate.DownloadProgressChangedEventArgs"/> instance containing the event data.</param>
-        private void DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
-        {
-            if (!this.Dispatcher.CheckAccess())
-            {
-                this.Dispatcher.BeginInvoke(this.DownloadProgressChanged, e);
-            }
-            else
-            {
-                this.DownloadProgressChanged(e);
-            }
-        }
-
-        /// <summary>Sets the UI when an error occurs</summary>
-        /// <param name="e">The <see cref="SevenUpdate.ErrorOccurredEventArgs"/> instance containing the event data.</param>
-        private void ErrorOccurred(ErrorOccurredEventArgs e)
-        {
-            Core.Instance.UpdateAction = UpdateAction.ErrorOccurred;
-            switch (e.ErrorType)
-            {
-                case ErrorType.FatalNetworkError:
-                    this.tbStatus.Text = Properties.Resources.CheckConnection;
-                    break;
-                case ErrorType.InstallationError:
-                case ErrorType.SearchError:
-                case ErrorType.DownloadError:
-                case ErrorType.GeneralError:
-                case ErrorType.FatalError:
-                    this.tbStatus.Text = e.Exception;
-                    break;
-            }
-        }
-
-        /// <summary>Sets the UI when an error has occurred</summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="SevenUpdate.ErrorOccurredEventArgs"/> instance containing the event data.</param>
-        private void ErrorOccurred(object sender, ErrorOccurredEventArgs e)
-        {
-            if (!this.Dispatcher.CheckAccess())
-            {
-                this.Dispatcher.BeginInvoke(this.ErrorOccurred, e);
-            }
-            else
-            {
-                this.ErrorOccurred(e);
-            }
-        }
-
         /// <summary>Updates the UI when the installation has completed</summary>
         /// <param name="e">The InstallCompleted data</param>
         private void InstallCompleted(InstallCompletedEventArgs e)
@@ -484,6 +451,54 @@ namespace SevenUpdate.Pages
             {
                 this.InstallProgressChanged(e);
             }
+        }
+
+        /// <summary>Opens a browser and navigates to the Uri</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Navigation.RequestNavigateEventArgs"/> instance containing the event data.</param>
+        private void NavigateToGoogleCode(object sender, RequestNavigateEventArgs e)
+        {
+            Utilities.StartProcess(e.Uri.AbsoluteUri);
+            e.Handled = true;
+        }
+
+        /// <summary>Navigates to the Options page</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
+        private void NavigateToOptions(object sender, MouseButtonEventArgs e)
+        {
+            MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate;component/Pages/Options.xaml", UriKind.Relative));
+        }
+
+        /// <summary>Navigates to the Restore Updates page</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
+        private void NavigateToRestoreUpdates(object sender, MouseButtonEventArgs e)
+        {
+            MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate;component/Pages/RestoreUpdates.xaml", UriKind.Relative));
+        }
+
+        /// <summary>Navigates to the Update History page</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
+        private void NavigateToUpdateHistory(object sender, MouseButtonEventArgs e)
+        {
+            MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate;component/Pages/UpdateHistory.xaml", UriKind.Relative));
+        }
+
+        /// <summary>Opens a browser and navigates to the Uri</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Navigation.RequestNavigateEventArgs"/> instance containing the event data.</param>
+        private void OpenErrorLog(object sender, RequestNavigateEventArgs e)
+        {
+            var errorLog = Path.Combine(App.UserStore, "error.log");
+
+            if (File.Exists(errorLog))
+            {
+                Utilities.StartProcess(errorLog, null, false, false);
+            }
+
+            e.Handled = true;
         }
 
         /// <summary>Performs an action based on the <see cref="UpdateAction"/></summary>
@@ -825,6 +840,15 @@ namespace SevenUpdate.Pages
             }
         }
 
+        /// <summary>Shows the About Dialog window</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
+        private void ShowAboutDialog(object sender, MouseButtonEventArgs e)
+        {
+            var about = new About();
+            about.ShowDialog();
+        }
+
         /// <summary>Updates the UI when the update selection changes</summary>
         /// <param name="sender">The sender.</param>
         /// <param name="e">The <see cref="UpdateInfo.UpdateSelectionChangedEventArgs"/> instance containing the event data.</param>
@@ -892,30 +916,6 @@ namespace SevenUpdate.Pages
                 this.tbSelectedUpdates.FontWeight = FontWeights.Normal;
                 this.btnAction.Visibility = Visibility.Collapsed;
             }
-        }
-
-        /// <summary>Opens a browser and navigates to the Uri</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Navigation.RequestNavigateEventArgs"/> instance containing the event data.</param>
-        private void NavigateToGoogleCode(object sender, RequestNavigateEventArgs e)
-        {
-            Utilities.StartProcess(e.Uri.AbsoluteUri);
-            e.Handled = true;
-        }
-
-        /// <summary>Opens a browser and navigates to the Uri</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Navigation.RequestNavigateEventArgs"/> instance containing the event data.</param>
-        private void OpenErrorLog(object sender, RequestNavigateEventArgs e)
-        {
-            var errorLog = Path.Combine(App.UserStore, "error.log");
-
-            if (File.Exists(errorLog))
-            {
-                Utilities.StartProcess(errorLog, null, false, false);
-            }
-
-            e.Handled = true;
         }
 
         #endregion

@@ -86,6 +86,14 @@ namespace SevenUpdate.Pages
             this.lvHiddenUpdates.ItemsSource = this.hiddenUpdates;
         }
 
+        /// <summary>Goes back to the Main page</summary>
+        /// <param name="sender">The source of the event.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        private void NavigateToMainPage(object sender, RoutedEventArgs e)
+        {
+            Core.NavigateToMainPage();
+        }
+
         /// <summary>Un hides one or more updates and navigates to the Main page</summary>
         /// <param name="sender">The source of the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
@@ -153,14 +161,6 @@ namespace SevenUpdate.Pages
 
             this.tbSelectedUpdates.Text = String.Format(CultureInfo.CurrentCulture, Properties.Resources.TotalSelectedUpdates, checkedCount);
             this.btnRestore.IsEnabled = checkedCount > 0;
-        }
-
-        /// <summary>Goes back to the Main page</summary>
-        /// <param name="sender">The source of the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
-        private void NavigateToMainPage(object sender, RoutedEventArgs e)
-        {
-            Core.NavigateToMainPage();
         }
 
         #endregion

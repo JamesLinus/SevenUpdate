@@ -38,6 +38,10 @@ namespace SevenUpdate.Admin
     [CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant)]
     public class WcfServiceCallback : IElevatedProcess
     {
+        #region Implemented Interfaces
+
+        #region IElevatedProcess
+
         /// <summary>Adds an application to Seven Update, so it can manage updates for it.</summary>
         /// <param name="application">The application to add to Seven Update</param>
         public void AddApp(Sua application)
@@ -208,5 +212,9 @@ namespace SevenUpdate.Admin
                         }
                     });
         }
+
+        #endregion
+
+        #endregion
     }
 }

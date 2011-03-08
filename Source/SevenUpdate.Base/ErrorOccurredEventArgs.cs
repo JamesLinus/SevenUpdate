@@ -35,23 +35,23 @@ namespace SevenUpdate
     {
         /// <summary>An error that occurred while trying to download updates</summary>
         [ProtoEnum, EnumMember]
-        DownloadError,
+        DownloadError, 
 
         /// <summary>An error that occurred while trying to install updates</summary>
         [ProtoEnum, EnumMember]
-        InstallationError,
+        InstallationError, 
 
         /// <summary>A general network connection error</summary>
         [ProtoEnum, EnumMember]
-        FatalNetworkError,
+        FatalNetworkError, 
 
         /// <summary>An unspecified error, non fatal</summary>
         [ProtoEnum, EnumMember]
-        GeneralError,
+        GeneralError, 
 
         /// <summary>An unspecified error that prevents Seven Update from continuing</summary>
         [ProtoEnum, EnumMember]
-        FatalError,
+        FatalError, 
 
         /// <summary>An error that occurs while searching for updates</summary>
         [ProtoEnum, EnumMember]

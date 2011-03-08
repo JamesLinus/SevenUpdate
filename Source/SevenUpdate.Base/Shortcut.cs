@@ -40,11 +40,11 @@ namespace SevenUpdate
     {
         /// <summary>Adds a shortcut</summary>
         [ProtoEnum, EnumMember]
-        Add = 0,
+        Add = 0, 
 
         /// <summary>Updates a shortcut only if it exists</summary>
         [ProtoEnum, EnumMember]
-        Update = 1,
+        Update = 1, 
 
         /// <summary>Deletes a shortcut</summary>
         [ProtoEnum, EnumMember]
@@ -55,37 +55,37 @@ namespace SevenUpdate
     internal enum InstallState
     {
         /// <summary>The component being requested is disabled on the computer.</summary>
-        NotUsed = -7,
+        NotUsed = -7, 
 
         /// <summary>The configuration data is corrupt.</summary>
-        BadConfig = -6,
+        BadConfig = -6, 
 
         /// <summary>The installation is incomplete</summary>
-        Incomplete = -5,
+        Incomplete = -5, 
 
         /// <summary>The component source is inaccessible.</summary>
-        SourceAbsent = -4,
+        SourceAbsent = -4, 
 
         /// <summary>One of the function parameters is invalid.</summary>
-        InvalidArg = -2,
+        InvalidArg = -2, 
 
         /// <summary>The product code or component ID is unknown.</summary>
-        Unknown = -1,
+        Unknown = -1, 
 
         /// <summary>The shortcut is advertised</summary>
-        Advertised = 1,
+        Advertised = 1, 
 
         /// <summary>The component has been removed</summary>
-        Removed = 1,
+        Removed = 1, 
 
         /// <summary>The component is not installed.</summary>
-        Absent = 2,
+        Absent = 2, 
 
         /// <summary>The component is installed locally.</summary>
-        Local = 3,
+        Local = 3, 
 
         /// <summary>The component is installed to run from source.</summary>
-        Source = 4,
+        Source = 4, 
     }
 
     /// <summary>A shortcut to be created within an update</summary>
@@ -185,8 +185,7 @@ namespace SevenUpdate
             void GetClassID(out Guid classID);
         }
 
-        /// <summary>Enables an object to be loaded from or saved to a disk file, rather than a storage object or stream.
-        /// Because the information needed to open a file varies greatly from one application to another, the implementation of IPersistFile::Load on the object must also open its disk file.</summary>
+        /// <summary>Enables an object to be loaded from or saved to a disk file, rather than a storage object or stream.Because the information needed to open a file varies greatly from one application to another, the implementation of IPersistFile::Load on the object must also open its disk file.</summary>
         [ComImport, Guid("0000010b-0000-0000-C000-000000000046"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
         private interface IPersistFile : IPersist
         {
@@ -201,24 +200,29 @@ namespace SevenUpdate
 
             /// <summary>Opens the specified file and initializes an object from the file contents.</summary>
             /// <param name="fileName">The absolute path of the file to be opened.</param>
-            /// <param name="mode">The access mode to be used when opening the file. Possible values are taken from the Stgm enumeration. 
-            /// The method can treat this value as a suggestion, adding more restrictive permissions if necessary. 
-            /// If mode is 0, the implementation should open the file using whatever default permissions are used when a user opens the file.</param>
+            /// <param name="mode">
+            /// The access mode to be used when opening the file. Possible values are taken from the Stgm enumeration. 
+            ///   The method can treat this value as a suggestion, adding more restrictive permissions if necessary. 
+            ///   If mode is 0, the implementation should open the file using whatever default permissions are used when a user opens the file.
+            /// </param>
             [PreserveSig]
             void Load([MarshalAs(UnmanagedType.LPWStr)] string fileName, uint mode);
 
             /// <summary>Saves a copy of the object to the specified file.</summary>
-            /// <param name="fileName">The absolute path of the file to which the object should be saved.
-            /// If fileName is null, the object should save its data to the current file, if there is one.</param>
-            /// <param name="remember">Indicates whether the fileName parameter is to be used as the current working file.
-            /// If true, fileName becomes the current file and the object should clear its dirty flag after the save.
-            /// If false, this save operation is a Save A Copy As ... operation. In this case, the current file is unchanged and the object should not clear its dirty flag.
-            /// If fileName is null, the implementation should ignore the remember flag.</param>
+            /// <param name="fileName">
+            /// The absolute path of the file to which the object should be saved.
+            ///   If fileName is null, the object should save its data to the current file, if there is one.
+            /// </param>
+            /// <param name="remember">
+            /// Indicates whether the fileName parameter is to be used as the current working file.
+            ///   If true, fileName becomes the current file and the object should clear its dirty flag after the save.
+            ///   If false, this save operation is a Save A Copy As ... operation. In this case, the current file is unchanged and the object should not clear its dirty flag.
+            ///   If fileName is null, the implementation should ignore the remember flag.
+            /// </param>
             [PreserveSig]
             void Save([MarshalAs(UnmanagedType.LPWStr)] string fileName, [MarshalAs(UnmanagedType.Bool)] bool remember);
 
-            /// <summary>Notifies the object that it can write to its file. It does this by notifying the object that it can revert from NoScribble mode (in which it must not write to its file), to Normal mode (in which it can).
-            /// The component enters NoScribble mode when it receives an IPersistFile::Save call.</summary>
+            /// <summary>Notifies the object that it can write to its file. It does this by notifying the object that it can revert from NoScribble mode (in which it must not write to its file), to Normal mode (in which it can).The component enters NoScribble mode when it receives an IPersistFile::Save call.</summary>
             /// <param name="fileName">The absolute path of the file where the object was saved previously.</param>
             [PreserveSig]
             void SaveCompleted([MarshalAs(UnmanagedType.LPWStr)] string fileName);
@@ -448,6 +452,43 @@ namespace SevenUpdate
 
         #region Public Methods
 
+        /// <summary>Creates a shortcut on the system</summary>
+        /// <param name="shortcut">The shortcut data used to create the shortcut</param>
+        public static void CreateShortcut(Shortcut shortcut)
+        {
+            if (shortcut == null)
+            {
+                throw new ArgumentNullException(@"shortcut");
+            }
+
+            var shellLink = new CShellLink();
+            var link = (IShellLink)shellLink;
+
+            link.SetArguments(shortcut.arguments);
+
+            if (shortcut.Description.Count > 0)
+            {
+                link.SetDescription(Utilities.GetLocaleString(shortcut.Description));
+            }
+
+            if (!String.IsNullOrWhiteSpace(shortcut.Icon))
+            {
+                var icon = shortcut.Icon.Split(new[] { ',' });
+                link.SetIconLocation(icon[0], Convert.ToInt32(icon[1]));
+            }
+
+            link.SetWorkingDirectory(Path.GetDirectoryName(shortcut.Target));
+            link.SetPath(shortcut.Target);
+
+            var persistFile = (IPersistFile)link;
+            persistFile.Save(Path.Combine(shortcut.Location, Utilities.GetLocaleString(shortcut.Name) + ".lnk"), false);
+            Marshal.ReleaseComObject(persistFile);
+            Marshal.ReleaseComObject(link);
+            Marshal.ReleaseComObject(shellLink);
+
+            // NativeMethods.CoInitializeEx((IntPtr)null, NativeMethods.CoInit.ApartmentThreaded);
+        }
+
         /// <summary>Gets data associated with a shortcut</summary>
         /// <param name="shortcutName">The full path to the shortcut lnk file</param>
         /// <returns>The data for the shortcut</returns>
@@ -496,43 +537,6 @@ namespace SevenUpdate
             shortcut.Location = shortcutName;
 
             return shortcut;
-        }
-
-        /// <summary>Creates a shortcut on the system</summary>
-        /// <param name="shortcut">The shortcut data used to create the shortcut</param>
-        public static void CreateShortcut(Shortcut shortcut)
-        {
-            if (shortcut == null)
-            {
-                throw new ArgumentNullException(@"shortcut");
-            }
-
-            var shellLink = new CShellLink();
-            var link = (IShellLink)shellLink;
-
-            link.SetArguments(shortcut.arguments);
-
-            if (shortcut.Description.Count > 0)
-            {
-                link.SetDescription(Utilities.GetLocaleString(shortcut.Description));
-            }
-
-            if (!String.IsNullOrWhiteSpace(shortcut.Icon))
-            {
-                var icon = shortcut.Icon.Split(new[] { ',' });
-                link.SetIconLocation(icon[0], Convert.ToInt32(icon[1]));
-            }
-
-            link.SetWorkingDirectory(Path.GetDirectoryName(shortcut.Target));
-            link.SetPath(shortcut.Target);
-
-            var persistFile = (IPersistFile)link;
-            persistFile.Save(Path.Combine(shortcut.Location, Utilities.GetLocaleString(shortcut.Name) + ".lnk"), false);
-            Marshal.ReleaseComObject(persistFile);
-            Marshal.ReleaseComObject(link);
-            Marshal.ReleaseComObject(shellLink);
-
-            // NativeMethods.CoInitializeEx((IntPtr)null, NativeMethods.CoInit.ApartmentThreaded);
         }
 
         #endregion
@@ -613,12 +617,10 @@ namespace SevenUpdate
             /// <summary>A FileTime structure that specifies when a file or directory was created.</summary>
             private FileTime creationTime;
 
-            /// <summary>For a file, the structure specifies when the file was last read from, written to, or for executable files, run.
-            /// For a directory, the structure specifies when the directory is created. If the underlying file system does not support last access time, this member is zero.</summary>
+            /// <summary>For a file, the structure specifies when the file was last read from, written to, or for executable files, run.For a directory, the structure specifies when the directory is created. If the underlying file system does not support last access time, this member is zero.</summary>
             private FileTime lastAccessTime;
 
-            /// <summary>For a file, the structure specifies when the file was last written to, truncated, or overwritten, for example, when WriteFile or SetEndOfFile are used. The date and time are not updated when file attributes or security descriptors are changed.
-            /// For a directory, the structure specifies when the directory is created. If the underlying file system does not support last write time, this member is zero.</summary>
+            /// <summary>For a file, the structure specifies when the file was last written to, truncated, or overwritten, for example, when WriteFile or SetEndOfFile are used. The date and time are not updated when file attributes or security descriptors are changed.For a directory, the structure specifies when the directory is created. If the underlying file system does not support last write time, this member is zero.</summary>
             private FileTime lastWriteTime;
 
             /// <summary>The high-order file size</summary>

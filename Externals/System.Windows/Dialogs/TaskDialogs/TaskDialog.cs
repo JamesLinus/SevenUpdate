@@ -414,10 +414,7 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>
-        /// Gets or sets the progress bar on the task dialog. ProgressBar a visual representation
-        /// of the progress of a long running operation.
-        /// </summary>
+        /// <summary>Gets or sets the progress bar on the task dialog. ProgressBar a visual representationof the progress of a long running operation.</summary>
         /// <value>The progress bar.</value>
         public TaskDialogProgressBar ProgressBar
         {

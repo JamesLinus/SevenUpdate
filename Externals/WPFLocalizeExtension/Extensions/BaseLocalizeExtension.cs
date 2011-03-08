@@ -42,10 +42,7 @@ namespace WPFLocalizeExtension.Extensions
         /// <summary>The current value</summary>
         private TValue currentValue;
 
-        /// <summary>
-        /// Holds the Name of the .resx dictionary.
-        /// If it's <see langword = "null" />, "Resources" will get returned
-        /// </summary>
+        /// <summary>Holds the Name of the .resx dictionary.If it's <see langword = "null" />, "Resources" will get returned</summary>
         private string dict;
 
         /// <summary>Holds the Key to a .resx object</summary>
@@ -55,9 +52,7 @@ namespace WPFLocalizeExtension.Extensions
 
         #region Constructors and Destructors
 
-        /// <summary>
-        /// Initializes a new instance of the <see cref="BaseLocalizeExtension{TValue}"/> class. Initializes a new instance of the BaseLocalizeExtension class.
-        /// </summary>
+        /// <summary>Initializes a new instance of the <see cref="BaseLocalizeExtension{TValue}"/> class. Initializes a new instance of the BaseLocalizeExtension class.</summary>
         protected BaseLocalizeExtension()
         {
             // initialize the collection of the assigned dependency objects
@@ -88,10 +83,7 @@ namespace WPFLocalizeExtension.Extensions
 
         #region Properties
 
-        /// <summary>
-        /// Gets the current value.
-        /// This property has only a value, if the <c>BaseLocalizeExtension</c> is binded to a target.
-        /// </summary>
+        /// <summary>Gets the current value.This property has only a value, if the <c>BaseLocalizeExtension</c> is binded to a target.</summary>
         /// <value>The current value.</value>
         public TValue CurrentValue
         {
@@ -110,10 +102,7 @@ namespace WPFLocalizeExtension.Extensions
         /// <summary>Gets or sets the culture to force a fixed localized object</summary>
         public string ForceCulture { get; set; }
 
-        /// <summary>
-        /// Gets or sets the initialize value.
-        /// This is ONLY used to support the localize extension in blend!
-        /// </summary>
+        /// <summary>Gets or sets the initialize value.This is ONLY used to support the localize extension in blend!</summary>
         /// <value>The initialize value.</value>
         [EditorBrowsable(EditorBrowsableState.Never), ConstructorArgument("key")]
         public string InitializeValue { get; set; }
@@ -142,10 +131,7 @@ namespace WPFLocalizeExtension.Extensions
             }
         }
 
-        /// <summary>
-        /// Gets or sets the name of the Assembly where the .resx is located.
-        /// If it's <see langword = "null" />, the executing assembly (where this LocalizeEngine is located at) will get returned
-        /// </summary>
+        /// <summary>Gets or sets the name of the Assembly where the .resx is located.If it's <see langword = "null" />, the executing assembly (where this LocalizeEngine is located at) will get returned</summary>
         protected string Assembly
         {
             get
@@ -164,9 +150,7 @@ namespace WPFLocalizeExtension.Extensions
         [DesignOnly(true)]
         protected object DesignValue { get; set; }
 
-        /// <summary>
-        /// Gets the current <see cref="CultureInfo"/>, otherwise LocalizeDictionary.Culture will get returned.
-        /// </summary>
+        /// <summary>Gets the current <see cref="CultureInfo"/>, otherwise LocalizeDictionary.Culture will get returned.</summary>
         /// <returns>The <see cref="CultureInfo"/></returns>
         /// <exception cref="System.ArgumentException">thrown if the parameter Culture don't defines a valid <see cref="CultureInfo"/></exception>
         protected CultureInfo Culture
@@ -206,10 +190,7 @@ namespace WPFLocalizeExtension.Extensions
             }
         }
 
-        /// <summary>
-        /// Gets or sets the Name of the .resx dictionary.
-        /// If it's <see langword = "null" />, "Resources" will get returned
-        /// </summary>
+        /// <summary>Gets or sets the Name of the .resx dictionary.If it's <see langword = "null" />, "Resources" will get returned</summary>
         protected string Dictionary
         {
             get

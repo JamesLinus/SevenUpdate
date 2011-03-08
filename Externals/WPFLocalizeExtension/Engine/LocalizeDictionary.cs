@@ -29,10 +29,7 @@ namespace WPFLocalizeExtension.Engine
         /// <summary>Holds the default <see cref = "ResourceDictionary" /> name</summary>
         public const string ResourcesName = "Resources";
 
-        /// <summary>
-        /// <see cref = "DependencyProperty" /> DesignCulture to set the Culture.
-        /// Only supported at DesignTime.
-        /// </summary>
+        /// <summary><see cref = "DependencyProperty" /> DesignCulture to set the Culture.Only supported at DesignTime.</summary>
         [DesignOnly(true)]
         public static readonly DependencyProperty DesignCultureProperty = DependencyProperty.RegisterAttached(
             "DesignCulture", typeof(string), typeof(Localize), new PropertyMetadata(SetCultureFromDependencyProperty));
@@ -76,10 +73,7 @@ namespace WPFLocalizeExtension.Engine
 
         #region Properties
 
-        /// <summary>
-        /// Gets the LocalizeDictionary singleton.
-        /// If the underlying instance is <see langword = "null" />, a instance will be created.
-        /// </summary>
+        /// <summary>Gets the LocalizeDictionary singleton.If the underlying instance is <see langword = "null" />, a instance will be created.</summary>
         public static Localize Instance
         {
             get
@@ -126,10 +120,7 @@ namespace WPFLocalizeExtension.Engine
             }
         }
 
-        /// <summary>
-        /// Gets or sets the <see cref = "CultureInfo" /> for localization.
-        /// On set, <see cref = "OnCultureChanged" /> is raised.
-        /// </summary>
+        /// <summary>Gets or sets the <see cref = "CultureInfo" /> for localization.On set, <see cref = "OnCultureChanged" /> is raised.</summary>
         /// <exception cref = "System.InvalidOperationException">
         /// You have to set LocalizeDictionary.Culture first or 
         /// wait until System.Windows.Application.Current.MainWindow is created.

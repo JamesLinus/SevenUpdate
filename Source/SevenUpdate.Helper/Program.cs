@@ -49,6 +49,30 @@ namespace SevenUpdate.Helper
 
         #region Methods
 
+        /// <summary>Stops a running process</summary>
+        /// <param name="name">The name of the process to kill</param>
+        private static void KillProcess(string name)
+        {
+            try
+            {
+                var processes = Process.GetProcessesByName(name);
+                if (processes.Length > 0)
+                {
+                    foreach (var t in processes)
+                    {
+                        t.Kill();
+                    }
+                }
+            }
+            catch (Exception e)
+            {
+                if (!(e is OperationCanceledException || e is UnauthorizedAccessException || e is InvalidOperationException || e is NotSupportedException || e is Win32Exception))
+                {
+                    throw;
+                }
+            }
+        }
+
         /// <summary>The main entry point for the application.</summary>
         /// <param name="args">The arguments passed to the program at startup</param>
         [STAThread]
@@ -123,6 +147,14 @@ namespace SevenUpdate.Helper
             }
         }
 
+        /// <summary>Run Seven Update and auto check for updates</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The <see cref="System.Timers.ElapsedEventArgs"/> instance containing the event data.</param>
+        private static void RunSevenUpdate(object sender, ElapsedEventArgs e)
+        {
+            Process.Start(Path.Combine(AppDir, "SevenUpdate.Admin.exe"), "Auto");
+        }
+
         /// <summary>Starts a process on the system</summary>
         /// <param name="fileName">The file to execute</param>
         /// <param name="arguments">The arguments to execute with the file</param>
@@ -165,38 +197,6 @@ namespace SevenUpdate.Helper
             }
 
             return false;
-        }
-
-        /// <summary>Stops a running process</summary>
-        /// <param name="name">The name of the process to kill</param>
-        private static void KillProcess(string name)
-        {
-            try
-            {
-                var processes = Process.GetProcessesByName(name);
-                if (processes.Length > 0)
-                {
-                    foreach (var t in processes)
-                    {
-                        t.Kill();
-                    }
-                }
-            }
-            catch (Exception e)
-            {
-                if (!(e is OperationCanceledException || e is UnauthorizedAccessException || e is InvalidOperationException || e is NotSupportedException || e is Win32Exception))
-                {
-                    throw;
-                }
-            }
-        }
-
-        /// <summary>Run Seven Update and auto check for updates</summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The <see cref="System.Timers.ElapsedEventArgs"/> instance containing the event data.</param>
-        private static void RunSevenUpdate(object sender, ElapsedEventArgs e)
-        {
-            Process.Start(Path.Combine(AppDir, "SevenUpdate.Admin.exe"), "Auto");
         }
 
         #endregion
