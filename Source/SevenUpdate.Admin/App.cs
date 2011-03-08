@@ -481,8 +481,8 @@ namespace SevenUpdate.Admin
         private static void StartWcfHost()
         {
             var binding = new NetNamedPipeBinding { Name = "sevenupdatebinding", Security = { Mode = NetNamedPipeSecurityMode.Transport } };
-
             var address = new EndpointAddress("net.pipe://localhost/sevenupdate/");
+
             try
             {
                 client = new ElevatedProcessCallback(new InstanceContext(new WcfServiceCallback()), binding, address);

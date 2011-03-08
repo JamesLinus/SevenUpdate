@@ -16,7 +16,7 @@
 			<RadioButton Content="{LocText SevenUpdate:Resources:AcceptTerms}" Name="rbtnAccept" Padding="4,0,0,7" MinHeight="17" IsEnabled="False" />
 			<RadioButton Content="{LocText SevenUpdate:Resources:Decline}" Name="rbtnDecline" MinHeight="17" IsEnabled="False" />
 		</StackPanel>
-		<StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Center" Grid.Column="1" Grid.Row="2" Margin="0,31,0,10">
+		<StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Bottom" Grid.Column="1" Grid.Row="2" Margin="0,0,0,12">
 			<UacButton IsDefault="True" MinHeight="23" MinWidth="75" Name="btnAction" Padding="5,1" Click="PerformAction" ButtonText="{LocText SevenUpdate:Resources:Finish}">
 				<UacButton.Style>
 					<Style TargetType="UacButton">

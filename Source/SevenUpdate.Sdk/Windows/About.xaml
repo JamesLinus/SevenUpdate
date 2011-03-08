@@ -19,7 +19,7 @@
         </Grid.RowDefinitions>
         <Button Content="{LocText SevenUpdate.Sdk:Resources:Close}" HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23"
                 MinWidth="75" Padding="5,1" VerticalAlignment="Bottom" VerticalContentAlignment="Center" Grid.Row="4" Grid.Column="2"
-                Click="CloseWindow" Margin="0,0,12,9" HorizontalAlignment="Right" />
+                Click="CloseWindow" Margin="0,0,10,12" HorizontalAlignment="Right" />
         <TextBlock HorizontalAlignment="Left" Padding="2" Text="{LocText SevenUpdate.Sdk:Resources:Version}" VerticalAlignment="Top"
                 Grid.Column="1" />
         <TextBlock HorizontalAlignment="Left" Padding="2" Text="{LocText SevenUpdate.Sdk:Resources:Support}" Grid.Row="1" Grid.Column="1"

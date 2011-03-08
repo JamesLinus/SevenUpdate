@@ -10,8 +10,8 @@
             <RowDefinition Height="415*" />
             <RowDefinition Height="44" />
         </Grid.RowDefinitions>
-        <Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="1"
-                X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="1" />
+        <Line Stroke="#FFdfdfdf" VerticalAlignment="Top" Grid.Row="1"
+                X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="1" Stretch="Fill" />
         <TextBlock FontSize="16" Foreground="#FF003399" HorizontalAlignment="Left" Padding="2"
                 Text="{LocText SevenUpdate:Resources:RestoreHiddenUpdates}" VerticalAlignment="Top" Margin="24,12,0,5" />
         <ListView AlternationCount="2" SelectionMode="Single" Grid.Row="1" Name="lvHiddenUpdates" MinWidth="800"
@@ -53,7 +53,7 @@
             </ListView.View>
         </ListView>
         <Rectangle Fill="#FFF0F0F0" Grid.Row="2" />
-        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Center" Grid.Row="2" Margin="0,0,10,0">
+        <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Bottom" Grid.Row="2" Margin="0,0,10,12">
             <UacButton IsDefault="True" MinHeight="23" MinWidth="75" Click="RestoreUpdate" Padding="5,1"
                     ButtonText="{LocText SevenUpdate:Resources:Restore}" IsEnabled="False" Name="btnRestore" TabIndex="1" />
             <Button Content="{LocText SevenUpdate:Resources:Cancel}" IsCancel="True" IsDefault="False" Margin="6,0,0,0" MinHeight="23"
@@ -61,7 +61,7 @@
         </StackPanel>
         <TextBlock Grid.Row="2" HorizontalAlignment="Left" Text="{LocText SevenUpdate:Resources:TotalSelectedUpdates, FormatSegment1=0}"
                 VerticalAlignment="Center" Margin="20,0,0,0" Name="tbSelectedUpdates" />
-        <Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="2"
-                X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="1" />
+        <Line Stroke="#FFdfdfdf" VerticalAlignment="Top" Grid.Row="2"
+                X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="1" Stretch="Fill" />
     </Grid>
 </Page>

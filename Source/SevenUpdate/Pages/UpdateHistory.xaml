@@ -11,8 +11,8 @@
         </Grid.RowDefinitions>
         <TextBlock FontSize="16" Foreground="#FF003399" HorizontalAlignment="Left" Padding="2"
                 Text="{LocText SevenUpdate:Resources:ReviewUpdateHistory}" VerticalAlignment="Top" Margin="24,12,0,5" />
-        <Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="1"
-                X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="1" />
+        <Line Stroke="#FFdfdfdf" VerticalAlignment="Top" Grid.Row="1"
+                X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="1" Stretch="Fill" />
         <ListView AlternationCount="2" Grid.Row="1" Name="lvUpdateHistory" Foreground="Black" BorderThickness="0"
                 ListViewSorter.CustomSorter="SevenUpdate.CustomComparer.SuhSorter,SevenUpdate" TabIndex="0">
             <ListView.Resources>
@@ -42,11 +42,12 @@
                 </GridView>
             </ListView.View>
         </ListView>
-        <Rectangle Fill="#FFF0F0F0" Grid.Row="2" />
+
+        <Rectangle Fill="#FFf0f0f0" Grid.Row="2" />
         <Button Content="{LocText SevenUpdate:Resources:OK}" HorizontalAlignment="Right" HorizontalContentAlignment="Center"
-                IsDefault="True" Padding="5,1" VerticalAlignment="Center" VerticalContentAlignment="Center" Margin="0,0,10,0" Grid.Row="2"
+                IsDefault="True" Padding="5,1" VerticalAlignment="Bottom" VerticalContentAlignment="Center" Margin="0,0,10,12" Grid.Row="2"
                 MinWidth="75" MinHeight="23" TabIndex="1" Click="NavigateToMainPage" />
-        <Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="2"
-                X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="1" />
+        <Line Stroke="#FFdfdfdf" VerticalAlignment="Top" Grid.Row="2"
+                X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="1" Stretch="Fill" />
     </Grid>
 </Page>

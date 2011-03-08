@@ -26,8 +26,8 @@
             <RowDefinition Height="44" />
         </Grid.RowDefinitions>
         <Rectangle Grid.ColumnSpan="4" Grid.Row="10" Fill="#FFF0F0F0" Name="rectangle" />
-        <Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="10"
-                X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="1"
+        <Line Stroke="#FFdfdfdf" VerticalAlignment="Top" Grid.Row="10"
+                X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="1" Stretch="Fill"
                 Grid.ColumnSpan="4" Name="line" />
         <Rectangle Grid.Row="1" Grid.ColumnSpan="4" Fill="White" Grid.RowSpan="9" />
         <StackPanel Orientation="Horizontal" Grid.ColumnSpan="4">
@@ -50,7 +50,7 @@
                     VerticalAlignment="Center" FontSize="18" Foreground="#FF003399" Grid.Row="1" Margin="10,0,0,0" />
         </StackPanel>
         <!--Naviation Buttons-->
-        <StackPanel Grid.Row="10" HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal" Margin="0,0,10,0"
+        <StackPanel Grid.Row="10" HorizontalAlignment="Right" VerticalAlignment="Bottom" Orientation="Horizontal" Margin="0,0,10,12"
                 Grid.Column="3">
             <Button HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Padding="5,1"
                     VerticalContentAlignment="Center" Content="{LocText SevenUpdate.Sdk:Resources:Next}" Click="MoveOn" TabIndex="8" />

@@ -36,8 +36,8 @@
                 <Run Text="{LocText SevenUpdate:Resources:PrivacyStatementOnline}"></Run>
             </Hyperlink>.
         </TextBlock>
-        <Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="9"
-                X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="1"
+        <Line Stroke="#FFdfdfdf" VerticalAlignment="Top" Grid.Row="9"
+                X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="1" Stretch="Fill"
                 Grid.ColumnSpan="3" />
         <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="3" Grid.Row="9">
             <ListView SelectionMode="Single" Name="lvApps" MinWidth="800" Thumb.DragDelta="RestrictColumn" Foreground="Black"
@@ -86,8 +86,8 @@
         <TextBlock HorizontalAlignment="Left" Padding="2" Text="{LocText SevenUpdate:Resources:PleaseWaitDownloading}"
                 VerticalAlignment="Center" Grid.Column="1" Grid.Row="10" Margin="0,9" Grid.ColumnSpan="2"
                 Visibility="{Binding ElementName=lvApps, Path=Items.Count, Converter={StaticResource intToVisibility}, ConverterParameter=True}" />
-        <StackPanel Grid.Column="2" Grid.Row="10" HorizontalAlignment="Right" VerticalAlignment="Center" Orientation="Horizontal"
-                Margin="0,0,10,0">
+        <StackPanel Grid.Column="2" Grid.Row="10" HorizontalAlignment="Right" VerticalAlignment="Bottom" Orientation="Horizontal"
+                Margin="0,0,10,12">
             <UacButton IsDefault="True" MinHeight="23" MinWidth="75" Padding="5,1" Click="SaveSettings"
                     Command="NavigationCommands.BrowseBack" ButtonText="{LocText SevenUpdate:Resources:Save}" Name="btnSave" TabIndex="4" />
             <Button Content="{LocText SevenUpdate:Resources:Cancel}" HorizontalContentAlignment="Center" IsDefault="False" MinHeight="23"
@@ -102,7 +102,7 @@
             <Separator MinWidth="200" MinHeight="5" Height="5" Width="555" Background="LightGray" VerticalAlignment="Center"
                     Margin="2,2,0,0" />
         </StackPanel>
-        <Line Stroke="#FFA0A0A0" VerticalAlignment="Top" Grid.Row="10"
+        <Line Stroke="#FFdfdfdf" VerticalAlignment="Top" Grid.Row="10"
                 X1="{Binding Path=ActualWidth, RelativeSource={RelativeSource AncestorType={x:Type Page}}}" StrokeThickness="0.5"
                 Grid.ColumnSpan="3" />
         <ComboBox IsDropDownOpen="False" IsReadOnly="True" MaxHeight="23" MinHeight="23" MinWidth="120"

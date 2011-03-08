@@ -3,7 +3,7 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <ResourceDictionary Source="Resources\Dictionary.xaml" />
+                <ResourceDictionary Source= "/SevenUpdate;Component/Resources/Dictionary.xaml" />
                 <ResourceDictionary Source="/SevenUpdate;Component/Resources/Icons.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
