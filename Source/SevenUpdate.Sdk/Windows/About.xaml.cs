@@ -45,6 +45,8 @@ namespace SevenUpdate.Sdk.Windows
 
             this.tbVersion.Text = version.ToString();
 
+            this.MouseLeftButtonDown -= Core.EnableDragOnGlass;
+            this.MouseLeftButtonDown += Core.EnableDragOnGlass;
             AeroGlass.CompositionChanged -= this.ChangeWindowChrome;
             AeroGlass.CompositionChanged += this.ChangeWindowChrome;
 

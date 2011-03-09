@@ -221,10 +221,6 @@
     <value>Create a new update</value>
     <comment>CommandLink.Content</comment>
   </data>
-  <data name="WelcomeTitle" xml:space="preserve">
-    <value>Welcome to the Seven Update SDK</value>
-    <comment>TextBlock.Text</comment>
-  </data>
   <data name="HelpSupport" xml:space="preserve">
     <value>Help &amp; Support</value>
     <comment>TextBlock.Text</comment>

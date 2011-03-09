@@ -53,6 +53,8 @@ namespace SevenUpdate.Pages
             this.InitializeComponent();
             this.miUpdate.DataContext = Core.Instance.IsAdmin;
 
+            this.MouseLeftButtonDown -= Core.EnableDragOnGlass;
+            this.MouseLeftButtonDown += Core.EnableDragOnGlass;
             AeroGlass.CompositionChanged -= this.UpdateUI;
             AeroGlass.CompositionChanged += this.UpdateUI;
 

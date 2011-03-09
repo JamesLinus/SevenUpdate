@@ -30,6 +30,7 @@ namespace SevenUpdate.Pages
     using System.Threading.Tasks;
     using System.Timers;
     using System.Windows;
+    using System.Windows.Controls;
     using System.Windows.Input;
     using System.Windows.Media;
     using System.Windows.Navigation;
@@ -60,20 +61,25 @@ namespace SevenUpdate.Pages
         public Main()
         {
             this.InitializeComponent();
-
+            this.MouseLeftButtonDown -= Core.EnableDragOnGlass;
+            this.MouseLeftButtonDown += Core.EnableDragOnGlass;
             AeroGlass.CompositionChanged -= this.UpdateUI;
             AeroGlass.CompositionChanged += this.UpdateUI;
+            Core.GlassEffect = tbAbout.TextEffects;
+
             if (AeroGlass.IsGlassEnabled)
             {
                 this.tbAbout.Foreground = Brushes.Black;
-                this.bottom.Height = new GridLength(41);
-                this.Top.Height = new GridLength(32);
+                Grid.SetRow(rectSide, 1);
+                Grid.SetRowSpan(rectSide, 5);
+                spBackButton.Visibility = Visibility.Visible;
             }
             else
             {
                 this.tbAbout.Foreground = Brushes.White;
-                this.bottom.Height = new GridLength(0);
-                this.Top.Height = new GridLength(0);
+                Grid.SetRow(rectSide, 0);
+                Grid.SetRowSpan(rectSide, 7);
+                spBackButton.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -942,12 +948,16 @@ namespace SevenUpdate.Pages
             if (AeroGlass.IsGlassEnabled)
             {
                 this.tbAbout.Foreground = Brushes.Black;
-                this.bottom.Height = new GridLength(41);
+                Grid.SetRow(rectSide, 1);
+                Grid.SetRowSpan(rectSide, 5);
+                spBackButton.Visibility = Visibility.Visible;
             }
             else
             {
                 this.tbAbout.Foreground = Brushes.White;
-                this.bottom.Height = new GridLength(0);
+                Grid.SetRow(rectSide, 0);
+                Grid.SetRowSpan(rectSide, 7);
+                spBackButton.Visibility = Visibility.Collapsed;
             }
         }
 

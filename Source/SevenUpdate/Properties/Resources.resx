@@ -648,7 +648,7 @@
     <value>Development Channel</value>
   </data>
   <data name="DevNote" xml:space="preserve">
-    <value>Please Note: This is a development version of Seven Update, it may crash, fail to work properly, or work just fine. By using this program, you agree not to hold Seven Software, it's developers, or it's partners responsible for any data loss or corruption.</value>
+    <value>Please Note: This is a development version of Seven Update, it may crash, fail to work properly, or work just fine. By using this program, you agree not to hold Seven Software, it's developers, or it's partners responsible for anything.</value>
   </data>
   <data name="ErrorLog" xml:space="preserve">
     <value>error log.</value>

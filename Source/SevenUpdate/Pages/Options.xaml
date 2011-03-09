@@ -21,10 +21,6 @@
             <RowDefinition Height="41" />
         </Grid.RowDefinitions>
         <Rectangle Grid.Row="1" Grid.ColumnSpan="3" Fill="White" Grid.RowSpan="9" />
-        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3" HorizontalAlignment="Left">
-            <BackButton Grid.RowSpan="3" TabIndex="13" />
-            <TextBlock Style="{StaticResource glassText}" Text="{LocText SevenUpdate:Resources:ChooseHowToInstall}" VerticalAlignment="Center" FontSize="16" Grid.Column="1" Padding="2" Grid.ColumnSpan="2" Name="tbTitle" Margin="15,-2,0,0" />
-        </StackPanel>
         <TextBlock HorizontalAlignment="Left" Text="{LocText SevenUpdate:Resources:OptionDescription}" VerticalAlignment="Top" Padding="2" Grid.Column="1" Grid.Row="1" Margin="0,5,0,0" Grid.ColumnSpan="2" />
         <Rectangle Grid.ColumnSpan="3" Grid.Row="10" Fill="#FFF0F0F0" Name="rectangle" />
         <TextBlock HorizontalAlignment="Left" Padding="2" VerticalAlignment="Top" Grid.Column="1" Grid.Row="8" Grid.ColumnSpan="2">
@@ -104,5 +100,9 @@
                 </Style>
             </Rectangle.Style>
         </Rectangle>
+        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3" HorizontalAlignment="Left">
+            <BackButton Grid.RowSpan="3" TabIndex="13" />
+            <TextBlock Style="{StaticResource glassText}" Text="{LocText SevenUpdate:Resources:ChooseHowToInstall}" VerticalAlignment="Center" FontSize="16" Grid.Column="1" Padding="2" Grid.ColumnSpan="2" Name="tbTitle" Margin="15,-2,0,0" />
+        </StackPanel>
     </Grid>
 </Page>

@@ -56,6 +56,8 @@ namespace SevenUpdate.Pages
             this.lvHiddenUpdates.AddHandler(Thumb.DragDeltaEvent, new DragDeltaEventHandler(this.RestrictColumn), true);
             this.btnRestore.IsShieldNeeded = !Core.Instance.IsAdmin;
 
+            this.MouseLeftButtonDown -= Core.EnableDragOnGlass;
+            this.MouseLeftButtonDown += Core.EnableDragOnGlass;
             AeroGlass.CompositionChanged -= this.UpdateUI;
             AeroGlass.CompositionChanged += this.UpdateUI;
 

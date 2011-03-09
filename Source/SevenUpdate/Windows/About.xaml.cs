@@ -27,6 +27,7 @@ namespace SevenUpdate.Windows
     using System;
     using System.Reflection;
     using System.Windows;
+    using System.Windows.Input;
     using System.Windows.Internal;
     using System.Windows.Media;
     using System.Windows.Navigation;
@@ -55,6 +56,8 @@ namespace SevenUpdate.Windows
 
             this.tbVersion.Text = version.ToString();
 
+            this.MouseLeftButtonDown -= Core.EnableDragOnGlass;
+            this.MouseLeftButtonDown += Core.EnableDragOnGlass;
             AeroGlass.CompositionChanged -= this.ChangeWindowChrome;
             AeroGlass.CompositionChanged += this.ChangeWindowChrome;
         }
@@ -110,6 +113,17 @@ namespace SevenUpdate.Windows
         private void CloseWindow(object sender, RoutedEventArgs e)
         {
             this.Close();
+        }
+
+        /// <summary>Enables the ability to drag the window on glass</summary>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
+        private void EnableDragOnGlass(object sender, MouseButtonEventArgs e)
+        {
+            if (AeroGlass.IsGlassEnabled && e.LeftButton == MouseButtonState.Pressed)
+            {
+                this.DragMove();
+            }
         }
 
         /// <summary>Opens a browser and navigates to the Uri</summary>
