@@ -355,7 +355,7 @@ namespace SharpBits.Base
         }
 
         /// <summary>Notifications the handler on job error event.</summary>
-        /// <param name="sender">The sender.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="SharpBits.Base.ErrorNotificationEventArgs"/> instance containing the event data.</param>
         private void NotificationHandlerOnJobErrorEvent(object sender, ErrorNotificationEventArgs e)
         {
@@ -374,7 +374,7 @@ namespace SharpBits.Base
         }
 
         /// <summary>Notifications the handler on job modified event.</summary>
-        /// <param name="sender">The sender.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="NotificationEventArgs"/> instance containing the event data.</param>
         private void NotificationHandlerOnJobModifiedEvent(object sender, NotificationEventArgs e)
         {
@@ -393,7 +393,7 @@ namespace SharpBits.Base
         }
 
         /// <summary>Notifications the handler on job transferred event.</summary>
-        /// <param name="sender">The sender.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="NotificationEventArgs"/> instance containing the event data.</param>
         private void NotificationHandlerOnJobTransferredEvent(object sender, NotificationEventArgs e)
         {

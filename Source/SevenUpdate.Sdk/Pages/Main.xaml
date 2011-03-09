@@ -10,7 +10,7 @@
 			<RowDefinition Height="32" />
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="422*" />
-			<RowDefinition Height="44" />
+			<RowDefinition Height="41" />
 		</Grid.RowDefinitions>
 		<Rectangle Grid.Row="2" Fill="White" Grid.ColumnSpan="2" />
 		<StackPanel Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Margin="25,25,0,0" Grid.RowSpan="2">

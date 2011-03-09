@@ -1194,13 +1194,6 @@ namespace SevenUpdate.Sdk.Properties {
             }
         }
         
-        /// <summary>Looks up a localized string similar to Use of this program is subject to the following software licenses:.</summary>
-        public static string TermsAgreement {
-            get {
-                return ResourceManager.GetString("TermsAgreement", resourceCulture);
-            }
-        }
-        
         /// <summary>Looks up a localized string similar to Test {0}.</summary>
         public static string Test {
             get {

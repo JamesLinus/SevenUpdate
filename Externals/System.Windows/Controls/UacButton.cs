@@ -252,7 +252,7 @@ namespace System.Windows.Controls
         }
 
         /// <summary>Called when the control is loaded</summary>
-        /// <param name="sender">The sender.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void OnLoaded(object sender, RoutedEventArgs e)
         {

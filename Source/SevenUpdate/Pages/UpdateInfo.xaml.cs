@@ -52,6 +52,22 @@ namespace SevenUpdate.Pages
         {
             this.InitializeComponent();
             this.miUpdate.DataContext = Core.Instance.IsAdmin;
+
+            AeroGlass.CompositionChanged -= this.UpdateUI;
+            AeroGlass.CompositionChanged += this.UpdateUI;
+
+            if (AeroGlass.IsGlassEnabled)
+            {
+                this.tbTitle.Foreground = Brushes.Black;
+                this.line.Visibility = Visibility.Collapsed;
+                this.rectangle.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                this.tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 51, 153));
+                this.line.Visibility = Visibility.Visible;
+                this.rectangle.Visibility = Visibility.Visible;
+            }
         }
 
         #endregion
@@ -99,7 +115,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Adds the updates to the list</summary>
-        /// <param name="sender">The sender.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void AddUpdates(object sender, RoutedEventArgs e)
         {
@@ -126,7 +142,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Launches the Help <c>Url</c> of the update</summary>
-        /// <param name="sender">The sender.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
         private void NavigateToHelpUrl(object sender, MouseButtonEventArgs e)
         {
@@ -134,7 +150,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Launches the More Information <c>Url</c> of the update</summary>
-        /// <param name="sender">The sender.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
         private void NavigateToInfoUrl(object sender, MouseButtonEventArgs e)
         {
@@ -142,7 +158,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Navigates back to the Main page</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void NavigateToMainPage(object sender, RoutedEventArgs e)
         {
@@ -150,7 +166,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Saves the selection of updates and navigates back to the Main page</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void SaveUpdateSelection(object sender, RoutedEventArgs e)
         {
@@ -206,7 +222,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Expands the group expander based on the which link was clicked from the main page</summary>
-        /// <param name="sender">The sender.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void SetExpanded(object sender, RoutedEventArgs e)
         {
@@ -237,7 +253,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Shows or Hides the selected update</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void ShowOrHideUpdate(object sender, RoutedEventArgs e)
         {
@@ -274,6 +290,25 @@ namespace SevenUpdate.Pages
                 {
                     update.Hidden = false;
                 }
+            }
+        }
+
+        /// <summary>Changes the UI depending on whether Aero Glass is enabled.</summary>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">The <see cref="CompositionChangedEventArgs"/> instance containing the event data.</param>
+        private void UpdateUI(object sender, CompositionChangedEventArgs e)
+        {
+            if (e.IsGlassEnabled)
+            {
+                this.tbTitle.Foreground = Brushes.Black;
+                this.line.Visibility = Visibility.Collapsed;
+                this.rectangle.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                this.tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 51, 153));
+                this.line.Visibility = Visibility.Visible;
+                this.rectangle.Visibility = Visibility.Visible;
             }
         }
 

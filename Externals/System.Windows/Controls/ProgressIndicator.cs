@@ -217,7 +217,7 @@ namespace System.Windows.Controls
         }
 
         /// <summary>Animates the progress wheel</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private void Animate(object sender, EventArgs e)
         {

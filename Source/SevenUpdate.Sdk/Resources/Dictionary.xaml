@@ -80,7 +80,7 @@
 
 	<Style TargetType="TextBlock" x:Key="glassText">
 		<Style.Triggers>
-			<DataTrigger Binding="{Binding Source={x:Static CommandLink.RunningOnXP}, Mode=OneWay, UpdateSourceTrigger=LostFocus}" Value="False">
+			<DataTrigger Binding="{Binding Source={x:Static AeroGlass.IsGlassEnabled}, Mode=OneWay, UpdateSourceTrigger=PropertyChanged}" Value="True">
 				<Setter Property="Effect">
 					<Setter.Value>
 						<DropShadowEffect Color="White" BlurRadius="10" RenderingBias="Performance" ShadowDepth="0" Direction="0" />

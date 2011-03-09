@@ -905,7 +905,4 @@
   <data name="GPL" xml:space="preserve">
     <value>GNU GPL 3.0</value>
   </data>
-  <data name="TermsAgreement" xml:space="preserve">
-    <value>Use of this program is subject to the following software licenses:</value>
-  </data>
 </root>

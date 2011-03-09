@@ -70,12 +70,12 @@ namespace SevenUpdate.Sdk.Windows
         protected override void OnSourceInitialized(EventArgs e)
         {
             base.OnSourceInitialized(e);
-            AeroGlass.EnableGlass(this, new Margins(0, 32, 0, 44));
-            this.Background = AeroGlass.IsEnabled ? Brushes.Transparent : Brushes.White;
+            AeroGlass.EnableGlass(this, new Margins(0, 32, 0, 41));
+            this.Background = AeroGlass.IsGlassEnabled ? Brushes.Transparent : Brushes.White;
         }
 
         /// <summary>Changes the Window Background when Aero Glass is enabled or disabled.</summary>
-        /// <param name="sender">The Sender</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="CompositionChangedEventArgs"/> instance containing the event data</param>
         private void ChangeWindowChrome(object sender, CompositionChangedEventArgs e)
         {
@@ -86,22 +86,22 @@ namespace SevenUpdate.Sdk.Windows
                 return;
             }
 
-            AeroGlass.EnableGlass(this, new Margins(0, 32, 0, 44));
+            AeroGlass.EnableGlass(this, new Margins(0, 32, 0, 41));
         }
 
         /// <summary>Enables the ability to drag the window on glass</summary>
-        /// <param name="sender">The sender.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
         private void EnableDragOnGlass(object sender, MouseButtonEventArgs e)
         {
-            if (AeroGlass.IsEnabled && e.LeftButton == MouseButtonState.Pressed)
+            if (AeroGlass.IsGlassEnabled && e.LeftButton == MouseButtonState.Pressed)
             {
                 this.DragMove();
             }
         }
 
         /// <summary>Sets the Height and Width of the window from the settings</summary>
-        /// <param name="sender">The sender.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void LoadWindowSize(object sender, RoutedEventArgs e)
         {
@@ -110,7 +110,7 @@ namespace SevenUpdate.Sdk.Windows
         }
 
         /// <summary>When Seven Update is closing, save the Window Width and Height in the settings</summary>
-        /// <param name="sender">The sender.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.ComponentModel.CancelEventArgs"/> instance containing the event data.</param>
         private void SaveWindowSize(object sender, CancelEventArgs e)
         {

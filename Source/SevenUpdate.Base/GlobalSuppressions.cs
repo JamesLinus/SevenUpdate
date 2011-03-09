@@ -20,7 +20,7 @@
 //    You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
-// ***********************************************************************
+// <summary>
 // This file is used by Code Analysis to maintain SuppressMessage 
 // attributes that are applied to this project.
 // Project-level suppressions either have no target or are given 
@@ -29,6 +29,8 @@
 // Error List, point to "Suppress Message(s)", and click 
 // "In Project Suppression File".
 // You do not need to add suppressions to this file manually.
+// </summary>
+// ***********************************************************************
 using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("Microsoft.Design", "CA1056:UriPropertiesShouldNotBeStrings", Scope = "member", Target = "SevenUpdate.Sua.#AppUrl")]

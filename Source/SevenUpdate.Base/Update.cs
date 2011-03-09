@@ -344,7 +344,7 @@ namespace SevenUpdate
         #region Methods
 
         /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
-        /// <param name="sender">The sender</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The event data</param>
         private void DescriptionCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -352,7 +352,7 @@ namespace SevenUpdate
         }
 
         /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
-        /// <param name="sender">The sender</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The event data</param>
         private void NameCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {

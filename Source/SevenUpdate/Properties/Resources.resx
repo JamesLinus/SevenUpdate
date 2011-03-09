@@ -672,7 +672,7 @@
     <value>32 &amp; 64-Bit</value>
   </data>
   <data name="PrivacyStatementOnline" xml:space="preserve">
-    <value>privacy statement online</value>
+    <value>privacy statement online.</value>
   </data>
   <data name="Copyright" xml:space="preserve">
     <value>Copyright:</value>
@@ -682,8 +682,5 @@
   </data>
   <data name="PrivacyStatement" xml:space="preserve">
     <value>Your privacy is important to us, read our</value>
-  </data>
-  <data name="TermsAgreement" xml:space="preserve">
-    <value>Use of this program is subject to the following software licenses:</value>
   </data>
 </root>

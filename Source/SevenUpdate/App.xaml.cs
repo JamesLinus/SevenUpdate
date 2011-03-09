@@ -240,7 +240,7 @@ namespace SevenUpdate
         }
 
         /// <summary>Logs an error</summary>
-        /// <param name="sender">The sender</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The error data to log</param>
         private static void LogError(object sender, ErrorOccurredEventArgs e)
         {
@@ -258,8 +258,10 @@ namespace SevenUpdate
                 return;
             }
 
+#if !DEBUG
             // register for Application Restart
             ApplicationRestartRecoveryManager.RegisterForApplicationRestart(new RestartSettings(string.Empty, RestartRestrictions.NotOnReboot));
+#endif
         }
 
         /// <summary>Sets the application jump list</summary>

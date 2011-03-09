@@ -32,6 +32,7 @@ namespace SevenUpdate.Pages
     using System.Windows.Controls;
     using System.Windows.Controls.Primitives;
     using System.Windows.Input;
+    using System.Windows.Media;
     using System.Windows.Navigation;
 
     /// <summary>Interaction logic for Options.xaml</summary>
@@ -59,6 +60,22 @@ namespace SevenUpdate.Pages
 
             this.lvApps.AddHandler(Thumb.DragDeltaEvent, new DragDeltaEventHandler(this.RestrictColumn), true);
             this.btnSave.IsShieldNeeded = !Core.Instance.IsAdmin;
+
+            AeroGlass.CompositionChanged -= this.UpdateUI;
+            AeroGlass.CompositionChanged += this.UpdateUI;
+
+            if (AeroGlass.IsGlassEnabled)
+            {
+                this.tbTitle.Foreground = Brushes.Black;
+                this.line.Visibility = Visibility.Collapsed;
+                this.rectangle.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                this.tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 51, 153));
+                this.line.Visibility = Visibility.Visible;
+                this.rectangle.Visibility = Visibility.Visible;
+            }
         }
 
         #endregion
@@ -83,7 +100,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Navigates to the Seven Update privacy policy</summary>
-        /// <param name="sender">The sender</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The event data</param>
         private void GoToPrivacyPolicy(object sender, RequestNavigateEventArgs e)
         {
@@ -92,7 +109,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Loads the settings and <see cref="Sua"/> list when the page is loaded</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void Init(object sender, RoutedEventArgs e)
         {
@@ -212,7 +229,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Goes back to the Main page</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void NavigateToMainPage(object sender, RoutedEventArgs e)
         {
@@ -220,7 +237,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Navigates to a Uri</summary>
-        /// <param name="sender">The sender.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.Navigation.RequestNavigateEventArgs"/> instance containing the event data.</param>
         private void NavigateToUri(object sender, RequestNavigateEventArgs e)
         {
@@ -230,7 +247,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Limit the size of the <see cref="GridViewColumn"/> when it's being resized</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.Controls.Primitives.DragDeltaEventArgs"/> instance containing the event data.</param>
         private void RestrictColumn(object sender, DragDeltaEventArgs e)
         {
@@ -238,7 +255,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Saves the settings and goes back to the Main page</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void SaveSettings(object sender, RoutedEventArgs e)
         {
@@ -255,6 +272,25 @@ namespace SevenUpdate.Pages
             if (machineAppList != null)
             {
                 this.lvApps.ItemsSource = machineAppList;
+            }
+        }
+
+        /// <summary>Changes the UI depending on whether Aero Glass is enabled.</summary>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">The <see cref="CompositionChangedEventArgs"/> instance containing the event data.</param>
+        private void UpdateUI(object sender, CompositionChangedEventArgs e)
+        {
+            if (e.IsGlassEnabled)
+            {
+                this.tbTitle.Foreground = Brushes.Black;
+                this.line.Visibility = Visibility.Collapsed;
+                this.rectangle.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                this.tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 51, 153));
+                this.line.Visibility = Visibility.Visible;
+                this.rectangle.Visibility = Visibility.Visible;
             }
         }
 

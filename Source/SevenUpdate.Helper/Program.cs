@@ -148,7 +148,7 @@ namespace SevenUpdate.Helper
         }
 
         /// <summary>Run Seven Update and auto check for updates</summary>
-        /// <param name="sender">The sender.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Timers.ElapsedEventArgs"/> instance containing the event data.</param>
         private static void RunSevenUpdate(object sender, ElapsedEventArgs e)
         {

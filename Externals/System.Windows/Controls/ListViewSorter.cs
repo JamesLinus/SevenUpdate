@@ -399,7 +399,7 @@ namespace System.Windows.Controls
         }
 
         /// <summary>Handles the Click event of the <see cref="GridViewColumnHeader"/> control.</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private static void SortColumn(object sender, RoutedEventArgs e)
         {

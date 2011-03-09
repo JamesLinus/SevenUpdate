@@ -57,12 +57,12 @@ namespace SevenUpdate
             Instance = new ServiceHost(typeof(WcfService), baseAddress);
 
 #if (DEBUG)
-            var debug = Instance.Description.Behaviors.Find<ServiceDebugBehavior>();
+            var debug = Instance.Description.Behaviors.Find<System.ServiceModel.Description.ServiceDebugBehavior>();
 
             // if not found - add behavior with setting turned on 
             if (debug == null)
             {
-                Instance.Description.Behaviors.Add(new ServiceDebugBehavior { IncludeExceptionDetailInFaults = true });
+                Instance.Description.Behaviors.Add(new System.ServiceModel.Description.ServiceDebugBehavior { IncludeExceptionDetailInFaults = true });
             }
             else
             {

@@ -23,10 +23,14 @@
 // ***********************************************************************
 namespace SevenUpdate.Windows
 {
+    using System;
     using System.ComponentModel;
     using System.Windows;
     using System.Windows.Controls;
+    using System.Windows.Input;
+    using System.Windows.Internal;
     using System.Windows.Markup;
+    using System.Windows.Media;
     using System.Windows.Navigation;
 
     using SevenUpdate.Properties;
@@ -51,6 +55,9 @@ namespace SevenUpdate.Windows
                 this.Title += " - " + Properties.Resources.BetaChannel;
             }
 
+            AeroGlass.CompositionChanged -= this.ChangeWindowChrome;
+            AeroGlass.CompositionChanged += this.ChangeWindowChrome;
+
             App.TaskBar = this.taskBar;
             NavService = this.NavigationService;
             App.ProcessArgs(App.Args);
@@ -69,8 +76,43 @@ namespace SevenUpdate.Windows
 
         #region Methods
 
+        /// <summary>Enables Aero Glass on the Window</summary>
+        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data</param>
+        protected override void OnSourceInitialized(EventArgs e)
+        {
+            base.OnSourceInitialized(e);
+            AeroGlass.EnableGlass(this, new Margins(0, 32, 0, 41));
+            this.Background = AeroGlass.IsGlassEnabled ? Brushes.Transparent : Brushes.White;
+        }
+
+        /// <summary>Changes the Window Background when Aero Glass is enabled or disabled.</summary>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">The <see cref="CompositionChangedEventArgs"/> instance containing the event data</param>
+        private void ChangeWindowChrome(object sender, CompositionChangedEventArgs e)
+        {
+            this.Background = e.IsGlassEnabled ? Brushes.Transparent : Brushes.White;
+
+            if (!e.IsGlassEnabled)
+            {
+                return;
+            }
+
+            AeroGlass.EnableGlass(this, new Margins(0, 32, 0, 41));
+        }
+
+        /// <summary>Enables the ability to drag the window on glass</summary>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
+        private void EnableDragOnGlass(object sender, MouseButtonEventArgs e)
+        {
+            if (AeroGlass.IsGlassEnabled && e.LeftButton == MouseButtonState.Pressed)
+            {
+                this.DragMove();
+            }
+        }
+
         /// <summary>Sets the Height and Width of the window from the settings</summary>
-        /// <param name="sender">The sender.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void LoadWindowSize(object sender, RoutedEventArgs e)
         {
@@ -79,7 +121,7 @@ namespace SevenUpdate.Windows
         }
 
         /// <summary>When Seven Update is closing, save the Window Width and Height in the settings</summary>
-        /// <param name="sender">The sender.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.ComponentModel.CancelEventArgs"/> instance containing the event data.</param>
         private void SaveWindowSize(object sender, CancelEventArgs e)
         {

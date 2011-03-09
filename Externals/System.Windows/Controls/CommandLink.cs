@@ -71,15 +71,6 @@ namespace System.Windows.Controls
 
         #region Properties
 
-        /// <summary>Gets a value indicating whether the application is running on XP</summary>
-        public static bool RunningOnXP
-        {
-            get
-            {
-                return Environment.OSVersion.Version.Major < 6;
-            }
-        }
-
         /// <summary>Gets or sets the supporting text to display on the <see cref = "CommandLink" /> below the instruction text</summary>
         public string Note
         {

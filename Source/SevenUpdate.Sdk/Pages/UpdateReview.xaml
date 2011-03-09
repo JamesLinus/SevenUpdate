@@ -14,7 +14,7 @@
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="Auto" />
 			<RowDefinition Height="312*" />
-			<RowDefinition Height="44" />
+			<RowDefinition Height="41" />
 		</Grid.RowDefinitions>
 		<StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
 			<BackButton Grid.RowSpan="3">

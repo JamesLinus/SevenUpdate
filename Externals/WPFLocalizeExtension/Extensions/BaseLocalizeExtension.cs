@@ -220,11 +220,7 @@ namespace WPFLocalizeExtension.Extensions
         /// <summary>Provides the Value for the first Binding</summary>
         /// <param name="serviceProvider">The <see cref="System.Windows.Markup.IProvideValueTarget"/> provided from the <see cref="MarkupExtension"/></param>
         /// <returns>The found item from the .resx directory or <see langword="null"/> if not found</returns>
-        /// <remarks>
-        /// This method register the <see cref="EventHandler"/><c>OnCultureChanged</c> on <c>LocalizeDictionary</c> to get an acknowledge of changing the culture, if the passed <see cref="TargetObjects"/> type of <see cref="DependencyObject"/>.
-        ///   !PROOF: On every single <see cref="UserControl"/>, Window, and Page, there is a new SharedDP reference, and so there is every time a new <c>BaseLocalizeExtension</c>!
-        ///   Because of this, we don't need to notify every single DependencyObjects to update their value (for GC).
-        /// </remarks>
+        /// <remarks>This method register the <see cref="EventHandler"/><c>OnCultureChanged</c> on <c>LocalizeDictionary</c> to get an acknowledge of changing the culture, if the passed <see cref="TargetObjects"/> type of <see cref="DependencyObject"/>.!PROOF: On every single <see cref="UserControl"/>, Window, and Page, there is a new SharedDP reference, and so there is every time a new <c>BaseLocalizeExtension</c>!Because of this, we don't need to notify every single DependencyObjects to update their value (for GC).</remarks>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             if (serviceProvider == null)
@@ -488,7 +484,7 @@ namespace WPFLocalizeExtension.Extensions
 
         /// <summary>This method will be called through the interface, passed to theLocalizeDictionary. LocalizeDictionary.<see cref="Localize.WeakCultureChangedEventManager"/> to get notified on culture changed</summary>
         /// <param name="managerType">The manager Type.</param>
-        /// <param name="sender">The sender.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The event argument.</param>
         /// <returns><see langword="true"/> if the listener handled the event. It is considered an error by the <see cref="T:System.Windows.WeakEventManager"/> handling in WPF to register a listener for an event that the listener does not handle. Regardless, the method should return <see langword="false"/> if it receives an event that it does not recognize or handle.</returns>
         protected bool ReceiveWeakEvent(Type managerType, object sender, EventArgs e)

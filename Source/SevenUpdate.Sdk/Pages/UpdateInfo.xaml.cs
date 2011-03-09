@@ -52,7 +52,7 @@ namespace SevenUpdate.Sdk.Pages
             this.MouseLeftButtonDown += Core.EnableDragOnGlass;
             AeroGlass.CompositionChanged -= this.UpdateUI;
             AeroGlass.CompositionChanged += this.UpdateUI;
-            if (AeroGlass.IsEnabled)
+            if (AeroGlass.IsGlassEnabled)
             {
                 this.tbTitle.Foreground = Brushes.Black;
                 this.line.Visibility = Visibility.Collapsed;
@@ -71,7 +71,7 @@ namespace SevenUpdate.Sdk.Pages
         #region Methods
 
         /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
-        /// <param name="sender">The sender</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The event data</param>
         private void ChangeDescription(object sender, RoutedEventArgs e)
         {
@@ -81,7 +81,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
-        /// <param name="sender">The sender</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The event data</param>
         private void ChangeName(object sender, RoutedEventArgs e)
         {
@@ -98,7 +98,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Loads the <see cref="LocaleString"/>'s for the <see cref="Update"/> into the UI</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.Controls.SelectionChangedEventArgs"/> instance containing the event data.</param>
         private void LoadLocaleStrings(object sender, SelectionChangedEventArgs e)
         {
@@ -139,7 +139,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Loads the <see cref="Update"/> information to the UI</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void LoadUI(object sender, RoutedEventArgs e)
         {
@@ -185,7 +185,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Moves on to the next pages if no errors are present</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void MoveOn(object sender, RoutedEventArgs e)
         {
@@ -200,7 +200,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Navigates to the main page</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void NavigateToMainPage(object sender, RoutedEventArgs e)
         {
@@ -208,7 +208,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Updates the UI based on whether Aero Glass is enabled</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="CompositionChangedEventArgs"/> instance containing the event data.</param>
         private void UpdateUI(object sender, CompositionChangedEventArgs e)
         {
@@ -227,7 +227,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Validates the textbox to see if required input exists</summary>
-        /// <param name="sender">The sender</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The event data</param>
         private void ValidateInputRequired(object sender, TextChangedEventArgs e)
         {
@@ -246,7 +246,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Validates input to see if it's a valid URL</summary>
-        /// <param name="sender">The sender</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The event data</param>
         private void ValidateUrlInput(object sender, TextChangedEventArgs e)
         {

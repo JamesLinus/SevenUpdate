@@ -28,6 +28,7 @@ namespace SevenUpdate.Sdk
     using System.Collections.ObjectModel;
     using System.Globalization;
     using System.IO;
+    using System.Threading;
     using System.Windows;
     using System.Windows.ApplicationServices;
     using System.Windows.Shell;
@@ -94,6 +95,7 @@ namespace SevenUpdate.Sdk
         {
             UnregisterApplicationRecoveryAndRestart();
             base.OnExit(e, firstInstance);
+            
         }
 
         /// <summary>Raises the <see cref="InstanceAwareApplication.Startup"/> event.</summary>
@@ -155,12 +157,14 @@ namespace SevenUpdate.Sdk
                 return;
             }
 
+#if !DEBUG
             // register for Application Restart
             ApplicationRestartRecoveryManager.RegisterForApplicationRestart(new RestartSettings(string.Empty, RestartRestrictions.NotOnReboot));
 
             // register for Application Recovery
             var recoverySettings = new RecoverySettings(new RecoveryData(PerformRecovery, null), 4000);
             ApplicationRestartRecoveryManager.RegisterForApplicationRecovery(recoverySettings);
+#endif
         }
 
         /// <summary>Sets the Windows 7 <see cref="JumpList"/></summary>

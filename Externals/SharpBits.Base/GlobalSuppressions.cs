@@ -8,8 +8,8 @@
 // </copyright>
 // <author username="xidar">xidar</author>
 // <author username="sevenalive">Robert Baker</author>
-// <license href="http://sharpbits.codeplex.com/license">BSD License</license> 
-// ***********************************************************************
+// <license href="http://sharpbits.codeplex.com/license">BSD License</license>
+// <summary>
 // This file is used by Code Analysis to maintain SuppressMessage 
 // attributes that are applied to this project.
 // Project-level suppressions either have no target or are given 
@@ -18,6 +18,8 @@
 // Error List, point to "Suppress Message(s)", and click 
 // "In Project Suppression File".
 // You do not need to add suppressions to this file manually.
+// </summary>
+// ***********************************************************************
 using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode", Scope = "member", Target = "SharpBits.Base.Utilities.#DateTimeToFileTime(System.DateTime)")]

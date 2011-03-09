@@ -332,7 +332,7 @@ namespace WPFLocalizeExtension.Extensions
 
         /// <summary>This method will be called through the interface, passed to the<see cref="Localize.WeakCultureChangedEventManager"/> to get notified on culture changed</summary>
         /// <param name="managerType">The manager Type.</param>
-        /// <param name="sender">The sender.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The event argument.</param>
         /// <returns><see langword="true"/> if the listener handled the event. It is considered an error by the<see cref="T:System.Windows.WeakEventManager"/> handling in WPF�to register alistener for an event that the listener does not handle. Regardless,the method should return <see langword="false"/> if it receives an event that it does not recognize or handle.</returns>
         bool IWeakEventListener.ReceiveWeakEvent(Type managerType, object sender, EventArgs e)

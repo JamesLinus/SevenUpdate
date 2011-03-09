@@ -62,7 +62,7 @@ namespace SevenUpdate.Sdk.Pages
             this.MouseLeftButtonDown += Core.EnableDragOnGlass;
             AeroGlass.CompositionChanged -= this.UpdateUI;
             AeroGlass.CompositionChanged += this.UpdateUI;
-            if (AeroGlass.IsEnabled)
+            if (AeroGlass.IsGlassEnabled)
             {
                 this.tbTitle.Foreground = Brushes.Black;
                 this.line.Visibility = Visibility.Collapsed;
@@ -148,7 +148,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Browses for a folder contains files to add to the <see cref="UpdateFile"/> collection</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void BrowseFolder(object sender, RoutedEventArgs e)
         {
@@ -168,7 +168,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Browses for a file to add to the <see cref="UpdateFile"/> collection</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void BrowseForFile(object sender, RoutedEventArgs e)
         {
@@ -203,7 +203,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Changes the UI based on the selected <see cref="UpdateFile"/>'s <see cref="FileAction"/></summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.Controls.SelectionChangedEventArgs"/> instance containing the event data.</param>
         private void ChangeUI(object sender, SelectionChangedEventArgs e)
         {
@@ -249,7 +249,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Converts a path to system variables</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.Input.KeyboardFocusChangedEventArgs"/> instance containing the event data.</param>
         private void ConvertPath(object sender, KeyboardFocusChangedEventArgs e)
         {
@@ -273,7 +273,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Deletes an item from the <see cref="System.Windows.Controls.ListBox"/> on delete key down</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.Input.KeyEventArgs"/> instance containing the event data.</param>
         private void DeleteItem(object sender, KeyEventArgs e)
         {
@@ -313,7 +313,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Navigates to the next page if no errors exist</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void MoveOn(object sender, RoutedEventArgs e)
         {
@@ -328,7 +328,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Navigates to the main page</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void NavigateToMainPage(object sender, RoutedEventArgs e)
         {
@@ -336,7 +336,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Removes all files from the <see cref="UpdateFile"/> collection</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void RemoveAllFiles(object sender, RoutedEventArgs e)
         {
@@ -344,7 +344,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Removes a files from the <see cref="UpdateFile"/> collection</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void RemoveFile(object sender, RoutedEventArgs e)
         {
@@ -352,7 +352,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Opens a dialog to browse for the selected file in the <see cref="UpdateFile"/> collection</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
         private void UpdateFile(object sender, MouseButtonEventArgs e)
         {
@@ -374,7 +374,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Updates the hash for the selected <see cref="UpdateFile"/></summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
         private void UpdateHash(object sender, MouseButtonEventArgs e)
         {
@@ -398,7 +398,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Updates the UI based on whether Aero Glass is enabled</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="CompositionChangedEventArgs"/> instance containing the event data.</param>
         private void UpdateUI(object sender, CompositionChangedEventArgs e)
         {
@@ -417,7 +417,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Validates the download directory</summary>
-        /// <param name="sender">The sender.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The data for the event</param>
         private void ValidateDownloadDirectory(object sender, TextChangedEventArgs e)
         {
@@ -438,7 +438,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Validates the install directory</summary>
-        /// <param name="sender">The sender.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The data for the event</param>
         private void ValidateInstallDirectory(object sender, TextChangedEventArgs e)
         {

@@ -218,7 +218,7 @@ namespace SevenUpdate
         }
 
         /// <summary>Reports when a download completes</summary>
-        /// <param name="sender">The sender.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="SharpBits.Base.NotificationEventArgs"/> instance containing the event data.</param>
         private static void ReportDownloadComplete(object sender, NotificationEventArgs e)
         {
@@ -264,7 +264,7 @@ namespace SevenUpdate
         }
 
         /// <summary>Reports a download error</summary>
-        /// <param name="sender">The sender.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="SharpBits.Base.ErrorNotificationEventArgs"/> instance containing the event data.</param>
         private static void ReportDownloadError(object sender, ErrorNotificationEventArgs e)
         {
@@ -307,7 +307,7 @@ namespace SevenUpdate
         }
 
         /// <summary>Reports the download progress</summary>
-        /// <param name="sender">The sender.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="SharpBits.Base.NotificationEventArgs"/> instance containing the event data.</param>
         private static void ReportDownloadProgress(object sender, NotificationEventArgs e)
         {

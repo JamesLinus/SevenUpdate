@@ -32,6 +32,7 @@ namespace SevenUpdate.Pages
     using System.Windows.Controls;
     using System.Windows.Controls.Primitives;
     using System.Windows.Input;
+    using System.Windows.Media;
 
     using SevenUpdate.Windows;
 
@@ -54,6 +55,22 @@ namespace SevenUpdate.Pages
 
             this.lvHiddenUpdates.AddHandler(Thumb.DragDeltaEvent, new DragDeltaEventHandler(this.RestrictColumn), true);
             this.btnRestore.IsShieldNeeded = !Core.Instance.IsAdmin;
+
+            AeroGlass.CompositionChanged -= this.UpdateUI;
+            AeroGlass.CompositionChanged += this.UpdateUI;
+
+            if (AeroGlass.IsGlassEnabled)
+            {
+                this.tbTitle.Foreground = Brushes.Black;
+                this.line.Visibility = Visibility.Collapsed;
+                this.rectangle.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                this.tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 51, 153));
+                this.line.Visibility = Visibility.Visible;
+                this.rectangle.Visibility = Visibility.Visible;
+            }
         }
 
         #endregion
@@ -68,7 +85,7 @@ namespace SevenUpdate.Pages
         #region Methods
 
         /// <summary>Gets the hidden updates and loads them in the <see cref="ListView"/></summary>
-        /// <param name="sender">The sender.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void GetHiddenUpdates(object sender, RoutedEventArgs e)
         {
@@ -87,7 +104,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Goes back to the Main page</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void NavigateToMainPage(object sender, RoutedEventArgs e)
         {
@@ -95,7 +112,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Un hides one or more updates and navigates to the Main page</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void RestoreUpdate(object sender, RoutedEventArgs e)
         {
@@ -122,7 +139,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Limit the size of the <see cref="GridViewColumn"/> when it's being resized</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.Controls.Primitives.DragDeltaEventArgs"/> instance containing the event data.</param>
         private void RestrictColumn(object sender, DragDeltaEventArgs e)
         {
@@ -130,7 +147,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Shows the selected update details</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
         private void ShowDetails(object sender, MouseButtonEventArgs e)
         {
@@ -144,7 +161,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Shows the selected update details</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void ShowDetailsDialog(object sender, RoutedEventArgs e)
         {
@@ -152,8 +169,28 @@ namespace SevenUpdate.Pages
             details.ShowDialog(this.hiddenUpdates[this.lvHiddenUpdates.SelectedIndex]);
         }
 
+
+        /// <summary>Changes the UI depending on whether Aero Glass is enabled.</summary>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">The <see cref="CompositionChangedEventArgs"/> instance containing the event data.</param>
+        private void UpdateUI(object sender, CompositionChangedEventArgs e)
+        {
+            if (e.IsGlassEnabled)
+            {
+                this.tbTitle.Foreground = Brushes.Black;
+                this.line.Visibility = Visibility.Collapsed;
+                this.rectangle.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                this.tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 51, 153));
+                this.line.Visibility = Visibility.Visible;
+                this.rectangle.Visibility = Visibility.Visible;
+            }
+        }
+
         /// <summary>Updates the UI when an update check box is clicked</summary>
-        /// <param name="sender">The sender.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void UpdateUIOnUpdateSelection(object sender, RoutedEventArgs e)
         {

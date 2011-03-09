@@ -30,6 +30,7 @@ namespace SevenUpdate.Pages
     using System.Windows;
     using System.Windows.Data;
     using System.Windows.Input;
+    using System.Windows.Media;
 
     using SevenUpdate.Windows;
 
@@ -49,6 +50,22 @@ namespace SevenUpdate.Pages
         public UpdateHistory()
         {
             this.InitializeComponent();
+
+            AeroGlass.CompositionChanged -= this.UpdateUI;
+            AeroGlass.CompositionChanged += this.UpdateUI;
+
+            if (AeroGlass.IsGlassEnabled)
+            {
+                this.tbTitle.Foreground = Brushes.Black;
+                this.line.Visibility = Visibility.Collapsed;
+                this.rectangle.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                this.tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 51, 153));
+                this.line.Visibility = Visibility.Visible;
+                this.rectangle.Visibility = Visibility.Visible;
+            }
         }
 
         #endregion
@@ -56,7 +73,7 @@ namespace SevenUpdate.Pages
         #region Methods
 
         /// <summary>Gets the update history and loads it to the listView</summary>
-        /// <param name="sender">The sender.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void GetHistory(object sender, RoutedEventArgs e)
         {
@@ -77,7 +94,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Goes back to the Main page</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void NavigateToMainPage(object sender, RoutedEventArgs e)
         {
@@ -85,7 +102,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Updates the <see cref="CollectionView"/> when the collection changes</summary>
-        /// <param name="sender">The sender.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Collections.Specialized.NotifyCollectionChangedEventArgs"/> instance containing the event data.</param>
         private void RefreshDataView(object sender, NotifyCollectionChangedEventArgs e)
         {
@@ -100,7 +117,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Shows the selected update details</summary>
-        /// <param name="sender">The sender.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
         private void ShowDetails(object sender, MouseButtonEventArgs e)
         {
@@ -114,12 +131,32 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Shows the selected update details</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void ShowDetailsDialog(object sender, RoutedEventArgs e)
         {
             var details = new UpdateDetails();
             details.ShowDialog(this.updateHistory[this.lvUpdateHistory.SelectedIndex]);
+        }
+
+
+        /// <summary>Changes the UI depending on whether Aero Glass is enabled.</summary>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">The <see cref="CompositionChangedEventArgs"/> instance containing the event data.</param>
+        private void UpdateUI(object sender, CompositionChangedEventArgs e)
+        {
+            if (e.IsGlassEnabled)
+            {
+                this.tbTitle.Foreground = Brushes.Black;
+                this.line.Visibility = Visibility.Collapsed;
+                this.rectangle.Visibility = Visibility.Collapsed;
+            }
+            else
+            {
+                this.tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 51, 153));
+                this.line.Visibility = Visibility.Visible;
+                this.rectangle.Visibility = Visibility.Visible;
+            }
         }
 
         #endregion

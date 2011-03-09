@@ -50,7 +50,7 @@ namespace SevenUpdate.Sdk.Pages
             this.MouseLeftButtonDown += Core.EnableDragOnGlass;
             AeroGlass.CompositionChanged -= this.UpdateUI;
             AeroGlass.CompositionChanged += this.UpdateUI;
-            if (AeroGlass.IsEnabled)
+            if (AeroGlass.IsGlassEnabled)
             {
                 this.tbTitle.Foreground = Brushes.Black;
                 this.line.Visibility = Visibility.Collapsed;
@@ -69,7 +69,7 @@ namespace SevenUpdate.Sdk.Pages
         #region Methods
 
         /// <summary>Deletes the selected <see cref="RegistryItem"/> from the <see cref="ListBox"/></summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.Input.KeyEventArgs"/> instance containing the event data.</param>
         private void DeleteRegistryItem(object sender, KeyEventArgs e)
         {
@@ -104,7 +104,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Opens a dialog and imports the selected .reg file</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void ImportRegistryFile(object sender, RoutedEventArgs e)
         {
@@ -124,7 +124,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Loads the default values for the UI</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void LoadUI(object sender, RoutedEventArgs e)
         {
@@ -135,7 +135,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Navigates to the next page if no errors exist</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void MoveOn(object sender, RoutedEventArgs e)
         {
@@ -150,7 +150,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Navigates to the main page</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void NavigateToMainPage(object sender, RoutedEventArgs e)
         {
@@ -158,7 +158,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Adds a new <see cref="RegistryItem"/></summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void NewRegistryItem(object sender, RoutedEventArgs e)
         {
@@ -167,7 +167,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Removes all <see cref="RegistryItem"/>'s from the collection</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void RemoveAll(object sender, RoutedEventArgs e)
         {
@@ -175,7 +175,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Removes a <see cref="RegistryItem"/> from a collection</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void RemoveSelected(object sender, RoutedEventArgs e)
         {
@@ -183,7 +183,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Updates the UI based on whether Aero Glass is enabled</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="CompositionChangedEventArgs"/> instance containing the event data.</param>
         private void UpdateUI(object sender, CompositionChangedEventArgs e)
         {
@@ -202,7 +202,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Restricts the input to the characters needed for <see cref="RegistryValueKind"/></summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.Input.KeyEventArgs"/> instance containing the event data.</param>
         private void ValidateData(object sender, KeyEventArgs e)
         {

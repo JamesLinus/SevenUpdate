@@ -7,7 +7,7 @@
 //     Copyright (c) Microsoft Corporation. All rights reserved.
 // </copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
-// ***********************************************************************
+// <summary>
 // This file is used by Code Analysis to maintain SuppressMessage 
 // attributes that are applied to this project.
 // Project-level suppressions either have no target or are given 
@@ -16,6 +16,8 @@
 // Error List, point to "Suppress Message(s)", and click 
 // "In Project Suppression File".
 // You do not need to add suppressions to this file manually.
+// </summary>
+// ***********************************************************************
 using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields", Scope = "member", Target = "System.Windows.Dialogs.TaskDialogNativeMethods+TaskDialogConfigIconUnion.#Spacer")]

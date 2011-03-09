@@ -42,7 +42,7 @@ namespace SevenUpdate.Sdk.Pages
 
             this.MouseLeftButtonDown += Core.EnableDragOnGlass;
             AeroGlass.CompositionChanged += this.UpdateUI;
-            this.tbTitle.Foreground = AeroGlass.IsEnabled ? Brushes.Black : new SolidColorBrush(Color.FromRgb(0, 51, 153));
+            this.tbTitle.Foreground = AeroGlass.IsGlassEnabled ? Brushes.Black : new SolidColorBrush(Color.FromRgb(0, 51, 153));
         }
 
         #endregion
@@ -50,7 +50,7 @@ namespace SevenUpdate.Sdk.Pages
         #region Methods
 
         /// <summary>Saves and exports the Project</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void SaveExportProject(object sender, RoutedEventArgs e)
         {
@@ -58,7 +58,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Saves the Project</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void SaveProject(object sender, RoutedEventArgs e)
         {
@@ -66,7 +66,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Updates the UI based on whether Aero Glass is enabled</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="CompositionChangedEventArgs"/> instance containing the event data.</param>
         private void UpdateUI(object sender, CompositionChangedEventArgs e)
         {

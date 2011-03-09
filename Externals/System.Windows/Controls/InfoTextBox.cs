@@ -214,7 +214,7 @@ namespace System.Windows.Controls
         }
 
         /// <summary>Determines whether the <see cref="InfoTextBox"/> is Visible</summary>
-        /// <param name="sender">The sender.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private static new void IsVisibleChanged(object sender, EventArgs e)
         {

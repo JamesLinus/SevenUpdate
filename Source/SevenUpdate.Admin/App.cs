@@ -124,7 +124,7 @@ namespace SevenUpdate.Admin
         #region Methods
 
         /// <summary>Adds an update to the history</summary>
-        /// <param name="sender">The sender</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The event data</param>
         private static void AddHistory(object sender, UpdateInstalledEventArgs e)
         {
@@ -134,7 +134,7 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Checks if Seven Update is running</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Timers.ElapsedEventArgs"/> instance containing the event data.</param>
         private static void CheckIfRunning(object sender, ElapsedEventArgs e)
         {
@@ -176,7 +176,7 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Reports that the download has completed and starts update installation if necessary</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="DownloadCompletedEventArgs"/> instance containing the event data.</param>
         private static void DownloadCompleted(object sender, DownloadCompletedEventArgs e)
         {
@@ -200,7 +200,7 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Reports that the download progress has changed</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="DownloadProgressChangedEventArgs"/> instance containing the event data.</param>
         private static void DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
@@ -214,7 +214,7 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Runs when there is an error searching for updates</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="ErrorOccurredEventArgs"/> instance containing the event data.</param>
         private static void ErrorOccurred(object sender, ErrorOccurredEventArgs e)
         {
@@ -225,7 +225,7 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Reports the installation has completed</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="InstallCompletedEventArgs"/> instance containing the event data.</param>
         private static void InstallCompleted(object sender, InstallCompletedEventArgs e)
         {
@@ -242,7 +242,7 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Reports when the installation progress has changed</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="InstallProgressChangedEventArgs"/> instance containing the event data.</param>
         private static void InstallProgressChanged(object sender, InstallProgressChangedEventArgs e)
         {
@@ -317,7 +317,7 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Prevents the system from shutting down until the installation is safely stopped</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="Microsoft.Win32.SessionEndingEventArgs"/> instance containing the event data.</param>
         private static void PreventClose(object sender, SessionEndingEventArgs e)
         {
@@ -411,7 +411,7 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Starts Seven Update UI</summary>
-        /// <param name="sender">The sender.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.EventArgs"/> instance containing the event data.</param>
         private static void RunSevenUpdate(object sender, EventArgs e)
         {
@@ -438,7 +438,7 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Runs when the search for updates has completed for an auto update</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="SearchCompletedEventArgs"/> instance containing the event data.</param>
         private static void SearchCompleted(object sender, SearchCompletedEventArgs e)
         {

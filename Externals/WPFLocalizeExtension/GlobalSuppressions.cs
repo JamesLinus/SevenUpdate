@@ -8,7 +8,7 @@
 // </copyright>
 // <author username="SeriousM">Bernhard Millauer</author>
 // <license href="http://wpflocalizeextension.codeplex.com/license">Microsoft Public License</license>
-// ***********************************************************************
+// <summary>
 // This file is used by Code Analysis to maintain SuppressMessage 
 // attributes that are applied to this project.
 // Project-level suppressions either have no target or are given 
@@ -17,6 +17,8 @@
 // Error List, point to "Suppress Message(s)", and click 
 // "In Project Suppression File".
 // You do not need to add suppressions to this file manually.
+// </summary>
+// ***********************************************************************
 using System.Diagnostics.CodeAnalysis;
 
 [assembly: SuppressMessage("Microsoft.Naming", "CA1709:IdentifiersShouldBeCasedCorrectly", MessageId = "WPF", Scope = "namespace", Target = "WPFLocalizeExtension.Engine")]

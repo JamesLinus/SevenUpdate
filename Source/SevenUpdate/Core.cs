@@ -83,7 +83,7 @@ namespace SevenUpdate
         #region Constants and Fields
 
         /// <summary>Location of the SUI for Seven Update</summary>
-        internal const string SevenUpdateSui = @"http://sevenupdate.com/apps/SevenUpdate";
+        private const string SevenUpdateSui = @"http://sevenupdate.com/apps/SevenUpdate";
 
         /// <summary>The main page for Seven Update</summary>
         private static readonly Main MainPage = new Main();

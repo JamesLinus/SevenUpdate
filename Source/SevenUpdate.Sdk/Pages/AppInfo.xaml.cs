@@ -74,7 +74,7 @@ namespace SevenUpdate.Sdk.Pages
             AeroGlass.CompositionChanged -= this.UpdateUI;
             AeroGlass.CompositionChanged += this.UpdateUI;
 
-            if (AeroGlass.IsEnabled)
+            if (AeroGlass.IsGlassEnabled)
             {
                 this.tbTitle.Foreground = Brushes.Black;
                 this.line.Visibility = Visibility.Collapsed;
@@ -93,7 +93,7 @@ namespace SevenUpdate.Sdk.Pages
         #region Methods
 
         /// <summary>Opens a <see cref="OpenFileDialog"/> to browse for the application install location</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
         private void BrowseForAppLocation(object sender, MouseButtonEventArgs e)
         {
@@ -107,7 +107,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
-        /// <param name="sender">The sender</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The event data</param>
         private void ChangeDescription(object sender, RoutedEventArgs e)
         {
@@ -116,7 +116,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
-        /// <param name="sender">The sender</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The event data</param>
         private void ChangeName(object sender, RoutedEventArgs e)
         {
@@ -125,7 +125,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
-        /// <param name="sender">The sender</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The event data</param>
         private void ChangePublisher(object sender, RoutedEventArgs e)
         {
@@ -134,7 +134,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Changes the UI to show the file system application location</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void ChangeToFileSystemLocation(object sender, RoutedEventArgs e)
         {
@@ -149,7 +149,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Changes the UI to show the registry application location</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void ChangeToRegistryLocation(object sender, RoutedEventArgs e)
         {
@@ -164,7 +164,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Converts the application location path to system variables</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.Input.KeyboardFocusChangedEventArgs"/> instance containing the event data.</param>
         private void ConvertPath(object sender, KeyboardFocusChangedEventArgs e)
         {
@@ -188,7 +188,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Loads the application info into the UI.</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void LoadAppInfo(object sender, RoutedEventArgs e)
         {
@@ -268,7 +268,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Loads the <see cref="LocaleString"/>'s for the <see cref="Sua"/> into the UI</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.Controls.SelectionChangedEventArgs"/> instance containing the event data.</param>
         private void LoadLocaleStrings(object sender, SelectionChangedEventArgs e)
         {
@@ -323,7 +323,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Moves on to the next pages if no errors are present</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void MoveOn(object sender, RoutedEventArgs e)
         {
@@ -338,7 +338,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Saves the project and goes back to the main page</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void SaveSua(object sender, RoutedEventArgs e)
         {
@@ -412,7 +412,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Changes the UI depending on whether Aero Glass is enabled.</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="CompositionChangedEventArgs"/> instance containing the event data.</param>
         private void UpdateUI(object sender, CompositionChangedEventArgs e)
         {
@@ -431,7 +431,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Validates the textbox against the AppDirectory Validation Rule</summary>
-        /// <param name="sender">The sender.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The data for the event.</param>
         private void ValidateAppDirectory(object sender, TextChangedEventArgs e)
         {
@@ -455,7 +455,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Validates the textbox content.</summary>
-        /// <param name="sender">The sender.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The data for the event</param>
         private void ValidateRequiredInput(object sender, TextChangedEventArgs e)
         {
@@ -474,7 +474,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Validates the textbox against the Sui Validation Rule</summary>
-        /// <param name="sender">The sender.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The data for the event.</param>
         private void ValidateSuiLocation(object sender, TextChangedEventArgs e)
         {
@@ -490,7 +490,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Validates the textbox against the AppDirectory Validation Rule</summary>
-        /// <param name="sender">The sender.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The data for the event.</param>
         private void ValidateUrlInput(object sender, TextChangedEventArgs e)
         {

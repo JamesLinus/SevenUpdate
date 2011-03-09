@@ -90,7 +90,7 @@ namespace SevenUpdate.Windows
         }
 
         /// <summary>Closes the window, declining all software licenses</summary>
-        /// <param name="sender">The source of the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void Cancel(object sender, RoutedEventArgs e)
         {
@@ -99,7 +99,7 @@ namespace SevenUpdate.Windows
         }
 
         /// <summary>Updates the UI with the licenses and displays the first license</summary>
-        /// <param name="sender">The sender.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.ComponentModel.RunWorkerCompletedEventArgs"/> instance containing the event data.</param>
         private void DisplayLicense(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -128,7 +128,7 @@ namespace SevenUpdate.Windows
         }
 
         /// <summary>Downloads the <see cref="licenseInformation"/></summary>
-        /// <param name="sender">The sender.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void DownloadLicenseInformation(object sender, RoutedEventArgs e)
         {
@@ -146,7 +146,7 @@ namespace SevenUpdate.Windows
         }
 
         /// <summary>Downloads the license agreements of the updates</summary>
-        /// <param name="sender">The sender.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.ComponentModel.DoWorkEventArgs"/> instance containing the event data.</param>
         private void DownloadLicenses(object sender, DoWorkEventArgs e)
         {
@@ -205,7 +205,7 @@ namespace SevenUpdate.Windows
         }
 
         /// <summary>Displays the next license agreement or returns the collection of updates.</summary>
-        /// <param name="sender">The sender.</param>
+        /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void PerformAction(object sender, RoutedEventArgs e)
         {
