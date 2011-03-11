@@ -331,11 +331,13 @@ namespace SevenUpdate.Sdk.Pages
             {
                 this.tbTitle.Foreground = Brushes.Black;
                 this.tbHelp.Foreground = Brushes.Black;
+                this.tbAbout.Foreground = Brushes.Black;
             }
             else
             {
                 this.tbTitle.Foreground = new SolidColorBrush(Color.FromRgb(0, 51, 153));
                 this.tbHelp.Foreground = new SolidColorBrush(Color.FromRgb(0, 102, 204));
+                this.tbAbout.Foreground = new SolidColorBrush(Color.FromRgb(0, 102, 204));
             }
         }
 
