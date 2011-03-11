@@ -27,7 +27,7 @@ namespace System.Windows
     using System.Windows.Interop;
     using System.Windows.Media;
 
-    /// <summary>WPF Glass WindowInherit from this window class to enable glass on a WPF window</summary>
+    /// <summary>Contains methods to allow use of Aero Glass</summary>
     public static class AeroGlass
     {
 

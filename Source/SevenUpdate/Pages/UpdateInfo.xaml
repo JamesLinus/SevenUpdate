@@ -145,25 +145,22 @@
                 </TextBlock.Style>
             </TextBlock>
         </StackPanel>
-        <TextBlock HorizontalAlignment="Left" Padding="2" Text="{LocText SevenUpdate:Resources:MoreInformation}" VerticalAlignment="Top" Grid.Column="1" Grid.Row="6" Foreground="#FF0066CC" MouseDown="NavigateToInfoUrl" Cursor="Hand" Margin="5,10,0,0" Focusable="True">
+        <TextBlock HorizontalAlignment="Left" Padding="2" Text="{LocText SevenUpdate:Resources:MoreInformation}" VerticalAlignment="Top" Grid.Column="1" Grid.Row="6" MouseDown="NavigateToInfoUrl" Margin="5,10,0,0" Focusable="True">
             <TextBlock.Style>
-                <Style>
+                <Style TargetType="TextBlock" BasedOn="{StaticResource textBlockLink}">
                     <Style.Triggers>
-                        <Trigger Property="TextBlock.IsMouseOver" Value="True">
-                            <Setter Property="TextBlock.TextDecorations" Value="Underline" />
-                        </Trigger>
                         <DataTrigger Binding="{Binding ElementName=lvUpdates, Path=SelectedIndex}" Value="-1">
-                            <Setter Property="TextBlock.Visibility" Value="Collapsed" />
+                            <Setter Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
                         <DataTrigger Binding="{Binding ElementName=lvUpdates, Path=SelectedItem.InfoUrl, Converter={StaticResource stringToBool}}" Value="True">
-                            <Setter Property="TextBlock.Visibility" Value="Collapsed" />
+                            <Setter Property="Visibility" Value="Collapsed" />
                         </DataTrigger>
                     </Style.Triggers>
                 </Style>
             </TextBlock.Style>
 
         </TextBlock>
-        <TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" Padding="2" Text="{LocText SevenUpdate:Resources:HelpSupport}" VerticalAlignment="Top" Grid.Column="1" Grid.Row="7" Foreground="#FF0066CC" MouseDown="NavigateToHelpUrl" Cursor="Hand" Margin="5,5,0,0" Focusable="True" Visibility="{Binding ElementName=lvUpdates, Path=SelectedIndex, Converter={StaticResource indexToVisibility}}" />
+        <TextBlock Style="{StaticResource textBlockLink}" HorizontalAlignment="Left" Padding="2" Text="{LocText SevenUpdate:Resources:HelpSupport}" VerticalAlignment="Top" Grid.Column="1" Grid.Row="7" MouseDown="NavigateToHelpUrl" Margin="5,5,0,0" Focusable="True" Visibility="{Binding ElementName=lvUpdates, Path=SelectedIndex, Converter={StaticResource indexToVisibility}}" />
         <Separator Grid.ColumnSpan="2" Name="line" Background="#FFDFDFDF" Margin="0" Grid.Row="9" VerticalAlignment="Top" />
         <Line Stroke="#FFDFDFDF" Grid.Column="0" Grid.RowSpan="7" HorizontalAlignment="Right" Grid.Row="2" Y2="1" Stretch="Fill" />
     </Grid>

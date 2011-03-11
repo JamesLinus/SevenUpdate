@@ -45,19 +45,6 @@
         </Style.Triggers>
     </Style>
 
-    <!--Underline TextBlock-->
-    <Style x:Key="underlineTextBlock" TargetType="TextBlock">
-        <Setter Property="Foreground" Value="#FF0066CC" />
-        <Style.Triggers>
-            <Trigger Property="IsMouseOver" Value="True">
-                <Setter Property="TextDecorations" Value="Underline" />
-            </Trigger>
-            <Trigger Property="IsEnabled" Value="False">
-                <Setter Property="Foreground" Value="{x:Static SystemColors.GrayTextBrush}" />
-            </Trigger>
-        </Style.Triggers>
-    </Style>
-
     <Style TargetType="Image">
         <Setter Property="RenderOptions.BitmapScalingMode" Value="NearestNeighbor" />
     </Style>
@@ -77,9 +64,8 @@
             </DataTrigger>
         </Style.Triggers>
     </Style>
-
     <Style TargetType="TextBlock" x:Key="glassText">
-       <Setter Property="Foreground" Value="Black" />
+        <Setter Property="Foreground" Value="Black" />
         <Style.Triggers>
             <Trigger Property="Foreground" Value="Black">
                 <Setter Property="Effect">
@@ -90,14 +76,43 @@
             </Trigger>
         </Style.Triggers>
     </Style>
-    <Style TargetType="TextBlock" x:Key="glassLink" BasedOn="{StaticResource glassText}">
+    <Style x:Key="glassLink" TargetType="TextBlock" BasedOn="{StaticResource glassText}">
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Focusable" Value="True" />
         <Setter Property="Foreground" Value="#FF0066CC" />
         <Style.Triggers>
             <Trigger Property="IsMouseOver" Value="True">
                 <Setter Property="TextDecorations" Value="Underline" />
+                <Setter Property="Foreground" Value="#FF3399FF" />
             </Trigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter Property="Foreground" Value="{x:Static SystemColors.GrayTextBrush}" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style TargetType="Hyperlink">
+        <Setter Property="Foreground" Value="#FF0066CC" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="TextDecorations" Value="Underline" />
+                <Setter Property="Foreground" Value="#FF3399FF" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="underlineTextBlock" TargetType="TextBlock">
+        <Setter Property="Cursor" Value="Hand" />
+        <Setter Property="Focusable" Value="True" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="TextDecorations" Value="Underline" />
+            </Trigger>
+        </Style.Triggers>
+    </Style>
+    <Style x:Key="textBlockLink" TargetType="TextBlock" BasedOn="{StaticResource underlineTextBlock}">
+        <Setter Property="Foreground" Value="#FF0066CC" />
+        <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+                <Setter Property="Foreground" Value="#FF3399FF" />
             </Trigger>
         </Style.Triggers>
     </Style>

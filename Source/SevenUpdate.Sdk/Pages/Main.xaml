@@ -23,8 +23,8 @@
 			<BackButton IsEnabled="False" />
 			<TextBlock Style="{StaticResource glassText}" FontSize="14" HorizontalAlignment="Left" Background="{x:Null}" VerticalAlignment="Center" Margin="15,0,0,2" Name="tbTitle" Text="{LocText SevenUpdate.Sdk:Resources:SevenUpdateSDK}"></TextBlock>
 		</StackPanel>
-		<TextBlock Style="{StaticResource glassLink}" Text="{LocText SevenUpdate.Sdk:Resources:HelpSupport}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,2,2" Padding="2" MouseDown="NavigateToSupport" Cursor="Hand" Focusable="True" Name="tbHelp" Grid.Column="1" />
-		<TextBlock Style="{StaticResource glassLink}" Cursor="Hand" HorizontalAlignment="Left" Padding="2" Text="{LocText SevenUpdate.Sdk:Resources:AboutSevenUpdateSDK}" VerticalAlignment="Bottom" Grid.Row="3" Margin="12,0,0,12" MouseDown="ShowAboutDialog" Focusable="True" Name="tbAbout" />
+		<TextBlock Style="{StaticResource glassLink}" Text="{LocText SevenUpdate.Sdk:Resources:HelpSupport}" HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,2,2" Padding="2" MouseDown="NavigateToSupport" Name="tbHelp" Grid.Column="1" />
+		<TextBlock Style="{StaticResource glassLink}" HorizontalAlignment="Left" Padding="2" Text="{LocText SevenUpdate.Sdk:Resources:AboutSevenUpdateSDK}" VerticalAlignment="Bottom" Grid.Row="3" Margin="12,0,0,12" MouseDown="ShowAboutDialog" Name="tbAbout" />
 		<TreeView BorderBrush="LightGray" Margin="5" MinWidth="250" Name="treeView" TabIndex="0" Grid.Row="2" Visibility="Hidden" SelectedItemChanged="ChangeUI" MouseRightButtonDown="SelectedItemOnRightClick" MaxWidth="400">
 			<TreeView.ContextMenu>
 				<ContextMenu>

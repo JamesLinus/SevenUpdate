@@ -27,11 +27,11 @@
             </Rectangle.Fill>
         </Rectangle>
         <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="12,4,0,0" Grid.Row="1">
-            <TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="{LocText SevenUpdate:Resources:CheckForUpdates}" Padding="2" Foreground="White" Cursor="Hand" MouseDown="CheckForUpdates" Focusable="True" />
-            <TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="{LocText SevenUpdate:Resources:ChangeSettings}" Padding="2" Foreground="White" Cursor="Hand" MouseDown="NavigateToOptions" Focusable="True" />
+            <TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="{LocText SevenUpdate:Resources:CheckForUpdates}" Padding="2" Foreground="White" MouseDown="CheckForUpdates" />
+            <TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="{LocText SevenUpdate:Resources:ChangeSettings}" Padding="2" Foreground="White" MouseDown="NavigateToOptions" />
 
-            <TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="{LocText SevenUpdate:Resources:ViewUpdateHistory}" Padding="2" Foreground="White" Cursor="Hand" MouseDown="NavigateToUpdateHistory" Focusable="True" />
-            <TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="{LocText SevenUpdate:Resources:RestoreHiddenUpdates}" Padding="2" Foreground="White" Cursor="Hand" MouseDown="NavigateToRestoreUpdates" Focusable="True" />
+            <TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="{LocText SevenUpdate:Resources:ViewUpdateHistory}" Padding="2" Foreground="White" MouseDown="NavigateToUpdateHistory" />
+            <TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5" Text="{LocText SevenUpdate:Resources:RestoreHiddenUpdates}" Padding="2" Foreground="White" MouseDown="NavigateToRestoreUpdates" />
         </StackPanel>
         <!-- Update Info-->
         <Grid MinWidth="550" Grid.Column="2" VerticalAlignment="Top" Grid.ColumnSpan="2" HorizontalAlignment="Left" Grid.Row="1" Margin="0,15">
@@ -152,8 +152,8 @@
             </Rectangle>
             <Line Grid.Column="2" StrokeThickness="1" Stretch="Fill" Stroke="LightGray" Grid.Row="1" Grid.RowSpan="2" Y1="25" HorizontalAlignment="Center" Margin="0,10,0,0" Name="line" VerticalAlignment="Top" />
             <StackPanel Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0">
-                <TextBlock Padding="2" Foreground="#FF0066CC" Cursor="Hand" MouseDown="SelectImportantUpdates" Name="tbViewImportantUpdates" Style="{StaticResource underlineTextBlock}" Grid.Column="2" Grid.Row="1" Text="{LocText SevenUpdate:Resources:ViewImportantUpdates}" HorizontalAlignment="Left" VerticalAlignment="Top" Focusable="True" Margin="0,4,0,0" />
-                <TextBlock Padding="2" Foreground="#FF0066CC" Cursor="Hand" MouseDown="SelectOptionalUpdates" Name="tbViewOptionalUpdates" Style="{StaticResource underlineTextBlock}" Grid.Column="2" Grid.Row="2" Text="{LocText SevenUpdate:Resources:ViewOptionalUpdates}" HorizontalAlignment="Left" VerticalAlignment="Top" Focusable="True" Margin="0,5,0,0" />
+                <TextBlock Padding="2" MouseDown="SelectImportantUpdates" Name="tbViewImportantUpdates" Style="{StaticResource textBlockLink}" Grid.Column="2" Grid.Row="1" Text="{LocText SevenUpdate:Resources:ViewImportantUpdates}" HorizontalAlignment="Left" VerticalAlignment="Top" Focusable="True" Margin="0,4,0,0" />
+                <TextBlock Padding="2" MouseDown="SelectOptionalUpdates" Name="tbViewOptionalUpdates" Style="{StaticResource textBlockLink}" Grid.Column="2" Grid.Row="2" Text="{LocText SevenUpdate:Resources:ViewOptionalUpdates}" HorizontalAlignment="Left" VerticalAlignment="Top" Focusable="True" Margin="0,5,0,0" />
             </StackPanel>
             <TextBlock TextWrapping="Wrap" Grid.Column="2" LineHeight="25" Grid.Row="1" Name="tbSelectedUpdates" HorizontalAlignment="Right" Padding="2" Margin="0,9,4,0" VerticalAlignment="Top" Text="{LocText SevenUpdate:Resources:NoUpdatesSelected}" />
             <UacButton MinHeight="23" MinWidth="75" Padding="5,1" Visibility="Collapsed" HorizontalAlignment="Right" VerticalAlignment="Bottom" Margin="0,0,12,12" Grid.Column="2" Grid.Row="2" IsDefault="True" Click="PerformAction" Name="btnAction" TabIndex="0" />
@@ -177,7 +177,7 @@
                 <Run Text="{LocText SevenUpdate:Resources:ErrorLog}" />
             </Hyperlink>
         </TextBlock>
-        <TextBlock Style="{StaticResource glassLink}" Text="{LocText SevenUpdate:Resources:AboutSevenUpdate}" HorizontalAlignment="Left" VerticalAlignment="Center" Cursor="Hand" Padding="2" MouseDown="ShowAboutDialog" Grid.Row="6" Focusable="True" Name="tbAbout" Grid.RowSpan="1" Margin="10,0,0,0" />
+        <TextBlock Style="{StaticResource glassLink}" Text="{LocText SevenUpdate:Resources:AboutSevenUpdate}" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="2" MouseDown="ShowAboutDialog" Grid.Row="6" Name="tbAbout" Grid.RowSpan="1" Margin="10,0,0,0" />
         <StackPanel Grid.ColumnSpan="3" Grid.RowSpan="1" HorizontalAlignment="Left" Orientation="Horizontal" Name="spBackButton">
             <BackButton Grid.RowSpan="3" TabIndex="13" IsEnabled="False" />
             <TextBlock Style="{StaticResource glassText}" FontSize="16" Margin="15,-2,0,0" Name="tbTitle" Padding="2" Text="{LocText SevenUpdate:Resources:SevenUpdate}" VerticalAlignment="Center" />
