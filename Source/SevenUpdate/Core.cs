@@ -113,8 +113,6 @@ namespace SevenUpdate
 
         #region Properties
 
-        public static TextEffectCollection GlassEffect { get; set; }
-
         /// <summary>Gets the update configuration settings</summary>
         public static Config Settings
         {

@@ -65,21 +65,20 @@ namespace SevenUpdate.Pages
             this.MouseLeftButtonDown += Core.EnableDragOnGlass;
             AeroGlass.CompositionChanged -= this.UpdateUI;
             AeroGlass.CompositionChanged += this.UpdateUI;
-            Core.GlassEffect = tbAbout.TextEffects;
 
             if (AeroGlass.IsGlassEnabled)
             {
                 this.tbAbout.Foreground = Brushes.Black;
-                Grid.SetRow(rectSide, 1);
-                Grid.SetRowSpan(rectSide, 5);
-                spBackButton.Visibility = Visibility.Visible;
+                Grid.SetRow(this.rectSide, 1);
+                Grid.SetRowSpan(this.rectSide, 5);
+                this.spBackButton.Visibility = Visibility.Visible;
             }
             else
             {
                 this.tbAbout.Foreground = Brushes.White;
-                Grid.SetRow(rectSide, 0);
-                Grid.SetRowSpan(rectSide, 7);
-                spBackButton.Visibility = Visibility.Collapsed;
+                Grid.SetRow(this.rectSide, 0);
+                Grid.SetRowSpan(this.rectSide, 7);
+                this.spBackButton.Visibility = Visibility.Collapsed;
             }
         }
 
@@ -948,16 +947,16 @@ namespace SevenUpdate.Pages
             if (AeroGlass.IsGlassEnabled)
             {
                 this.tbAbout.Foreground = Brushes.Black;
-                Grid.SetRow(rectSide, 1);
-                Grid.SetRowSpan(rectSide, 5);
-                spBackButton.Visibility = Visibility.Visible;
+                Grid.SetRow(this.rectSide, 1);
+                Grid.SetRowSpan(this.rectSide, 5);
+                this.spBackButton.Visibility = Visibility.Visible;
             }
             else
             {
                 this.tbAbout.Foreground = Brushes.White;
-                Grid.SetRow(rectSide, 0);
-                Grid.SetRowSpan(rectSide, 7);
-                spBackButton.Visibility = Visibility.Collapsed;
+                Grid.SetRow(this.rectSide, 0);
+                Grid.SetRowSpan(this.rectSide, 7);
+                this.spBackButton.Visibility = Visibility.Collapsed;
             }
         }
 
