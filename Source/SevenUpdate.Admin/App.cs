@@ -311,6 +311,7 @@ namespace SevenUpdate.Admin
                 {
                     ErrorOccurred(null, new ErrorOccurredEventArgs(Utilities.GetExceptionAsString(e), ErrorType.FatalError));
                 }
+                notifyIcon.Icon = null;
             }
 
             SystemEvents.SessionEnding -= PreventClose;
@@ -471,7 +472,7 @@ namespace SevenUpdate.Admin
                 else
                 {
                     Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.DownloadStarted);
-                    Task.Factory.StartNew(() => Download.DownloadUpdates(Applications, Path.Combine(AllUserStore, "downloads"), "SevenUpdate"));
+                    Task.Factory.StartNew(() => Download.DownloadUpdates(Applications, "SevenUpdate", Path.Combine(AllUserStore, "downloads")));
                     IsInstalling = true;
                 }
             }
@@ -515,8 +516,7 @@ namespace SevenUpdate.Admin
             catch (IOException)
             {
             }
-
-            Application.Current.Shutdown(0);
+            Environment.Exit(0);
         }
 
         /// <summary>Starts the WCF service</summary>
