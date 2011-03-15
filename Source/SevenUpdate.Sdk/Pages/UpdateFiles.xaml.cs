@@ -91,7 +91,7 @@ namespace SevenUpdate.Sdk.Pages
                 () =>
                     {
                         updateFile.FileSize = Utilities.GetFileSize(
-                            Utilities.ConvertPath(fileLocation ?? updateFile.Destination, Core.AppInfo.Directory, Core.AppInfo.Platform, Core.AppInfo.ValueName));
+                            Utilities.ExpandInstallLocation(fileLocation ?? updateFile.Destination, Core.AppInfo.Directory, Core.AppInfo.Platform, Core.AppInfo.ValueName));
                     });
         }
 
@@ -198,7 +198,7 @@ namespace SevenUpdate.Sdk.Pages
             Task.Factory.StartNew(
                 () =>
                     {
-                        updateFile.Hash = Utilities.GetHash(Utilities.ConvertPath(fileLocation ?? updateFile.Destination, Core.AppInfo.Directory, Core.AppInfo.Platform, Core.AppInfo.ValueName));
+                        updateFile.Hash = Utilities.GetHash(Utilities.ExpandInstallLocation(fileLocation ?? updateFile.Destination, Core.AppInfo.Directory, Core.AppInfo.Platform, Core.AppInfo.ValueName));
                     }).ContinueWith(_ => this.CheckHashGenerating(), context);
         }
 
@@ -384,7 +384,7 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             }
 
-            var fileLocation = Utilities.ConvertPath(selectedItem.Destination, Core.AppInfo.Directory, Core.AppInfo.Platform, Core.AppInfo.ValueName);
+            var fileLocation = Utilities.ExpandInstallLocation(selectedItem.Destination, Core.AppInfo.Directory, Core.AppInfo.Platform, Core.AppInfo.ValueName);
 
             var files = Core.OpenFileDialog(Path.GetDirectoryName(fileLocation), Path.GetFileName(fileLocation));
 
@@ -428,10 +428,10 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             }
 
-            textBox.HasError = !new AppDirectoryRule().Validate(textBox.Text, null).IsValid;
-            textBox.ToolTip = textBox.HasError ? Properties.Resources.FilePathInvalid : null;
+            textBox.HasError = !new UrlInputRule().Validate(textBox.Text, null).IsValid;
+            textBox.ToolTip = textBox.HasError ? Properties.Resources.UrlNotValid : null;
 
-            if (!textBox.HasError)
+            if (!textBox.HasError && this.listBox.SelectedItem != null)
             {
                 ((UpdateFile)this.listBox.SelectedItem).Source = textBox.Text;
             }
@@ -452,7 +452,7 @@ namespace SevenUpdate.Sdk.Pages
             textBox.HasError = !new AppDirectoryRule().Validate(textBox.Text, null).IsValid;
             textBox.ToolTip = textBox.HasError ? Properties.Resources.FilePathInvalid : null;
 
-            if (!textBox.HasError)
+            if (!textBox.HasError && this.listBox.SelectedItem != null)
             {
                 ((UpdateFile)this.listBox.SelectedItem).Destination = textBox.Text;
             }

@@ -180,7 +180,13 @@ namespace SharpBits.Base
             // forward event
             if (job.NotificationTarget != null)
             {
-                job.NotificationTarget.JobModification(copyJob, reserved);
+                try
+                {
+                    job.NotificationTarget.JobModification(copyJob, reserved);
+                }
+                catch (System.Runtime.InteropServices.COMException)
+                {
+                }
             }
         }
 

@@ -1,5 +1,5 @@
 // ***********************************************************************
-// <copyright file="AppDirectoryRule.cs"
+// <copyright file="UrlInputRule.cs"
 //            project="SevenUpdate.Sdk"
 //            assembly="SevenUpdate.Sdk"
 //            solution="SevenUpdate"
@@ -24,15 +24,28 @@
 namespace SevenUpdate.Sdk.ValidationRules
 {
     using System;
+    using System.Diagnostics.CodeAnalysis;
     using System.Globalization;
     using System.IO;
+    using System.Text.RegularExpressions;
     using System.Windows.Controls;
+    using System.Windows.Properties;
 
-    using SevenUpdate.Sdk.Properties;
+    using SevenUpdate;
+    using SevenUpdate.Sdk;
 
-    /// <summary>Validates a value and determines if the value is a application location</summary>
-    internal sealed class AppDirectoryRule : ValidationRule
+    /// <summary>Validates if the input is a url</summary>
+    [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "Validation Rule")]
+    public class UrlInputRule : ValidationRule
     {
+        #region Properties
+
+        /// <summary>Gets or sets a value indicating whether this instance is required.</summary>
+        /// <value><see langword = "true" /> if this instance is required; otherwise, <see langword = "false" />.</value>
+        public bool IsRequired { get; set; }
+
+        #endregion
+
         #region Public Methods
 
         /// <summary>When overridden in a derived class, performs validation checks on a value.</summary>
@@ -42,30 +55,31 @@ namespace SevenUpdate.Sdk.ValidationRules
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             var input = value as string;
+
             if (input == null)
             {
-                return new ValidationResult(false, Resources.FilePathInvalid);
+                return this.IsRequired ? new ValidationResult(false, Resources.UrilInvalid) : new ValidationResult(true, null);
             }
 
-            input = Core.AppInfo.Directory == null
-                        ? Utilities.ConvertPath(input, true, Core.AppInfo.Platform)
-                        : Utilities.ExpandInstallLocation(input, Core.AppInfo.Directory, Core.AppInfo.Platform, Core.AppInfo.ValueName);
-            if (File.Exists(input) || Directory.Exists(input))
+            if (String.IsNullOrWhiteSpace(input))
+            {
+                return this.IsRequired ? new ValidationResult(false, Resources.UrilInvalid) : new ValidationResult(true, null);
+            }
+
+            input = Utilities.ExpandDownloadUrl(input, Core.UpdateInfo.DownloadUrl, Core.AppInfo.Platform);
+
+            if ((File.Exists(input) || Directory.Exists(input)) && input.Length > 3)
             {
                 return new ValidationResult(true, null);
             }
 
-            if (Uri.IsWellFormedUriString(input, UriKind.Absolute))
+            if (Uri.IsWellFormedUriString(input, UriKind.Absolute) && input.Length > 3)
             {
                 return new ValidationResult(true, null);
             }
 
-            if (string.IsNullOrEmpty(input) || input.IndexOfAny(Path.GetInvalidPathChars()) >= 0)
-            {
-                return new ValidationResult(false, Resources.FilePathInvalid);
-            }
-
-            return new ValidationResult(false, Resources.FilePathInvalid);
+            var r = new Regex(@"^(([a-zA-Z]\:)|(\\))(\\{1}|((\\{1})[^\\]([^/:*?<>""|]*))+)$");
+            return r.IsMatch(input) ? new ValidationResult(true, null) : new ValidationResult(false, Resources.UrilInvalid);
         }
 
         #endregion

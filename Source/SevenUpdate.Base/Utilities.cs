@@ -133,40 +133,40 @@ namespace SevenUpdate
             return "0 Bytes";
         }
 
-        /// <summary>Expands the file location variables and expands the %INSTALLDIR% variable</summary>
-        /// <param name="path">a string that contains a file path</param>
-        /// <param name="directory">a string that contains a directory</param>
-        /// <returns>a string of the path expanded</returns>
-        public static string ConvertPath(string path, string directory)
-        {
-            return ConvertPath(path, directory, Platform.X86, null);
-        }
-
-        /// <summary>Expands the file location variables and expands the %INSTALLDIR% variable</summary>
+        /// <summary>Expands a string containing the %INSTALLDIR% variable and replaces it with the specified install location</summary>
         /// <param name="path">a string that contains a file path</param>
         /// <param name="directory">a string that contains a directory</param>
         /// <param name="platform">a value that indicates what cpu architecture the application supports</param>
         /// <returns>a string of the path expanded</returns>
-        public static string ConvertPath(string path, string directory, Platform platform)
+        public static string ExpandInstallLocation(string path, string directory, Platform platform)
         {
-            return ConvertPath(path, directory, platform, null);
+            return ExpandInstallLocation(path, directory, platform, null);
         }
 
-        /// <summary>Expands the file location variables and expands the %INSTALLDIR% variable</summary>
+        /// <summary>Expands a string containing the %INSTALLDIR% variable and replaces it with the specified install location</summary>
         /// <param name="path">a string that contains a file path</param>
-        /// <param name="directory">a string that contains a directory</param>
+        /// <param name="installLocation">The install location</param>
         /// <param name="platform">a value that indicates what cpu architecture the application supports</param>
         /// <param name="valueName">a string that contains a value name of the registry key that contains the directory location, this parameter is optional and can be <see langword="null"/></param>
         /// <returns>a string of the path expanded</returns>
-        public static string ConvertPath(string path, string directory, Platform platform, string valueName)
+        public static string ExpandInstallLocation(string path, string installLocation, Platform platform, string valueName)
         {
-            path = path.Replace(
-                "%INSTALLDIR%", !IsRegistryKey(directory) ? ConvertPath(directory, true, platform) : ConvertPath(GetRegistryValue(directory, valueName, platform), true, platform), true);
-            path = path.Replace("%DOWNLOADURL%", ConvertPath(directory, true, platform), true);
+            path = path.Replace("%INSTALLDIR%", !IsRegistryKey(installLocation) ? ConvertPath(installLocation, true, platform) : ConvertPath(GetRegistryValue(installLocation, valueName, platform), true, platform), true);
             return ConvertPath(path, true, platform);
         }
 
-        /// <summary>Expands the system variables in a string, not for use with InstallDir or DownloadUri variables</summary>
+        /// <summary>Expands a string containing the %DownloadUrl% variable and replaces it with the specified download url</summary>
+        /// <param name="path">a string that contains a file path</param>
+        /// <param name="downloadUrl">The main download url</param>
+        /// <param name="platform">a value that indicates what cpu architecture the application supports</param>
+        /// <returns>a string of the path expanded</returns>
+        public static string ExpandDownloadUrl(string path, string downloadUrl, Platform platform)
+        {
+            path = path.Replace("%DOWNLOADURL%", ConvertPath(downloadUrl, true, platform), true);
+            return ConvertPath(path, true, platform);
+        }
+
+        /// <summary>Expands system variables in a string, not for use with InstallDir or DownloadUri variables</summary>
         /// <param name="path">a string that contains a file path</param>
         /// <param name="expand"><see langword="true"/> to expand system variable, <see langword="false"/> to converts paths into system variables</param>
         /// <param name="platform">a value that indicates what cpu architecture the application supports</param>

@@ -504,6 +504,7 @@ namespace SevenUpdate.Admin
 
             if (notifyIcon != null)
             {
+                notifyIcon.Icon = null;
                 notifyIcon.Visible = false;
                 notifyIcon.Dispose();
                 notifyIcon = null;
@@ -532,6 +533,11 @@ namespace SevenUpdate.Admin
                 isClientConnected = true;
             }
             catch (EndpointNotFoundException)
+            {
+                client = null;
+                isClientConnected = false;
+            }
+            catch (FaultException)
             {
                 client = null;
                 isClientConnected = false;

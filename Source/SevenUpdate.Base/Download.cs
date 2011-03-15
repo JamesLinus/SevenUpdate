@@ -122,33 +122,41 @@ namespace SevenUpdate
             manager.EnumJobs(JobOwner.CurrentUser);
             manager.EnumJobs(JobOwner.AllUsers);
 
-            // Loops through the jobs, if a Seven Update job is found, try to resume, if not 
-            foreach (var job in manager.Jobs.Values.Where(job => job.DisplayName == jobName))
+            // Loops through the jobs, if a Seven Update job is found, try to resume, if not cancel it.
+            foreach (var job in manager.Jobs.Values.Where(job => job.DisplayName == jobName).ToList())
             {
-                job.EnumerateFiles();
+                if (job.State == JobState.Suspended)
+                {
+                    job.EnumerateFiles();
+                    job.Resume();
+                    return;
+                }
 
-                if (job.Files.Count < 1 || (job.State != JobState.Transferring && job.State != JobState.Suspended))
+                if (job.State == JobState.Transferred)
                 {
-                    job.Cancel();
+                    job.Complete();
+                    manager.Dispose();
+                    manager = null;
+                    IsDownloading = false;
+                    if (DownloadCompleted != null)
+                    {
+                        DownloadCompleted(null, new DownloadCompletedEventArgs(false));
+                    }
+
+                    return;
                 }
-                else
+
+                if (job.ErrorCount <= 0)
                 {
-                    if (job.ErrorCount < 1 && job.State == JobState.Suspended)
-                    {
-                        job.Resume();
-                    }
-                    else
-                    {
-                        job.Cancel();
-                    }
+                    return;
                 }
+
+                job.Cancel();
+                break;
             }
 
             var bitsJob = manager.CreateJob(jobName, JobType.Download);
-            if (isPriority)
-            {
-                bitsJob.Priority = JobPriority.Foreground;
-            }
+            bitsJob.Priority = isPriority ? JobPriority.Foreground : JobPriority.Normal;
 
             bitsJob.NotificationOptions = NotificationOptions.JobErrorOccurred | NotificationOptions.JobModified | NotificationOptions.JobTransferred;
             bitsJob.NoProgressTimeout = 60;
@@ -199,7 +207,7 @@ namespace SevenUpdate
                         continue;
                     }
 
-                    if (Utilities.GetHash(downloadDir + Path.GetFileName(application.Updates[y].Files[z].Destination)) == application.Updates[y].Files[z].Hash)
+                    if (Utilities.GetHash(Path.Combine(downloadDir, Path.GetFileName(application.Updates[y].Files[z].Destination))) == application.Updates[y].Files[z].Hash)
                     {
                         continue;
                     }

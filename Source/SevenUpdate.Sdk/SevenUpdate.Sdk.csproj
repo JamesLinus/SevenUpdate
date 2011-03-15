@@ -185,6 +185,7 @@
       <DependentUpon>Settings.settings</DependentUpon>
     </Compile>
     <Compile Include="Core.cs" />
+    <Compile Include="ValidationRules\UrlInputRule.cs" />
     <Compile Include="Win32Window.cs" />
     <Compile Include="Windows\About.xaml.cs">
       <DependentUpon>About.xaml</DependentUpon>

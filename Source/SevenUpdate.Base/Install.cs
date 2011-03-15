@@ -364,7 +364,7 @@ namespace SevenUpdate
             // Choose the path for the shortcut
             for (var x = 0; x < shortcuts.Count; x++)
             {
-                shortcuts[x].Location = Utilities.ConvertPath(shortcuts[x].Location, appInfo.Directory, appInfo.Platform, appInfo.ValueName);
+                shortcuts[x].Location = Utilities.ExpandInstallLocation(shortcuts[x].Location, appInfo.Directory, appInfo.Platform, appInfo.ValueName);
                 var linkName = Utilities.GetLocaleString(shortcuts[x].Name);
 
                 if (shortcuts[x].Action == ShortcutAction.Add || (shortcuts[x].Action == ShortcutAction.Update && File.Exists(Path.Combine(shortcuts[x].Location, linkName + ".lnk"))))

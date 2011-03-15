@@ -218,9 +218,9 @@ namespace SevenUpdate
                     // ReSharper disable ForCanBeConvertedToForeach
                     for (var z = 0; z < app.Updates[y].Files.Count; z++)
                     {
-                        app.Updates[y].Files[z].Destination = Utilities.ConvertPath(app.Updates[y].Files[z].Destination, app.AppInfo.Directory, app.AppInfo.Platform, app.AppInfo.ValueName);
+                        app.Updates[y].Files[z].Destination = Utilities.ExpandInstallLocation(app.Updates[y].Files[z].Destination, app.AppInfo.Directory, app.AppInfo.Platform, app.AppInfo.ValueName);
 
-                        app.Updates[y].Files[z].Source = Utilities.ConvertPath(app.Updates[y].Files[z].Source, app.Updates[y].DownloadUrl, app.AppInfo.Platform);
+                        app.Updates[y].Files[z].Source = Utilities.ExpandDownloadUrl(app.Updates[y].Files[z].Source, app.Updates[y].DownloadUrl, app.AppInfo.Platform);
 
                         if (app.Updates[y].Files[z].Action != FileAction.ExecuteThenDelete)
                         {
@@ -283,7 +283,7 @@ namespace SevenUpdate
             ulong size = 0;
             for (var z = 0; z < update.Files.Count; z++)
             {
-                update.Files[z].Destination = Utilities.ConvertPath(update.Files[z].Destination, directory, platform, valueName);
+                update.Files[z].Destination = Utilities.ExpandInstallLocation(update.Files[z].Destination, directory, platform, valueName);
                 var downloadFile = Path.Combine(downloadDirectory, update.Name[0].Value, Path.GetFileName(update.Files[z].Destination));
 
                 // Checks to see if the file needs updated, if it doesn't it removes it from the list.
