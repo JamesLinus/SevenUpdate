@@ -135,7 +135,13 @@ namespace SharpBits.Base
             // forward event
             if (job.NotificationTarget != null)
             {
-                job.NotificationTarget.JobError(copyJob, error);
+                try
+                {
+                    job.NotificationTarget.JobError(copyJob, error);
+                }
+                catch (System.Runtime.InteropServices.COMException)
+                {
+                }
             }
         }
 
@@ -230,7 +236,13 @@ namespace SharpBits.Base
             // forward event
             if (job.NotificationTarget != null)
             {
-                job.NotificationTarget.JobTransferred(copyJob);
+                try
+                {
+                    job.NotificationTarget.JobTransferred(copyJob);
+                }
+                catch (System.Runtime.InteropServices.COMException)
+                {
+                }
             }
         }
 

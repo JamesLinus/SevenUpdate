@@ -154,10 +154,12 @@ namespace SevenUpdate.Admin
                             }
                         }
 
+#if (!DEBUG)
                         if (client == null)
                         {
                             StartWcfHost();
                         }
+#endif
 
                         if (IsInstalling)
                         {
