@@ -39,7 +39,6 @@ namespace SevenUpdate.Sdk.Pages
     using SevenUpdate.Sdk.Windows;
 
     using Application = System.Windows.Application;
-    using UrlInputRule = SevenUpdate.Sdk.ValidationRules.UrlInputRule;
 
     /// <summary>Interaction logic for AppInfo.xaml</summary>
     public sealed partial class AppInfo

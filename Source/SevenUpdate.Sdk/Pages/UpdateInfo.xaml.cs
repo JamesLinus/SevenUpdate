@@ -33,8 +33,6 @@ namespace SevenUpdate.Sdk.Pages
 
     using SevenUpdate.Sdk.Windows;
 
-    using UrlInputRule = SevenUpdate.Sdk.ValidationRules.UrlInputRule;
-
     /// <summary>Interaction logic for UpdateInfo.xaml</summary>
     public sealed partial class UpdateInfo
     {

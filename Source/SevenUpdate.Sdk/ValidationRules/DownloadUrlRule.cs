@@ -1,5 +1,5 @@
 // ***********************************************************************
-// <copyright file="UrlInputRule.cs"
+// <copyright file="DownloadUrlRule.cs"
 //            project="SevenUpdate.Sdk"
 //            assembly="SevenUpdate.Sdk"
 //            solution="SevenUpdate"
@@ -36,7 +36,7 @@ namespace SevenUpdate.Sdk.ValidationRules
 
     /// <summary>Validates if the input is a url</summary>
     [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "Validation Rule")]
-    public class UrlInputRule : ValidationRule
+    public class DownloadUrlRule : ValidationRule
     {
         #region Properties
 

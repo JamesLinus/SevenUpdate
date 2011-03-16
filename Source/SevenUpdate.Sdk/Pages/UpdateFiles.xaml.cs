@@ -229,8 +229,8 @@ namespace SevenUpdate.Sdk.Pages
                 default:
                     this.tbxArgs.IsEnabled = true;
                     this.tbxDownloadUrl.IsEnabled = true;
-                    this.tbxDownloadUrl.HasError = !new AppDirectoryRule().Validate(this.tbxDownloadUrl.Text, null).IsValid;
-                    this.tbxDownloadUrl.ToolTip = this.tbxDownloadUrl.HasError ? Properties.Resources.FilePathInvalid : null;
+                    this.tbxDownloadUrl.HasError = !new DownloadUrlRule().Validate(this.tbxDownloadUrl.Text, null).IsValid;
+                    this.tbxDownloadUrl.ToolTip = this.tbxDownloadUrl.HasError ? Properties.Resources.UrlNotValid : null;
                     break;
             }
 
@@ -428,7 +428,7 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             }
 
-            textBox.HasError = !new UrlInputRule().Validate(textBox.Text, null).IsValid;
+            textBox.HasError = !new DownloadUrlRule().Validate(textBox.Text, null).IsValid;
             textBox.ToolTip = textBox.HasError ? Properties.Resources.UrlNotValid : null;
 
             if (!textBox.HasError && this.listBox.SelectedItem != null)
