@@ -474,7 +474,8 @@ namespace SevenUpdate.Admin
                 else
                 {
                     Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.DownloadStarted);
-                    Task.Factory.StartNew(() => Download.DownloadUpdates(Applications, "SevenUpdate", Path.Combine(AllUserStore, "downloads")));
+                    Download.DownloadUpdates(Applications, "SevenUpdate", Path.Combine(AllUserStore, "downloads"));
+                    //Task.Factory.StartNew(() => Download.DownloadUpdates(Applications, "SevenUpdate", Path.Combine(AllUserStore, "downloads")));
                     IsInstalling = true;
                 }
             }

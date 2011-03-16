@@ -43,7 +43,7 @@
             <Button HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Content="{LocText SevenUpdate.Sdk:Resources:Next}" Click="MoveOn" TabIndex="8" />
             <Button Content="{LocText SevenUpdate.Sdk:Resources:Cancel}" HorizontalContentAlignment="Center" IsDefault="False" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Margin="8,0,0,0" IsCancel="True" Click="NavigateToMainPage" TabIndex="9" />
         </StackPanel>
-        <ListBox BorderBrush="LightGray" Name="listBox" SelectedIndex="0" Margin="5" Grid.Row="1" MinWidth="200" MaxWidth="260" Grid.RowSpan="9" KeyDown="DeleteRegistryItem" TabIndex="0">
+        <ListBox BorderBrush="LightGray" Name="listBox" SelectedIndex="0" Margin="5" Grid.Row="1" MinWidth="200" MaxWidth="260" Grid.RowSpan="9" KeyDown="DeleteRegistryItem" TabIndex="0" ItemsSource="{Binding}" DisplayMemberPath="Key">
             <ListBox.ContextMenu>
                 <ContextMenu>
                     <MenuItem Click="NewRegistryItem" Header="{LocText SevenUpdate.Sdk:Resources:AddRegistryItem}" />
@@ -68,7 +68,7 @@
         <TextBlock Text="{LocText SevenUpdate.Sdk:Resources:KeyPath}" HorizontalAlignment="Left" ToolTip="{LocText SevenUpdate.Sdk:Resources:KeyPathToolTip}" Grid.Column="1" Grid.Row="2" Padding="2" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" Cursor="Help" />
         <InfoTextBox Note="HKLM\SOFTWARE\MyCompany\MyApp" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3" Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}" Margin="0,0,40,0" TabIndex="4" Name="tbxKeyPath" TextChanged="ValidateRegistryPath">
             <InfoTextBox.Text>
-                <Binding ElementName="listBox" Path="SelectedItem.Key" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
+                <Binding ElementName="listBox" Path="SelectedItem.Key" Mode="TwoWay" UpdateSourceTrigger="Explicit">
                     <!--<Binding.ValidationRules>
                         <Helpers:RegistryPathRule />
                     </Binding.ValidationRules>-->

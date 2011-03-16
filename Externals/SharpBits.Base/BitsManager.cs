@@ -253,7 +253,7 @@ namespace SharpBits.Base
             return this.EnumJobs(JobOwner.CurrentUser);
         }
 
-        /// <summary>Enumerates the collection of <see cref="BitsJob"/></summary>
+        /// <summary>Enumerates the collection of <see cref="BitsJob"/>, it also completes any job that has finished.</summary>
         /// <param name="jobOwner">The job owner.</param>
         /// <returns>The collection of <see cref="BitsJob"/></returns>
         public BitsJobsDictionary EnumJobs(JobOwner jobOwner)

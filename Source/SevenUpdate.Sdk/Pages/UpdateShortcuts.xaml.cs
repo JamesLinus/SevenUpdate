@@ -95,6 +95,22 @@ namespace SevenUpdate.Sdk.Pages
             Core.UpdateLocaleStrings(textBox.Text, Core.UpdateInfo.Shortcuts[Core.SelectedShortcut].Name);
         }
 
+        /// <summary>The clear error.</summary>
+        /// <param name="sender">The sender.</param>
+        /// <param name="e">The e.</param>
+        private void ClearError(object sender, DependencyPropertyChangedEventArgs e)
+        {
+            var textBox = (InfoTextBox)sender;
+
+            if (Convert.ToBoolean(e.NewValue))
+            {
+                return;
+            }
+
+            textBox.HasError = false;
+            textBox.ToolTip = false;
+        }
+
         /// <summary>Converts a path to system variables</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.Input.KeyboardFocusChangedEventArgs"/> instance containing the event data.</param>
@@ -369,7 +385,9 @@ namespace SevenUpdate.Sdk.Pages
         {
             var textBox = (InfoTextBox)sender;
 
-            textBox.HasError = !new DirectoryInputRule { IsRequired = true } .Validate(textBox.Text, null).IsValid;
+            textBox.HasError = !new DirectoryInputRule { IsRequired = true }
+                .Validate(Utilities.ExpandInstallLocation(textBox.Text, Core.AppInfo.Directory, Core.AppInfo.Platform, Core.AppInfo.ValueName), null).IsValid;
+            
             textBox.ToolTip = textBox.HasError ? Properties.Resources.FilePathInvalid : null;
         }
 
@@ -380,7 +398,16 @@ namespace SevenUpdate.Sdk.Pages
         {
             var textBox = (InfoTextBox)sender;
 
-            textBox.HasError = !new FileNameInputRule { IsRequired = true } .Validate(textBox.Text, null).IsValid;
+            if (textBox.Name == "tbxName")
+            {
+                textBox.HasError = String.IsNullOrWhiteSpace(textBox.Text) || textBox.Text.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0;
+            }
+            else
+            {
+                textBox.HasError = !new FileNameInputRule { IsRequired = true }
+                    .Validate(Utilities.ExpandInstallLocation(textBox.Text, Core.AppInfo.Directory, Core.AppInfo.Platform, Core.AppInfo.ValueName), null).IsValid;
+            }
+
             textBox.ToolTip = textBox.HasError ? Properties.Resources.FilePathInvalid : null;
         }
 

@@ -122,37 +122,48 @@ namespace SevenUpdate
             manager.EnumJobs(JobOwner.CurrentUser);
             manager.EnumJobs(JobOwner.AllUsers);
 
+            var jobCount = 0;
+
             // Loops through the jobs, if a Seven Update job is found, try to resume, if not cancel it.
             foreach (var job in manager.Jobs.Values.Where(job => job.DisplayName == jobName).ToList())
             {
+                jobCount++;
+                job.EnumerateFiles();
+                if (job.Files.Count < 1)
+                {
+                    job.Cancel();
+                    jobCount--;
+                }
+
                 if (job.State == JobState.Suspended)
                 {
-                    job.EnumerateFiles();
                     job.Resume();
-                    return;
                 }
 
                 if (job.State == JobState.Transferred)
                 {
                     job.Complete();
-                    manager.Dispose();
-                    manager = null;
                     IsDownloading = false;
                     if (DownloadCompleted != null)
                     {
                         DownloadCompleted(null, new DownloadCompletedEventArgs(false));
                     }
-
                     return;
                 }
 
-                if (job.ErrorCount <= 0)
+                if ((job.State != JobState.Error && job.State != JobState.TransientError) && job.ErrorCount <= 0)
                 {
-                    return;
+                    continue;
                 }
 
+                Utilities.ReportError(new Exception(job.Error.Description + " " + job.Error.ErrorCode), ErrorType.DownloadError);
                 job.Cancel();
-                break;
+                jobCount--;
+            }
+
+            if (jobCount > 0)
+            {
+                return;
             }
 
             var bitsJob = manager.CreateJob(jobName, JobType.Download);
@@ -173,8 +184,7 @@ namespace SevenUpdate
             }
             else
             {
-                manager.Dispose();
-                manager = null;
+                bitsJob.Cancel();
                 IsDownloading = false;
                 if (DownloadCompleted != null)
                 {
