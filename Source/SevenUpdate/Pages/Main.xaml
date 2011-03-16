@@ -178,7 +178,7 @@
             </Hyperlink>
         </TextBlock>
         <TextBlock Style="{StaticResource glassLink}" Text="{LocText SevenUpdate:Resources:AboutSevenUpdate}" HorizontalAlignment="Left" VerticalAlignment="Center" Padding="2" MouseDown="ShowAboutDialog" Grid.Row="6" Name="tbAbout" Grid.RowSpan="1" Margin="10,0,0,0" />
-        <StackPanel Grid.ColumnSpan="3" Grid.RowSpan="1" HorizontalAlignment="Left" Orientation="Horizontal" Name="spBackButton">
+        <StackPanel Grid.ColumnSpan="3" Grid.RowSpan="1" HorizontalAlignment="Left" Orientation="Horizontal" Name="spBackButton" VerticalAlignment="Top">
             <BackButton Grid.RowSpan="3" TabIndex="13" IsEnabled="False" />
             <TextBlock Style="{StaticResource glassText}" FontSize="16" Margin="15,-2,0,0" Name="tbTitle" Padding="2" Text="{LocText SevenUpdate:Resources:SevenUpdate}" VerticalAlignment="Center" />
         </StackPanel>

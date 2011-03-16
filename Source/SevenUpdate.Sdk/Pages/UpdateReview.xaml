@@ -16,7 +16,7 @@
 			<RowDefinition Height="312*" />
 			<RowDefinition Height="41" />
 		</Grid.RowDefinitions>
-		<StackPanel Orientation="Horizontal" Grid.ColumnSpan="2">
+		<StackPanel Orientation="Horizontal" Grid.ColumnSpan="2" VerticalAlignment="Top" HorizontalAlignment="Left">
 			<BackButton Grid.RowSpan="3">
 				<BackButton.CommandBindings>
 					<CommandBinding />

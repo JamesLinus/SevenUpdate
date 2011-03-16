@@ -13,7 +13,7 @@
 			<RowDefinition Height="41" />
 		</Grid.RowDefinitions>
 		<Rectangle Grid.Row="2" Fill="White" Grid.ColumnSpan="2" />
-		<StackPanel Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Margin="25,25,0,0" Grid.RowSpan="2">
+		<StackPanel Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="1" Margin="25,25,10,0" Grid.RowSpan="2">
 			<CommandLink Content="{LocText SevenUpdate.Sdk:Resources:CreateNewProject}" Note="{LocText SevenUpdate.Sdk:Resources:CreateProjectNote}" TabIndex="1" Click="NewProject" />
 			<CommandLink Content="{LocText SevenUpdate.Sdk:Resources:CreateNewUpdate}" Grid.Column="1" Note="{LocText SevenUpdate.Sdk:Resources:AddUpdate}" TabIndex="2" Click="NewUpdate" Visibility="Collapsed" Name="clNewUpdate" />
 			<CommandLink Grid.Column="1" TabIndex="2" Visibility="Collapsed" Name="clEdit" Click="EditSelectedItem" Content="{LocText SevenUpdate.Sdk:Resources:Edit}" />

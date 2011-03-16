@@ -229,8 +229,9 @@ namespace SevenUpdate.Sdk.Pages
                 default:
                     this.tbxArgs.IsEnabled = true;
                     this.tbxDownloadUrl.IsEnabled = true;
-                    this.tbxDownloadUrl.HasError = !new DownloadUrlRule().Validate(this.tbxDownloadUrl.Text, null).IsValid;
-                    this.tbxDownloadUrl.ToolTip = this.tbxDownloadUrl.HasError ? Properties.Resources.UrlNotValid : null;
+
+                    // this.tbxDownloadUrl.HasError = !new DownloadUrlRule().Validate(this.tbxDownloadUrl.Text, null).IsValid;
+                    // this.tbxDownloadUrl.ToolTip = this.tbxDownloadUrl.HasError ? Properties.Resources.UrlNotValid : null;
                     break;
             }
 

@@ -103,7 +103,7 @@
         </ListView>
         <Rectangle Grid.Column="1" Grid.Row="6" HorizontalAlignment="Center" VerticalAlignment="Center" Visibility="{Binding ElementName=lvUpdates, Path=SelectedIndex, Converter={StaticResource indexToVisibility}, ConverterParameter=True}" Margin="36,23,36,138" Grid.RowSpan="3" Width="128" Height="128" Fill="{StaticResource SevenUpdateIcon}" Stretch="Uniform"></Rectangle>
 
-        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3" HorizontalAlignment="Left">
+        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3" HorizontalAlignment="Left" VerticalAlignment="Top">
             <BackButton Grid.RowSpan="3" TabIndex="13" />
             <TextBlock Style="{StaticResource glassText}" FontSize="16" Padding="2" Text="{LocText SevenUpdate:Resources:SelectUpdatesToInstall}" Margin="15,-2,0,0" Name="tbTitle" VerticalAlignment="Center" />
         </StackPanel>

@@ -33,7 +33,7 @@
 
         <Rectangle Grid.Row="1" Grid.ColumnSpan="5" Fill="White" Grid.RowSpan="17" />
 
-        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3" HorizontalAlignment="Left">
+        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3" HorizontalAlignment="Left" VerticalAlignment="Top">
             <BackButton Grid.RowSpan="3" TabIndex="13" />
             <TextBlock Style="{StaticResource glassText}" Text="{LocText SevenUpdate.Sdk:Resources:SoftwareInformation}" HorizontalAlignment="Left" VerticalAlignment="Center" Grid.Column="1" FontSize="14" Margin="15,-2,0,0" Name="tbTitle" />
         </StackPanel>

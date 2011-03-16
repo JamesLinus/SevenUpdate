@@ -32,6 +32,7 @@ namespace SevenUpdate.Sdk.Pages
 
     using Microsoft.Win32;
 
+    using SevenUpdate.Sdk.ValidationRules;
     using SevenUpdate.Sdk.Windows;
 
     /// <summary>Interaction logic for UpdateRegistry.xaml</summary>
@@ -248,5 +249,26 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         #endregion
+
+        /// <summary>Validates the registry path</summary>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">The <see cref="TextChangedEventArgs"/> instance containing the event data.</param>
+        private void ValidateRegistryPath(object sender, TextChangedEventArgs e)
+        {
+            var textBox = sender as InfoTextBox;
+
+            if (textBox == null)
+            {
+                return;
+            }
+
+            textBox.HasError = !new RegistryPathRule().Validate(textBox.Text, null).IsValid;
+            textBox.ToolTip = textBox.HasError ? Properties.Resources.FilePathInvalid : null;
+
+            if (!textBox.HasError && this.listBox.SelectedItem != null)
+            {
+                ((RegistryItem)this.listBox.SelectedItem).Key = textBox.Text;
+            }
+        }
     }
 }

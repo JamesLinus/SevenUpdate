@@ -10,7 +10,7 @@
         <Rectangle Fill="#FFF0F0F0" Grid.Row="2" Name="rectangle" />
         <Separator Background="#FFDFDFDF" Margin="0" Grid.Row="1" VerticalAlignment="Top" />
 
-        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3" HorizontalAlignment="Left">
+        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3" HorizontalAlignment="Left" VerticalAlignment="Top">
             <BackButton Grid.RowSpan="3" TabIndex="13" />
             <TextBlock Style="{StaticResource glassText}" FontSize="16" Padding="2" Text="{LocText SevenUpdate:Resources:RestoreHiddenUpdates}" VerticalAlignment="Center" Margin="15,-2,0,0" Name="tbTitle" />
         </StackPanel>

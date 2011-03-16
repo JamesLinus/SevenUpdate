@@ -100,7 +100,7 @@
                 </Style>
             </Rectangle.Style>
         </Rectangle>
-        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3" HorizontalAlignment="Left">
+        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3" HorizontalAlignment="Left" VerticalAlignment="Top">
             <BackButton Grid.RowSpan="3" TabIndex="13" />
             <TextBlock Style="{StaticResource glassText}" Text="{LocText SevenUpdate:Resources:ChooseHowToInstall}" VerticalAlignment="Center" FontSize="16" Grid.Column="1" Padding="2" Grid.ColumnSpan="2" Name="tbTitle" Margin="15,-2,0,0" />
         </StackPanel>

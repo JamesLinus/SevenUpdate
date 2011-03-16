@@ -32,6 +32,7 @@ namespace SevenUpdate.Sdk.Pages
     using System.Windows.Dialogs;
     using System.Windows.Input;
     using System.Windows.Media;
+    using System.Windows.ValidationRules;
 
     using SevenUpdate.Sdk.Windows;
 
@@ -85,6 +86,12 @@ namespace SevenUpdate.Sdk.Pages
         private void ChangeName(object sender, RoutedEventArgs e)
         {
             var textBox = (InfoTextBox)sender;
+
+            if (Utilities.Locale == "en" && String.IsNullOrWhiteSpace(textBox.Text))
+            {
+                return;
+            }
+
             Core.UpdateLocaleStrings(textBox.Text, Core.UpdateInfo.Shortcuts[Core.SelectedShortcut].Name);
         }
 
@@ -355,23 +362,26 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        /// <summary>Validates the textbox content</summary>
+        /// <summary>Validates the input to make sure it's a valid directory</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The event data</param>
-        private void ValidateTextBox(object sender, TextChangedEventArgs e)
+        /// <param name="e">The <see cref="TextChangedEventArgs"/> instance containing the event data.</param>
+        private void ValidateDirectoryPath(object sender, TextChangedEventArgs e)
         {
             var textBox = (InfoTextBox)sender;
 
-            if (String.IsNullOrWhiteSpace(textBox.Text))
-            {
-                textBox.HasError = true;
-                textBox.ToolTip = Properties.Resources.InputRequired;
-            }
-            else
-            {
-                textBox.HasError = false;
-                textBox.ToolTip = null;
-            }
+            textBox.HasError = !new DirectoryInputRule { IsRequired = true } .Validate(textBox.Text, null).IsValid;
+            textBox.ToolTip = textBox.HasError ? Properties.Resources.FilePathInvalid : null;
+        }
+
+        /// <summary>Validates the input to make sure it's a valid file</summary>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">The <see cref="TextChangedEventArgs"/> instance containing the event data.</param>
+        private void ValidateFileName(object sender, TextChangedEventArgs e)
+        {
+            var textBox = (InfoTextBox)sender;
+
+            textBox.HasError = !new FileNameInputRule { IsRequired = true } .Validate(textBox.Text, null).IsValid;
+            textBox.ToolTip = textBox.HasError ? Properties.Resources.FilePathInvalid : null;
         }
 
         #endregion

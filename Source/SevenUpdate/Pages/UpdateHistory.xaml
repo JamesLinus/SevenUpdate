@@ -8,7 +8,7 @@
         </Grid.RowDefinitions>
         <Rectangle Fill="#FFf0f0f0" Grid.Row="2" Name="rectangle" />
 
-        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3" HorizontalAlignment="Left">
+        <StackPanel Orientation="Horizontal" Grid.ColumnSpan="3" HorizontalAlignment="Left" VerticalAlignment="Top">
             <BackButton Grid.RowSpan="3" TabIndex="13" />
             <TextBlock Style="{StaticResource glassText}" FontSize="16" Padding="2" Text="{LocText SevenUpdate:Resources:ReviewUpdateHistory}" Name="tbTitle" VerticalAlignment="Center" Margin="15,-2,0,0" />
         </StackPanel>
