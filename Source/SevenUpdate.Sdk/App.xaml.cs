@@ -176,27 +176,16 @@ namespace SevenUpdate.Sdk
 
             if (Core.Projects != null)
             {
-                for (var x = 0; x < 2; x++)
+                for (var x = 0; x < 5; x++)
                 {
-                    jumpTask = new JumpTask
-                        {
-                            ApplicationPath = Path.Combine(Utilities.AppDir, "SevenUpdate.Sdk.exe"), 
-                            IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"), 
-                            IconResourceIndex = 7, 
-                            Title = Sdk.Properties.Resources.CreateUpdate, 
-                            CustomCategory = Core.Projects[x].ApplicationName, 
-                            Arguments = @"-newupdate " + x, 
-                        };
-                    jumpList.JumpItems.Add(jumpTask);
                     for (var y = 0; y < Core.Projects[x].UpdateNames.Count; y++)
                     {
                         jumpTask = new JumpTask
                             {
-                                ApplicationPath = Path.Combine(Utilities.AppDir, "SevenUpdate.Sdk.exe"), 
                                 IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"), 
                                 IconResourceIndex = 8, 
-                                Title = String.Format(CultureInfo.CurrentCulture, Sdk.Properties.Resources.Edit, Core.Projects[x].UpdateNames[y]), 
-                                CustomCategory = Core.Projects[x].ApplicationName, 
+                                Title = Core.Projects[x].UpdateNames[y],
+                                CustomCategory = Sdk.Properties.Resources.Recent, 
                                 Arguments = @"-edit " + x + " " + y
                             };
 
@@ -213,11 +202,9 @@ namespace SevenUpdate.Sdk
             // Configure a new JumpTask
             jumpTask = new JumpTask
                 {
-                    ApplicationPath = Path.Combine(Utilities.AppDir, "SevenUpdate.Sdk.exe"), 
                     IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"), 
                     IconResourceIndex = 6, 
-                    Title = Sdk.Properties.Resources.CreateProject, 
-                    CustomCategory = Sdk.Properties.Resources.Tasks, 
+                    Title = Sdk.Properties.Resources.CreateProject,
                     Arguments = @"-newproject"
                 };
             jumpList.JumpItems.Add(jumpTask);
