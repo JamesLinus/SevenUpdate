@@ -357,6 +357,12 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
         private void UpdateFile(object sender, MouseButtonEventArgs e)
         {
+            var selectedItem = this.listBox.SelectedItem as UpdateFile;
+            if (selectedItem == null)
+            {
+                return;
+            }
+
             var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
                                        ? Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Platform)
                                        : Core.AppInfo.Directory;
@@ -371,7 +377,9 @@ namespace SevenUpdate.Sdk.Pages
 
             var installUrl = files[0].Replace(installDirectory, @"%INSTALLDIR%\", true);
             installUrl = installUrl.Replace(@"\\", @"\");
-            Core.UpdateInfo.Files[this.listBox.SelectedIndex].Destination = installUrl;
+            selectedItem.Destination = installUrl;
+            this.CalculateHash(ref selectedItem, files[0]);
+            GetFileSize(ref selectedItem, files[0]);
         }
 
         /// <summary>Updates the hash for the selected <see cref="UpdateFile"/></summary>
