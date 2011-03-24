@@ -172,41 +172,17 @@ namespace SevenUpdate.Sdk
         {
             // Create JumpTask
             var jumpList = new JumpList();
-            JumpTask jumpTask;
-
-            if (Core.Projects != null)
-            {
-                for (var x = 0; x < 5; x++)
-                {
-                    for (var y = 0; y < Core.Projects[x].UpdateNames.Count; y++)
-                    {
-                        jumpTask = new JumpTask
-                            {
-                                IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"), 
-                                IconResourceIndex = 8, 
-                                Title = Core.Projects[x].UpdateNames[y],
-                                CustomCategory = Sdk.Properties.Resources.Recent, 
-                                Arguments = @"-edit " + x + " " + y
-                            };
-
-                        jumpList.JumpItems.Add(jumpTask);
-                    }
-
-                    if (x + 1 == Core.Projects.Count)
-                    {
-                        break;
-                    }
-                }
-            }
+            jumpList.ShowRecentCategory = true;
 
             // Configure a new JumpTask
-            jumpTask = new JumpTask
+            var jumpTask = new JumpTask
                 {
                     IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"), 
                     IconResourceIndex = 6, 
                     Title = Sdk.Properties.Resources.CreateProject,
                     Arguments = @"-newproject"
                 };
+
             jumpList.JumpItems.Add(jumpTask);
             JumpList.SetJumpList(Current, jumpList);
         }

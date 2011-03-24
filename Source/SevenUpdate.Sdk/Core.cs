@@ -33,6 +33,7 @@ namespace SevenUpdate.Sdk
     using System.Windows.Input;
     using System.Windows.Interop;
     using System.Windows.Media;
+    using System.Windows.Shell;
 
     using SevenUpdate.Sdk.Pages;
     using SevenUpdate.Sdk.Properties;
@@ -235,6 +236,16 @@ namespace SevenUpdate.Sdk
                 ShowMessage(String.Format(Resources.FileLoadError, Path.Combine(App.UserStore, Projects[AppIndex].ApplicationName + ".sui")), TaskDialogStandardIcon.Error);
                 return;
             }
+
+           var jumpTask = new JumpTask
+            {
+                IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"),
+                IconResourceIndex = 8,
+                Title = Utilities.GetLocaleString(UpdateInfo.Name),
+                Arguments = @"-edit " + AppIndex + " " + UpdateIndex
+            };
+
+            JumpList.AddToRecentCategory(jumpTask);
 
             MainWindow.NavService.Navigate(UpdateInfoPage);
         }

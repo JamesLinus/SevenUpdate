@@ -901,7 +901,4 @@
   <data name="GPL" xml:space="preserve">
     <value>GNU GPL 3.0</value>
   </data>
-  <data name="Recent" xml:space="preserve">
-    <value>Recent</value>
-  </data>
 </root>
