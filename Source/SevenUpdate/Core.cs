@@ -33,7 +33,6 @@ namespace SevenUpdate
     using System.Windows.Dialogs;
     using System.Windows.Input;
     using System.Windows.Internal;
-    using System.Windows.Media;
 
     using SevenUpdate.Pages;
     using SevenUpdate.Properties;

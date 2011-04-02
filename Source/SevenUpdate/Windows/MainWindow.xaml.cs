@@ -60,8 +60,9 @@ namespace SevenUpdate.Windows
 
             App.TaskBar = this.taskBar;
             NavService = this.NavigationService;
-            App.ProcessArgs(App.Args);
+            
             Core.NavigateToMainPage();
+            App.ProcessArgs(App.Args);
         }
 
         #endregion

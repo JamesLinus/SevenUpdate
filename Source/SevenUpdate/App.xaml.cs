@@ -106,15 +106,15 @@ namespace SevenUpdate
                     break;
 
                 case "-history":
-                    SevenUpdate.Windows.MainWindow.NavService.Navigate(new Uri(@"Pages\UpdateHistory.xaml", UriKind.Relative));
+                    SevenUpdate.Windows.MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate;Component/Pages/UpdateHistory.xaml", UriKind.Relative));
                     break;
 
                 case "-hidden":
-                    SevenUpdate.Windows.MainWindow.NavService.Navigate(new Uri(@"Pages\RestoreUpdates.xaml", UriKind.Relative));
+                    SevenUpdate.Windows.MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate;Component/Pages/RestoreUpdates.xaml", UriKind.Relative));
                     break;
 
                 case "-settings":
-                    SevenUpdate.Windows.MainWindow.NavService.Navigate(new Uri(@"Pages\Options.xaml", UriKind.Relative));
+                    SevenUpdate.Windows.MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate;Component/Pages/Options.xaml", UriKind.Relative));
                     break;
             }
         }

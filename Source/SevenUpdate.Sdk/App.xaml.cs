@@ -95,7 +95,6 @@ namespace SevenUpdate.Sdk
         {
             UnregisterApplicationRecoveryAndRestart();
             base.OnExit(e, firstInstance);
-            
         }
 
         /// <summary>Raises the <see cref="InstanceAwareApplication.Startup"/> event.</summary>
