@@ -28,7 +28,6 @@ namespace SevenUpdate.Sdk
     using System.Collections.ObjectModel;
     using System.Globalization;
     using System.IO;
-    using System.Threading;
     using System.Windows;
     using System.Windows.ApplicationServices;
     using System.Windows.Shell;
@@ -157,6 +156,7 @@ namespace SevenUpdate.Sdk
             }
 
 #if !DEBUG
+
             // register for Application Restart
             ApplicationRestartRecoveryManager.RegisterForApplicationRestart(new RestartSettings(string.Empty, RestartRestrictions.NotOnReboot));
 
@@ -170,16 +170,12 @@ namespace SevenUpdate.Sdk
         private static void SetJumpList()
         {
             // Create JumpTask
-            var jumpList = new JumpList();
-            jumpList.ShowRecentCategory = true;
+            var jumpList = new JumpList { ShowRecentCategory = true };
 
             // Configure a new JumpTask
             var jumpTask = new JumpTask
                 {
-                    IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"), 
-                    IconResourceIndex = 6, 
-                    Title = Sdk.Properties.Resources.CreateProject,
-                    Arguments = @"-newproject"
+                   IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"), IconResourceIndex = 6, Title = Sdk.Properties.Resources.CreateProject, Arguments = @"-newproject" 
                 };
 
             jumpList.JumpItems.Add(jumpTask);
