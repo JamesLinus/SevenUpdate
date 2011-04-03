@@ -30,7 +30,6 @@ namespace System.Windows
     /// <summary>Contains methods to allow use of Aero Glass</summary>
     public static class AeroGlass
     {
-
         #region Events
 
         /// <summary>Occurs when DWM becomes enabled or disabled on the system</summary>
@@ -220,7 +219,6 @@ namespace System.Windows
                 if (CompositionChanged != null)
                 {
                     CompositionChanged.Invoke(null, new CompositionChangedEventArgs(IsGlassEnabled));
-
                 }
 
                 handled = true;

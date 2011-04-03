@@ -133,7 +133,10 @@ namespace SharpBits.Base
             this.errorOccurred(this, new ErrorNotificationEventArgs(job, new BitsError(job, error)));
 
             // forward event
-            if (job.NotificationTarget != null)
+            if (job.NotificationTarget == null)
+            {
+            }
+            else
             {
                 try
                 {
@@ -184,7 +187,10 @@ namespace SharpBits.Base
             this.onJobModified(this, new NotificationEventArgs(job));
 
             // forward event
-            if (job.NotificationTarget != null)
+            if (job.NotificationTarget == null)
+            {
+            }
+            else
             {
                 try
                 {
@@ -234,7 +240,10 @@ namespace SharpBits.Base
             this.onJobTransfered(this, new NotificationEventArgs(job));
 
             // forward event
-            if (job.NotificationTarget != null)
+            if (job.NotificationTarget == null)
+            {
+            }
+            else
             {
                 try
                 {

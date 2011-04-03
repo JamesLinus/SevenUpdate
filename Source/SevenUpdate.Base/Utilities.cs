@@ -135,21 +135,11 @@ namespace SevenUpdate
 
         /// <summary>Expands a string containing the %INSTALLDIR% variable and replaces it with the specified install location</summary>
         /// <param name="path">a string that contains a file path</param>
-        /// <param name="directory">a string that contains a directory</param>
-        /// <param name="platform">a value that indicates what cpu architecture the application supports</param>
-        /// <returns>a string of the path expanded</returns>
-        public static string ExpandInstallLocation(string path, string directory, Platform platform)
-        {
-            return ExpandInstallLocation(path, directory, platform, null);
-        }
-
-        /// <summary>Expands a string containing the %INSTALLDIR% variable and replaces it with the specified install location</summary>
-        /// <param name="path">a string that contains a file path</param>
         /// <param name="installLocation">The install location</param>
         /// <param name="platform">a value that indicates what cpu architecture the application supports</param>
         /// <param name="valueName">a string that contains a value name of the registry key that contains the directory location, this parameter is optional and can be <see langword="null"/></param>
         /// <returns>a string of the path expanded</returns>
-        public static string ExpandInstallLocation(string path, string installLocation, Platform platform, string valueName)
+        public static string ExpandInstallLocation(string path, string installLocation, Platform platform, string valueName = null)
         {
             path = path.Replace("%INSTALLDIR%", !IsRegistryKey(installLocation) ? ConvertPath(installLocation, true, platform) : ConvertPath(GetRegistryValue(installLocation, valueName, platform), true, platform), true);
             return ConvertPath(path, true, platform);
@@ -575,40 +565,13 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Starts a process hidden on the system</summary>
-        /// <param name="fileName">The file to execute</param>
-        /// <returns><see langword="true"/> if the process has executed successfully</returns>
-        public static bool StartProcess(string fileName)
-        {
-            return StartProcess(fileName, null, false, true);
-        }
-
-        /// <summary>Starts a process hidden on the system</summary>
-        /// <param name="fileName">The file to execute</param>
-        /// <param name="arguments">The arguments to execute with the file</param>
-        /// <returns><see langword="true"/> if the process has executed successfully</returns>
-        public static bool StartProcess(string fileName, string arguments)
-        {
-            return StartProcess(fileName, arguments, false, true);
-        }
-
-        /// <summary>Starts a process hidden on the system</summary>
-        /// <param name="fileName">The file to execute</param>
-        /// <param name="arguments">The arguments to execute with the file</param>
-        /// <param name="wait">if set to <see langword="true"/> the calling thread will be blocked until process has exited</param>
-        /// <returns><see langword="true"/> if the process has executed successfully</returns>
-        public static bool StartProcess(string fileName, string arguments, bool wait)
-        {
-            return StartProcess(fileName, arguments, wait, true);
-        }
-
         /// <summary>Starts a process on the system</summary>
         /// <param name="fileName">The file to execute</param>
         /// <param name="arguments">The arguments to execute with the file</param>
         /// <param name="wait">if set to <see langword="true"/> the calling thread will be blocked until process has exited</param>
         /// <param name="hidden">if set to <see langword="true"/> the process will execute with no UI</param>
         /// <returns><see langword="true"/> if the process has executed successfully</returns>
-        public static bool StartProcess(string fileName, string arguments, bool wait, bool hidden)
+        public static bool StartProcess(string fileName, string arguments = null, bool wait = false, bool hidden = true)
         {
             using (var process = new Process())
             {

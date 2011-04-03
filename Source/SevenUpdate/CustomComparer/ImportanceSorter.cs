@@ -20,10 +20,13 @@
 //    You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
+// <summary>
+//   Sorts the update importance class
+// </summary>
 // ***********************************************************************
 namespace SevenUpdate.CustomComparer
 {
-    /// <summary>Sorts Importance</summary>
+    /// <summary>Sorts the update importance class</summary>
     internal static class ImportanceSorter
     {
         #region Methods

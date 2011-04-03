@@ -23,6 +23,8 @@
 // ***********************************************************************
 namespace System.Windows.Controls
 {
+    using System.Linq;
+
     /// <summary>Contains methods that extend the <see cref="TreeView"/> control</summary>
     public static class TreeViewExtensions
     {
@@ -48,15 +50,8 @@ namespace System.Windows.Controls
         /// <returns>The TreeViewItem found</returns>
         private static TreeViewItem FindTreeViewItem(ItemContainerGenerator parentItemContainerGenerator, ItemCollection itemCollection, Predicate<TreeViewItem> predicate)
         {
-            foreach (var item in itemCollection)
+            foreach (var trvItem in from object item in itemCollection select item as TreeViewItem ?? (TreeViewItem)parentItemContainerGenerator.ContainerFromItem(item))
             {
-                var trvItem = item as TreeViewItem;
-
-                if (trvItem == null)
-                {
-                    trvItem = (TreeViewItem)parentItemContainerGenerator.ContainerFromItem(trvItem);
-                }
-
                 if (predicate(trvItem))
                 {
                     return trvItem;

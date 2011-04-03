@@ -20,6 +20,9 @@
 //    You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
+// <summary>
+//   Interaction logic for Options.xaml
+// </summary>
 // ***********************************************************************
 namespace SevenUpdate.Pages
 {
@@ -106,7 +109,7 @@ namespace SevenUpdate.Pages
         /// <param name="e">The event data</param>
         private void GoToPrivacyPolicy(object sender, RequestNavigateEventArgs e)
         {
-            Utilities.StartProcess("http://sevenupdate.com/privacy", null, false, true);
+            Utilities.StartProcess("http://sevenupdate.com/privacy");
             e.Handled = true;
         }
 

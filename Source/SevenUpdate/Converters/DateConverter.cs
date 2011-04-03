@@ -20,6 +20,9 @@
 //    You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
+// <summary>
+//   Converts the <see cref="DateTime"/> to a String
+// </summary>
 // ***********************************************************************
 namespace SevenUpdate.Converters
 {

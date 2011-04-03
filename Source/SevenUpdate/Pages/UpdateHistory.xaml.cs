@@ -20,6 +20,9 @@
 //    You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
+// <summary>
+//   Interaction logic for UpdateHistory.xaml
+// </summary>
 // ***********************************************************************
 
 namespace SevenUpdate.Pages
@@ -140,7 +143,6 @@ namespace SevenUpdate.Pages
             var details = new UpdateDetails();
             details.ShowDialog(this.updateHistory[this.lvUpdateHistory.SelectedIndex]);
         }
-
 
         /// <summary>Changes the UI depending on whether Aero Glass is enabled.</summary>
         /// <param name="sender">The object that called the event.</param>

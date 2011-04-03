@@ -23,7 +23,7 @@
 // ***********************************************************************
 namespace System.Windows
 {
-    /// <summary>Event argument for The <see cref="CompositionChanged"/> event</summary>
+    /// <summary>Event argument for The CompositionChanged event</summary>
     public class CompositionChangedEventArgs : EventArgs
     {
         #region Constructors and Destructors

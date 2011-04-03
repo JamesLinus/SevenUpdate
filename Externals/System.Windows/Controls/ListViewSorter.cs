@@ -181,26 +181,19 @@ namespace System.Windows.Controls
                 }
             }
 
-            try
+            var sorter = Activator.CreateInstance(Type.GetType(GetCustomSorter(listView))) as ListViewCustomComparer;
+            if (sorter != null)
             {
-                var sorter = Activator.CreateInstance(Type.GetType(GetCustomSorter(listView))) as ListViewCustomComparer;
-                if (sorter != null)
-                {
-                    sorter.AddSort(propertyName, currentSortDirection);
+                sorter.AddSort(propertyName, currentSortDirection);
 
-                    view.CustomSort = sorter;
+                view.CustomSort = sorter;
 
-                    listView.Items.Refresh();
-                }
-                else
-                {
-                    view.SortDescriptions.Clear();
-                    view.SortDescriptions.Add(new SortDescription(propertyName, currentSortDirection));
-                }
+                listView.Items.Refresh();
             }
-            catch (Exception)
+            else
             {
-                throw;
+                view.SortDescriptions.Clear();
+                view.SortDescriptions.Add(new SortDescription(propertyName, currentSortDirection));
             }
 
             var currentSortedColumnHeader = GetSortedColumnHeader(listView);

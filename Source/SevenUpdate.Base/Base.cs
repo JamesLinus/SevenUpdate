@@ -34,22 +34,22 @@ namespace SevenUpdate
         #region Constants and Fields
 
         /// <summary>The all users application data location</summary>
-        public static readonly string AllUserStore = Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData) + @"\Seven Software\Seven Update\";
+        public static readonly string AllUserStore = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Seven Software", "Seven Update");
 
         /// <summary>The application directory of Seven Update</summary>
-        public static readonly string AppDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location) + @"\";
+        public static readonly string AppDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 
         /// <summary>The location of the list of applications Seven Update can update</summary>
-        public static readonly string AppsFile = AllUserStore + @"Apps.sul";
+        public static readonly string AppsFile = Path.Combine(AllUserStore, "Apps.sul");
 
         /// <summary>The location of the application settings file</summary>
-        public static readonly string ConfigFile = AllUserStore + @"App.config";
+        public static readonly string ConfigFile = Path.Combine(AllUserStore, "App.config");
 
         /// <summary>The location of the hidden updates file</summary>
-        public static readonly string HiddenFile = AllUserStore + @"Hidden.suh";
+        public static readonly string HiddenFile = Path.Combine(AllUserStore, "Hidden.suh");
 
         /// <summary>The location of the update history file</summary>
-        public static readonly string HistoryFile = AllUserStore + @"History.suh";
+        public static readonly string HistoryFile = Path.Combine(AllUserStore, "History.suh");
 
         /// <summary>The location of the user application data location</summary>
         public static readonly string UserStore = Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData) + @"\Seven Software\Seven Update\";

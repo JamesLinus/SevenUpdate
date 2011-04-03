@@ -81,17 +81,8 @@ namespace SevenUpdate
         /// <param name="appUpdates">The application updates to download</param>
         /// <param name="downloadName">The name of the job</param>
         /// <param name="downloadLocation">The directory where the files are downloaded are stored</param>
-        public static void DownloadUpdates(Collection<Sui> appUpdates, string downloadName, string downloadLocation)
-        {
-            DownloadUpdates(appUpdates, downloadName, downloadLocation, false);
-        }
-
-        /// <summary>Downloads the updates using BITS</summary>
-        /// <param name="appUpdates">The application updates to download</param>
-        /// <param name="downloadName">The name of the job</param>
-        /// <param name="downloadLocation">The directory where the files are downloaded are stored</param>
         /// <param name="isPriority">if set to <see langword="true"/> the updates will download with priority</param>
-        public static void DownloadUpdates(Collection<Sui> appUpdates, string downloadName, string downloadLocation, bool isPriority)
+        public static void DownloadUpdates(Collection<Sui> appUpdates, string downloadName, string downloadLocation, bool isPriority = false)
         {
             downloadDirectory = downloadLocation;
             jobName = downloadName;
@@ -119,7 +110,7 @@ namespace SevenUpdate
             manager.OnJobModified += ReportDownloadProgress;
 
             // Load the BITS Jobs for the entire machine and current user
-            manager.EnumJobs(JobOwner.CurrentUser);
+            manager.EnumJobs();
             manager.EnumJobs(JobOwner.AllUsers);
 
             var jobCount = 0;
@@ -148,6 +139,7 @@ namespace SevenUpdate
                     {
                         DownloadCompleted(null, new DownloadCompletedEventArgs(false));
                     }
+
                     return;
                 }
 

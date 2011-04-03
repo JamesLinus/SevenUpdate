@@ -89,17 +89,10 @@ namespace WPFLocalizeExtension.Engine
             return itemRegistered;
         }
 
-        /// <summary>This method cleans up all independent (!<see cref="WeakReference"/>.IsAlive) objects.</summary>
-        public static void CleanUp()
-        {
-            // call the overloaded method
-            CleanUp(null);
-        }
-
         /// <summary>This method cleans up all independent (!<see cref="WeakReference"/>.IsAlive) objects or a single object.</summary>
         /// <param name="value">If defined, the associated object dependency will be removed instead of a full CleanUp</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public static void CleanUp(object value)
+        public static void CleanUp(object value = null)
         {
             // if a particular object is passed, remove it.
             if (value != null)

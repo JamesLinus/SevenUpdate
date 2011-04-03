@@ -20,7 +20,7 @@ namespace System.Windows.Dialogs
     using System.Windows.Internal;
 
     /// <summary>Encapsulates the native logic required to create,  configure, and show a <see cref="TaskDialog"/>, via the TaskDialogIndirect() Win32 function.</summary>
-    /// <remarks>A new instance of this class should  be created for each Message Box show, as the handles for <see cref="TaskDialogs"/> do not remain constant across calls to TaskDialogIndirect.</remarks>
+    /// <remarks>A new instance of this class should  be created for each Message Box show, as the handles for <see cref="TaskDialog"/> do not remain constant across calls to TaskDialogIndirect.</remarks>
     internal sealed class NativeTaskDialog : IDisposable
     {
         #region Constants and Fields

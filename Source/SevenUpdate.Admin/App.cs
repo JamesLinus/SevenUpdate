@@ -313,6 +313,7 @@ namespace SevenUpdate.Admin
                 {
                     ErrorOccurred(null, new ErrorOccurredEventArgs(Utilities.GetExceptionAsString(e), ErrorType.FatalError));
                 }
+
                 notifyIcon.Icon = null;
             }
 
@@ -475,7 +476,8 @@ namespace SevenUpdate.Admin
                 {
                     Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, NotifyType.DownloadStarted);
                     Download.DownloadUpdates(Applications, "SevenUpdate", Path.Combine(AllUserStore, "downloads"));
-                    //Task.Factory.StartNew(() => Download.DownloadUpdates(Applications, "SevenUpdate", Path.Combine(AllUserStore, "downloads")));
+
+                    // Task.Factory.StartNew(() => Download.DownloadUpdates(Applications, "SevenUpdate", Path.Combine(AllUserStore, "downloads")));
                     IsInstalling = true;
                 }
             }
@@ -520,6 +522,7 @@ namespace SevenUpdate.Admin
             catch (IOException)
             {
             }
+
             Environment.Exit(0);
         }
 

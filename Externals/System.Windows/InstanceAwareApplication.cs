@@ -303,26 +303,19 @@ namespace System.Windows
         /// <param name="uri">The <see cref="Uri"/> used by the service that allows for inter-process communication.</param>
         private void InitializeFirstInstance(Uri uri)
         {
-            try
-            {
-                // Acquire the mutex used to synchronize service initialization...
-                this.serviceInitializationMutex.WaitOne();
+            // Acquire the mutex used to synchronize service initialization...
+            this.serviceInitializationMutex.WaitOne();
 
-                // Create and start the service...
-                this.serviceHost = new ServiceHost(this, uri);
-                this.serviceHost.AddServiceEndpoint(typeof(IPriorApplicationInstance), new NetNamedPipeBinding(), uri);
-                this.serviceHost.Open();
+            // Create and start the service...
+            this.serviceHost = new ServiceHost(this, uri);
+            this.serviceHost.AddServiceEndpoint(typeof(IPriorApplicationInstance), new NetNamedPipeBinding(), uri);
+            this.serviceHost.Open();
 
-                // Release the mutex used to synchronize service initialization...
-                this.serviceInitializationMutex.ReleaseMutex();
+            // Release the mutex used to synchronize service initialization...
+            this.serviceInitializationMutex.ReleaseMutex();
 
-                // Signal that the service is ready, so that subsequent instances can go on...
-                this.serviceReadySemaphore.Set();
-            }
-            catch (Exception)
-            {
-                throw;
-            }
+            // Signal that the service is ready, so that subsequent instances can go on...
+            this.serviceReadySemaphore.Set();
         }
 
         /// <summary>Initializes the application instance.</summary>
@@ -429,7 +422,7 @@ namespace System.Windows
         /// <param name="args">The parameters used to run the next instance of the application.</param>
         private void OnStartupNextApplicationInstance(string[] args)
         {
-            var e = new StartupNextInstanceEventArgs(args, true);
+            var e = new StartupNextInstanceEventArgs(args);
             this.OnStartupNextInstance(e);
 
             if (!e.BringToForeground || (this.MainWindow == null))

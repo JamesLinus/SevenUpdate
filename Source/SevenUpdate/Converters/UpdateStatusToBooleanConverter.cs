@@ -20,6 +20,9 @@
 //    You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
+// <summary>
+//   Converts the update status to a boolean
+// </summary>
 // ***********************************************************************
 namespace SevenUpdate.Converters
 {
@@ -27,7 +30,7 @@ namespace SevenUpdate.Converters
     using System.Globalization;
     using System.Windows.Data;
 
-    /// <summary>Converts an Enum to a Boolean value</summary>
+    /// <summary>Converts the update status to a Boolean value</summary>
     [ValueConversion(typeof(UpdateStatus), typeof(bool))]
     internal sealed class UpdateStatusToBooleanConverter : IValueConverter
     {

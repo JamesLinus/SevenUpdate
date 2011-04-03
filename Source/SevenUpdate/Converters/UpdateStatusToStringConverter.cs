@@ -20,6 +20,9 @@
 //    You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
+// <summary>
+//   Converts the update status to a localized string
+// </summary>
 // ***********************************************************************
 namespace SevenUpdate.Converters
 {
@@ -30,7 +33,7 @@ namespace SevenUpdate.Converters
 
     using SevenUpdate.Properties;
 
-    /// <summary>Converts Importance to a localized string</summary>
+    /// <summary>Converts the update status to a localized string</summary>
     [ValueConversion(typeof(UpdateStatus), typeof(string))]
     internal sealed class UpdateStatusToStringConverter : IValueConverter
     {

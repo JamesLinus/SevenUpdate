@@ -95,9 +95,9 @@ namespace SevenUpdate.Sdk.Pages
             Core.UpdateLocaleStrings(textBox.Text, Core.UpdateInfo.Shortcuts[Core.SelectedShortcut].Name);
         }
 
-        /// <summary>The clear error.</summary>
-        /// <param name="sender">The sender.</param>
-        /// <param name="e">The e.</param>
+        /// <summary>Clears the UI of errors</summary>
+         /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">The <see cref="DependencyPropertyChangedEventArgs"/> instance containing the event data.</param>
         private void ClearError(object sender, DependencyPropertyChangedEventArgs e)
         {
             var textBox = (InfoTextBox)sender;

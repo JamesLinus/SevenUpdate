@@ -1,6 +1,6 @@
 ﻿// ***********************************************************************
 // <copyright file="AssemblyInfo.cs"
-//            project="SevenUpdate"
+//            project="SevenUpdate
 //            assembly="SevenUpdate"
 //            solution="SevenUpdate"
 //            company="Seven Software">
