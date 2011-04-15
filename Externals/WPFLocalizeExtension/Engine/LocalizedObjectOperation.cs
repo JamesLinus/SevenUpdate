@@ -9,6 +9,7 @@
 // <author username="SeriousM">Bernhard Millauer</author>
 // <license href="http://wpflocalizeextension.codeplex.com/license">Microsoft Public License</license>
 // ***********************************************************************
+
 namespace WPFLocalizeExtension.Engine
 {
     using System;
@@ -27,7 +28,10 @@ namespace WPFLocalizeExtension.Engine
         {
             try
             {
-                return (string)Localize.Instance.GetLocalizedObject<object>(Localize.GetAssemblyName(Assembly.GetExecutingAssembly()), "ResError", "ERR_" + errorNo, Localize.Instance.Culture);
+                return
+                    (string)
+                    Localize.Instance.GetLocalizedObject<object>(
+                        Localize.GetAssemblyName(Assembly.GetExecutingAssembly()), "ResError", "ERR_" + errorNo, Localize.Instance.Culture);
             }
             catch (Exception)
             {
@@ -62,7 +66,9 @@ namespace WPFLocalizeExtension.Engine
 
             try
             {
-                return (string)Localize.Instance.GetLocalizedObject<object>(Localize.GetAssemblyName(Assembly.GetExecutingAssembly()), "ResGui", key, language);
+                return
+                    (string)
+                    Localize.Instance.GetLocalizedObject<object>(Localize.GetAssemblyName(Assembly.GetExecutingAssembly()), "ResGui", key, language);
             }
             catch (Exception)
             {
@@ -88,7 +94,10 @@ namespace WPFLocalizeExtension.Engine
 
             try
             {
-                return (string)Localize.Instance.GetLocalizedObject<object>(Localize.GetAssemblyName(Assembly.GetExecutingAssembly()), "ResHelp", key, Localize.Instance.Culture);
+                return
+                    (string)
+                    Localize.Instance.GetLocalizedObject<object>(
+                        Localize.GetAssemblyName(Assembly.GetExecutingAssembly()), "ResHelp", key, Localize.Instance.Culture);
             }
             catch (Exception)
             {
@@ -114,7 +123,10 @@ namespace WPFLocalizeExtension.Engine
 
             try
             {
-                return (string)Localize.Instance.GetLocalizedObject<object>(Localize.GetAssemblyName(Assembly.GetExecutingAssembly()), "ResMaintenance", key, Localize.Instance.Culture);
+                return
+                    (string)
+                    Localize.Instance.GetLocalizedObject<object>(
+                        Localize.GetAssemblyName(Assembly.GetExecutingAssembly()), "ResMaintenance", key, Localize.Instance.Culture);
             }
             catch (Exception)
             {
@@ -140,7 +152,10 @@ namespace WPFLocalizeExtension.Engine
 
             try
             {
-                return (string)Localize.Instance.GetLocalizedObject<object>(Localize.GetAssemblyName(Assembly.GetExecutingAssembly()), "ResUpdateAgent", key, Localize.Instance.Culture);
+                return
+                    (string)
+                    Localize.Instance.GetLocalizedObject<object>(
+                        Localize.GetAssemblyName(Assembly.GetExecutingAssembly()), "ResUpdateAgent", key, Localize.Instance.Culture);
             }
             catch (Exception)
             {

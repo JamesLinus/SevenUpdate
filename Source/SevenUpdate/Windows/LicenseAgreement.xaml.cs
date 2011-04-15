@@ -24,6 +24,7 @@
 //   Interaction logic for LicenseAgreement.xaml
 // </summary>
 // ***********************************************************************
+
 namespace SevenUpdate.Windows
 {
     using System;
@@ -53,7 +54,7 @@ namespace SevenUpdate.Windows
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "LicenseAgreement" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="LicenseAgreement" /> class.</summary>
         public LicenseAgreement()
         {
             this.InitializeComponent();
@@ -73,7 +74,7 @@ namespace SevenUpdate.Windows
 
         #region Methods
 
-        /// <summary>Loads the <see cref="licenseInformation"/> and shows the form</summary>
+        /// <summary>Loads the <see cref="licenseInformation" /> and shows the form</summary>
         /// <returns>Returns the dialog result</returns>
         internal bool? LoadLicenses()
         {
@@ -94,7 +95,7 @@ namespace SevenUpdate.Windows
 
         /// <summary>Closes the window, declining all software licenses</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void Cancel(object sender, RoutedEventArgs e)
         {
             this.DialogResult = false;
@@ -103,7 +104,7 @@ namespace SevenUpdate.Windows
 
         /// <summary>Updates the UI with the licenses and displays the first license</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.ComponentModel.RunWorkerCompletedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.ComponentModel.RunWorkerCompletedEventArgs" /> instance containing the event data.</param>
         private void DisplayLicense(object sender, RunWorkerCompletedEventArgs e)
         {
             this.rtbSLA.Cursor = Cursors.IBeam;
@@ -130,9 +131,9 @@ namespace SevenUpdate.Windows
             this.Cursor = Cursors.Arrow;
         }
 
-        /// <summary>Downloads the <see cref="licenseInformation"/></summary>
+        /// <summary>Downloads the <see cref="licenseInformation" /></summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void DownloadLicenseInformation(object sender, RoutedEventArgs e)
         {
             var worker = new BackgroundWorker();
@@ -150,7 +151,7 @@ namespace SevenUpdate.Windows
 
         /// <summary>Downloads the license agreements of the updates</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.ComponentModel.DoWorkEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.ComponentModel.DoWorkEventArgs" /> instance containing the event data.</param>
         private void DownloadLicenses(object sender, DoWorkEventArgs e)
         {
             this.licenseText = new string[this.licenseInformation.Count];
@@ -199,7 +200,10 @@ namespace SevenUpdate.Windows
 
                     var sla = new Eula
                         {
-                           LicenseUrl = Core.Applications[x].Updates[y].LicenseUrl, Title = Utilities.GetLocaleString(Core.Applications[x].Updates[y].Name), AppIndex = x, UpdateIndex = y 
+                            LicenseUrl = Core.Applications[x].Updates[y].LicenseUrl,
+                            Title = Utilities.GetLocaleString(Core.Applications[x].Updates[y].Name),
+                            AppIndex = x,
+                            UpdateIndex = y
                         };
 
                     this.licenseInformation.Add(sla);
@@ -209,7 +213,7 @@ namespace SevenUpdate.Windows
 
         /// <summary>Displays the next license agreement or returns the collection of updates.</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void PerformAction(object sender, RoutedEventArgs e)
         {
             if (this.rbtnDecline.IsChecked == true)
@@ -225,7 +229,8 @@ namespace SevenUpdate.Windows
 
             if (this.btnAction.ButtonText == Properties.Resources.Next)
             {
-                this.tbHeading.Text = string.Format(CultureInfo.CurrentCulture, Properties.Resources.AcceptLicenseTerms, this.licenseInformation[this.index].Title);
+                this.tbHeading.Text = string.Format(
+                    CultureInfo.CurrentCulture, Properties.Resources.AcceptLicenseTerms, this.licenseInformation[this.index].Title);
                 var flowDoc = new FlowDocument();
                 var para = new Paragraph();
                 var r = new Run(this.licenseText[this.index]);
@@ -256,7 +261,7 @@ namespace SevenUpdate.Windows
 
         #endregion
 
-        /// <summary>Data containing the <see cref="Update"/> license agreement</summary>
+        /// <summary>Data containing the <see cref="Update" /> license agreement</summary>
         private struct Eula
         {
             #region Properties
@@ -264,7 +269,7 @@ namespace SevenUpdate.Windows
             /// <summary>Gets or sets the index of the application of the update</summary>
             internal int AppIndex { get; set; }
 
-            /// <summary>Gets or sets the <see cref = "Uri" /> for the license agreement</summary>
+            /// <summary>Gets or sets the <see cref="Uri" /> for the license agreement</summary>
             internal string LicenseUrl { get; set; }
 
             /// <summary>Gets or sets the update title</summary>

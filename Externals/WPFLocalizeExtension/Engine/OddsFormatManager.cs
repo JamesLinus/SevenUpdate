@@ -9,6 +9,7 @@
 // <author username="SeriousM">Bernhard Millauer</author>
 // <license href="http://wpflocalizeextension.codeplex.com/license">Microsoft Public License</license>
 // ***********************************************************************
+
 namespace WPFLocalizeExtension.Engine
 {
     using System;
@@ -22,10 +23,13 @@ namespace WPFLocalizeExtension.Engine
     {
         #region Constants and Fields
 
-        /// <summary><see cref = "DependencyProperty" /> DesignOddsFormat to set the <see cref = "OddsFormatType" />.Only supported at DesignTime.</summary>
+        /// <summary><see cref="DependencyProperty" /> DesignOddsFormat to set the <see cref="OddsFormatType" />.Only supported at DesignTime.</summary>
         [DesignOnly(true)]
         public static readonly DependencyProperty DesignOddsFormatProperty = DependencyProperty.RegisterAttached(
-            "DesignOddsFormat", typeof(OddsFormatType), typeof(OddsFormatManager), new PropertyMetadata(DefaultOddsFormatType, SetOddsFormatFromDependencyProperty));
+            "DesignOddsFormat",
+            typeof(OddsFormatType),
+            typeof(OddsFormatManager),
+            new PropertyMetadata(DefaultOddsFormatType, SetOddsFormatFromDependencyProperty));
 
         /// <summary>Holds a SyncRoot to be thread safe</summary>
         private static readonly object SyncRoot = new object();
@@ -33,14 +37,14 @@ namespace WPFLocalizeExtension.Engine
         /// <summary>Holds the instance of singleton</summary>
         private static OddsFormatManager instance;
 
-        /// <summary>Holds the current chosen <see cref = "OddsFormatType" />.</summary>
+        /// <summary>Holds the current chosen <see cref="OddsFormatType" />.</summary>
         private OddsFormatType oddsFormatType = DefaultOddsFormatType;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>Prevents a default instance of the <see cref = "OddsFormatManager" /> class from being created. Static Constructor</summary>
+        /// <summary>Prevents a default instance of the <see cref="OddsFormatManager" /> class from being created. Static Constructor</summary>
         private OddsFormatManager()
         {
         }
@@ -49,14 +53,14 @@ namespace WPFLocalizeExtension.Engine
 
         #region Events
 
-        /// <summary>Get raised if the <see cref = "OddsFormatManager" />.<see cref = "OddsFormatType" /> is changed.</summary>
+        /// <summary>Get raised if the <see cref="OddsFormatManager" />.<see cref="OddsFormatType" /> is changed.</summary>
         internal event Action OnOddsFormatChanged;
 
         #endregion
 
         #region Properties
 
-        /// <summary>Gets the default <see cref = "OddsFormatType" /> to initialize the <see cref = "OddsFormatManager" />.<see cref = "OddsFormatType" />.</summary>
+        /// <summary>Gets the default <see cref="OddsFormatType" /> to initialize the <see cref="OddsFormatManager" />.<see cref="OddsFormatType" />.</summary>
         public static OddsFormatType DefaultOddsFormatType
         {
             get
@@ -65,7 +69,7 @@ namespace WPFLocalizeExtension.Engine
             }
         }
 
-        /// <summary>Gets the <see cref = "OddsFormatManager" /> singleton.If the underlying instance is <see langword = "null" />, a instance will be created.</summary>
+        /// <summary>Gets the <see cref="OddsFormatManager" /> singleton.If the underlying instance is <see langword="null" />, a instance will be created.</summary>
         public static OddsFormatManager Instance
         {
             get
@@ -94,7 +98,7 @@ namespace WPFLocalizeExtension.Engine
         }
 
         /// <summary>Gets a value indicating whether the status of the design mode</summary>
-        /// <returns><see langword = "true" /> if in design mode, else <see langword = "false" /></returns>
+        /// <returns><see langword="true" /> if in design mode, else <see langword="false" /></returns>
         public bool IsInDesignMode
         {
             get
@@ -103,12 +107,12 @@ namespace WPFLocalizeExtension.Engine
             }
         }
 
-        /// <summary>Gets or sets the OddsFormatType for localization.On set, <see cref = "OnOddsFormatChanged" /> is raised.</summary>
-        /// <exception cref = "System.InvalidOperationException">
-        ///   You have to set <see cref = "OddsFormatManager" />.<see cref = "OddsFormatType" /> first or 
+        /// <summary>Gets or sets the OddsFormatType for localization.On set, <see cref="OnOddsFormatChanged" /> is raised.</summary>
+        /// <exception cref="System.InvalidOperationException">
+        ///   You have to set <see cref="OddsFormatManager" />.<see cref="OddsFormatType" /> first or 
         ///   wait until MainWindow is created.
         ///   Otherwise you will get an Exception.</exception>
-        /// <exception cref = "System.ArgumentNullException">thrown if OddsFormatType is not defined</exception>
+        /// <exception cref="System.ArgumentNullException">thrown if OddsFormatType is not defined</exception>
         public OddsFormatType OddsFormatType
         {
             get
@@ -139,7 +143,7 @@ namespace WPFLocalizeExtension.Engine
 
         #region Public Methods
 
-        /// <summary>Attach an WeakEventListener to the <see cref="OddsFormatManager"/></summary>
+        /// <summary>Attach an WeakEventListener to the <see cref="OddsFormatManager" /></summary>
         /// <param name="listener">The listener to attach</param>
         public static void AddEventListener(IWeakEventListener listener)
         {
@@ -147,7 +151,7 @@ namespace WPFLocalizeExtension.Engine
             WeakOddsFormatChangedEventManager.AddListener(listener);
         }
 
-        /// <summary>Getter of <see cref="DependencyProperty"/> DesignOddsFormat.Only supported at DesignTime.If its in Runtime, the current <see cref="OddsFormatType"/> will be returned.</summary>
+        /// <summary>Getter of <see cref="DependencyProperty" /> DesignOddsFormat.Only supported at DesignTime.If its in Runtime, the current <see cref="OddsFormatType" /> will be returned.</summary>
         /// <param name="obj">The dependency object to get the odds format type from.</param>
         /// <returns>The design odds format at design time or the current odds format at runtime.</returns>
         [DesignOnly(true)]
@@ -161,7 +165,7 @@ namespace WPFLocalizeExtension.Engine
             return Instance.IsInDesignMode ? (OddsFormatType)obj.GetValue(DesignOddsFormatProperty) : Instance.OddsFormatType;
         }
 
-        /// <summary>Detach an WeakEventListener to the <see cref="OddsFormatManager"/></summary>
+        /// <summary>Detach an WeakEventListener to the <see cref="OddsFormatManager" /></summary>
         /// <param name="listener">The listener to detach</param>
         public static void RemoveEventListener(IWeakEventListener listener)
         {
@@ -174,7 +178,7 @@ namespace WPFLocalizeExtension.Engine
             WeakOddsFormatChangedEventManager.RemoveListener(listener);
         }
 
-        /// <summary>Setter of <see cref="DependencyProperty"/> DesignOddsFormat. Only supported at DesignTime.</summary>
+        /// <summary>Setter of <see cref="DependencyProperty" /> DesignOddsFormat. Only supported at DesignTime.</summary>
         /// <param name="obj">The dependency object to set the odds format to.</param>
         /// <param name="value">The odds format.</param>
         [DesignOnly(true)]
@@ -195,9 +199,9 @@ namespace WPFLocalizeExtension.Engine
 
         #region Methods
 
-        /// <summary>Callback function. Used to set the <see cref="OddsFormatManager"/>.<see cref="OddsFormatType"/> if set in Xaml.Only supported at DesignTime.</summary>
+        /// <summary>Callback function. Used to set the <see cref="OddsFormatManager" />.<see cref="OddsFormatType" /> if set in Xaml.Only supported at DesignTime.</summary>
         /// <param name="obj">The dependency object to set the odds format to.</param>
-        /// <param name="args">The <see cref="System.Windows.DependencyPropertyChangedEventArgs"/> instance containing the event data.</param>
+        /// <param name="args">The <see cref="System.Windows.DependencyPropertyChangedEventArgs" /> instance containing the event data.</param>
         [DesignOnly(true)]
         private static void SetOddsFormatFromDependencyProperty(DependencyObject obj, DependencyPropertyChangedEventArgs args)
         {
@@ -214,7 +218,8 @@ namespace WPFLocalizeExtension.Engine
                 }
                 else
                 {
-                    throw new InvalidCastException(string.Format(CultureInfo.CurrentCulture, "\"{0}\" not defined in Enum OddsFormatType", args.NewValue));
+                    throw new InvalidCastException(
+                        string.Format(CultureInfo.CurrentCulture, "\"{0}\" not defined in Enum OddsFormatType", args.NewValue));
                 }
             }
             else
@@ -240,7 +245,7 @@ namespace WPFLocalizeExtension.Engine
 
             #region Constructors and Destructors
 
-            /// <summary>Prevents a default instance of the <see cref = "WeakOddsFormatChangedEventManager" /> class from being created.</summary>
+            /// <summary>Prevents a default instance of the <see cref="WeakOddsFormatChangedEventManager" /> class from being created.</summary>
             private WeakOddsFormatChangedEventManager()
             {
                 // creates a new list and assign it to listeners
@@ -251,7 +256,7 @@ namespace WPFLocalizeExtension.Engine
 
             #region Properties
 
-            /// <summary>Gets the singleton instance of <see cref = "WeakOddsFormatChangedEventManager" /></summary>
+            /// <summary>Gets the singleton instance of <see cref="WeakOddsFormatChangedEventManager" /></summary>
             private static WeakOddsFormatChangedEventManager CurrentManager
             {
                 get
@@ -343,7 +348,7 @@ namespace WPFLocalizeExtension.Engine
                 this.DeliverEventToList(Instance, EventArgs.Empty, this.listeners);
             }
 
-            /// <summary>This method is called if the <see cref="OddsFormatManager"/>.OnOddsFormatChanged is called and the listening process is enabled</summary>
+            /// <summary>This method is called if the <see cref="OddsFormatManager" />.OnOddsFormatChanged is called and the listening process is enabled</summary>
             private void Instance_OnOddsFormatChanged()
             {
                 // tells every listener in the list that the event is occurred

@@ -21,6 +21,7 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
+
 namespace SevenUpdate
 {
     using System;
@@ -37,15 +38,15 @@ namespace SevenUpdate
     {
         /// <summary>Indicates that the application is native 32 bit</summary>
         [ProtoEnum, EnumMember]
-        X86 = 0, 
+        X86 = 0,
 
         /// <summary>Indicates that the application can only run on 64 bit platforms</summary>
         [ProtoEnum, EnumMember]
-        X64 = 1, 
+        X64 = 1,
 
         /// <summary>Indicates that the application can run on 32bit or 64bit natively depending on the OS</summary>
         [ProtoEnum, EnumMember]
-        AnyCpu = 2, 
+        AnyCpu = 2,
     }
 
     /// <summary>Seven Update Application information</summary>
@@ -54,13 +55,13 @@ namespace SevenUpdate
     {
         #region Constants and Fields
 
-        /// <summary>The <see cref = "Uri" /> for the application's website</summary>
+        /// <summary>The <see cref="Uri" /> for the application's website</summary>
         private string appUrl;
 
         /// <summary>The directory where the application is installed</summary>
         private string directory;
 
-        /// <summary>The help website <see cref = "Uri" /> of the application.</summary>
+        /// <summary>The help website <see cref="Uri" /> of the application.</summary>
         private string helpUrl;
 
         /// <summary>Indicates if the application is 64 bit</summary>
@@ -72,7 +73,7 @@ namespace SevenUpdate
         /// <summary>Indicates the cpu platform the application can run under</summary>
         private Platform platform;
 
-        /// <summary>The <see cref = "Uri" /> pointing to the sui file containing the application updates</summary>
+        /// <summary>The <see cref="Uri" /> pointing to the sui file containing the application updates</summary>
         private string suiUrl;
 
         /// <summary>The name of the value to the registry key that contains the application directory location</summary>
@@ -82,11 +83,12 @@ namespace SevenUpdate
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="Sua"/> class</summary>
+        /// <summary>Initializes a new instance of the <see cref="Sua" /> class</summary>
         /// <param name="name">The collection of localized update names</param>
         /// <param name="publisher">The collection of localized publisher names</param>
         /// <param name="description">The collection of localized update descriptions</param>
-        public Sua(ObservableCollection<LocaleString> name, ObservableCollection<LocaleString> publisher, ObservableCollection<LocaleString> description)
+        public Sua(
+            ObservableCollection<LocaleString> name, ObservableCollection<LocaleString> publisher, ObservableCollection<LocaleString> description)
         {
             this.Name = name;
             this.Publisher = publisher;
@@ -108,7 +110,7 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Initializes a new instance of the <see cref="Sua"/> class</summary>
+        /// <summary>Initializes a new instance of the <see cref="Sua" /> class</summary>
         /// <param name="name">The collection of localized update names</param>
         /// <param name="publisher">The collection of localized publisher names</param>
         public Sua(ObservableCollection<LocaleString> name, ObservableCollection<LocaleString> publisher)
@@ -137,7 +139,7 @@ namespace SevenUpdate
             this.Publisher.CollectionChanged += this.PublisherCollectionChanged;
         }
 
-        /// <summary>Initializes a new instance of the <see cref = "Sua" /> class</summary>
+        /// <summary>Initializes a new instance of the <see cref="Sua" /> class</summary>
         public Sua()
         {
             this.Name = new ObservableCollection<LocaleString>();
@@ -156,7 +158,7 @@ namespace SevenUpdate
 
         #region Properties
 
-        /// <summary>Gets or sets the <see cref = "Uri" /> for the application's website</summary>
+        /// <summary>Gets or sets the <see cref="Uri" /> for the application's website</summary>
         /// <value>The application website</value>
         [ProtoMember(8, IsRequired = false), DataMember]
         public string AppUrl
@@ -199,7 +201,7 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Gets or sets the help website <see cref = "Uri" /> of the application</summary>
+        /// <summary>Gets or sets the help website <see cref="Uri" /> of the application</summary>
         /// <value>The help and support website for the application</value>
         [ProtoMember(9, IsRequired = false), DataMember]
         public string HelpUrl
@@ -219,7 +221,7 @@ namespace SevenUpdate
         }
 
         /// <summary>Gets or sets a value indicating whether if the application is 64 bit</summary>
-        /// <value><see langword = "true" /> if the application is 64 bit; otherwise, <see langword = "false" />.</value>
+        /// <value><see langword="true" /> if the application is 64 bit; otherwise, <see langword="false" />.</value>
         [ProtoMember(4), DataMember, Obsolete]
         public bool Is64Bit
         {
@@ -238,7 +240,7 @@ namespace SevenUpdate
         }
 
         /// <summary>Gets or sets a value indicating whether the SUA is enabled with Seven Update (SDK does not use this value)</summary>
-        /// <value><see langword = "true" /> if this instance is enabled; otherwise, <see langword = "false" />.</value>
+        /// <value><see langword="true" /> if this instance is enabled; otherwise, <see langword="false" />.</value>
         [ProtoMember(5), DataMember]
         public bool IsEnabled
         {
@@ -284,7 +286,7 @@ namespace SevenUpdate
         [ProtoMember(6), DataMember]
         public ObservableCollection<LocaleString> Publisher { get; private set; }
 
-        /// <summary>Gets or sets the <see cref = "Uri" /> pointing to the sui file containing the application updates</summary>
+        /// <summary>Gets or sets the <see cref="Uri" /> pointing to the sui file containing the application updates</summary>
         /// <value>The url pointing to the sui file</value>
         [ProtoMember(7), DataMember]
         public string SuiUrl
@@ -342,7 +344,7 @@ namespace SevenUpdate
             this.OnPropertyChanged("Name");
         }
 
-        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged"/> Event</summary>
+        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged" /> Event</summary>
         /// <param name="propertyName">The name of the property.</param>
         private void OnPropertyChanged(string propertyName)
         {

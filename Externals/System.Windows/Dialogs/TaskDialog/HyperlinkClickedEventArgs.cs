@@ -8,6 +8,7 @@
 // </copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
 // ***********************************************************************
+
 namespace System.Windows.Dialogs
 {
     /// <summary>Defines event data associated with a HyperlinkClicked event.</summary>
@@ -15,7 +16,7 @@ namespace System.Windows.Dialogs
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="HyperlinkClickedEventArgs"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="HyperlinkClickedEventArgs" /> class.</summary>
         /// <param name="link">The text of the hyperlink that was clicked.</param>
         public HyperlinkClickedEventArgs(string link)
         {

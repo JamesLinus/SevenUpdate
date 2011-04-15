@@ -21,6 +21,7 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
+
 namespace SevenUpdate
 {
     using System;
@@ -35,23 +36,23 @@ namespace SevenUpdate
     {
         /// <summary>An error that occurred while trying to download updates</summary>
         [ProtoEnum, EnumMember]
-        DownloadError, 
+        DownloadError,
 
         /// <summary>An error that occurred while trying to install updates</summary>
         [ProtoEnum, EnumMember]
-        InstallationError, 
+        InstallationError,
 
         /// <summary>A general network connection error</summary>
         [ProtoEnum, EnumMember]
-        FatalNetworkError, 
+        FatalNetworkError,
 
         /// <summary>An unspecified error, non fatal</summary>
         [ProtoEnum, EnumMember]
-        GeneralError, 
+        GeneralError,
 
         /// <summary>An unspecified error that prevents Seven Update from continuing</summary>
         [ProtoEnum, EnumMember]
-        FatalError, 
+        FatalError,
 
         /// <summary>An error that occurs while searching for updates</summary>
         [ProtoEnum, EnumMember]
@@ -64,7 +65,7 @@ namespace SevenUpdate
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="ErrorOccurredEventArgs"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="ErrorOccurredEventArgs" /> class.</summary>
         /// <param name="exception">the exception that occurred</param>
         /// <param name="type">the type of error that occurred</param>
         public ErrorOccurredEventArgs(string exception, ErrorType type)
@@ -77,7 +78,7 @@ namespace SevenUpdate
 
         #region Properties
 
-        /// <summary>Gets the <see cref = "ErrorType" /> of the error that occurred</summary>
+        /// <summary>Gets the <see cref="ErrorType" /> of the error that occurred</summary>
         /// <value>The type of error that occurred</value>
         public ErrorType ErrorType { get; private set; }
 

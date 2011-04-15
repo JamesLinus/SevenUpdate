@@ -10,18 +10,19 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://sharpbits.codeplex.com/license">BSD License</license> 
 // ***********************************************************************
+
 namespace SharpBits.Base
 {
     using System.Runtime.InteropServices;
 
-    /// <summary>Use the IEnumBackgroundCopyJobs interface to enumerate the list of jobs in the transfer queue. To get an <see cref="IEnumBackgroundCopyJobs"/> interface pointer, call the <see cref="IBackgroundCopyManager"/>:: EnumJobs method.</summary>
+    /// <summary>Use the IEnumBackgroundCopyJobs interface to enumerate the list of jobs in the transfer queue. To get an <see cref="IEnumBackgroundCopyJobs" /> interface pointer, call the <see cref="IBackgroundCopyManager" />:: EnumJobs method.</summary>
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown), GuidAttribute("1AF4F612-3B71-466F-8F58-7B6F73AC57AD"), ComImportAttribute]
     internal interface IEnumBackgroundCopyJobs
     {
         /// <summary>Retrieves a specified number of items in the enumeration sequence</summary>
         /// <param name="celt">Number of elements requested.</param>
-        /// <param name="copyJob">Array of <see cref="IBackgroundCopyJob"/> objects. You must release each object in <paramref name="copyJob"/> when done.</param>
-        /// <param name="celtFetched">Number of elements returned in <paramref name="copyJob"/>. You can set fetched to <see langword="null"/> if <paramref name="copyJob"/> is one. Otherwise, initialize the value of fetched to 0 before calling this method.</param>
+        /// <param name="copyJob">Array of <see cref="IBackgroundCopyJob" /> objects. You must release each object in <paramref name="copyJob" /> when done.</param>
+        /// <param name="celtFetched">Number of elements returned in <paramref name="copyJob" />. You can set fetched to <see langword="null" /> if <paramref name="copyJob" /> is one. Otherwise, initialize the value of fetched to 0 before calling this method.</param>
         void Next(uint celt, [MarshalAs(UnmanagedType.Interface)] out IBackgroundCopyJob copyJob, out uint celtFetched);
 
         /// <summary>Skips a specified number of items in the enumeration sequence</summary>

@@ -21,6 +21,7 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
+
 namespace SevenUpdate
 {
     using System;
@@ -36,15 +37,15 @@ namespace SevenUpdate
     {
         /// <summary>Indicates that the update installation failed</summary>
         [ProtoEnum, EnumMember]
-        Failed = 0, 
+        Failed = 0,
 
         /// <summary>Indicates that the update is hidden</summary>
         [ProtoEnum, EnumMember]
-        Hidden = 1, 
+        Hidden = 1,
 
         /// <summary>Indicates that the update is visible</summary>
         [ProtoEnum, EnumMember]
-        Visible = 2, 
+        Visible = 2,
 
         /// <summary>Indicates that the update installation succeeded</summary>
         [ProtoEnum, EnumMember]
@@ -52,15 +53,16 @@ namespace SevenUpdate
     }
 
     /// <summary>Information about an update, used by History and Hidden Updates. Not used by the SDK</summary>
-    [ProtoContract, DataContract(IsReference = true), KnownType(typeof(UpdateStatus)), KnownType(typeof(Importance)), KnownType(typeof(ObservableCollection<LocaleString>))]
+    [ProtoContract, DataContract(IsReference = true), KnownType(typeof(UpdateStatus)), KnownType(typeof(Importance)),
+     KnownType(typeof(ObservableCollection<LocaleString>))]
     public sealed class Suh : INotifyPropertyChanged
     {
         #region Constants and Fields
 
-        /// <summary>The <see cref = "Uri" /> for the application's website</summary>
+        /// <summary>The <see cref="Uri" /> for the application's website</summary>
         private string appUrl;
 
-        /// <summary>The help website <see cref = "Uri" /> of the application</summary>
+        /// <summary>The help website <see cref="Uri" /> of the application</summary>
         private string helpUrl;
 
         /// <summary>The importance of the update</summary>
@@ -85,11 +87,12 @@ namespace SevenUpdate
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="Suh"/> class</summary>
+        /// <summary>Initializes a new instance of the <see cref="Suh" /> class</summary>
         /// <param name="name">The collection of localized update names</param>
         /// <param name="publisher">The collection of localized publisher names</param>
         /// <param name="description">The collection of localized update descriptions</param>
-        public Suh(ObservableCollection<LocaleString> name, ObservableCollection<LocaleString> publisher, ObservableCollection<LocaleString> description)
+        public Suh(
+            ObservableCollection<LocaleString> name, ObservableCollection<LocaleString> publisher, ObservableCollection<LocaleString> description)
         {
             this.Name = name;
             this.Description = description;
@@ -111,7 +114,7 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Initializes a new instance of the <see cref = "Suh" /> class</summary>
+        /// <summary>Initializes a new instance of the <see cref="Suh" /> class</summary>
         public Suh()
         {
             this.Name = new ObservableCollection<LocaleString>();
@@ -130,7 +133,7 @@ namespace SevenUpdate
 
         #region Properties
 
-        /// <summary>Gets or sets the <see cref = "Uri" /> for the application's website</summary>
+        /// <summary>Gets or sets the <see cref="Uri" /> for the application's website</summary>
         /// <value>The application website</value>
         [ProtoMember(8), DataMember]
         public string AppUrl
@@ -154,7 +157,7 @@ namespace SevenUpdate
         [ProtoMember(2), DataMember]
         public ObservableCollection<LocaleString> Description { get; private set; }
 
-        /// <summary>Gets or sets the help website <see cref = "Uri" /> of the application</summary>
+        /// <summary>Gets or sets the help website <see cref="Uri" /> of the application</summary>
         /// <value>The help and support website for the application</value>
         [ProtoMember(9, IsRequired = false), DataMember]
         public string HelpUrl
@@ -301,7 +304,7 @@ namespace SevenUpdate
 
         #region Methods
 
-        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged"/> Event</summary>
+        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged" /> Event</summary>
         /// <param name="propertyName">The name of the property that changed</param>
         private void OnPropertyChanged(string propertyName)
         {

@@ -20,6 +20,7 @@
 //   Contains properties and methods that are essential to the program
 // </summary>
 // ***********************************************************************
+
 namespace SevenUpdate
 {
     using System;
@@ -41,40 +42,40 @@ namespace SevenUpdate
     public enum UpdateAction
     {
         /// <summary>Canceled Updates</summary>
-        Canceled, 
+        Canceled,
 
         /// <summary>Check for updates</summary>
-        CheckForUpdates, 
+        CheckForUpdates,
 
         /// <summary>Checking for updates</summary>
-        CheckingForUpdates, 
+        CheckingForUpdates,
 
         /// <summary>When connecting to the admin service</summary>
-        ConnectingToService, 
+        ConnectingToService,
 
         /// <summary>When downloading of updates has been completed</summary>
-        DownloadCompleted, 
+        DownloadCompleted,
 
         /// <summary>Downloading updates</summary>
-        Downloading, 
+        Downloading,
 
         /// <summary>An Error Occurred when downloading/installing updates</summary>
-        ErrorOccurred, 
+        ErrorOccurred,
 
         /// <summary>When installation of updates have completed</summary>
-        InstallationCompleted, 
+        InstallationCompleted,
 
         /// <summary>Installing Updates</summary>
-        Installing, 
+        Installing,
 
         /// <summary>No updates have been found</summary>
-        NoUpdates, 
+        NoUpdates,
 
         /// <summary>A reboot is needed to finish installing updates</summary>
-        RebootNeeded, 
+        RebootNeeded,
 
         /// <summary>Updates have been found</summary>
-        UpdatesFound, 
+        UpdatesFound,
     }
 
     /// <summary>Contains properties and methods that are essential</summary>
@@ -116,12 +117,14 @@ namespace SevenUpdate
         {
             get
             {
-                return File.Exists(App.ConfigFile) ? Utilities.Deserialize<Config>(App.ConfigFile) : new Config { AutoOption = AutoUpdateOption.Notify, IncludeRecommended = false };
+                return File.Exists(App.ConfigFile)
+                           ? Utilities.Deserialize<Config>(App.ConfigFile)
+                           : new Config { AutoOption = AutoUpdateOption.Notify, IncludeRecommended = false };
             }
         }
 
         /// <summary>Gets or sets a value indicating whether the current user enabled admin access</summary>
-        /// <value><see langword = "true" /> if this instance is admin; otherwise, <see langword = "false" />.</value>
+        /// <value><see langword="true" /> if this instance is admin; otherwise, <see langword="false" />.</value>
         public bool IsAdmin
         {
             get
@@ -192,11 +195,11 @@ namespace SevenUpdate
 
                 var app = new Sua(name, publisher)
                     {
-                        AppUrl = @"http://sevenupdate.com/", 
-                        Directory = Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, Platform.AnyCpu), 
-                        HelpUrl = @"http://sevenupdate.com/support/", 
-                        Platform = Platform.AnyCpu, 
-                        IsEnabled = true, 
+                        AppUrl = @"http://sevenupdate.com/",
+                        Directory = Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, Platform.AnyCpu),
+                        HelpUrl = @"http://sevenupdate.com/support/",
+                        Platform = Platform.AnyCpu,
+                        IsEnabled = true,
                         SuiUrl = SevenUpdateSui
                     };
                 if (App.IsDev)
@@ -224,7 +227,7 @@ namespace SevenUpdate
         #region Methods
 
         /// <summary>Checks for updates</summary>
-        /// <param name="auto"><see langword="true"/> if it's called because of an auto update check, otherwise <see langword="false"/></param>
+        /// <param name="auto"><see langword="true" /> if it's called because of an auto update check, otherwise <see langword="false" /></param>
         internal static void CheckForUpdates(bool auto)
         {
             if (auto)
@@ -267,8 +270,14 @@ namespace SevenUpdate
                 else
                 {
                     Instance.UpdateAction = UpdateAction.RebootNeeded;
-                    if (ShowMessage(Resources.RebootComputer, TaskDialogStandardIcon.Information, TaskDialogStandardButtons.Cancel, Resources.RebootNeededFirst, null, Resources.RestartNow) !=
-                        TaskDialogResult.Cancel)
+                    if (
+                        ShowMessage(
+                            Resources.RebootComputer,
+                            TaskDialogStandardIcon.Information,
+                            TaskDialogStandardButtons.Cancel,
+                            Resources.RebootNeededFirst,
+                            null,
+                            Resources.RestartNow) != TaskDialogResult.Cancel)
                     {
                         Utilities.StartProcess(@"shutdown.exe", "-r -t 00");
                     }
@@ -302,8 +311,8 @@ namespace SevenUpdate
             MainWindow.NavService.Navigate(MainPage);
         }
 
-        /// <summary>Shows either a <see cref="TaskDialog"/> or a <see cref="MessageBox"/> if running legacy windows.</summary>
-        /// <param name="instructionText">The main text to display (Blue 14pt for <see cref="TaskDialog"/>)</param>
+        /// <summary>Shows either a <see cref="TaskDialog" /> or a <see cref="MessageBox" /> if running legacy windows.</summary>
+        /// <param name="instructionText">The main text to display (Blue 14pt for <see cref="TaskDialog" />)</param>
         /// <param name="icon">The icon to display</param>
         /// <param name="standardButtons">The standard buttons to use (with or without the custom default button text)</param>
         /// <param name="description">A description of the message, supplements the instruction text</param>
@@ -312,12 +321,12 @@ namespace SevenUpdate
         /// <param name="displayShieldOnButton">Indicates if a UAC shield is to be displayed on the defaultButton</param>
         /// <returns>Returns the result of the message</returns>
         internal static TaskDialogResult ShowMessage(
-            string instructionText, 
-            TaskDialogStandardIcon icon, 
-            TaskDialogStandardButtons standardButtons, 
-            string description = null, 
-            string footerText = null, 
-            string defaultButtonText = null, 
+            string instructionText,
+            TaskDialogStandardIcon icon,
+            TaskDialogStandardButtons standardButtons,
+            string description = null,
+            string footerText = null,
+            string defaultButtonText = null,
             bool displayShieldOnButton = false)
         {
             if (TaskDialog.IsPlatformSupported)
@@ -335,7 +344,8 @@ namespace SevenUpdate
 
                     if (defaultButtonText != null)
                     {
-                        var button = new TaskDialogButton(@"btnCustom", defaultButtonText) { Default = true, ShowElevationIcon = displayShieldOnButton };
+                        var button = new TaskDialogButton(@"btnCustom", defaultButtonText)
+                            { Default = true, ShowElevationIcon = displayShieldOnButton };
                         td.Controls.Add(button);
                     }
 
@@ -393,8 +403,8 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Shows either a <see cref="TaskDialog"/> or a <see cref="MessageBox"/> if running legacy windows.</summary>
-        /// <param name="instructionText">The main text to display (Blue 14pt for <see cref="TaskDialog"/>)</param>
+        /// <summary>Shows either a <see cref="TaskDialog" /> or a <see cref="MessageBox" /> if running legacy windows.</summary>
+        /// <param name="instructionText">The main text to display (Blue 14pt for <see cref="TaskDialog" />)</param>
         /// <param name="icon">The icon to display</param>
         /// <param name="description">A description of the message, supplements the instruction text</param>
         private static void ShowMessage(string instructionText, TaskDialogStandardIcon icon, string description = null)
@@ -402,7 +412,7 @@ namespace SevenUpdate
             ShowMessage(instructionText, icon, TaskDialogStandardButtons.Ok, description);
         }
 
-        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged"/> Event</summary>
+        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged" /> Event</summary>
         /// <param name="name">The name of the property that changed</param>
         private void OnPropertyChanged(string name)
         {

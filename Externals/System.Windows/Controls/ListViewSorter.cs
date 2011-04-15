@@ -22,6 +22,7 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
+
 namespace System.Windows.Controls
 {
     using System.Collections;
@@ -32,12 +33,12 @@ namespace System.Windows.Controls
     using System.Windows.Documents;
     using System.Windows.Media;
 
-    /// <summary>Sorts a <see cref="ListView"/></summary>
+    /// <summary>Sorts a <see cref="ListView" /></summary>
     public static class ListViewSorter
     {
         #region Constants and Fields
 
-        /// <summary>Indicates if the <see cref = "ListView" /> will auto sort</summary>
+        /// <summary>Indicates if the <see cref="ListView" /> will auto sort</summary>
         public static readonly DependencyProperty AutoSortProperty = DependencyProperty.RegisterAttached(
             "AutoSort", typeof(bool), typeof(ListViewSorter), new UIPropertyMetadata(false, AutoSortCallback));
 
@@ -46,7 +47,8 @@ namespace System.Windows.Controls
             "CustomSorter", typeof(string), typeof(ListViewSorter), new FrameworkPropertyMetadata(null, CustomSorterCallback));
 
         /// <summary>The property name to sort</summary>
-        public static readonly DependencyProperty PropertyNameProperty = DependencyProperty.RegisterAttached("PropertyName", typeof(string), typeof(ListViewSorter), new UIPropertyMetadata(null));
+        public static readonly DependencyProperty PropertyNameProperty = DependencyProperty.RegisterAttached(
+            "PropertyName", typeof(string), typeof(ListViewSorter), new UIPropertyMetadata(null));
 
         /// <summary>The sort arrow up</summary>
         public static readonly DependencyProperty SortGlyphAscendingProperty = DependencyProperty.RegisterAttached(
@@ -69,7 +71,7 @@ namespace System.Windows.Controls
 
         /// <summary>Sets the auto sort.</summary>
         /// <param name="obj">The dependency object</param>
-        /// <param name="value">if set to <see langword="true"/> auto sorting will be used</param>
+        /// <param name="value">if set to <see langword="true" /> auto sorting will be used</param>
         public static void SetAutoSort(DependencyObject obj, bool value)
         {
             if (obj == null)
@@ -80,9 +82,9 @@ namespace System.Windows.Controls
             obj.SetValue(AutoSortProperty, value);
         }
 
-        /// <summary>Sets the <see cref="GridViewColumn"/> sorter</summary>
-        /// <param name="obj">The <see cref="DependencyObject"/> to set the sorter to</param>
-        /// <param name="comparerName">the <see cref="IComparer"/> to set as the sorter</param>
+        /// <summary>Sets the <see cref="GridViewColumn" /> sorter</summary>
+        /// <param name="obj">The <see cref="DependencyObject" /> to set the sorter to</param>
+        /// <param name="comparerName">the <see cref="IComparer" /> to set as the sorter</param>
         public static void SetCustomSorter(DependencyObject obj, string comparerName)
         {
             if (obj == null)
@@ -170,14 +172,17 @@ namespace System.Windows.Controls
         /// <param name="propertyName">Name of the property.</param>
         /// <param name="listView">The list view to sort</param>
         /// <param name="sortedColumnHeader">The sorted column header.</param>
-        private static void ApplyCustomSort(ListCollectionView view, string propertyName, ItemsControl listView, GridViewColumnHeader sortedColumnHeader)
+        private static void ApplyCustomSort(
+            ListCollectionView view, string propertyName, ItemsControl listView, GridViewColumnHeader sortedColumnHeader)
         {
             if (view.SortDescriptions.Count > 0)
             {
                 var currentSort = view.SortDescriptions[0];
                 if (currentSort.PropertyName == propertyName)
                 {
-                    currentSortDirection = currentSort.Direction == ListSortDirection.Ascending ? ListSortDirection.Descending : ListSortDirection.Ascending;
+                    currentSortDirection = currentSort.Direction == ListSortDirection.Ascending
+                                               ? ListSortDirection.Descending
+                                               : ListSortDirection.Ascending;
                 }
             }
 
@@ -207,7 +212,10 @@ namespace System.Windows.Controls
                 return;
             }
 
-            AddSortGlyph(sortedColumnHeader, currentSortDirection, currentSortDirection == ListSortDirection.Ascending ? GetSortGlyphAscending(listView) : GetSortGlyphDescending(listView));
+            AddSortGlyph(
+                sortedColumnHeader,
+                currentSortDirection,
+                currentSortDirection == ListSortDirection.Ascending ? GetSortGlyphAscending(listView) : GetSortGlyphDescending(listView));
             SetSortedColumnHeader(listView, sortedColumnHeader);
         }
 
@@ -244,14 +252,17 @@ namespace System.Windows.Controls
 
             view.SortDescriptions.Add(new SortDescription(propertyName, direction));
 
-            AddSortGlyph(sortedColumnHeader, direction, direction == ListSortDirection.Ascending ? GetSortGlyphAscending(listView) : GetSortGlyphDescending(listView));
+            AddSortGlyph(
+                sortedColumnHeader,
+                direction,
+                direction == ListSortDirection.Ascending ? GetSortGlyphAscending(listView) : GetSortGlyphDescending(listView));
 
             SetSortedColumnHeader(listView, sortedColumnHeader);
         }
 
         /// <summary>The auto sort callback</summary>
         /// <param name="o">The dependency object</param>
-        /// <param name="e">The <see cref="System.Windows.DependencyPropertyChangedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.DependencyPropertyChangedEventArgs" /> instance containing the event data.</param>
         private static void AutoSortCallback(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
             var listView = o as ItemsControl;
@@ -280,7 +291,7 @@ namespace System.Windows.Controls
 
         /// <summary>Customs the sorter callback.</summary>
         /// <param name="o">The dependency object</param>
-        /// <param name="e">The <see cref="System.Windows.DependencyPropertyChangedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.DependencyPropertyChangedEventArgs" /> instance containing the event data.</param>
         private static void CustomSorterCallback(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
             var listView = o as ItemsControl;
@@ -328,15 +339,15 @@ namespace System.Windows.Controls
 
         /// <summary>Gets the auto sort.</summary>
         /// <param name="obj">The dependency object</param>
-        /// <returns><see langword="true"/> if the sorting is done automatic; otherwise, <see langword="false"/></returns>
+        /// <returns><see langword="true" /> if the sorting is done automatic; otherwise, <see langword="false" /></returns>
         private static bool GetAutoSort(DependencyObject obj)
         {
             return (bool)obj.GetValue(AutoSortProperty);
         }
 
-        /// <summary>Gets the <see cref="GridViewColumn"/> sorter</summary>
-        /// <param name="obj">The <see cref="DependencyObject"/> to get the sorter from</param>
-        /// <returns>an <see cref="IComparer"/> for CustomSorter</returns>
+        /// <summary>Gets the <see cref="GridViewColumn" /> sorter</summary>
+        /// <param name="obj">The <see cref="DependencyObject" /> to get the sorter from</param>
+        /// <returns>an <see cref="IComparer" /> for CustomSorter</returns>
         private static string GetCustomSorter(DependencyObject obj)
         {
             return (string)obj.GetValue(CustomSorterProperty);
@@ -352,7 +363,7 @@ namespace System.Windows.Controls
 
         /// <summary>Gets the sort glyph ascending.</summary>
         /// <param name="obj">The dependency object</param>
-        /// <returns>The <see cref="ImageSource"/> for the sort glyph</returns>
+        /// <returns>The <see cref="ImageSource" /> for the sort glyph</returns>
         private static ImageSource GetSortGlyphAscending(DependencyObject obj)
         {
             return (ImageSource)obj.GetValue(SortGlyphAscendingProperty);
@@ -360,7 +371,7 @@ namespace System.Windows.Controls
 
         /// <summary>Gets the sort glyph descending.</summary>
         /// <param name="obj">The dependency object</param>
-        /// <returns>The <see cref="ImageSource"/> for the sort glyph</returns>
+        /// <returns>The <see cref="ImageSource" /> for the sort glyph</returns>
         private static ImageSource GetSortGlyphDescending(DependencyObject obj)
         {
             return (ImageSource)obj.GetValue(SortGlyphDescendingProperty);
@@ -391,9 +402,9 @@ namespace System.Windows.Controls
             }
         }
 
-        /// <summary>Handles the Click event of the <see cref="GridViewColumnHeader"/> control.</summary>
+        /// <summary>Handles the Click event of the <see cref="GridViewColumnHeader" /> control.</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private static void SortColumn(object sender, RoutedEventArgs e)
         {
             var headerClicked = e.OriginalSource as GridViewColumnHeader;
@@ -456,11 +467,12 @@ namespace System.Windows.Controls
 
             #region Constructors and Destructors
 
-            /// <summary>Initializes a new instance of the <see cref="SortGlyphAdorner"/> class.</summary>
+            /// <summary>Initializes a new instance of the <see cref="SortGlyphAdorner" /> class.</summary>
             /// <param name="columnHeader">The column header.</param>
             /// <param name="direction">The direction.</param>
             /// <param name="sortGlyph">The sort glyph.</param>
-            public SortGlyphAdorner(GridViewColumnHeader columnHeader, ListSortDirection direction, ImageSource sortGlyph) : base(columnHeader)
+            public SortGlyphAdorner(GridViewColumnHeader columnHeader, ListSortDirection direction, ImageSource sortGlyph)
+                : base(columnHeader)
             {
                 this.columnHeader = columnHeader;
                 this.direction = direction;
@@ -496,9 +508,13 @@ namespace System.Windows.Controls
                         return;
                     }
 
-                    drawingContext.PushTransform(new TranslateTransform(this.AdornedElement.RenderSize.Width - 15, (this.AdornedElement.RenderSize.Height - 5) / 2));
+                    drawingContext.PushTransform(
+                        new TranslateTransform(this.AdornedElement.RenderSize.Width - 15, (this.AdornedElement.RenderSize.Height - 5) / 2));
 
-                    drawingContext.DrawGeometry(Brushes.LightGray, new Pen(Brushes.Gray, 1.0), currentSortDirection == ListSortDirection.Ascending ? AscGeometry : DescGeometry);
+                    drawingContext.DrawGeometry(
+                        Brushes.LightGray,
+                        new Pen(Brushes.Gray, 1.0),
+                        currentSortDirection == ListSortDirection.Ascending ? AscGeometry : DescGeometry);
 
                     drawingContext.Pop();
                 }

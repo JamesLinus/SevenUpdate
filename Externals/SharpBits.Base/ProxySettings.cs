@@ -10,9 +10,10 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://sharpbits.codeplex.com/license">BSD License</license> 
 // ***********************************************************************
+
 namespace SharpBits.Base
 {
-    /// <summary>The proxy settings for the <see cref="BitsJob"/></summary>
+    /// <summary>The proxy settings for the <see cref="BitsJob" /></summary>
     public class ProxySettings
     {
         #region Constants and Fields
@@ -33,7 +34,7 @@ namespace SharpBits.Base
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="ProxySettings"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="ProxySettings" /> class.</summary>
         /// <param name="job">The job to set the proxy settings for</param>
         internal ProxySettings(IBackgroundCopyJob job)
         {
@@ -94,7 +95,7 @@ namespace SharpBits.Base
 
         #region Public Methods
 
-        /// <summary>Updates <see cref="BitsJob"/> with the proxy usage</summary>
+        /// <summary>Updates <see cref="BitsJob" /> with the proxy usage</summary>
         public void Update()
         {
             this.job.SetProxySettings(this.proxyUsage, this.proxyList, this.proxyBypassList);

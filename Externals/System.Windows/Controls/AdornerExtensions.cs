@@ -21,6 +21,7 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
+
 namespace System.Windows.Controls
 {
     using System.Windows.Documents;
@@ -33,7 +34,7 @@ namespace System.Windows.Controls
         /// <summary>Determines whether the adorner layer contains an element</summary>
         /// <param name="adorner">The adorner.</param>
         /// <param name="element">The element</param>
-        /// <returns><see langword="true"/> if the adorner layer contains the element otherwise, <see langword="false"/>.</returns>
+        /// <returns><see langword="true" /> if the adorner layer contains the element otherwise, <see langword="false" />.</returns>
         /// <typeparam name="T">The object to look for</typeparam>
         public static bool Contains<T>(this AdornerLayer adorner, UIElement element)
         {

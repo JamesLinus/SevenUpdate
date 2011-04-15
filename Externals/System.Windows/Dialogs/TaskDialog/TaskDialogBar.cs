@@ -8,6 +8,7 @@
 // </copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
 // ***********************************************************************
+
 namespace System.Windows.Dialogs
 {
     using System.Windows.Controls;
@@ -17,21 +18,22 @@ namespace System.Windows.Dialogs
     {
         #region Constants and Fields
 
-        /// <summary>The <see cref = "ProgressBar" /> State</summary>
+        /// <summary>The <see cref="ProgressBar" /> State</summary>
         private TaskDialogProgressBarState state;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "TaskDialogBar" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="TaskDialogBar" /> class.</summary>
         protected TaskDialogBar()
         {
         }
 
-        /// <summary>Initializes a new instance of the <see cref="TaskDialogBar"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="TaskDialogBar" /> class.</summary>
         /// <param name="name">The name for this control.</param>
-        protected TaskDialogBar(string name) : base(name)
+        protected TaskDialogBar(string name)
+            : base(name)
         {
         }
 

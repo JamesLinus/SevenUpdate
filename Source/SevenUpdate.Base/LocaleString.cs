@@ -21,6 +21,7 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
+
 namespace SevenUpdate
 {
     using System.ComponentModel;
@@ -44,12 +45,12 @@ namespace SevenUpdate
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "LocaleString" /> class</summary>
+        /// <summary>Initializes a new instance of the <see cref="LocaleString" /> class</summary>
         public LocaleString()
         {
         }
 
-        /// <summary>Initializes a new instance of the <see cref="LocaleString"/> class</summary>
+        /// <summary>Initializes a new instance of the <see cref="LocaleString" /> class</summary>
         /// <param name="value">The string value</param>
         /// <param name="lang">The an ISO language code for the value</param>
         public LocaleString(string value, string lang)
@@ -111,7 +112,7 @@ namespace SevenUpdate
 
         #region Methods
 
-        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged"/> Event</summary>
+        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged" /> Event</summary>
         /// <param name="name">The name of the property that changed</param>
         private void OnPropertyChanged(string name)
         {

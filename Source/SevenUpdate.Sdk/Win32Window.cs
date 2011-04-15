@@ -21,6 +21,7 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
+
 namespace SevenUpdate.Sdk
 {
     using System;
@@ -34,21 +35,21 @@ namespace SevenUpdate.Sdk
         /// <summary>The pointer to the window</summary>
         private readonly IntPtr windowHandle;
 
-        /// <summary><see langword = "true" /> if the window is disposed</summary>
+        /// <summary><see langword="true" /> if the window is disposed</summary>
         private bool disposed;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="Win32Window"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="Win32Window" /> class.</summary>
         /// <param name="handle">The handle.</param>
         public Win32Window(IntPtr handle)
         {
             this.windowHandle = handle;
         }
 
-        /// <summary>Finalizes an instance of the <see cref="Win32Window"/> class.</summary>
+        /// <summary>Finalizes an instance of the <see cref="Win32Window" /> class.</summary>
         ~Win32Window()
         {
             this.Dispose(false);
@@ -91,7 +92,7 @@ namespace SevenUpdate.Sdk
         #region Methods
 
         /// <summary>Releases unmanaged and - optionally - managed resources</summary>
-        /// <param name="disposing"><see langword="true"/> to release both managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.</param>
+        /// <param name="disposing"><see langword="true" /> to release both managed and unmanaged resources; <see langword="false" /> to release only unmanaged resources.</param>
         private void Dispose(bool disposing)
         {
             lock (this)

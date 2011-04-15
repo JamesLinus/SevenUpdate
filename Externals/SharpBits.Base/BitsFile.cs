@@ -10,13 +10,14 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://sharpbits.codeplex.com/license">BSD License</license> 
 // ***********************************************************************
+
 namespace SharpBits.Base
 {
     using System;
     using System.Collections.ObjectModel;
     using System.Runtime.InteropServices;
 
-    /// <summary>A file that can be added to a <see cref="BitsJob"/></summary>
+    /// <summary>A file that can be added to a <see cref="BitsJob" /></summary>
     public sealed partial class BitsFile : IDisposable
     {
         #region Constants and Fields
@@ -27,17 +28,17 @@ namespace SharpBits.Base
         /// <summary>Indicates if the file has been disposed</summary>
         private bool disposed;
 
-        /// <summary>The current <see cref = "BitsFile" /></summary>
+        /// <summary>The current <see cref="BitsFile" /></summary>
         private IBackgroundCopyFile file;
 
-        /// <summary>The current <see cref = "BitsFile" /> progress</summary>
+        /// <summary>The current <see cref="BitsFile" /> progress</summary>
         private FileProgress progress;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="BitsFile"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="BitsFile" /> class.</summary>
         /// <param name="job">The current job</param>
         /// <param name="file">The current file within the job</param>
         internal BitsFile(BitsJob job, IBackgroundCopyFile file)
@@ -160,7 +161,7 @@ namespace SharpBits.Base
         #region Methods
 
         /// <summary>Releases unmanaged and - optionally - managed resources</summary>
-        /// <param name="disposing"><see langword="true"/> to release both managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.</param>
+        /// <param name="disposing"><see langword="true" /> to release both managed and unmanaged resources; <see langword="false" /> to release only unmanaged resources.</param>
         private void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -182,7 +183,7 @@ namespace SharpBits.Base
         #endregion
     }
 
-    /// <summary>A file that can be added to a <see cref="BitsJob"/></summary>
+    /// <summary>A file that can be added to a <see cref="BitsJob" /></summary>
     public sealed partial class BitsFile
     {
         #region Constants and Fields

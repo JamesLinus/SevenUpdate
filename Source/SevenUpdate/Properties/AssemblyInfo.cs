@@ -20,6 +20,7 @@
 //   Contains information about the assembly
 // </summary>
 // ***********************************************************************
+
 using System;
 using System.Reflection;
 using System.Resources;

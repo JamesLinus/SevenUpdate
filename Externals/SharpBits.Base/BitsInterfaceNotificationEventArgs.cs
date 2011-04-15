@@ -10,6 +10,7 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://sharpbits.codeplex.com/license">BSD License</license> 
 // ***********************************************************************
+
 namespace SharpBits.Base
 {
     using System.Runtime.InteropServices;
@@ -26,11 +27,12 @@ namespace SharpBits.Base
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="BitsInterfaceNotificationEventArgs"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="BitsInterfaceNotificationEventArgs" /> class.</summary>
         /// <param name="job">The job the notification is for</param>
         /// <param name="exception">The exception.</param>
         /// <param name="description">The description.</param>
-        internal BitsInterfaceNotificationEventArgs(BitsJob job, COMException exception, string description) : base(job)
+        internal BitsInterfaceNotificationEventArgs(BitsJob job, COMException exception, string description)
+            : base(job)
         {
             this.Description = description;
             this.exception = exception;

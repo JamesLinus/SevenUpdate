@@ -21,6 +21,7 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
+
 namespace SevenUpdate.Helper
 {
     using System;
@@ -66,7 +67,9 @@ namespace SevenUpdate.Helper
             }
             catch (Exception e)
             {
-                if (!(e is OperationCanceledException || e is UnauthorizedAccessException || e is InvalidOperationException || e is NotSupportedException || e is Win32Exception))
+                if (
+                    !(e is OperationCanceledException || e is UnauthorizedAccessException || e is InvalidOperationException ||
+                      e is NotSupportedException || e is Win32Exception))
                 {
                     throw;
                 }
@@ -96,7 +99,8 @@ namespace SevenUpdate.Helper
                         throw;
                     }
 
-                    NativeMethods.MoveFileExW(Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "reboot.lock"), null, MoveOnReboot);
+                    NativeMethods.MoveFileExW(
+                        Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "reboot.lock"), null, MoveOnReboot);
                 }
 
                 var files = Directory.GetFiles(AppDir, "*.bak");
@@ -149,7 +153,7 @@ namespace SevenUpdate.Helper
 
         /// <summary>Run Seven Update and auto check for updates</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Timers.ElapsedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Timers.ElapsedEventArgs" /> instance containing the event data.</param>
         private static void RunSevenUpdate(object sender, ElapsedEventArgs e)
         {
             Process.Start(Path.Combine(AppDir, "SevenUpdate.Admin.exe"), "Auto");
@@ -158,9 +162,9 @@ namespace SevenUpdate.Helper
         /// <summary>Starts a process on the system</summary>
         /// <param name="fileName">The file to execute</param>
         /// <param name="arguments">The arguments to execute with the file</param>
-        /// <param name="wait">if set to <see langword="true"/> the calling thread will be blocked until process has exited</param>
-        /// <param name="hidden">if set to <see langword="true"/> the process will execute with no UI</param>
-        /// <returns><see langword="true"/> if the process has executed successfully</returns>
+        /// <param name="wait">if set to <see langword="true" /> the calling thread will be blocked until process has exited</param>
+        /// <param name="hidden">if set to <see langword="true" /> the process will execute with no UI</param>
+        /// <returns><see langword="true" /> if the process has executed successfully</returns>
         private static bool StartProcess(string fileName, string arguments, bool wait = false, bool hidden = true)
         {
             using (var process = new Process())
@@ -189,7 +193,9 @@ namespace SevenUpdate.Helper
                 }
                 catch (Exception e)
                 {
-                    if (!(e is OperationCanceledException || e is UnauthorizedAccessException || e is InvalidOperationException || e is NotSupportedException || e is Win32Exception))
+                    if (
+                        !(e is OperationCanceledException || e is UnauthorizedAccessException || e is InvalidOperationException ||
+                          e is NotSupportedException || e is Win32Exception))
                     {
                         throw;
                     }

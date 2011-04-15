@@ -1,6 +1,10 @@
 ﻿<!-- Copyright (c) Robert Baker, Seven Software -->
-<NavigationWindow x:Class="SevenUpdate.Windows.MainWindow" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Title="{LocText SevenUpdate:Resources:SevenUpdate}" Icon="/Images/wicon.ico" MinWidth="900" MinHeight="550" ShowsNavigationUI="False" SizeToContent="Manual" Width="900" Height="550" Loaded="LoadWindowSize" Closing="SaveWindowSize" MouseLeftButtonDown="EnableDragOnGlass">
-	<Window.TaskbarItemInfo>
-		<TaskbarItemInfo x:Name="taskBar" />
-	</Window.TaskbarItemInfo>
+<NavigationWindow x:Class="SevenUpdate.Windows.MainWindow"
+                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Title="{LocText SevenUpdate:Resources:SevenUpdate}"
+                  Icon="/Images/wicon.ico" MinWidth="900" MinHeight="550" ShowsNavigationUI="False" SizeToContent="Manual" Width="900"
+                  Height="550" Loaded="LoadWindowSize" Closing="SaveWindowSize" MouseLeftButtonDown="EnableDragOnGlass">
+  <Window.TaskbarItemInfo>
+    <TaskbarItemInfo x:Name="taskBar" />
+  </Window.TaskbarItemInfo>
 </NavigationWindow>

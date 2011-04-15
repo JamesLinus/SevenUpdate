@@ -10,11 +10,12 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://sharpbits.codeplex.com/license">BSD License</license> 
 // ***********************************************************************
+
 namespace SharpBits.Base
 {
     using System;
 
-    /// <summary>The <see cref="BitsFile"/> progress</summary>
+    /// <summary>The <see cref="BitsFile" /> progress</summary>
     public class FileProgress
     {
         #region Constants and Fields
@@ -26,7 +27,7 @@ namespace SharpBits.Base
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="FileProgress"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="FileProgress" /> class.</summary>
         /// <param name="fileProgress">The file progress.</param>
         internal FileProgress(BGFileProgress fileProgress)
         {
@@ -57,8 +58,8 @@ namespace SharpBits.Base
             }
         }
 
-        /// <summary>Gets a value indicating whether this <see cref = "FileProgress" /> is completed.</summary>
-        /// <value><see langword = "true" /> if completed; otherwise, <see langword = "false" />.</value>
+        /// <summary>Gets a value indicating whether this <see cref="FileProgress" /> is completed.</summary>
+        /// <value><see langword="true" /> if completed; otherwise, <see langword="false" />.</value>
         public bool Completed
         {
             get

@@ -10,21 +10,22 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://sharpbits.codeplex.com/license">BSD License</license> 
 // ***********************************************************************
+
 namespace SharpBits.Base
 {
-    /// <summary>The file info for the <see cref="BitsFile"/></summary>
+    /// <summary>The file info for the <see cref="BitsFile" /></summary>
     public class BitsFileInfo
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="BitsFileInfo"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="BitsFileInfo" /> class.</summary>
         /// <param name="fileInfo">The file info.</param>
         internal BitsFileInfo(BGFileInfo fileInfo)
         {
             this.BGFileInfo = fileInfo;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="BitsFileInfo"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="BitsFileInfo" /> class.</summary>
         /// <param name="remoteName">Name of the remote.</param>
         /// <param name="localName">Name of the local.</param>
         protected BitsFileInfo(string remoteName, string localName)

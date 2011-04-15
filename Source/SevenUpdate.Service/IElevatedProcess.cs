@@ -21,6 +21,7 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
+
 namespace SevenUpdate.Service
 {
     using System.Collections.ObjectModel;
@@ -42,7 +43,7 @@ namespace SevenUpdate.Service
         /// <summary>Changes the program settings</summary>
         /// <param name="applications">The applications to enable update checking</param>
         /// <param name="options">The Seven Update settings</param>
-        /// <param name="autoCheck">if set to <see langword="true"/> automatic updates will be enabled</param>
+        /// <param name="autoCheck">if set to <see langword="true" /> automatic updates will be enabled</param>
         [OperationContract(IsOneWay = false), ProtoBehavior]
         void ChangeSettings(Collection<Sua> applications, Config options, bool autoCheck);
 
@@ -51,12 +52,12 @@ namespace SevenUpdate.Service
         [OperationContract(IsOneWay = false), ProtoBehavior]
         void HideUpdate(Suh hiddenUpdate);
 
-        /// <summary>Hides a collection of <see cref="Suh"/> to hide</summary>
+        /// <summary>Hides a collection of <see cref="Suh" /> to hide</summary>
         /// <param name="hiddenUpdates">The collection of updates to hide</param>
         [OperationContract(IsOneWay = false), ProtoBehavior]
         void HideUpdates(Collection<Suh> hiddenUpdates);
 
-        /// <summary>Gets a collection of <see cref="Sui"/></summary>
+        /// <summary>Gets a collection of <see cref="Sui" /></summary>
         /// <param name="applicationUpdates">The collection of applications and updates to install</param>
         [OperationContract(IsOneWay = false), ProtoBehavior]
         void InstallUpdates(Collection<Sui> applicationUpdates);

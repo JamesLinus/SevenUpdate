@@ -24,6 +24,7 @@
 //   Interaction logic for App.xaml
 // </summary>
 // ***********************************************************************
+
 namespace SevenUpdate
 {
     using System;
@@ -47,7 +48,8 @@ namespace SevenUpdate
         #region Constants and Fields
 
         /// <summary>The all users application data location</summary>
-        public static readonly string AllUserStore = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Seven Software", "Seven Update");
+        public static readonly string AllUserStore = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Seven Software", "Seven Update");
 
         /// <summary>The location of the list of applications Seven Update can update</summary>
         public static readonly string ApplicationsFile = Path.Combine(AllUserStore, @"Apps.sul");
@@ -62,7 +64,8 @@ namespace SevenUpdate
         public static readonly string HistoryFile = Path.Combine(AllUserStore, @"History.suh");
 
         /// <summary>The location of the user application data location</summary>
-        public static readonly string UserStore = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Seven Software", "Seven Update");
+        public static readonly string UserStore = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Seven Software", "Seven Update");
 
         /// <summary>The Seven Update list location</summary>
         internal const string SulLocation = @"http://sevenupdate.com/apps/Apps.sul";
@@ -124,16 +127,16 @@ namespace SevenUpdate
 
         /// <summary>Raises the Application.Exit event.</summary>
         /// <param name="e">An ExitEventArgs that contains the event data.</param>
-        /// <param name="firstInstance">If set to <see langword="true"/> the current instance is the first application instance.</param>
+        /// <param name="firstInstance">If set to <see langword="true" /> the current instance is the first application instance.</param>
         protected override void OnExit(ExitEventArgs e, bool firstInstance)
         {
             UnregisterApplicationRecoveryAndRestart();
             base.OnExit(e, firstInstance);
         }
 
-        /// <summary>Raises the <see cref="InstanceAwareApplication.Startup"/> event.</summary>
-        /// <param name="e">The <see cref="System.Windows.StartupEventArgs"/> instance containing the event data.</param>
-        /// <param name="isFirstInstance">If set to <see langword="true"/> the current instance is the first application instance.</param>
+        /// <summary>Raises the <see cref="InstanceAwareApplication.Startup" /> event.</summary>
+        /// <param name="e">The <see cref="System.Windows.StartupEventArgs" /> instance containing the event data.</param>
+        /// <param name="isFirstInstance">If set to <see langword="true" /> the current instance is the first application instance.</param>
         protected override void OnStartup(StartupEventArgs e, bool isFirstInstance)
         {
             Init();
@@ -150,7 +153,9 @@ namespace SevenUpdate
                     catch (WebException)
                     {
                         Core.ShowMessage(
-                            string.Format(CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.ErrorDownloading, e.Args[0]), TaskDialogStandardIcon.Error, TaskDialogStandardButtons.Ok);
+                            string.Format(CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.ErrorDownloading, e.Args[0]),
+                            TaskDialogStandardIcon.Error,
+                            TaskDialogStandardButtons.Ok);
                         Environment.Exit(0);
                     }
 
@@ -158,18 +163,20 @@ namespace SevenUpdate
                     if (Utilities.IsRunning64BitOS == false && app.Platform == Platform.X64)
                     {
                         Core.ShowMessage(
-                            string.Format(CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.Not64BitCompat, appName), TaskDialogStandardIcon.Error, TaskDialogStandardButtons.Ok);
+                            string.Format(CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.Not64BitCompat, appName),
+                            TaskDialogStandardIcon.Error,
+                            TaskDialogStandardButtons.Ok);
                         Environment.Exit(0);
                     }
 
                     if (
                         Core.ShowMessage(
-                            string.Format(CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.AddToSevenUpdate, appName), 
-                            TaskDialogStandardIcon.ShieldBlue, 
-                            TaskDialogStandardButtons.Cancel, 
-                            string.Format(CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.AllowUpdates, appName), 
-                            null, 
-                            SevenUpdate.Properties.Resources.Add, 
+                            string.Format(CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.AddToSevenUpdate, appName),
+                            TaskDialogStandardIcon.ShieldBlue,
+                            TaskDialogStandardButtons.Cancel,
+                            string.Format(CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.AllowUpdates, appName),
+                            null,
+                            SevenUpdate.Properties.Resources.Add,
                             true) != TaskDialogResult.Cancel)
                     {
                         app.IsEnabled = true;
@@ -198,8 +205,8 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Raises the <see cref="InstanceAwareApplication.StartupNextInstance"/> event.</summary>
-        /// <param name="e">The <see cref="StartupNextInstanceEventArgs"/> instance containing the event data.</param>
+        /// <summary>Raises the <see cref="InstanceAwareApplication.StartupNextInstance" /> event.</summary>
+        /// <param name="e">The <see cref="StartupNextInstanceEventArgs" /> instance containing the event data.</param>
         protected override void OnStartupNextInstance(StartupNextInstanceEventArgs e)
         {
             base.OnStartupNextInstance(e);
@@ -274,18 +281,18 @@ namespace SevenUpdate
 
             var jumpTask = new JumpTask
                 {
-                    IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"), 
-                    IconResourceIndex = 2, 
+                    IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"),
+                    IconResourceIndex = 2,
                     Title = SevenUpdate.Properties.Resources.CheckForUpdates,
-                    Arguments = "-check", 
+                    Arguments = "-check",
                 };
 
             jumpList.JumpItems.Add(jumpTask);
 
             jumpTask = new JumpTask
                 {
-                    IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"), 
-                    IconResourceIndex = 5, 
+                    IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"),
+                    IconResourceIndex = 5,
                     Title = SevenUpdate.Properties.Resources.RestoreHiddenUpdates,
                     Arguments = "-hidden"
                 };
@@ -294,20 +301,20 @@ namespace SevenUpdate
 
             jumpTask = new JumpTask
                 {
-                    IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"), 
-                    IconResourceIndex = 4, 
+                    IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"),
+                    IconResourceIndex = 4,
                     Title = SevenUpdate.Properties.Resources.ViewUpdateHistory,
-                    Arguments = "-history", 
+                    Arguments = "-history",
                 };
 
             jumpList.JumpItems.Add(jumpTask);
 
             jumpTask = new JumpTask
                 {
-                    IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"), 
-                    IconResourceIndex = 3, 
+                    IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"),
+                    IconResourceIndex = 3,
                     Title = SevenUpdate.Properties.Resources.ChangeSettings,
-                    Arguments = "-settings", 
+                    Arguments = "-settings",
                 };
 
             jumpList.JumpItems.Add(jumpTask);

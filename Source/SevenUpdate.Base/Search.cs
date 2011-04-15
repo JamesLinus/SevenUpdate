@@ -21,6 +21,7 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
+
 namespace SevenUpdate
 {
     using System;
@@ -154,7 +155,7 @@ namespace SevenUpdate
             Task.Factory.StartNew(() => SearchForUpdates(applications, downloadFolder));
         }
 
-        /// <summary>Manually sets an <see cref="Sui"/> collection has updates found</summary>
+        /// <summary>Manually sets an <see cref="Sui" /> collection has updates found</summary>
         /// <param name="updates">The updates to set as found</param>
         public static void SetUpdatesFound(IEnumerable<Sui> updates)
         {
@@ -190,7 +191,7 @@ namespace SevenUpdate
 
         /// <summary>Checks for updates</summary>
         /// <param name="app">a collection of applications to check for updates</param>
-        /// <returns>returns <see langword="true"/> if found updates, otherwise <see langword="false"/></returns>
+        /// <returns>returns <see langword="true" /> if found updates, otherwise <see langword="false" /></returns>
         private static bool CheckForUpdates(ref Sui app)
         {
             app.AppInfo.Directory = Utilities.IsRegistryKey(app.AppInfo.Directory)
@@ -218,9 +219,11 @@ namespace SevenUpdate
                     // ReSharper disable ForCanBeConvertedToForeach
                     for (var z = 0; z < app.Updates[y].Files.Count; z++)
                     {
-                        app.Updates[y].Files[z].Destination = Utilities.ExpandInstallLocation(app.Updates[y].Files[z].Destination, app.AppInfo.Directory, app.AppInfo.Platform, app.AppInfo.ValueName);
+                        app.Updates[y].Files[z].Destination = Utilities.ExpandInstallLocation(
+                            app.Updates[y].Files[z].Destination, app.AppInfo.Directory, app.AppInfo.Platform, app.AppInfo.ValueName);
 
-                        app.Updates[y].Files[z].Source = Utilities.ExpandDownloadUrl(app.Updates[y].Files[z].Source, app.Updates[y].DownloadUrl, app.AppInfo.Platform);
+                        app.Updates[y].Files[z].Source = Utilities.ExpandDownloadUrl(
+                            app.Updates[y].Files[z].Source, app.Updates[y].DownloadUrl, app.AppInfo.Platform);
 
                         if (app.Updates[y].Files[z].Action != FileAction.ExecuteThenDelete)
                         {
@@ -275,7 +278,7 @@ namespace SevenUpdate
         /// <summary>Iterates through the update and removes un needed values. Returns the download size for the update</summary>
         /// <param name="update">The update to iterate</param>
         /// <param name="directory">The Uri or registry key to the application directory </param>
-        /// <param name="valueName">The name of the registry value, can be <see langword="null"/></param>
+        /// <param name="valueName">The name of the registry value, can be <see langword="null" /></param>
         /// <param name="platform">a value that indicates what cpu architecture the application supports</param>
         /// <returns>The current download size of the update</returns>
         private static ulong IterateUpdate(ref Update update, string directory, string valueName, Platform platform)

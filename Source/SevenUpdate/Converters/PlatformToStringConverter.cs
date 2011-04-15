@@ -24,6 +24,7 @@
 //   Converts the Platform enum to a localized string
 // </summary>
 // ***********************************************************************
+
 namespace SevenUpdate.Converters
 {
     using System;

@@ -10,21 +10,22 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://sharpbits.codeplex.com/license">BSD License</license> 
 // ***********************************************************************
+
 namespace SharpBits.Base
 {
     /// <summary>The proxy use</summary>
     public enum ProxyUsage
     {
         /// <summary>Use the current configuration</summary>
-        PreConfig, 
+        PreConfig,
 
         /// <summary>Don't use a proxy</summary>
-        NoProxy, 
+        NoProxy,
 
         /// <summary>Override proxy settings</summary>
-        Override, 
+        Override,
 
         /// <summary>Auto detect proxy settings</summary>
-        AutoDetect, 
+        AutoDetect,
     }
 }

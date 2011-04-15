@@ -8,27 +8,28 @@
 // </copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
 // ************************************************************************
+
 namespace System.Windows.Dialogs
 {
     using System.Collections.Generic;
     using System.Runtime.InteropServices;
 
-    /// <summary>Encapsulates additional configuration needed by <see cref="NativeTaskDialog"/> that it can't get from the <see cref="TaskDialogNativeMethods.TaskDialogConfig"/> struct.</summary>
+    /// <summary>Encapsulates additional configuration needed by <see cref="NativeTaskDialog" /> that it can't get from the <see cref="TaskDialogNativeMethods.TaskDialogConfig" /> struct.</summary>
     internal sealed class NativeTaskDialogSettings
     {
         #region Constants and Fields
 
-        /// <summary>A collection of <see cref = "TaskDialogButton" /></summary>
+        /// <summary>A collection of <see cref="TaskDialogButton" /></summary>
         private TaskDialogNativeMethods.TaskDialogButtonData[] buttons;
 
-        /// <summary>/// A collection of <see cref = "TaskDialogRadioButton" /></summary>
+        /// <summary>/// A collection of <see cref="TaskDialogRadioButton" /></summary>
         private TaskDialogNativeMethods.TaskDialogButtonData[] radioButtons;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "NativeTaskDialogSettings" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="NativeTaskDialogSettings" /> class.</summary>
         internal NativeTaskDialogSettings()
         {
             this.NativeConfiguration = new TaskDialogNativeMethods.TaskDialogConfig();
@@ -95,14 +96,14 @@ namespace System.Windows.Dialogs
         #region Public Methods
 
         /// <summary>Gets the buttons.</summary>
-        /// <returns>The collection of <see cref="TaskDialogButton"/>'s of the dialog dialog</returns>
+        /// <returns>The collection of <see cref="TaskDialogButton" />'s of the dialog dialog</returns>
         public TaskDialogNativeMethods.TaskDialogButtonData[] GetButtons()
         {
             return this.buttons;
         }
 
         /// <summary>Gets the radio buttons.</summary>
-        /// <returns>The collection of <see cref="TaskDialogRadioButton"/>'s of the dialog dialog</returns>
+        /// <returns>The collection of <see cref="TaskDialogRadioButton" />'s of the dialog dialog</returns>
         public TaskDialogNativeMethods.TaskDialogButtonData[] GetRadioButtons()
         {
             return this.radioButtons;

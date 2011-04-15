@@ -9,6 +9,7 @@
 // <author username="SeriousM">Bernhard Millauer</author>
 // <license href="http://wpflocalizeextension.codeplex.com/license">Microsoft Public License</license>
 // ***********************************************************************
+
 namespace WPFLocalizeExtension.Engine
 {
     using System;
@@ -20,7 +21,7 @@ namespace WPFLocalizeExtension.Engine
     {
         #region Constants and Fields
 
-        /// <summary>This member holds the list of all <see cref = "WeakReference" />s and their appropriate objects.</summary>
+        /// <summary>This member holds the list of all <see cref="WeakReference" />s and their appropriate objects.</summary>
         private static readonly Dictionary<object, List<WeakReference>> InternalList = new Dictionary<object, List<WeakReference>>();
 
         #endregion
@@ -28,9 +29,9 @@ namespace WPFLocalizeExtension.Engine
         #region Public Methods
 
         /// <summary>This method adds a new object dependency</summary>
-        /// <param name="weakRef">The <see cref="WeakReference"/>, which ensures the live cycle of <paramref name="value"/></param>
-        /// <param name="value">The object, which should stay alive as long <paramref name="weakRef"/> is alive</param>
-        /// <returns><see langword="true"/>, if the binding was successfully, otherwise <see langword="false"/></returns>
+        /// <param name="weakRef">The <see cref="WeakReference" />, which ensures the live cycle of <paramref name="value" /></param>
+        /// <param name="value">The object, which should stay alive as long <paramref name="weakRef" /> is alive</param>
+        /// <returns><see langword="true" />, if the binding was successfully, otherwise <see langword="false" /></returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public static bool AddObjectDependency(WeakReference weakRef, object value)
         {
@@ -89,7 +90,7 @@ namespace WPFLocalizeExtension.Engine
             return itemRegistered;
         }
 
-        /// <summary>This method cleans up all independent (!<see cref="WeakReference"/>.IsAlive) objects or a single object.</summary>
+        /// <summary>This method cleans up all independent (!<see cref="WeakReference" />.IsAlive) objects or a single object.</summary>
         /// <param name="value">If defined, the associated object dependency will be removed instead of a full CleanUp</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public static void CleanUp(object value = null)

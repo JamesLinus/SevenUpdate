@@ -8,6 +8,7 @@
 // </copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
 // ***********************************************************************
+
 namespace System.Windows.ApplicationServices
 {
     using System.Runtime.InteropServices;
@@ -25,7 +26,7 @@ namespace System.Windows.ApplicationServices
         internal delegate uint InternalRecoveryCallback(IntPtr state);
 
         /// <summary>Indicates that the calling application has completed its data recovery.</summary>
-        /// <param name="success">if set to <see langword="true"/> the data was successfully recovered; otherwise, <see langword="false"/>.</param>
+        /// <param name="success">if set to <see langword="true" /> the data was successfully recovered; otherwise, <see langword="false" />.</param>
         [DllImport(@"kernel32.dll")]
         internal static extern void ApplicationRecoveryFinished([MarshalAs(UnmanagedType.Bool)] bool success);
 
@@ -42,7 +43,8 @@ namespace System.Windows.ApplicationServices
         /// <param name="flags">Reserved for future use.</param>
         /// <returns>S_OK if function succeeded, otherwise the error result</returns>
         [DllImport(@"kernel32.dll", CharSet = CharSet.Unicode), PreserveSig]
-        internal static extern Result RegisterApplicationRecoveryCallback(InternalRecoveryCallback callback, IntPtr parameter, uint pingInterval, uint flags);
+        internal static extern Result RegisterApplicationRecoveryCallback(
+            InternalRecoveryCallback callback, IntPtr parameter, uint pingInterval, uint flags);
 
         /// <summary>Registers the active instance of an application for restart.</summary>
         /// <param name="commandLineArgs">A pointer to a Unicode string that specifies the command-line arguments for the application when it is restarted.</param>

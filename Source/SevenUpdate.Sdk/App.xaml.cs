@@ -21,6 +21,7 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
+
 namespace SevenUpdate.Sdk
 {
     using System;
@@ -40,7 +41,8 @@ namespace SevenUpdate.Sdk
         #region Constants and Fields
 
         /// <summary>The user application data location</summary>
-        public static readonly string UserStore = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Seven Software", "Seven Update SDK");
+        public static readonly string UserStore = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Seven Software", "Seven Update SDK");
 
         #endregion
 
@@ -89,16 +91,16 @@ namespace SevenUpdate.Sdk
 
         /// <summary>Raises the Application.Exit event.</summary>
         /// <param name="e">An ExitEventArgs that contains the event data.</param>
-        /// <param name="firstInstance">If set to <see langword="true"/> the current instance is the first application instance.</param>
+        /// <param name="firstInstance">If set to <see langword="true" /> the current instance is the first application instance.</param>
         protected override void OnExit(ExitEventArgs e, bool firstInstance)
         {
             UnregisterApplicationRecoveryAndRestart();
             base.OnExit(e, firstInstance);
         }
 
-        /// <summary>Raises the <see cref="InstanceAwareApplication.Startup"/> event.</summary>
-        /// <param name="e">The <see cref="System.Windows.StartupEventArgs"/> instance containing the event data.</param>
-        /// <param name="isFirstInstance">If set to <see langword="true"/> the current instance is the first application instance.</param>
+        /// <summary>Raises the <see cref="InstanceAwareApplication.Startup" /> event.</summary>
+        /// <param name="e">The <see cref="System.Windows.StartupEventArgs" /> instance containing the event data.</param>
+        /// <param name="isFirstInstance">If set to <see langword="true" /> the current instance is the first application instance.</param>
         protected override void OnStartup(StartupEventArgs e, bool isFirstInstance)
         {
             Utilities.Locale = Settings.Default.locale;
@@ -118,8 +120,8 @@ namespace SevenUpdate.Sdk
             }
         }
 
-        /// <summary>Raises the <see cref="InstanceAwareApplication.StartupNextInstance"/> event.</summary>
-        /// <param name="e">The <see cref="StartupNextInstanceEventArgs"/> instance containing the event data.</param>
+        /// <summary>Raises the <see cref="InstanceAwareApplication.StartupNextInstance" /> event.</summary>
+        /// <param name="e">The <see cref="StartupNextInstanceEventArgs" /> instance containing the event data.</param>
         protected override void OnStartupNextInstance(StartupNextInstanceEventArgs e)
         {
             base.OnStartupNextInstance(e);
@@ -166,7 +168,7 @@ namespace SevenUpdate.Sdk
 #endif
         }
 
-        /// <summary>Sets the Windows 7 <see cref="JumpList"/></summary>
+        /// <summary>Sets the Windows 7 <see cref="JumpList" /></summary>
         private static void SetJumpList()
         {
             // Create JumpTask
@@ -175,7 +177,10 @@ namespace SevenUpdate.Sdk
             // Configure a new JumpTask
             var jumpTask = new JumpTask
                 {
-                   IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"), IconResourceIndex = 6, Title = Sdk.Properties.Resources.CreateProject, Arguments = @"-newproject" 
+                    IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"),
+                    IconResourceIndex = 6,
+                    Title = Sdk.Properties.Resources.CreateProject,
+                    Arguments = @"-newproject"
                 };
 
             jumpList.JumpItems.Add(jumpTask);

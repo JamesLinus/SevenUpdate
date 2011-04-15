@@ -24,6 +24,7 @@
 //   Interaction logic for UpdateDetails.xaml
 // </summary>
 // ***********************************************************************
+
 namespace SevenUpdate.Windows
 {
     using System;
@@ -45,7 +46,7 @@ namespace SevenUpdate.Windows
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "UpdateDetails" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="UpdateDetails" /> class.</summary>
         public UpdateDetails()
         {
             this.InitializeComponent();
@@ -76,24 +77,28 @@ namespace SevenUpdate.Windows
                                    ? Properties.Resources.Failed.ToLower(CultureInfo.CurrentCulture)
                                    : Properties.Resources.Successful.ToLower(CultureInfo.CurrentCulture);
             this.tbStatus.Text = updateInfo.Status == UpdateStatus.Hidden
-                                     ? string.Format(CultureInfo.CurrentCulture, Properties.Resources.DownloadSize, Utilities.ConvertFileSize(updateInfo.UpdateSize))
-                                     : string.Format(CultureInfo.CurrentCulture, Properties.Resources.InstallationStatus, updateStatus, updateInfo.InstallDate);
+                                     ? string.Format(
+                                         CultureInfo.CurrentCulture,
+                                         Properties.Resources.DownloadSize,
+                                         Utilities.ConvertFileSize(updateInfo.UpdateSize))
+                                     : string.Format(
+                                         CultureInfo.CurrentCulture, Properties.Resources.InstallationStatus, updateStatus, updateInfo.InstallDate);
 
             this.ShowDialog();
             return;
         }
 
-        /// <summary>Launches the Help <see cref="Uri"/></summary>
+        /// <summary>Launches the Help <see cref="Uri" /></summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs" /> instance containing the event data.</param>
         private void NavigateToHelpUrl(object sender, MouseButtonEventArgs e)
         {
             Utilities.StartProcess(this.helpUrl);
         }
 
-        /// <summary>Launches the More Information <see cref="Uri"/></summary>
+        /// <summary>Launches the More Information <see cref="Uri" /></summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs" /> instance containing the event data.</param>
         private void NavigateToInfoUrl(object sender, MouseButtonEventArgs e)
         {
             Utilities.StartProcess(this.infoUrl);

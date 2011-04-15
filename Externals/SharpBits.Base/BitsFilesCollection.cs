@@ -10,12 +10,13 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://sharpbits.codeplex.com/license">BSD License</license> 
 // ***********************************************************************
+
 namespace SharpBits.Base
 {
     using System;
     using System.Collections.ObjectModel;
 
-    /// <summary>Collection of <see cref="BitsFile"/></summary>
+    /// <summary>Collection of <see cref="BitsFile" /></summary>
     public class BitsFilesCollection : Collection<BitsFile>, IDisposable
     {
         #region Constants and Fields
@@ -26,14 +27,14 @@ namespace SharpBits.Base
         /// <summary>Indicates of the files has been disposed</summary>
         private bool disposed;
 
-        /// <summary>Gets a list of the <see cref = "BitsFile" /></summary>
+        /// <summary>Gets a list of the <see cref="BitsFile" /></summary>
         private IEnumBackgroundCopyFiles fileList;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="BitsFilesCollection"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="BitsFilesCollection" /> class.</summary>
         /// <param name="job">The current job</param>
         /// <param name="fileList">The file list.</param>
         internal BitsFilesCollection(BitsJob job, IEnumBackgroundCopyFiles fileList)
@@ -62,7 +63,7 @@ namespace SharpBits.Base
 
         #region Methods
 
-        /// <summary>Refreshes the <see cref="BitsFile"/> collection</summary>
+        /// <summary>Refreshes the <see cref="BitsFile" /> collection</summary>
         internal void Refresh()
         {
             uint count;
@@ -82,7 +83,7 @@ namespace SharpBits.Base
         }
 
         /// <summary>Releases unmanaged and - optionally - managed resources</summary>
-        /// <param name="disposing"><see langword="true"/> to release both managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.</param>
+        /// <param name="disposing"><see langword="true" /> to release both managed and unmanaged resources; <see langword="false" /> to release only unmanaged resources.</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)

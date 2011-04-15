@@ -21,6 +21,7 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
+
 namespace System.Windows.Internal
 {
     using System.Runtime.InteropServices;
@@ -29,19 +30,21 @@ namespace System.Windows.Internal
     [StructLayout(LayoutKind.Sequential)]
     public struct Margins
     {
-        /// <summary>Initializes a new instance of the <see cref="Margins"/> struct.</summary>
-        /// <param name="fullWindow">if set to <see langword="true"/> the margin is set to the full window.</param>
-        public Margins(bool fullWindow) : this()
+        /// <summary>Initializes a new instance of the <see cref="Margins" /> struct.</summary>
+        /// <param name="fullWindow">if set to <see langword="true" /> the margin is set to the full window.</param>
+        public Margins(bool fullWindow)
+            : this()
         {
             this.LeftWidth = this.RightWidth = this.TopHeight = this.BottomHeight = fullWindow ? -1 : 0;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="Margins"/> struct.</summary>
+        /// <summary>Initializes a new instance of the <see cref="Margins" /> struct.</summary>
         /// <param name="left">Width of the left border that retains its size.</param>
         /// <param name="top">Height of the top border that retains its size.</param>
         /// <param name="right">Width of the right border that retains its size.</param>
         /// <param name="bottom">Height of the bottom border that retains its size.</param>
-        public Margins(int left, int top, int right, int bottom) : this()
+        public Margins(int left, int top, int right, int bottom)
+            : this()
         {
             this.LeftWidth = left;
             this.RightWidth = right;

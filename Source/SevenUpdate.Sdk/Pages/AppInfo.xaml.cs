@@ -21,6 +21,7 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
+
 namespace SevenUpdate.Sdk.Pages
 {
     using System;
@@ -52,7 +53,7 @@ namespace SevenUpdate.Sdk.Pages
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "AppInfo" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="AppInfo" /> class.</summary>
         public AppInfo()
         {
             this.InitializeComponent();
@@ -92,9 +93,9 @@ namespace SevenUpdate.Sdk.Pages
 
         #region Methods
 
-        /// <summary>Opens a <see cref="OpenFileDialog"/> to browse for the application install location</summary>
+        /// <summary>Opens a <see cref="OpenFileDialog" /> to browse for the application install location</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs" /> instance containing the event data.</param>
         private void BrowseForAppLocation(object sender, MouseButtonEventArgs e)
         {
             using (var folderBrowserDialog = new FolderBrowserDialog())
@@ -135,7 +136,7 @@ namespace SevenUpdate.Sdk.Pages
 
         /// <summary>Changes the UI to show the file system application location</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void ChangeToFileSystemLocation(object sender, RoutedEventArgs e)
         {
             if (this.tbxAppLocation == null)
@@ -150,7 +151,7 @@ namespace SevenUpdate.Sdk.Pages
 
         /// <summary>Changes the UI to show the registry application location</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void ChangeToRegistryLocation(object sender, RoutedEventArgs e)
         {
             if (this.tbxAppLocation == null)
@@ -165,7 +166,7 @@ namespace SevenUpdate.Sdk.Pages
 
         /// <summary>Converts the application location path to system variables</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Input.KeyboardFocusChangedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.Input.KeyboardFocusChangedEventArgs" /> instance containing the event data.</param>
         private void ConvertPath(object sender, KeyboardFocusChangedEventArgs e)
         {
             if (this.rbtnFileSystem.IsChecked.GetValueOrDefault())
@@ -175,7 +176,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Determines whether this instance has errors.</summary>
-        /// <returns><see langword="true"/> if this instance has errors; otherwise, <see langword="false"/>.</returns>
+        /// <returns><see langword="true" /> if this instance has errors; otherwise, <see langword="false" />.</returns>
         private bool HasErrors()
         {
             if (this.rbtnRegistry.IsChecked.GetValueOrDefault() && this.tbxValueName.HasError)
@@ -183,13 +184,13 @@ namespace SevenUpdate.Sdk.Pages
                 return true;
             }
 
-            return this.tbxAppName.HasError || this.tbxPublisher.HasError || this.tbxAppUrl.HasError || this.tbxHelpUrl.HasError || this.tbxAppLocation.HasError || this.tbxAppDescription.HasError ||
-                   this.tbxSuiUrl.HasError;
+            return this.tbxAppName.HasError || this.tbxPublisher.HasError || this.tbxAppUrl.HasError || this.tbxHelpUrl.HasError ||
+                   this.tbxAppLocation.HasError || this.tbxAppDescription.HasError || this.tbxSuiUrl.HasError;
         }
 
         /// <summary>Loads the application info into the UI.</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void LoadAppInfo(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(this.tbxAppName.Text))
@@ -267,9 +268,9 @@ namespace SevenUpdate.Sdk.Pages
             oldPlatform = Core.AppInfo.Platform;
         }
 
-        /// <summary>Loads the <see cref="LocaleString"/>'s for the <see cref="Sua"/> into the UI</summary>
+        /// <summary>Loads the <see cref="LocaleString" />'s for the <see cref="Sua" /> into the UI</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Controls.SelectionChangedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.Controls.SelectionChangedEventArgs" /> instance containing the event data.</param>
         private void LoadLocaleStrings(object sender, SelectionChangedEventArgs e)
         {
             if (this.tbxAppName == null || this.cbxLocale.SelectedIndex < 0)
@@ -324,7 +325,7 @@ namespace SevenUpdate.Sdk.Pages
 
         /// <summary>Moves on to the next pages if no errors are present</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void MoveOn(object sender, RoutedEventArgs e)
         {
             if (!this.HasErrors())
@@ -339,7 +340,7 @@ namespace SevenUpdate.Sdk.Pages
 
         /// <summary>Saves the project and goes back to the main page</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void SaveSua(object sender, RoutedEventArgs e)
         {
             if (this.btnNext.Visibility != Visibility.Visible)
@@ -413,7 +414,7 @@ namespace SevenUpdate.Sdk.Pages
 
         /// <summary>Changes the UI depending on whether Aero Glass is enabled.</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="CompositionChangedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="CompositionChangedEventArgs" /> instance containing the event data.</param>
         private void UpdateUI(object sender, CompositionChangedEventArgs e)
         {
             if (e.IsGlassEnabled)

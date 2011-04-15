@@ -21,6 +21,7 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
+
 namespace SevenUpdate
 {
     using System.Collections.ObjectModel;
@@ -36,15 +37,15 @@ namespace SevenUpdate
     {
         /// <summary>Important update</summary>
         [ProtoEnum, EnumMember]
-        Important = 0, 
+        Important = 0,
 
         /// <summary>Locale or language</summary>
         [ProtoEnum, EnumMember]
-        Locale = 1, 
+        Locale = 1,
 
         /// <summary>Optional update</summary>
         [ProtoEnum, EnumMember]
-        Optional = 2, 
+        Optional = 2,
 
         /// <summary>Recommended update</summary>
         [ProtoEnum, EnumMember]
@@ -52,7 +53,8 @@ namespace SevenUpdate
     }
 
     /// <summary>Information on how to install a software update</summary>
-    [ProtoContract, DataContract(IsReference = true), KnownType(typeof(ObservableCollection<LocaleString>)), KnownType(typeof(UpdateFile)), KnownType(typeof(RegistryItem)), KnownType(typeof(Shortcut)), KnownType(typeof(Importance))]
+    [ProtoContract, DataContract(IsReference = true), KnownType(typeof(ObservableCollection<LocaleString>)), KnownType(typeof(UpdateFile)),
+     KnownType(typeof(RegistryItem)), KnownType(typeof(Shortcut)), KnownType(typeof(Importance))]
     public sealed class Update : INotifyPropertyChanged
     {
         #region Constants and Fields
@@ -85,17 +87,17 @@ namespace SevenUpdate
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="Update"/> class</summary>
+        /// <summary>Initializes a new instance of the <see cref="Update" /> class</summary>
         /// <param name="name">The collection of localized update names</param>
         /// <param name="description">The collection localized update descriptions</param>
         /// <param name="files">The collection of localized update files</param>
         /// <param name="registryItems">The collection of registry keys and values to perform actions on in the update</param>
         /// <param name="shortcuts">The collection of shortcuts to perform actions on in the update</param>
         public Update(
-            ObservableCollection<LocaleString> name, 
-            ObservableCollection<LocaleString> description, 
-            ObservableCollection<UpdateFile> files, 
-            ObservableCollection<RegistryItem> registryItems, 
+            ObservableCollection<LocaleString> name,
+            ObservableCollection<LocaleString> description,
+            ObservableCollection<UpdateFile> files,
+            ObservableCollection<RegistryItem> registryItems,
             ObservableCollection<Shortcut> shortcuts)
         {
             this.Name = name;
@@ -136,7 +138,7 @@ namespace SevenUpdate
             this.Description.CollectionChanged += this.DescriptionCollectionChanged;
         }
 
-        /// <summary>Initializes a new instance of the <see cref = "Update" /> class</summary>
+        /// <summary>Initializes a new instance of the <see cref="Update" /> class</summary>
         public Update()
         {
             this.Name = new ObservableCollection<LocaleString>();
@@ -192,7 +194,7 @@ namespace SevenUpdate
         public ObservableCollection<UpdateFile> Files { get; private set; }
 
         /// <summary>Gets or sets a value indicating whether the update is hidden</summary>
-        /// <value><see langword = "true" /> if hidden; otherwise, <see langword = "false" />.</value>
+        /// <value><see langword="true" /> if hidden; otherwise, <see langword="false" />.</value>
         [ProtoIgnore, IgnoreDataMember]
         public bool Hidden
         {
@@ -297,7 +299,7 @@ namespace SevenUpdate
         }
 
         /// <summary>Gets or sets a value indicating whether the update is selected (not used in the SDK)</summary>
-        /// <value><see langword = "true" /> if selected; otherwise, <see langword = "false" />.</value>
+        /// <value><see langword="true" /> if selected; otherwise, <see langword="false" />.</value>
         [ProtoIgnore, IgnoreDataMember]
         public bool Selected
         {
@@ -359,7 +361,7 @@ namespace SevenUpdate
             this.OnPropertyChanged("Name");
         }
 
-        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged"/> Event</summary>
+        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged" /> Event</summary>
         /// <param name="propertyName">The name of the property</param>
         private void OnPropertyChanged(string propertyName)
         {

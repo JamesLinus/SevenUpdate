@@ -10,9 +10,10 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://sharpbits.codeplex.com/license">BSD License</license> 
 // ***********************************************************************
+
 namespace SharpBits.Base
 {
-    /// <summary>The <see cref="BitsJob"/> Progress</summary>
+    /// <summary>The <see cref="BitsJob" /> Progress</summary>
     public class JobProgress
     {
         #region Constants and Fields
@@ -24,7 +25,7 @@ namespace SharpBits.Base
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="JobProgress"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="JobProgress" /> class.</summary>
         /// <param name="jobProgress">The job progress.</param>
         internal JobProgress(BGJobProgress jobProgress)
         {

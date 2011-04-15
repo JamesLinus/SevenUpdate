@@ -21,6 +21,7 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
+
 namespace SevenUpdate
 {
     using System;
@@ -35,7 +36,7 @@ namespace SevenUpdate
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="SearchCompletedEventArgs"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="SearchCompletedEventArgs" /> class.</summary>
         /// <param name="applications">The collection of applications to update</param>
         /// <param name="importantCount">The number of important updates</param>
         /// <param name="recommendedCount">The number of recommended updates</param>
@@ -48,7 +49,7 @@ namespace SevenUpdate
             this.RecommendedCount = recommendedCount;
         }
 
-        /// <summary>Initializes a new instance of the <see cref = "SearchCompletedEventArgs" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="SearchCompletedEventArgs" /> class.</summary>
         public SearchCompletedEventArgs()
         {
         }

@@ -21,6 +21,7 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
+
 namespace SevenUpdate
 {
     using System;
@@ -81,7 +82,7 @@ namespace SevenUpdate
         /// <param name="appUpdates">The application updates to download</param>
         /// <param name="downloadName">The name of the job</param>
         /// <param name="downloadLocation">The directory where the files are downloaded are stored</param>
-        /// <param name="isPriority">if set to <see langword="true"/> the updates will download with priority</param>
+        /// <param name="isPriority">if set to <see langword="true" /> the updates will download with priority</param>
         public static void DownloadUpdates(Collection<Sui> appUpdates, string downloadName, string downloadLocation, bool isPriority = false)
         {
             downloadDirectory = downloadLocation;
@@ -203,13 +204,15 @@ namespace SevenUpdate
 
                 for (var z = 0; z < application.Updates[y].Files.Count; z++)
                 {
-                    if (application.Updates[y].Files[z].Action == FileAction.Delete || application.Updates[y].Files[z].Action == FileAction.UnregisterThenDelete ||
+                    if (application.Updates[y].Files[z].Action == FileAction.Delete ||
+                        application.Updates[y].Files[z].Action == FileAction.UnregisterThenDelete ||
                         application.Updates[y].Files[z].Action == FileAction.CompareOnly)
                     {
                         continue;
                     }
 
-                    if (Utilities.GetHash(Path.Combine(downloadDir, Path.GetFileName(application.Updates[y].Files[z].Destination))) == application.Updates[y].Files[z].Hash)
+                    if (Utilities.GetHash(Path.Combine(downloadDir, Path.GetFileName(application.Updates[y].Files[z].Destination))) ==
+                        application.Updates[y].Files[z].Hash)
                     {
                         continue;
                     }
@@ -222,14 +225,16 @@ namespace SevenUpdate
                     {
                     }
 
-                    bitsJob.AddFile(new Uri(application.Updates[y].Files[z].Source).AbsoluteUri, Path.Combine(downloadDir, Path.GetFileName(application.Updates[y].Files[z].Destination)));
+                    bitsJob.AddFile(
+                        new Uri(application.Updates[y].Files[z].Source).AbsoluteUri,
+                        Path.Combine(downloadDir, Path.GetFileName(application.Updates[y].Files[z].Destination)));
                 }
             }
         }
 
         /// <summary>Reports when a download completes</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="SharpBits.Base.NotificationEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="SharpBits.Base.NotificationEventArgs" /> instance containing the event data.</param>
         private static void ReportDownloadComplete(object sender, NotificationEventArgs e)
         {
             if (e.Job == null)
@@ -275,7 +280,7 @@ namespace SevenUpdate
 
         /// <summary>Reports a download error</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="SharpBits.Base.ErrorNotificationEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="SharpBits.Base.ErrorNotificationEventArgs" /> instance containing the event data.</param>
         private static void ReportDownloadError(object sender, ErrorNotificationEventArgs e)
         {
             if (e.Job == null)
@@ -295,7 +300,8 @@ namespace SevenUpdate
 
             errorOccurred = true;
 
-            var exception = new Exception(e.Job.Error.File + " " + e.Job.Error.Description + " " + e.Job.Error.ErrorCode + " " + e.Job.Error.ContextDescription);
+            var exception =
+                new Exception(e.Job.Error.File + " " + e.Job.Error.Description + " " + e.Job.Error.ErrorCode + " " + e.Job.Error.ContextDescription);
 
             Utilities.ReportError(exception, ErrorType.DownloadError);
 
@@ -318,7 +324,7 @@ namespace SevenUpdate
 
         /// <summary>Reports the download progress</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="SharpBits.Base.NotificationEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="SharpBits.Base.NotificationEventArgs" /> instance containing the event data.</param>
         private static void ReportDownloadProgress(object sender, NotificationEventArgs e)
         {
             if (cancelDownload)
@@ -347,7 +353,8 @@ namespace SevenUpdate
                 return;
             }
 
-            var eventArgs = new DownloadProgressChangedEventArgs(e.Job.Progress.BytesTransferred, e.Job.Progress.BytesTotal, e.Job.Progress.FilesTransferred, e.Job.Progress.FilesTotal);
+            var eventArgs = new DownloadProgressChangedEventArgs(
+                e.Job.Progress.BytesTransferred, e.Job.Progress.BytesTotal, e.Job.Progress.FilesTransferred, e.Job.Progress.FilesTotal);
             DownloadProgressChanged(null, eventArgs);
         }
 

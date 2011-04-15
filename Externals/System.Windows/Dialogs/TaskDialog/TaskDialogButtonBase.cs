@@ -8,6 +8,7 @@
 // </copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
 // ***********************************************************************
+
 namespace System.Windows.Dialogs
 {
     /// <summary>Defines the abstract base class for task dialog buttons.Classes that inherit from this class will inheritthe Text property defined in this class.</summary>
@@ -18,7 +19,7 @@ namespace System.Windows.Dialogs
         /// <summary>Default control</summary>
         private bool defaultControl;
 
-        /// <summary><see langword = "true" /> to enable, <see langword = "false" /> to disable</summary>
+        /// <summary><see langword="true" /> to enable, <see langword="false" /> to disable</summary>
         private bool enabled = true;
 
         /// <summary>The text for the button</summary>
@@ -28,15 +29,16 @@ namespace System.Windows.Dialogs
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "TaskDialogButtonBase" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="TaskDialogButtonBase" /> class.</summary>
         protected TaskDialogButtonBase()
         {
         }
 
-        /// <summary>Initializes a new instance of the <see cref="TaskDialogButtonBase"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="TaskDialogButtonBase" /> class.</summary>
         /// <param name="name">The name for this button.</param>
         /// <param name="text">The label for this button.</param>
-        protected TaskDialogButtonBase(string name, string text) : base(name)
+        protected TaskDialogButtonBase(string name, string text)
+            : base(name)
         {
             this.text = text;
         }
@@ -53,7 +55,7 @@ namespace System.Windows.Dialogs
         #region Properties
 
         /// <summary>Gets or sets a value indicating whether this button is the default button.</summary>
-        /// <value><see langword = "true" /> if default; otherwise, <see langword = "false" />.</value>
+        /// <value><see langword="true" /> if default; otherwise, <see langword="false" />.</value>
         public bool Default
         {
             get
@@ -106,7 +108,7 @@ namespace System.Windows.Dialogs
         #region Public Methods
 
         /// <summary>Returns the Text property value for this button.</summary>
-        /// <returns>A <see cref="System.String"/>.</returns>
+        /// <returns>A <see cref="System.String" />.</returns>
         public override string ToString()
         {
             return this.text ?? string.Empty;

@@ -24,6 +24,7 @@
 //   Interaction logic for UpdateFiles.xaml
 // </summary>
 // ***********************************************************************
+
 namespace SevenUpdate.Sdk.Pages
 {
     using System.Collections.Generic;
@@ -54,7 +55,7 @@ namespace SevenUpdate.Sdk.Pages
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "UpdateFiles" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="UpdateFiles" /> class.</summary>
         public UpdateFiles()
         {
             this.InitializeComponent();
@@ -84,7 +85,7 @@ namespace SevenUpdate.Sdk.Pages
         #region Methods
 
         /// <summary>Gets the size of the file.</summary>
-        /// <param name="file">The <see cref="UpdateFile"/> to get the file size for</param>
+        /// <param name="file">The <see cref="UpdateFile" /> to get the file size for</param>
         /// <param name="fileLocation">The location for the file</param>
         private static void GetFileSize(ref UpdateFile file, string fileLocation = null)
         {
@@ -93,8 +94,10 @@ namespace SevenUpdate.Sdk.Pages
             Task.Factory.StartNew(
                 () =>
                     {
-                        updateFile.FileSize = Utilities.GetFileSize(
-                            Utilities.ExpandInstallLocation(fileLocation ?? updateFile.Destination, Core.AppInfo.Directory, Core.AppInfo.Platform, Core.AppInfo.ValueName));
+                        updateFile.FileSize =
+                            Utilities.GetFileSize(
+                                Utilities.ExpandInstallLocation(
+                                    fileLocation ?? updateFile.Destination, Core.AppInfo.Directory, Core.AppInfo.Platform, Core.AppInfo.ValueName));
                     });
         }
 
@@ -125,7 +128,8 @@ namespace SevenUpdate.Sdk.Pages
                 downloadUrl = downloadUrl.Replace(@"//", @"/");
             }
 
-            var file = new UpdateFile { Action = FileAction.Update, Destination = installUrl, Hash = Properties.Resources.CalculatingHash, Source = downloadUrl };
+            var file = new UpdateFile
+                { Action = FileAction.Update, Destination = installUrl, Hash = Properties.Resources.CalculatingHash, Source = downloadUrl };
 
             Core.UpdateInfo.Files.Add(file);
 
@@ -135,7 +139,7 @@ namespace SevenUpdate.Sdk.Pages
             GetFileSize(ref file, fullName);
         }
 
-        /// <summary>Adds multiple files to the <see cref="UpdateFile"/> collection</summary>
+        /// <summary>Adds multiple files to the <see cref="UpdateFile" /> collection</summary>
         /// <param name="files">A list of files to add to the update</param>
         /// <param name="pathToFiles">The full directory path of the files being added</param>
         /// <param name="impersonateAppDirectory">true to use use %INSTALLDIR% instead of real location of the file</param>
@@ -150,9 +154,9 @@ namespace SevenUpdate.Sdk.Pages
             this.listBox.SelectedIndex = 0;
         }
 
-        /// <summary>Browses for a folder contains files to add to the <see cref="UpdateFile"/> collection</summary>
+        /// <summary>Browses for a folder contains files to add to the <see cref="UpdateFile" /> collection</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void BrowseFolder(object sender, RoutedEventArgs e)
         {
             var impersonate = Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift);
@@ -165,14 +169,17 @@ namespace SevenUpdate.Sdk.Pages
 
                 if (folderBrowserDialog.ShowDialog(Application.Current.MainWindow.GetIWin32Window()) == DialogResult.OK)
                 {
-                    this.AddFiles(Directory.GetFiles(folderBrowserDialog.SelectedPath, "*.*", SearchOption.AllDirectories), folderBrowserDialog.SelectedPath, impersonate);
+                    this.AddFiles(
+                        Directory.GetFiles(folderBrowserDialog.SelectedPath, "*.*", SearchOption.AllDirectories),
+                        folderBrowserDialog.SelectedPath,
+                        impersonate);
                 }
             }
         }
 
-        /// <summary>Browses for a file to add to the <see cref="UpdateFile"/> collection</summary>
+        /// <summary>Browses for a file to add to the <see cref="UpdateFile" /> collection</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void BrowseForFile(object sender, RoutedEventArgs e)
         {
             var impersonate = Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift);
@@ -190,7 +197,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Calculates the hash.</summary>
-        /// <param name="file">The <see cref="UpdateFile"/> to update the hash for</param>
+        /// <param name="file">The <see cref="UpdateFile" /> to update the hash for</param>
         /// <param name="fileLocation">The alternate location of the file</param>
         private void CalculateHash(ref UpdateFile file, string fileLocation = null)
         {
@@ -201,13 +208,17 @@ namespace SevenUpdate.Sdk.Pages
             Task.Factory.StartNew(
                 () =>
                     {
-                        updateFile.Hash = Utilities.GetHash(Utilities.ExpandInstallLocation(fileLocation ?? updateFile.Destination, Core.AppInfo.Directory, Core.AppInfo.Platform, Core.AppInfo.ValueName));
-                    }).ContinueWith(_ => this.CheckHashGenerating(), context);
+                        updateFile.Hash =
+                            Utilities.GetHash(
+                                Utilities.ExpandInstallLocation(
+                                    fileLocation ?? updateFile.Destination, Core.AppInfo.Directory, Core.AppInfo.Platform, Core.AppInfo.ValueName));
+                    })
+                .ContinueWith(_ => this.CheckHashGenerating(), context);
         }
 
-        /// <summary>Changes the UI based on the selected <see cref="UpdateFile"/>'s <see cref="FileAction"/></summary>
+        /// <summary>Changes the UI based on the selected <see cref="UpdateFile" />'s <see cref="FileAction" /></summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Controls.SelectionChangedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.Controls.SelectionChangedEventArgs" /> instance containing the event data.</param>
         private void ChangeUI(object sender, SelectionChangedEventArgs e)
         {
             if (this.tbxDownloadUrl == null || this.listBox.SelectedItem == null)
@@ -254,7 +265,7 @@ namespace SevenUpdate.Sdk.Pages
 
         /// <summary>Converts a path to system variables</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Input.KeyboardFocusChangedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.Input.KeyboardFocusChangedEventArgs" /> instance containing the event data.</param>
         private void ConvertPath(object sender, KeyboardFocusChangedEventArgs e)
         {
             var source = e.Source as InfoTextBox;
@@ -276,9 +287,9 @@ namespace SevenUpdate.Sdk.Pages
             source.Text = Utilities.ConvertPath(installUrl, false, Core.AppInfo.Platform);
         }
 
-        /// <summary>Deletes an item from the <see cref="System.Windows.Controls.ListBox"/> on delete key down</summary>
+        /// <summary>Deletes an item from the <see cref="System.Windows.Controls.ListBox" /> on delete key down</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Input.KeyEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.Input.KeyEventArgs" /> instance containing the event data.</param>
         private void DeleteItem(object sender, KeyEventArgs e)
         {
             var index = this.listBox.SelectedIndex;
@@ -302,7 +313,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Determines whether this instance has errors.</summary>
-        /// <returns><see langword="true"/> if this instance has errors; otherwise, <see langword="false"/>.</returns>
+        /// <returns><see langword="true" /> if this instance has errors; otherwise, <see langword="false" />.</returns>
         private bool HasErrors()
         {
             if (Core.UpdateInfo.Files.Count == 0)
@@ -318,7 +329,7 @@ namespace SevenUpdate.Sdk.Pages
 
         /// <summary>Navigates to the next page if no errors exist</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void MoveOn(object sender, RoutedEventArgs e)
         {
             if (!this.HasErrors())
@@ -333,31 +344,31 @@ namespace SevenUpdate.Sdk.Pages
 
         /// <summary>Navigates to the main page</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void NavigateToMainPage(object sender, RoutedEventArgs e)
         {
             MainWindow.NavService.Navigate(Core.MainPage);
         }
 
-        /// <summary>Removes all files from the <see cref="UpdateFile"/> collection</summary>
+        /// <summary>Removes all files from the <see cref="UpdateFile" /> collection</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void RemoveAllFiles(object sender, RoutedEventArgs e)
         {
             Core.UpdateInfo.Files.Clear();
         }
 
-        /// <summary>Removes a files from the <see cref="UpdateFile"/> collection</summary>
+        /// <summary>Removes a files from the <see cref="UpdateFile" /> collection</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void RemoveFile(object sender, RoutedEventArgs e)
         {
             Core.UpdateInfo.Files.RemoveAt(this.listBox.SelectedIndex);
         }
 
-        /// <summary>Opens a dialog to browse for the selected file in the <see cref="UpdateFile"/> collection</summary>
+        /// <summary>Opens a dialog to browse for the selected file in the <see cref="UpdateFile" /> collection</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs" /> instance containing the event data.</param>
         private void UpdateFile(object sender, MouseButtonEventArgs e)
         {
             var selectedItem = this.listBox.SelectedItem as UpdateFile;
@@ -385,9 +396,9 @@ namespace SevenUpdate.Sdk.Pages
             GetFileSize(ref selectedItem, files[0]);
         }
 
-        /// <summary>Updates the hash for the selected <see cref="UpdateFile"/></summary>
+        /// <summary>Updates the hash for the selected <see cref="UpdateFile" /></summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs" /> instance containing the event data.</param>
         private void UpdateHash(object sender, MouseButtonEventArgs e)
         {
             var selectedItem = this.listBox.SelectedItem as UpdateFile;
@@ -396,7 +407,8 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             }
 
-            var fileLocation = Utilities.ExpandInstallLocation(selectedItem.Destination, Core.AppInfo.Directory, Core.AppInfo.Platform, Core.AppInfo.ValueName);
+            var fileLocation = Utilities.ExpandInstallLocation(
+                selectedItem.Destination, Core.AppInfo.Directory, Core.AppInfo.Platform, Core.AppInfo.ValueName);
 
             var files = Core.OpenFileDialog(Path.GetDirectoryName(fileLocation), Path.GetFileName(fileLocation));
 
@@ -411,7 +423,7 @@ namespace SevenUpdate.Sdk.Pages
 
         /// <summary>Updates the UI based on whether Aero Glass is enabled</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="CompositionChangedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="CompositionChangedEventArgs" /> instance containing the event data.</param>
         private void UpdateUI(object sender, CompositionChangedEventArgs e)
         {
             if (e.IsGlassEnabled)

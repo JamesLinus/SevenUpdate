@@ -9,6 +9,7 @@
 // <author username="SeriousM">Bernhard Millauer</author>
 // <license href="http://wpflocalizeextension.codeplex.com/license">Microsoft Public License</license>
 // ***********************************************************************
+
 namespace WPFLocalizeExtension.Extensions
 {
     using System;
@@ -23,14 +24,15 @@ namespace WPFLocalizeExtension.Extensions
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "LocDoubleExtension" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="LocDoubleExtension" /> class.</summary>
         public LocDoubleExtension()
         {
         }
 
-        /// <summary>Initializes a new instance of the <see cref="LocDoubleExtension"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="LocDoubleExtension" /> class.</summary>
         /// <param name="key">The resource identifier.</param>
-        public LocDoubleExtension(string key) : base(key)
+        public LocDoubleExtension(string key)
+            : base(key)
         {
         }
 
@@ -39,8 +41,8 @@ namespace WPFLocalizeExtension.Extensions
         #region Public Methods
 
         /// <summary>Provides the Value for the first Binding as double</summary>
-        /// <param name="serviceProvider">The <see cref="System.Windows.Markup.IProvideValueTarget"/> provided from the <see cref="MarkupExtension"/></param>
-        /// <returns>The found item from the .resx directory or <see langword="null"/> if not found</returns>
+        /// <param name="serviceProvider">The <see cref="System.Windows.Markup.IProvideValueTarget" /> provided from the <see cref="MarkupExtension" /></param>
+        /// <returns>The found item from the .resx directory or <see langword="null" /> if not found</returns>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             var obj = base.ProvideValue(serviceProvider);
@@ -60,7 +62,9 @@ namespace WPFLocalizeExtension.Extensions
                 return this.FormatOutput(obj);
             }
 
-            throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, "ResourceKey '{0}' returns '{1}' which is not type of double", this.Key, obj.GetType().FullName));
+            throw new NotSupportedException(
+                string.Format(
+                    CultureInfo.CurrentCulture, "ResourceKey '{0}' returns '{1}' which is not type of double", this.Key, obj.GetType().FullName));
         }
 
         #endregion

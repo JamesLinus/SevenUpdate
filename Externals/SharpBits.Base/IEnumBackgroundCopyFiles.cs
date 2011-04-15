@@ -10,18 +10,19 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://sharpbits.codeplex.com/license">BSD License</license> 
 // ***********************************************************************
+
 namespace SharpBits.Base
 {
     using System.Runtime.InteropServices;
 
-    /// <summary>Use the IEnumBackgroundCopyFiles interface to enumerate the filesthat a job contains. To get an IEnumBackgroundCopyFiles interface pointer, call the <see cref="IBackgroundCopyJob"/>::EnumFiles method.</summary>
+    /// <summary>Use the IEnumBackgroundCopyFiles interface to enumerate the filesthat a job contains. To get an IEnumBackgroundCopyFiles interface pointer, call the <see cref="IBackgroundCopyJob" />::EnumFiles method.</summary>
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown), GuidAttribute("CA51E165-C365-424C-8D41-24AAA4FF3C40"), ComImportAttribute]
     internal interface IEnumBackgroundCopyFiles
     {
         /// <summary>Retrieves a specified number of items in the enumeration sequence</summary>
         /// <param name="celt">Number of elements requested.</param>
-        /// <param name="copyFile">Array of <see cref="IBackgroundCopyFile"/> objects. You must release each object in <paramref name="copyFile"/> when done.</param>
-        /// <param name="fetched">Number of elements returned in <paramref name="copyFile"/>. You can set fetched to <see langword="null"/> if <paramref name="celt"/> is one. Otherwise, initialize the value of fetched to 0 before calling this method.</param>
+        /// <param name="copyFile">Array of <see cref="IBackgroundCopyFile" /> objects. You must release each object in <paramref name="copyFile" /> when done.</param>
+        /// <param name="fetched">Number of elements returned in <paramref name="copyFile" />. You can set fetched to <see langword="null" /> if <paramref name="celt" /> is one. Otherwise, initialize the value of fetched to 0 before calling this method.</param>
         void Next(uint celt, [MarshalAs(UnmanagedType.Interface)] out IBackgroundCopyFile copyFile, out uint fetched);
 
         /// <summary>Skips a specified number of items in the enumeration sequence</summary>

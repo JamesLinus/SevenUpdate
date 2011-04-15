@@ -8,6 +8,7 @@
 // </copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
 // ***********************************************************************
+
 namespace System.Windows.Dialogs
 {
     using System.Collections.Generic;
@@ -19,8 +20,8 @@ namespace System.Windows.Dialogs
     using System.Windows.Controls;
     using System.Windows.Internal;
 
-    /// <summary>Encapsulates the native logic required to create,  configure, and show a <see cref="TaskDialog"/>, via the TaskDialogIndirect() Win32 function.</summary>
-    /// <remarks>A new instance of this class should  be created for each Message Box show, as the handles for <see cref="TaskDialog"/> do not remain constant across calls to TaskDialogIndirect.</remarks>
+    /// <summary>Encapsulates the native logic required to create,  configure, and show a <see cref="TaskDialog" />, via the TaskDialogIndirect() Win32 function.</summary>
+    /// <remarks>A new instance of this class should  be created for each Message Box show, as the handles for <see cref="TaskDialog" /> do not remain constant across calls to TaskDialogIndirect.</remarks>
     internal sealed class NativeTaskDialog : IDisposable
     {
         #region Constants and Fields
@@ -28,7 +29,7 @@ namespace System.Windows.Dialogs
         /// <summary>The collection of buttons</summary>
         private IntPtr buttonArray;
 
-        /// <summary>Indicates if the <see cref = "CheckBox" /> is checked</summary>
+        /// <summary>Indicates if the <see cref="CheckBox" /> is checked</summary>
         private bool checkBoxChecked;
 
         /// <summary>The pointer for the dialog</summary>
@@ -70,7 +71,7 @@ namespace System.Windows.Dialogs
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="NativeTaskDialog"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="NativeTaskDialog" /> class.</summary>
         /// <param name="settings">The settings.</param>
         /// <param name="outerDialog">The outer dialog.</param>
         internal NativeTaskDialog(NativeTaskDialogSettings settings, TaskDialog outerDialog)
@@ -79,13 +80,13 @@ namespace System.Windows.Dialogs
             this.settings = settings;
 
             // Wire up dialog proc message loop for this instance.
-            this.nativeDialogConfig.Callback = new TaskDialogNativeMethods.TaskDialogCallBack(this.DialogProc);
+            this.nativeDialogConfig.Callback = this.DialogProc;
 
             // Keep a reference to the outer shell, so we can notify.
             this.outerDialog = outerDialog;
         }
 
-        /// <summary>Finalizes an instance of the <see cref="NativeTaskDialog"/> class.</summary>
+        /// <summary>Finalizes an instance of the <see cref="NativeTaskDialog" /> class.</summary>
         ~NativeTaskDialog()
         {
             this.Dispose(false);
@@ -104,7 +105,7 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>Gets a value indicating whether the <see cref = "CheckBox" /> is checked</summary>
+        /// <summary>Gets a value indicating whether the <see cref="CheckBox" /> is checked</summary>
         internal bool CheckBoxChecked
         {
             get
@@ -137,7 +138,7 @@ namespace System.Windows.Dialogs
 
         #region IDisposable
 
-        /// <summary>Finalizes an instance of the <see cref="NativeTaskDialog"/> class.</summary>
+        /// <summary>Finalizes an instance of the <see cref="NativeTaskDialog" /> class.</summary>
         public void Dispose()
         {
             this.Dispose(true);
@@ -157,10 +158,10 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>
-        /// The new task dialog does not support the existing
+        ///   The new task dialog does not support the existing
         ///   Win32 functions for closing (e.g. EndDialog()); instead,
         ///   a "click button" message is sent. In this case, we're
-        ///   abstracting out to say that the <see cref="TaskDialog"/> consumer can
+        ///   abstracting out to say that the <see cref="TaskDialog" /> consumer can
         ///   simply call "Close" and we'll "click" the cancel button.
         /// </summary>
         /// <param name="result">The result to give when closing the dialog</param>
@@ -196,7 +197,7 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>Shows the native dialog</summary>
-        [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.string.Format(System.String,System.Object)", 
+        [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.string.Format(System.String,System.Object)",
             Justification = "We are not currently handling globalization or localization")]
         internal void NativeShow()
         {
@@ -220,7 +221,8 @@ namespace System.Windows.Dialogs
 
                 // Here is the way we use "vanilla" P/Invoke to call 
                 // TaskDialogIndirect().  
-                var result = TaskDialogNativeMethods.TaskDialogIndirect(this.nativeDialogConfig, out this.selectedButtonID, out this.selectedRadioButtonID, out this.checkBoxChecked);
+                var result = TaskDialogNativeMethods.TaskDialogIndirect(
+                    this.nativeDialogConfig, out this.selectedButtonID, out this.selectedRadioButtonID, out this.checkBoxChecked);
 
                 if (ErrorHelper.Failed(result))
                 {
@@ -253,7 +255,7 @@ namespace System.Windows.Dialogs
 
         /// <summary>Updates the button enabled.</summary>
         /// <param name="buttonID">The button ID.</param>
-        /// <param name="enabled">if set to <see langword="true"/> [enabled].</param>
+        /// <param name="enabled">if set to <see langword="true" /> [enabled].</param>
         internal void UpdateButtonEnabled(int buttonID, bool enabled)
         {
             this.AssertCurrentlyShowing();
@@ -261,7 +263,7 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>Updates the check box checked.</summary>
-        /// <param name="isChecked">if set to <see langword="true"/> the checkbox is checked.</param>
+        /// <param name="isChecked">if set to <see langword="true" /> the checkbox is checked.</param>
         internal void UpdateCheckBoxChecked(bool isChecked)
         {
             this.AssertCurrentlyShowing();
@@ -270,7 +272,7 @@ namespace System.Windows.Dialogs
 
         /// <summary>Updates the elevation icon.</summary>
         /// <param name="buttonId">The button id.</param>
-        /// <param name="showIcon">if set to <see langword="true"/> [show icon].</param>
+        /// <param name="showIcon">if set to <see langword="true" /> [show icon].</param>
         internal void UpdateElevationIcon(int buttonId, bool showIcon)
         {
             this.AssertCurrentlyShowing();
@@ -341,7 +343,7 @@ namespace System.Windows.Dialogs
 
         /// <summary>Update the radio button when enabled has changed</summary>
         /// <param name="buttonID">The button ID.</param>
-        /// <param name="enabled">if set to <see langword="true"/> the radio button is enabled.</param>
+        /// <param name="enabled">if set to <see langword="true" /> the radio button is enabled.</param>
         internal void UpdateRadioButtonEnabled(int buttonID, bool enabled)
         {
             this.AssertCurrentlyShowing();
@@ -421,7 +423,7 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>Releases unmanaged and - optionally - managed resources</summary>
-        /// <param name="disposing"><see langword="true"/> to release both managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.</param>
+        /// <param name="disposing"><see langword="true" /> to release both managed and unmanaged resources; <see langword="false" /> to release only unmanaged resources.</param>
         private void Dispose(bool disposing)
         {
             if (this.disposed)
@@ -574,7 +576,7 @@ namespace System.Windows.Dialogs
 
         /// <summary>Determines whether [is option set] [the specified flag].</summary>
         /// <param name="flag">The option flags</param>
-        /// <returns><see langword="true"/> if [is option set] [the specified flag]; otherwise, <see langword="false"/>.</returns>
+        /// <returns><see langword="true" /> if [is option set] [the specified flag]; otherwise, <see langword="false" />.</returns>
         private bool IsOptionSet(TaskDialogNativeMethods.TaskDialogFlags flag)
         {
             return (this.nativeDialogConfig.flags & flag) == flag;

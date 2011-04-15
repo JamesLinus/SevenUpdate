@@ -21,6 +21,7 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
+
 namespace System.Windows.ValidationRules
 {
     using System.Diagnostics.CodeAnalysis;
@@ -29,7 +30,8 @@ namespace System.Windows.ValidationRules
     using System.Windows.Properties;
 
     /// <summary>The required input rule.</summary>
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1606:ElementDocumentationMustHaveSummaryText", Justification = "Validation Rule")]
+    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1606:ElementDocumentationMustHaveSummaryText",
+        Justification = "Validation Rule")]
     public class RequiredInputRule : ValidationRule
     {
         #region Public Methods
@@ -37,7 +39,7 @@ namespace System.Windows.ValidationRules
         /// <summary>When overridden in a derived class, performs validation checks on a value.</summary>
         /// <param name="value">The value from the binding target to check.</param>
         /// <param name="cultureInfo">The culture to use in this rule.</param>
-        /// <returns>A <see cref="T:System.Windows.Controls.ValidationResult"/> object.</returns>
+        /// <returns>A <see cref="T:System.Windows.Controls.ValidationResult" /> object.</returns>
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             var input = value as string;

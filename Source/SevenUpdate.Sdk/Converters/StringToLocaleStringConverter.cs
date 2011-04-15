@@ -21,6 +21,7 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
+
 namespace SevenUpdate.Sdk.Converters
 {
     using System;
@@ -30,7 +31,7 @@ namespace SevenUpdate.Sdk.Converters
     using System.Windows;
     using System.Windows.Data;
 
-    /// <summary>Converts a <see cref="LocaleString"/> to a localized string</summary>
+    /// <summary>Converts a <see cref="LocaleString" /> to a localized string</summary>
     [ValueConversion(typeof(LocaleString), typeof(string))]
     internal class StringToLocaleStringConverter : IValueConverter
     {

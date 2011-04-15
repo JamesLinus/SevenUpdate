@@ -21,6 +21,7 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
+
 namespace SevenUpdate
 {
     using System.ComponentModel;
@@ -34,39 +35,39 @@ namespace SevenUpdate
     {
         /// <summary>Updates a file</summary>
         [ProtoEnum, EnumMember]
-        Update = 0, 
+        Update = 0,
 
         /// <summary>Updates a file, only if it exist</summary>
         [ProtoEnum, EnumMember]
-        UpdateIfExist = 1, 
+        UpdateIfExist = 1,
 
         /// <summary>Updates a file, then registers the dll</summary>
         [ProtoEnum, EnumMember]
-        UpdateThenRegister = 2, 
+        UpdateThenRegister = 2,
 
         /// <summary>Updates a file, then executes it</summary>
         [ProtoEnum, EnumMember]
-        UpdateThenExecute = 3, 
+        UpdateThenExecute = 3,
 
         /// <summary>Compares a file, but does not update it</summary>
         [ProtoEnum, EnumMember]
-        CompareOnly = 4, 
+        CompareOnly = 4,
 
         /// <summary>Executes a file, can be on system or be downloaded</summary>
         [ProtoEnum, EnumMember]
-        Execute = 5, 
+        Execute = 5,
 
         /// <summary>Deletes a file</summary>
         [ProtoEnum, EnumMember]
-        Delete = 6, 
+        Delete = 6,
 
         /// <summary>Executes a file, then deletes it</summary>
         [ProtoEnum, EnumMember]
-        ExecuteThenDelete = 7, 
+        ExecuteThenDelete = 7,
 
         /// <summary>Unregisters a dll, then deletes it</summary>
         [ProtoEnum, EnumMember]
-        UnregisterThenDelete = 8, 
+        UnregisterThenDelete = 8,
     }
 
     /// <summary>Information about a file within an update</summary>
@@ -75,7 +76,7 @@ namespace SevenUpdate
     {
         #region Constants and Fields
 
-        /// <summary>The action to perform on the <see cref = "UpdateFile" /></summary>
+        /// <summary>The action to perform on the <see cref="UpdateFile" /></summary>
         private FileAction action;
 
         /// <summary>The command line arguments to execute with the file</summary>
@@ -104,7 +105,7 @@ namespace SevenUpdate
 
         #region Properties
 
-        /// <summary>Gets or sets the action to perform on the <see cref = "UpdateFile" /></summary>
+        /// <summary>Gets or sets the action to perform on the <see cref="UpdateFile" /></summary>
         /// <value>The action.</value>
         [ProtoMember(1), DataMember]
         public FileAction Action
@@ -222,7 +223,7 @@ namespace SevenUpdate
 
         #region Methods
 
-        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged"/> Event</summary>
+        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged" /> Event</summary>
         /// <param name="name">The name of the property that changed</param>
         private void OnPropertyChanged(string name)
         {

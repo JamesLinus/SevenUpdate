@@ -24,6 +24,7 @@
 //   Converts the update status to a boolean
 // </summary>
 // ***********************************************************************
+
 namespace SevenUpdate.Converters
 {
     using System;

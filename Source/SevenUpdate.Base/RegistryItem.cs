@@ -21,6 +21,7 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
+
 namespace SevenUpdate
 {
     using System.ComponentModel;
@@ -36,11 +37,11 @@ namespace SevenUpdate
     {
         /// <summary>Adds a registry entry to the machine</summary>
         [ProtoEnum, EnumMember]
-        Add = 0, 
+        Add = 0,
 
         /// <summary>Deletes a registry key on the machine</summary>
         [ProtoEnum, EnumMember]
-        DeleteKey = 1, 
+        DeleteKey = 1,
 
         /// <summary>Deletes a value of a registry key on the machine</summary>
         [ProtoEnum, EnumMember]
@@ -48,12 +49,13 @@ namespace SevenUpdate
     }
 
     /// <summary>A registry entry within an update</summary>
-    [ProtoContract, DataContract(IsReference = true), KnownType(typeof(RegistryAction)), KnownType(typeof(RegistryHive)), KnownType(typeof(RegistryValueKind))]
+    [ProtoContract, DataContract(IsReference = true), KnownType(typeof(RegistryAction)), KnownType(typeof(RegistryHive)),
+     KnownType(typeof(RegistryValueKind))]
     public sealed class RegistryItem : INotifyPropertyChanged
     {
         #region Constants and Fields
 
-        /// <summary>The action to perform on the <see cref = "RegistryItem" /></summary>
+        /// <summary>The action to perform on the <see cref="RegistryItem" /></summary>
         private RegistryAction action;
 
         /// <summary>The data for the key value</summary>
@@ -79,7 +81,7 @@ namespace SevenUpdate
 
         #region Properties
 
-        /// <summary>Gets or sets the action to perform on the <see cref = "RegistryItem" /></summary>
+        /// <summary>Gets or sets the action to perform on the <see cref="RegistryItem" /></summary>
         /// <value>The action.</value>
         [ProtoMember(1), DataMember]
         public RegistryAction Action
@@ -178,7 +180,7 @@ namespace SevenUpdate
 
         #region Methods
 
-        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged"/> Event</summary>
+        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged" /> Event</summary>
         /// <param name="name">The name of the property that changed</param>
         private void OnPropertyChanged(string name)
         {

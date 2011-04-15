@@ -21,6 +21,7 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
+
 namespace SevenUpdate.Admin
 {
     using System;
@@ -78,7 +79,7 @@ namespace SevenUpdate.Admin
         /// <summary>Changes the program settings</summary>
         /// <param name="applications">The applications Seven Update will check and manage updates for</param>
         /// <param name="options">The Seven Update settings</param>
-        /// <param name="autoCheck">if set to <see langword="true"/> automatic updates will be enabled</param>
+        /// <param name="autoCheck">if set to <see langword="true" /> automatic updates will be enabled</param>
         public void ChangeSettings(Collection<Sua> applications, Config options, bool autoCheck)
         {
             if (!autoCheck)
@@ -86,7 +87,8 @@ namespace SevenUpdate.Admin
                 if (Environment.OSVersion.Version.Major < 6)
                 {
                     // ReSharper disable PossibleNullReferenceException
-                    Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true).DeleteValue("Seven Update Automatic Checking", false);
+                    Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true).DeleteValue(
+                        "Seven Update Automatic Checking", false);
 
                     // ReSharper restore PossibleNullReferenceException
                 }
@@ -99,7 +101,10 @@ namespace SevenUpdate.Admin
             {
                 if (Environment.OSVersion.Version.Major < 6)
                 {
-                    Registry.SetValue(@"HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run", "Seven Update Automatic Checking", Path.Combine(Utilities.AppDir, "SevenUpdate.Helper.exe"));
+                    Registry.SetValue(
+                        @"HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run",
+                        "Seven Update Automatic Checking",
+                        Path.Combine(Utilities.AppDir, "SevenUpdate.Helper.exe"));
                 }
                 else
                 {
@@ -115,14 +120,15 @@ namespace SevenUpdate.Admin
         /// <param name="hiddenUpdate">The update to hide</param>
         public void HideUpdate(Suh hiddenUpdate)
         {
-            var hidden = (File.Exists(App.HiddenFile) ? Utilities.Deserialize<Collection<Suh>>(App.HiddenFile) : new Collection<Suh>()) ?? new Collection<Suh>();
+            var hidden = (File.Exists(App.HiddenFile) ? Utilities.Deserialize<Collection<Suh>>(App.HiddenFile) : new Collection<Suh>()) ??
+                         new Collection<Suh>();
 
             hidden.Add(hiddenUpdate);
 
             Utilities.Serialize(hidden, App.HiddenFile);
         }
 
-        /// <summary>Hides a collection of <see cref="Suh"/> to hide</summary>
+        /// <summary>Hides a collection of <see cref="Suh" /> to hide</summary>
         /// <param name="hiddenUpdates">The collection of updates to hide</param>
         public void HideUpdates(Collection<Suh> hiddenUpdates)
         {
@@ -141,7 +147,7 @@ namespace SevenUpdate.Admin
             Utilities.Serialize(hiddenUpdates, App.HiddenFile);
         }
 
-        /// <summary>Gets a collection of <see cref="Sui"/></summary>
+        /// <summary>Gets a collection of <see cref="Sui" /></summary>
         /// <param name="applicationUpdates">The collection of applications and updates to install</param>
         public void InstallUpdates(Collection<Sui> applicationUpdates)
         {
@@ -164,7 +170,8 @@ namespace SevenUpdate.Admin
             }
 
             App.Applications = applicationUpdates;
-            Task.Factory.StartNew(() => Download.DownloadUpdates(applicationUpdates, "SevenUpdate", Path.Combine(App.AllUserStore, "downloads"), true));
+            Task.Factory.StartNew(
+                () => Download.DownloadUpdates(applicationUpdates, "SevenUpdate", Path.Combine(App.AllUserStore, "downloads"), true));
         }
 
         /// <summary>The update to show and remove from hidden updates</summary>
@@ -181,9 +188,10 @@ namespace SevenUpdate.Admin
 
             for (var x = 0; x < show.Count; x++)
             {
-                if (show[x].Importance == hiddenUpdate.Importance && show[x].Status == hiddenUpdate.Status && show[x].UpdateSize == hiddenUpdate.UpdateSize && show[x].HelpUrl == hiddenUpdate.HelpUrl &&
-                    show[x].InfoUrl == hiddenUpdate.InfoUrl && show[x].AppUrl == hiddenUpdate.AppUrl && show[x].Description[0].Value == hiddenUpdate.Description[0].Value &&
-                    show[x].Name[0].Value == hiddenUpdate.Name[0].Value)
+                if (show[x].Importance == hiddenUpdate.Importance && show[x].Status == hiddenUpdate.Status &&
+                    show[x].UpdateSize == hiddenUpdate.UpdateSize && show[x].HelpUrl == hiddenUpdate.HelpUrl &&
+                    show[x].InfoUrl == hiddenUpdate.InfoUrl && show[x].AppUrl == hiddenUpdate.AppUrl &&
+                    show[x].Description[0].Value == hiddenUpdate.Description[0].Value && show[x].Name[0].Value == hiddenUpdate.Name[0].Value)
                 {
                     show.RemoveAt(x);
                 }

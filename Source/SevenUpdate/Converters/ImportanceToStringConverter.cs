@@ -24,6 +24,7 @@
 //   Converts the update importance to a localized string
 // </summary>
 // ***********************************************************************
+
 namespace SevenUpdate.Converters
 {
     using System;

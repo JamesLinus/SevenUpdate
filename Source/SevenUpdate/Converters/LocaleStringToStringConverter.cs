@@ -24,6 +24,7 @@
 //   Converts a LocaleString and gets the selected locale string
 // </summary>
 // ***********************************************************************
+
 namespace SevenUpdate.Converters
 {
     using System;
@@ -35,7 +36,7 @@ namespace SevenUpdate.Converters
 
     using SevenUpdate.Properties;
 
-    /// <summary>Converts a <see cref="LocaleString"/> to a localized string</summary>
+    /// <summary>Converts a <see cref="LocaleString" /> to a localized string</summary>
     [ValueConversion(typeof(LocaleString), typeof(string))]
     internal sealed class LocaleStringToStringConverter : IValueConverter
     {
@@ -54,7 +55,9 @@ namespace SevenUpdate.Converters
             var localeStrings = value as Collection<LocaleString>;
 
             // Loops through the collection of LocaleStrings
-            return localeStrings != null ? localeStrings.Where(t => t.Lang == Utilities.Locale).Select(t => t.Value).FirstOrDefault() : Resources.NotAvailable;
+            return localeStrings != null
+                       ? localeStrings.Where(t => t.Lang == Utilities.Locale).Select(t => t.Value).FirstOrDefault()
+                       : Resources.NotAvailable;
         }
 
         /// <summary>Converts a converted object back into it's original form</summary>

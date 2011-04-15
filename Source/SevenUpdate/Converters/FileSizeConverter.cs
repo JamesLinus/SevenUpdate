@@ -24,6 +24,7 @@
 // Converts a ulong or group of ulong values into a string readable file size
 // </summary>
 // ***********************************************************************
+
 namespace SevenUpdate.Converters
 {
     using System;

@@ -21,6 +21,7 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
+
 namespace System.Windows.Controls
 {
     using System.Windows.Input;
@@ -30,13 +31,13 @@ namespace System.Windows.Controls
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes static members of the <see cref = "BackButton" /> class.</summary>
+        /// <summary>Initializes static members of the <see cref="BackButton" /> class.</summary>
         static BackButton()
         {
             DefaultStyleKeyProperty.OverrideMetadata(typeof(BackButton), new FrameworkPropertyMetadata(typeof(BackButton)));
         }
 
-        /// <summary>Initializes a new instance of the <see cref = "BackButton" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="BackButton" /> class.</summary>
         public BackButton()
         {
             if (this.Resources.Count != 0)
@@ -44,7 +45,8 @@ namespace System.Windows.Controls
                 return;
             }
 
-            var resourceDictionary = new ResourceDictionary { Source = new Uri("/System.Windows;component/Resources/Dictionary.xaml", UriKind.Relative) };
+            var resourceDictionary = new ResourceDictionary
+                { Source = new Uri("/System.Windows;component/Resources/Dictionary.xaml", UriKind.Relative) };
             this.Resources.MergedDictionaries.Add(resourceDictionary);
             this.Command = NavigationCommands.BrowseBack;
         }

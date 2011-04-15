@@ -21,6 +21,7 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
+
 namespace SevenUpdate
 {
     using System;
@@ -34,7 +35,7 @@ namespace SevenUpdate
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="InstallCompletedEventArgs"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="InstallCompletedEventArgs" /> class.</summary>
         /// <param name="updatesInstalled">the number of updates installed</param>
         /// <param name="updatesFailed">the number of updates that failed</param>
         public InstallCompletedEventArgs(int updatesInstalled, int updatesFailed)
@@ -43,7 +44,7 @@ namespace SevenUpdate
             this.UpdatesFailed = updatesFailed;
         }
 
-        /// <summary>Initializes a new instance of the <see cref = "InstallCompletedEventArgs" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="InstallCompletedEventArgs" /> class.</summary>
         public InstallCompletedEventArgs()
         {
         }

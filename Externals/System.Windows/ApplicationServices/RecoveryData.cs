@@ -8,13 +8,14 @@
 // </copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
 // ***********************************************************************
+
 namespace System.Windows.ApplicationServices
 {
-    /// <summary>The <see cref="System.Delegate"/> that represents the callback method invokedby the system when an application has registered for application recovery.</summary>
+    /// <summary>The <see cref="System.Delegate" /> that represents the callback method invokedby the system when an application has registered for application recovery.</summary>
     /// <param name="state">An application-defined state object that is passed to the callback method.</param>
     /// <returns>The result code</returns>
-    /// <remarks>The callback method will be invokedprior to the application being terminated by Windows Error Reporting (WER). To keep WER from terminating the application before the callback method completes, the callback method mustperiodically call the <see cref="ApplicationRestartRecoveryManager.ApplicationRecoveryInProgress"/> method.</remarks>
-    /// <seealso cref="ApplicationRestartRecoveryManager.RegisterForApplicationRecovery(RecoverySettings)"/>
+    /// <remarks>The callback method will be invokedprior to the application being terminated by Windows Error Reporting (WER). To keep WER from terminating the application before the callback method completes, the callback method mustperiodically call the <see cref="ApplicationRestartRecoveryManager.ApplicationRecoveryInProgress" /> method.</remarks>
+    /// <seealso cref="ApplicationRestartRecoveryManager.RegisterForApplicationRecovery(RecoverySettings)" />
     public delegate int RecoveryCallback(object state);
 
     /// <summary>Defines a class that contains a callback delegate and properties of the applicationas defined by the user.</summary>
@@ -22,7 +23,7 @@ namespace System.Windows.ApplicationServices
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="RecoveryData"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="RecoveryData" /> class.</summary>
         /// <param name="callback">The callback delegate.</param>
         /// <param name="state">The current state of the application.</param>
         public RecoveryData(RecoveryCallback callback, object state)

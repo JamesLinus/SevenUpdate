@@ -21,6 +21,7 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
+
 namespace SevenUpdate
 {
     using System;
@@ -34,7 +35,7 @@ namespace SevenUpdate
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="DownloadProgressChangedEventArgs"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="DownloadProgressChangedEventArgs" /> class.</summary>
         /// <param name="bytesTransferred">the number of bytes transferred</param>
         /// <param name="bytesTotal">the total number of bytes to download</param>
         /// <param name="filesTransferred">the number of files transfered</param>
@@ -47,7 +48,7 @@ namespace SevenUpdate
             this.FilesTransferred = filesTransferred;
         }
 
-        /// <summary>Initializes a new instance of the <see cref = "DownloadProgressChangedEventArgs" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="DownloadProgressChangedEventArgs" /> class.</summary>
         public DownloadProgressChangedEventArgs()
         {
         }

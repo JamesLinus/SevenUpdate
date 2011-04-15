@@ -10,6 +10,7 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://sharpbits.codeplex.com/license">BSD License</license> 
 // ***********************************************************************
+
 namespace SharpBits.Base
 {
     using System;
@@ -25,7 +26,7 @@ namespace SharpBits.Base
         /// <summary>The BITS manager</summary>
         private readonly BitsManager manager;
 
-        /// <summary>Indicates if the <see cref = "BitsJob" /> has been disposed</summary>
+        /// <summary>Indicates if the <see cref="BitsJob" /> has been disposed</summary>
         private bool disposed;
 
         /// <summary>Data about the error</summary>
@@ -56,7 +57,7 @@ namespace SharpBits.Base
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="BitsJob"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="BitsJob" /> class.</summary>
         /// <param name="manager">The manager for the BITS</param>
         /// <param name="job">The current job</param>
         internal BitsJob(BitsManager manager, IBackgroundCopyJob job)
@@ -242,7 +243,7 @@ namespace SharpBits.Base
             }
         }
 
-        /// <summary>Gets the collection of <see cref = "BitsFile" />'s for the job</summary>
+        /// <summary>Gets the collection of <see cref="BitsFile" />'s for the job</summary>
         /// <value>The files.</value>
         public BitsFilesCollection Files { get; private set; }
 
@@ -267,7 +268,7 @@ namespace SharpBits.Base
             }
         }
 
-        /// <summary>Gets the job times for the current <see cref = "BitsJob" /></summary>
+        /// <summary>Gets the job times for the current <see cref="BitsJob" /></summary>
         public JobTimes JobTimes
         {
             get
@@ -287,7 +288,7 @@ namespace SharpBits.Base
             }
         }
 
-        /// <summary>Gets the type of the current <see cref = "BitsJob" /></summary>
+        /// <summary>Gets the type of the current <see cref="BitsJob" /></summary>
         public JobType JobType
         {
             get
@@ -524,8 +525,8 @@ namespace SharpBits.Base
             }
         }
 
-        /// <summary>Gets the current <see cref = "BitsJob" /></summary>
-        /// <value>The <see cref = "BitsJob" /></value>
+        /// <summary>Gets the current <see cref="BitsJob" /></summary>
+        /// <value>The <see cref="BitsJob" /></value>
         internal IBackgroundCopyJob Job { get; private set; }
 
         /// <summary>Gets or sets the notification interface.</summary>
@@ -598,7 +599,7 @@ namespace SharpBits.Base
             this.AddFile(fileInfo.RemoteName, fileInfo.LocalName);
         }
 
-        /// <summary>Adds the files the current <see cref="BitsJob"/></summary>
+        /// <summary>Adds the files the current <see cref="BitsJob" /></summary>
         /// <param name="files">The files.</param>
         public void AddFiles(Collection<BitsFileInfo> files)
         {
@@ -616,7 +617,7 @@ namespace SharpBits.Base
             this.AddFiles(fileArray);
         }
 
-        /// <summary>Cancels the <see cref="BitsJob"/></summary>
+        /// <summary>Cancels the <see cref="BitsJob" /></summary>
         public void Cancel()
         {
             try
@@ -629,7 +630,7 @@ namespace SharpBits.Base
             }
         }
 
-        /// <summary>Completes and removes the <see cref="BitsJob"/> from the collection</summary>
+        /// <summary>Completes and removes the <see cref="BitsJob" /> from the collection</summary>
         public void Complete()
         {
             try
@@ -642,8 +643,8 @@ namespace SharpBits.Base
             }
         }
 
-        /// <summary>Enumerate the <see cref="BitsFile"/> collection</summary>
-        /// <returns>The collection of <see cref="BitsFile"/>'s</returns>
+        /// <summary>Enumerate the <see cref="BitsFile" /> collection</summary>
+        /// <returns>The collection of <see cref="BitsFile" />'s</returns>
         public BitsFilesCollection EnumerateFiles()
         {
             try
@@ -660,7 +661,7 @@ namespace SharpBits.Base
             return this.Files;
         }
 
-        /// <summary>Resumes the <see cref="BitsJob"/></summary>
+        /// <summary>Resumes the <see cref="BitsJob" /></summary>
         public void Resume()
         {
             try
@@ -673,7 +674,7 @@ namespace SharpBits.Base
             }
         }
 
-        /// <summary>Suspends the <see cref="BitsJob"/></summary>
+        /// <summary>Suspends the <see cref="BitsJob" /></summary>
         public void Suspend()
         {
             try
@@ -735,7 +736,7 @@ namespace SharpBits.Base
 
         /// <summary>Fires the event when the job has occurred an error</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="SharpBits.Base.ErrorNotificationEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="SharpBits.Base.ErrorNotificationEventArgs" /> instance containing the event data.</param>
         internal void JobError(object sender, ErrorNotificationEventArgs e)
         {
             if (null != this.jobError)
@@ -746,7 +747,7 @@ namespace SharpBits.Base
 
         /// <summary>Fires the event when the job has been modified</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="NotificationEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="NotificationEventArgs" /> instance containing the event data.</param>
         internal void JobModified(object sender, NotificationEventArgs e)
         {
             if (this.jobModified != null)
@@ -757,7 +758,7 @@ namespace SharpBits.Base
 
         /// <summary>Fires the event when the job has transferred</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="NotificationEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="NotificationEventArgs" /> instance containing the event data.</param>
         internal void JobTransferred(object sender, NotificationEventArgs e)
         {
             if (this.jobTransferred != null)
@@ -774,7 +775,7 @@ namespace SharpBits.Base
         }
 
         /// <summary>Releases unmanaged and - optionally - managed resources</summary>
-        /// <param name="disposing"><see langword="true"/> to release both managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.</param>
+        /// <param name="disposing"><see langword="true" /> to release both managed and unmanaged resources; <see langword="false" /> to release only unmanaged resources.</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -1015,7 +1016,8 @@ namespace SharpBits.Base
                 if (this.job2 != null && credentials != null)
                 {
                     // only supported from IBackgroundCopyJob2 and above
-                    var authCredentials = new BGAuthCredentials { Scheme = (BGAuthScheme)credentials.AuthenticationScheme, Target = (BGAuthTarget)credentials.AuthenticationTarget };
+                    var authCredentials = new BGAuthCredentials
+                        { Scheme = (BGAuthScheme)credentials.AuthenticationScheme, Target = (BGAuthTarget)credentials.AuthenticationTarget };
                     authCredentials.Credentials.Basic.Password = credentials.Password;
                     authCredentials.Credentials.Basic.UserName = credentials.UserName;
                     this.job2.SetCredentials(ref authCredentials);
@@ -1333,7 +1335,7 @@ namespace SharpBits.Base
         }
 
         /// <summary>Gets a value indicating whether the owner is elevated</summary>
-        /// <value><see langword = "true" /> if the owner is elevated; otherwise, <see langword = "false" />.</value>
+        /// <value><see langword="true" /> if the owner is elevated; otherwise, <see langword="false" />.</value>
         public bool OwnerElevationState
         {
             get

@@ -8,6 +8,7 @@
 // </copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
 // ***********************************************************************
+
 namespace System.Windows.ApplicationServices
 {
     using System.Runtime.InteropServices;
@@ -18,16 +19,16 @@ namespace System.Windows.ApplicationServices
     public enum RestartRestrictions
     {
         /// <summary>Always restart the application.</summary>
-        None = 0, 
+        None = 0,
 
         /// <summary>Do not restart when the application has crashed.</summary>
-        NotOnCrash = 1, 
+        NotOnCrash = 1,
 
         /// <summary>Do not restart when the application is hung.</summary>
-        NotOnHang = 2, 
+        NotOnHang = 2,
 
         /// <summary>Do not restart when the application is terminateddue to a system update.</summary>
-        NotOnPatch = 4, 
+        NotOnPatch = 4,
 
         /// <summary>Do not restart when the application is terminated because of a system reboot.</summary>
         NotOnReboot = 8
@@ -38,9 +39,9 @@ namespace System.Windows.ApplicationServices
     {
         #region Public Methods
 
-        /// <summary>Called by an application's <see cref="RecoveryCallback"/> method to indicate that the recovery work is complete.</summary>
-        /// <remarks>This shouldbe the last call made by the <see cref="RecoveryCallback"/> method becauseWindows Error Reporting will terminate the applicationafter this method is invoked.</remarks>
-        /// <param name="success"><see langword="true"/> to indicate the the program was able to complete its recoverywork before terminating; otherwise <see langword="false"/>.</param>
+        /// <summary>Called by an application's <see cref="RecoveryCallback" /> method to indicate that the recovery work is complete.</summary>
+        /// <remarks>This shouldbe the last call made by the <see cref="RecoveryCallback" /> method becauseWindows Error Reporting will terminate the applicationafter this method is invoked.</remarks>
+        /// <param name="success"><see langword="true" /> to indicate the the program was able to complete its recoverywork before terminating; otherwise <see langword="false" />.</param>
         public static void ApplicationRecoveryFinished(bool success)
         {
             // Throw PlatformNotSupportedException if the user is not running Vista or beyond
@@ -52,8 +53,8 @@ namespace System.Windows.ApplicationServices
             AppRestartRecoveryNativeMethods.ApplicationRecoveryFinished(success);
         }
 
-        /// <summary>Called by an application's <see cref="RecoveryCallback"/> method to indicate that it is still performing recovery work.</summary>
-        /// <returns>A <see cref="System.Boolean"/> value indicating whether the usercanceled the recovery.</returns>
+        /// <summary>Called by an application's <see cref="RecoveryCallback" /> method to indicate that it is still performing recovery work.</summary>
+        /// <returns>A <see cref="System.Boolean" /> value indicating whether the usercanceled the recovery.</returns>
         public static bool ApplicationRecoveryInProgress()
         {
             // Throw PlatformNotSupportedException if the user is not running Vista or beyond
@@ -76,7 +77,7 @@ namespace System.Windows.ApplicationServices
 
         /// <summary>Registers an application for recovery by Application Restart and Recovery.</summary>
         /// <param name="settings">An object that specifiesthe callback method, an optional parameter to pass to the callbackmethod and a time interval.</param>
-        /// <remarks>The time interval is the period of time within which the recovery callback method calls the <see cref="ApplicationRecoveryInProgress"/> method to indicatethat it is still performing recovery work.</remarks>
+        /// <remarks>The time interval is the period of time within which the recovery callback method calls the <see cref="ApplicationRecoveryInProgress" /> method to indicatethat it is still performing recovery work.</remarks>
         public static void RegisterForApplicationRecovery(RecoverySettings settings)
         {
             // Throw PlatformNotSupportedException if the user is not running Vista or beyond
@@ -92,7 +93,8 @@ namespace System.Windows.ApplicationServices
 
             var handle = GCHandle.Alloc(settings.RecoveryData);
 
-            var hr = AppRestartRecoveryNativeMethods.RegisterApplicationRecoveryCallback(AppRestartRecoveryNativeMethods.InternalCallback, (IntPtr)handle, settings.PingInterval, 0);
+            var hr = AppRestartRecoveryNativeMethods.RegisterApplicationRecoveryCallback(
+                AppRestartRecoveryNativeMethods.InternalCallback, (IntPtr)handle, settings.PingInterval, 0);
 
             if (!ErrorHelper.Succeeded((int)hr))
             {

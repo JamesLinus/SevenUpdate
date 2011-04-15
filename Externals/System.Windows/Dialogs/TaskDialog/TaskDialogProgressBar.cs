@@ -8,6 +8,7 @@
 // </copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
 // ***********************************************************************
+
 namespace System.Windows.Dialogs
 {
     /// <summary>Provides a visual representation of the progress of a long running operation.</summary>
@@ -28,18 +29,19 @@ namespace System.Windows.Dialogs
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "TaskDialogProgressBar" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="TaskDialogProgressBar" /> class.</summary>
         protected TaskDialogProgressBar()
         {
         }
 
-        /// <summary>Initializes a new instance of the <see cref="TaskDialogProgressBar"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="TaskDialogProgressBar" /> class.</summary>
         /// <param name="name">The name of the control.</param>
-        protected TaskDialogProgressBar(string name) : base(name)
+        protected TaskDialogProgressBar(string name)
+            : base(name)
         {
         }
 
-        /// <summary>Initializes a new instance of the <see cref="TaskDialogProgressBar"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="TaskDialogProgressBar" /> class.</summary>
         /// <param name="minimum">The minimum value for this control.</param>
         /// <param name="maximum">The maximum value for this control.</param>
         /// <param name="value">The current value for this control.</param>
@@ -135,7 +137,7 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>Gets a value indicating whether this instance has valid values.</summary>
-        /// <value><see langword = "true" /> if this instance has valid values; otherwise, <see langword = "false" />.</value>
+        /// <value><see langword="true" /> if this instance has valid values; otherwise, <see langword="false" />.</value>
         internal bool HasValidValues
         {
             get

@@ -10,6 +10,7 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://wpfinstanceawareapp.codeplex.com/license">Microsoft Public License</license>
 // ***********************************************************************
+
 namespace System.Windows
 {
     using System.ServiceModel;

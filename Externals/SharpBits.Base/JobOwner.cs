@@ -10,15 +10,16 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://sharpbits.codeplex.com/license">BSD License</license> 
 // ***********************************************************************
+
 namespace SharpBits.Base
 {
-    /// <summary>Specifies the owner of the current <see cref="BitsJob"/></summary>
+    /// <summary>Specifies the owner of the current <see cref="BitsJob" /></summary>
     public enum JobOwner
     {
         /// <summary>The current logged in user</summary>
-        CurrentUser = 0, 
+        CurrentUser = 0,
 
         /// <summary>The administrators group or system</summary>
-        AllUsers = 1, 
+        AllUsers = 1,
     }
 }

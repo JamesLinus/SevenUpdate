@@ -24,6 +24,7 @@
 //   Interaction logic for MyServiceHost.xaml
 // </summary>
 // ***********************************************************************
+
 namespace SevenUpdate
 {
     using System;
@@ -38,7 +39,7 @@ namespace SevenUpdate
     {
         #region Properties
 
-        /// <summary>Gets or sets the <see cref = "ServiceHost" /> instance</summary>
+        /// <summary>Gets or sets the <see cref="ServiceHost" /> instance</summary>
         internal static ServiceHost Instance { get; set; }
 
         #endregion

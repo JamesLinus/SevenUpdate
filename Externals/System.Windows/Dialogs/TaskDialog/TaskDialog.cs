@@ -8,6 +8,7 @@
 // </copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
 // ***********************************************************************
+
 namespace System.Windows.Dialogs
 {
     using System.Collections.Generic;
@@ -18,7 +19,7 @@ namespace System.Windows.Dialogs
     using System.Windows.Internal;
     using System.Windows.Interop;
 
-    /// <summary>Encapsulates a new-to-Vista Win32 TaskDialog window - a powerful successor to the <see cref="MessageBox"/> availablein previous versions of Windows.</summary>
+    /// <summary>Encapsulates a new-to-Vista Win32 TaskDialog window - a powerful successor to the <see cref="MessageBox" /> availablein previous versions of Windows.</summary>
     [SecurityPermission(SecurityAction.InheritanceDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
     public sealed class TaskDialog : IDialogControlHost, IDisposable
     {
@@ -30,7 +31,7 @@ namespace System.Windows.Dialogs
         /// <summary>The buttons</summary>
         private List<TaskDialogButtonBase> buttons;
 
-        /// <summary>Indicates if the <see cref = "TaskDialog" /> can be canceled</summary>
+        /// <summary>Indicates if the <see cref="TaskDialog" /> can be canceled</summary>
         private bool canCancel;
 
         /// <summary>The caption</summary>
@@ -45,7 +46,7 @@ namespace System.Windows.Dialogs
         /// <summary>The details collapsed label</summary>
         private string detailsCollapsedLabel;
 
-        /// <summary><see langword = "true" /> to details expanded</summary>
+        /// <summary><see langword="true" /> to details expanded</summary>
         private bool detailsExpanded;
 
         /// <summary>The details expanded label</summary>
@@ -54,7 +55,7 @@ namespace System.Windows.Dialogs
         /// <summary>The details expanded text</summary>
         private string detailsExpandedText;
 
-        /// <summary><see langword = "true" /> to disposed</summary>
+        /// <summary><see langword="true" /> to disposed</summary>
         private bool disposed;
 
         /// <summary>The expansion mode</summary>
@@ -69,10 +70,10 @@ namespace System.Windows.Dialogs
         /// <summary>The footer text</summary>
         private string footerText;
 
-        /// <summary><see langword = "true" /> to enable, <see langword = "false" /> to disable the hyperlinks</summary>
+        /// <summary><see langword="true" /> to enable, <see langword="false" /> to disable the hyperlinks</summary>
         private bool hyperlinksEnabled;
 
-        /// <summary>The icon to show on the <see cref = "TaskDialog" /></summary>
+        /// <summary>The icon to show on the <see cref="TaskDialog" /></summary>
         private TaskDialogStandardIcon icon;
 
         /// <summary>The instruction text</summary>
@@ -96,14 +97,14 @@ namespace System.Windows.Dialogs
         /// <summary>The startup location</summary>
         private TaskDialogStartupLocation startupLocation;
 
-        /// <summary>The text for the <see cref = "TaskDialog" /></summary>
+        /// <summary>The text for the <see cref="TaskDialog" /></summary>
         private string text;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "TaskDialog" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="TaskDialog" /> class.</summary>
         public TaskDialog()
         {
             // Throw PlatformNotSupportedException if the user is not running Vista or beyond
@@ -119,7 +120,7 @@ namespace System.Windows.Dialogs
             this.commandLinks = new List<TaskDialogButtonBase>();
         }
 
-        /// <summary>Finalizes an instance of the <see cref="TaskDialog"/> class.</summary>
+        /// <summary>Finalizes an instance of the <see cref="TaskDialog" /> class.</summary>
         ~TaskDialog()
         {
             this.Dispose(false);
@@ -129,7 +130,7 @@ namespace System.Windows.Dialogs
 
         #region Events
 
-        /// <summary>Occurs when the <see cref = "TaskDialog" /> is closing.</summary>
+        /// <summary>Occurs when the <see cref="TaskDialog" /> is closing.</summary>
         public event EventHandler<TaskDialogClosingEventArgs> Closing;
 
         /// <summary>Occurs when a user clicks on Help.</summary>
@@ -138,7 +139,7 @@ namespace System.Windows.Dialogs
         /// <summary>Occurs when a user clicks a hyperlink.</summary>
         public event EventHandler<HyperlinkClickedEventArgs> HyperlinkClick;
 
-        /// <summary>Occurs when the <see cref = "TaskDialog" /> is opened.</summary>
+        /// <summary>Occurs when the <see cref="TaskDialog" /> is opened.</summary>
         public event EventHandler Opened;
 
         /// <summary>Occurs when a progress bar changes.</summary>
@@ -188,7 +189,7 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>Gets a value that contains the <see cref = "TaskDialog" /> controls.</summary>
+        /// <summary>Gets a value that contains the <see cref="TaskDialog" /> controls.</summary>
         public DialogControlCollection<TaskDialogControl> Controls { get; private set; }
 
         /// <summary>Gets or sets a value that contains the collapsed control text.</summary>
@@ -270,7 +271,7 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>Gets or sets a value that indicates if the footer <see cref = "CheckBox" /> is checked.</summary>
+        /// <summary>Gets or sets a value that indicates if the footer <see cref="CheckBox" /> is checked.</summary>
         public bool? FooterCheckBoxChecked
         {
             get
@@ -344,7 +345,7 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>Gets or sets a value indicating whether if hyper links are enabled.</summary>
-        /// <value><see langword = "true" /> if enabled; otherwise, <see langword = "false" />.</value>
+        /// <value><see langword="true" /> if enabled; otherwise, <see langword="false" />.</value>
         public bool HyperlinksEnabled
         {
             get
@@ -359,7 +360,7 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>Gets or sets a value that contains the <see cref = "TaskDialog" /> main icon.</summary>
+        /// <summary>Gets or sets a value that contains the <see cref="TaskDialog" /> main icon.</summary>
         public TaskDialogStandardIcon Icon
         {
             get
@@ -488,12 +489,13 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>Gets a value indicating whether a native dialog is showing</summary>
-        /// <value><see langword = "true" /> if a native dialog is showing; otherwise, <see langword = "false" />.</value>
+        /// <value><see langword="true" /> if a native dialog is showing; otherwise, <see langword="false" />.</value>
         private bool NativeDialogShowing
         {
             get
             {
-                return (this.nativeDialog != null) && (this.nativeDialog.ShowState == DialogShowState.Showing || this.nativeDialog.ShowState == DialogShowState.Closing);
+                return (this.nativeDialog != null) &&
+                       (this.nativeDialog.ShowState == DialogShowState.Showing || this.nativeDialog.ShowState == DialogShowState.Closing);
             }
         }
 
@@ -528,7 +530,7 @@ namespace System.Windows.Dialogs
             return ShowCoreStatic(text, instructionText, caption);
         }
 
-        /// <summary>Close <see cref="TaskDialog"/></summary>
+        /// <summary>Close <see cref="TaskDialog" /></summary>
         public void Close()
         {
             if (!this.NativeDialogShowing)
@@ -542,8 +544,8 @@ namespace System.Windows.Dialogs
             // which runs post show - will handle disposal of native dialog.
         }
 
-        /// <summary>Close <see cref="TaskDialog"/> with a given <see cref="TaskDialogResult"/></summary>
-        /// <param name="closingResult"><see cref="TaskDialogResult"/> to return from the <see cref="TaskDialog"/>.Show() method</param>
+        /// <summary>Close <see cref="TaskDialog" /> with a given <see cref="TaskDialogResult" /></summary>
+        /// <param name="closingResult"><see cref="TaskDialogResult" /> to return from the <see cref="TaskDialog" />.Show() method</param>
         public void Close(TaskDialogResult closingResult)
         {
             if (!this.NativeDialogShowing)
@@ -557,8 +559,8 @@ namespace System.Windows.Dialogs
             // which runs post show - will handle disposal of native dialog.
         }
 
-        /// <summary>Dispose <see cref="TaskDialog"/> Resources</summary>
-        /// <param name="disposing">If <see langword="true"/>, indicates that this is being called via Dispose rather than via the finalizer.</param>
+        /// <summary>Dispose <see cref="TaskDialog" /> Resources</summary>
+        /// <param name="disposing">If <see langword="true" />, indicates that this is being called via Dispose rather than via the finalizer.</param>
         public void Dispose(bool disposing)
         {
             if (this.disposed)
@@ -629,7 +631,7 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>
-        /// Called when a control currently in the collection
+        ///   Called when a control currently in the collection
         ///   has a property changed.
         ///   Called when a control currently in the collection has a property changing - this is basically to screen out property changes that cannot occur while the dialog is showing
         ///   because the Win32 API has no way for us to propagate the changes until we re-invoke the Win32 call.
@@ -719,14 +721,14 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>
-        /// Handle notifications of pseudo-controls being added
+        ///   Handle notifications of pseudo-controls being added
         ///   or removed from the collection.
         ///   PreFilter should throw if a control cannot
         ///   be added/removed in the dialog's current state.
         ///   PostProcess should pass on changes to native control,
         ///   if appropriate.
         /// </summary>
-        /// <returns><see langword="true"/> if collection change is allowed.</returns>
+        /// <returns><see langword="true" /> if collection change is allowed.</returns>
         bool IDialogControlHost.IsCollectionChangeAllowed()
         {
             // Only allow additions to collection if dialog is NOT showing.
@@ -734,7 +736,7 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>
-        /// Handle notifications of individual child
+        ///   Handle notifications of individual child
         ///   pseudo-controls' properties changing..
         ///   Pre filter should throw if the property
         ///   cannot be set in the dialog's current state.
@@ -742,8 +744,8 @@ namespace System.Windows.Dialogs
         ///   if appropriate.
         /// </summary>
         /// <param name="propertyName">The name of the property.</param>
-        /// <param name="control">The control <paramref name="propertyName"/> applies to.</param>
-        /// <returns><see langword="true"/> if the property change is allowed.</returns>
+        /// <param name="control">The control <paramref name="propertyName" /> applies to.</param>
+        /// <returns><see langword="true" /> if the property change is allowed.</returns>
         bool IDialogControlHost.IsControlPropertyChangeAllowed(string propertyName, DialogControl control)
         {
             Debug.Assert(control is TaskDialogControl, "Property changing for a control that is not a TaskDialogControl-derived type");
@@ -793,7 +795,7 @@ namespace System.Windows.Dialogs
 
         #region IDisposable
 
-        /// <summary>Dispose <see cref="TaskDialog"/> Resources</summary>
+        /// <summary>Dispose <see cref="TaskDialog" /> Resources</summary>
         public void Dispose()
         {
             this.Dispose(true);
@@ -823,7 +825,7 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>Raises the closing event.Gives event subscriber a chance to prevent the dialog from closing, based on the current state of the application and the button used to commit. Note that we don't have full access at this stage to the full dialog state.</summary>
-        /// <param name="id">The id for the <see cref="TaskDialog"/></param>
+        /// <param name="id">The id for the <see cref="TaskDialog" /></param>
         /// <returns>An integer</returns>
         internal int RaiseClosingEvent(int id)
         {
@@ -946,7 +948,7 @@ namespace System.Windows.Dialogs
 
         /// <summary>Constructs the dialog result.</summary>
         /// <param name="native">The native.</param>
-        /// <returns>The <see cref="TaskDialogResult"/></returns>
+        /// <returns>The <see cref="TaskDialogResult" /></returns>
         private static TaskDialogResult ConstructDialogResult(NativeTaskDialog native)
         {
             Debug.Assert(native.ShowState == DialogShowState.Closed, "dialog result being constructed for hidden dialog.");
@@ -978,7 +980,7 @@ namespace System.Windows.Dialogs
 
         /// <summary>Maps the button id to standard button.</summary>
         /// <param name="id">The button id</param>
-        /// <returns>The <see cref="TaskDialogButton"/></returns>
+        /// <returns>The <see cref="TaskDialogButton" /></returns>
         private static TaskDialogStandardButtons MapButtonIdToStandardButton(int id)
         {
             switch ((TaskDialogNativeMethods.TaskDialogCommonButtonReturnID)id)
@@ -1010,11 +1012,11 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>Shows the <see cref="TaskDialog"/></summary>
+        /// <summary>Shows the <see cref="TaskDialog" /></summary>
         /// <param name="text">The text to show</param>
         /// <param name="instructionText">The instruction text.</param>
         /// <param name="caption">The caption.</param>
-        /// <returns>The <see cref="TaskDialogResult"/></returns>
+        /// <returns>The <see cref="TaskDialogResult" /></returns>
         private static TaskDialogResult ShowCoreStatic(string text, string instructionText, string caption)
         {
             // Throw PlatformNotSupportedException if the user is not running Vista or beyond
@@ -1198,7 +1200,7 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>Sets important text properties.</summary>
-        /// <param name="dialogConfig">An instance of a <see cref="TaskDialogNativeMethods.TaskDialogConfig"/> object.</param>
+        /// <param name="dialogConfig">An instance of a <see cref="TaskDialogNativeMethods.TaskDialogConfig" /> object.</param>
         private void ApplyTextConfiguration(TaskDialogNativeMethods.TaskDialogConfig dialogConfig)
         {
             // note that nulls or empty strings are fine here.
@@ -1259,14 +1261,14 @@ namespace System.Windows.Dialogs
 
         /// <summary>Gets the button for id.</summary>
         /// <param name="id">The button id</param>
-        /// <returns>The <see cref="TaskDialogButton"/></returns>
+        /// <returns>The <see cref="TaskDialogButton" /></returns>
         private TaskDialogButtonBase GetButtonForId(int id)
         {
             return (TaskDialogButtonBase)this.Controls.GetControlById(id);
         }
 
         /// <summary>Shows the core.</summary>
-        /// <returns>Returns the result of the <see cref="TaskDialog"/></returns>
+        /// <returns>Returns the result of the <see cref="TaskDialog" /></returns>
         private TaskDialogResult ShowCore()
         {
             TaskDialogResult result;

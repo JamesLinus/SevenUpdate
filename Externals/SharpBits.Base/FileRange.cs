@@ -10,6 +10,7 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://sharpbits.codeplex.com/license">BSD License</license> 
 // ***********************************************************************
+
 namespace SharpBits.Base
 {
     /// <summary>The File range</summary>
@@ -17,7 +18,7 @@ namespace SharpBits.Base
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="FileRange"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="FileRange" /> class.</summary>
         /// <param name="initialOffset">The initial offset.</param>
         /// <param name="length">The length.</param>
         public FileRange(ulong initialOffset, ulong length)
@@ -25,7 +26,7 @@ namespace SharpBits.Base
             this.BGFileRange = new BGFileRange { InitialOffset = initialOffset, Length = length };
         }
 
-        /// <summary>Initializes a new instance of the <see cref="FileRange"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="FileRange" /> class.</summary>
         /// <param name="fileRange">The file range.</param>
         internal FileRange(BGFileRange fileRange)
         {

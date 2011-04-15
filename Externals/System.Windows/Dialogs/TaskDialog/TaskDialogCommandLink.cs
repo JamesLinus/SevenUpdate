@@ -8,6 +8,7 @@
 // </copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
 // ***********************************************************************
+
 namespace System.Windows.Dialogs
 {
     /// <summary>Represents a command-link.</summary>
@@ -22,23 +23,25 @@ namespace System.Windows.Dialogs
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "TaskDialogCommandLink" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="TaskDialogCommandLink" /> class.</summary>
         protected TaskDialogCommandLink()
         {
         }
 
-        /// <summary>Initializes a new instance of the <see cref="TaskDialogCommandLink"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="TaskDialogCommandLink" /> class.</summary>
         /// <param name="name">The name for this button.</param>
         /// <param name="text">The label for this button.</param>
-        protected TaskDialogCommandLink(string name, string text) : base(name, text)
+        protected TaskDialogCommandLink(string name, string text)
+            : base(name, text)
         {
         }
 
-        /// <summary>Initializes a new instance of the <see cref="TaskDialogCommandLink"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="TaskDialogCommandLink" /> class.</summary>
         /// <param name="name">The name for this button.</param>
         /// <param name="text">The label for this button.</param>
         /// <param name="instruction">The instruction for this command link.</param>
-        protected TaskDialogCommandLink(string name, string text, string instruction) : base(name, text)
+        protected TaskDialogCommandLink(string name, string text, string instruction)
+            : base(name, text)
         {
             this.instruction = instruction;
         }
@@ -66,7 +69,7 @@ namespace System.Windows.Dialogs
         #region Public Methods
 
         /// <summary>Returns a string representation of this object.</summary>
-        /// <returns>A <see cref="System.String"/> </returns>
+        /// <returns>A <see cref="System.String" /> </returns>
         public override string ToString()
         {
             var instructionString = this.instruction ?? string.Empty;

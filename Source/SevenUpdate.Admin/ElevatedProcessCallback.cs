@@ -21,6 +21,7 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
+
 namespace SevenUpdate.Admin
 {
     using System.ServiceModel;
@@ -33,11 +34,12 @@ namespace SevenUpdate.Admin
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="ElevatedProcessCallback"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="ElevatedProcessCallback" /> class.</summary>
         /// <param name="callbackInstance">The callback instance context</param>
         /// <param name="binding">The service binding configuration</param>
         /// <param name="remoteAddress">The url for the service</param>
-        public ElevatedProcessCallback(InstanceContext callbackInstance, Binding binding, EndpointAddress remoteAddress) : base(callbackInstance, binding, remoteAddress)
+        public ElevatedProcessCallback(InstanceContext callbackInstance, Binding binding, EndpointAddress remoteAddress)
+            : base(callbackInstance, binding, remoteAddress)
         {
         }
 

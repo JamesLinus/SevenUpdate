@@ -8,6 +8,7 @@
 // </copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
 // ***********************************************************************
+
 namespace System.Windows.Dialogs
 {
     using System.Diagnostics;
@@ -16,13 +17,13 @@ namespace System.Windows.Dialogs
     internal enum DialogShowState
     {
         /// <summary>The dialog is about to be shown</summary>
-        PreShow, 
+        PreShow,
 
         /// <summary>Currently Showing</summary>
-        Showing, 
+        Showing,
 
         /// <summary>Currently Closing</summary>
-        Closing, 
+        Closing,
 
         /// <summary>Closed dialog</summary>
         Closed
@@ -46,7 +47,7 @@ namespace System.Windows.Dialogs
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "DialogControl" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="DialogControl" /> class.</summary>
         protected DialogControl()
         {
             this.Id = nextId;
@@ -62,9 +63,10 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>Initializes a new instance of the <see cref="DialogControl"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="DialogControl" /> class.</summary>
         /// <param name="name">The name for this dialog.</param>
-        protected DialogControl(string name) : this()
+        protected DialogControl(string name)
+            : this()
         {
             this.Name = name;
         }
@@ -73,7 +75,7 @@ namespace System.Windows.Dialogs
 
         #region Properties
 
-        /// <summary>Gets or sets the native dialog that is hosting this control. This property is <see langword = "null" /> isthere is not associated dialog</summary>
+        /// <summary>Gets or sets the native dialog that is hosting this control. This property is <see langword="null" /> isthere is not associated dialog</summary>
         /// <value>The hosting dialog.</value>
         public IDialogControlHost HostingDialog
         {
@@ -89,14 +91,14 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>Gets the identifier for this control.</summary>
-        /// <value>An <see cref = "System.Int32" /> value.</value>
+        /// <value>An <see cref="System.Int32" /> value.</value>
         public int Id { get; private set; }
 
         /// <summary>Gets or sets the name for this control.</summary>
-        /// <value>A <see cref = "System.String" /> value.</value>
+        /// <value>A <see cref="System.String" /> value.</value>
         /// <remarks>The name of the control should not be modified once set</remarks>
-        /// <exception cref = "System.ArgumentException">The name cannot be <see langword = "null" /> or a zero-length string.</exception>
-        /// <exception cref = "System.InvalidOperationException">The name has already been set.</exception>
+        /// <exception cref="System.ArgumentException">The name cannot be <see langword="null" /> or a zero-length string.</exception>
+        /// <exception cref="System.InvalidOperationException">The name has already been set.</exception>
         public string Name
         {
             get
@@ -132,7 +134,7 @@ namespace System.Windows.Dialogs
 
         /// <summary>Compares two objects to determine whether they are equal</summary>
         /// <param name="obj">The object to compare against.</param>
-        /// <returns>A <see cref="System.Boolean"/> value.</returns>
+        /// <returns>A <see cref="System.Boolean" /> value.</returns>
         public override bool Equals(object obj)
         {
             var control = obj as DialogControl;
@@ -146,7 +148,7 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>Serves as a hash function for a particular type.</summary>
-        /// <returns>An <see cref="System.Int32"/> hash code for this control.</returns>
+        /// <returns>An <see cref="System.Int32" /> hash code for this control.</returns>
         public override int GetHashCode()
         {
             return this.name == null ? this.ToString().GetHashCode() : this.name.GetHashCode();
@@ -157,7 +159,7 @@ namespace System.Windows.Dialogs
         #region Methods
 
         /// <summary>
-        /// Calls the hosting dialog, if it exists, to
+        ///   Calls the hosting dialog, if it exists, to
         ///   to indicate that a property has changed, and that 
         ///   the dialog should do whatever is necessary 
         ///   to propagate the change to the native control.
@@ -176,7 +178,7 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>
-        /// Calls the hosting dialog, if it exists, to check whether the 
+        ///   Calls the hosting dialog, if it exists, to check whether the 
         ///   property can be set in the dialog's current state. 
         ///   The host should throw an exception if the change is not supported.
         ///   Note that if the dialog isn't set yet, 

@@ -10,6 +10,7 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://sharpbits.codeplex.com/license">BSD License</license> 
 // ***********************************************************************
+
 namespace SharpBits.Base
 {
     using System;
@@ -18,7 +19,7 @@ namespace SharpBits.Base
     using System.Runtime.Serialization;
     using System.Security.Permissions;
 
-    /// <summary>The collection of <see cref="BitsJob"/>'s</summary>
+    /// <summary>The collection of <see cref="BitsJob" />'s</summary>
     [Serializable]
     public class BitsJobsDictionary : Dictionary<Guid, BitsJob>, IDisposable
     {
@@ -34,21 +35,21 @@ namespace SharpBits.Base
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "BitsJobsDictionary" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="BitsJobsDictionary" /> class.</summary>
         public BitsJobsDictionary()
         {
         }
 
         // only required for initialization
 
-        /// <summary>Initializes a new instance of the <see cref="BitsJobsDictionary"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="BitsJobsDictionary" /> class.</summary>
         /// <param name="manager">The manager.</param>
         internal BitsJobsDictionary(BitsManager manager)
         {
             this.manager = manager;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="BitsJobsDictionary"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="BitsJobsDictionary" /> class.</summary>
         /// <param name="manager">The manager.</param>
         /// <param name="jobList">The job list.</param>
         internal BitsJobsDictionary(BitsManager manager, IEnumBackgroundCopyJobs jobList)
@@ -58,10 +59,11 @@ namespace SharpBits.Base
             this.Update();
         }
 
-        /// <summary>Initializes a new instance of the <see cref="BitsJobsDictionary"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="BitsJobsDictionary" /> class.</summary>
         /// <param name="info">The serialization info</param>
         /// <param name="context">The context.</param>
-        protected BitsJobsDictionary(SerializationInfo info, StreamingContext context) : base(info, context)
+        protected BitsJobsDictionary(SerializationInfo info, StreamingContext context)
+            : base(info, context)
         {
             if (info == null)
             {
@@ -130,7 +132,7 @@ namespace SharpBits.Base
         }
 
         /// <summary>Releases unmanaged and - optionally - managed resources</summary>
-        /// <param name="disposing"><see langword="true"/> to release both managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.</param>
+        /// <param name="disposing"><see langword="true" /> to release both managed and unmanaged resources; <see langword="false" /> to release only unmanaged resources.</param>
         protected virtual void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -149,7 +151,7 @@ namespace SharpBits.Base
             this.disposed = true;
         }
 
-        /// <summary>Updates the <see cref="BitsJob"/> collection</summary>
+        /// <summary>Updates the <see cref="BitsJob" /> collection</summary>
         private void Update()
         {
             uint count;

@@ -10,9 +10,11 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://sharpbits.codeplex.com/license">BSD License</license> 
 // ***********************************************************************
+
 namespace SharpBits.Base
 {
     using System;
+    using System.Runtime.InteropServices;
 
     /// <summary>The notification class for the bits manager</summary>
     internal class BitsNotification : IBackgroundCopyCallback
@@ -22,20 +24,20 @@ namespace SharpBits.Base
         /// <summary>The BITS manager</summary>
         private readonly BitsManager manager;
 
-        /// <summary>Occurs when a <see cref = "BitsJob" /> error occurs</summary>
+        /// <summary>Occurs when a <see cref="BitsJob" /> error occurs</summary>
         private EventHandler<ErrorNotificationEventArgs> errorOccurred;
 
-        /// <summary>Occurs when a <see cref = "BitsJob" /> is modified</summary>
+        /// <summary>Occurs when a <see cref="BitsJob" /> is modified</summary>
         private EventHandler<NotificationEventArgs> onJobModified;
 
-        /// <summary>Occurs when a <see cref = "BitsJob" /> is transfered</summary>
+        /// <summary>Occurs when a <see cref="BitsJob" /> is transfered</summary>
         private EventHandler<NotificationEventArgs> onJobTransfered;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="BitsNotification"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="BitsNotification" /> class.</summary>
         /// <param name="manager">The manager.</param>
         internal BitsNotification(BitsManager manager)
         {
@@ -142,7 +144,7 @@ namespace SharpBits.Base
                 {
                     job.NotificationTarget.JobError(copyJob, error);
                 }
-                catch (System.Runtime.InteropServices.COMException)
+                catch (COMException)
                 {
                 }
             }
@@ -196,7 +198,7 @@ namespace SharpBits.Base
                 {
                     job.NotificationTarget.JobModification(copyJob, reserved);
                 }
-                catch (System.Runtime.InteropServices.COMException)
+                catch (COMException)
                 {
                 }
             }
@@ -249,7 +251,7 @@ namespace SharpBits.Base
                 {
                     job.NotificationTarget.JobTransferred(copyJob);
                 }
-                catch (System.Runtime.InteropServices.COMException)
+                catch (COMException)
                 {
                 }
             }

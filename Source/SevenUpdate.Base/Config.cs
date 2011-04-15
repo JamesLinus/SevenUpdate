@@ -21,6 +21,7 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
+
 namespace SevenUpdate
 {
     using System.ComponentModel;
@@ -34,15 +35,15 @@ namespace SevenUpdate
     {
         /// <summary>Download and Installs updates automatically</summary>
         [ProtoEnum, EnumMember]
-        Install = 0, 
+        Install = 0,
 
         /// <summary>Downloads Updates automatically</summary>
         [ProtoEnum, EnumMember]
-        Download = 1, 
+        Download = 1,
 
         /// <summary>Only checks and notifies the user of updates</summary>
         [ProtoEnum, EnumMember]
-        Notify = 2, 
+        Notify = 2,
 
         /// <summary>No automatic checking</summary>
         [ProtoEnum, EnumMember]
@@ -58,7 +59,7 @@ namespace SevenUpdate
         /// <summary>The automatic update setting</summary>
         private AutoUpdateOption autoOption;
 
-        /// <summary>A value that indicates whether to treat <see cref = "Importance.Recommended" /> updates the same as <see cref = "Importance.Important" /> updates</summary>
+        /// <summary>A value that indicates whether to treat <see cref="Importance.Recommended" /> updates the same as <see cref="Importance.Important" /> updates</summary>
         private bool includeRecommended;
 
         #endregion
@@ -92,7 +93,7 @@ namespace SevenUpdate
         }
 
         /// <summary>Gets or sets a value indicating whether Seven Update is to included recommended updates when automatically downloading updates</summary>
-        /// <value><see langword = "true" /> if recommended updates should be treated as important updates otherwise, <see langword = "false" />.</value>
+        /// <value><see langword="true" /> if recommended updates should be treated as important updates otherwise, <see langword="false" />.</value>
         [ProtoMember(2), DataMember]
         public bool IncludeRecommended
         {
@@ -114,7 +115,7 @@ namespace SevenUpdate
 
         #region Methods
 
-        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged"/> Event</summary>
+        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged" /> Event</summary>
         /// <param name="name">The name of the property that changed</param>
         private void OnPropertyChanged(string name)
         {

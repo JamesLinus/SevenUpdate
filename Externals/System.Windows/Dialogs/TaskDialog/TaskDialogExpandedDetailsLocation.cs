@@ -8,16 +8,17 @@
 // </copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
 // ***********************************************************************
+
 namespace System.Windows.Dialogs
 {
     /// <summary>Specifies the options for expand/collapse sections in dialogs.</summary>
     public enum TaskDialogExpandedDetailsLocation
     {
         /// <summary>Do not show the content.</summary>
-        Hide, 
+        Hide,
 
         /// <summary>Show the content.</summary>
-        ExpandContent, 
+        ExpandContent,
 
         /// <summary>Expand the footer content.</summary>
         ExpandFooter

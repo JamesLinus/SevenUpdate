@@ -21,6 +21,7 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
+
 namespace SevenUpdate
 {
     using System;
@@ -122,7 +123,8 @@ namespace SevenUpdate
                     currentUpdateName = Utilities.GetLocaleString(applications[x].Updates[y].Name);
 
                     // TODO: Remove this code and test executing SevenUpdate.Helper as a FileAction in the Seven Update SUI file
-                    if (applications[x].AppInfo.Directory == Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, applications[x].AppInfo.Platform))
+                    if (applications[x].AppInfo.Directory ==
+                        Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, applications[x].AppInfo.Platform))
                     {
                         try
                         {
@@ -162,7 +164,8 @@ namespace SevenUpdate
                         AddHistory(applications[x], applications[x].Updates[y]);
                     }
 
-                    if (applications[x].AppInfo.Directory == Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, Platform.AnyCpu))
+                    if (applications[x].AppInfo.Directory ==
+                        Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, Platform.AnyCpu))
                     {
                         selfUpdate = true;
                     }
@@ -231,18 +234,18 @@ namespace SevenUpdate
         /// <summary>Adds an update to the update history</summary>
         /// <param name="appInfo">the application information</param>
         /// <param name="updateInfo">the update information</param>
-        /// <param name="failed"><see langword="true"/> if the update failed, otherwise <see langword="false"/></param>
+        /// <param name="failed"><see langword="true" /> if the update failed, otherwise <see langword="false" /></param>
         private static void AddHistory(Sui appInfo, Update updateInfo, bool failed = false)
         {
             var hist = new Suh(updateInfo.Name, appInfo.AppInfo.Publisher, updateInfo.Description)
                 {
-                    HelpUrl = appInfo.AppInfo.HelpUrl, 
-                    AppUrl = appInfo.AppInfo.AppUrl, 
-                    Status = failed == false ? UpdateStatus.Successful : UpdateStatus.Failed, 
-                    InfoUrl = updateInfo.InfoUrl, 
-                    InstallDate = DateTime.Now.ToShortDateString(), 
-                    ReleaseDate = updateInfo.ReleaseDate, 
-                    Importance = updateInfo.Importance, 
+                    HelpUrl = appInfo.AppInfo.HelpUrl,
+                    AppUrl = appInfo.AppInfo.AppUrl,
+                    Status = failed == false ? UpdateStatus.Successful : UpdateStatus.Failed,
+                    InfoUrl = updateInfo.InfoUrl,
+                    InstallDate = DateTime.Now.ToShortDateString(),
+                    ReleaseDate = updateInfo.ReleaseDate,
+                    Importance = updateInfo.Importance,
                 };
 
             if (UpdateInstalled != null)
@@ -367,7 +370,8 @@ namespace SevenUpdate
                 shortcuts[x].Location = Utilities.ExpandInstallLocation(shortcuts[x].Location, appInfo.Directory, appInfo.Platform, appInfo.ValueName);
                 var linkName = Utilities.GetLocaleString(shortcuts[x].Name);
 
-                if (shortcuts[x].Action == ShortcutAction.Add || (shortcuts[x].Action == ShortcutAction.Update && File.Exists(Path.Combine(shortcuts[x].Location, linkName + ".lnk"))))
+                if (shortcuts[x].Action == ShortcutAction.Add ||
+                    (shortcuts[x].Action == ShortcutAction.Update && File.Exists(Path.Combine(shortcuts[x].Location, linkName + ".lnk"))))
                 {
                     if (!Directory.Exists(shortcuts[x].Location))
                     {

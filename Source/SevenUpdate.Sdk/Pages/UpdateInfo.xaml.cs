@@ -21,6 +21,7 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
+
 namespace SevenUpdate.Sdk.Pages
 {
     using System;
@@ -38,7 +39,7 @@ namespace SevenUpdate.Sdk.Pages
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "UpdateInfo" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="UpdateInfo" /> class.</summary>
         public UpdateInfo()
         {
             this.InitializeComponent();
@@ -91,15 +92,16 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Determines whether this instance has errors.</summary>
-        /// <returns><see langword="true"/> if this instance has errors; otherwise, <see langword="false"/>.</returns>
+        /// <returns><see langword="true" /> if this instance has errors; otherwise, <see langword="false" />.</returns>
         private bool HasErrors()
         {
-            return this.tbxUpdateName.HasError || this.tbxUpdateDetails.HasError || this.tbxSourceLocation.HasError || this.imgReleaseDate.Visibility == Visibility.Visible;
+            return this.tbxUpdateName.HasError || this.tbxUpdateDetails.HasError || this.tbxSourceLocation.HasError ||
+                   this.imgReleaseDate.Visibility == Visibility.Visible;
         }
 
-        /// <summary>Loads the <see cref="LocaleString"/>'s for the <see cref="Update"/> into the UI</summary>
+        /// <summary>Loads the <see cref="LocaleString" />'s for the <see cref="Update" /> into the UI</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Controls.SelectionChangedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.Controls.SelectionChangedEventArgs" /> instance containing the event data.</param>
         private void LoadLocaleStrings(object sender, SelectionChangedEventArgs e)
         {
             if (this.tbxUpdateName == null || this.cbxLocale.SelectedIndex < 0)
@@ -138,9 +140,9 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        /// <summary>Loads the <see cref="Update"/> information to the UI</summary>
+        /// <summary>Loads the <see cref="Update" /> information to the UI</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void LoadUI(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(this.tbxUpdateDetails.Text))
@@ -186,7 +188,7 @@ namespace SevenUpdate.Sdk.Pages
 
         /// <summary>Moves on to the next pages if no errors are present</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void MoveOn(object sender, RoutedEventArgs e)
         {
             if (!this.HasErrors())
@@ -201,7 +203,7 @@ namespace SevenUpdate.Sdk.Pages
 
         /// <summary>Navigates to the main page</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void NavigateToMainPage(object sender, RoutedEventArgs e)
         {
             MainWindow.NavService.Navigate(Core.MainPage);
@@ -209,7 +211,7 @@ namespace SevenUpdate.Sdk.Pages
 
         /// <summary>Updates the UI based on whether Aero Glass is enabled</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="CompositionChangedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="CompositionChangedEventArgs" /> instance containing the event data.</param>
         private void UpdateUI(object sender, CompositionChangedEventArgs e)
         {
             if (e.IsGlassEnabled)

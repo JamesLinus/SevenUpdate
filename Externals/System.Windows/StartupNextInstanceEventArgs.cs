@@ -10,6 +10,7 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://wpfinstanceawareapp.codeplex.com/license">Microsoft Public License</license>
 // ***********************************************************************
+
 namespace System.Windows
 {
     /// <summary>Class used to define the arguments of another application instance startup.</summary>
@@ -24,9 +25,9 @@ namespace System.Windows
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="StartupNextInstanceEventArgs"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="StartupNextInstanceEventArgs" /> class.</summary>
         /// <param name="args">The arguments passed to the program</param>
-        /// <param name="bringToFront">If set to <see langword="true"/> the application main window will be brought to front.</param>
+        /// <param name="bringToFront">If set to <see langword="true" /> the application main window will be brought to front.</param>
         public StartupNextInstanceEventArgs(string[] args, bool bringToFront = true)
         {
             if (args == null)
@@ -43,7 +44,7 @@ namespace System.Windows
         #region Properties
 
         /// <summary>Gets a value indicating whether the application main window has to be brought to foreground.</summary>
-        /// <value><see langword = "true" /> if the application window has to be brought to foreground, otherwise <see langword = "false" /></value>
+        /// <value><see langword="true" /> if the application window has to be brought to foreground, otherwise <see langword="false" /></value>
         public bool BringToForeground { get; private set; }
 
         #endregion

@@ -21,6 +21,7 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
+
 namespace SevenUpdate.Sdk.Windows
 {
     using System;
@@ -36,7 +37,7 @@ namespace SevenUpdate.Sdk.Windows
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "About" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="About" /> class.</summary>
         public About()
         {
             this.InitializeComponent();
@@ -67,7 +68,7 @@ namespace SevenUpdate.Sdk.Windows
         #region Methods
 
         /// <summary>Enables Aero Glass on the Window</summary>
-        /// <param name="e">The <see cref="EventArgs"/> instance containing the event data</param>
+        /// <param name="e">The <see cref="EventArgs" /> instance containing the event data</param>
         protected override void OnSourceInitialized(EventArgs e)
         {
             base.OnSourceInitialized(e);
@@ -77,7 +78,7 @@ namespace SevenUpdate.Sdk.Windows
 
         /// <summary>Changes the Window Background when Aero Glass is enabled or disabled.</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="CompositionChangedEventArgs"/> instance containing the event data</param>
+        /// <param name="e">The <see cref="CompositionChangedEventArgs" /> instance containing the event data</param>
         private void ChangeWindowChrome(object sender, CompositionChangedEventArgs e)
         {
             if (e.IsGlassEnabled)
@@ -97,7 +98,7 @@ namespace SevenUpdate.Sdk.Windows
 
         /// <summary>Closes the About window</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void CloseWindow(object sender, RoutedEventArgs e)
         {
             this.Close();
@@ -105,7 +106,7 @@ namespace SevenUpdate.Sdk.Windows
 
         /// <summary>Enables the ability to drag the window on glass</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs" /> instance containing the event data.</param>
         private void EnableDragOnGlass(object sender, MouseButtonEventArgs e)
         {
             if (AeroGlass.IsGlassEnabled && e.LeftButton == MouseButtonState.Pressed)
@@ -116,7 +117,7 @@ namespace SevenUpdate.Sdk.Windows
 
         /// <summary>Opens a browser and navigates to the Uri</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Navigation.RequestNavigateEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.Navigation.RequestNavigateEventArgs" /> instance containing the event data.</param>
         private void NavigateToUri(object sender, RequestNavigateEventArgs e)
         {
             Utilities.StartProcess(e.Uri.AbsoluteUri);

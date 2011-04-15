@@ -21,6 +21,7 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
+
 namespace System.Windows
 {
     /// <summary>Event argument for The CompositionChanged event</summary>
@@ -28,8 +29,8 @@ namespace System.Windows
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="CompositionChangedEventArgs"/> class.</summary>
-        /// <param name="isGlassEnabled">if set to <see langword="true"/> aero glass is enabled</param>
+        /// <summary>Initializes a new instance of the <see cref="CompositionChangedEventArgs" /> class.</summary>
+        /// <param name="isGlassEnabled">if set to <see langword="true" /> aero glass is enabled</param>
         internal CompositionChangedEventArgs(bool isGlassEnabled)
         {
             this.IsGlassEnabled = isGlassEnabled;
@@ -40,7 +41,7 @@ namespace System.Windows
         #region Properties
 
         /// <summary>Gets a value indicating whether DWM/Glass is currently enabled.</summary>
-        /// <value><see langword = "true" /> if this instance is glass enabled; otherwise, <see langword = "false" />.</value>
+        /// <value><see langword="true" /> if this instance is glass enabled; otherwise, <see langword="false" />.</value>
         public bool IsGlassEnabled { get; private set; }
 
         #endregion

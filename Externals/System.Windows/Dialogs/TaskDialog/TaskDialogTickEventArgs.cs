@@ -8,6 +8,7 @@
 // </copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
 // ***********************************************************************
+
 namespace System.Windows.Dialogs
 {
     /// <summary>The event data for a TaskDialogTick event.</summary>
@@ -15,7 +16,7 @@ namespace System.Windows.Dialogs
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="TaskDialogTickEventArgs"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="TaskDialogTickEventArgs" /> class.</summary>
         /// <param name="totalTicks">The total number of ticks since the control was activated.</param>
         public TaskDialogTickEventArgs(int totalTicks)
         {

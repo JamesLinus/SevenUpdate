@@ -21,6 +21,7 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
+
 namespace SevenUpdate
 {
     using System;
@@ -34,7 +35,7 @@ namespace SevenUpdate
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="InstallProgressChangedEventArgs"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="InstallProgressChangedEventArgs" /> class.</summary>
         /// <param name="updateName">the name of the update currently being installed</param>
         /// <param name="progress">the progress percentage of the installation</param>
         /// <param name="updatesComplete">the number of updates that have been installed so far</param>
@@ -47,7 +48,7 @@ namespace SevenUpdate
             this.UpdateName = updateName;
         }
 
-        /// <summary>Initializes a new instance of the <see cref = "InstallProgressChangedEventArgs" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="InstallProgressChangedEventArgs" /> class.</summary>
         public InstallProgressChangedEventArgs()
         {
         }

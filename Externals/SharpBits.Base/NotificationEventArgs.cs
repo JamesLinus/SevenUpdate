@@ -10,6 +10,7 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://sharpbits.codeplex.com/license">BSD License</license> 
 // ***********************************************************************
+
 namespace SharpBits.Base
 {
     /// <summary>The event data for the Notification event</summary>
@@ -17,7 +18,7 @@ namespace SharpBits.Base
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="NotificationEventArgs"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="NotificationEventArgs" /> class.</summary>
         /// <param name="job">The job the event occurred for</param>
         internal NotificationEventArgs(BitsJob job)
         {
@@ -29,7 +30,7 @@ namespace SharpBits.Base
         #region Properties
 
         /// <summary>Gets the job.</summary>
-        /// <value>The <see cref = "BitsJob" /> the notification occurred for</value>
+        /// <value>The <see cref="BitsJob" /> the notification occurred for</value>
         public BitsJob Job { get; private set; }
 
         #endregion

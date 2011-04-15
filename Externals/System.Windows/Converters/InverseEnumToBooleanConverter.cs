@@ -21,6 +21,7 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
+
 namespace System.Windows.Converters
 {
     using System.Globalization;
@@ -39,7 +40,7 @@ namespace System.Windows.Converters
         /// <param name="targetType">The type of the binding target property.</param>
         /// <param name="parameter">The converter parameter to use.</param>
         /// <param name="culture">The culture to use in the converter.</param>
-        /// <returns>A converted value. If the method returns <see langword="null"/>, the valid <see langword="null"/> value is used.</returns>
+        /// <returns>A converted value. If the method returns <see langword="null" />, the valid <see langword="null" /> value is used.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null)
@@ -55,7 +56,7 @@ namespace System.Windows.Converters
         /// <param name="targetType">The type to convert to.</param>
         /// <param name="parameter">The converter parameter to use.</param>
         /// <param name="culture">The culture to use in the converter.</param>
-        /// <returns>A converted value. If the method returns <see langword="null"/>, the valid <see langword="null"/> value is used.</returns>
+        /// <returns>A converted value. If the method returns <see langword="null" />, the valid <see langword="null" /> value is used.</returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return DependencyProperty.UnsetValue;

@@ -8,11 +8,12 @@
 // </copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
 // ***********************************************************************
+
 namespace System.Windows.Dialogs
 {
     using System.ComponentModel;
 
-    /// <summary>Data associated with <see cref="TaskDialog.Closing"/> event.</summary>
+    /// <summary>Data associated with <see cref="TaskDialog.Closing" /> event.</summary>
     public class TaskDialogClosingEventArgs : CancelEventArgs
     {
         #region Properties

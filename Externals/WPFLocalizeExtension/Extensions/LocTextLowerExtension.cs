@@ -9,6 +9,7 @@
 // <author username="SeriousM">Bernhard Millauer</author>
 // <license href="http://wpflocalizeextension.codeplex.com/license">Microsoft Public License</license>
 // ***********************************************************************
+
 namespace WPFLocalizeExtension.Extensions
 {
     using System;
@@ -23,14 +24,15 @@ namespace WPFLocalizeExtension.Extensions
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "LocTextLowerExtension" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="LocTextLowerExtension" /> class.</summary>
         public LocTextLowerExtension()
         {
         }
 
-        /// <summary>Initializes a new instance of the <see cref="LocTextLowerExtension"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="LocTextLowerExtension" /> class.</summary>
         /// <param name="key">The resource identifier.</param>
-        public LocTextLowerExtension(string key) : base(key)
+        public LocTextLowerExtension(string key)
+            : base(key)
         {
         }
 
@@ -38,9 +40,9 @@ namespace WPFLocalizeExtension.Extensions
 
         #region Public Methods
 
-        /// <summary>Provides the Value for the first Binding as <see cref="System.String"/></summary>
-        /// <param name="serviceProvider">The <see cref="System.Windows.Markup.IProvideValueTarget"/> provided from the <see cref="MarkupExtension"/></param>
-        /// <returns>The found item from the .resx directory or <see langword="null"/> if not found</returns>
+        /// <summary>Provides the Value for the first Binding as <see cref="System.String" /></summary>
+        /// <param name="serviceProvider">The <see cref="System.Windows.Markup.IProvideValueTarget" /> provided from the <see cref="MarkupExtension" /></param>
+        /// <returns>The found item from the .resx directory or <see langword="null" /> if not found</returns>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             var obj = base.ProvideValue(serviceProvider);
@@ -61,16 +63,18 @@ namespace WPFLocalizeExtension.Extensions
                 return obj;
             }
 
-            throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, "ResourceKey '{0}' returns '{1}' which is not type of System.String", this.Key, obj.GetType().FullName));
+            throw new NotSupportedException(
+                string.Format(
+                    CultureInfo.CurrentCulture, "ResourceKey '{0}' returns '{1}' which is not type of System.String", this.Key, obj.GetType().FullName));
         }
 
         #endregion
 
         #region Methods
 
-        /// <summary>This method formats the localized text.If the passed target text is <see langword="null"/>, string.empty will be returned.</summary>
+        /// <summary>This method formats the localized text.If the passed target text is <see langword="null" />, string.empty will be returned.</summary>
         /// <param name="target">The text to format.</param>
-        /// <returns>Returns the formated text or string.empty, if the target text was <see langword="null"/>.</returns>
+        /// <returns>Returns the formated text or string.empty, if the target text was <see langword="null" />.</returns>
         protected override string FormatText(string target)
         {
             return target == null ? string.Empty : target.ToLower(this.Culture);

@@ -21,6 +21,7 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
+
 namespace SevenUpdate.Sdk
 {
     using System;
@@ -49,7 +50,8 @@ namespace SevenUpdate.Sdk
         #region Constants and Fields
 
         /// <summary>The location of the file that contains the collection of Projects for the SDK</summary>
-        public static readonly string ProjectsFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Seven Software", "Seven Update SDK", "Projects.sul");
+        public static readonly string ProjectsFile = Path.Combine(
+            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Seven Software", "Seven Update SDK", "Projects.sul");
 
         /// <summary>The application information page</summary>
         private static AppInfo appInfoPage;
@@ -99,7 +101,7 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>Gets or sets a value indicating whether the current project being edited is new</summary>
-        /// <value><see langword = "true" /> if this instance is new project; otherwise, <see langword = "false" />.</value>
+        /// <value><see langword="true" /> if this instance is new project; otherwise, <see langword="false" />.</value>
         internal static bool IsNewProject { get; set; }
 
         /// <summary>Gets the Main page</summary>
@@ -215,7 +217,9 @@ namespace SevenUpdate.Sdk
             {
                 AppInfo = null;
                 UpdateInfo = null;
-                ShowMessage(string.Format(Resources.FileLoadError, Path.Combine(App.UserStore, Projects[AppIndex].ApplicationName + ".sua")), TaskDialogStandardIcon.Error);
+                ShowMessage(
+                    string.Format(Resources.FileLoadError, Path.Combine(App.UserStore, Projects[AppIndex].ApplicationName + ".sua")),
+                    TaskDialogStandardIcon.Error);
                 return;
             }
 
@@ -227,23 +231,26 @@ namespace SevenUpdate.Sdk
 
             if (File.Exists(Path.Combine(App.UserStore, Projects[AppIndex].ApplicationName + @".sui")))
             {
-                UpdateInfo = Utilities.Deserialize<Collection<Update>>(Path.Combine(App.UserStore, Projects[AppIndex].ApplicationName + ".sui"))[UpdateIndex];
+                UpdateInfo =
+                    Utilities.Deserialize<Collection<Update>>(Path.Combine(App.UserStore, Projects[AppIndex].ApplicationName + ".sui"))[UpdateIndex];
             }
             else
             {
                 AppInfo = null;
                 UpdateInfo = null;
-                ShowMessage(string.Format(Resources.FileLoadError, Path.Combine(App.UserStore, Projects[AppIndex].ApplicationName + ".sui")), TaskDialogStandardIcon.Error);
+                ShowMessage(
+                    string.Format(Resources.FileLoadError, Path.Combine(App.UserStore, Projects[AppIndex].ApplicationName + ".sui")),
+                    TaskDialogStandardIcon.Error);
                 return;
             }
 
-           var jumpTask = new JumpTask
-            {
-                IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"),
-                IconResourceIndex = 8,
-                Title = Utilities.GetLocaleString(UpdateInfo.Name),
-                Arguments = @"-edit " + AppIndex + " " + UpdateIndex
-            };
+            var jumpTask = new JumpTask
+                {
+                    IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"),
+                    IconResourceIndex = 8,
+                    Title = Utilities.GetLocaleString(UpdateInfo.Name),
+                    Arguments = @"-edit " + AppIndex + " " + UpdateIndex
+                };
 
             JumpList.AddToRecentCategory(jumpTask);
 
@@ -299,14 +306,18 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>Opens a OpenFileDialog</summary>
-        /// <param name="initialDirectory">Gets or sets the initial directory displayed when the dialog is shown. A <see langword="null"/> or empty string indicates that the dialog is using the default directory</param>
+        /// <param name="initialDirectory">Gets or sets the initial directory displayed when the dialog is shown. A <see langword="null" /> or empty string indicates that the dialog is using the default directory</param>
         /// <param name="initialFileName">Gets or sets the initial filename displayed when the dialog is shown.</param>
         /// <param name="multiSelect">Gets or sets a value that determines whether the user can select more than one file</param>
-        /// <param name="defaultExtension">Gets or sets the default file extension to be added to the file names. If the value is <see langword="null"/> or empty, the extension is not added to the file names</param>
+        /// <param name="defaultExtension">Gets or sets the default file extension to be added to the file names. If the value is <see langword="null" /> or empty, the extension is not added to the file names</param>
         /// <param name="navigateToShortcut">Gets or sets a value that controls whether shortcuts should be treated as their target items, allowing an application to open a .lnk file</param>
         /// <returns>A collection of the selected files</returns>
         internal static string[] OpenFileDialog(
-            string initialDirectory = null, string initialFileName = null, bool multiSelect = false, string defaultExtension = null, bool navigateToShortcut = false)
+            string initialDirectory = null,
+            string initialFileName = null,
+            bool multiSelect = false,
+            string defaultExtension = null,
+            bool navigateToShortcut = false)
         {
             string[] result;
             using (var openFileDialog = new OpenFileDialog())
@@ -340,16 +351,18 @@ namespace SevenUpdate.Sdk
                         break;
                 }
 
-                result = openFileDialog.ShowDialog(GetIWin32Window(Application.Current.MainWindow)) != DialogResult.OK ? null : openFileDialog.FileNames;
+                result = openFileDialog.ShowDialog(GetIWin32Window(Application.Current.MainWindow)) != DialogResult.OK
+                             ? null
+                             : openFileDialog.FileNames;
             }
 
             return result;
         }
 
         /// <summary>Opens a SaveFileDialog</summary>
-        /// <param name="initialDirectory">Gets or sets the initial directory displayed when the dialog is shown. A <see langword="null"/> or empty string indicates that the dialog is using the default directory</param>
+        /// <param name="initialDirectory">Gets or sets the initial directory displayed when the dialog is shown. A <see langword="null" /> or empty string indicates that the dialog is using the default directory</param>
         /// <param name="defaultFileName">Sets the default file name</param>
-        /// <param name="defaultExtension">Gets or sets the default file extension to be added to the file names. If the value is <see langword="null"/> or empty, the extension is not added to the file names</param>
+        /// <param name="defaultExtension">Gets or sets the default file extension to be added to the file names. If the value is <see langword="null" /> or empty, the extension is not added to the file names</param>
         /// <returns>Gets the selected filename</returns>
         internal static string SaveFileDialog(string initialDirectory, string defaultFileName, string defaultExtension = null)
         {
@@ -382,14 +395,16 @@ namespace SevenUpdate.Sdk
                         break;
                 }
 
-                result = saveFileDialog.ShowDialog(GetIWin32Window(Application.Current.MainWindow)) != DialogResult.OK ? null : saveFileDialog.FileName;
+                result = saveFileDialog.ShowDialog(GetIWin32Window(Application.Current.MainWindow)) != DialogResult.OK
+                             ? null
+                             : saveFileDialog.FileName;
             }
 
             return result;
         }
 
         /// <summary>Saves the project.</summary>
-        /// <param name="export"><see langword="true"/> to export the sui/sua files, <see langword="false"/> otherwise</param>
+        /// <param name="export"><see langword="true" /> to export the sui/sua files, <see langword="false" /> otherwise</param>
         internal static void SaveProject(bool export = false)
         {
             var appUpdates = new Collection<Update>();
@@ -508,9 +523,9 @@ namespace SevenUpdate.Sdk
             MainWindow.NavService.Navigate(MainPage);
         }
 
-        /// <summary>Shows either a <see cref="TaskDialog"/> or a <see cref="System.Windows.MessageBox"/> if running legacy windows.</summary>
-        /// <param name="instructionText">The main text to display (Blue 14pt for <see cref="TaskDialog"/>)</param>
-        /// <param name="icon">The <see cref="TaskDialogStandardIcon"/> to display</param>
+        /// <summary>Shows either a <see cref="TaskDialog" /> or a <see cref="System.Windows.MessageBox" /> if running legacy windows.</summary>
+        /// <param name="instructionText">The main text to display (Blue 14pt for <see cref="TaskDialog" />)</param>
+        /// <param name="icon">The <see cref="TaskDialogStandardIcon" /> to display</param>
         /// <param name="description">A description of the message, supplements the instruction text</param>
         internal static void ShowMessage(string instructionText, TaskDialogStandardIcon icon, string description = null)
         {
@@ -561,8 +576,8 @@ namespace SevenUpdate.Sdk
             UpdateReviewPage = null;
         }
 
-        /// <summary>Shows either a <see cref="TaskDialog"/> or a <see cref="System.Windows.MessageBox"/> if running legacy windows.</summary>
-        /// <param name="instructionText">The main text to display (Blue 14pt for <see cref="TaskDialog"/>)</param>
+        /// <summary>Shows either a <see cref="TaskDialog" /> or a <see cref="System.Windows.MessageBox" /> if running legacy windows.</summary>
+        /// <param name="instructionText">The main text to display (Blue 14pt for <see cref="TaskDialog" />)</param>
         /// <param name="icon">The icon to use</param>
         /// <param name="standardButtons">The standard buttons to use (with or without the custom default button text)</param>
         /// <param name="description">A description of the message, supplements the instruction text</param>
@@ -570,12 +585,12 @@ namespace SevenUpdate.Sdk
         /// <param name="defaultButtonText">Text to display on the button</param>
         /// <param name="displayShieldOnButton">Indicates if a UAC shield is to be displayed on the defaultButton</param>
         private static void ShowMessage(
-            string instructionText, 
-            TaskDialogStandardIcon icon, 
-            TaskDialogStandardButtons standardButtons, 
-            string description = null, 
-            string footerText = null, 
-            string defaultButtonText = null, 
+            string instructionText,
+            TaskDialogStandardIcon icon,
+            TaskDialogStandardButtons standardButtons,
+            string description = null,
+            string footerText = null,
+            string defaultButtonText = null,
             bool displayShieldOnButton = false)
         {
             if (TaskDialog.IsPlatformSupported)
@@ -592,7 +607,8 @@ namespace SevenUpdate.Sdk
 
                     if (defaultButtonText != null)
                     {
-                        var button = new TaskDialogButton(@"btnCustom", defaultButtonText) { Default = true, ShowElevationIcon = displayShieldOnButton };
+                        var button = new TaskDialogButton(@"btnCustom", defaultButtonText)
+                            { Default = true, ShowElevationIcon = displayShieldOnButton };
                         td.Controls.Add(button);
 
                         switch (standardButtons)

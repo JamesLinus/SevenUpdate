@@ -21,12 +21,13 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
+
 namespace System.Windows.Converters
 {
     using System.Globalization;
     using System.Windows.Data;
 
-    /// <summary>Converts the <see cref="Enum"/> to a Boolean</summary>
+    /// <summary>Converts the <see cref="Enum" /> to a Boolean</summary>
     [ValueConversion(typeof(Enum), typeof(bool))]
     public class EnumToBooleanConverter : IValueConverter
     {
@@ -39,7 +40,7 @@ namespace System.Windows.Converters
         /// <param name="targetType">The type of the binding target property.</param>
         /// <param name="parameter">The converter parameter to use.</param>
         /// <param name="culture">The culture to use in the converter.</param>
-        /// <returns>A converted value. If the method returns <see langword="null"/>, the valid <see langword="null"/> value is used.</returns>
+        /// <returns>A converted value. If the method returns <see langword="null" />, the valid <see langword="null" /> value is used.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return value == null ? DependencyProperty.UnsetValue : value.Equals(parameter);
@@ -50,7 +51,7 @@ namespace System.Windows.Converters
         /// <param name="targetType">The type to convert to.</param>
         /// <param name="parameter">The converter parameter to use.</param>
         /// <param name="culture">The culture to use in the converter.</param>
-        /// <returns>A converted value. If the method returns <see langword="null"/>, the valid <see langword="null"/> value is used.</returns>
+        /// <returns>A converted value. If the method returns <see langword="null" />, the valid <see langword="null" /> value is used.</returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null)

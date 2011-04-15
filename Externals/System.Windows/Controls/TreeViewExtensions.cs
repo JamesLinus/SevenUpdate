@@ -21,11 +21,12 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
+
 namespace System.Windows.Controls
 {
     using System.Linq;
 
-    /// <summary>Contains methods that extend the <see cref="TreeView"/> control</summary>
+    /// <summary>Contains methods that extend the <see cref="TreeView" /> control</summary>
     public static class TreeViewExtensions
     {
         #region Public Methods
@@ -48,9 +49,11 @@ namespace System.Windows.Controls
         /// <param name="itemCollection">The item collection</param>
         /// <param name="predicate">The TreeViewItem</param>
         /// <returns>The TreeViewItem found</returns>
-        private static TreeViewItem FindTreeViewItem(ItemContainerGenerator parentItemContainerGenerator, ItemCollection itemCollection, Predicate<TreeViewItem> predicate)
+        private static TreeViewItem FindTreeViewItem(
+            ItemContainerGenerator parentItemContainerGenerator, ItemCollection itemCollection, Predicate<TreeViewItem> predicate)
         {
-            foreach (var trvItem in from object item in itemCollection select item as TreeViewItem ?? (TreeViewItem)parentItemContainerGenerator.ContainerFromItem(item))
+            foreach (var trvItem in
+                from object item in itemCollection select item as TreeViewItem ?? (TreeViewItem)parentItemContainerGenerator.ContainerFromItem(item))
             {
                 if (predicate(trvItem))
                 {

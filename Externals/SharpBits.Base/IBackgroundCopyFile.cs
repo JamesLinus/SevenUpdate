@@ -10,6 +10,7 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://sharpbits.codeplex.com/license">BSD License</license> 
 // ***********************************************************************
+
 namespace SharpBits.Base
 {
     using System.Runtime.InteropServices;
@@ -19,11 +20,11 @@ namespace SharpBits.Base
     internal interface IBackgroundCopyFile
     {
         /// <summary>Retrieves the remote name of the file</summary>
-        /// <param name="val"><see langword="null"/>-terminated string that contains the remote name of the file to transfer. The name is fully qualified. Call the CoTaskMemFree function to free ppName when done. </param>
+        /// <param name="val"><see langword="null" />-terminated string that contains the remote name of the file to transfer. The name is fully qualified. Call the CoTaskMemFree function to free ppName when done. </param>
         void GetRemoteName([MarshalAs(UnmanagedType.LPWStr)] out string val);
 
         /// <summary>Retrieves the local name of the file</summary>
-        /// <param name="val"><see langword="null"/>-terminated string that contains the name of the file on the client.</param>
+        /// <param name="val"><see langword="null" />-terminated string that contains the name of the file on the client.</param>
         void GetLocalName([MarshalAs(UnmanagedType.LPWStr)] out string val);
 
         /// <summary>Retrieves the progress of the file transfer</summary>

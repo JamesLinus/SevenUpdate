@@ -10,6 +10,7 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://sharpbits.codeplex.com/license">BSD License</license> 
 // ***********************************************************************
+
 namespace SharpBits.Base
 {
     using System;
@@ -18,7 +19,7 @@ namespace SharpBits.Base
     using System.Runtime.InteropServices;
     using System.Threading;
 
-    /// <summary>Use the <see cref="IBackgroundCopyManager"/> interface to create transfer jobs, retrieve an enumerator object that contains the jobs in the queue, and to retrieve individual jobs from the queue.</summary>
+    /// <summary>Use the <see cref="IBackgroundCopyManager" /> interface to create transfer jobs, retrieve an enumerator object that contains the jobs in the queue, and to retrieve individual jobs from the queue.</summary>
     public sealed class BitsManager : IDisposable
     {
         #region Constants and Fields
@@ -48,7 +49,7 @@ namespace SharpBits.Base
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "BitsManager" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="BitsManager" /> class.</summary>
         public BitsManager()
         {
             // Set threading apartment
@@ -85,7 +86,7 @@ namespace SharpBits.Base
             }
         }
 
-        /// <summary>Occurs when a <see cref = "BitsJob" /> is added</summary>
+        /// <summary>Occurs when a <see cref="BitsJob" /> is added</summary>
         public event EventHandler<NotificationEventArgs> OnJobAdded
         {
             add
@@ -99,7 +100,7 @@ namespace SharpBits.Base
             }
         }
 
-        /// <summary>Occurs when a <see cref = "BitsJob" /> error occurs</summary>
+        /// <summary>Occurs when a <see cref="BitsJob" /> error occurs</summary>
         public event EventHandler<ErrorNotificationEventArgs> OnJobError
         {
             add
@@ -113,7 +114,7 @@ namespace SharpBits.Base
             }
         }
 
-        /// <summary>Occurs when a <see cref = "BitsJob" /> is modified</summary>
+        /// <summary>Occurs when a <see cref="BitsJob" /> is modified</summary>
         public event EventHandler<NotificationEventArgs> OnJobModified
         {
             add
@@ -127,7 +128,7 @@ namespace SharpBits.Base
             }
         }
 
-        /// <summary>Occurs when a <see cref = "BitsJob" /> is removed</summary>
+        /// <summary>Occurs when a <see cref="BitsJob" /> is removed</summary>
         public event EventHandler<NotificationEventArgs> OnJobRemoved
         {
             add
@@ -141,7 +142,7 @@ namespace SharpBits.Base
             }
         }
 
-        /// <summary>Occurs when a <see cref = "BitsJob" /> is transfered</summary>
+        /// <summary>Occurs when a <see cref="BitsJob" /> is transfered</summary>
         public event EventHandler<NotificationEventArgs> OnJobTransferred
         {
             add
@@ -159,8 +160,8 @@ namespace SharpBits.Base
 
         #region Properties
 
-        /// <summary>Gets the collection of <see cref = "BitsJob" /></summary>
-        /// <value>The collection of <see cref = "BitsJob" /></value>
+        /// <summary>Gets the collection of <see cref="BitsJob" /></summary>
+        /// <value>The collection of <see cref="BitsJob" /></value>
         public BitsJobsDictionary Jobs { get; private set; }
 
         /// <summary>Gets the bits version.</summary>
@@ -223,9 +224,9 @@ namespace SharpBits.Base
         #region Public Methods
 
         /// <summary>Creates a new transfer job.</summary>
-        /// <param name="displayName">Null-terminated string that contains a display name for the job.Typically, the display name is used to identify the job in a user interface.Note that more than one job may have the same display name. Must not be <see langword="null"/>.The name is limited to 256 characters, not including the <see langword="null"/> terminator.</param>
-        /// <param name="jobType">Type of transfer job, such as <see cref="JobType"/>.Download. For a list of transfer types, see the <see cref="JobType"/> enumeration</param>
-        /// <returns>The <see cref="BitsJob"/> created</returns>
+        /// <param name="displayName">Null-terminated string that contains a display name for the job.Typically, the display name is used to identify the job in a user interface.Note that more than one job may have the same display name. Must not be <see langword="null" />.The name is limited to 256 characters, not including the <see langword="null" /> terminator.</param>
+        /// <param name="jobType">Type of transfer job, such as <see cref="JobType" />.Download. For a list of transfer types, see the <see cref="JobType" /> enumeration</param>
+        /// <returns>The <see cref="BitsJob" /> created</returns>
         public BitsJob CreateJob(string displayName, JobType jobType)
         {
             Guid guid;
@@ -246,9 +247,9 @@ namespace SharpBits.Base
             return job;
         }
 
-        /// <summary>Enumerates the collection of <see cref="BitsJob"/>, it also completes any job that has finished.</summary>
+        /// <summary>Enumerates the collection of <see cref="BitsJob" />, it also completes any job that has finished.</summary>
         /// <param name="jobOwner">The job owner.</param>
-        /// <returns>The collection of <see cref="BitsJob"/></returns>
+        /// <returns>The collection of <see cref="BitsJob" /></returns>
         public BitsJobsDictionary EnumJobs(JobOwner jobOwner = JobOwner.CurrentUser)
         {
             if (this.BackgroundCopyManager == null)
@@ -325,7 +326,7 @@ namespace SharpBits.Base
         }
 
         /// <summary>Releases unmanaged and - optionally - managed resources</summary>
-        /// <param name="disposing"><see langword="true"/> to release both managed and unmanaged resources; <see langword="false"/> to release only unmanaged resources.</param>
+        /// <param name="disposing"><see langword="true" /> to release both managed and unmanaged resources; <see langword="false" /> to release only unmanaged resources.</param>
         private void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -349,7 +350,7 @@ namespace SharpBits.Base
 
         /// <summary>Notifications the handler on job error event.</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="SharpBits.Base.ErrorNotificationEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="SharpBits.Base.ErrorNotificationEventArgs" /> instance containing the event data.</param>
         private void NotificationHandlerOnJobErrorEvent(object sender, ErrorNotificationEventArgs e)
         {
             // route the event to the job
@@ -368,7 +369,7 @@ namespace SharpBits.Base
 
         /// <summary>Notifications the handler on job modified event.</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="NotificationEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="NotificationEventArgs" /> instance containing the event data.</param>
         private void NotificationHandlerOnJobModifiedEvent(object sender, NotificationEventArgs e)
         {
             // route the event to the job
@@ -387,7 +388,7 @@ namespace SharpBits.Base
 
         /// <summary>Notifications the handler on job transferred event.</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="NotificationEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="NotificationEventArgs" /> instance containing the event data.</param>
         private void NotificationHandlerOnJobTransferredEvent(object sender, NotificationEventArgs e)
         {
             // route the event to the job

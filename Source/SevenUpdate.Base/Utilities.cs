@@ -21,6 +21,7 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
+
 namespace SevenUpdate
 {
     using System;
@@ -77,7 +78,7 @@ namespace SevenUpdate
         public static string Locale { get; set; }
 
         /// <summary>Gets or sets a value indicating whether if a reboot is needed</summary>
-        /// <value><see langword = "true" /> if a reboot is needed otherwise, <see langword = "false" />.</value>
+        /// <value><see langword="true" /> if a reboot is needed otherwise, <see langword="false" />.</value>
         public static bool RebootNeeded
         {
             get
@@ -99,7 +100,7 @@ namespace SevenUpdate
         /// <summary>Checks if a registry key exists</summary>
         /// <param name="registryKey">The path to the registry key</param>
         /// <param name="platform">a value that indicates what cpu architecture the application supports</param>
-        /// <returns><see langword="true"/> if exists; otherwise, <see langword="false"/></returns>
+        /// <returns><see langword="true" /> if exists; otherwise, <see langword="false" /></returns>
         public static bool CheckRegistryKey(string registryKey, Platform platform)
         {
             return GetRegistryValue(registryKey, null, platform) != null;
@@ -133,32 +134,9 @@ namespace SevenUpdate
             return "0 Bytes";
         }
 
-        /// <summary>Expands a string containing the %INSTALLDIR% variable and replaces it with the specified install location</summary>
-        /// <param name="path">a string that contains a file path</param>
-        /// <param name="installLocation">The install location</param>
-        /// <param name="platform">a value that indicates what cpu architecture the application supports</param>
-        /// <param name="valueName">a string that contains a value name of the registry key that contains the directory location, this parameter is optional and can be <see langword="null"/></param>
-        /// <returns>a string of the path expanded</returns>
-        public static string ExpandInstallLocation(string path, string installLocation, Platform platform, string valueName = null)
-        {
-            path = path.Replace("%INSTALLDIR%", !IsRegistryKey(installLocation) ? ConvertPath(installLocation, true, platform) : ConvertPath(GetRegistryValue(installLocation, valueName, platform), true, platform), true);
-            return ConvertPath(path, true, platform);
-        }
-
-        /// <summary>Expands a string containing the %DownloadUrl% variable and replaces it with the specified download url</summary>
-        /// <param name="path">a string that contains a file path</param>
-        /// <param name="downloadUrl">The main download url</param>
-        /// <param name="platform">a value that indicates what cpu architecture the application supports</param>
-        /// <returns>a string of the path expanded</returns>
-        public static string ExpandDownloadUrl(string path, string downloadUrl, Platform platform)
-        {
-            path = path.Replace("%DOWNLOADURL%", ConvertPath(downloadUrl, true, platform), true);
-            return ConvertPath(path, true, platform);
-        }
-
         /// <summary>Expands system variables in a string, not for use with InstallDir or DownloadUri variables</summary>
         /// <param name="path">a string that contains a file path</param>
-        /// <param name="expand"><see langword="true"/> to expand system variable, <see langword="false"/> to converts paths into system variables</param>
+        /// <param name="expand"><see langword="true" /> to expand system variable, <see langword="false" /> to converts paths into system variables</param>
         /// <param name="platform">a value that indicates what cpu architecture the application supports</param>
         /// <returns>a string of the path expanded</returns>
         public static string ConvertPath(string path, bool expand, Platform platform)
@@ -172,18 +150,21 @@ namespace SevenUpdate
 
             if (expand == false)
             {
-                stringBuilder = stringBuilder.Replace(Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu), "%ALLUSERSSTARTMENU%", true);
+                stringBuilder = stringBuilder.Replace(
+                    Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu), "%ALLUSERSSTARTMENU%", true);
                 stringBuilder = stringBuilder.Replace(Environment.GetFolderPath(Environment.SpecialFolder.Programs), "%STARTMENUPROGRAMS%", true);
                 stringBuilder = stringBuilder.Replace(Environment.GetFolderPath(Environment.SpecialFolder.StartMenu), "%STARTMENU%", true);
                 stringBuilder = stringBuilder.Replace(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "%DOCUMENTS%", true);
                 stringBuilder = stringBuilder.Replace(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic), "%MUSIC%", true);
                 stringBuilder = stringBuilder.Replace(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "%PICTURES%", true);
                 stringBuilder = stringBuilder.Replace(Environment.GetEnvironmentVariable("ProgramFiles(x86)"), "%PROGRAMFILES(x86)%", true);
-                stringBuilder = stringBuilder.Replace(Environment.GetEnvironmentVariable("COMMONPROGRAMFILES(x86)"), "%COMMONPROGRAMFILES(x86)%", true);
+                stringBuilder = stringBuilder.Replace(
+                    Environment.GetEnvironmentVariable("COMMONPROGRAMFILES(x86)"), "%COMMONPROGRAMFILES(x86)%", true);
                 stringBuilder = stringBuilder.Replace(Environment.GetEnvironmentVariable("ProgramFiles"), "%PROGRAMFILES%", true);
                 stringBuilder = stringBuilder.Replace(Environment.GetEnvironmentVariable("COMMONPROGRAMFILES"), "%COMMONPROGRAMFILES%", true);
                 stringBuilder = stringBuilder.Replace(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "%APPDATA%", true);
-                stringBuilder = stringBuilder.Replace(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "%LOCALAPPDATA%", true);
+                stringBuilder = stringBuilder.Replace(
+                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "%LOCALAPPDATA%", true);
                 stringBuilder = stringBuilder.Replace(Environment.GetFolderPath(Environment.SpecialFolder.Startup), "%STARTUP%", true);
                 stringBuilder = stringBuilder.Replace(Environment.GetFolderPath(Environment.SpecialFolder.Templates), "%TEMPLATES%", true);
                 stringBuilder = stringBuilder.Replace(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), "%DESKTOP%", true);
@@ -202,7 +183,8 @@ namespace SevenUpdate
             }
             else
             {
-                stringBuilder = stringBuilder.Replace("%ALLUSERSSTARTMENU%", Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu), true);
+                stringBuilder = stringBuilder.Replace(
+                    "%ALLUSERSSTARTMENU%", Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu), true);
                 stringBuilder = stringBuilder.Replace("%STARTMENUPROGRAMS%", Environment.GetFolderPath(Environment.SpecialFolder.Programs), true);
                 stringBuilder = stringBuilder.Replace("%STARTMENU%", Environment.GetFolderPath(Environment.SpecialFolder.StartMenu), true);
                 stringBuilder = stringBuilder.Replace("%DOCUMENTS%", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), true);
@@ -215,15 +197,21 @@ namespace SevenUpdate
                     {
                         case Platform.AnyCpu:
                         case Platform.X64:
-                            stringBuilder = stringBuilder.Replace("%COMMONPROGRAMFILES%", Environment.GetEnvironmentVariable("COMMONPROGRAMFILES"), true);
+                            stringBuilder = stringBuilder.Replace(
+                                "%COMMONPROGRAMFILES%", Environment.GetEnvironmentVariable("COMMONPROGRAMFILES"), true);
                             stringBuilder = stringBuilder.Replace("%PROGRAMFILES%", Environment.GetEnvironmentVariable("ProgramFiles"), true);
-                            stringBuilder = stringBuilder.Replace("%PROGRAMFILES(x86)%", Environment.GetEnvironmentVariable("ProgramFiles(x86)"), true);
-                            stringBuilder = stringBuilder.Replace("%COMMONPROGRAMFILES(x86)%", Environment.GetEnvironmentVariable("COMMONPROGRAMFILES(x86)"), true);
+                            stringBuilder = stringBuilder.Replace(
+                                "%PROGRAMFILES(x86)%", Environment.GetEnvironmentVariable("ProgramFiles(x86)"), true);
+                            stringBuilder = stringBuilder.Replace(
+                                "%COMMONPROGRAMFILES(x86)%", Environment.GetEnvironmentVariable("COMMONPROGRAMFILES(x86)"), true);
                             break;
                         case Platform.X86:
-                            stringBuilder = stringBuilder.Replace("%COMMONPROGRAMFILES(x86)%", Environment.GetEnvironmentVariable("COMMONPROGRAMFILES(x86)"), true);
-                            stringBuilder = stringBuilder.Replace("%PROGRAMFILES(x86)%", Environment.GetEnvironmentVariable("ProgramFiles(x86)"), true);
-                            stringBuilder = stringBuilder.Replace("%COMMONPROGRAMFILES%", Environment.GetEnvironmentVariable("COMMONPROGRAMFILES(x86)"), true);
+                            stringBuilder = stringBuilder.Replace(
+                                "%COMMONPROGRAMFILES(x86)%", Environment.GetEnvironmentVariable("COMMONPROGRAMFILES(x86)"), true);
+                            stringBuilder = stringBuilder.Replace(
+                                "%PROGRAMFILES(x86)%", Environment.GetEnvironmentVariable("ProgramFiles(x86)"), true);
+                            stringBuilder = stringBuilder.Replace(
+                                "%COMMONPROGRAMFILES%", Environment.GetEnvironmentVariable("COMMONPROGRAMFILES(x86)"), true);
                             stringBuilder = stringBuilder.Replace("%PROGRAMFILES%", Environment.GetEnvironmentVariable("ProgramFiles(x86)"), true);
                             break;
                     }
@@ -237,7 +225,8 @@ namespace SevenUpdate
                 }
 
                 stringBuilder = stringBuilder.Replace("%APPDATA%", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), true);
-                stringBuilder = stringBuilder.Replace("%LOCALAPPDATA%", Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), true);
+                stringBuilder = stringBuilder.Replace(
+                    "%LOCALAPPDATA%", Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), true);
                 stringBuilder = stringBuilder.Replace("%STARTUP%", Environment.GetFolderPath(Environment.SpecialFolder.Startup), true);
                 stringBuilder = stringBuilder.Replace("%TEMPLATES%", Environment.GetFolderPath(Environment.SpecialFolder.Templates), true);
                 stringBuilder = stringBuilder.Replace("%DESKTOP%", Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), true);
@@ -311,7 +300,7 @@ namespace SevenUpdate
 
         /// <summary>Downloads a file</summary>
         /// <param name="url">A Uri pointing to the location of the file to download</param>
-        /// <returns>the downloaded file <see cref="Stream"/></returns>
+        /// <returns>the downloaded file <see cref="Stream" /></returns>
         public static Stream DownloadFile(string url)
         {
             // Get a data stream from the url
@@ -319,6 +308,29 @@ namespace SevenUpdate
             {
                 return new MemoryStream(wc.DownloadData(url));
             }
+        }
+
+        /// <summary>Expands a string containing the %DownloadUrl% variable and replaces it with the specified download url</summary>
+        /// <param name="path">a string that contains a file path</param>
+        /// <param name="downloadUrl">The main download url</param>
+        /// <param name="platform">a value that indicates what cpu architecture the application supports</param>
+        /// <returns>a string of the path expanded</returns>
+        public static string ExpandDownloadUrl(string path, string downloadUrl, Platform platform)
+        {
+            path = path.Replace("%DOWNLOADURL%", ConvertPath(downloadUrl, true, platform), true);
+            return ConvertPath(path, true, platform);
+        }
+
+        /// <summary>Expands a string containing the %INSTALLDIR% variable and replaces it with the specified install location</summary>
+        /// <param name="path">a string that contains a file path</param>
+        /// <param name="installLocation">The install location</param>
+        /// <param name="platform">a value that indicates what cpu architecture the application supports</param>
+        /// <param name="valueName">a string that contains a value name of the registry key that contains the directory location, this parameter is optional and can be <see langword="null" /></param>
+        /// <returns>a string of the path expanded</returns>
+        public static string ExpandInstallLocation(string path, string installLocation, Platform platform, string valueName = null)
+        {
+            path = path.Replace("%INSTALLDIR%", !IsRegistryKey(installLocation) ? ConvertPath(installLocation, true, platform) : ConvertPath(GetRegistryValue(installLocation, valueName, platform), true, platform), true);
+            return ConvertPath(path, true, platform);
         }
 
         /// <summary>Gets data from the exception as a string</summary>
@@ -369,7 +381,7 @@ namespace SevenUpdate
         }
 
         /// <summary>Gets the preferred localized string from a collection of localized strings</summary>
-        /// <param name="localeStrings">A collection of <see cref="LocaleString"/>'s</param>
+        /// <param name="localeStrings">A collection of <see cref="LocaleString" />'s</param>
         /// <returns>a localized string</returns>
         public static string GetLocaleString(Collection<LocaleString> localeStrings)
         {
@@ -439,10 +451,11 @@ namespace SevenUpdate
 
         /// <summary>Checks to see if path is a registry key</summary>
         /// <param name="path">The path to check</param>
-        /// <returns><see langword="true"/> if the path is a registry key otherwise, <see langword="false"/></returns>
+        /// <returns><see langword="true" /> if the path is a registry key otherwise, <see langword="false" /></returns>
         public static bool IsRegistryKey(string path)
         {
-            return Regex.IsMatch(path, @"^HKLM\\|^HKEY_CLASSES_ROOT\\|^HKEY_CURRENT_USER\\|^HKEY_LOCAL_MACHINE\\|^HKEY_USERS\\|^HKU\\|^HKCR\\", RegexOptions.IgnoreCase);
+            return Regex.IsMatch(
+                path, @"^HKLM\\|^HKEY_CLASSES_ROOT\\|^HKEY_CURRENT_USER\\|^HKEY_LOCAL_MACHINE\\|^HKEY_USERS\\|^HKU\\|^HKCR\\", RegexOptions.IgnoreCase);
         }
 
         /// <summary>Gets whether the specified path is a valid absolute file path.</summary>
@@ -482,7 +495,7 @@ namespace SevenUpdate
         /// <param name="value">the string that will be searched</param>
         /// <param name="find">a string to find in the complete string</param>
         /// <param name="replaceValue">a string to use to replace the find string in the complete string</param>
-        /// <param name="ignoreCase">if set to <see langword="true"/> case is ignored</param>
+        /// <param name="ignoreCase">if set to <see langword="true" /> case is ignored</param>
         /// <returns>The replacement string</returns>
         public static string Replace(this string value, string find, string replaceValue, bool ignoreCase)
         {
@@ -568,9 +581,9 @@ namespace SevenUpdate
         /// <summary>Starts a process hidden on the system</summary>
         /// <param name="fileName">The file to execute</param>
         /// <param name="arguments">The arguments to execute with the file</param>
-        /// <param name="wait">if set to <see langword="true"/> the calling thread will be blocked until process has exited</param>
-        /// <param name="hidden">if set to <see langword="true"/> the process will execute with no UI</param>
-        /// <returns><see langword="true"/> if the process has executed successfully</returns>
+        /// <param name="wait">if set to <see langword="true" /> the calling thread will be blocked until process has exited</param>
+        /// <param name="hidden">if set to <see langword="true" /> the process will execute with no UI</param>
+        /// <returns><see langword="true" /> if the process has executed successfully</returns>
         public static bool StartProcess(string fileName, string arguments = null, bool wait = false, bool hidden = true)
         {
             using (var process = new Process())
@@ -599,7 +612,9 @@ namespace SevenUpdate
                 }
                 catch (Exception e)
                 {
-                    if (!(e is OperationCanceledException || e is UnauthorizedAccessException || e is InvalidOperationException || e is NotSupportedException || e is Win32Exception))
+                    if (
+                        !(e is OperationCanceledException || e is UnauthorizedAccessException || e is InvalidOperationException ||
+                          e is NotSupportedException || e is Win32Exception))
                     {
                         ErrorOccurred(null, new ErrorOccurredEventArgs(GetExceptionAsString(e), ErrorType.FatalError));
                         throw;
@@ -620,7 +635,7 @@ namespace SevenUpdate
         /// <param name="original">The original string to check</param>
         /// <param name="value">The value to check the string for</param>
         /// <param name="comparisonType">Type of the comparison.</param>
-        /// <returns><see langword="true"/> if the string contains the specified value; otherwise, <see langword="false"/>.</returns>
+        /// <returns><see langword="true" /> if the string contains the specified value; otherwise, <see langword="false" />.</returns>
         private static bool Contains(this string original, string value, StringComparison comparisonType)
         {
             return original.IndexOf(value, comparisonType) >= 0;
@@ -652,11 +667,11 @@ namespace SevenUpdate
         }
 
         /// <summary>Replaces a string within a string</summary>
-        /// <param name="sb">The <see cref="StringBuilder"/> object</param>
+        /// <param name="sb">The <see cref="StringBuilder" /> object</param>
         /// <param name="find">a string to find in the complete string</param>
         /// <param name="replaceValue">a string to use to replace the find string in the complete string</param>
-        /// <param name="ignoreCase">if set to <see langword="true"/> case is ignored</param>
-        /// <returns>The <see cref="StringBuilder"/> with replacements</returns>
+        /// <param name="ignoreCase">if set to <see langword="true" /> case is ignored</param>
+        /// <returns>The <see cref="StringBuilder" /> with replacements</returns>
         private static StringBuilder Replace(this StringBuilder sb, string find, string replaceValue, bool ignoreCase)
         {
             if (sb == null || find == null)

@@ -9,6 +9,7 @@
 // <author username="SeriousM">Bernhard Millauer</author>
 // <license href="http://wpflocalizeextension.codeplex.com/license">Microsoft Public License</license>
 // ***********************************************************************
+
 namespace WPFLocalizeExtension.Extensions
 {
     using System;
@@ -18,20 +19,21 @@ namespace WPFLocalizeExtension.Extensions
 
     using WPFLocalizeExtension.Engine;
 
-    /// <summary><c>BaseLocalizeExtension</c> for <see cref="FlowDirection"/> values</summary>
+    /// <summary><c>BaseLocalizeExtension</c> for <see cref="FlowDirection" /> values</summary>
     [MarkupExtensionReturnType(typeof(FlowDirection))]
     public class LocFlowDirectionExtension : BaseLocalizeExtension<FlowDirection>
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "LocFlowDirectionExtension" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="LocFlowDirectionExtension" /> class.</summary>
         public LocFlowDirectionExtension()
         {
         }
 
-        /// <summary>Initializes a new instance of the <see cref="LocFlowDirectionExtension"/> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="LocFlowDirectionExtension" /> class.</summary>
         /// <param name="key">The resource identifier.</param>
-        public LocFlowDirectionExtension(string key) : base(key)
+        public LocFlowDirectionExtension(string key)
+            : base(key)
         {
         }
 
@@ -39,8 +41,8 @@ namespace WPFLocalizeExtension.Extensions
 
         #region Public Methods
 
-        /// <summary>Provides the Value for the first Binding as <see cref="LocFlowDirectionExtension"/></summary>
-        /// <param name="serviceProvider">The <see cref="System.Windows.Markup.IProvideValueTarget"/> provided from the <see cref="MarkupExtension"/></param>
+        /// <summary>Provides the Value for the first Binding as <see cref="LocFlowDirectionExtension" /></summary>
+        /// <param name="serviceProvider">The <see cref="System.Windows.Markup.IProvideValueTarget" /> provided from the <see cref="MarkupExtension" /></param>
         /// <returns>The found item from the .resx directory or LeftToRight if not found</returns>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
@@ -56,7 +58,9 @@ namespace WPFLocalizeExtension.Extensions
                 return this.FormatOutput(obj);
             }
 
-            throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, "ResourceKey '{0}' returns '{1}' which is not type of FlowDirection", this.Key, obj.GetType().FullName));
+            throw new NotSupportedException(
+                string.Format(
+                    CultureInfo.CurrentCulture, "ResourceKey '{0}' returns '{1}' which is not type of FlowDirection", this.Key, obj.GetType().FullName));
         }
 
         #endregion

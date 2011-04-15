@@ -21,6 +21,7 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
+
 namespace System.Windows
 {
     using System.Windows.Internal;
@@ -40,7 +41,7 @@ namespace System.Windows
         #region Properties
 
         /// <summary>Gets or sets a value indicating whether DWM is enabled on the desktop.</summary>
-        /// <value><see langword = "true" /> if this instance is enabled; otherwise, <see langword = "false" />.</value>
+        /// <value><see langword="true" /> if this instance is enabled; otherwise, <see langword="false" />.</value>
         public static bool IsGlassEnabled
         {
             get
@@ -64,14 +65,16 @@ namespace System.Windows
         #region Public Methods
 
         /// <summary>Enables Blur on Aero Glass for a WPF window</summary>
-        /// <param name="window">The window object to add blur to</param><param name="region">The area to add the blur to</param>
+        /// <param name="window">The window object to add blur to</param>
+        /// <param name="region">The area to add the blur to</param>
         public static void EnableBlur(Window window, IntPtr region)
         {
             EnableBlur(new WindowInteropHelper(window).Handle, region);
         }
 
         /// <summary>Enables Blur on Aero Glass</summary>
-        /// <param name="windowHandle">The windows handle to add the blur to</param><param name="region">The area to add the blur to</param>
+        /// <param name="windowHandle">The windows handle to add the blur to</param>
+        /// <param name="region">The area to add the blur to</param>
         public static void EnableBlur(IntPtr windowHandle, IntPtr region)
         {
             if (Environment.OSVersion.Version.Major < 6)
@@ -88,7 +91,8 @@ namespace System.Windows
         }
 
         /// <summary>Enables Aero Glass on a WPF window, no exception thrown if OS does not support DWM.</summary>
-        /// <param name="window">The window to enable glass</param><param name="margins">The region to add glass</param>
+        /// <param name="window">The window to enable glass</param>
+        /// <param name="margins">The region to add glass</param>
         public static void EnableGlass(Window window, Margins margins)
         {
             if (Environment.OSVersion.Version.Major < 6)
@@ -132,7 +136,8 @@ namespace System.Windows
         }
 
         /// <summary>Excludes a UI element from the Aero Glass frame.</summary>
-        /// <param name="element">The element to exclude.</param><param name="window">The window the element resides in</param>
+        /// <param name="element">The element to exclude.</param>
+        /// <param name="window">The window the element resides in</param>
         /// <remarks>cMany non-WPF rendered controls (i.e., the ExplorerBrowser control) will notrender properly on top of an Aero Glass frame.</remarks>
         public static void ExcludeElementFromAeroGlass(FrameworkElement element, Window window)
         {
@@ -164,15 +169,21 @@ namespace System.Windows
             }
 
             var nonClientSize = new Size(
-                (windowRect.Right - windowRect.Left) - (double)(clientRect.Right - clientRect.Left), (windowRect.Bottom - windowRect.Top) - (double)(clientRect.Bottom - clientRect.Top));
+                (windowRect.Right - windowRect.Left) - (double)(clientRect.Right - clientRect.Left),
+                (windowRect.Bottom - windowRect.Top) - (double)(clientRect.Bottom - clientRect.Top));
 
             // calculate size of element relative to non-client area
             var transform = element.TransformToAncestor(window);
             var topLeftFrame = transform.Transform(new Point(0, 0));
-            var bottomRightFrame = transform.Transform(new Point(element.ActualWidth + nonClientSize.Width, element.ActualHeight + nonClientSize.Height));
+            var bottomRightFrame =
+                transform.Transform(new Point(element.ActualWidth + nonClientSize.Width, element.ActualHeight + nonClientSize.Height));
 
             // Create a margin structure
-            var margins = new Margins((int)topLeftFrame.X, (int)topLeftFrame.Y, (int)(window.ActualWidth - bottomRightFrame.X), (int)(window.ActualHeight - bottomRightFrame.Y));
+            var margins = new Margins(
+                (int)topLeftFrame.X,
+                (int)topLeftFrame.Y,
+                (int)(window.ActualWidth - bottomRightFrame.X),
+                (int)(window.ActualHeight - bottomRightFrame.Y));
 
             // Extend the Frame into client area
             if (NativeMethods.DwmExtendFrameIntoClientArea(handle, ref margins) != 0)
@@ -182,14 +193,16 @@ namespace System.Windows
         }
 
         /// <summary>Resets the Aero Glass exclusion area.</summary>
-        /// <param name="margins">The margins.</param><param name="window">The window.</param>
+        /// <param name="margins">The margins.</param>
+        /// <param name="window">The window.</param>
         public static void ResetAeroGlass(Margins margins, Window window)
         {
             ResetAeroGlass(margins, new WindowInteropHelper(window).Handle);
         }
 
         /// <summary>Resets the Aero Glass exclusion area.</summary>
-        /// <param name="margins">The margins.</param><param name="windowHandle">The window handle.</param>
+        /// <param name="margins">The margins.</param>
+        /// <param name="windowHandle">The window handle.</param>
         public static void ResetAeroGlass(Margins margins, IntPtr windowHandle)
         {
             if (Environment.OSVersion.Version.Major < 6)
@@ -208,9 +221,11 @@ namespace System.Windows
         #region Methods
 
         /// <summary>An application-defined function that processes messages sent to a window.</summary>
-        /// <param name="handle">A handle to the window.</param><param name="msg">The message to send</param>
-        /// <param name="parameter">Additional message information. The contents of this parameter depend on the value of the <paramref name="msg"/> parameter.</param><param name="parameter2">Another additional message information. The contents of this parameter depend on the value of the <paramref name="msg"/> parameter.</param>
-        /// <param name="handled">if set to <see langword="true"/> the event was handled</param>
+        /// <param name="handle">A handle to the window.</param>
+        /// <param name="msg">The message to send</param>
+        /// <param name="parameter">Additional message information. The contents of this parameter depend on the value of the <paramref name="msg" /> parameter.</param>
+        /// <param name="parameter2">Another additional message information. The contents of this parameter depend on the value of the <paramref name="msg" /> parameter.</param>
+        /// <param name="handled">if set to <see langword="true" /> the event was handled</param>
         /// <returns>The return value is the result of the message processing and depends on the message sent.</returns>
         private static IntPtr WndProc(IntPtr handle, int msg, IntPtr parameter, IntPtr parameter2, ref bool handled)
         {

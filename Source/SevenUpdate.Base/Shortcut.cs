@@ -21,6 +21,7 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
+
 namespace SevenUpdate
 {
     using System;
@@ -40,11 +41,11 @@ namespace SevenUpdate
     {
         /// <summary>Adds a shortcut</summary>
         [ProtoEnum, EnumMember]
-        Add = 0, 
+        Add = 0,
 
         /// <summary>Updates a shortcut only if it exists</summary>
         [ProtoEnum, EnumMember]
-        Update = 1, 
+        Update = 1,
 
         /// <summary>Deletes a shortcut</summary>
         [ProtoEnum, EnumMember]
@@ -55,37 +56,37 @@ namespace SevenUpdate
     internal enum InstallState
     {
         /// <summary>The component being requested is disabled on the computer.</summary>
-        NotUsed = -7, 
+        NotUsed = -7,
 
         /// <summary>The configuration data is corrupt.</summary>
-        BadConfig = -6, 
+        BadConfig = -6,
 
         /// <summary>The installation is incomplete</summary>
-        Incomplete = -5, 
+        Incomplete = -5,
 
         /// <summary>The component source is inaccessible.</summary>
-        SourceAbsent = -4, 
+        SourceAbsent = -4,
 
         /// <summary>One of the function parameters is invalid.</summary>
-        InvalidArg = -2, 
+        InvalidArg = -2,
 
         /// <summary>The product code or component ID is unknown.</summary>
-        Unknown = -1, 
+        Unknown = -1,
 
         /// <summary>The shortcut is advertised</summary>
-        Advertised = 1, 
+        Advertised = 1,
 
         /// <summary>The component has been removed</summary>
-        Removed = 1, 
+        Removed = 1,
 
         /// <summary>The component is not installed.</summary>
-        Absent = 2, 
+        Absent = 2,
 
         /// <summary>The component is installed locally.</summary>
-        Local = 3, 
+        Local = 3,
 
         /// <summary>The component is installed to run from source.</summary>
-        Source = 4, 
+        Source = 4,
     }
 
     /// <summary>A shortcut to be created within an update</summary>
@@ -109,7 +110,7 @@ namespace SevenUpdate
         /// <summary>The read constant</summary>
         private const uint Read = 0;
 
-        /// <summary>The action to perform on the <see cref = "Shortcut" /></summary>
+        /// <summary>The action to perform on the <see cref="Shortcut" /></summary>
         private ShortcutAction action;
 
         /// <summary>The command line arguments for the shortcut</summary>
@@ -128,7 +129,7 @@ namespace SevenUpdate
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="Shortcut"/> class</summary>
+        /// <summary>Initializes a new instance of the <see cref="Shortcut" /> class</summary>
         /// <param name="name">The collection of localized update names</param>
         /// <param name="description">The collection of localized update descriptions</param>
         public Shortcut(ObservableCollection<LocaleString> name, ObservableCollection<LocaleString> description)
@@ -152,7 +153,7 @@ namespace SevenUpdate
             this.Description.CollectionChanged += this.DescriptionCollectionChanged;
         }
 
-        /// <summary>Initializes a new instance of the <see cref = "Shortcut" /> class</summary>
+        /// <summary>Initializes a new instance of the <see cref="Shortcut" /> class</summary>
         public Shortcut()
         {
             this.Name = new ObservableCollection<LocaleString>();
@@ -331,7 +332,7 @@ namespace SevenUpdate
 
         #region Properties
 
-        /// <summary>Gets or sets the action to perform on the <see cref = "Shortcut" /></summary>
+        /// <summary>Gets or sets the action to perform on the <see cref="Shortcut" /></summary>
         /// <value>The action.</value>
         [ProtoMember(3), DataMember]
         public ShortcutAction Action
@@ -570,7 +571,7 @@ namespace SevenUpdate
             this.OnPropertyChanged("Name");
         }
 
-        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged"/> Event</summary>
+        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged" /> Event</summary>
         /// <param name="propertyName">The name of the property.</param>
         private void OnPropertyChanged(string propertyName)
         {

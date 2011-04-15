@@ -21,6 +21,7 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
+
 namespace SevenUpdate.Sdk.Pages
 {
     using System;
@@ -40,7 +41,7 @@ namespace SevenUpdate.Sdk.Pages
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "UpdateRegistry" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="UpdateRegistry" /> class.</summary>
         public UpdateRegistry()
         {
             this.InitializeComponent();
@@ -69,9 +70,9 @@ namespace SevenUpdate.Sdk.Pages
 
         #region Methods
 
-        /// <summary>Deletes the selected <see cref="RegistryItem"/> from the <see cref="ListBox"/></summary>
+        /// <summary>Deletes the selected <see cref="RegistryItem" /> from the <see cref="ListBox" /></summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Input.KeyEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.Input.KeyEventArgs" /> instance containing the event data.</param>
         private void DeleteRegistryItem(object sender, KeyEventArgs e)
         {
             var index = this.listBox.SelectedIndex;
@@ -95,7 +96,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Determines whether this instance has errors.</summary>
-        /// <returns><see langword="true"/> if this instance has errors; otherwise, <see langword="false"/>.</returns>
+        /// <returns><see langword="true" /> if this instance has errors; otherwise, <see langword="false" />.</returns>
         private bool HasErrors()
         {
             // ReSharper disable PossibleNullReferenceException
@@ -106,7 +107,7 @@ namespace SevenUpdate.Sdk.Pages
 
         /// <summary>Opens a dialog and imports the selected .reg file</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void ImportRegistryFile(object sender, RoutedEventArgs e)
         {
             var files = Core.OpenFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), null, false, "reg");
@@ -126,7 +127,7 @@ namespace SevenUpdate.Sdk.Pages
 
         /// <summary>Loads the default values for the UI</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void LoadUI(object sender, RoutedEventArgs e)
         {
             // ReSharper disable PossibleNullReferenceException
@@ -137,7 +138,7 @@ namespace SevenUpdate.Sdk.Pages
 
         /// <summary>Navigates to the next page if no errors exist</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void MoveOn(object sender, RoutedEventArgs e)
         {
             if (!this.HasErrors())
@@ -152,32 +153,38 @@ namespace SevenUpdate.Sdk.Pages
 
         /// <summary>Navigates to the main page</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void NavigateToMainPage(object sender, RoutedEventArgs e)
         {
             MainWindow.NavService.Navigate(Core.MainPage);
         }
 
-        /// <summary>Adds a new <see cref="RegistryItem"/></summary>
+        /// <summary>Adds a new <see cref="RegistryItem" /></summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void NewRegistryItem(object sender, RoutedEventArgs e)
         {
-            var registryItem = new RegistryItem { KeyValue = Properties.Resources.NewRegistryItem, Key = @"HKLM\Software\MyApp", Action = RegistryAction.Add, ValueKind = RegistryValueKind.String };
+            var registryItem = new RegistryItem
+                {
+                    KeyValue = Properties.Resources.NewRegistryItem,
+                    Key = @"HKLM\Software\MyApp",
+                    Action = RegistryAction.Add,
+                    ValueKind = RegistryValueKind.String
+                };
             Core.UpdateInfo.RegistryItems.Add(registryItem);
         }
 
-        /// <summary>Removes all <see cref="RegistryItem"/>'s from the collection</summary>
+        /// <summary>Removes all <see cref="RegistryItem" />'s from the collection</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void RemoveAll(object sender, RoutedEventArgs e)
         {
             Core.UpdateInfo.RegistryItems.Clear();
         }
 
-        /// <summary>Removes a <see cref="RegistryItem"/> from a collection</summary>
+        /// <summary>Removes a <see cref="RegistryItem" /> from a collection</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void RemoveSelected(object sender, RoutedEventArgs e)
         {
             Core.UpdateInfo.RegistryItems.RemoveAt(this.listBox.SelectedIndex);
@@ -185,7 +192,7 @@ namespace SevenUpdate.Sdk.Pages
 
         /// <summary>Updates the UI based on whether Aero Glass is enabled</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="CompositionChangedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="CompositionChangedEventArgs" /> instance containing the event data.</param>
         private void UpdateUI(object sender, CompositionChangedEventArgs e)
         {
             if (e.IsGlassEnabled)
@@ -202,9 +209,9 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        /// <summary>Restricts the input to the characters needed for <see cref="RegistryValueKind"/></summary>
+        /// <summary>Restricts the input to the characters needed for <see cref="RegistryValueKind" /></summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Input.KeyEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.Input.KeyEventArgs" /> instance containing the event data.</param>
         private void ValidateData(object sender, KeyEventArgs e)
         {
             if (Core.UpdateInfo.RegistryItems[this.listBox.SelectedIndex].ValueKind != RegistryValueKind.Binary &&
@@ -248,11 +255,9 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        #endregion
-
         /// <summary>Validates the registry path</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="TextChangedEventArgs"/> instance containing the event data.</param>
+        /// <param name="e">The <see cref="TextChangedEventArgs" /> instance containing the event data.</param>
         private void ValidateRegistryPath(object sender, TextChangedEventArgs e)
         {
             var textBox = sender as InfoTextBox;
@@ -270,5 +275,7 @@ namespace SevenUpdate.Sdk.Pages
                 ((RegistryItem)this.listBox.SelectedItem).Key = textBox.Text;
             }
         }
+
+        #endregion
     }
 }

@@ -10,6 +10,7 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://sharpbits.codeplex.com/license">BSD License</license> 
 // ***********************************************************************
+
 namespace SharpBits.Base
 {
     using System;
@@ -20,9 +21,9 @@ namespace SharpBits.Base
     {
         #region Methods
 
-        /// <summary>Converts a <see cref="DateTime"/> to <see cref="FileTime"/></summary>
+        /// <summary>Converts a <see cref="DateTime" /> to <see cref="FileTime" /></summary>
         /// <param name="dateTime">The date time.</param>
-        /// <returns>The converted <see cref="DateTime"/> as a <see cref="FileTime"/></returns>
+        /// <returns>The converted <see cref="DateTime" /> as a <see cref="FileTime" /></returns>
         internal static FileTime DateTimeToFileTime(DateTime dateTime)
         {
             long fileTime = 0;
@@ -36,9 +37,9 @@ namespace SharpBits.Base
             return resultingFileTime;
         }
 
-        /// <summary>Converts the <see cref="FileTime"/> to <see cref="DateTime"/></summary>
+        /// <summary>Converts the <see cref="FileTime" /> to <see cref="DateTime" /></summary>
         /// <param name="fileTime">The file time.</param>
-        /// <returns>The converted <see cref="FileTime"/> to <see cref="DateTime"/></returns>
+        /// <returns>The converted <see cref="FileTime" /> to <see cref="DateTime" /></returns>
         internal static DateTime FileTimeToDateTime(FileTime fileTime)
         {
             if (fileTime.DWHighDateTime == 0 && fileTime.DWLowDateTime == 0)

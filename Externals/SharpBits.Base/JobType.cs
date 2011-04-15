@@ -10,21 +10,22 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://sharpbits.codeplex.com/license">BSD License</license> 
 // ***********************************************************************
+
 namespace SharpBits.Base
 {
-    /// <summary>The type of <see cref="BitsJob"/></summary>
+    /// <summary>The type of <see cref="BitsJob" /></summary>
     public enum JobType
     {
         /// <summary>Downloads a file</summary>
-        Download, 
+        Download,
 
         /// <summary>Uploads a file without progress</summary>
-        Upload, 
+        Upload,
 
         /// <summary>Uploads a file and reply's with progress</summary>
-        UploadReply, 
+        UploadReply,
 
         /// <summary>Unknown job</summary>
-        Unknown, 
+        Unknown,
     }
 }
