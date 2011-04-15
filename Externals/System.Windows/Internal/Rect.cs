@@ -1,5 +1,5 @@
-﻿// ***********************************************************************
-// <copyright file="DwmCompositionChangedEventArgs.cs"
+// ***********************************************************************
+// <copyright file="Rect.cs"
 //            project="System.Windows"
 //            assembly="System.Windows"
 //            solution="SevenUpdate"
@@ -21,28 +21,24 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
-namespace System.Windows
+namespace System.Windows.Internal
 {
-    /// <summary>Event argument for The CompositionChanged event</summary>
-    public class CompositionChangedEventArgs : EventArgs
+    using System.Runtime.InteropServices;
+
+    /// <summary>Defines the coordinates of the upper-left and lower-right corners of a rectangle.</summary>
+    [StructLayout(LayoutKind.Sequential)]
+    internal struct Rect
     {
-        #region Constructors and Destructors
+        /// <summary>The x-coordinate of the upper-left corner of the rectangle.</summary>
+        public int Left;
 
-        /// <summary>Initializes a new instance of the <see cref="CompositionChangedEventArgs"/> class.</summary>
-        /// <param name="isGlassEnabled">if set to <see langword="true"/> aero glass is enabled</param>
-        internal CompositionChangedEventArgs(bool isGlassEnabled)
-        {
-            this.IsGlassEnabled = isGlassEnabled;
-        }
+        /// <summary>The y-coordinate of the upper-left corner of the rectangle.</summary>
+        public int Top;
 
-        #endregion
+        /// <summary>The x-coordinate of the lower-right corner of the rectangle.</summary>
+        public int Right;
 
-        #region Properties
-
-        /// <summary>Gets a value indicating whether DWM/Glass is currently enabled.</summary>
-        /// <value><see langword = "true" /> if this instance is glass enabled; otherwise, <see langword = "false" />.</value>
-        public bool IsGlassEnabled { get; private set; }
-
-        #endregion
+        /// <summary>The y-coordinate of the lower-right corner of the rectangle.</summary>
+        public int Bottom;
     }
 }

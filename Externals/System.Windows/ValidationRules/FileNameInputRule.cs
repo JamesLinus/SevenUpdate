@@ -50,7 +50,7 @@ namespace System.Windows.ValidationRules
         {
             var input = value as string;
 
-            if (String.IsNullOrWhiteSpace(input))
+            if (string.IsNullOrWhiteSpace(input))
             {
                 return this.IsRequired ? new ValidationResult(false, Resources.FilePathInvalid) : new ValidationResult(true, null);
             }
@@ -66,7 +66,7 @@ namespace System.Windows.ValidationRules
 
             var fileName = Path.GetFileName(input);
 
-            if (String.IsNullOrEmpty(fileName))
+            if (string.IsNullOrEmpty(fileName))
             {
                 return this.IsRequired ? new ValidationResult(false, Resources.FilePathInvalid) : new ValidationResult(true, null);
             }

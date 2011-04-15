@@ -212,7 +212,7 @@ namespace SevenUpdate.Admin
                 client.OnDownloadProgressChanged(sender, e);
             }
 
-            Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, String.Format(CultureInfo.CurrentCulture, Resources.DownloadProgress, e.FilesTransferred, e.FilesTotal));
+            Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, string.Format(CultureInfo.CurrentCulture, Resources.DownloadProgress, e.FilesTransferred, e.FilesTotal));
         }
 
         /// <summary>Runs when there is an error searching for updates</summary>
@@ -253,7 +253,7 @@ namespace SevenUpdate.Admin
                 client.OnInstallProgressChanged(sender, e);
             }
 
-            Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, String.Format(CultureInfo.CurrentCulture, Resources.InstallProgress, e.CurrentProgress));
+            Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, string.Format(CultureInfo.CurrentCulture, Resources.InstallProgress, e.CurrentProgress));
         }
 
         /// <summary>The main execution method</summary>

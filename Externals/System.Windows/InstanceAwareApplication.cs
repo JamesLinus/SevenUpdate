@@ -25,30 +25,6 @@ namespace System.Windows
     using System.Threading;
     using System.Windows.Threading;
 
-    /// <summary>Enumerator used to define the awareness of an application, when dealing with subsequent instances of the application itself.</summary>
-    public enum ApplicationInstanceAwareness
-    {
-        /// <summary>The awareness is global, meaning that the first application instance is aware of any other instances running on the host.</summary>
-        Host = 0x00, 
-
-        /// <summary>The awareness is local, meaning that the first application instance is aware only of other instances running in the current user session.</summary>
-        UserSession = 0x01
-    }
-
-    /// <summary>Interface used to signal a prior instance of the application about the startup another instance.</summary>
-    [ServiceContract]
-    internal interface IPriorApplicationInstance
-    {
-        #region Public Methods
-
-        /// <summary>Signals the startup of the next application instance.</summary>
-        /// <param name="args">The parameters used to run the next instance of the application.</param>
-        [OperationContract]
-        void SignalStartupNextInstance(string[] args);
-
-        #endregion
-    }
-
     /// <summary>Class used to define a WPF application which is aware of subsequent application instances running, either locally (per session) or globally (per host).</summary>
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class InstanceAwareApplication : Application, IPriorApplicationInstance, IDisposable

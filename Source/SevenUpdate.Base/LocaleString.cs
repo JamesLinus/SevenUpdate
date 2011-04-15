@@ -1,5 +1,5 @@
 // ***********************************************************************
-// <copyright file="LocaleString.cs"
+// <copyright file="Localestring.cs"
 //            project="SevenUpdate.Base"
 //            assembly="SevenUpdate.Base"
 //            solution="SevenUpdate"

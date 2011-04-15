@@ -47,11 +47,11 @@ namespace System.Windows.ApplicationServices
 
         /// <summary>Returns a string representation of the current stateof this object.</summary>
         /// <returns>A <see cref="System.String"/> object.</returns>
-        [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object,System.Object,System.Object)", 
+        [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.string.Format(System.String,System.Object,System.Object,System.Object)", 
             Justification = "We are not currently handling globalization or localization")]
         public override string ToString()
         {
-            return String.Format(CultureInfo.CurrentCulture, "delegate: {0}, state: {1}, ping: {2}", this.RecoveryData.Callback.Method, this.RecoveryData.State, this.PingInterval);
+            return string.Format(CultureInfo.CurrentCulture, "delegate: {0}, state: {1}, ping: {2}", this.RecoveryData.Callback.Method, this.RecoveryData.State, this.PingInterval);
         }
 
         #endregion

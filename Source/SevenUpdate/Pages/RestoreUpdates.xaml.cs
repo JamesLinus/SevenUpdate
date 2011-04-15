@@ -200,7 +200,7 @@ namespace SevenUpdate.Pages
         {
             var checkedCount = this.hiddenUpdates.Count(t => t.Status == UpdateStatus.Visible);
 
-            this.tbSelectedUpdates.Text = String.Format(CultureInfo.CurrentCulture, Properties.Resources.TotalSelectedUpdates, checkedCount);
+            this.tbSelectedUpdates.Text = string.Format(CultureInfo.CurrentCulture, Properties.Resources.TotalSelectedUpdates, checkedCount);
             this.btnRestore.IsEnabled = checkedCount > 0;
         }
 

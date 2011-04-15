@@ -18,9 +18,6 @@
 !define MUI_ICON "..\Source\SevenUpdate\icon.ico"
 !define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\modern-uninstall.ico"
 
-
-; Welcome page
-!insertmacro MUI_PAGE_WELCOME
 ; License page
 !define MUI_LICENSEPAGE_CHECKBOX
 !insertmacro MUI_PAGE_LICENSE ".\license.txt"
@@ -29,9 +26,6 @@
 ; Finish page
 !define MUI_FINISHPAGE_RUN "$INSTDIR\SevenUpdate.exe"
 !insertmacro MUI_PAGE_FINISH
-
-; Uninstaller pages
-!insertmacro MUI_UNPAGE_INSTFILES
 
 ; Language files
 !insertmacro MUI_LANGUAGE "English"

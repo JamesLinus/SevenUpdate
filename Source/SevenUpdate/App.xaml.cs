@@ -150,7 +150,7 @@ namespace SevenUpdate
                     catch (WebException)
                     {
                         Core.ShowMessage(
-                            String.Format(CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.ErrorDownloading, e.Args[0]), TaskDialogStandardIcon.Error, TaskDialogStandardButtons.Ok);
+                            string.Format(CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.ErrorDownloading, e.Args[0]), TaskDialogStandardIcon.Error, TaskDialogStandardButtons.Ok);
                         Environment.Exit(0);
                     }
 
@@ -158,16 +158,16 @@ namespace SevenUpdate
                     if (Utilities.IsRunning64BitOS == false && app.Platform == Platform.X64)
                     {
                         Core.ShowMessage(
-                            String.Format(CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.Not64BitCompat, appName), TaskDialogStandardIcon.Error, TaskDialogStandardButtons.Ok);
+                            string.Format(CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.Not64BitCompat, appName), TaskDialogStandardIcon.Error, TaskDialogStandardButtons.Ok);
                         Environment.Exit(0);
                     }
 
                     if (
                         Core.ShowMessage(
-                            String.Format(CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.AddToSevenUpdate, appName), 
+                            string.Format(CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.AddToSevenUpdate, appName), 
                             TaskDialogStandardIcon.ShieldBlue, 
                             TaskDialogStandardButtons.Cancel, 
-                            String.Format(CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.AllowUpdates, appName), 
+                            string.Format(CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.AllowUpdates, appName), 
                             null, 
                             SevenUpdate.Properties.Resources.Add, 
                             true) != TaskDialogResult.Cancel)

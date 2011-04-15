@@ -192,7 +192,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void LoadAppInfo(object sender, RoutedEventArgs e)
         {
-            if (String.IsNullOrWhiteSpace(this.tbxAppName.Text))
+            if (string.IsNullOrWhiteSpace(this.tbxAppName.Text))
             {
                 this.tbxAppName.HasError = true;
                 this.tbxAppName.ToolTip = Properties.Resources.InputRequired;
@@ -203,7 +203,7 @@ namespace SevenUpdate.Sdk.Pages
                 this.tbxAppName.ToolTip = null;
             }
 
-            if (String.IsNullOrWhiteSpace(this.tbxAppDescription.Text))
+            if (string.IsNullOrWhiteSpace(this.tbxAppDescription.Text))
             {
                 this.tbxAppDescription.HasError = true;
                 this.tbxAppDescription.ToolTip = Properties.Resources.InputRequired;
@@ -214,7 +214,7 @@ namespace SevenUpdate.Sdk.Pages
                 this.tbxAppDescription.ToolTip = null;
             }
 
-            if (String.IsNullOrWhiteSpace(this.tbxPublisher.Text))
+            if (string.IsNullOrWhiteSpace(this.tbxPublisher.Text))
             {
                 this.tbxPublisher.HasError = true;
                 this.tbxPublisher.ToolTip = Properties.Resources.InputRequired;
@@ -371,7 +371,7 @@ namespace SevenUpdate.Sdk.Pages
 
                     File.Delete(Path.Combine(App.UserStore, oldAppName + ".sua"));
 
-                    if (Core.AppInfo.Platform != oldPlatform && String.Compare(oldAppName, appName, StringComparison.OrdinalIgnoreCase) != 0)
+                    if (Core.AppInfo.Platform != oldPlatform && string.Compare(oldAppName, appName, StringComparison.OrdinalIgnoreCase) != 0)
                     {
                         File.Copy(Path.Combine(App.UserStore, oldAppName + ".sui"), Path.Combine(App.UserStore, appName + ".sui"), true);
                         File.Delete(Path.Combine(App.UserStore, oldAppName + ".sui"));
@@ -461,7 +461,7 @@ namespace SevenUpdate.Sdk.Pages
         {
             var textBox = (InfoTextBox)sender;
 
-            if (String.IsNullOrWhiteSpace(textBox.Text))
+            if (string.IsNullOrWhiteSpace(textBox.Text))
             {
                 textBox.HasError = true;
                 textBox.ToolTip = Properties.Resources.InputRequired;
@@ -501,7 +501,7 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             }
 
-            textBox.HasError = !new UrlInputRule { IsRequired = true } .Validate(textBox.Text, null).IsValid;
+            textBox.HasError = !new UrlInputRule { IsRequired = true }.Validate(textBox.Text, null).IsValid;
             textBox.ToolTip = textBox.HasError ? Properties.Resources.UrlNotValid : null;
         }
 

@@ -1,5 +1,5 @@
 // ***********************************************************************
-// <copyright file="RegParser.cs"
+// <copyright file="RegistryParser.cs"
 //            project="SevenUpdate.Sdk"
 //            assembly="SevenUpdate.Sdk"
 //            solution="SevenUpdate"
@@ -182,7 +182,7 @@ namespace SevenUpdate.Sdk
                 valueData = PutOnOneLineAndTrim(valueData);
 
                 // Remove hex: or hex(3): at the beginning
-                valueData = Regex.Replace(valueData, @"^hex(\(0*3\))?:", String.Empty, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline);
+                valueData = Regex.Replace(valueData, @"^hex(\(0*3\))?:", string.Empty, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline);
                 methodResult.ValueKind = RegistryValueKind.Binary;
                 methodResult.Data = valueData;
                 methodResult.KeyValue = valueName;
@@ -204,10 +204,10 @@ namespace SevenUpdate.Sdk
             if (Regex.IsMatch(valueData, @"^(dword:([0-9A-Fa-f]){1,8})|(hex\(0*4\):([0-9A-Fa-f]{1,2},?)+)", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline))
             {
                 // Remove dword: at the beginning
-                valueData = Regex.Replace(valueData, @"^(dword|hex\(0*4\)):", String.Empty, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline);
+                valueData = Regex.Replace(valueData, @"^(dword|hex\(0*4\)):", string.Empty, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline);
 
                 // Check for empty ValueData
-                if (String.IsNullOrEmpty(valueData.Trim()))
+                if (string.IsNullOrEmpty(valueData.Trim()))
                 {
                     methodResult.ValueKind = RegistryValueKind.DWord;
                     methodResult.Data = valueData;
@@ -265,12 +265,12 @@ namespace SevenUpdate.Sdk
                 valueData = PutOnOneLineAndTrim(valueData);
 
                 // Remove hex(7): at the beginning
-                valueData = Regex.Replace(valueData, @"^hex\(0*7\):", String.Empty, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline);
+                valueData = Regex.Replace(valueData, @"^hex\(0*7\):", string.Empty, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline);
 
                 // Remove trailing 00,00s is now done by the RegEx below the following block
 
                 // Check for empty ValueData
-                if (String.IsNullOrEmpty(valueData.Trim()))
+                if (string.IsNullOrEmpty(valueData.Trim()))
                 {
                     // Set Flag - Undocumented but used inside XP Setup's own files to specify 
                     // REG_MULTI_SZ. The documented method seems to be to use 0x10000
@@ -295,7 +295,7 @@ namespace SevenUpdate.Sdk
                     var readInTwos = Regex.Matches(valueData, @"[a-zA-Z0-9]{2},[a-zA-Z0-9]{2}", RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
                     foreach (Match found in readInTwos)
                     {
-                        if (String.Compare(found.Value, "00,00", StringComparison.CurrentCulture) != 0)
+                        if (string.Compare(found.Value, "00,00", StringComparison.CurrentCulture) != 0)
                         {
                             var z = new List<string>(found.Value.Split(new[] { ',' }));
                             var y = z.ConvertAll(String2Byte);
@@ -369,13 +369,13 @@ namespace SevenUpdate.Sdk
                 valueData = PutOnOneLineAndTrim(valueData);
 
                 // Remove hex(1): at the beginning
-                valueData = Regex.Replace(valueData, @"^hex\(0*1\):", String.Empty, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline);
+                valueData = Regex.Replace(valueData, @"^hex\(0*1\):", string.Empty, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline);
 
                 // Remove trailing 00,00s
-                valueData = Regex.Replace(valueData, @",00,00$", String.Empty, RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.ExplicitCapture);
+                valueData = Regex.Replace(valueData, @",00,00$", string.Empty, RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.ExplicitCapture);
 
                 // Check for empty ValueData
-                if (String.IsNullOrEmpty(valueData.Trim()))
+                if (string.IsNullOrEmpty(valueData.Trim()))
                 {
                     methodResult.ValueKind = RegistryValueKind.String;
                     methodResult.Data = valueData;
@@ -422,13 +422,13 @@ namespace SevenUpdate.Sdk
                 valueData = PutOnOneLineAndTrim(valueData);
 
                 // Remove hex(2): at the beginning
-                valueData = Regex.Replace(valueData, @"^hex\(0*2\):", String.Empty, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline);
+                valueData = Regex.Replace(valueData, @"^hex\(0*2\):", string.Empty, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline);
 
                 // Remove trailing 00,00s (v5) or 00s (v4)
-                valueData = Regex.Replace(valueData, @",00,00$", String.Empty, RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.ExplicitCapture);
+                valueData = Regex.Replace(valueData, @",00,00$", string.Empty, RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.ExplicitCapture);
 
                 // Check for empty ValueData
-                if (String.IsNullOrEmpty(valueData.Trim()))
+                if (string.IsNullOrEmpty(valueData.Trim()))
                 {
                     methodResult.ValueKind = RegistryValueKind.ExpandString;
                     methodResult.Data = valueData;
@@ -451,7 +451,7 @@ namespace SevenUpdate.Sdk
                     // Nuke all 00s to prevent conversion to null, if this line causes
                     // changes ValueData then its 99% possible that the wrong REG signature
                     // is present in the REG file being processed.
-                    valueData = Regex.Replace(valueData, @"00,?", String.Empty);
+                    valueData = Regex.Replace(valueData, @"00,?", string.Empty);
 
                     // Create an array to hold the hex values
                     var temporaryArray = new List<string>(valueData.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
@@ -489,7 +489,7 @@ namespace SevenUpdate.Sdk
             valueData = PutOnOneLineAndTrim(valueData);
 
             // Remove hex: at the beginning
-            valueData = Regex.Replace(valueData, @"^hex\(0*" + hexType + @"\):", String.Empty, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline);
+            valueData = Regex.Replace(valueData, @"^hex\(0*" + hexType + @"\):", string.Empty, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline);
             methodResult.ValueKind = flag;
             methodResult.KeyValue = valueNameData;
 
@@ -507,7 +507,7 @@ namespace SevenUpdate.Sdk
             var methodResult = new RegistryItem();
 
             // Return empty INFConversionResult instance if Line is empty
-            if (String.IsNullOrEmpty(line))
+            if (string.IsNullOrEmpty(line))
             {
                 return methodResult;
             }
@@ -558,7 +558,7 @@ namespace SevenUpdate.Sdk
 
             // If ValueData is equal to -, this means that this is a removal instruction
             // and the line should be added to the DelReg part of the INFConversionResult instance
-            if (String.Compare(valueData, "-", StringComparison.CurrentCulture) == 0)
+            if (string.Compare(valueData, "-", StringComparison.CurrentCulture) == 0)
             {
                 methodResult.Data = null;
                 methodResult.Action = RegistryAction.DeleteValue;
@@ -568,7 +568,7 @@ namespace SevenUpdate.Sdk
 
             // If ValueData is still empty, that means a normal string value with its
             // value explicitly set to blank
-            if (String.IsNullOrEmpty(valueData))
+            if (string.IsNullOrEmpty(valueData))
             {
                 methodResult.KeyValue = valueName;
                 methodResult.Data = valueData;
@@ -778,7 +778,7 @@ namespace SevenUpdate.Sdk
             regBlock = regBlock.Trim();
 
             // Check for empty RegBlock (will happen if sub key is empty)
-            if (String.IsNullOrEmpty(regBlock))
+            if (string.IsNullOrEmpty(regBlock))
             {
                 return;
             }

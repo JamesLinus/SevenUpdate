@@ -1,5 +1,5 @@
 ﻿// ***********************************************************************
-// <copyright file="Utility.cs"
+// <copyright file="Utilities.cs"
 //            project="SharpBits.Base"
 //            assembly="SharpBits.Base"
 //            solution="SevenUpdate"

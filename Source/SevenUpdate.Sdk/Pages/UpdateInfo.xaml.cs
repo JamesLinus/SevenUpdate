@@ -43,7 +43,7 @@ namespace SevenUpdate.Sdk.Pages
         {
             this.InitializeComponent();
             this.DataContext = Core.UpdateInfo;
-            if (String.IsNullOrWhiteSpace(Core.UpdateInfo.ReleaseDate))
+            if (string.IsNullOrWhiteSpace(Core.UpdateInfo.ReleaseDate))
             {
                 Core.UpdateInfo.ReleaseDate = DateTime.Now.ToShortDateString();
             }
@@ -143,7 +143,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void LoadUI(object sender, RoutedEventArgs e)
         {
-            if (String.IsNullOrWhiteSpace(this.tbxUpdateDetails.Text))
+            if (string.IsNullOrWhiteSpace(this.tbxUpdateDetails.Text))
             {
                 this.tbxUpdateDetails.HasError = true;
                 this.tbxUpdateDetails.ToolTip = Properties.Resources.InputRequired;
@@ -154,7 +154,7 @@ namespace SevenUpdate.Sdk.Pages
                 this.tbxUpdateDetails.ToolTip = null;
             }
 
-            if (String.IsNullOrWhiteSpace(this.tbxUpdateName.Text))
+            if (string.IsNullOrWhiteSpace(this.tbxUpdateName.Text))
             {
                 this.tbxUpdateName.HasError = true;
                 this.tbxUpdateName.ToolTip = Properties.Resources.InputRequired;
@@ -233,7 +233,7 @@ namespace SevenUpdate.Sdk.Pages
         {
             var textBox = (InfoTextBox)sender;
 
-            if (String.IsNullOrWhiteSpace(textBox.Text))
+            if (string.IsNullOrWhiteSpace(textBox.Text))
             {
                 textBox.HasError = true;
                 textBox.ToolTip = Properties.Resources.InputRequired;
@@ -257,7 +257,7 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             }
 
-            textBox.HasError = !new UrlInputRule { IsRequired = textBox.Name == @"tbxSourceLocation" } .Validate(textBox.Text, null).IsValid;
+            textBox.HasError = !new UrlInputRule { IsRequired = textBox.Name == @"tbxSourceLocation" }.Validate(textBox.Text, null).IsValid;
             textBox.ToolTip = textBox.HasError ? Properties.Resources.UrlNotValid : null;
         }
 

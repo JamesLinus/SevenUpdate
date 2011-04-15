@@ -55,7 +55,7 @@ namespace WPFLocalizeExtension.Engine
                 throw new ArgumentNullException("key");
             }
 
-            if (key != null && String.IsNullOrEmpty(key))
+            if (key != null && string.IsNullOrEmpty(key))
             {
                 throw new ArgumentException("key is empty", "key");
             }
@@ -81,7 +81,7 @@ namespace WPFLocalizeExtension.Engine
                 throw new ArgumentNullException("key");
             }
 
-            if (key != null && String.IsNullOrEmpty(key))
+            if (key != null && string.IsNullOrEmpty(key))
             {
                 throw new ArgumentException("key is empty", "key");
             }
@@ -107,7 +107,7 @@ namespace WPFLocalizeExtension.Engine
                 throw new ArgumentNullException("key");
             }
 
-            if (key != null && String.IsNullOrEmpty(key))
+            if (key != null && string.IsNullOrEmpty(key))
             {
                 throw new ArgumentException("key is empty", "key");
             }
@@ -133,7 +133,7 @@ namespace WPFLocalizeExtension.Engine
                 throw new ArgumentNullException("key");
             }
 
-            if (key != null && String.IsNullOrEmpty(key))
+            if (key != null && string.IsNullOrEmpty(key))
             {
                 throw new ArgumentException("key is empty", "key");
             }

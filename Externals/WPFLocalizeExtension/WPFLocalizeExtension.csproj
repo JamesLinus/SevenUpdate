@@ -110,7 +110,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Extensions\BaseLocalizeExtension.cs" />
-    <Compile Include="Engine\LocalizeDictionary.cs" />
+    <Compile Include="Engine\Localize.cs" />
     <Compile Include="Engine\LocalizedObjectOperation.cs" />
     <Compile Include="Engine\ObjectDependencyManager.cs" />
     <Compile Include="Engine\OddsFormatManager.cs" />

@@ -44,7 +44,7 @@ namespace SevenUpdate.CustomComparer
             var first = (Sua)x;
             var second = (Sua)y;
 
-            string valueX = String.Empty, valueY = String.Empty;
+            string valueX = string.Empty, valueY = string.Empty;
             var result = 0;
 
             foreach (var sort in this.SortColumnList)
@@ -70,11 +70,11 @@ namespace SevenUpdate.CustomComparer
 
                 if (this.SortColumns[sort] == ListSortDirection.Ascending)
                 {
-                    result = String.Compare(valueX, valueY, StringComparison.CurrentCulture);
+                    result = string.Compare(valueX, valueY, StringComparison.CurrentCulture);
                 }
                 else
                 {
-                    result = (-1) * String.Compare(valueX, valueY, StringComparison.CurrentCulture);
+                    result = (-1) * string.Compare(valueX, valueY, StringComparison.CurrentCulture);
                 }
 
                 if (result != 0)

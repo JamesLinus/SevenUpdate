@@ -76,8 +76,8 @@ namespace SevenUpdate.Windows
                                    ? Properties.Resources.Failed.ToLower(CultureInfo.CurrentCulture)
                                    : Properties.Resources.Successful.ToLower(CultureInfo.CurrentCulture);
             this.tbStatus.Text = updateInfo.Status == UpdateStatus.Hidden
-                                     ? String.Format(CultureInfo.CurrentCulture, Properties.Resources.DownloadSize, Utilities.ConvertFileSize(updateInfo.UpdateSize))
-                                     : String.Format(CultureInfo.CurrentCulture, Properties.Resources.InstallationStatus, updateStatus, updateInfo.InstallDate);
+                                     ? string.Format(CultureInfo.CurrentCulture, Properties.Resources.DownloadSize, Utilities.ConvertFileSize(updateInfo.UpdateSize))
+                                     : string.Format(CultureInfo.CurrentCulture, Properties.Resources.InstallationStatus, updateStatus, updateInfo.InstallDate);
 
             this.ShowDialog();
             return;

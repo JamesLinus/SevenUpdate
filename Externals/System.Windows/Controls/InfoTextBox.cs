@@ -196,7 +196,7 @@ namespace System.Windows.Controls
         /// <param name="e">The arguments that are associated with the <see cref="E:System.Windows.Controls.Primitives.TextBoxBase.TextChanged"/> event.</param>
         protected override void OnTextChanged(TextChangedEventArgs e)
         {
-            this.HasText = !(this.Text != null && String.IsNullOrEmpty(this.Text));
+            this.HasText = !(this.Text != null && string.IsNullOrEmpty(this.Text));
 
             if (this.HasText)
             {

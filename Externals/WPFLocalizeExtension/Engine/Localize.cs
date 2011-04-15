@@ -1,5 +1,5 @@
 // ***********************************************************************
-// <copyright file="LocalizeDictionary.cs"
+// <copyright file="Localize.cs"
 //            project="WPFLocalizeExtension"
 //            assembly="WPFLocalizeExtension"
 //            solution="SevenUpdate"
@@ -294,7 +294,7 @@ namespace WPFLocalizeExtension.Engine
                 throw new ArgumentNullException("resourceAssembly");
             }
 
-            if (resourceAssembly != null && String.IsNullOrEmpty(resourceAssembly))
+            if (resourceAssembly != null && string.IsNullOrEmpty(resourceAssembly))
             {
                 throw new ArgumentException("resourceAssembly is empty", "resourceAssembly");
             }
@@ -304,7 +304,7 @@ namespace WPFLocalizeExtension.Engine
                 throw new ArgumentNullException("resourceDictionary");
             }
 
-            if (resourceDictionary != null && String.IsNullOrEmpty(resourceDictionary))
+            if (resourceDictionary != null && string.IsNullOrEmpty(resourceDictionary))
             {
                 throw new ArgumentException("resourceDictionary is empty", "resourceDictionary");
             }
@@ -321,7 +321,7 @@ namespace WPFLocalizeExtension.Engine
                     throw new ArgumentNullException("resourceKey");
                 }
 
-                if (String.IsNullOrEmpty(resourceKey))
+                if (string.IsNullOrEmpty(resourceKey))
                 {
                     throw new ArgumentException("resourceKey is empty", "resourceKey");
                 }

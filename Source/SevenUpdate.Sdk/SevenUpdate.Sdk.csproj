@@ -155,7 +155,7 @@
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
     </Compile>
-    <Compile Include="RegParser.cs" />
+    <Compile Include="RegistryParser.cs" />
     <Compile Include="ValidationRules\RegistryPathRule.cs" />
     <Compile Include="ValidationRules\SuiLocationRule.cs" />
     <Compile Include="ValidationRules\AppDirectoryRule.cs" />

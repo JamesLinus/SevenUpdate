@@ -1321,7 +1321,7 @@ namespace System.Windows.Dialogs
                 // and sort the controls based on type.
                 if (commandLink != null)
                 {
-                    if (String.IsNullOrEmpty(commandLink.Instruction))
+                    if (string.IsNullOrEmpty(commandLink.Instruction))
                     {
                         throw new InvalidOperationException("Button text must be non-empty");
                     }
@@ -1333,7 +1333,7 @@ namespace System.Windows.Dialogs
                 var radioButton = control as TaskDialogRadioButton;
                 if (radioButton != null)
                 {
-                    if (String.IsNullOrEmpty(radioButton.Text))
+                    if (string.IsNullOrEmpty(radioButton.Text))
                     {
                         throw new InvalidOperationException("Button text must be non-empty");
                     }
@@ -1350,7 +1350,7 @@ namespace System.Windows.Dialogs
                 var button = control as TaskDialogButton;
                 if (button != null)
                 {
-                    if (String.IsNullOrEmpty(button.Text))
+                    if (string.IsNullOrEmpty(button.Text))
                     {
                         throw new InvalidOperationException("Button text must be non-empty");
                     }
@@ -1388,7 +1388,7 @@ namespace System.Windows.Dialogs
         /// <summary>Validates the current dialog settings.</summary>
         private void ValidateCurrentDialogSettings()
         {
-            if (this.footerCheckBoxChecked.HasValue && this.footerCheckBoxChecked.Value && String.IsNullOrEmpty(this.checkBoxText))
+            if (this.footerCheckBoxChecked.HasValue && this.footerCheckBoxChecked.Value && string.IsNullOrEmpty(this.checkBoxText))
             {
                 throw new InvalidOperationException(@"Checkbox text must be provided to enable the dialog checkbox.");
             }

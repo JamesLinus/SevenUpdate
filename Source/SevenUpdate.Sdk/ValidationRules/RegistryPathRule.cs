@@ -49,7 +49,7 @@ namespace SevenUpdate.Sdk.ValidationRules
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             var input = value as string;
-            if (String.IsNullOrWhiteSpace(input) || input == null)
+            if (string.IsNullOrWhiteSpace(input) || input == null)
             {
                 return new ValidationResult(false, Resources.FilePathInvalid);
             }

@@ -1,5 +1,5 @@
 ﻿// ***********************************************************************
-// <copyright file="WaitForElevatedProcess.cs"
+// <copyright file="ElevatedProcessCallback.cs"
 //            project="SevenUpdate.Admin"
 //            assembly="SevenUpdate.Admin"
 //            solution="SevenUpdate"

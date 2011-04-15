@@ -92,8 +92,8 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             }
 
-            this.clEdit.Content = String.Format(CultureInfo.CurrentCulture, Properties.Resources.Edit, item.Header);
-            this.clNewUpdate.Note = String.Format(CultureInfo.CurrentCulture, Properties.Resources.AddUpdate, item.Header);
+            this.clEdit.Content = string.Format(CultureInfo.CurrentCulture, Properties.Resources.Edit, item.Header);
+            this.clNewUpdate.Note = string.Format(CultureInfo.CurrentCulture, Properties.Resources.AddUpdate, item.Header);
             if (parent == null)
             {
                 Core.AppIndex = item.Tag is int ? (int)item.Tag : -1;
@@ -102,7 +102,7 @@ namespace SevenUpdate.Sdk.Pages
 
                 // clTest.Visibility = Visibility.Visible;
 
-                // clTest.Content = String.Format(Properties.Resources.Test, item.Header);
+                // clTest.Content = string.Format(Properties.Resources.Test, item.Header);
             }
             else
             {

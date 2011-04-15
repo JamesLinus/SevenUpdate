@@ -61,7 +61,7 @@ namespace SevenUpdate.Sdk.ValidationRules
                 return this.IsRequired ? new ValidationResult(false, Resources.UrilInvalid) : new ValidationResult(true, null);
             }
 
-            if (String.IsNullOrWhiteSpace(input))
+            if (string.IsNullOrWhiteSpace(input))
             {
                 return this.IsRequired ? new ValidationResult(false, Resources.UrilInvalid) : new ValidationResult(true, null);
             }

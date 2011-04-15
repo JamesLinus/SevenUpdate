@@ -42,7 +42,7 @@ namespace System.Windows.ValidationRules
         {
             var input = value as string;
 
-            return String.IsNullOrWhiteSpace(input) ? new ValidationResult(false, Resources.InputRequired) : new ValidationResult(true, null);
+            return string.IsNullOrWhiteSpace(input) ? new ValidationResult(false, Resources.InputRequired) : new ValidationResult(true, null);
         }
 
         #endregion

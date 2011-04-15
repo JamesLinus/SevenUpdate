@@ -123,7 +123,7 @@ namespace SevenUpdate.Windows
                 this.btnAction.IsShieldNeeded = this.licenseInformation.Count == 1;
             }
 
-            this.tbHeading.Text = String.Format(CultureInfo.CurrentCulture, Properties.Resources.AcceptLicenseTerms, this.licenseInformation[0].Title);
+            this.tbHeading.Text = string.Format(CultureInfo.CurrentCulture, Properties.Resources.AcceptLicenseTerms, this.licenseInformation[0].Title);
             this.rbtnAccept.IsEnabled = true;
             this.rbtnDecline.IsEnabled = true;
             this.rtbSLA.Cursor = Cursors.IBeam;
@@ -225,7 +225,7 @@ namespace SevenUpdate.Windows
 
             if (this.btnAction.ButtonText == Properties.Resources.Next)
             {
-                this.tbHeading.Text = String.Format(CultureInfo.CurrentCulture, Properties.Resources.AcceptLicenseTerms, this.licenseInformation[this.index].Title);
+                this.tbHeading.Text = string.Format(CultureInfo.CurrentCulture, Properties.Resources.AcceptLicenseTerms, this.licenseInformation[this.index].Title);
                 var flowDoc = new FlowDocument();
                 var para = new Paragraph();
                 var r = new Run(this.licenseText[this.index]);

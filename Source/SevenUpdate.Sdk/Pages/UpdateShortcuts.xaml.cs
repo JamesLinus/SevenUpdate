@@ -87,7 +87,7 @@ namespace SevenUpdate.Sdk.Pages
         {
             var textBox = (InfoTextBox)sender;
 
-            if (Utilities.Locale == "en" && String.IsNullOrWhiteSpace(textBox.Text))
+            if (Utilities.Locale == "en" && string.IsNullOrWhiteSpace(textBox.Text))
             {
                 return;
             }
@@ -400,7 +400,7 @@ namespace SevenUpdate.Sdk.Pages
 
             if (textBox.Name == "tbxName")
             {
-                textBox.HasError = String.IsNullOrWhiteSpace(textBox.Text) || textBox.Text.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0;
+                textBox.HasError = string.IsNullOrWhiteSpace(textBox.Text) || textBox.Text.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0;
             }
             else
             {

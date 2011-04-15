@@ -215,7 +215,7 @@ namespace SevenUpdate.Sdk
             {
                 AppInfo = null;
                 UpdateInfo = null;
-                ShowMessage(String.Format(Resources.FileLoadError, Path.Combine(App.UserStore, Projects[AppIndex].ApplicationName + ".sua")), TaskDialogStandardIcon.Error);
+                ShowMessage(string.Format(Resources.FileLoadError, Path.Combine(App.UserStore, Projects[AppIndex].ApplicationName + ".sua")), TaskDialogStandardIcon.Error);
                 return;
             }
 
@@ -233,7 +233,7 @@ namespace SevenUpdate.Sdk
             {
                 AppInfo = null;
                 UpdateInfo = null;
-                ShowMessage(String.Format(Resources.FileLoadError, Path.Combine(App.UserStore, Projects[AppIndex].ApplicationName + ".sui")), TaskDialogStandardIcon.Error);
+                ShowMessage(string.Format(Resources.FileLoadError, Path.Combine(App.UserStore, Projects[AppIndex].ApplicationName + ".sui")), TaskDialogStandardIcon.Error);
                 return;
             }
 
@@ -515,7 +515,6 @@ namespace SevenUpdate.Sdk
         internal static void ShowMessage(string instructionText, TaskDialogStandardIcon icon, string description = null)
         {
             ShowMessage(instructionText, icon, TaskDialogStandardButtons.Ok, description);
-            return;
         }
 
         /// <summary>Updates a LocaleString collection a new value</summary>
@@ -523,7 +522,7 @@ namespace SevenUpdate.Sdk
         /// <param name="localeStrings">The collection for the value</param>
         internal static void UpdateLocaleStrings(string value, ObservableCollection<LocaleString> localeStrings)
         {
-            if (!String.IsNullOrWhiteSpace(value))
+            if (!string.IsNullOrWhiteSpace(value))
             {
                 var found = false;
 

@@ -50,12 +50,12 @@ namespace System.Windows.Converters
                 if (System.Convert.ToBoolean(parameter, CultureInfo.CurrentCulture))
                 {
                     // If  no value return true, otherwise false
-                    return !String.IsNullOrEmpty(stringValue);
+                    return !string.IsNullOrEmpty(stringValue);
                 }
             }
 
             // If  no value return true, otherwise false
-            return String.IsNullOrEmpty(stringValue);
+            return string.IsNullOrEmpty(stringValue);
         }
 
         /// <summary>Converts a converted object back into it's original form</summary>

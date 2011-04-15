@@ -90,7 +90,7 @@ namespace System.Windows.Controls
                 throw new ArgumentNullException("obj");
             }
 
-            if (String.IsNullOrWhiteSpace(comparerName))
+            if (string.IsNullOrWhiteSpace(comparerName))
             {
                 throw new ArgumentNullException("comparerName");
             }
@@ -294,7 +294,7 @@ namespace System.Windows.Controls
                 return;
             }
 
-            if (String.IsNullOrEmpty(GetCustomSorter(listView)))
+            if (string.IsNullOrEmpty(GetCustomSorter(listView)))
             {
                 return;
             }

@@ -538,7 +538,7 @@ namespace SevenUpdate.Sdk.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to ExpandString.
+        ///   Looks up a localized string similar to Expandstring.
         /// </summary>
         public static string ExpandString {
             get {
@@ -826,7 +826,7 @@ namespace SevenUpdate.Sdk.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to MultiString.
+        ///   Looks up a localized string similar to Multistring.
         /// </summary>
         public static string MultiString {
             get {
@@ -1483,7 +1483,7 @@ namespace SevenUpdate.Sdk.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to String.
+        ///   Looks up a localized string similar to string.
         /// </summary>
         public static string String {
             get {

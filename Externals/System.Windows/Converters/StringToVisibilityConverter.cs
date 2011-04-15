@@ -50,12 +50,12 @@ namespace System.Windows.Converters
                 if (System.Convert.ToBoolean(parameter, CultureInfo.CurrentCulture))
                 {
                     // If  no value return true, otherwise false
-                    return !String.IsNullOrEmpty(stringValue) ? Visibility.Visible : Visibility.Collapsed;
+                    return !string.IsNullOrEmpty(stringValue) ? Visibility.Visible : Visibility.Collapsed;
                 }
             }
 
             // If  no value return true, otherwise false
-            return String.IsNullOrEmpty(stringValue) ? Visibility.Visible : Visibility.Collapsed;
+            return string.IsNullOrEmpty(stringValue) ? Visibility.Visible : Visibility.Collapsed;
         }
 
         /// <summary>Converts a converted object back into it's original form</summary>

@@ -459,7 +459,7 @@ namespace SevenUpdate
                 link.SetDescription(Utilities.GetLocaleString(shortcut.Description));
             }
 
-            if (!String.IsNullOrWhiteSpace(shortcut.Icon))
+            if (!string.IsNullOrWhiteSpace(shortcut.Icon))
             {
                 var icon = shortcut.Icon.Split(new[] { ',' });
                 link.SetIconLocation(icon[0], Convert.ToInt32(icon[1]));
@@ -513,7 +513,7 @@ namespace SevenUpdate
 
             int iconIndex;
             shellLink.GetIconLocation(sb, MaxPath, out iconIndex);
-            if (String.IsNullOrWhiteSpace(sb.ToString()))
+            if (string.IsNullOrWhiteSpace(sb.ToString()))
             {
                 shortcut.Icon = shortcut.Target + @"," + iconIndex;
             }

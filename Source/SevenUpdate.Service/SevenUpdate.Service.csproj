@@ -87,7 +87,8 @@
     <Reference Include="System.ServiceModel" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IWcfService.cs" />
+    <Compile Include="IElevatedProcess.cs" />
+    <Compile Include="IElevatedProcessCallback.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

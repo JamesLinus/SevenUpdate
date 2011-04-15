@@ -68,7 +68,7 @@ namespace SevenUpdate
         {
             get
             {
-                return IntPtr.Size == 8 || !String.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"));
+                return IntPtr.Size == 8 || !string.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"));
             }
         }
 
@@ -112,17 +112,17 @@ namespace SevenUpdate
         {
             if (bytes >= 1073741824)
             {
-                return String.Format(CultureInfo.CurrentCulture, "{0:##.##}", bytes / 1073741824) + " GB";
+                return string.Format(CultureInfo.CurrentCulture, "{0:##.##}", bytes / 1073741824) + " GB";
             }
 
             if (bytes >= 1048576)
             {
-                return String.Format(CultureInfo.CurrentCulture, "{0:##.##}", bytes / 1048576) + " MB";
+                return string.Format(CultureInfo.CurrentCulture, "{0:##.##}", bytes / 1048576) + " MB";
             }
 
             if (bytes >= 1024)
             {
-                return String.Format(CultureInfo.CurrentCulture, "{0:##.##}", bytes / 1024) + " KB";
+                return string.Format(CultureInfo.CurrentCulture, "{0:##.##}", bytes / 1024) + " KB";
             }
 
             if (bytes < 1024)
@@ -360,7 +360,7 @@ namespace SevenUpdate
                     sha2.ComputeHash(stream);
                     foreach (var hashByte in sha2.Hash)
                     {
-                        buff.Append(String.Format("{0:X1}", hashByte));
+                        buff.Append(string.Format("{0:X1}", hashByte));
                     }
                 }
             }
@@ -398,7 +398,7 @@ namespace SevenUpdate
         /// <returns>The value retrieved from the registry path, returns null if the registry path does not exist</returns>
         public static string GetRegistryValue(string registryKey, string valueName, Platform platform)
         {
-            if (8 == IntPtr.Size || (!String.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"))))
+            if (8 == IntPtr.Size || (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"))))
             {
                 if (platform == Platform.X86)
                 {
@@ -460,7 +460,7 @@ namespace SevenUpdate
         /// <returns>The parsed registry key</returns>
         public static string ParseRegistryKey(string registryKey, Platform platform)
         {
-            if (8 == IntPtr.Size || (!String.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"))))
+            if (8 == IntPtr.Size || (!string.IsNullOrEmpty(Environment.GetEnvironmentVariable("PROCESSOR_ARCHITEW6432"))))
             {
                 if (platform == Platform.X86)
                 {
@@ -565,7 +565,7 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Starts a process on the system</summary>
+        /// <summary>Starts a process hidden on the system</summary>
         /// <param name="fileName">The file to execute</param>
         /// <param name="arguments">The arguments to execute with the file</param>
         /// <param name="wait">if set to <see langword="true"/> the calling thread will be blocked until process has exited</param>

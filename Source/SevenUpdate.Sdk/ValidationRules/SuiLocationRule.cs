@@ -45,7 +45,7 @@ namespace SevenUpdate.Sdk.ValidationRules
         {
             var input = value as string;
 
-            if (String.IsNullOrWhiteSpace(input) || input == null)
+            if (string.IsNullOrWhiteSpace(input) || input == null)
             {
                 return new ValidationResult(false, Resources.FilePathInvalid);
             }
@@ -62,7 +62,7 @@ namespace SevenUpdate.Sdk.ValidationRules
 
             var fileName = Path.GetFileName(input);
 
-            if (fileName == null || String.IsNullOrWhiteSpace(input))
+            if (fileName == null || string.IsNullOrWhiteSpace(input))
             {
                 return new ValidationResult(false, Resources.FilePathInvalid);
             }

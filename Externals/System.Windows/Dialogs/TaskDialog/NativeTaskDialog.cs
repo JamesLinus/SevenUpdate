@@ -196,7 +196,7 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>Shows the native dialog</summary>
-        [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.String.Format(System.String,System.Object)", 
+        [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.string.Format(System.String,System.Object)", 
             Justification = "We are not currently handling globalization or localization")]
         internal void NativeShow()
         {
@@ -234,7 +234,7 @@ namespace System.Windows.Dialogs
                             msg = "Dialog contents too complex.";
                             break;
                         default:
-                            msg = String.Format(CultureInfo.CurrentCulture, "An unexpected internal error occurred in the Win32 call:{0:x}", result);
+                            msg = string.Format(CultureInfo.CurrentCulture, "An unexpected internal error occurred in the Win32 call:{0:x}", result);
                             break;
                     }
 

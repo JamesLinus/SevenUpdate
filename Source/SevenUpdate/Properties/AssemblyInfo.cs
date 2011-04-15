@@ -1,9 +1,5 @@
 ﻿// ***********************************************************************
-// <copyright file="AssemblyInfo.cs"
-//            project="SevenUpdate
-//            assembly="SevenUpdate"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="AssemblyInfo.cs" project="SevenUpdate" assembly="SevenUpdate" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
@@ -20,6 +16,9 @@
 //    You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
+// <summary>
+//   Contains information about the assembly
+// </summary>
 // ***********************************************************************
 using System;
 using System.Reflection;

@@ -52,7 +52,7 @@ namespace System.Windows.Dialogs
             this.Id = nextId;
 
             // Support wrapping of control IDs in case you create a lot of custom controls
-            if (nextId == Int32.MaxValue)
+            if (nextId == int.MaxValue)
             {
                 nextId = 9;
             }
@@ -109,12 +109,12 @@ namespace System.Windows.Dialogs
                 // Names for controls need to be quite stable, 
                 // as we are going to maintain a mapping between 
                 // the names and the underlying Win32/COM control IDs.
-                if (String.IsNullOrEmpty(value))
+                if (string.IsNullOrEmpty(value))
                 {
                     throw new ArgumentException("Dialog control name cannot be empty or null.");
                 }
 
-                if (!String.IsNullOrEmpty(this.name))
+                if (!string.IsNullOrEmpty(this.name))
                 {
                     throw new InvalidOperationException("Dialog controls cannot be renamed.");
                 }
@@ -167,7 +167,7 @@ namespace System.Windows.Dialogs
         /// <param name="propName">The name of the property that is changing.</param>
         protected void ApplyPropertyChange(string propName)
         {
-            Debug.Assert(!String.IsNullOrEmpty(propName), "Property changed was not specified");
+            Debug.Assert(!string.IsNullOrEmpty(propName), "Property changed was not specified");
 
             if (this.hostingDialog != null)
             {
@@ -185,7 +185,7 @@ namespace System.Windows.Dialogs
         /// <param name="propName">The name of the property that is changing</param>
         protected void CheckPropertyChangeAllowed(string propName)
         {
-            Debug.Assert(!String.IsNullOrEmpty(propName), "Property to change was not specified");
+            Debug.Assert(!string.IsNullOrEmpty(propName), "Property to change was not specified");
 
             if (this.hostingDialog != null)
             {
