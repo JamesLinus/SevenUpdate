@@ -27,27 +27,6 @@ namespace SevenUpdate
 
     using ProtoBuf;
 
-    /// <summary>The current status of the update.</summary>
-    [ProtoContract, DataContract, DefaultValue(Successful)]
-    public enum UpdateStatus
-    {
-        /// <summary>Indicates that the update installation failed.</summary>
-        [ProtoEnum, EnumMember]
-        Failed = 0,
-
-        /// <summary>Indicates that the update is hidden.</summary>
-        [ProtoEnum, EnumMember]
-        Hidden = 1,
-
-        /// <summary>Indicates that the update is visible.</summary>
-        [ProtoEnum, EnumMember]
-        Visible = 2,
-
-        /// <summary>Indicates that the update installation succeeded.</summary>
-        [ProtoEnum, EnumMember]
-        Successful = 3
-    }
-
     /// <summary>Information about an update, used by History and Hidden Updates. Not used by the SDK.</summary>
     [ProtoContract, DataContract(IsReference = true), KnownType(typeof(UpdateStatus)), KnownType(typeof(Importance)),
      KnownType(typeof(ObservableCollection<LocaleString>))]

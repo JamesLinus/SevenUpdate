@@ -69,7 +69,7 @@ namespace System.Windows.Internal
         }
 
         /// <summary>Sends the specified message to a window or windows. The SendMessage function callsthe window procedure for the specified window and does not return until the windowprocedure has processed the message.</summary>
-        /// <param name="pointer">Handle to the window whose window procedure will receive the message.If this parameter is HWND_BROADCAST, the message is sent to all top-level windows in the system,including disabled or invisible unowned windows, overlapped windows, and pop-up windows;but the message is not sent to child windows.</param>
+        /// <param name="pointer">Handle to the window whose window procedure will receive the message. If this parameter is HWND_BROADCAST, the message is sent to all top-level windows in the system,including disabled or invisible unowned windows, overlapped windows, and pop-up windows;but the message is not sent to child windows.</param>
         /// <param name="msg">Specifies the message to be sent.</param>
         /// <param name="parameter">Specifies additional message-specific information.</param>
         /// <param name="parameterLength">Specifies the length of the additional message-specific information.</param>

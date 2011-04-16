@@ -31,60 +31,6 @@ namespace SevenUpdate
 
     using ProtoBuf;
 
-    /// <summary>The action to preform on the shortcut.</summary>
-    [ProtoContract, DataContract, DefaultValue(Add)]
-    public enum ShortcutAction
-    {
-        /// <summary>Adds a shortcut.</summary>
-        [ProtoEnum, EnumMember]
-        Add = 0,
-
-        /// <summary>Updates a shortcut only if it exists.</summary>
-        [ProtoEnum, EnumMember]
-        Update = 1,
-
-        /// <summary>Deletes a shortcut.</summary>
-        [ProtoEnum, EnumMember]
-        Delete = 2
-    }
-
-    /// <summary>The Msi Component install state.</summary>
-    internal enum InstallState
-    {
-        /// <summary>The component being requested is disabled on the computer.</summary>
-        NotUsed = -7,
-
-        /// <summary>The configuration data is corrupt.</summary>
-        BadConfig = -6,
-
-        /// <summary>The installation is incomplete.</summary>
-        Incomplete = -5,
-
-        /// <summary>The component source is inaccessible.</summary>
-        SourceAbsent = -4,
-
-        /// <summary>One of the function parameters is invalid.</summary>
-        InvalidArg = -2,
-
-        /// <summary>The product code or component ID is unknown.</summary>
-        Unknown = -1,
-
-        /// <summary>The shortcut is advertised.</summary>
-        Advertised = 1,
-
-        /// <summary>The component has been removed.</summary>
-        Removed = 1,
-
-        /// <summary>The component is not installed.</summary>
-        Absent = 2,
-
-        /// <summary>The component is installed locally.</summary>
-        Local = 3,
-
-        /// <summary>The component is installed to run from source.</summary>
-        Source = 4,
-    }
-
     /// <summary>A shortcut to be created within an update.</summary>
     [ProtoContract, DataContract(IsReference = true), KnownType(typeof(ShortcutAction))]
     public sealed class Shortcut : INotifyPropertyChanged
@@ -202,8 +148,8 @@ namespace SevenUpdate
             void Load([MarshalAs(UnmanagedType.LPWStr)] string fileName, uint mode);
 
             /// <summary>Saves a copy of the object to the specified file.</summary>
-            /// <param name="fileName">The absolute path of the file to which the object should be saved.If fileName is null, the object should save its data to the current file, if there is one.</param>
-            /// <param name="remember">Indicates whether the fileName parameter is to be used as the current working file.If <see langword="true" />, fileName becomes the current file and the object should clear its dirty flag after the save.If <see langword="false" />, this save operation is a Save A Copy As ... operation. In this case, the current file is unchanged and the object should not clear its dirty flag.If fileName is null, the implementation should ignore the remember flag.</param>
+            /// <param name="fileName">The absolute path of the file to which the object should be saved. If fileName is null, the object should save its data to the current file, if there is one.</param>
+            /// <param name="remember">Indicates whether the fileName parameter is to be used as the current working file. If <see langword="true" />, fileName becomes the current file and the object should clear its dirty flag after the save.If <see langword="false" />, this save operation is a Save A Copy As ... operation. In this case, the current file is unchanged and the object should not clear its dirty flag.If fileName is null, the implementation should ignore the remember flag.</param>
             [PreserveSig]
             void Save([MarshalAs(UnmanagedType.LPWStr)] string fileName, [MarshalAs(UnmanagedType.Bool)] bool remember);
 
@@ -583,7 +529,7 @@ namespace SevenUpdate
 
         /// <summary>The file time.</summary>
         [StructLayout(LayoutKind.Sequential)]
-        public struct FileTime
+        private struct FileTime
         {
             /// <summary>The low-order part of the file time.</summary>
             private uint lowDateTime;
@@ -594,7 +540,7 @@ namespace SevenUpdate
 
         /// <summary>The win 32 find data.</summary>
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-        public struct Win32FindData
+        private struct Win32FindData
         {
             /// <summary>The file attributes.</summary>
             private uint fileAttributes;
@@ -631,7 +577,7 @@ namespace SevenUpdate
 
         /// <summary>The c shell link.</summary>
         [Guid("00021401-0000-0000-C000-000000000046"), ClassInterfaceAttribute(ClassInterfaceType.None), ComImportAttribute]
-        public class CShellLink
+        private class CShellLink
         {
         }
     }

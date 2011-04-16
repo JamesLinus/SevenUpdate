@@ -28,23 +28,6 @@ namespace SevenUpdate
 
     using ProtoBuf;
 
-    /// <summary>The current status of the update.</summary>
-    [ProtoContract, DataContract, DefaultValue(X86)]
-    public enum Platform
-    {
-        /// <summary>Indicates that the application is native 32 bit.</summary>
-        [ProtoEnum, EnumMember]
-        X86 = 0,
-
-        /// <summary>Indicates that the application can only run on 64 bit platforms.</summary>
-        [ProtoEnum, EnumMember]
-        X64 = 1,
-
-        /// <summary>Indicates that the application can run on 32bit or 64bit natively depending on the OS.</summary>
-        [ProtoEnum, EnumMember]
-        AnyCpu = 2,
-    }
-
     /// <summary>Seven Update Application information.</summary>
     [ProtoContract, DataContract(IsReference = true), KnownType(typeof(ObservableCollection<LocaleString>))]
     public sealed class Sua : INotifyPropertyChanged

@@ -220,7 +220,7 @@ namespace SharpBits.Base
         #region Public Methods
 
         /// <summary>Creates a new transfer job.</summary>
-        /// <param name="displayName">Null-terminated string that contains a display name for the job.Typically, the display name is used to identify the job in a user interface.Note that more than one job may have the same display name. Must not be <see langword="null" />.The name is limited to 256 characters, not including the <see langword="null" /> terminator.</param>
+        /// <param name="displayName">Null-terminated string that contains a display name for the job. Typically, the display name is used to identify the job in a user interface. Note that more than one job may have the same display name. Must not be <see langword="null" />.The name is limited to 256 characters, not including the <see langword="null" /> terminator.</param>
         /// <param name="jobType">Type of transfer job, such as <see cref="JobType" />.Download. For a list of transfer types, see the <see cref="JobType" /> enumeration.</param>
         /// <returns>The <see cref="BitsJob" /> created.</returns>
         public BitsJob CreateJob(string displayName, JobType jobType)
@@ -322,7 +322,7 @@ namespace SharpBits.Base
         }
 
         /// <summary>Releases unmanaged and - optionally - managed resources.</summary>
-        /// <param name="disposing"><see langword="true" /> to release both managed and unmanaged resources; <see langword="false" /> to release only unmanaged resources.</param>
+        /// <param name="disposing"><see langword="true" /> to release both managed and unmanaged resources; otherwise, <see langword="false" /> to release only unmanaged resources.</param>
         private void Dispose(bool disposing)
         {
             if (!this.disposed)

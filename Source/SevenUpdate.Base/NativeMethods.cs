@@ -28,7 +28,7 @@ namespace SevenUpdate
     internal static class NativeMethods
     {
         /// <summary>Determines the concurrency model used for incoming calls to objects created by this thread. This concurrency model can be either apartment-threaded or multi-threaded.</summary>
-        public enum CoInit
+        internal enum CoInit
         {
             /// <summary>Initializes the thread for apartment-threaded object concurrency.</summary>
             MultiThreaded = 0x0,

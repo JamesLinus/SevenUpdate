@@ -81,25 +81,33 @@
     <Reference Include="WindowsBase" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AutoUpdateOption.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="DownloadCompletedEventArgs.cs" />
     <Compile Include="DownloadProgressChangedEventArgs.cs" />
     <Compile Include="ErrorOccurredEventArgs.cs" />
+    <Compile Include="ErrorType.cs" />
+    <Compile Include="FileAction.cs" />
     <Compile Include="GlobalSuppressions.cs" />
+    <Compile Include="Importance.cs" />
     <Compile Include="InstallCompletedEventArgs.cs" />
     <Compile Include="InstallProgressChangedEventArgs.cs" />
+    <Compile Include="InstallState.cs" />
     <Compile Include="LocaleString.cs" />
     <Compile Include="NativeMethods.cs" />
+    <Compile Include="Platform.cs" />
     <Compile Include="RegistryAction.cs" />
     <Compile Include="RegistryItem.cs" />
     <Compile Include="SearchCompletedEventArgs.cs" />
     <Compile Include="Shortcut.cs" />
+    <Compile Include="ShortcutAction.cs" />
     <Compile Include="Sua.cs" />
     <Compile Include="Suh.cs" />
     <Compile Include="Sui.cs" />
     <Compile Include="Update.cs" />
     <Compile Include="UpdateFile.cs" />
     <Compile Include="UpdateInstalledEventArgs.cs" />
+    <Compile Include="UpdateStatus.cs" />
     <Compile Include="Utilities.cs" />
     <Compile Include="Download.cs" />
     <Compile Include="Install.cs" />

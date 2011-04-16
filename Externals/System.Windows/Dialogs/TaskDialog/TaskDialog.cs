@@ -627,13 +627,11 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>
-        ///   Called when a control currently in the collection
-        ///   has a property changed.
-        ///   Called when a control currently in the collection has a property changing - this is basically to screen out property changes that cannot occur while the dialog is showing
-        ///   because the Win32 API has no way for us to propagate the changes until we re-invoke the Win32 call.
+        ///   Called when a control currently in the collection has a property changed.
+        ///   This is basically to screen out property changes that cannot occur while the dialog is showing because the Win32 API has no way for us to propagate the changes until we re-invoke the Win32 call.
         ///   Called when a control currently in the collection has a property changed - this handles propagating the new property values to the Win32 API. 
         ///   If there isn't a way to change the Win32 value, then we should have already screened out the property set  in NotifyControlPropertyChanging.
-        /// .</summary>
+        /// </summary>
         /// <param name="propertyName">The name of the property changed.</param>
         /// <param name="control">The control whose property has changed.</param>
         void IDialogControlHost.ApplyControlPropertyChange(string propertyName, DialogControl control)
@@ -717,13 +715,10 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>
-        ///   Handle notifications of pseudo-controls being added
-        ///   or removed from the collection.
-        ///   PreFilter should throw if a control cannot
-        ///   be added/removed in the dialog's current state.
-        ///   PostProcess should pass on changes to native control,
-        ///   if appropriate.
-        /// .</summary>
+        ///   Handle notifications of pseudo-controls being added or removed from the collection.
+        ///   PreFilter should throw if a control cannot be added/removed in the dialog's current state.
+        ///   PostProcess should pass on changes to native control, if appropriate.
+        /// </summary>
         /// <returns><see langword="true" /> if collection change is allowed.</returns>
         bool IDialogControlHost.IsCollectionChangeAllowed()
         {
@@ -732,13 +727,10 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>
-        ///   Handle notifications of individual child
-        ///   pseudo-controls' properties changing..
-        ///   Pre filter should throw if the property
-        ///   cannot be set in the dialog's current state.
-        ///   PostProcess should pass on changes to native control,
-        ///   if appropriate.
-        /// .</summary>
+        ///   Handle notifications of individual child pseudo-controls' properties changing.
+        ///   Pre filter should throw if the property cannot be set in the dialog's current state.
+        ///   PostProcess should pass on changes to native control, if appropriate.
+        /// </summary>
         /// <param name="propertyName">The name of the property.</param>
         /// <param name="control">The control <paramref name="propertyName" /> applies to.</param>
         /// <returns><see langword="true" /> if the property change is allowed.</returns>

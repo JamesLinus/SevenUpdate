@@ -10,26 +10,6 @@ namespace System.Windows.ApplicationServices
     using System.Runtime.InteropServices;
     using System.Windows.Internal;
 
-    /// <summary>Specifies the conditions when Windows Error Reportingshould not restart an application that has registeredfor automatic restart.</summary>
-    [Flags]
-    public enum RestartRestrictions
-    {
-        /// <summary>Always restart the application.</summary>
-        None = 0,
-
-        /// <summary>Do not restart when the application has crashed.</summary>
-        NotOnCrash = 1,
-
-        /// <summary>Do not restart when the application is hung.</summary>
-        NotOnHang = 2,
-
-        /// <summary>Do not restart when the application is terminateddue to a system update.</summary>
-        NotOnPatch = 4,
-
-        /// <summary>Do not restart when the application is terminated because of a system reboot.</summary>
-        NotOnReboot = 8
-    }
-
     /// <summary>Provides access to the Application Restart and Recoveryfeatures available in Windows Vista or higher. Application Restart and Recovery lets anapplication do some recovery work to save data before the process exits.</summary>
     public static class ApplicationRestartRecoveryManager
     {

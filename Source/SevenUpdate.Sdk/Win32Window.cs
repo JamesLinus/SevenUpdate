@@ -31,7 +31,7 @@ namespace SevenUpdate.Sdk
         /// <summary>The pointer to the window.</summary>
         private readonly IntPtr windowHandle;
 
-        /// <summary><see langword="true" /> if the window is disposed.</summary>
+        /// <summary>Indicates if the window is disposed.</summary>
         private bool disposed;
 
         #endregion

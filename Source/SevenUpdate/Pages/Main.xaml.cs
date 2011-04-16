@@ -44,7 +44,7 @@ namespace SevenUpdate.Pages
     {
         #region Constants and Fields
 
-        /// <summary><see langword="true" /> if the page was already initialized.</summary>
+        /// <summary>Indicates if the page was already initialized.</summary>
         private static bool init;
 
         /// <summary>Indicates if Seven Update will only install updates.</summary>

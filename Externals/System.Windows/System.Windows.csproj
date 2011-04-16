@@ -72,6 +72,7 @@
     <Compile Include="ApplicationServices\ApplicationRestartRecoveryManager.cs" />
     <Compile Include="ApplicationServices\RecoveryData.cs" />
     <Compile Include="ApplicationServices\RecoverySettings.cs" />
+    <Compile Include="ApplicationServices\RestartRestrictions.cs" />
     <Compile Include="ApplicationServices\RestartSettings.cs" />
     <Compile Include="Controls\AdornerExtensions.cs" />
     <Compile Include="Controls\AdornerLabel.cs" />
@@ -112,6 +113,7 @@
     <Compile Include="Internal\DwmMessages.cs" />
     <Compile Include="Internal\Margins.cs" />
     <Compile Include="Internal\Rect.cs" />
+    <Compile Include="Internal\Result.cs" />
     <Compile Include="IPriorApplicationInstance.cs" />
     <Compile Include="StartupNextInstanceEventArgs.cs" />
     <Compile Include="ValidationRules\FileNameInputRule.cs" />
