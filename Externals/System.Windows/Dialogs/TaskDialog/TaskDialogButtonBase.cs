@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="TaskDialogButtonBase.cs"
-//            project="System.Windows"
-//            assembly="System.Windows"
-//            solution="SevenUpdate"
-//            company="Microsoft Corporation">
+// <copyright file="TaskDialogButtonBase.cs" project="System.Windows" assembly="System.Windows" solution="SevenUpdate" company="Microsoft Corporation">
 //     Copyright (c) Microsoft Corporation. All rights reserved.
 // </copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
@@ -16,13 +12,13 @@ namespace System.Windows.Dialogs
     {
         #region Constants and Fields
 
-        /// <summary>Default control</summary>
+        /// <summary>Default control.</summary>
         private bool defaultControl;
 
-        /// <summary><see langword="true" /> to enable, <see langword="false" /> to disable</summary>
+        /// <summary>Enable the button.</summary>
         private bool enabled = true;
 
-        /// <summary>The text for the button</summary>
+        /// <summary>The text for the button.</summary>
         private string text;
 
         #endregion

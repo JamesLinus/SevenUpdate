@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="LicenseAgreement.xaml.cs"
-//            project="SevenUpdate"
-//            assembly="SevenUpdate"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="LicenseAgreement.xaml.cs" project="SevenUpdate" assembly="SevenUpdate" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
@@ -22,7 +18,7 @@
 // </license>
 // <summary>
 //   Interaction logic for LicenseAgreement.xaml
-// </summary>
+// .</summary>
 // ***********************************************************************
 
 namespace SevenUpdate.Windows
@@ -36,18 +32,18 @@ namespace SevenUpdate.Windows
     using System.Windows.Documents;
     using System.Windows.Input;
 
-    /// <summary>Interaction logic for License_Agreement.xaml</summary>
+    /// <summary>Interaction logic for License_Agreement.xaml.</summary>
     public sealed partial class LicenseAgreement
     {
         #region Constants and Fields
 
-        /// <summary>Current index</summary>
+        /// <summary>Current index.</summary>
         private int index;
 
-        /// <summary>List of updates that have EULAS</summary>
+        /// <summary>List of updates that have EULAS.</summary>
         private Collection<Eula> licenseInformation;
 
-        /// <summary>An array of the strings that consist of the software licenses</summary>
+        /// <summary>An array of the strings that consist of the software licenses.</summary>
         private string[] licenseText;
 
         #endregion
@@ -74,8 +70,8 @@ namespace SevenUpdate.Windows
 
         #region Methods
 
-        /// <summary>Loads the <see cref="licenseInformation" /> and shows the form</summary>
-        /// <returns>Returns the dialog result</returns>
+        /// <summary>Loads the <see cref="licenseInformation" /> and shows the form.</summary>
+        /// <returns>Returns the dialog result.</returns>
         internal bool? LoadLicenses()
         {
             this.GetLicenseAgreements();
@@ -93,7 +89,7 @@ namespace SevenUpdate.Windows
             return this.ShowDialog();
         }
 
-        /// <summary>Closes the window, declining all software licenses</summary>
+        /// <summary>Closes the window, declining all software licenses.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void Cancel(object sender, RoutedEventArgs e)
@@ -102,7 +98,7 @@ namespace SevenUpdate.Windows
             this.Close();
         }
 
-        /// <summary>Updates the UI with the licenses and displays the first license</summary>
+        /// <summary>Updates the UI with the licenses and displays the first license.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.ComponentModel.RunWorkerCompletedEventArgs" /> instance containing the event data.</param>
         private void DisplayLicense(object sender, RunWorkerCompletedEventArgs e)
@@ -131,7 +127,7 @@ namespace SevenUpdate.Windows
             this.Cursor = Cursors.Arrow;
         }
 
-        /// <summary>Downloads the <see cref="licenseInformation" /></summary>
+        /// <summary>Downloads the <see cref="licenseInformation" />.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void DownloadLicenseInformation(object sender, RoutedEventArgs e)
@@ -149,7 +145,7 @@ namespace SevenUpdate.Windows
             worker.RunWorkerAsync();
         }
 
-        /// <summary>Downloads the license agreements of the updates</summary>
+        /// <summary>Downloads the license agreements of the updates.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.ComponentModel.DoWorkEventArgs" /> instance containing the event data.</param>
         private void DownloadLicenses(object sender, DoWorkEventArgs e)
@@ -174,7 +170,7 @@ namespace SevenUpdate.Windows
             wc.Dispose();
         }
 
-        /// <summary>Gets the license agreements from the selected updates</summary>
+        /// <summary>Gets the license agreements from the selected updates.</summary>
         private void GetLicenseAgreements()
         {
             this.licenseInformation = new Collection<Eula>();
@@ -261,21 +257,21 @@ namespace SevenUpdate.Windows
 
         #endregion
 
-        /// <summary>Data containing the <see cref="Update" /> license agreement</summary>
+        /// <summary>Data containing the <see cref="Update" /> license agreement.</summary>
         private struct Eula
         {
             #region Properties
 
-            /// <summary>Gets or sets the index of the application of the update</summary>
+            /// <summary>Gets or sets the index of the application of the update.</summary>
             internal int AppIndex { get; set; }
 
-            /// <summary>Gets or sets the <see cref="Uri" /> for the license agreement</summary>
+            /// <summary>Gets or sets the <see cref="Uri" /> for the license agreement.</summary>
             internal string LicenseUrl { get; set; }
 
-            /// <summary>Gets or sets the update title</summary>
+            /// <summary>Gets or sets the update title.</summary>
             internal string Title { get; set; }
 
-            /// <summary>Gets or sets the index of the update</summary>
+            /// <summary>Gets or sets the index of the update.</summary>
             internal int UpdateIndex { get; set; }
 
             #endregion

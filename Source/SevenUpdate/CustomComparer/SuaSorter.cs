@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="SuaSorter.cs"
-//            project="SevenUpdate"
-//            assembly="SevenUpdate"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="SuaSorter.cs" project="SevenUpdate" assembly="SevenUpdate" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
@@ -22,7 +18,7 @@
 // </license>
 // <summary>
 //   Sorts the SUA class for a ListView
-// </summary>
+// .</summary>
 // ***********************************************************************
 
 namespace SevenUpdate.CustomComparer
@@ -31,7 +27,7 @@ namespace SevenUpdate.CustomComparer
     using System.ComponentModel;
     using System.Windows.Controls;
 
-    /// <summary>Sorts the SUA class</summary>
+    /// <summary>Sorts the SUA class.</summary>
     internal sealed class SuaSorter : ListViewCustomComparer
     {
         #region Public Methods

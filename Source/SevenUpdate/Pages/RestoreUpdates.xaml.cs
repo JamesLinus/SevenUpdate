@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="RestoreUpdates.xaml.cs"
-//            project="SevenUpdate"
-//            assembly="SevenUpdate"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="RestoreUpdates.xaml.cs" project="SevenUpdate" assembly="SevenUpdate" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
@@ -22,7 +18,7 @@
 // </license>
 // <summary>
 //   Interaction logic for RestoreUpdates.xaml
-// </summary>
+// .</summary>
 // ***********************************************************************
 
 namespace SevenUpdate.Pages
@@ -40,12 +36,12 @@ namespace SevenUpdate.Pages
 
     using SevenUpdate.Windows;
 
-    /// <summary>Interaction logic for Update_History.xaml</summary>
+    /// <summary>Interaction logic for Update_History.xaml.</summary>
     public sealed partial class RestoreUpdates
     {
         #region Constants and Fields
 
-        /// <summary>Gets or sets a collection of SUH items</summary>
+        /// <summary>Gets or sets a collection of SUH items.</summary>
         private ObservableCollection<Suh> hiddenUpdates;
 
         #endregion
@@ -83,14 +79,14 @@ namespace SevenUpdate.Pages
 
         #region Events
 
-        /// <summary>Occurs when one or more hidden updates have been restored</summary>
+        /// <summary>Occurs when one or more hidden updates have been restored.</summary>
         public static event EventHandler<EventArgs> RestoredHiddenUpdate;
 
         #endregion
 
         #region Methods
 
-        /// <summary>Gets the hidden updates and loads them in the <see cref="ListView" /></summary>
+        /// <summary>Gets the hidden updates and loads them in the <see cref="ListView" />.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void GetHiddenUpdates(object sender, RoutedEventArgs e)
@@ -109,7 +105,7 @@ namespace SevenUpdate.Pages
             this.lvHiddenUpdates.ItemsSource = this.hiddenUpdates;
         }
 
-        /// <summary>Goes back to the Main page</summary>
+        /// <summary>Goes back to the Main page.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void NavigateToMainPage(object sender, RoutedEventArgs e)
@@ -117,7 +113,7 @@ namespace SevenUpdate.Pages
             Core.NavigateToMainPage();
         }
 
-        /// <summary>Un hides one or more updates and navigates to the Main page</summary>
+        /// <summary>Un hides one or more updates and navigates to the Main page.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void RestoreUpdate(object sender, RoutedEventArgs e)
@@ -144,7 +140,7 @@ namespace SevenUpdate.Pages
             Core.NavigateToMainPage();
         }
 
-        /// <summary>Limit the size of the <see cref="GridViewColumn" /> when it's being resized</summary>
+        /// <summary>Limit the size of the <see cref="GridViewColumn" /> when it's being resized.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.Controls.Primitives.DragDeltaEventArgs" /> instance containing the event data.</param>
         private void RestrictColumn(object sender, DragDeltaEventArgs e)
@@ -152,7 +148,7 @@ namespace SevenUpdate.Pages
             ListViewExtensions.LimitColumnSize((Thumb)e.OriginalSource);
         }
 
-        /// <summary>Shows the selected update details</summary>
+        /// <summary>Shows the selected update details.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs" /> instance containing the event data.</param>
         private void ShowDetails(object sender, MouseButtonEventArgs e)
@@ -166,7 +162,7 @@ namespace SevenUpdate.Pages
             details.ShowDialog(this.hiddenUpdates[this.lvHiddenUpdates.SelectedIndex]);
         }
 
-        /// <summary>Shows the selected update details</summary>
+        /// <summary>Shows the selected update details.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void ShowDetailsDialog(object sender, RoutedEventArgs e)
@@ -194,7 +190,7 @@ namespace SevenUpdate.Pages
             }
         }
 
-        /// <summary>Updates the UI when an update check box is clicked</summary>
+        /// <summary>Updates the UI when an update check box is clicked.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void UpdateUIOnUpdateSelection(object sender, RoutedEventArgs e)

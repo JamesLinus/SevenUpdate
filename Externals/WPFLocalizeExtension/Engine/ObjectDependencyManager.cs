@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="ObjectDependencyManager.cs"
-//            project="WPFLocalizeExtension"
-//            assembly="WPFLocalizeExtension"
-//            solution="SevenUpdate"
-//            company="Bernhard Millauer">
+// <copyright file="ObjectDependencyManager.cs" project="WPFLocalizeExtension" assembly="WPFLocalizeExtension" solution="SevenUpdate" company="Bernhard Millauer">
 //     Copyright (c) Bernhard Millauer. All rights reserved.
 // </copyright>
 // <author username="SeriousM">Bernhard Millauer</author>
@@ -28,10 +24,10 @@ namespace WPFLocalizeExtension.Engine
 
         #region Public Methods
 
-        /// <summary>This method adds a new object dependency</summary>
-        /// <param name="weakRef">The <see cref="WeakReference" />, which ensures the live cycle of <paramref name="value" /></param>
-        /// <param name="value">The object, which should stay alive as long <paramref name="weakRef" /> is alive</param>
-        /// <returns><see langword="true" />, if the binding was successfully, otherwise <see langword="false" /></returns>
+        /// <summary>This method adds a new object dependency.</summary>
+        /// <param name="weakRef">The <see cref="WeakReference" />, which ensures the live cycle of <paramref name="value" />.</param>
+        /// <param name="value">The object, which should stay alive as long <paramref name="weakRef" /> is alive.</param>
+        /// <returns><see langword="true" />, if the binding was successfully, otherwise <see langword="false" />.</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public static bool AddObjectDependency(WeakReference weakRef, object value)
         {
@@ -91,7 +87,7 @@ namespace WPFLocalizeExtension.Engine
         }
 
         /// <summary>This method cleans up all independent (!<see cref="WeakReference" />.IsAlive) objects or a single object.</summary>
-        /// <param name="value">If defined, the associated object dependency will be removed instead of a full CleanUp</param>
+        /// <param name="value">If defined, the associated object dependency will be removed instead of a full CleanUp.</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public static void CleanUp(object value = null)
         {

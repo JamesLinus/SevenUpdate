@@ -1,9 +1,5 @@
 ﻿// ***********************************************************************
-// <copyright file="Utilities.cs"
-//            project="SharpBits.Base"
-//            assembly="SharpBits.Base"
-//            solution="SevenUpdate"
-//            company="Xidar Solutions">
+// <copyright file="Utilities.cs" project="SharpBits.Base" assembly="SharpBits.Base" solution="SevenUpdate" company="Xidar Solutions">
 //     Copyright (c) xidar solutions. All rights reserved.
 // </copyright>
 // <author username="xidar">xidar</author>
@@ -21,9 +17,9 @@ namespace SharpBits.Base
     {
         #region Methods
 
-        /// <summary>Converts a <see cref="DateTime" /> to <see cref="FileTime" /></summary>
+        /// <summary>Converts a <see cref="DateTime" /> to <see cref="FileTime" />.</summary>
         /// <param name="dateTime">The date time.</param>
-        /// <returns>The converted <see cref="DateTime" /> as a <see cref="FileTime" /></returns>
+        /// <returns>The converted <see cref="DateTime" /> as a <see cref="FileTime" />.</returns>
         internal static FileTime DateTimeToFileTime(DateTime dateTime)
         {
             long fileTime = 0;
@@ -37,9 +33,9 @@ namespace SharpBits.Base
             return resultingFileTime;
         }
 
-        /// <summary>Converts the <see cref="FileTime" /> to <see cref="DateTime" /></summary>
+        /// <summary>Converts the <see cref="FileTime" /> to <see cref="DateTime" />.</summary>
         /// <param name="fileTime">The file time.</param>
-        /// <returns>The converted <see cref="FileTime" /> to <see cref="DateTime" /></returns>
+        /// <returns>The converted <see cref="FileTime" /> to <see cref="DateTime" />.</returns>
         internal static DateTime FileTimeToDateTime(FileTime fileTime)
         {
             if (fileTime.DWHighDateTime == 0 && fileTime.DWLowDateTime == 0)
@@ -52,9 +48,9 @@ namespace SharpBits.Base
             return DateTime.FromFileTime(dateTime);
         }
 
-        /// <summary>Gets the name from a SID</summary>
-        /// <param name="sid">The SID as a string</param>
-        /// <returns>The name from the SID</returns>
+        /// <summary>Gets the name from a SID.</summary>
+        /// <param name="sid">The SID as a string.</param>
+        /// <returns>The name from the SID.</returns>
         internal static string GetName(string sid)
         {
             long userNameSize = 255;

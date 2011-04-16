@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="OddsFormatManager.cs"
-//            project="WPFLocalizeExtension"
-//            assembly="WPFLocalizeExtension"
-//            solution="SevenUpdate"
-//            company="Bernhard Millauer">
+// <copyright file="OddsFormatManager.cs" project="WPFLocalizeExtension" assembly="WPFLocalizeExtension" solution="SevenUpdate" company="Bernhard Millauer">
 //     Copyright (c) Bernhard Millauer. All rights reserved.
 // </copyright>
 // <author username="SeriousM">Bernhard Millauer</author>
@@ -18,7 +14,7 @@ namespace WPFLocalizeExtension.Engine
     using System.Runtime.CompilerServices;
     using System.Windows;
 
-    /// <summary>Represents the odds format manager</summary>
+    /// <summary>Represents the odds format manager.</summary>
     public sealed class OddsFormatManager : DependencyObject
     {
         #region Constants and Fields
@@ -31,10 +27,10 @@ namespace WPFLocalizeExtension.Engine
             typeof(OddsFormatManager),
             new PropertyMetadata(DefaultOddsFormatType, SetOddsFormatFromDependencyProperty));
 
-        /// <summary>Holds a SyncRoot to be thread safe</summary>
+        /// <summary>Holds a SyncRoot to be thread safe.</summary>
         private static readonly object SyncRoot = new object();
 
-        /// <summary>Holds the instance of singleton</summary>
+        /// <summary>Holds the instance of singleton.</summary>
         private static OddsFormatManager instance;
 
         /// <summary>Holds the current chosen <see cref="OddsFormatType" />.</summary>
@@ -44,7 +40,7 @@ namespace WPFLocalizeExtension.Engine
 
         #region Constructors and Destructors
 
-        /// <summary>Prevents a default instance of the <see cref="OddsFormatManager" /> class from being created. Static Constructor</summary>
+        /// <summary>Prevents a default instance of the <see cref="OddsFormatManager" /> class from being created. Static Constructor.</summary>
         private OddsFormatManager()
         {
         }
@@ -97,8 +93,8 @@ namespace WPFLocalizeExtension.Engine
             }
         }
 
-        /// <summary>Gets a value indicating whether the status of the design mode</summary>
-        /// <returns><see langword="true" /> if in design mode, else <see langword="false" /></returns>
+        /// <summary>Gets a value indicating whether the status of the design mode.</summary>
+        /// <returns><see langword="true" /> if in design mode, else <see langword="false" />.</returns>
         public bool IsInDesignMode
         {
             get
@@ -143,8 +139,8 @@ namespace WPFLocalizeExtension.Engine
 
         #region Public Methods
 
-        /// <summary>Attach an WeakEventListener to the <see cref="OddsFormatManager" /></summary>
-        /// <param name="listener">The listener to attach</param>
+        /// <summary>Attach an WeakEventListener to the <see cref="OddsFormatManager" />.</summary>
+        /// <param name="listener">The listener to attach.</param>
         public static void AddEventListener(IWeakEventListener listener)
         {
             // calls AddListener from the inline WeakOddsFormatChangedEventManager
@@ -165,8 +161,8 @@ namespace WPFLocalizeExtension.Engine
             return Instance.IsInDesignMode ? (OddsFormatType)obj.GetValue(DesignOddsFormatProperty) : Instance.OddsFormatType;
         }
 
-        /// <summary>Detach an WeakEventListener to the <see cref="OddsFormatManager" /></summary>
-        /// <param name="listener">The listener to detach</param>
+        /// <summary>Detach an WeakEventListener to the <see cref="OddsFormatManager" />.</summary>
+        /// <param name="listener">The listener to detach.</param>
         public static void RemoveEventListener(IWeakEventListener listener)
         {
             if (listener == null)
@@ -230,15 +226,15 @@ namespace WPFLocalizeExtension.Engine
 
         #endregion
 
-        /// <summary>This in line class is used to handle weak events to avoid memory leaks</summary>
+        /// <summary>This in line class is used to handle weak events to avoid memory leaks.</summary>
         internal sealed class WeakOddsFormatChangedEventManager : WeakEventManager
         {
             #region Constants and Fields
 
-            /// <summary>Holds the inner list of listeners</summary>
+            /// <summary>Holds the inner list of listeners.</summary>
             private readonly ListenerList listeners;
 
-            /// <summary>Indicates, if the current instance is listening on the source event</summary>
+            /// <summary>Indicates, if the current instance is listening on the source event.</summary>
             private bool isListening;
 
             #endregion
@@ -256,7 +252,7 @@ namespace WPFLocalizeExtension.Engine
 
             #region Properties
 
-            /// <summary>Gets the singleton instance of <see cref="WeakOddsFormatChangedEventManager" /></summary>
+            /// <summary>Gets the singleton instance of <see cref="WeakOddsFormatChangedEventManager" />.</summary>
             private static WeakOddsFormatChangedEventManager CurrentManager
             {
                 get
@@ -286,8 +282,8 @@ namespace WPFLocalizeExtension.Engine
 
             #region Methods
 
-            /// <summary>Adds an listener to the inner list of listeners</summary>
-            /// <param name="listener">The listener to add</param>
+            /// <summary>Adds an listener to the inner list of listeners.</summary>
+            /// <param name="listener">The listener to add.</param>
             internal static void AddListener(IWeakEventListener listener)
             {
                 // add the listener to the inner list of listeners
@@ -297,8 +293,8 @@ namespace WPFLocalizeExtension.Engine
                 CurrentManager.StartStopListening();
             }
 
-            /// <summary>Removes an listener from the inner list of listeners</summary>
-            /// <param name="listener">The listener to remove</param>
+            /// <summary>Removes an listener from the inner list of listeners.</summary>
+            /// <param name="listener">The listener to remove.</param>
             internal static void RemoveListener(IWeakEventListener listener)
             {
                 // removes the listener from the inner list of listeners
@@ -308,7 +304,7 @@ namespace WPFLocalizeExtension.Engine
                 CurrentManager.StartStopListening();
             }
 
-            /// <summary>This method starts the listening process by attaching on the source event</summary>
+            /// <summary>This method starts the listening process by attaching on the source event.</summary>
             /// <param name="source">The source.</param>
             [MethodImpl(MethodImplOptions.Synchronized)]
             protected override void StartListening(object source)
@@ -326,7 +322,7 @@ namespace WPFLocalizeExtension.Engine
                 this.isListening = true;
             }
 
-            /// <summary>This method stops the listening process by detaching on the source event</summary>
+            /// <summary>This method stops the listening process by detaching on the source event.</summary>
             /// <param name="source">The source to stop listening on.</param>
             [MethodImpl(MethodImplOptions.Synchronized)]
             protected override void StopListening(object source)
@@ -341,21 +337,21 @@ namespace WPFLocalizeExtension.Engine
                 this.isListening = false;
             }
 
-            /// <summary>This method is called if the LocalizeDictionary.OnCultureChanged is called and the listening process is enabled</summary>
+            /// <summary>This method is called if the LocalizeDictionary.OnCultureChanged is called and the listening process is enabled.</summary>
             private void Instance_OnCultureChanged()
             {
                 // tells every listener in the list that the event is occurred
                 this.DeliverEventToList(Instance, EventArgs.Empty, this.listeners);
             }
 
-            /// <summary>This method is called if the <see cref="OddsFormatManager" />.OnOddsFormatChanged is called and the listening process is enabled</summary>
+            /// <summary>This method is called if the <see cref="OddsFormatManager" />.OnOddsFormatChanged is called and the listening process is enabled.</summary>
             private void Instance_OnOddsFormatChanged()
             {
                 // tells every listener in the list that the event is occurred
                 this.DeliverEventToList(Instance, EventArgs.Empty, this.listeners);
             }
 
-            /// <summary>This method starts and stops the listening process by attaching/detaching on the source event</summary>
+            /// <summary>This method starts and stops the listening process by attaching/detaching on the source event.</summary>
             [MethodImpl(MethodImplOptions.Synchronized)]
             private void StartStopListening()
             {

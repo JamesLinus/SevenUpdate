@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="TaskDialogButton.cs"
-//            project="System.Windows"
-//            assembly="System.Windows"
-//            solution="SevenUpdate"
-//            company="Microsoft Corporation">
+// <copyright file="TaskDialogButton.cs" project="System.Windows" assembly="System.Windows" solution="SevenUpdate" company="Microsoft Corporation">
 //     Copyright (c) Microsoft Corporation. All rights reserved.
 // </copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
@@ -16,7 +12,7 @@ namespace System.Windows.Dialogs
     {
         #region Constants and Fields
 
-        /// <summary>Indicates whether to show the UAC icon</summary>
+        /// <summary>Indicates whether to show the UAC icon.</summary>
         private bool showElevationIcon;
 
         #endregion

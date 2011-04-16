@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="LocTextExtension.cs"
-//            project="WPFLocalizeExtension"
-//            assembly="WPFLocalizeExtension"
-//            solution="SevenUpdate"
-//            company="Bernhard Millauer">
+// <copyright file="LocTextExtension.cs" project="WPFLocalizeExtension" assembly="WPFLocalizeExtension" solution="SevenUpdate" company="Bernhard Millauer">
 //     Copyright (c) Bernhard Millauer. All rights reserved.
 // </copyright>
 // <author username="SeriousM">Bernhard Millauer</author>
@@ -24,13 +20,13 @@ namespace WPFLocalizeExtension.Extensions
     {
         #region Constants and Fields
 
-        /// <summary>Holds the local format segment array</summary>
+        /// <summary>Holds the local format segment array.</summary>
         private string[] formatSegments;
 
-        /// <summary>Holds the local prefix value</summary>
+        /// <summary>Holds the local prefix value.</summary>
         private string prefix;
 
-        /// <summary>Holds the local suffix value</summary>
+        /// <summary>Holds the local suffix value.</summary>
         private string suffix;
 
         #endregion
@@ -55,13 +51,13 @@ namespace WPFLocalizeExtension.Extensions
 
         #region Enums
 
-        /// <summary>This enumeration is used to determine the type of the return value of <see cref="GetAppendText" /></summary>
+        /// <summary>This enumeration is used to determine the type of the return value of <see cref="GetAppendText" />.</summary>
         protected enum TextAppendType
         {
-            /// <summary>The return value is used as prefix</summary>
+            /// <summary>The return value is used as prefix.</summary>
             Prefix,
 
-            /// <summary>The return value is used as suffix</summary>
+            /// <summary>The return value is used as suffix.</summary>
             Suffix
         }
 
@@ -149,7 +145,7 @@ namespace WPFLocalizeExtension.Extensions
             }
         }
 
-        /// <summary>Gets or sets a prefix for the localized text</summary>
+        /// <summary>Gets or sets a prefix for the localized text.</summary>
         public string Prefix
         {
             get
@@ -166,7 +162,7 @@ namespace WPFLocalizeExtension.Extensions
             }
         }
 
-        /// <summary>Gets or sets a suffix for the localized text</summary>
+        /// <summary>Gets or sets a suffix for the localized text.</summary>
         public string Suffix
         {
             get
@@ -187,9 +183,9 @@ namespace WPFLocalizeExtension.Extensions
 
         #region Public Methods
 
-        /// <summary>Provides the Value for the first Binding as <see cref="System.String" /></summary>
-        /// <param name="serviceProvider">The <see cref="System.Windows.Markup.IProvideValueTarget" /> provided from the <see cref="MarkupExtension" /></param>
-        /// <returns>The found item from the .resx directory or <see langword="null" /> if not found</returns>
+        /// <summary>Provides the Value for the first Binding as <see cref="System.String" />.</summary>
+        /// <param name="serviceProvider">The <see cref="System.Windows.Markup.IProvideValueTarget" /> provided from the <see cref="MarkupExtension" />.</param>
+        /// <returns>The found item from the .resx directory or <see langword="null" /> if not found.</returns>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             var obj = base.ProvideValue(serviceProvider);
@@ -218,9 +214,9 @@ namespace WPFLocalizeExtension.Extensions
 
         #region Methods
 
-        /// <summary>This method returns the finished formatted text</summary>
+        /// <summary>This method returns the finished formatted text.</summary>
         /// <param name="input">If the passed string not <see langword="null" />, it will be used, otherwise a fresh localized text will be loaded.</param>
-        /// <returns>Returns the finished formatted text in format [PREFIX]LocalizedText[SUFFIX]</returns>
+        /// <returns>Returns the finished formatted text in format [PREFIX]LocalizedText[SUFFIX].</returns>
         protected override object FormatOutput(object input)
         {
             if (Localize.Instance.IsInDesignMode && this.DesignValue != null)
@@ -275,15 +271,15 @@ namespace WPFLocalizeExtension.Extensions
             return target ?? string.Empty;
         }
 
-        /// <summary>see <c>BaseLocalizeExtension</c></summary>
+        /// <summary>This method gets the new value for the target property and call <see cref="BaseLocalizeExtension{TValue}.SetNewValue" />.</summary>
         protected override void HandleNewValue()
         {
             this.SetNewValue(this.FormatOutput(null));
         }
 
         /// <summary>Returns the prefix or suffix text, depending on the supplied <see cref="TextAppendType" />.If the prefix or suffix is <see langword="null" />, it will be returned a string.empty.</summary>
-        /// <param name="at">The <see cref="TextAppendType" /> defines the format of the return value</param>
-        /// <returns>Returns the formated prefix or suffix</returns>
+        /// <param name="at">The <see cref="TextAppendType" /> defines the format of the return value.</param>
+        /// <returns>Returns the formated prefix or suffix.</returns>
         private string GetAppendText(TextAppendType at)
         {
             // define a return value

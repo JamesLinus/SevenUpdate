@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="FileProgress.cs"
-//            project="SharpBits.Base"
-//            assembly="SharpBits.Base"
-//            solution="SevenUpdate"
-//            company="Xidar Solutions">
+// <copyright file="FileProgress.cs" project="SharpBits.Base" assembly="SharpBits.Base" solution="SevenUpdate" company="Xidar Solutions">
 //     Copyright (c) xidar solutions. All rights reserved.
 // </copyright>
 // <author username="xidar">xidar</author>
@@ -15,12 +11,12 @@ namespace SharpBits.Base
 {
     using System;
 
-    /// <summary>The <see cref="BitsFile" /> progress</summary>
+    /// <summary>The <see cref="BitsFile" /> progress.</summary>
     public class FileProgress
     {
         #region Constants and Fields
 
-        /// <summary>The current file progress</summary>
+        /// <summary>The current file progress.</summary>
         private BGFileProgress fileProgress;
 
         #endregion
@@ -38,7 +34,7 @@ namespace SharpBits.Base
 
         #region Properties
 
-        /// <summary>Gets the total number of bytes downloaded</summary>
+        /// <summary>Gets the total number of bytes downloaded.</summary>
         /// <value>The bytes total.</value>
         public ulong BytesTotal
         {

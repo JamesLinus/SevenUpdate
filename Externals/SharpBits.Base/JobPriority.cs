@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="JobPriority.cs"
-//            project="SharpBits.Base"
-//            assembly="SharpBits.Base"
-//            solution="SevenUpdate"
-//            company="Xidar Solutions">
+// <copyright file="JobPriority.cs" project="SharpBits.Base" assembly="SharpBits.Base" solution="SevenUpdate" company="Xidar Solutions">
 //     Copyright (c) xidar solutions. All rights reserved.
 // </copyright>
 // <author username="xidar">xidar</author>
@@ -13,19 +9,19 @@
 
 namespace SharpBits.Base
 {
-    /// <summary>The <see cref="BitsJob" /> priority</summary>
+    /// <summary>The <see cref="BitsJob" /> priority.</summary>
     public enum JobPriority
     {
-        /// <summary>Downloads without bandwidth restriction</summary>
+        /// <summary>Downloads without bandwidth restriction.</summary>
         Foreground = 0,
 
-        /// <summary>Downloads with a 80% bandwidth use</summary>
+        /// <summary>Downloads with a 80% bandwidth use.</summary>
         High = 1,
 
-        /// <summary>Downloads using bandwidth available</summary>
+        /// <summary>Downloads using bandwidth available.</summary>
         Normal = 2,
 
-        /// <summary>Download slow, giving other net use priority</summary>
+        /// <summary>Download slow, giving other net use priority.</summary>
         Low = 3,
     }
 }

@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="UrlInputRule.cs"
-//            project="System.Windows"
-//            assembly="System.Windows"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="UrlInputRule.cs" project="System.Windows" assembly="System.Windows" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
@@ -31,7 +27,7 @@ namespace System.Windows.ValidationRules
     using System.Windows.Controls;
     using System.Windows.Properties;
 
-    /// <summary>Validates if the input is a url</summary>
+    /// <summary>Validates if the input is a url.</summary>
     [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "Validation Rule")]
     public class UrlInputRule : ValidationRule
     {

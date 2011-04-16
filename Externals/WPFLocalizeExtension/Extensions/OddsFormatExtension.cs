@@ -1,9 +1,5 @@
 ﻿// ***********************************************************************
-// <copyright file="OddsFormatExtension.cs"
-//            project="WPFLocalizeExtension"
-//            assembly="WPFLocalizeExtension"
-//            solution="SevenUpdate"
-//            company="Bernhard Millauer">
+// <copyright file="OddsFormatExtension.cs" project="WPFLocalizeExtension" assembly="WPFLocalizeExtension" solution="SevenUpdate" company="Bernhard Millauer">
 //     Copyright (c) Bernhard Millauer. All rights reserved.
 // </copyright>
 // <author username="SeriousM">Bernhard Millauer</author>
@@ -32,13 +28,13 @@ namespace WPFLocalizeExtension.Extensions
     {
         #region Constants and Fields
 
-        /// <summary>Holds the collection of assigned dependency objects as WeakReferences</summary>
+        /// <summary>Holds the collection of assigned dependency objects as WeakReferences.</summary>
         private readonly Collection<WeakReference> targetObjects;
 
         /// <summary>Holds the Dictionary of the Lookup Table.</summary>
         private static Dictionary<decimal, string> oddsFormatLookupTableUk;
 
-        /// <summary>Holds the value to display</summary>
+        /// <summary>Holds the value to display.</summary>
         private decimal displayValue;
 
         #endregion
@@ -91,10 +87,10 @@ namespace WPFLocalizeExtension.Extensions
             }
         }
 
-        /// <summary>Gets or sets the <see cref="OddsFormatType" /> to force a fixed output</summary>
+        /// <summary>Gets or sets the <see cref="OddsFormatType" /> to force a fixed output.</summary>
         public OddsFormatType? ForceOddsFormatType { get; set; }
 
-        /// <summary>Gets or sets the initialize value.This is ONLY used to support the localize extension in blend!</summary>
+        /// <summary>Gets or sets the initialize value.This is ONLY used to support the localize extension in blend!.</summary>
         /// <value>The initialize value.</value>
         [EditorBrowsable(EditorBrowsableState.Never), ConstructorArgument("displayValue")]
         public decimal InitializeValue { get; set; }
@@ -205,7 +201,7 @@ namespace WPFLocalizeExtension.Extensions
             }
         }
 
-        /// <summary>Provides the Value for the first Binding</summary>
+        /// <summary>Provides the Value for the first Binding.</summary>
         /// <param name="serviceProvider">The <see cref="System.Windows.Markup.IProvideValueTarget" /> provided from the <see cref="MarkupExtension" />.</param>
         /// <returns>The found item from the .resx directory or <see langword="null" /> if not found.</returns>
         /// <remarks>
@@ -281,8 +277,8 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>Sets a binding between a <see cref="DependencyObject" /> with its<see cref="DependencyProperty" /> and this <c>BaseLocalizeExtension</c>.</summary>
-        /// <param name="targetObject">The target dependency object</param>
-        /// <param name="targetProperty">The target dependency property</param>
+        /// <param name="targetObject">The target dependency object.</param>
+        /// <param name="targetProperty">The target dependency property.</param>
         /// <returns><see langword="true" /> if the binding was setup successfully, otherwise <see langword="false" /> (Binding already exists).</returns>
         public bool SetBinding(DependencyObject targetObject, DependencyProperty targetProperty)
         {
@@ -321,8 +317,8 @@ namespace WPFLocalizeExtension.Extensions
             return false;
         }
 
-        /// <summary>Returns the Key that identifies a resource (Assembly:Dictionary:Key)</summary>
-        /// <returns>Format: Assembly:Dictionary:Key</returns>
+        /// <summary>Returns the Key that identifies a resource (Assembly:Dictionary:Key).</summary>
+        /// <returns>Format: Assembly:Dictionary:Key.</returns>
         public override string ToString()
         {
             return string.Format(CultureInfo.CurrentCulture, "{0} -> {1}", this.DisplayValue, this.GetForcedOddsFormatOrDefault());
@@ -334,7 +330,7 @@ namespace WPFLocalizeExtension.Extensions
 
         #region IWeakEventListener
 
-        /// <summary>This method will be called through the interface, passed to the<see cref="Localize.WeakCultureChangedEventManager" /> to get notified on culture changed</summary>
+        /// <summary>This method will be called through the interface, passed to the<see cref="Localize.WeakCultureChangedEventManager" /> to get notified on culture changed.</summary>
         /// <param name="managerType">The manager Type.</param>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The event argument.</param>
@@ -362,7 +358,7 @@ namespace WPFLocalizeExtension.Extensions
         #region Methods
 
         /// <summary>Gets the UK odds format lookup table.</summary>
-        /// <returns>Returns a Lookup Table</returns>
+        /// <returns>Returns a Lookup Table.</returns>
         private static Dictionary<decimal, string> GetUKOddsFormatLookupTable()
         {
             var dictionary = new Dictionary<decimal, string>
@@ -475,7 +471,7 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>Set the Value of the <see cref="DependencyProperty" /> to the passed Value.</summary>
-        /// <param name="newValue">The new Value</param>
+        /// <param name="newValue">The new Value.</param>
         private void SetNewValue(object newValue)
         {
             // if the list of dependency objects is empty or the target property is null, return

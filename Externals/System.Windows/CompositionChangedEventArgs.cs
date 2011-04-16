@@ -1,9 +1,5 @@
 ﻿// ***********************************************************************
-// <copyright file="CompositionChangedEventArgs.cs"
-//            project="System.Windows"
-//            assembly="System.Windows"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="CompositionChangedEventArgs.cs" project="System.Windows" assembly="System.Windows" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
@@ -24,13 +20,13 @@
 
 namespace System.Windows
 {
-    /// <summary>Event argument for The CompositionChanged event</summary>
+    /// <summary>Event argument for The CompositionChanged event.</summary>
     public class CompositionChangedEventArgs : EventArgs
     {
         #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="CompositionChangedEventArgs" /> class.</summary>
-        /// <param name="isGlassEnabled">if set to <see langword="true" /> aero glass is enabled</param>
+        /// <param name="isGlassEnabled">If set to <see langword="true" /> aero glass is enabled.</param>
         internal CompositionChangedEventArgs(bool isGlassEnabled)
         {
             this.IsGlassEnabled = isGlassEnabled;

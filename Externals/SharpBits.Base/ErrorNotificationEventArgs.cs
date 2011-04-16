@@ -1,9 +1,5 @@
 ﻿// ***********************************************************************
-// <copyright file="ErrorNotificationEventArgs.cs"
-//            project="SharpBits.Base"
-//            assembly="SharpBits.Base"
-//            solution="SevenUpdate"
-//            company="Xidar Solutions">
+// <copyright file="ErrorNotificationEventArgs.cs" project="SharpBits.Base" assembly="SharpBits.Base" solution="SevenUpdate" company="Xidar Solutions">
 //     Copyright (c) xidar solutions. All rights reserved.
 // </copyright>
 // <author username="xidar">xidar</author>
@@ -13,14 +9,14 @@
 
 namespace SharpBits.Base
 {
-    /// <summary>The event data for the ErrorNotification event</summary>
+    /// <summary>The event data for the ErrorNotification event.</summary>
     public class ErrorNotificationEventArgs : NotificationEventArgs
     {
         #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="ErrorNotificationEventArgs" /> class.</summary>
-        /// <param name="job">The job the notification is for</param>
-        /// <param name="error">The error that occurred</param>
+        /// <param name="job">The job the notification is for.</param>
+        /// <param name="error">The error that occurred.</param>
         internal ErrorNotificationEventArgs(BitsJob job, BitsError error)
             : base(job)
         {
@@ -32,7 +28,7 @@ namespace SharpBits.Base
         #region Properties
 
         /// <summary>Gets the error.</summary>
-        /// <value>The error that occurred</value>
+        /// <value>The error that occurred.</value>
         public BitsError Error { get; private set; }
 
         #endregion

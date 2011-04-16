@@ -18,7 +18,7 @@
 // </license>
 // <summary>
 //   Contains information about the assembly
-// </summary>
+// .</summary>
 // ***********************************************************************
 
 using System;

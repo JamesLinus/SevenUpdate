@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="DateConverter.cs"
-//            project="SevenUpdate.Sdk"
-//            assembly="SevenUpdate.Sdk"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="DateConverter.cs" project="SevenUpdate.Sdk" assembly="SevenUpdate.Sdk" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
@@ -28,7 +24,7 @@ namespace SevenUpdate.Sdk.Converters
     using System.Globalization;
     using System.Windows.Data;
 
-    /// <summary>Converts the string to a <see cref="DateTime" /></summary>
+    /// <summary>Converts the string to a <see cref="DateTime" />.</summary>
     [ValueConversion(typeof(DateTime), typeof(string))]
     internal class DateConverter : IValueConverter
     {

@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="BitsNotification.cs"
-//            project="SharpBits.Base"
-//            assembly="SharpBits.Base"
-//            solution="SevenUpdate"
-//            company="Xidar Solutions">
+// <copyright file="BitsNotification.cs" project="SharpBits.Base" assembly="SharpBits.Base" solution="SevenUpdate" company="Xidar Solutions">
 //     Copyright (c) xidar solutions. All rights reserved.
 // </copyright>
 // <author username="xidar">xidar</author>
@@ -16,21 +12,21 @@ namespace SharpBits.Base
     using System;
     using System.Runtime.InteropServices;
 
-    /// <summary>The notification class for the bits manager</summary>
+    /// <summary>The notification class for the bits manager.</summary>
     internal class BitsNotification : IBackgroundCopyCallback
     {
         #region Constants and Fields
 
-        /// <summary>The BITS manager</summary>
+        /// <summary>The BITS manager.</summary>
         private readonly BitsManager manager;
 
-        /// <summary>Occurs when a <see cref="BitsJob" /> error occurs</summary>
+        /// <summary>Occurs when a <see cref="BitsJob" /> error occurs.</summary>
         private EventHandler<ErrorNotificationEventArgs> errorOccurred;
 
-        /// <summary>Occurs when a <see cref="BitsJob" /> is modified</summary>
+        /// <summary>Occurs when a <see cref="BitsJob" /> is modified.</summary>
         private EventHandler<NotificationEventArgs> onJobModified;
 
-        /// <summary>Occurs when a <see cref="BitsJob" /> is transfered</summary>
+        /// <summary>Occurs when a <see cref="BitsJob" /> is transfered.</summary>
         private EventHandler<NotificationEventArgs> onJobTransfered;
 
         #endregion

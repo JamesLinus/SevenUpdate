@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="DwmBlurBehind.cs"
-//            project="System.Windows"
-//            assembly="System.Windows"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="DwmBlurBehind.cs" project="System.Windows" assembly="System.Windows" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
@@ -33,13 +29,13 @@ namespace System.Windows.Internal
         /// <summary>A bitwise combination of DWM Blur Behind Constants values indicating which members are set.</summary>
         public BlurBehindOptions Flags;
 
-        /// <summary><see langword="true" /> to register the window handle to DWM blur behind; <see langword="false" /> to unregister the window handle from DWM blur behind.</summary>
+        /// <summary>Registers the window handle to DWM blur behind; <see langword="false" /> to unregister the window handle from DWM blur behind.</summary>
         public bool Enable;
 
         /// <summary>The region within the client area to apply the blur behind. A <see langword="null" /> value will apply the blur behind the entire client area.</summary>
         public IntPtr RegionBlur;
 
-        /// <summary><see langword="true" /> if the window's colorization should transition to match the maximized windows; otherwise, <see langword="false" />.</summary>
+        /// <summary>Window's colorization should transition to match the maximized windows; otherwise, <see langword="false" />.</summary>
         public bool TransitionOnMaximized;
     }
 }

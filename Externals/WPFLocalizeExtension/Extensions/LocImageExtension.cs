@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="LocImageExtension.cs"
-//            project="WPFLocalizeExtension"
-//            assembly="WPFLocalizeExtension"
-//            solution="SevenUpdate"
-//            company="Bernhard Millauer">
+// <copyright file="LocImageExtension.cs" project="WPFLocalizeExtension" assembly="WPFLocalizeExtension" solution="SevenUpdate" company="Bernhard Millauer">
 //     Copyright (c) Bernhard Millauer. All rights reserved.
 // </copyright>
 // <author username="SeriousM">Bernhard Millauer</author>
@@ -22,7 +18,7 @@ namespace WPFLocalizeExtension.Extensions
 
     using WPFLocalizeExtension.Engine;
 
-    /// <summary><c>BaseLocalizeExtension</c> for image objects</summary>
+    /// <summary><c>BaseLocalizeExtension</c> for image objects.</summary>
     [MarkupExtensionReturnType(typeof(BitmapSource))]
     public class LocImageExtension : BaseLocalizeExtension<BitmapSource>
     {
@@ -44,9 +40,9 @@ namespace WPFLocalizeExtension.Extensions
 
         #region Public Methods
 
-        /// <summary>Provides the Value for the first Binding as <see cref="System.Windows.Media.Imaging.BitmapSource" /></summary>
-        /// <param name="serviceProvider">The <see cref="System.Windows.Markup.IProvideValueTarget" /> provided from the <see cref="MarkupExtension" /></param>
-        /// <returns>The found item from the .resx directory or <see langword="null" /> if not found</returns>
+        /// <summary>Provides the Value for the first Binding as <see cref="System.Windows.Media.Imaging.BitmapSource" />.</summary>
+        /// <param name="serviceProvider">The <see cref="System.Windows.Markup.IProvideValueTarget" /> provided from the <see cref="MarkupExtension" />.</param>
+        /// <returns>The found item from the .resx directory or <see langword="null" /> if not found.</returns>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             var obj = base.ProvideValue(serviceProvider);
@@ -79,8 +75,8 @@ namespace WPFLocalizeExtension.Extensions
         #region Methods
 
         /// <summary>Creates a <see cref="System.Windows.Media.Imaging.BitmapSource" /> from a <see cref="System.Drawing.Bitmap" />.This extension does NOT support a DesignValue.</summary>
-        /// <param name="input">The <see cref="System.Drawing.Bitmap" /> to convert</param>
-        /// <returns>The converted <see cref="System.Windows.Media.Imaging.BitmapSource" /></returns>
+        /// <param name="input">The <see cref="System.Drawing.Bitmap" /> to convert.</param>
+        /// <returns>The converted <see cref="System.Windows.Media.Imaging.BitmapSource" />.</returns>
         protected override object FormatOutput(object input)
         {
             // allocate the memory for the bitmap
@@ -99,7 +95,7 @@ namespace WPFLocalizeExtension.Extensions
             return bitmapSource;
         }
 
-        /// <summary>see <c>BaseLocalizeExtension</c></summary>
+        /// <summary>This method gets the new value for the target property and call <see cref="BaseLocalizeExtension{TValue}.SetNewValue" />.</summary>
         protected override void HandleNewValue()
         {
             var obj = Localize.Instance.GetLocalizedObject<object>(this.Assembly, this.Dictionary, this.Key, this.Culture);

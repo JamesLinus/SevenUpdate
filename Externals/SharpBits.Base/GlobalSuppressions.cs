@@ -1,9 +1,5 @@
 ﻿// ***********************************************************************
-// <copyright file="GlobalSuppressions.cs"
-//            project="SharpBits.Base"
-//            assembly="SharpBits.Base"
-//            solution="SevenUpdate"
-//            company="Xidar Solutions">
+// <copyright file="GlobalSuppressions.cs" project="SharpBits.Base" assembly="SharpBits.Base" solution="SevenUpdate" company="Xidar Solutions">
 //     Copyright (c) xidar solutions. All rights reserved.
 // </copyright>
 // <author username="xidar">xidar</author>
@@ -18,7 +14,7 @@
 // Error List, point to "Suppress Message(s)", and click 
 // "In Project Suppression File".
 // You do not need to add suppressions to this file manually.
-// </summary>
+// .</summary>
 // ***********************************************************************
 using System.Diagnostics.CodeAnalysis;
 

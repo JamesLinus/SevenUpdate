@@ -1,9 +1,5 @@
 ﻿// ***********************************************************************
-// <copyright file="UpdateInstalledEventArgs.cs"
-//            project="SevenUpdate.Base"
-//            assembly="SevenUpdate.Base"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="UpdateInstalledEventArgs.cs" project="SevenUpdate.Base" assembly="SevenUpdate.Base" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
@@ -29,14 +25,14 @@ namespace SevenUpdate
 
     using ProtoBuf;
 
-    /// <summary>Provides event data for the InstallProgressChanged event</summary>
+    /// <summary>Provides event data for the InstallProgressChanged event.</summary>
     [ProtoContract, DataContract]
     public sealed class UpdateInstalledEventArgs : EventArgs
     {
         #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="UpdateInstalledEventArgs" /> class.</summary>
-        /// <param name="update">the update information that was installed</param>
+        /// <param name="update">The update information that was installed.</param>
         public UpdateInstalledEventArgs(Suh update)
         {
             this.Update = update;
@@ -51,7 +47,7 @@ namespace SevenUpdate
 
         #region Properties
 
-        /// <summary>Gets the update information that was installed</summary>
+        /// <summary>Gets the update information that was installed.</summary>
         [ProtoMember(1), DataMember]
         public Suh Update { get; private set; }
 

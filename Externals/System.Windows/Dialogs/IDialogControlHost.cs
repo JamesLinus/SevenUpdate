@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="IDialogControlHost.cs"
-//            project="System.Windows"
-//            assembly="System.Windows"
-//            solution="SevenUpdate"
-//            company="Microsoft Corporation">
+// <copyright file="IDialogControlHost.cs" project="System.Windows" assembly="System.Windows" solution="SevenUpdate" company="Microsoft Corporation">
 //     Copyright (c) Microsoft Corporation. All rights reserved.
 // </copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
@@ -31,7 +27,7 @@ namespace System.Windows.Dialogs
         ///   be added/removed in the dialog's current state.
         ///   PostProcess should pass on changes to native control, 
         ///   if appropriate.
-        /// </summary>
+        /// .</summary>
         /// <returns><see langword="true" /> if collection change is allowed.</returns>
         bool IsCollectionChangeAllowed();
 
@@ -42,7 +38,7 @@ namespace System.Windows.Dialogs
         ///   cannot be set in the dialog's current state.
         ///   PostProcess should pass on changes to native control, 
         ///   if appropriate.
-        /// </summary>
+        /// .</summary>
         /// <param name="propertyName">The name of the property.</param>
         /// <param name="control">The control <paramref name="propertyName" /> applies to.</param>
         /// <returns><see langword="true" /> if the property change is allowed.</returns>

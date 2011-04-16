@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="Search.cs"
-//            project="SevenUpdate.Base"
-//            assembly="SevenUpdate.Base"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="Search.cs" project="SevenUpdate.Base" assembly="SevenUpdate.Base" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
@@ -33,28 +29,28 @@ namespace SevenUpdate
     using System.Net.Sockets;
     using System.Threading.Tasks;
 
-    /// <summary>Contains methods to search for updates</summary>
+    /// <summary>Contains methods to search for updates.</summary>
     public static class Search
     {
         #region Constants and Fields
 
-        /// <summary>The directory containing the app update files</summary>
+        /// <summary>The directory containing the app update files.</summary>
         private static string downloadDirectory;
 
-        /// <summary>The number of important updates found</summary>
+        /// <summary>The number of important updates found.</summary>
         private static int importantCount;
 
-        /// <summary>The number of optional updates found</summary>
+        /// <summary>The number of optional updates found.</summary>
         private static int optionalCount;
 
-        /// <summary>The number of recommended updates found</summary>
+        /// <summary>The number of recommended updates found.</summary>
         private static int recommendedCount;
 
         #endregion
 
         #region Events
 
-        /// <summary>Occurs if an error occurred</summary>
+        /// <summary>Occurs if an error occurred.</summary>
         public static event EventHandler<ErrorOccurredEventArgs> ErrorOccurred;
 
         /// <summary>Occurs when the searching of updates has completed.</summary>
@@ -64,15 +60,15 @@ namespace SevenUpdate
 
         #region Properties
 
-        /// <summary>Gets a value indicating whether Seven update is currently searching for updates</summary>
+        /// <summary>Gets a value indicating whether Seven update is currently searching for updates.</summary>
         public static bool IsSearching { get; private set; }
 
         #endregion
 
         #region Public Methods
 
-        /// <summary>Searches for updates while blocking the calling thread</summary>
-        /// <param name="applications">The collection of applications to check for updates</param>
+        /// <summary>Searches for updates while blocking the calling thread.</summary>
+        /// <param name="applications">The collection of applications to check for updates.</param>
         /// <param name="downloadFolder">The directory where update might be downloaded to.</param>
         public static void SearchForUpdates(IEnumerable<Sua> applications, string downloadFolder)
         {
@@ -147,16 +143,16 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Searches for files without blocking the calling thread</summary>
-        /// <param name="applications">The collection of applications to check for updates</param>
+        /// <summary>Searches for files without blocking the calling thread.</summary>
+        /// <param name="applications">The collection of applications to check for updates.</param>
         /// <param name="downloadFolder">The directory where update might be downloaded to.</param>
         public static void SearchForUpdatesAsync(IEnumerable<Sua> applications, string downloadFolder)
         {
             Task.Factory.StartNew(() => SearchForUpdates(applications, downloadFolder));
         }
 
-        /// <summary>Manually sets an <see cref="Sui" /> collection has updates found</summary>
-        /// <param name="updates">The updates to set as found</param>
+        /// <summary>Manually sets an <see cref="Sui" /> collection has updates found.</summary>
+        /// <param name="updates">The updates to set as found.</param>
         public static void SetUpdatesFound(IEnumerable<Sui> updates)
         {
             importantCount = 0;
@@ -189,9 +185,9 @@ namespace SevenUpdate
 
         #region Methods
 
-        /// <summary>Checks for updates</summary>
-        /// <param name="app">a collection of applications to check for updates</param>
-        /// <returns>returns <see langword="true" /> if found updates, otherwise <see langword="false" /></returns>
+        /// <summary>Checks for updates.</summary>
+        /// <param name="app">A collection of applications to check for updates.</param>
+        /// <returns>Returns <see langword="true" /> if found updates, otherwise <see langword="false" />.</returns>
         private static bool CheckForUpdates(ref Sui app)
         {
             app.AppInfo.Directory = Utilities.IsRegistryKey(app.AppInfo.Directory)
@@ -275,12 +271,12 @@ namespace SevenUpdate
             return false;
         }
 
-        /// <summary>Iterates through the update and removes un needed values. Returns the download size for the update</summary>
-        /// <param name="update">The update to iterate</param>
-        /// <param name="directory">The Uri or registry key to the application directory </param>
-        /// <param name="valueName">The name of the registry value, can be <see langword="null" /></param>
-        /// <param name="platform">a value that indicates what cpu architecture the application supports</param>
-        /// <returns>The current download size of the update</returns>
+        /// <summary>Iterates through the update and removes un needed values. Returns the download size for the update.</summary>
+        /// <param name="update">The update to iterate.</param>
+        /// <param name="directory">The Uri or registry key to the application directory .</param>
+        /// <param name="valueName">The name of the registry value, can be <see langword="null" />.</param>
+        /// <param name="platform">A value that indicates what cpu architecture the application supports.</param>
+        /// <returns>The current download size of the update.</returns>
         private static ulong IterateUpdate(ref Update update, string directory, string valueName, Platform platform)
         {
             ulong size = 0;

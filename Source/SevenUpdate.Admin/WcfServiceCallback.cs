@@ -1,9 +1,5 @@
 ﻿// ***********************************************************************
-// <copyright file="WcfServiceCallback.cs"
-//            project="SevenUpdate.Admin"
-//            assembly="SevenUpdate.Admin"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="WcfServiceCallback.cs" project="SevenUpdate.Admin" assembly="SevenUpdate.Admin" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
@@ -35,7 +31,7 @@ namespace SevenUpdate.Admin
 
     using SevenUpdate.Service;
 
-    /// <summary>Contains methods to execute for the service callback</summary>
+    /// <summary>Contains methods to execute for the service callback.</summary>
     [CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant)]
     public class WcfServiceCallback : IElevatedProcess
     {
@@ -44,7 +40,7 @@ namespace SevenUpdate.Admin
         #region IElevatedProcess
 
         /// <summary>Adds an application to Seven Update, so it can manage updates for it.</summary>
-        /// <param name="application">The application to add to Seven Update</param>
+        /// <param name="application">The application to add to Seven Update.</param>
         public void AddApp(Sua application)
         {
             Collection<Sua> sul = null;
@@ -76,10 +72,10 @@ namespace SevenUpdate.Admin
             Utilities.Serialize(sul, App.ApplicationsFile);
         }
 
-        /// <summary>Changes the program settings</summary>
-        /// <param name="applications">The applications Seven Update will check and manage updates for</param>
-        /// <param name="options">The Seven Update settings</param>
-        /// <param name="autoCheck">if set to <see langword="true" /> automatic updates will be enabled</param>
+        /// <summary>Changes the program settings.</summary>
+        /// <param name="applications">The applications Seven Update will check and manage updates for.</param>
+        /// <param name="options">The Seven Update settings.</param>
+        /// <param name="autoCheck">If set to <see langword="true" /> automatic updates will be enabled.</param>
         public void ChangeSettings(Collection<Sua> applications, Config options, bool autoCheck)
         {
             if (!autoCheck)
@@ -116,8 +112,8 @@ namespace SevenUpdate.Admin
             Utilities.Serialize(options, App.ConfigFile);
         }
 
-        /// <summary>Hides a single update</summary>
-        /// <param name="hiddenUpdate">The update to hide</param>
+        /// <summary>Hides a single update.</summary>
+        /// <param name="hiddenUpdate">The update to hide.</param>
         public void HideUpdate(Suh hiddenUpdate)
         {
             var hidden = (File.Exists(App.HiddenFile) ? Utilities.Deserialize<Collection<Suh>>(App.HiddenFile) : new Collection<Suh>()) ??
@@ -128,8 +124,8 @@ namespace SevenUpdate.Admin
             Utilities.Serialize(hidden, App.HiddenFile);
         }
 
-        /// <summary>Hides a collection of <see cref="Suh" /> to hide</summary>
-        /// <param name="hiddenUpdates">The collection of updates to hide</param>
+        /// <summary>Hides a collection of <see cref="Suh" /> to hide.</summary>
+        /// <param name="hiddenUpdates">The collection of updates to hide.</param>
         public void HideUpdates(Collection<Suh> hiddenUpdates)
         {
             if (hiddenUpdates == null)
@@ -147,8 +143,8 @@ namespace SevenUpdate.Admin
             Utilities.Serialize(hiddenUpdates, App.HiddenFile);
         }
 
-        /// <summary>Gets a collection of <see cref="Sui" /></summary>
-        /// <param name="applicationUpdates">The collection of applications and updates to install</param>
+        /// <summary>Gets a collection of <see cref="Sui" />.</summary>
+        /// <param name="applicationUpdates">The collection of applications and updates to install.</param>
         public void InstallUpdates(Collection<Sui> applicationUpdates)
         {
             try
@@ -174,8 +170,8 @@ namespace SevenUpdate.Admin
                 () => Download.DownloadUpdates(applicationUpdates, "SevenUpdate", Path.Combine(App.AllUserStore, "downloads"), true));
         }
 
-        /// <summary>The update to show and remove from hidden updates</summary>
-        /// <param name="hiddenUpdate">The hidden update to show</param>
+        /// <summary>The update to show and remove from hidden updates.</summary>
+        /// <param name="hiddenUpdate">The hidden update to show.</param>
         public void ShowUpdate(Suh hiddenUpdate)
         {
             var show = File.Exists(App.HiddenFile) ? Utilities.Deserialize<Collection<Suh>>(App.HiddenFile) : new Collection<Suh>();
@@ -207,7 +203,7 @@ namespace SevenUpdate.Admin
             }
         }
 
-        /// <summary>Shutdown the admin process if it's not installing updates. Execute the admin process with Abort</summary>
+        /// <summary>Shutdown the admin process if it's not installing updates. Execute the admin process with Abort.</summary>
         public void Shutdown()
         {
             Task.Factory.StartNew(

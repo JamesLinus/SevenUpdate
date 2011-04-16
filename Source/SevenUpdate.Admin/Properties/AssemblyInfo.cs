@@ -1,9 +1,5 @@
 ﻿// ***********************************************************************
-// <copyright file="AssemblyInfo.cs"
-//            project="SevenUpdate.Admin"
-//            assembly="SevenUpdate.Admin"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="AssemblyInfo.cs" project="SevenUpdate.Admin" assembly="SevenUpdate.Admin" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>

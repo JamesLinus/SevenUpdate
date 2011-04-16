@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="SuiLocationRule.cs"
-//            project="SevenUpdate.Sdk"
-//            assembly="SevenUpdate.Sdk"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="SuiLocationRule.cs" project="SevenUpdate.Sdk" assembly="SevenUpdate.Sdk" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
@@ -32,7 +28,7 @@ namespace SevenUpdate.Sdk.ValidationRules
 
     using SevenUpdate.Sdk.Properties;
 
-    /// <summary>Validates a value and determines if the value is a Sui location</summary>
+    /// <summary>Validates a value and determines if the value is a Sui location.</summary>
     [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "ValidationRule")]
     public class SuiLocationRule : ValidationRule
     {

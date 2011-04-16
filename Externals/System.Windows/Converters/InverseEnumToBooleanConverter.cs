@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="InverseEnumToBooleanConverter.cs"
-//            project="System.Windows"
-//            assembly="System.Windows"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="InverseEnumToBooleanConverter.cs" project="System.Windows" assembly="System.Windows" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
@@ -27,7 +23,7 @@ namespace System.Windows.Converters
     using System.Globalization;
     using System.Windows.Data;
 
-    /// <summary>Converts the Enum to a Boolean</summary>
+    /// <summary>Converts the Enum to a Boolean.</summary>
     [ValueConversion(typeof(Enum), typeof(bool))]
     public class InverseEnumToBooleanConverter : IValueConverter
     {

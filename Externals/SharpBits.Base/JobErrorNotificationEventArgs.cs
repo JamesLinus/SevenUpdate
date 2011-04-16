@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="JobErrorNotificationEventArgs.cs"
-//            project="SharpBits.Base"
-//            assembly="SharpBits.Base"
-//            solution="SevenUpdate"
-//            company="Xidar Solutions">
+// <copyright file="JobErrorNotificationEventArgs.cs" project="SharpBits.Base" assembly="SharpBits.Base" solution="SevenUpdate" company="Xidar Solutions">
 //     Copyright (c) xidar solutions. All rights reserved.
 // </copyright>
 // <author username="xidar">xidar</author>
@@ -13,7 +9,7 @@
 
 namespace SharpBits.Base
 {
-    /// <summary>The event data for the JobError event</summary>
+    /// <summary>The event data for the JobError event.</summary>
     public class JobErrorNotificationEventArgs : JobNotificationEventArgs
     {
         #region Constructors and Destructors
@@ -30,7 +26,7 @@ namespace SharpBits.Base
         #region Properties
 
         /// <summary>Gets the error.</summary>
-        /// <value>The error that occurred</value>
+        /// <value>The error that occurred.</value>
         public BitsError Error { get; private set; }
 
         #endregion

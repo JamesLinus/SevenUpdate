@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="BitsJobsDictionary.cs"
-//            project="SharpBits.Base"
-//            assembly="SharpBits.Base"
-//            solution="SevenUpdate"
-//            company="Xidar Solutions">
+// <copyright file="BitsJobsDictionary.cs" project="SharpBits.Base" assembly="SharpBits.Base" solution="SevenUpdate" company="Xidar Solutions">
 //     Copyright (c) xidar solutions. All rights reserved.
 // </copyright>
 // <author username="xidar">xidar</author>
@@ -19,16 +15,16 @@ namespace SharpBits.Base
     using System.Runtime.Serialization;
     using System.Security.Permissions;
 
-    /// <summary>The collection of <see cref="BitsJob" />'s</summary>
+    /// <summary>The collection of <see cref="BitsJob" />'s.</summary>
     [Serializable]
     public class BitsJobsDictionary : Dictionary<Guid, BitsJob>, IDisposable
     {
         #region Constants and Fields
 
-        /// <summary>The current BITS manager</summary>
+        /// <summary>The current BITS manager.</summary>
         private readonly BitsManager manager;
 
-        /// <summary>Indicates if the job collection as been disposed</summary>
+        /// <summary>Indicates if the job collection as been disposed.</summary>
         private bool disposed;
 
         #endregion
@@ -60,7 +56,7 @@ namespace SharpBits.Base
         }
 
         /// <summary>Initializes a new instance of the <see cref="BitsJobsDictionary" /> class.</summary>
-        /// <param name="info">The serialization info</param>
+        /// <param name="info">The serialization info.</param>
         /// <param name="context">The context.</param>
         protected BitsJobsDictionary(SerializationInfo info, StreamingContext context)
             : base(info, context)
@@ -78,7 +74,7 @@ namespace SharpBits.Base
         #region Properties
 
         /// <summary>Gets the jobs.</summary>
-        /// <value>The jobs of the current collection</value>
+        /// <value>The jobs of the current collection.</value>
         internal IEnumBackgroundCopyJobs Jobs { get; private set; }
 
         #endregion
@@ -86,7 +82,7 @@ namespace SharpBits.Base
         #region Public Methods
 
         /// <summary>Gets the object data.</summary>
-        /// <param name="info">The serialization info</param>
+        /// <param name="info">The serialization info.</param>
         /// <param name="context">The context.</param>
         [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
@@ -131,7 +127,7 @@ namespace SharpBits.Base
             }
         }
 
-        /// <summary>Releases unmanaged and - optionally - managed resources</summary>
+        /// <summary>Releases unmanaged and - optionally - managed resources.</summary>
         /// <param name="disposing"><see langword="true" /> to release both managed and unmanaged resources; <see langword="false" /> to release only unmanaged resources.</param>
         protected virtual void Dispose(bool disposing)
         {
@@ -151,7 +147,7 @@ namespace SharpBits.Base
             this.disposed = true;
         }
 
-        /// <summary>Updates the <see cref="BitsJob" /> collection</summary>
+        /// <summary>Updates the <see cref="BitsJob" /> collection.</summary>
         private void Update()
         {
             uint count;

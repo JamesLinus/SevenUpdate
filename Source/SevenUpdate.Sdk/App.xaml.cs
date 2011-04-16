@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="App.xaml.cs"
-//            project="SevenUpdate.Sdk"
-//            assembly="SevenUpdate.Sdk"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="App.xaml.cs" project="SevenUpdate.Sdk" assembly="SevenUpdate.Sdk" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
@@ -35,12 +31,12 @@ namespace SevenUpdate.Sdk
 
     using SevenUpdate.Sdk.Properties;
 
-    /// <summary>Interaction logic for App.xaml</summary>
+    /// <summary>Interaction logic for App.xaml.</summary>
     public sealed partial class App
     {
         #region Constants and Fields
 
-        /// <summary>The user application data location</summary>
+        /// <summary>The user application data location.</summary>
         public static readonly string UserStore = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Seven Software", "Seven Update SDK");
 
@@ -48,15 +44,15 @@ namespace SevenUpdate.Sdk
 
         #region Properties
 
-        /// <summary>Gets the command line arguments passed to this instance</summary>
+        /// <summary>Gets the command line arguments passed to this instance.</summary>
         internal static IList<string> Args { get; private set; }
 
         #endregion
 
         #region Methods
 
-        /// <summary>Process command line args</summary>
-        /// <param name="args">The list of arguments</param>
+        /// <summary>Process command line args.</summary>
+        /// <param name="args">The list of arguments.</param>
         internal static void ProcessArgs(IList<string> args)
         {
             if (args == null)
@@ -128,7 +124,7 @@ namespace SevenUpdate.Sdk
             ProcessArgs(e.GetArgs());
         }
 
-        /// <summary>Performs recovery by saving the state</summary>
+        /// <summary>Performs recovery by saving the state.</summary>
         /// <param name="parameter">This parameter is not used.</param>
         /// <returns>Return value is not used.</returns>
         private static int PerformRecovery(object parameter)
@@ -149,7 +145,7 @@ namespace SevenUpdate.Sdk
             return 0;
         }
 
-        /// <summary>Registers the application to use the Recovery Manager</summary>
+        /// <summary>Registers the application to use the Recovery Manager.</summary>
         private static void RegisterApplicationRecoveryAndRestart()
         {
             if (Environment.OSVersion.Version.Major < 6)
@@ -168,7 +164,7 @@ namespace SevenUpdate.Sdk
 #endif
         }
 
-        /// <summary>Sets the Windows 7 <see cref="JumpList" /></summary>
+        /// <summary>Sets the Windows 7 <see cref="JumpList" />.</summary>
         private static void SetJumpList()
         {
             // Create JumpTask

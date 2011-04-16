@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="DialogControl.cs"
-//            project="System.Windows"
-//            assembly="System.Windows"
-//            solution="SevenUpdate"
-//            company="Microsoft Corporation">
+// <copyright file="DialogControl.cs" project="System.Windows" assembly="System.Windows" solution="SevenUpdate" company="Microsoft Corporation">
 //     Copyright (c) Microsoft Corporation. All rights reserved.
 // </copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
@@ -13,34 +9,34 @@ namespace System.Windows.Dialogs
 {
     using System.Diagnostics;
 
-    /// <summary>Dialog Show State</summary>
+    /// <summary>Dialog Show State.</summary>
     internal enum DialogShowState
     {
-        /// <summary>The dialog is about to be shown</summary>
+        /// <summary>The dialog is about to be shown.</summary>
         PreShow,
 
-        /// <summary>Currently Showing</summary>
+        /// <summary>Currently Showing.</summary>
         Showing,
 
-        /// <summary>Currently Closing</summary>
+        /// <summary>Currently Closing.</summary>
         Closing,
 
-        /// <summary>Closed dialog</summary>
+        /// <summary>Closed dialog.</summary>
         Closed
     }
 
-    /// <summary>Abstract base class for all dialog controls</summary>
+    /// <summary>Abstract base class for all dialog controls.</summary>
     public abstract class DialogControl
     {
         #region Constants and Fields
 
-        /// <summary>The next ID</summary>
+        /// <summary>The next ID.</summary>
         private static int nextId = 9;
 
-        /// <summary>The hosting dialog</summary>
+        /// <summary>The hosting dialog.</summary>
         private IDialogControlHost hostingDialog;
 
-        /// <summary>The control name</summary>
+        /// <summary>The control name.</summary>
         private string name;
 
         #endregion
@@ -75,7 +71,7 @@ namespace System.Windows.Dialogs
 
         #region Properties
 
-        /// <summary>Gets or sets the native dialog that is hosting this control. This property is <see langword="null" /> isthere is not associated dialog</summary>
+        /// <summary>Gets or sets the native dialog that is hosting this control. This property is <see langword="null" /> isthere is not associated dialog.</summary>
         /// <value>The hosting dialog.</value>
         public IDialogControlHost HostingDialog
         {
@@ -132,7 +128,7 @@ namespace System.Windows.Dialogs
 
         #region Public Methods
 
-        /// <summary>Compares two objects to determine whether they are equal</summary>
+        /// <summary>Compares two objects to determine whether they are equal.</summary>
         /// <param name="obj">The object to compare against.</param>
         /// <returns>A <see cref="System.Boolean" /> value.</returns>
         public override bool Equals(object obj)
@@ -165,7 +161,7 @@ namespace System.Windows.Dialogs
         ///   to propagate the change to the native control.
         ///   Note that if the dialog isn't set yet, 
         ///   there are no restrictions on setting the property.
-        /// </summary>
+        /// .</summary>
         /// <param name="propName">The name of the property that is changing.</param>
         protected void ApplyPropertyChange(string propName)
         {
@@ -183,8 +179,8 @@ namespace System.Windows.Dialogs
         ///   The host should throw an exception if the change is not supported.
         ///   Note that if the dialog isn't set yet, 
         ///   there are no restrictions on setting the property.
-        /// </summary>
-        /// <param name="propName">The name of the property that is changing</param>
+        /// .</summary>
+        /// <param name="propName">The name of the property that is changing.</param>
         protected void CheckPropertyChangeAllowed(string propName)
         {
             Debug.Assert(!string.IsNullOrEmpty(propName), "Property to change was not specified");

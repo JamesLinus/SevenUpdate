@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="DownloadCompletedEventArgs.cs"
-//            project="SevenUpdate.Base"
-//            assembly="SevenUpdate.Base"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="DownloadCompletedEventArgs.cs" project="SevenUpdate.Base" assembly="SevenUpdate.Base" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
@@ -29,14 +25,14 @@ namespace SevenUpdate
 
     using ProtoBuf;
 
-    /// <summary>Provides event data for the DownloadCompleted event</summary>
+    /// <summary>Provides event data for the DownloadCompleted event.</summary>
     [ProtoContract, DataContract]
     public sealed class DownloadCompletedEventArgs : EventArgs
     {
         #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="DownloadCompletedEventArgs" /> class.</summary>
-        /// <param name="errorOccurred"><see langword="true" /> is an error occurred, otherwise <see langword="false" /></param>
+        /// <param name="errorOccurred"><see langword="true" /> if an error occurred, otherwise <see langword="false" />.</param>
         public DownloadCompletedEventArgs(bool errorOccurred)
         {
             this.ErrorOccurred = errorOccurred;
@@ -51,7 +47,7 @@ namespace SevenUpdate
 
         #region Properties
 
-        /// <summary>Gets a value indicating whether an error occurred</summary>
+        /// <summary>Gets a value indicating whether an error occurred.</summary>
         /// <value><see langword="true" /> if an error occurred otherwise, <see langword="false" />.</value>
         [ProtoMember(1, IsRequired = false), DataMember]
         public bool ErrorOccurred { get; private set; }

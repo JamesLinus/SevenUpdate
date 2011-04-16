@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="Install.cs"
-//            project="SevenUpdate.Base"
-//            assembly="SevenUpdate.Base"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="Install.cs" project="SevenUpdate.Base" assembly="SevenUpdate.Base" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
@@ -34,27 +30,27 @@ namespace SevenUpdate
 
     using Microsoft.Win32;
 
-    /// <summary>Class containing methods to install updates</summary>
+    /// <summary>Class containing methods to install updates.</summary>
     public static class Install
     {
         #region Constants and Fields
 
-        /// <summary>Gets an int that indicates to move a file on reboot</summary>
+        /// <summary>Gets an int that indicates to move a file on reboot.</summary>
         private const int MoveOnReboot = 5;
 
         /// <summary>Indicates if the installation of updates should be cancelled.</summary>
         private static bool cancelInstall;
 
-        /// <summary>The localized name of the current update being installed</summary>
+        /// <summary>The localized name of the current update being installed.</summary>
         private static string currentUpdateName;
 
-        /// <summary>Indicates if an error has occurred</summary>
+        /// <summary>Indicates if an error has occurred.</summary>
         private static bool errorOccurred;
 
-        /// <summary>The total number of updates being installed</summary>
+        /// <summary>The total number of updates being installed.</summary>
         private static int updateCount;
 
-        /// <summary>The index position of the current update being installed</summary>
+        /// <summary>The index position of the current update being installed.</summary>
         private static int updateIndex;
 
         #endregion
@@ -64,32 +60,32 @@ namespace SevenUpdate
         /// <summary>Occurs when the installation completed.</summary>
         public static event EventHandler<InstallCompletedEventArgs> InstallCompleted;
 
-        /// <summary>Occurs when the installation progress changed</summary>
+        /// <summary>Occurs when the installation progress changed.</summary>
         public static event EventHandler<InstallProgressChangedEventArgs> InstallProgressChanged;
 
-        /// <summary>Occurs when the installation progress changed</summary>
+        /// <summary>Occurs when the installation progress changed.</summary>
         public static event EventHandler<UpdateInstalledEventArgs> UpdateInstalled;
 
         #endregion
 
         #region Properties
 
-        /// <summary>Gets a value indicating whether Seven Update is installing updates</summary>
+        /// <summary>Gets a value indicating whether Seven Update is installing updates.</summary>
         public static bool IsInstalling { get; private set; }
 
         #endregion
 
         #region Public Methods
 
-        /// <summary>Cancel the installation of updates</summary>
+        /// <summary>Cancel the installation of updates.</summary>
         public static void CancelInstall()
         {
             cancelInstall = true;
         }
 
-        /// <summary>Installs updates</summary>
-        /// <param name="applications">The collection of applications to install updates</param>
-        /// <param name="downloadDirectory">The directory containing the app update files</param>
+        /// <summary>Installs updates.</summary>
+        /// <param name="applications">The collection of applications to install updates.</param>
+        /// <param name="downloadDirectory">The directory containing the app update files.</param>
         public static void InstallUpdates(Collection<Sui> applications, string downloadDirectory)
         {
             if (applications == null)
@@ -231,10 +227,10 @@ namespace SevenUpdate
 
         #region Methods
 
-        /// <summary>Adds an update to the update history</summary>
-        /// <param name="appInfo">the application information</param>
-        /// <param name="updateInfo">the update information</param>
-        /// <param name="failed"><see langword="true" /> if the update failed, otherwise <see langword="false" /></param>
+        /// <summary>Adds an update to the update history.</summary>
+        /// <param name="appInfo">The application information.</param>
+        /// <param name="updateInfo">The update information.</param>
+        /// <param name="failed"><see langword="true" /> if the update failed, otherwise <see langword="false" />.</param>
         private static void AddHistory(Sui appInfo, Update updateInfo, bool failed = false)
         {
             var hist = new Suh(updateInfo.Name, appInfo.AppInfo.Publisher, updateInfo.Description)
@@ -254,8 +250,8 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Reports the installation progress</summary>
-        /// <param name="installProgress">The current install progress percentage</param>
+        /// <summary>Reports the installation progress.</summary>
+        /// <param name="installProgress">The current install progress percentage.</param>
         private static void ReportProgress(int installProgress)
         {
             if (InstallProgressChanged != null)
@@ -264,9 +260,9 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Sets the registry items of an update</summary>
-        /// <param name="regItems">The registry changes to install on the system</param>
-        /// <param name="platform">a value that indicates what cpu architecture the application supports</param>
+        /// <summary>Sets the registry items of an update.</summary>
+        /// <param name="regItems">The registry changes to install on the system.</param>
+        /// <param name="platform">A value that indicates what cpu architecture the application supports.</param>
         private static void SetRegistryItems(IList<RegistryItem> regItems, Platform platform)
         {
             RegistryKey key;
@@ -354,9 +350,9 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Installs the shortcuts of an update</summary>
-        /// <param name="shortcuts">the shortcuts to install on the system</param>
-        /// <param name="appInfo">the application information</param>
+        /// <summary>Installs the shortcuts of an update.</summary>
+        /// <param name="shortcuts">The shortcuts to install on the system.</param>
+        /// <param name="appInfo">The application information.</param>
         private static void SetShortcuts(IList<Shortcut> shortcuts, Sua appInfo)
         {
             if (shortcuts == null)
@@ -398,8 +394,8 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Updates the file on the system</summary>
-        /// <param name="file">The file to install or update</param>
+        /// <summary>Updates the file on the system.</summary>
+        /// <param name="file">The file to install or update.</param>
         private static void UpdateFile(UpdateFile file)
         {
             switch (file.Action)
@@ -523,9 +519,9 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Installs the files in the update</summary>
-        /// <param name="files">the collection of files to update</param>
-        /// <param name="downloadDirectory">the path to the download folder where the update files are located</param>
+        /// <summary>Installs the files in the update.</summary>
+        /// <param name="files">The collection of files to update.</param>
+        /// <param name="downloadDirectory">The path to the download folder where the update files are located.</param>
         private static void UpdateFiles(IList<UpdateFile> files, string downloadDirectory)
         {
             for (var x = 0; x < files.Count; x++)

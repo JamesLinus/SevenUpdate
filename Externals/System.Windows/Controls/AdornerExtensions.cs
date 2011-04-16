@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="AdornerExtensions.cs"
-//            project="System.Windows"
-//            assembly="System.Windows"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="AdornerExtensions.cs" project="System.Windows" assembly="System.Windows" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
@@ -26,16 +22,16 @@ namespace System.Windows.Controls
 {
     using System.Windows.Documents;
 
-    /// <summary>The adorner extensions</summary>
+    /// <summary>The adorner extensions.</summary>
     public static class AdornerExtensions
     {
         #region Public Methods
 
-        /// <summary>Determines whether the adorner layer contains an element</summary>
+        /// <summary>Determines whether the adorner layer contains an element.</summary>
         /// <param name="adorner">The adorner.</param>
-        /// <param name="element">The element</param>
+        /// <param name="element">The element.</param>
         /// <returns><see langword="true" /> if the adorner layer contains the element otherwise, <see langword="false" />.</returns>
-        /// <typeparam name="T">The object to look for</typeparam>
+        /// <typeparam name="T">The object to look for.</typeparam>
         public static bool Contains<T>(this AdornerLayer adorner, UIElement element)
         {
             if (adorner == null)
@@ -61,11 +57,11 @@ namespace System.Windows.Controls
             return false;
         }
 
-        /// <summary>Removes the adorners</summary>
-        /// <param name="adorner">The adorner</param>
-        /// <param name="element">The element</param>
+        /// <summary>Removes the adorners.</summary>
+        /// <param name="adorner">The adorner.</param>
+        /// <param name="element">The element.</param>
         /// <typeparameter name="T">The type of element</typeparameter>
-        /// <typeparam name="T">The type of element</typeparam>
+        /// <typeparam name="T">The type of element.</typeparam>
         public static void RemoveAdorners<T>(this AdornerLayer adorner, UIElement element)
         {
             if (adorner == null)
@@ -95,8 +91,8 @@ namespace System.Windows.Controls
         }
 
         /// <summary>Removes all.</summary>
-        /// <param name="adorner">The adorner layer</param>
-        /// <param name="element">The elementent</param>
+        /// <param name="adorner">The adorner layer.</param>
+        /// <param name="element">The elementent.</param>
         public static void RemoveAll(this AdornerLayer adorner, UIElement element)
         {
             if (adorner == null)

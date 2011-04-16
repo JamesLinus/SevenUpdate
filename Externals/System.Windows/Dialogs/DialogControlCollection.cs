@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="DialogControlCollection.cs"
-//            project="System.Windows"
-//            assembly="System.Windows"
-//            solution="SevenUpdate"
-//            company="Microsoft Corporation">
+// <copyright file="DialogControlCollection.cs" project="System.Windows" assembly="System.Windows" solution="SevenUpdate" company="Microsoft Corporation">
 //     Copyright (c) Microsoft Corporation. All rights reserved.
 // </copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
@@ -16,13 +12,13 @@ namespace System.Windows.Dialogs
     using System.Linq;
 
     /// <summary>Strongly typed collection for dialog controls.</summary>
-    /// <typeparam name="T">The <see cref="DialogControl" /></typeparam>
+    /// <typeparam name="T">The <see cref="DialogControl" />.</typeparam>
     /// <typeparameter name="T">The <see cref="DialogControl" /></typeparameter>
     public sealed class DialogControlCollection<T> : Collection<T> where T : DialogControl
     {
         #region Constants and Fields
 
-        /// <summary>The host dialog</summary>
+        /// <summary>The host dialog.</summary>
         private readonly IDialogControlHost hostingDialog;
 
         #endregion
@@ -41,7 +37,7 @@ namespace System.Windows.Dialogs
         #region Methods
 
         /// <summary>Recursively searches for a given control id in the collection passed via the <paramref name="subControl" /> parameter.</summary>
-        /// <param name="subControl">A Collection of CommonFileDialogControls</param>
+        /// <param name="subControl">A Collection of CommonFileDialogControls.</param>
         /// <param name="id">An int containing the identifier of the control being searched for.</param>
         /// <returns>A <see cref="DialogControl" /> who's Id matches the value of the <paramref name="id" /> parameter.</returns>
         internal static DialogControl GetSubControlById(IEnumerable<T> subControl, int id)

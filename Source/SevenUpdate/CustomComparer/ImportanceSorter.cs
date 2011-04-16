@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="ImportanceSorter.cs"
-//            project="SevenUpdate"
-//            assembly="SevenUpdate"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="ImportanceSorter.cs" project="SevenUpdate" assembly="SevenUpdate" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
@@ -22,17 +18,17 @@
 // </license>
 // <summary>
 //   Sorts the update importance class
-// </summary>
+// .</summary>
 // ***********************************************************************
 
 namespace SevenUpdate.CustomComparer
 {
-    /// <summary>Sorts the update importance class</summary>
+    /// <summary>Sorts the update importance class.</summary>
     internal static class ImportanceSorter
     {
         #region Methods
 
-        /// <summary>Compares two <see cref="Importance" /> objects</summary>
+        /// <summary>Compares two <see cref="Importance" /> objects.</summary>
         /// <param name="x">The first object to compare.</param>
         /// <param name="y">The second object to compare.</param>
         /// <returns>Value Condition Less than zero <paramref name="x" /> is less than <paramref name="y" />. Zero <paramref name="x" /> equals <paramref name="y" />. 

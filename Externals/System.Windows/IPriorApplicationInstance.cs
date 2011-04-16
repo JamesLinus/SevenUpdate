@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="IPriorApplicationInstance.cs"
-//            project="System.Windows"
-//            assembly="System.Windows"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="IPriorApplicationInstance.cs" project="System.Windows" assembly="System.Windows" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) BladeWise. All rights reserved.
 // </copyright>
 // <author username="BladeWise">BladeWise</author>

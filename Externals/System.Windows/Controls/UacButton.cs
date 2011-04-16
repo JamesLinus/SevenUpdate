@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="UacButton.cs"
-//            project="System.Windows"
-//            assembly="System.Windows"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="UacButton.cs" project="System.Windows" assembly="System.Windows" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
@@ -29,12 +25,12 @@ namespace System.Windows.Controls
     using System.Windows.Media;
     using System.Windows.Media.Imaging;
 
-    /// <summary>Provides a WPF button that displays a UAC Shield icon when required</summary>
+    /// <summary>Provides a WPF button that displays a UAC Shield icon when required.</summary>
     public sealed class UacButton : Button, INotifyPropertyChanged
     {
         #region Constants and Fields
 
-        /// <summary>Dependency Property - Specifies the text to display on the button</summary>
+        /// <summary>Dependency Property - Specifies the text to display on the button.</summary>
         private static readonly DependencyProperty ButtonTextProperty = DependencyProperty.Register(
             "ButtonText",
             typeof(string),
@@ -42,7 +38,7 @@ namespace System.Windows.Controls
             new FrameworkPropertyMetadata(
                 null, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsRender, OnButtonTextChanged));
 
-        /// <summary>Dependency Property - Indicates if the UAC Shield is desired on the button</summary>
+        /// <summary>Dependency Property - Indicates if the UAC Shield is desired on the button.</summary>
         private static readonly DependencyProperty IsShieldNeededProperty = DependencyProperty.Register(
             "IsShieldNeeded",
             typeof(bool),
@@ -50,25 +46,25 @@ namespace System.Windows.Controls
             new FrameworkPropertyMetadata(
                 true, FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsRender, OnIsShieldNeededChanged));
 
-        /// <summary>The UAC shield</summary>
+        /// <summary>The UAC shield.</summary>
         private static readonly BitmapImage Shield =
             new BitmapImage(new Uri(@"pack://application:,,,/System.Windows;component/Images/Shield.png", UriKind.Absolute));
 
-        /// <summary>The disabled shield image</summary>
+        /// <summary>The disabled shield image.</summary>
         private static readonly BitmapImage ShieldDisabled =
             new BitmapImage(new Uri(@"pack://application:,,,/System.Windows;component/Images/ShieldDisabled.png", UriKind.Absolute));
 
-        /// <summary>Dependency Property - The shield icon to display</summary>
+        /// <summary>Dependency Property - The shield icon to display.</summary>
         private static readonly DependencyProperty ShieldIconProperty = DependencyProperty.Register(
             "ShieldIcon",
             typeof(ImageSource),
             typeof(Button),
             new FrameworkPropertyMetadata(Shield, FrameworkPropertyMetadataOptions.AffectsRender, OnShieldIconChanged));
 
-        /// <summary>Indicates if the Uac shield is needed</summary>
+        /// <summary>Indicates if the Uac shield is needed.</summary>
         private static readonly bool ShieldNeeded = !NativeMethods.IsUserAdmin;
 
-        /// <summary>The text for the button</summary>
+        /// <summary>The text for the button.</summary>
         private static readonly string Text = string.Empty;
 
         #endregion
@@ -97,14 +93,14 @@ namespace System.Windows.Controls
 
         #region Events
 
-        /// <summary>Occurs when a property has changed</summary>
+        /// <summary>Occurs when a property has changed.</summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
 
         #region Properties
 
-        /// <summary>Gets or sets the text to display on the button</summary>
+        /// <summary>Gets or sets the text to display on the button.</summary>
         public string ButtonText
         {
             get
@@ -118,7 +114,7 @@ namespace System.Windows.Controls
             }
         }
 
-        /// <summary>Gets a value indicating whether the shield is desired and the OS supports elevation</summary>
+        /// <summary>Gets a value indicating whether the shield is desired and the OS supports elevation.</summary>
         public bool IsShieldDisplayed
         {
             get
@@ -128,7 +124,7 @@ namespace System.Windows.Controls
         }
 
         /// <summary>Gets or sets a value indicating whether the caller desires the <see cref="ShieldIcon" /> to be displayed.  This is a dependency property.</summary>
-        /// <value>A Boolean that indicates if the <see cref="ShieldIcon" /> caller wants the <see cref="ShieldIcon" />  displayed</value>
+        /// <value>A Boolean that indicates if the <see cref="ShieldIcon" /> caller wants the <see cref="ShieldIcon" />  displayed.</value>
         /// <remarks>This is only an indication of desire.  If the operating system does not support UAC or the user is alreadyelevated, any request to display is ignored.</remarks>
         public bool IsShieldNeeded
         {
@@ -144,7 +140,7 @@ namespace System.Windows.Controls
         }
 
         /// <summary>Gets or sets the icon so show when elevation is required.  This is a dependency property.</summary>
-        /// <value>An <see cref="ImageSource" /> that represents a graphic to be displayed </value>
+        /// <value>An <see cref="ImageSource" /> that represents a graphic to be displayed .</value>
         public ImageSource ShieldIcon
         {
             get
@@ -158,20 +154,20 @@ namespace System.Windows.Controls
             }
         }
 
-        /// <summary>Gets or sets <see cref="ToolTip" /> shown when elevation has been preformed</summary>
-        /// <value>A string that is used as the <see cref="ToolTip" /> when elevation is complete</value>
+        /// <summary>Gets or sets <see cref="ToolTip" /> shown when elevation has been preformed.</summary>
+        /// <value>A string that is used as the <see cref="ToolTip" /> when elevation is complete.</value>
         public object ToolTipElevated { get; set; }
 
-        /// <summary>Gets or sets <see cref="ToolTip" /> shown when elevation has not been preformed</summary>
-        /// <value>A string that is used as the <see cref="ToolTip" /> when elevation is required</value>
+        /// <summary>Gets or sets <see cref="ToolTip" /> shown when elevation has not been preformed.</summary>
+        /// <value>A string that is used as the <see cref="ToolTip" /> when elevation is required.</value>
         public object ToolTipNotElevated { get; set; }
 
         #endregion
 
         #region Methods
 
-        /// <summary>Handles a change to the <see cref="ButtonText" /> property</summary>
-        /// <param name="obj">The dependency object</param>
+        /// <summary>Handles a change to the <see cref="ButtonText" /> property.</summary>
+        /// <param name="obj">The dependency object.</param>
         /// <param name="e">The <see cref="System.Windows.DependencyPropertyChangedEventArgs" /> instance containing the event data.</param>
         private static void OnButtonTextChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
@@ -190,8 +186,8 @@ namespace System.Windows.Controls
             me.OnPropertyChanged("ButtonText");
         }
 
-        /// <summary>Handles a change to the <see cref="IsShieldNeeded" /> property</summary>
-        /// <param name="obj">The dependency object</param>
+        /// <summary>Handles a change to the <see cref="IsShieldNeeded" /> property.</summary>
+        /// <param name="obj">The dependency object.</param>
         /// <param name="e">The <see cref="System.Windows.DependencyPropertyChangedEventArgs" /> instance containing the event data.</param>
         /// <remarks>Adds or removes the UACShieldAdorner as appropriate</remarks>
         private static void OnIsShieldNeededChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
@@ -209,8 +205,8 @@ namespace System.Windows.Controls
             me.OnPropertyChanged("IsShieldNeeded");
         }
 
-        /// <summary>Handles a change to the <see cref="ShieldIcon" /> property</summary>
-        /// <param name="obj">The dependency object</param>
+        /// <summary>Handles a change to the <see cref="ShieldIcon" /> property.</summary>
+        /// <param name="obj">The dependency object.</param>
         /// <param name="e">The <see cref="System.Windows.DependencyPropertyChangedEventArgs" /> instance containing the event data.</param>
         private static void OnShieldIconChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
@@ -226,8 +222,8 @@ namespace System.Windows.Controls
             me.OnPropertyChanged("ShieldIcon");
         }
 
-        /// <summary>Changes the UAC icon</summary>
-        /// <param name="sender">The object that raised the event</param>
+        /// <summary>Changes the UAC icon.</summary>
+        /// <param name="sender">The object that raised the event.</param>
         /// <param name="e">The <see cref="System.Windows.DependencyPropertyChangedEventArgs" /> instance containing the event data.</param>
         private void ChangeUacIcon(object sender, DependencyPropertyChangedEventArgs e)
         {
@@ -246,8 +242,8 @@ namespace System.Windows.Controls
             }
         }
 
-        /// <summary>Returns current "actual" <see cref="ToolTip" /></summary>
-        /// <returns>If both <see cref="ToolTipElevated" /> and <see cref="ToolTipNotElevated" /> are <see langword="null" />,<see cref="Button.ToolTip" /> is returned.Otherwise <see cref="ToolTipElevated" /> or <see cref="ToolTipNotElevated" /> is returnedbased on <see cref="IsShieldNeeded" /></returns>
+        /// <summary>Returns current "actual" <see cref="ToolTip" />.</summary>
+        /// <returns>If both <see cref="ToolTipElevated" /> and <see cref="ToolTipNotElevated" /> are <see langword="null" />,<see cref="Button.ToolTip" /> is returned.Otherwise <see cref="ToolTipElevated" /> or <see cref="ToolTipNotElevated" /> is returnedbased on <see cref="IsShieldNeeded" />.</returns>
         /// <remarks>
         /// </remarks>
         private object GetToolTip()
@@ -260,7 +256,7 @@ namespace System.Windows.Controls
             return this.IsShieldNeeded ? this.ToolTipNotElevated : this.ToolTipElevated;
         }
 
-        /// <summary>Called when the control is loaded</summary>
+        /// <summary>Called when the control is loaded.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void OnLoaded(object sender, RoutedEventArgs e)
@@ -268,8 +264,8 @@ namespace System.Windows.Controls
             this.ToolTip = this.GetToolTip();
         }
 
-        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged" /> Event</summary>
-        /// <param name="name">The property name that has changed</param>
+        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged" /> Event.</summary>
+        /// <param name="name">The property name that has changed.</param>
         private void OnPropertyChanged(string name)
         {
             var handler = this.PropertyChanged;

@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="ListViewExtensions.cs"
-//            project="System.Windows"
-//            assembly="System.Windows"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="ListViewExtensions.cs" project="System.Windows" assembly="System.Windows" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
@@ -24,13 +20,13 @@
 
 namespace System.Windows.Controls
 {
-    /// <summary>Contains methods that extend the <see cref="ListView" /> control</summary>
+    /// <summary>Contains methods that extend the <see cref="ListView" /> control.</summary>
     public static class ListViewExtensions
     {
         #region Public Methods
 
-        /// <summary>Limits resizing of a <see cref="GridViewColumn" /></summary>
-        /// <param name="control">The Thumb object of the <see cref="GridViewColumn" /> to limit it's size</param>
+        /// <summary>Limits resizing of a <see cref="GridViewColumn" />.</summary>
+        /// <param name="control">The Thumb object of the <see cref="GridViewColumn" /> to limit it's size.</param>
         public static void LimitColumnSize(FrameworkElement control)
         {
             if (control == null)

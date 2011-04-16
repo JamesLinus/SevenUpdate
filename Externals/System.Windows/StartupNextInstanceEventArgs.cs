@@ -1,9 +1,5 @@
 ﻿// ***********************************************************************
-// <copyright file="StartupNextInstanceEventArgs.cs"
-//            project="System.Windows"
-//            assembly="System.Windows"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="StartupNextInstanceEventArgs.cs" project="System.Windows" assembly="System.Windows" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) BladeWise. All rights reserved.
 // </copyright>
 // <author username="BladeWise">BladeWise</author>
@@ -26,7 +22,7 @@ namespace System.Windows
         #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="StartupNextInstanceEventArgs" /> class.</summary>
-        /// <param name="args">The arguments passed to the program</param>
+        /// <param name="args">The arguments passed to the program.</param>
         /// <param name="bringToFront">If set to <see langword="true" /> the application main window will be brought to front.</param>
         public StartupNextInstanceEventArgs(string[] args, bool bringToFront = true)
         {
@@ -44,7 +40,7 @@ namespace System.Windows
         #region Properties
 
         /// <summary>Gets a value indicating whether the application main window has to be brought to foreground.</summary>
-        /// <value><see langword="true" /> if the application window has to be brought to foreground, otherwise <see langword="false" /></value>
+        /// <value><see langword="True" /> if the application window has to be brought to foreground, otherwise <see langword="false" />.</value>
         public bool BringToForeground { get; private set; }
 
         #endregion
@@ -52,7 +48,7 @@ namespace System.Windows
         #region Public Methods
 
         /// <summary>Gets the arguments passed to the other application.</summary>
-        /// <returns>Returns the arguments passed to the application</returns>
+        /// <returns>Returns the arguments passed to the application.</returns>
         /// <value>The arguments passed to the other application.</value>
         public string[] GetArgs()
         {

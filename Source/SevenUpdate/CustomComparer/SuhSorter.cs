@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="SuhSorter.cs"
-//            project="SevenUpdate"
-//            assembly="SevenUpdate"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="SuhSorter.cs" project="SevenUpdate" assembly="SevenUpdate" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
@@ -22,7 +18,7 @@
 // </license>
 // <summary>
 //   Sorts the Suh class for the ListView
-// </summary>
+// .</summary>
 // ***********************************************************************
 
 namespace SevenUpdate.CustomComparer
@@ -31,7 +27,7 @@ namespace SevenUpdate.CustomComparer
     using System.ComponentModel;
     using System.Windows.Controls;
 
-    /// <summary>Sorts the SUH Class</summary>
+    /// <summary>Sorts the SUH Class.</summary>
     internal sealed class SuhSorter : ListViewCustomComparer
     {
         #region Public Methods

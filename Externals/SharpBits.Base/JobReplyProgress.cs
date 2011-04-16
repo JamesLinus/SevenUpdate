@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="JobReplyProgress.cs"
-//            project="SharpBits.Base"
-//            assembly="SharpBits.Base"
-//            solution="SevenUpdate"
-//            company="Xidar Solutions">
+// <copyright file="JobReplyProgress.cs" project="SharpBits.Base" assembly="SharpBits.Base" solution="SevenUpdate" company="Xidar Solutions">
 //     Copyright (c) xidar solutions. All rights reserved.
 // </copyright>
 // <author username="xidar">xidar</author>
@@ -13,12 +9,12 @@
 
 namespace SharpBits.Base
 {
-    /// <summary>The <see cref="BitsJob" /> Progress</summary>
+    /// <summary>The <see cref="BitsJob" /> Progress.</summary>
     public class JobReplyProgress
     {
         #region Constants and Fields
 
-        /// <summary>The current project</summary>
+        /// <summary>The current project.</summary>
         private BGJobReplyProgress jobReplyProgress;
 
         #endregion
@@ -36,7 +32,7 @@ namespace SharpBits.Base
 
         #region Properties
 
-        /// <summary>Gets the total number of bytes downloaded</summary>
+        /// <summary>Gets the total number of bytes downloaded.</summary>
         public ulong BytesTotal
         {
             get
@@ -45,7 +41,7 @@ namespace SharpBits.Base
             }
         }
 
-        /// <summary>Gets the total number of bytes transferred</summary>
+        /// <summary>Gets the total number of bytes transferred.</summary>
         /// <value>The bytes transferred.</value>
         public ulong BytesTransferred
         {

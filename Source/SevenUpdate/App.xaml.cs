@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="App.xaml.cs"
-//            project="SevenUpdate"
-//            assembly="SevenUpdate"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="App.xaml.cs" project="SevenUpdate" assembly="SevenUpdate" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
@@ -22,7 +18,7 @@
 // </license>
 // <summary>
 //   Interaction logic for App.xaml
-// </summary>
+// .</summary>
 // ***********************************************************************
 
 namespace SevenUpdate
@@ -42,56 +38,56 @@ namespace SevenUpdate
 
     using SevenUpdate.Properties;
 
-    /// <summary>Interaction logic for App.xaml</summary>
+    /// <summary>Interaction logic for App.xaml.</summary>
     public sealed partial class App
     {
         #region Constants and Fields
 
-        /// <summary>The all users application data location</summary>
+        /// <summary>The all users application data location.</summary>
         public static readonly string AllUserStore = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Seven Software", "Seven Update");
 
-        /// <summary>The location of the list of applications Seven Update can update</summary>
+        /// <summary>The location of the list of applications Seven Update can update.</summary>
         public static readonly string ApplicationsFile = Path.Combine(AllUserStore, @"Apps.sul");
 
-        /// <summary>The location of the application settings file</summary>
+        /// <summary>The location of the application settings file.</summary>
         public static readonly string ConfigFile = Path.Combine(AllUserStore, @"App.config");
 
-        /// <summary>The location of the hidden updates file</summary>
+        /// <summary>The location of the hidden updates file.</summary>
         public static readonly string HiddenFile = Path.Combine(AllUserStore, @"Hidden.suh");
 
-        /// <summary>The location of the update history file</summary>
+        /// <summary>The location of the update history file.</summary>
         public static readonly string HistoryFile = Path.Combine(AllUserStore, @"History.suh");
 
-        /// <summary>The location of the user application data location</summary>
+        /// <summary>The location of the user application data location.</summary>
         public static readonly string UserStore = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Seven Software", "Seven Update");
 
-        /// <summary>The Seven Update list location</summary>
+        /// <summary>The Seven Update list location.</summary>
         internal const string SulLocation = @"http://sevenupdate.com/apps/Apps.sul";
 
         #endregion
 
         #region Properties
 
-        /// <summary>Gets the command line arguments passed to this instance</summary>
+        /// <summary>Gets the command line arguments passed to this instance.</summary>
         internal static IList<string> Args { get; private set; }
 
-        /// <summary>Gets a value indicating whether Seven Update should be updated to the beta channel</summary>
+        /// <summary>Gets a value indicating whether Seven Update should be updated to the beta channel.</summary>
         internal static bool IsBeta { get; private set; }
 
-        /// <summary>Gets a value indicating whether Seven Update should be updated to the dev channel</summary>
+        /// <summary>Gets a value indicating whether Seven Update should be updated to the dev channel.</summary>
         internal static bool IsDev { get; private set; }
 
-        /// <summary>Gets or sets the application TaskBarItemInfo</summary>
+        /// <summary>Gets or sets the application TaskBarItemInfo.</summary>
         internal static TaskbarItemInfo TaskBar { get; set; }
 
         #endregion
 
         #region Methods
 
-        /// <summary>Process command line args</summary>
-        /// <param name="args">The list of arguments</param>
+        /// <summary>Process command line args.</summary>
+        /// <param name="args">The list of arguments.</param>
         internal static void ProcessArgs(IList<string> args)
         {
             if (args == null)
@@ -213,7 +209,7 @@ namespace SevenUpdate
             ProcessArgs(e.GetArgs());
         }
 
-        /// <summary>Gets the application ready for startup</summary>
+        /// <summary>Gets the application ready for startup.</summary>
         private static void Init()
         {
             Utilities.Locale = Settings.Default.locale;
@@ -249,9 +245,9 @@ namespace SevenUpdate
             Core.IsReconnect = true;
         }
 
-        /// <summary>Logs an error</summary>
+        /// <summary>Logs an error.</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The error data to log</param>
+        /// <param name="e">The error data to log.</param>
         private static void LogError(object sender, ErrorOccurredEventArgs e)
         {
             using (var tw = new StreamWriter(Path.Combine(UserStore, "error.log"), true))
@@ -260,7 +256,7 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Registers the application to use the Recovery Manager</summary>
+        /// <summary>Registers the application to use the Recovery Manager.</summary>
         private static void RegisterApplicationRecoveryAndRestart()
         {
             if (Environment.OSVersion.Version.Major < 6)
@@ -274,7 +270,7 @@ namespace SevenUpdate
 #endif
         }
 
-        /// <summary>Sets the application jump list</summary>
+        /// <summary>Sets the application jump list.</summary>
         private static void SetJumpList()
         {
             var jumpList = new JumpList();

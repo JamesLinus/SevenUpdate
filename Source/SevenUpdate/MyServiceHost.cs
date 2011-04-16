@@ -1,9 +1,5 @@
 ﻿// ***********************************************************************
-// <copyright file="MyServiceHost.cs"
-//            project="SevenUpdate"
-//            assembly="SevenUpdate"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="MyServiceHost.cs" project="SevenUpdate" assembly="SevenUpdate" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
@@ -22,7 +18,7 @@
 // </license>
 // <summary>
 //   Interaction logic for MyServiceHost.xaml
-// </summary>
+// .</summary>
 // ***********************************************************************
 
 namespace SevenUpdate
@@ -34,19 +30,19 @@ namespace SevenUpdate
 
     using SevenUpdate.Service;
 
-    /// <summary>Contains methods to start the WCF service host</summary>
+    /// <summary>Contains methods to start the WCF service host.</summary>
     internal static class MyServiceHost
     {
         #region Properties
 
-        /// <summary>Gets or sets the <see cref="ServiceHost" /> instance</summary>
+        /// <summary>Gets or sets the <see cref="ServiceHost" /> instance.</summary>
         internal static ServiceHost Instance { get; set; }
 
         #endregion
 
         #region Methods
 
-        /// <summary>Starts the service</summary>
+        /// <summary>Starts the service.</summary>
         internal static void StartService()
         {
             if (Instance != null)
@@ -86,7 +82,7 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Stops the service</summary>
+        /// <summary>Stops the service.</summary>
         internal static void StopService()
         {
             if (Instance == null)

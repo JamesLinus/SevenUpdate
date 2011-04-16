@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="InstanceAwareApplication.cs"
-//            project="System.Windows"
-//            assembly="System.Windows"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="InstanceAwareApplication.cs" project="System.Windows" assembly="System.Windows" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) BladeWise. All rights reserved.
 // </copyright>
 // <author username="BladeWise">BladeWise</author>
@@ -157,7 +153,7 @@ namespace System.Windows
         #region Methods
 
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
-        /// <param name="disposing">true to dispose unmanaged resources</param>
+        /// <param name="disposing">Dispose unmanaged resources.</param>
         protected virtual void Dispose(bool disposing)
         {
             this.TryDisposeSynchronizationObjects();

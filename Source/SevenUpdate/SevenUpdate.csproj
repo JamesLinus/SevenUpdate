@@ -110,6 +110,7 @@
     <Compile Include="Converters\UpdateStatusToBooleanConverter.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="MyServiceHost.cs" />
+    <Compile Include="UpdateAction.cs" />
     <Compile Include="WcfService.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>

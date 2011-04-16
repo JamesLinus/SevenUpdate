@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="UpdateInfo.xaml.cs"
-//            project="SevenUpdate.Sdk"
-//            assembly="SevenUpdate.Sdk"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="UpdateInfo.xaml.cs" project="SevenUpdate.Sdk" assembly="SevenUpdate.Sdk" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
@@ -34,7 +30,7 @@ namespace SevenUpdate.Sdk.Pages
 
     using SevenUpdate.Sdk.Windows;
 
-    /// <summary>Interaction logic for UpdateInfo.xaml</summary>
+    /// <summary>Interaction logic for UpdateInfo.xaml.</summary>
     public sealed partial class UpdateInfo
     {
         #region Constructors and Destructors
@@ -71,9 +67,9 @@ namespace SevenUpdate.Sdk.Pages
 
         #region Methods
 
-        /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
+        /// <summary>Fires the OnPropertyChanged Event with the collection changes.</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The event data</param>
+        /// <param name="e">The event data.</param>
         private void ChangeDescription(object sender, RoutedEventArgs e)
         {
             var textBox = (InfoTextBox)sender;
@@ -81,9 +77,9 @@ namespace SevenUpdate.Sdk.Pages
             Core.UpdateLocaleStrings(textBox.Text, Core.UpdateInfo.Description);
         }
 
-        /// <summary>Fires the OnPropertyChanged Event with the collection changes</summary>
+        /// <summary>Fires the OnPropertyChanged Event with the collection changes.</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The event data</param>
+        /// <param name="e">The event data.</param>
         private void ChangeName(object sender, RoutedEventArgs e)
         {
             var textBox = (InfoTextBox)sender;
@@ -99,7 +95,7 @@ namespace SevenUpdate.Sdk.Pages
                    this.imgReleaseDate.Visibility == Visibility.Visible;
         }
 
-        /// <summary>Loads the <see cref="LocaleString" />'s for the <see cref="Update" /> into the UI</summary>
+        /// <summary>Loads the <see cref="LocaleString" />'s for the <see cref="Update" /> into the UI.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.Controls.SelectionChangedEventArgs" /> instance containing the event data.</param>
         private void LoadLocaleStrings(object sender, SelectionChangedEventArgs e)
@@ -140,7 +136,7 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        /// <summary>Loads the <see cref="Update" /> information to the UI</summary>
+        /// <summary>Loads the <see cref="Update" /> information to the UI.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void LoadUI(object sender, RoutedEventArgs e)
@@ -186,7 +182,7 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        /// <summary>Moves on to the next pages if no errors are present</summary>
+        /// <summary>Moves on to the next pages if no errors are present.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void MoveOn(object sender, RoutedEventArgs e)
@@ -201,7 +197,7 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        /// <summary>Navigates to the main page</summary>
+        /// <summary>Navigates to the main page.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void NavigateToMainPage(object sender, RoutedEventArgs e)
@@ -209,7 +205,7 @@ namespace SevenUpdate.Sdk.Pages
             MainWindow.NavService.Navigate(Core.MainPage);
         }
 
-        /// <summary>Updates the UI based on whether Aero Glass is enabled</summary>
+        /// <summary>Updates the UI based on whether Aero Glass is enabled.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="CompositionChangedEventArgs" /> instance containing the event data.</param>
         private void UpdateUI(object sender, CompositionChangedEventArgs e)
@@ -228,9 +224,9 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        /// <summary>Validates the textbox to see if required input exists</summary>
+        /// <summary>Validates the textbox to see if required input exists.</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The event data</param>
+        /// <param name="e">The event data.</param>
         private void ValidateInputRequired(object sender, TextChangedEventArgs e)
         {
             var textBox = (InfoTextBox)sender;
@@ -247,9 +243,9 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        /// <summary>Validates input to see if it's a valid URL</summary>
+        /// <summary>Validates input to see if it's a valid URL.</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The event data</param>
+        /// <param name="e">The event data.</param>
         private void ValidateUrlInput(object sender, TextChangedEventArgs e)
         {
             var textBox = (InfoTextBox)sender;

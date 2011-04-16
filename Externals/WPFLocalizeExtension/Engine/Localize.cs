@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="Localize.cs"
-//            project="WPFLocalizeExtension"
-//            assembly="WPFLocalizeExtension"
-//            solution="SevenUpdate"
-//            company="Bernhard Millauer">
+// <copyright file="Localize.cs" project="WPFLocalizeExtension" assembly="WPFLocalizeExtension" solution="SevenUpdate" company="Bernhard Millauer">
 //     Copyright (c) Bernhard Millauer. All rights reserved.
 // </copyright>
 // <author username="SeriousM">Bernhard Millauer</author>
@@ -22,12 +18,12 @@ namespace WPFLocalizeExtension.Engine
     using System.Runtime.CompilerServices;
     using System.Windows;
 
-    /// <summary>Represents the culture interface for localization</summary>
+    /// <summary>Represents the culture interface for localization.</summary>
     public sealed class Localize : DependencyObject
     {
         #region Constants and Fields
 
-        /// <summary>Holds the default <see cref="ResourceDictionary" /> name</summary>
+        /// <summary>Holds the default <see cref="ResourceDictionary" /> name.</summary>
         public const string ResourcesName = "Resources";
 
         /// <summary><see cref="DependencyProperty" /> DesignCulture to set the Culture.Only supported at DesignTime.</summary>
@@ -44,13 +40,13 @@ namespace WPFLocalizeExtension.Engine
         /// <summary>Holds the name of the Resource Manager.</summary>
         private const string ResourceManagerName = "ResourceManager";
 
-        /// <summary>Holds a SyncRoot to be thread safe</summary>
+        /// <summary>Holds a SyncRoot to be thread safe.</summary>
         private static readonly object SyncRoot = new object();
 
-        /// <summary>Holds the instance of singleton</summary>
+        /// <summary>Holds the instance of singleton.</summary>
         private static Localize instance;
 
-        /// <summary>Holds the current chosen <see cref="CultureInfo" /></summary>
+        /// <summary>Holds the current chosen <see cref="CultureInfo" />.</summary>
         private CultureInfo culture;
 
         #endregion
@@ -74,7 +70,7 @@ namespace WPFLocalizeExtension.Engine
 
         #region Properties
 
-        /// <summary>Gets the default <see cref="CultureInfo" /> to initialize the LocalizeDictionary.<see cref="CultureInfo" /></summary>
+        /// <summary>Gets the default <see cref="CultureInfo" /> to initialize the LocalizeDictionary.<see cref="CultureInfo" />.</summary>
         public static CultureInfo DefaultCultureInfo
         {
             get
@@ -143,8 +139,8 @@ namespace WPFLocalizeExtension.Engine
             }
         }
 
-        /// <summary>Gets a value indicating whether the status of the design mode</summary>
-        /// <returns><see langword="true" /> if in design mode, else <see langword="false" /></returns>
+        /// <summary>Gets a value indicating whether the status of the design mode.</summary>
+        /// <returns><see langword="true" /> if in design mode, else <see langword="false" />.</returns>
         public bool IsInDesignMode
         {
             get
@@ -169,17 +165,17 @@ namespace WPFLocalizeExtension.Engine
 
         #region Public Methods
 
-        /// <summary>Attach an WeakEventListener to the LocalizeDictionary</summary>
-        /// <param name="listener">The listener to attach</param>
+        /// <summary>Attach an WeakEventListener to the LocalizeDictionary.</summary>
+        /// <param name="listener">The listener to attach.</param>
         public static void AddEventListener(IWeakEventListener listener)
         {
             // calls AddListener from the inline WeakCultureChangedEventManager
             WeakCultureChangedEventManager.AddListener(listener);
         }
 
-        /// <summary>Returns the <see cref="AssemblyName" /> of the passed assembly instance</summary>
-        /// <param name="assembly">The Assembly where to get the name from</param>
-        /// <returns>The Assembly name</returns>
+        /// <summary>Returns the <see cref="AssemblyName" /> of the passed assembly instance.</summary>
+        /// <param name="assembly">The Assembly where to get the name from.</param>
+        /// <returns>The Assembly name.</returns>
         public static string GetAssemblyName(Assembly assembly)
         {
             if (assembly == null)
@@ -255,8 +251,8 @@ namespace WPFLocalizeExtension.Engine
             }
         }
 
-        /// <summary>Detach an WeakEventListener to the LocalizeDictionary</summary>
-        /// <param name="listener">The listener to detach</param>
+        /// <summary>Detach an WeakEventListener to the LocalizeDictionary.</summary>
+        /// <param name="listener">The listener to detach.</param>
         public static void RemoveEventListener(IWeakEventListener listener)
         {
             // calls RemoveListener from the inline WeakCultureChangedEventManager
@@ -281,12 +277,12 @@ namespace WPFLocalizeExtension.Engine
         }
 
         /// <summary>Returns an object from the passed dictionary with the given name.If a wrong <typeparamref name="TType" /> is passed, no exception will get thrown (return obj as <typeparam refname="TType" />).</summary>
-        /// <param name="resourceAssembly">The Assembly where the Resource is located at</param>
-        /// <param name="resourceDictionary">Name of the resource directory</param>
-        /// <param name="resourceKey">The key for the resource</param>
+        /// <param name="resourceAssembly">The Assembly where the Resource is located at.</param>
+        /// <param name="resourceDictionary">Name of the resource directory.</param>
+        /// <param name="resourceKey">The key for the resource.</param>
         /// <param name="cultureToUse">The culture to use.</param>
-        /// <returns>The found object or <see langword="null" /> if not found or wrong <typeparamref name="TType" /> is given</returns>
-        /// <typeparam name="TType">The type of object to get</typeparam>
+        /// <returns>The found object or <see langword="null" /> if not found or wrong <typeparamref name="TType" /> is given.</returns>
+        /// <typeparam name="TType">The type of object to get.</typeparam>
         public TType GetLocalizedObject<TType>(string resourceAssembly, string resourceDictionary, string resourceKey, CultureInfo cultureToUse)
             where TType : class
         {
@@ -368,21 +364,21 @@ namespace WPFLocalizeExtension.Engine
         }
 
         /// <summary>Looks up the ResourceManagers for the searched <paramref name="resourceKey" /> in the <param refname="resourceDictionary" /> in the <paramref name="resourceAssembly" />with an Invariant Culture.</summary>
-        /// <param name="resourceAssembly">The resource assembly (e.g.: <c>BaseLocalizeExtension</c>). <see langword="null" /> = Name of the executing assembly</param>
-        /// <param name="resourceDictionary">The dictionary to look up (e.g.: ResHelp, Resources, ...). <see langword="null" /> = Name of the default resource file (Resources)</param>
-        /// <param name="resourceKey">The key of the searched entry (e.g.: <c>btnHelp</c>, Cancel, ...). <see langword="null" /> = Exception</param>
-        /// <returns><see langword="true" /> if the searched one is found, otherwise <see langword="false" /></returns>
+        /// <param name="resourceAssembly">The resource assembly (e.g.: <c>BaseLocalizeExtension</c>). <see langword="null" /> = Name of the executing assembly.</param>
+        /// <param name="resourceDictionary">The dictionary to look up (e.g.: ResHelp, Resources, ...). <see langword="null" /> = Name of the default resource file (Resources).</param>
+        /// <param name="resourceKey">The key of the searched entry (e.g.: <c>btnHelp</c>, Cancel, ...). <see langword="null" /> = Exception.</param>
+        /// <returns><see langword="true" /> if the searched one is found, otherwise <see langword="false" />.</returns>
         public bool ResourceKeyExists(string resourceAssembly, string resourceDictionary, string resourceKey)
         {
             return this.ResourceKeyExists(resourceAssembly, resourceDictionary, resourceKey, CultureInfo.InvariantCulture);
         }
 
         /// <summary>Looks up the ResourceManagers for the searched <paramref name="resourceKey" />in the <param refname="resourceDictionary" /> in the <paramref name="resourceAssembly" />with the passed culture. If the searched one does not exists with the passed culture, is will searcheduntil the invariant culture is used.</summary>
-        /// <param name="resourceAssembly">The resource assembly (e.g.: <c>BaseLocalizeExtension</c>). <see langword="null" /> = Name of the executing assembly</param>
-        /// <param name="resourceDictionary">The dictionary to look up (e.g.: ResHelp, Resources, ...). <see langword="null" /> = Name of the default resource file (Resources)</param>
-        /// <param name="resourceKey">The key of the searched entry (e.g.: <c>btnHelp</c>, Cancel, ...). <see langword="null" /> = Exception</param>
+        /// <param name="resourceAssembly">The resource assembly (e.g.: <c>BaseLocalizeExtension</c>). <see langword="null" /> = Name of the executing assembly.</param>
+        /// <param name="resourceDictionary">The dictionary to look up (e.g.: ResHelp, Resources, ...). <see langword="null" /> = Name of the default resource file (Resources).</param>
+        /// <param name="resourceKey">The key of the searched entry (e.g.: <c>btnHelp</c>, Cancel, ...). <see langword="null" /> = Exception.</param>
         /// <param name="cultureToUse">The culture to use.</param>
-        /// <returns><see langword="true" /> if the searched one is found, otherwise <see langword="false" /></returns>
+        /// <returns><see langword="true" /> if the searched one is found, otherwise <see langword="false" />.</returns>
         public bool ResourceKeyExists(string resourceAssembly, string resourceDictionary, string resourceKey, CultureInfo cultureToUse)
         {
             try
@@ -440,10 +436,10 @@ namespace WPFLocalizeExtension.Engine
         }
 
         /// <summary>Looks up in the cached <see cref="ResourceManager" /> list for the searched <see cref="ResourceManager" />.</summary>
-        /// <param name="resourceAssembly">The resource assembly (e.g.: <c>BaseLocalizeExtension</c>). <see langword="null" /> = Name of the executing assembly</param>
-        /// <param name="resourceDictionary">The dictionary to look up (e.g.: ResHelp, Resources, ...). <see langword="null" /> = Name of the default resource file (Resources)</param>
-        /// <param name="resourceKey">The key of the searched entry (e.g.: <c>btnHelp</c>, Cancel, ...). <see langword="null" /> = Exception</param>
-        /// <returns>The found <see cref="ResourceManager" /></returns>
+        /// <param name="resourceAssembly">The resource assembly (e.g.: <c>BaseLocalizeExtension</c>). <see langword="null" /> = Name of the executing assembly.</param>
+        /// <param name="resourceDictionary">The dictionary to look up (e.g.: ResHelp, Resources, ...). <see langword="null" /> = Name of the default resource file (Resources).</param>
+        /// <param name="resourceKey">The key of the searched entry (e.g.: <c>btnHelp</c>, Cancel, ...). <see langword="null" /> = Exception.</param>
+        /// <returns>The found <see cref="ResourceManager" />.</returns>
         private ResourceManager GetResourceManager(string resourceAssembly, string resourceDictionary, string resourceKey)
         {
             if (resourceAssembly == null)
@@ -560,15 +556,15 @@ namespace WPFLocalizeExtension.Engine
 
         #endregion
 
-        /// <summary>This in line class is used to handle weak events to avoid memory leaks</summary>
+        /// <summary>This in line class is used to handle weak events to avoid memory leaks.</summary>
         internal sealed class WeakCultureChangedEventManager : WeakEventManager
         {
             #region Constants and Fields
 
-            /// <summary>Holds the inner list of listeners</summary>
+            /// <summary>Holds the inner list of listeners.</summary>
             private readonly ListenerList listeners;
 
-            /// <summary>Indicates, if the current instance is listening on the source event</summary>
+            /// <summary>Indicates, if the current instance is listening on the source event.</summary>
             private bool isListening;
 
             #endregion
@@ -586,7 +582,7 @@ namespace WPFLocalizeExtension.Engine
 
             #region Properties
 
-            /// <summary>Gets the singleton instance of <see cref="WeakCultureChangedEventManager" /></summary>
+            /// <summary>Gets the singleton instance of <see cref="WeakCultureChangedEventManager" />.</summary>
             private static WeakCultureChangedEventManager CurrentManager
             {
                 get
@@ -616,8 +612,8 @@ namespace WPFLocalizeExtension.Engine
 
             #region Methods
 
-            /// <summary>Adds an listener to the inner list of listeners</summary>
-            /// <param name="listener">The listener to add</param>
+            /// <summary>Adds an listener to the inner list of listeners.</summary>
+            /// <param name="listener">The listener to add.</param>
             internal static void AddListener(IWeakEventListener listener)
             {
                 // add the listener to the inner list of listeners
@@ -627,8 +623,8 @@ namespace WPFLocalizeExtension.Engine
                 CurrentManager.StartStopListening();
             }
 
-            /// <summary>Removes an listener from the inner list of listeners</summary>
-            /// <param name="listener">The listener to remove</param>
+            /// <summary>Removes an listener from the inner list of listeners.</summary>
+            /// <param name="listener">The listener to remove.</param>
             internal static void RemoveListener(IWeakEventListener listener)
             {
                 // removes the listener from the inner list of listeners
@@ -638,7 +634,7 @@ namespace WPFLocalizeExtension.Engine
                 CurrentManager.StartStopListening();
             }
 
-            /// <summary>This method starts the listening process by attaching on the source event</summary>
+            /// <summary>This method starts the listening process by attaching on the source event.</summary>
             /// <param name="source">The source.</param>
             [MethodImpl(MethodImplOptions.Synchronized)]
             protected override void StartListening(object source)
@@ -653,7 +649,7 @@ namespace WPFLocalizeExtension.Engine
                 this.isListening = true;
             }
 
-            /// <summary>This method stops the listening process by detaching on the source event</summary>
+            /// <summary>This method stops the listening process by detaching on the source event.</summary>
             /// <param name="source">The source to stop listening on.</param>
             [MethodImpl(MethodImplOptions.Synchronized)]
             protected override void StopListening(object source)
@@ -667,14 +663,14 @@ namespace WPFLocalizeExtension.Engine
                 this.isListening = false;
             }
 
-            /// <summary>This method is called if the LocalizeDictionary.OnCultureChangedis called and the listening process is enabled</summary>
+            /// <summary>This method is called if the LocalizeDictionary.OnCultureChangedis called and the listening process is enabled.</summary>
             private void Instance_OnCultureChanged()
             {
                 // tells every listener in the list that the event is occurred
                 this.DeliverEventToList(Instance, EventArgs.Empty, this.listeners);
             }
 
-            /// <summary>This method starts and stops the listening process by attaching/detaching on the source event</summary>
+            /// <summary>This method starts and stops the listening process by attaching/detaching on the source event.</summary>
             [MethodImpl(MethodImplOptions.Synchronized)]
             private void StartStopListening()
             {

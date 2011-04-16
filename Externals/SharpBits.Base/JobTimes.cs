@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="JobTimes.cs"
-//            project="SharpBits.Base"
-//            assembly="SharpBits.Base"
-//            solution="SevenUpdate"
-//            company="Xidar Solutions">
+// <copyright file="JobTimes.cs" project="SharpBits.Base" assembly="SharpBits.Base" solution="SevenUpdate" company="Xidar Solutions">
 //     Copyright (c) xidar solutions. All rights reserved.
 // </copyright>
 // <author username="xidar">xidar</author>
@@ -15,12 +11,12 @@ namespace SharpBits.Base
 {
     using System;
 
-    /// <summary>Data containing various <see cref="DateTime" />'s about the <see cref="BitsJob" /></summary>
+    /// <summary>Data containing various <see cref="DateTime" />'s about the <see cref="BitsJob" />.</summary>
     public class JobTimes
     {
         #region Constants and Fields
 
-        /// <summary>The current <see cref="JobTimes" /> for the <see cref="BitsJob" /></summary>
+        /// <summary>The current <see cref="JobTimes" /> for the <see cref="BitsJob" />.</summary>
         private BGJobTimes jobTimes;
 
         #endregion

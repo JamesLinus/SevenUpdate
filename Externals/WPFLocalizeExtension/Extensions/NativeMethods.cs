@@ -1,9 +1,5 @@
 ﻿// ***********************************************************************
-// <copyright file="NativeMethods.cs"
-//            project="WPFLocalizeExtension"
-//            assembly="WPFLocalizeExtension"
-//            solution="SevenUpdate"
-//            company="Bernhard Millauer">
+// <copyright file="NativeMethods.cs" project="WPFLocalizeExtension" assembly="WPFLocalizeExtension" solution="SevenUpdate" company="Bernhard Millauer">
 //     Copyright (c) Bernhard Millauer. All rights reserved.
 // </copyright>
 // <author username="SeriousM">Bernhard Millauer</author>
@@ -15,7 +11,7 @@ namespace WPFLocalizeExtension.Extensions
     using System;
     using System.Runtime.InteropServices;
 
-    /// <summary>Native Win32 methods</summary>
+    /// <summary>Native Win32 methods.</summary>
     internal static class NativeMethods
     {
         /// <summary>Frees memory of a pointer.</summary>

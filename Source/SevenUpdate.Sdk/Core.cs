@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="Core.cs"
-//            project="SevenUpdate.Sdk"
-//            assembly="SevenUpdate.Sdk"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="Core.cs" project="SevenUpdate.Sdk" assembly="SevenUpdate.Sdk" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
@@ -44,49 +40,49 @@ namespace SevenUpdate.Sdk
     using IWin32Window = System.Windows.Forms.IWin32Window;
     using MessageBox = System.Windows.MessageBox;
 
-    /// <summary>Contains methods that are essential for the program</summary>
+    /// <summary>Contains methods that are essential for the program.</summary>
     internal static class Core
     {
         #region Constants and Fields
 
-        /// <summary>The location of the file that contains the collection of Projects for the SDK</summary>
+        /// <summary>The location of the file that contains the collection of Projects for the SDK.</summary>
         public static readonly string ProjectsFile = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Seven Software", "Seven Update SDK", "Projects.sul");
 
-        /// <summary>The application information page</summary>
+        /// <summary>The application information page.</summary>
         private static AppInfo appInfoPage;
 
-        /// <summary>The main page</summary>
+        /// <summary>The main page.</summary>
         private static Main mainPage;
 
-        /// <summary>The update files page</summary>
+        /// <summary>The update files page.</summary>
         private static UpdateFiles updateFilesPage;
 
-        /// <summary>The update information page</summary>
+        /// <summary>The update information page.</summary>
         private static UpdateInfo updateInfoPage;
 
-        /// <summary>The update registry page</summary>
+        /// <summary>The update registry page.</summary>
         private static UpdateRegistry updateRegistryPage;
 
-        /// <summary>The update review page</summary>
+        /// <summary>The update review page.</summary>
         private static UpdateReview updateReviewPage;
 
-        /// <summary>The update shortcuts page</summary>
+        /// <summary>The update shortcuts page.</summary>
         private static UpdateShortcuts updateShortcutsPage;
 
         #endregion
 
         #region Properties
 
-        /// <summary>Gets the application information of the project</summary>
+        /// <summary>Gets the application information of the project.</summary>
         /// <value>The application info.</value>
         public static Sua AppInfo { get; private set; }
 
-        /// <summary>Gets or sets the index for the selected project</summary>
-        /// <value>The index of the application</value>
+        /// <summary>Gets or sets the index for the selected project.</summary>
+        /// <value>The index of the application.</value>
         internal static int AppIndex { get; set; }
 
-        /// <summary>Gets the AppInfo page</summary>
+        /// <summary>Gets the AppInfo page.</summary>
         internal static AppInfo AppInfoPage
         {
             get
@@ -100,11 +96,11 @@ namespace SevenUpdate.Sdk
             }
         }
 
-        /// <summary>Gets or sets a value indicating whether the current project being edited is new</summary>
+        /// <summary>Gets or sets a value indicating whether the current project being edited is new.</summary>
         /// <value><see langword="true" /> if this instance is new project; otherwise, <see langword="false" />.</value>
         internal static bool IsNewProject { get; set; }
 
-        /// <summary>Gets the Main page</summary>
+        /// <summary>Gets the Main page.</summary>
         internal static Main MainPage
         {
             get
@@ -113,15 +109,15 @@ namespace SevenUpdate.Sdk
             }
         }
 
-        /// <summary>Gets or sets a collection of Projects</summary>
+        /// <summary>Gets or sets a collection of Projects.</summary>
         /// <value>The projects.</value>
         internal static Collection<Project> Projects { get; set; }
 
-        /// <summary>Gets or sets the index for the current shortcut being edited</summary>
+        /// <summary>Gets or sets the index for the current shortcut being edited.</summary>
         /// <value>The selected shortcut.</value>
         internal static int SelectedShortcut { get; set; }
 
-        /// <summary>Gets the UpdateFiles page</summary>
+        /// <summary>Gets the UpdateFiles page.</summary>
         internal static UpdateFiles UpdateFilesPage
         {
             get
@@ -135,15 +131,15 @@ namespace SevenUpdate.Sdk
             }
         }
 
-        /// <summary>Gets or sets the index for the selected update in the selected project</summary>
+        /// <summary>Gets or sets the index for the selected update in the selected project.</summary>
         /// <value>The index of the update.</value>
         internal static int UpdateIndex { get; set; }
 
-        /// <summary>Gets the current update being edited</summary>
+        /// <summary>Gets the current update being edited.</summary>
         /// <value>The update info.</value>
         internal static Update UpdateInfo { get; private set; }
 
-        /// <summary>Gets the UpdateInfo page</summary>
+        /// <summary>Gets the UpdateInfo page.</summary>
         internal static UpdateInfo UpdateInfoPage
         {
             get
@@ -157,7 +153,7 @@ namespace SevenUpdate.Sdk
             }
         }
 
-        /// <summary>Gets the UpdateRegistry page</summary>
+        /// <summary>Gets the UpdateRegistry page.</summary>
         internal static UpdateRegistry UpdateRegistryPage
         {
             get
@@ -171,7 +167,7 @@ namespace SevenUpdate.Sdk
             }
         }
 
-        /// <summary>Gets the UpdateReview page</summary>
+        /// <summary>Gets the UpdateReview page.</summary>
         internal static UpdateReview UpdateReviewPage
         {
             get
@@ -185,7 +181,7 @@ namespace SevenUpdate.Sdk
             }
         }
 
-        /// <summary>Gets the UpdateShortcuts page</summary>
+        /// <summary>Gets the UpdateShortcuts page.</summary>
         internal static UpdateShortcuts UpdateShortcutsPage
         {
             get
@@ -203,7 +199,7 @@ namespace SevenUpdate.Sdk
 
         #region Methods
 
-        /// <summary>Edit the selected project or update</summary>
+        /// <summary>Edit the selected project or update.</summary>
         internal static void EditItem()
         {
             ResetPages();
@@ -259,15 +255,15 @@ namespace SevenUpdate.Sdk
 
         /// <summary>The rectangle_ mouse left button down.</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The arguments generated by the event</param>
+        /// <param name="e">The arguments generated by the event.</param>
         internal static void EnableDragOnGlass(object sender, MouseButtonEventArgs e)
         {
             e.Handled = true;
         }
 
         /// <summary>Gets the IWin32 window.</summary>
-        /// <param name="visual">The visual object</param>
-        /// <returns>The Win32 Window</returns>
+        /// <param name="visual">The visual object.</param>
+        /// <returns>The Win32 Window.</returns>
         internal static IWin32Window GetIWin32Window(this Visual visual)
         {
             var source = PresentationSource.FromVisual(visual) as HwndSource;
@@ -282,7 +278,7 @@ namespace SevenUpdate.Sdk
             return null;
         }
 
-        /// <summary>Creates a new project</summary>
+        /// <summary>Creates a new project.</summary>
         internal static void NewProject()
         {
             ResetPages();
@@ -294,7 +290,7 @@ namespace SevenUpdate.Sdk
             MainWindow.NavService.Navigate(AppInfoPage);
         }
 
-        /// <summary>Creates a new update for the selected project</summary>
+        /// <summary>Creates a new update for the selected project.</summary>
         internal static void NewUpdate()
         {
             ResetPages();
@@ -305,13 +301,13 @@ namespace SevenUpdate.Sdk
             MainWindow.NavService.Navigate(UpdateInfoPage);
         }
 
-        /// <summary>Opens a OpenFileDialog</summary>
-        /// <param name="initialDirectory">Gets or sets the initial directory displayed when the dialog is shown. A <see langword="null" /> or empty string indicates that the dialog is using the default directory</param>
+        /// <summary>Opens a OpenFileDialog.</summary>
+        /// <param name="initialDirectory">Gets or sets the initial directory displayed when the dialog is shown. A <see langword="null" /> or empty string indicates that the dialog is using the default directory.</param>
         /// <param name="initialFileName">Gets or sets the initial filename displayed when the dialog is shown.</param>
-        /// <param name="multiSelect">Gets or sets a value that determines whether the user can select more than one file</param>
-        /// <param name="defaultExtension">Gets or sets the default file extension to be added to the file names. If the value is <see langword="null" /> or empty, the extension is not added to the file names</param>
-        /// <param name="navigateToShortcut">Gets or sets a value that controls whether shortcuts should be treated as their target items, allowing an application to open a .lnk file</param>
-        /// <returns>A collection of the selected files</returns>
+        /// <param name="multiSelect">Gets or sets a value that determines whether the user can select more than one file.</param>
+        /// <param name="defaultExtension">Gets or sets the default file extension to be added to the file names. If the value is <see langword="null" /> or empty, the extension is not added to the file names.</param>
+        /// <param name="navigateToShortcut">Gets or sets a value that controls whether shortcuts should be treated as their target items, allowing an application to open a .lnk file.</param>
+        /// <returns>A collection of the selected files.</returns>
         internal static string[] OpenFileDialog(
             string initialDirectory = null,
             string initialFileName = null,
@@ -359,11 +355,11 @@ namespace SevenUpdate.Sdk
             return result;
         }
 
-        /// <summary>Opens a SaveFileDialog</summary>
-        /// <param name="initialDirectory">Gets or sets the initial directory displayed when the dialog is shown. A <see langword="null" /> or empty string indicates that the dialog is using the default directory</param>
-        /// <param name="defaultFileName">Sets the default file name</param>
-        /// <param name="defaultExtension">Gets or sets the default file extension to be added to the file names. If the value is <see langword="null" /> or empty, the extension is not added to the file names</param>
-        /// <returns>Gets the selected filename</returns>
+        /// <summary>Opens a SaveFileDialog.</summary>
+        /// <param name="initialDirectory">Gets or sets the initial directory displayed when the dialog is shown. A <see langword="null" /> or empty string indicates that the dialog is using the default directory.</param>
+        /// <param name="defaultFileName">Sets the default file name.</param>
+        /// <param name="defaultExtension">Gets or sets the default file extension to be added to the file names. If the value is <see langword="null" /> or empty, the extension is not added to the file names.</param>
+        /// <returns>Gets the selected filename.</returns>
         internal static string SaveFileDialog(string initialDirectory, string defaultFileName, string defaultExtension = null)
         {
             string result;
@@ -404,7 +400,7 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>Saves the project.</summary>
-        /// <param name="export"><see langword="true" /> to export the sui/sua files, <see langword="false" /> otherwise</param>
+        /// <param name="export">Export the sui/sua files, <see langword="false" /> otherwise.</param>
         internal static void SaveProject(bool export = false)
         {
             var appUpdates = new Collection<Update>();
@@ -524,17 +520,17 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>Shows either a <see cref="TaskDialog" /> or a <see cref="System.Windows.MessageBox" /> if running legacy windows.</summary>
-        /// <param name="instructionText">The main text to display (Blue 14pt for <see cref="TaskDialog" />)</param>
-        /// <param name="icon">The <see cref="TaskDialogStandardIcon" /> to display</param>
-        /// <param name="description">A description of the message, supplements the instruction text</param>
+        /// <param name="instructionText">The main text to display (Blue 14pt for <see cref="TaskDialog" />).</param>
+        /// <param name="icon">The <see cref="TaskDialogStandardIcon" /> to display.</param>
+        /// <param name="description">A description of the message, supplements the instruction text.</param>
         internal static void ShowMessage(string instructionText, TaskDialogStandardIcon icon, string description = null)
         {
             ShowMessage(instructionText, icon, TaskDialogStandardButtons.Ok, description);
         }
 
-        /// <summary>Updates a LocaleString collection a new value</summary>
-        /// <param name="value">The value to update the collection with</param>
-        /// <param name="localeStrings">The collection for the value</param>
+        /// <summary>Updates a LocaleString collection a new value.</summary>
+        /// <param name="value">The value to update the collection with.</param>
+        /// <param name="localeStrings">The collection for the value.</param>
         internal static void UpdateLocaleStrings(string value, ObservableCollection<LocaleString> localeStrings)
         {
             if (!string.IsNullOrWhiteSpace(value))
@@ -565,7 +561,7 @@ namespace SevenUpdate.Sdk
             }
         }
 
-        /// <summary>Resets the pages to default status</summary>
+        /// <summary>Resets the pages to default status.</summary>
         private static void ResetPages()
         {
             AppInfoPage = null; // new AppInfo();
@@ -577,13 +573,13 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>Shows either a <see cref="TaskDialog" /> or a <see cref="System.Windows.MessageBox" /> if running legacy windows.</summary>
-        /// <param name="instructionText">The main text to display (Blue 14pt for <see cref="TaskDialog" />)</param>
-        /// <param name="icon">The icon to use</param>
-        /// <param name="standardButtons">The standard buttons to use (with or without the custom default button text)</param>
-        /// <param name="description">A description of the message, supplements the instruction text</param>
-        /// <param name="footerText">Text to display as a footer message</param>
-        /// <param name="defaultButtonText">Text to display on the button</param>
-        /// <param name="displayShieldOnButton">Indicates if a UAC shield is to be displayed on the defaultButton</param>
+        /// <param name="instructionText">The main text to display (Blue 14pt for <see cref="TaskDialog" />).</param>
+        /// <param name="icon">The icon to use.</param>
+        /// <param name="standardButtons">The standard buttons to use (with or without the custom default button text).</param>
+        /// <param name="description">A description of the message, supplements the instruction text.</param>
+        /// <param name="footerText">Text to display as a footer message.</param>
+        /// <param name="defaultButtonText">Text to display on the button.</param>
+        /// <param name="displayShieldOnButton">Indicates if a UAC shield is to be displayed on the defaultButton.</param>
         private static void ShowMessage(
             string instructionText,
             TaskDialogStandardIcon icon,

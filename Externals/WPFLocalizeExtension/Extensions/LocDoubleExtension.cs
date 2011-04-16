@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="LocDoubleExtension.cs"
-//            project="WPFLocalizeExtension"
-//            assembly="WPFLocalizeExtension"
-//            solution="SevenUpdate"
-//            company="Bernhard Millauer">
+// <copyright file="LocDoubleExtension.cs" project="WPFLocalizeExtension" assembly="WPFLocalizeExtension" solution="SevenUpdate" company="Bernhard Millauer">
 //     Copyright (c) Bernhard Millauer. All rights reserved.
 // </copyright>
 // <author username="SeriousM">Bernhard Millauer</author>
@@ -18,7 +14,7 @@ namespace WPFLocalizeExtension.Extensions
 
     using WPFLocalizeExtension.Engine;
 
-    /// <summary><c>BaseLocalizeExtension</c> for double values</summary>
+    /// <summary><c>BaseLocalizeExtension</c> for double values.</summary>
     [MarkupExtensionReturnType(typeof(double))]
     public class LocDoubleExtension : BaseLocalizeExtension<double>
     {
@@ -40,9 +36,9 @@ namespace WPFLocalizeExtension.Extensions
 
         #region Public Methods
 
-        /// <summary>Provides the Value for the first Binding as double</summary>
-        /// <param name="serviceProvider">The <see cref="System.Windows.Markup.IProvideValueTarget" /> provided from the <see cref="MarkupExtension" /></param>
-        /// <returns>The found item from the .resx directory or <see langword="null" /> if not found</returns>
+        /// <summary>Provides the Value for the first Binding as double.</summary>
+        /// <param name="serviceProvider">The <see cref="System.Windows.Markup.IProvideValueTarget" /> provided from the <see cref="MarkupExtension" />.</param>
+        /// <returns>The found item from the .resx directory or <see langword="null" /> if not found.</returns>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             var obj = base.ProvideValue(serviceProvider);
@@ -71,9 +67,9 @@ namespace WPFLocalizeExtension.Extensions
 
         #region Methods
 
-        /// <summary>This method is used to modify the passed object into the target format</summary>
-        /// <param name="input">The object that will be modified</param>
-        /// <returns>Returns the modified object</returns>
+        /// <summary>This method is used to modify the passed object into the target format.</summary>
+        /// <param name="input">The object that will be modified.</param>
+        /// <returns>Returns the modified object.</returns>
         protected override object FormatOutput(object input)
         {
             if (Localize.Instance.IsInDesignMode && this.DesignValue != null)
@@ -92,7 +88,7 @@ namespace WPFLocalizeExtension.Extensions
             return double.Parse((string)input, new CultureInfo("en-US"));
         }
 
-        /// <summary>see <c>BaseLocalizeExtension</c></summary>
+        /// <summary>This method gets the new value for the target property and call <see cref="BaseLocalizeExtension{TValue}.SetNewValue" />.</summary>
         protected override void HandleNewValue()
         {
             var obj = Localize.Instance.GetLocalizedObject<object>(this.Assembly, this.Dictionary, this.Key, this.Culture);

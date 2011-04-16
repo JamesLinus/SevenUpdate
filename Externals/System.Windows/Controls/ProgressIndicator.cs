@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="ProgressIndicator.cs"
-//            project="System.Windows"
-//            assembly="System.Windows"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="ProgressIndicator.cs" project="System.Windows" assembly="System.Windows" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author>Michael Detras</author>
@@ -31,44 +27,44 @@ namespace System.Windows.Controls
     using System.Windows.Media.Animation;
     using System.Windows.Threading;
 
-    /// <summary>Displays a progress circle</summary>
+    /// <summary>Displays a progress circle.</summary>
     [TemplatePart(Name = ElementCanvas, Type = typeof(Canvas))]
     public sealed class ProgressIndicator : RangeBase
     {
         #region Constants and Fields
 
-        /// <summary>The storyboard</summary>
+        /// <summary>The storyboard.</summary>
         public static readonly DependencyProperty ElementStoryboardProperty = DependencyProperty.Register(
             "ElementStoryboard", typeof(Storyboard), typeof(ProgressIndicator));
 
-        /// <summary>The text to display when the progress is indeterminate</summary>
+        /// <summary>The text to display when the progress is indeterminate.</summary>
         public static readonly DependencyProperty IndeterminateTextProperty = DependencyProperty.Register(
             "IndeterminateText", typeof(string), typeof(ProgressIndicator));
 
-        /// <summary>Indicates if the progress is indeterminate</summary>
+        /// <summary>Indicates if the progress is indeterminate.</summary>
         public static readonly DependencyProperty IsIndeterminateProperty = DependencyProperty.Register(
             "IsIndeterminate", typeof(bool), typeof(ProgressIndicator));
 
-        /// <summary>Indicates if the progress is running</summary>
+        /// <summary>Indicates if the progress is running.</summary>
         public static readonly DependencyProperty IsRunningProperty = DependencyProperty.Register(
             "IsRunning", typeof(bool), typeof(ProgressIndicator), new FrameworkPropertyMetadata(IsRunningPropertyChanged));
 
-        /// <summary>The element name</summary>
+        /// <summary>The element name.</summary>
         private const string ElementCanvas = "PART_Canvas";
 
-        /// <summary>The dispatch timer</summary>
+        /// <summary>The dispatch timer.</summary>
         private readonly DispatcherTimer dispatcherTimer;
 
-        /// <summary>The canvas</summary>
+        /// <summary>The canvas.</summary>
         private Canvas canvas;
 
-        /// <summary>The canvas elements</summary>
+        /// <summary>The canvas elements.</summary>
         private Array canvasElements;
 
-        /// <summary>Indicates if the progress runs clockwise</summary>
+        /// <summary>Indicates if the progress runs clockwise.</summary>
         private bool clockwise;
 
-        /// <summary>The index for the progress</summary>
+        /// <summary>The index for the progress.</summary>
         private int index;
 
         #endregion
@@ -204,8 +200,8 @@ namespace System.Windows.Controls
 
         #region Methods
 
-        /// <summary>Stops or starts the progress indicator based on the <see cref="IsRunning" /> property</summary>
-        /// <param name="d">The dependency object</param>
+        /// <summary>Stops or starts the progress indicator based on the <see cref="IsRunning" /> property.</summary>
+        /// <param name="d">The dependency object.</param>
         /// <param name="e">The <see cref="System.Windows.DependencyPropertyChangedEventArgs" /> instance containing the event data.</param>
         private static void IsRunningPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -221,7 +217,7 @@ namespace System.Windows.Controls
             }
         }
 
-        /// <summary>Animates the progress wheel</summary>
+        /// <summary>Animates the progress wheel.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.EventArgs" /> instance containing the event data.</param>
         private void Animate(object sender, EventArgs e)

@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="FileNameInputRule.cs"
-//            project="System.Windows"
-//            assembly="System.Windows"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="FileNameInputRule.cs" project="System.Windows" assembly="System.Windows" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
@@ -30,12 +26,12 @@ namespace System.Windows.ValidationRules
     using System.Windows.Controls;
     using System.Windows.Properties;
 
-    /// <summary>Validates if the input is a filename</summary>
+    /// <summary>Validates if the input is a filename.</summary>
     public class FileNameInputRule : ValidationRule
     {
         #region Properties
 
-        /// <summary>Gets or sets a value indicating whether the filename is required to pass validation</summary>
+        /// <summary>Gets or sets a value indicating whether the filename is required to pass validation.</summary>
         /// <value><see langword="true" /> if the filename is required; otherwise, <see langword="false" />.</value>
         public bool IsRequired { get; set; }
 

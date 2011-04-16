@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="TaskDialogNativeMethods.cs"
-//            project="System.Windows"
-//            assembly="System.Windows"
-//            solution="SevenUpdate"
-//            company="Microsoft Corporation">
+// <copyright file="TaskDialogNativeMethods.cs" project="System.Windows" assembly="System.Windows" solution="SevenUpdate" company="Microsoft Corporation">
 //     Copyright (c) Microsoft Corporation. All rights reserved.
 // </copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
@@ -18,13 +14,13 @@ namespace System.Windows.Dialogs
     /// <summary>Internal class containing most native interop declarations usedthroughout the library.Functions that are not performance intensive belong in this class.</summary>
     internal static class TaskDialogNativeMethods
     {
-        /// <summary>The <see cref="TaskDialog" /> callback</summary>
-        /// <param name="handle">The handle for the dialog</param>
-        /// <param name="msg">The message id</param>
-        /// <param name="parameter">The parameter</param>
-        /// <param name="parameterLength">The length of the parameter</param>
-        /// <param name="data">The data for the callback</param>
-        /// <returns>The result of the <see cref="TaskDialog" /></returns>
+        /// <summary>The <see cref="TaskDialog" /> callback.</summary>
+        /// <param name="handle">The handle for the dialog.</param>
+        /// <param name="msg">The message id.</param>
+        /// <param name="parameter">The parameter.</param>
+        /// <param name="parameterLength">The length of the parameter.</param>
+        /// <param name="data">The data for the callback.</param>
+        /// <returns>The result of the <see cref="TaskDialog" />.</returns>
         internal delegate int TaskDialogCallBack(IntPtr handle, uint msg, IntPtr parameter, IntPtr parameterLength, IntPtr data);
 
         #region Enums
@@ -52,47 +48,47 @@ namespace System.Windows.Dialogs
             CloseButton = 0x0020
         }
 
-        /// <summary>The button return ids</summary>
+        /// <summary>The button return ids.</summary>
         internal enum TaskDialogCommonButtonReturnID
         {
-            /// <summary>The button returned OK</summary>
+            /// <summary>The button returned OK.</summary>
             OK = 1,
 
-            /// <summary>The button returned cancel</summary>
+            /// <summary>The button returned cancel.</summary>
             Cancel = 2,
 
-            /// <summary>The button return abort</summary>
+            /// <summary>The button return abort.</summary>
             Abort = 3,
 
-            /// <summary>The button returned retry</summary>
+            /// <summary>The button returned retry.</summary>
             Retry = 4,
 
-            /// <summary>The button was ignored</summary>
+            /// <summary>The button was ignored.</summary>
             Ignore = 5,
 
-            /// <summary>The button returned yes</summary>
+            /// <summary>The button returned yes.</summary>
             Yes = 6,
 
-            /// <summary>The button returned no</summary>
+            /// <summary>The button returned no.</summary>
             No = 7,
 
-            /// <summary>The button returned close</summary>
+            /// <summary>The button returned close.</summary>
             Close = 8
         }
 
-        /// <summary>The task dialog elements</summary>
+        /// <summary>The task dialog elements.</summary>
         internal enum TaskDialogElement
         {
-            /// <summary>The main portion of the dialog</summary>
+            /// <summary>The main portion of the dialog.</summary>
             Content,
 
-            /// <summary>Content in the expander</summary>
+            /// <summary>Content in the expander.</summary>
             ExpandedInformation,
 
-            /// <summary>The footer of the dialog</summary>
+            /// <summary>The footer of the dialog.</summary>
             Footer,
 
-            /// <summary>The main instructions for the dialog</summary>
+            /// <summary>The main instructions for the dialog.</summary>
             MainInstruction
         }
 
@@ -100,7 +96,7 @@ namespace System.Windows.Dialogs
         [Flags]
         internal enum TaskDialogFlags
         {
-            /// <summary>Empty dialog</summary>
+            /// <summary>Empty dialog.</summary>
             None = 0,
 
             /// <summary>Enables hyperlink processing for the strings specified in the pszContent, pszExpandedInformation and pszFooter members.</summary>
@@ -149,17 +145,17 @@ namespace System.Windows.Dialogs
             NoDefaultRadioButton = 0x4000
         }
 
-        /// <summary>The icon elements for the dialog</summary>
+        /// <summary>The icon elements for the dialog.</summary>
         internal enum TaskDialogIconElement
         {
-            /// <summary>The main icon</summary>
+            /// <summary>The main icon.</summary>
             IconMain,
 
-            /// <summary>The footer icon</summary>
+            /// <summary>The footer icon.</summary>
             IconFooter
         }
 
-        /// <summary>Dialog messages</summary>
+        /// <summary>Dialog messages.</summary>
         internal enum TaskDialogMessage
         {
             /// <summary>Recreates a task dialog with new contents, simulating the functionality of a multi-page wizard.</summary>
@@ -168,7 +164,7 @@ namespace System.Windows.Dialogs
             /// <summary>Simulates the action of a button click in a dialog.</summary>
             ClickButton = NativeMethods.WmUser + 102,
 
-            /// <summary>parameter = 0 (nonMarque) parameter != 0 (Marquee)</summary>
+            /// <summary>Parameter = 0 (nonMarque) parameter != 0 (Marquee).</summary>
             SetMarqueeProgressBar = NativeMethods.WmUser + 103,
 
             /// <summary>Sets the current state of the progress bar.</summary>
@@ -208,7 +204,7 @@ namespace System.Windows.Dialogs
             UpdateIcon = NativeMethods.WmUser + 116
         }
 
-        /// <summary>The notification ids</summary>
+        /// <summary>The notification ids.</summary>
         internal enum TaskDialogNotification
         {
             /// <summary>Sent by a task dialog after the dialog has been created and before it is displayed. This notification code is received only through the task dialog callback function, which can be registered using the TaskDialogIndirect method.</summary>
@@ -245,7 +241,7 @@ namespace System.Windows.Dialogs
             ExpandButtonClicked = 10
         }
 
-        /// <summary>The task dialog main icons</summary>
+        /// <summary>The task dialog main icons.</summary>
         internal enum TaskDialogIcon
         {
             /// <summary>An exclamation-point icon appears in the task dialog.</summary>
@@ -267,8 +263,8 @@ namespace System.Windows.Dialogs
         /// <param name="taskConfig">A pointer to a <see cref="TaskDialogConfig" /> structure that contains information used to display the task dialog.</param>
         /// <param name="button">Address of a variable that receives one of the button IDs specified in the <paramref name="button" /> member of the <paramref name="taskConfig" /> parameter. If this parameter is <see langword="null" />, no value is returned.</param>
         /// <param name="radioButton">Address of a variable that receives one of the button IDs specified in the <paramref name="radioButton" /> member of the <paramref name="taskConfig" /> parameter. If this parameter is <see langword="null" />, no value is returned.</param>
-        /// <param name="verificationFlagChecked"><see langword="true" /> if the verification <see cref="CheckBox" /> was checked when the dialog was dismissed; otherwise, false</param>
-        /// <returns>The result</returns>
+        /// <param name="verificationFlagChecked"><see langword="true" /> if the verification <see cref="CheckBox" /> was checked when the dialog was dismissed; otherwise, <see langword="false" />.</param>
+        /// <returns>The result.</returns>
         [DllImport(@"comctl32.dll", CharSet = CharSet.Unicode, PreserveSig = false)]
         internal static extern Result TaskDialogIndirect(
             [In] TaskDialogConfig taskConfig,
@@ -276,24 +272,24 @@ namespace System.Windows.Dialogs
             [Out] out int radioButton,
             [MarshalAs(UnmanagedType.Bool), Out] out bool verificationFlagChecked);
 
-        /// <summary>Contains the data for a <see cref="TaskDialogIcon" /></summary>
+        /// <summary>Contains the data for a <see cref="TaskDialogIcon" />.</summary>
         [StructLayout(LayoutKind.Explicit, CharSet = CharSet.Auto)]
         internal struct TaskDialogConfigIconUnion
         {
-            /// <summary>The main icon Id to display</summary>
+            /// <summary>The main icon Id to display.</summary>
             [FieldOffset(0)]
             private readonly int MainIcon;
 
-            /// <summary>The footer icon id to display</summary>
+            /// <summary>The footer icon id to display.</summary>
             [FieldOffset(0)]
             private readonly int Icon;
 
-            /// <summary>The pointer to the space</summary>
+            /// <summary>The pointer to the space.</summary>
             [FieldOffset(0)]
             private readonly IntPtr Spacer;
 
             /// <summary>Initializes a new instance of the <see cref="TaskDialogConfigIconUnion" /> struct.</summary>
-            /// <param name="i">The icon identifier</param>
+            /// <param name="i">The icon identifier.</param>
             internal TaskDialogConfigIconUnion(int i)
             {
                 this.Spacer = IntPtr.Zero;
@@ -302,14 +298,14 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>Contains the data for a <see cref="TaskDialogButton" /></summary>
+        /// <summary>Contains the data for a <see cref="TaskDialogButton" />.</summary>
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 4)]
         internal struct TaskDialogButtonData
         {
             /// <summary>Indicates the value to be returned when this button is selected.</summary>
             internal int ButtonID;
 
-            /// <summary>The text to display on the button</summary>
+            /// <summary>The text to display on the button.</summary>
             [MarshalAs(UnmanagedType.LPWStr)]
             internal string ButtonText;
 
@@ -323,7 +319,7 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>Contains information used to display a task dialog</summary>
+        /// <summary>Contains information used to display a task dialog.</summary>
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 4)]
         internal class TaskDialogConfig
         {
@@ -336,7 +332,7 @@ namespace System.Windows.Dialogs
             /// <summary>Handle to the module that contains the icon resource identified by the mainIcon or footerIcon members, and the string resources identified by the windowTitle, mainInstruction, content, verificationText, expandedInformation, expandedControlText, collapsedControlText or footer members.</summary>
             internal IntPtr Instance;
 
-            /// <summary>Specifies the behavior of the task dialog</summary>
+            /// <summary>Specifies the behavior of the task dialog.</summary>
             internal TaskDialogFlags flags;
 
             /// <summary>Specifies the push buttons displayed in the task dialog. If no common buttons are specified and no custom buttons are specified using the buttons and pButtons members, the task dialog will contain the OK button by default.</summary>
@@ -363,7 +359,7 @@ namespace System.Windows.Dialogs
             /// <summary>A pointer to an array of <see cref="TaskDialogButton" /> structures containing the definition of the custom buttons that are to be displayed in the dialog. This array must contain at least the number of entries that are specified by the buttons member.</summary>
             internal IntPtr ButtonCollection;
 
-            /// <summary>The default button for the dialog. This may be any of the values specified in ButtonID members of one of the <see cref="TaskDialogButton" /> structures in the <see cref="ButtonCollection" />, or one of the IDs corresponding to the buttons specified in the <see cref="CommonButtons" /> member</summary>
+            /// <summary>The default button for the dialog. This may be any of the values specified in ButtonID members of one of the <see cref="TaskDialogButton" /> structures in the <see cref="ButtonCollection" />, or one of the IDs corresponding to the buttons specified in the <see cref="CommonButtons" /> member.</summary>
             internal int DefaultButton;
 
             /// <summary>The number of entries in the <see cref="RadioButtonCollection" /> that is used to create radio buttons in the dialog.</summary>

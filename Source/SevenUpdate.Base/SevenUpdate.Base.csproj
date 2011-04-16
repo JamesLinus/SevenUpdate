@@ -90,6 +90,7 @@
     <Compile Include="InstallProgressChangedEventArgs.cs" />
     <Compile Include="LocaleString.cs" />
     <Compile Include="NativeMethods.cs" />
+    <Compile Include="RegistryAction.cs" />
     <Compile Include="RegistryItem.cs" />
     <Compile Include="SearchCompletedEventArgs.cs" />
     <Compile Include="Shortcut.cs" />

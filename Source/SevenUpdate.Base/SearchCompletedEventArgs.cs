@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="SearchCompletedEventArgs.cs"
-//            project="SevenUpdate.Base"
-//            assembly="SevenUpdate.Base"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="SearchCompletedEventArgs.cs" project="SevenUpdate.Base" assembly="SevenUpdate.Base" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
@@ -30,17 +26,17 @@ namespace SevenUpdate
 
     using ProtoBuf;
 
-    /// <summary>Provides event data for the SearchCompleted event</summary>
+    /// <summary>Provides event data for the SearchCompleted event.</summary>
     [ProtoContract, DataContract]
     public sealed class SearchCompletedEventArgs : EventArgs
     {
         #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="SearchCompletedEventArgs" /> class.</summary>
-        /// <param name="applications">The collection of applications to update</param>
-        /// <param name="importantCount">The number of important updates</param>
-        /// <param name="recommendedCount">The number of recommended updates</param>
-        /// <param name="optionalCount">The number of optional updates</param>
+        /// <param name="applications">The collection of applications to update.</param>
+        /// <param name="importantCount">The number of important updates.</param>
+        /// <param name="recommendedCount">The number of recommended updates.</param>
+        /// <param name="optionalCount">The number of optional updates.</param>
         public SearchCompletedEventArgs(IEnumerable<Sui> applications, int importantCount, int recommendedCount, int optionalCount)
         {
             this.Applications = applications;
@@ -58,7 +54,7 @@ namespace SevenUpdate
 
         #region Properties
 
-        /// <summary>Gets a collection of applications that contain updates to install</summary>
+        /// <summary>Gets a collection of applications that contain updates to install.</summary>
         /// <value>The applications.</value>
         [ProtoMember(1), DataMember]
         public IEnumerable<Sui> Applications { get; private set; }

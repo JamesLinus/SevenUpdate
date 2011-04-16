@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="AdornerLabel.cs"
-//            project="System.Windows"
-//            assembly="System.Windows"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="AdornerLabel.cs" project="System.Windows" assembly="System.Windows" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Ben Dewey. All rights reserved.
 // </copyright>
 // <author>Ben Dewey</author>
@@ -28,12 +24,12 @@ namespace System.Windows.Controls
     using System.Windows.Documents;
     using System.Windows.Media;
 
-    /// <summary>The label to display on the <see cref="InfoTextBox" /></summary>
+    /// <summary>The label to display on the <see cref="InfoTextBox" />.</summary>
     public class AdornerLabel : Adorner
     {
         #region Constants and Fields
 
-        /// <summary>The textBlock</summary>
+        /// <summary>The textBlock.</summary>
         private readonly TextBlock textBlock;
 
         #endregion
@@ -55,7 +51,6 @@ namespace System.Windows.Controls
         #region Properties
 
         /// <summary>Gets the number of visual child elements within this element.</summary>
-        /// <value></value>
         /// <returns>The number of visual child elements for this element.</returns>
         protected override int VisualChildrenCount
         {

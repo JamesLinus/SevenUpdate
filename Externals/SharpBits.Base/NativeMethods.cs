@@ -1,9 +1,5 @@
 ﻿// ***********************************************************************
-// <copyright file="NativeMethods.cs"
-//            project="SharpBits.Base"
-//            assembly="SharpBits.Base"
-//            solution="SevenUpdate"
-//            company="Xidar Solutions">
+// <copyright file="NativeMethods.cs" project="SharpBits.Base" assembly="SharpBits.Base" solution="SevenUpdate" company="Xidar Solutions">
 //     Copyright (c) xidar solutions. All rights reserved.
 // </copyright>
 // <author username="xidar">xidar</author>
@@ -28,7 +24,7 @@ namespace SharpBits.Base
         /// <summary>Performs no authentication.</summary>
         None = 1,
 
-        /// <summary>Authenticates the credentials of the client only when the client establishes a relationship with the server</summary>
+        /// <summary>Authenticates the credentials of the client only when the client establishes a relationship with the server.</summary>
         Connect = 2,
 
         /// <summary>Authenticates only at the beginning of each remote procedure call when the server receives the request.</summary>
@@ -78,11 +74,11 @@ namespace SharpBits.Base
         /// <summary>Authenticates distributed reference count calls to prevent malicious users from releasing objects that are still being used. If this flag is set, which can be done only in a call to CoInitializeSecurity by the client, the authentication level (in AuthLevel) cannot be set to none.The server always authenticates Release calls. Setting this flag prevents an authenticated client from releasing the objects of another authenticated client. It is recommended that clients always set this flag, although performance is affected because of the overhead associated with the extra security.</summary>
         SecureRefs = 0x02,
 
-        /// <summary>The application ID</summary>
+        /// <summary>The application ID.</summary>
         [SuppressMessage("Microsoft.Naming", "CA1706:ShortAcronymsShouldBeUppercase", MessageId = "Member", Justification = "Interop")]
         AppID = 0x08,
 
-        /// <summary>Require full</summary>
+        /// <summary>Require full.</summary>
         [SuppressMessage("Microsoft.Naming", "CA1705:LongAcronymsShouldBePascalCased", MessageId = "Member", Justification = "Interop")]
         RequireFullSic = 0x200,
 
@@ -94,25 +90,25 @@ namespace SharpBits.Base
     /// <summary>The version of BITS.</summary>
     internal enum BitsVersion
     {
-        /// <summary>undefined bits version</summary>
+        /// <summary>Undefined bits version.</summary>
         BitsUndefined,
 
-        /// <summary>BITS version 1.0</summary>
+        /// <summary>BITS version 1.0.</summary>
         Bits1,
 
-        /// <summary>BITS version 1.2</summary>
+        /// <summary>BITS version 1.2.</summary>
         Bits1Dot2,
 
-        /// <summary>BITS version 1.5</summary>
+        /// <summary>BITS version 1.5.</summary>
         Bits1Dot5,
 
-        /// <summary>Bits Version 2.0</summary>
+        /// <summary>Bits Version 2.0.</summary>
         Bits2,
 
-        /// <summary>Bits version 2.5</summary>
+        /// <summary>Bits version 2.5.</summary>
         Bits2Dot5,
 
-        /// <summary>Bits version 3.0</summary>
+        /// <summary>Bits version 3.0.</summary>
         Bits3,
     }
 
@@ -122,7 +118,7 @@ namespace SharpBits.Base
         /// <summary>Converts a string-format security identifier (SID) into a valid, functional SID. You can use this function to retrieve a SID that the ConvertSidToStringSid function converted to string format.</summary>
         /// <param name="sid">A pointer to a <see langword="null" />-terminated string containing the string-format SID to convert. The SID string can use either the standard S-R-I-S-S� format for SID strings, or the SID string constant format, such as "BA" for built-in administrators.</param>
         /// <param name="sidPointer">A pointer to a variable that receives a pointer to the converted SID. To free the returned buffer, call the LocalFree function.</param>
-        /// <returns><see langword="true" /> if function succecced</returns>
+        /// <returns><see langword="true" /> if function succecced.</returns>
         [DllImport(@"advapi32.dll", CharSet = CharSet.Unicode)]
         [return: MarshalAsAttribute(UnmanagedType.Bool)]
         internal static extern bool ConvertStringSidToSidW(string sid, ref IntPtr sidPointer);
@@ -135,7 +131,7 @@ namespace SharpBits.Base
         /// <param name="referencedDomainName">A pointer to a buffer that receives a <see langword="null" />-terminated string that contains the name of the domain where the account name was found.</param>
         /// <param name="domainNameSize">On input, specifies the size, of the <paramref name="referencedDomainName" /> buffer. If the function fails because the buffer is too small or if <paramref name="referencedDomainName" /> is zero, <paramref name="referencedDomainName" /> receives the required buffer size, including the terminating <see langword="null" /> character.</param>
         /// <param name="use">A pointer to a variable that receives a SidNameUse value that indicates the type of the account.</param>
-        /// <returns><see langword="true" /> if function succecced</returns>
+        /// <returns><see langword="true" /> if function succecced.</returns>
         [DllImport(@"advapi32.dll", CharSet = CharSet.Unicode)]
         [return: MarshalAsAttribute(UnmanagedType.Bool)]
         internal static extern bool LookupAccountSidW(

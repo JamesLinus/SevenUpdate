@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="Margins.cs"
-//            project="System.Windows"
-//            assembly="System.Windows"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="Margins.cs" project="System.Windows" assembly="System.Windows" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
@@ -31,7 +27,7 @@ namespace System.Windows.Internal
     public struct Margins
     {
         /// <summary>Initializes a new instance of the <see cref="Margins" /> struct.</summary>
-        /// <param name="fullWindow">if set to <see langword="true" /> the margin is set to the full window.</param>
+        /// <param name="fullWindow">If set to <see langword="true" /> the margin is set to the full window.</param>
         public Margins(bool fullWindow)
             : this()
         {

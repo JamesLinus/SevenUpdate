@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="TaskDialogProgressBar.cs"
-//            project="System.Windows"
-//            assembly="System.Windows"
-//            solution="SevenUpdate"
-//            company="Microsoft Corporation">
+// <copyright file="TaskDialogProgressBar.cs" project="System.Windows" assembly="System.Windows" solution="SevenUpdate" company="Microsoft Corporation">
 //     Copyright (c) Microsoft Corporation. All rights reserved.
 // </copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
@@ -16,13 +12,13 @@ namespace System.Windows.Dialogs
     {
         #region Constants and Fields
 
-        /// <summary>The maximum value</summary>
+        /// <summary>The maximum value.</summary>
         private int maximum = TaskDialogDefaults.ProgressBarMaximumValue;
 
-        /// <summary>The minimum value</summary>
+        /// <summary>The minimum value.</summary>
         private int minimum = TaskDialogDefaults.ProgressBarMinimumValue;
 
-        /// <summary>The progress bar value</summary>
+        /// <summary>The progress bar value.</summary>
         private int value = TaskDialogDefaults.ProgressBarMinimumValue;
 
         #endregion

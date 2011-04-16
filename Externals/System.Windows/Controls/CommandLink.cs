@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="CommandLink.cs"
-//            project="System.Windows"
-//            assembly="System.Windows"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="CommandLink.cs" project="System.Windows" assembly="System.Windows" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
@@ -31,14 +27,14 @@ namespace System.Windows.Controls
     {
         #region Constants and Fields
 
-        /// <summary>The text to display below the main instruction text</summary>
+        /// <summary>The text to display below the main instruction text.</summary>
         public static readonly DependencyProperty NoteProperty = DependencyProperty.Register(
             "Note",
             typeof(string),
             typeof(CommandLink),
             new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.AffectsRender, OnNoteChanged));
 
-        /// <summary>Indicates if the Uac shield is needed</summary>
+        /// <summary>Indicates if the Uac shield is needed.</summary>
         public static readonly DependencyProperty UseShieldProperty = DependencyProperty.Register(
             "UseShield",
             typeof(bool),
@@ -72,14 +68,14 @@ namespace System.Windows.Controls
 
         #region Events
 
-        /// <summary>Occurs when a property has changed</summary>
+        /// <summary>Occurs when a property has changed.</summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
 
         #region Properties
 
-        /// <summary>Gets or sets the supporting text to display on the <see cref="CommandLink" /> below the instruction text</summary>
+        /// <summary>Gets or sets the supporting text to display on the <see cref="CommandLink" /> below the instruction text.</summary>
         public string Note
         {
             get
@@ -112,8 +108,8 @@ namespace System.Windows.Controls
 
         #region Methods
 
-        /// <summary>Handles a change to the <see cref="Note" /> property</summary>
-        /// <param name="obj">The dependency object</param>
+        /// <summary>Handles a change to the <see cref="Note" /> property.</summary>
+        /// <param name="obj">The dependency object.</param>
         /// <param name="e">The <see cref="System.Windows.DependencyPropertyChangedEventArgs" /> instance containing the event data.</param>
         private static void OnNoteChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
@@ -122,8 +118,8 @@ namespace System.Windows.Controls
             me.OnPropertyChanged("Note");
         }
 
-        /// <summary>Handles a change to the <see cref="UseShield" /> property</summary>
-        /// <param name="obj">The dependency object</param>
+        /// <summary>Handles a change to the <see cref="UseShield" /> property.</summary>
+        /// <param name="obj">The dependency object.</param>
         /// <param name="e">The <see cref="System.Windows.DependencyPropertyChangedEventArgs" /> instance containing the event data.</param>
         private static void OnUseShieldChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
@@ -132,8 +128,8 @@ namespace System.Windows.Controls
             me.OnPropertyChanged("UseShield");
         }
 
-        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged" /> Event</summary>
-        /// <param name="name">The name of the property that has changed</param>
+        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged" /> Event.</summary>
+        /// <param name="name">The name of the property that has changed.</param>
         private void OnPropertyChanged(string name)
         {
             var handler = this.PropertyChanged;

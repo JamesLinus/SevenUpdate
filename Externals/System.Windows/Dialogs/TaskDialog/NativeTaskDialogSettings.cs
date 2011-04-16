@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="NativeTaskDialogSettings.cs"
-//            project="System.Windows"
-//            assembly="System.Windows"
-//            solution="SevenUpdate"
-//            company="Microsoft Corporation">
+// <copyright file="NativeTaskDialogSettings.cs" project="System.Windows" assembly="System.Windows" solution="SevenUpdate" company="Microsoft Corporation">
 //     Copyright (c) Microsoft Corporation. All rights reserved.
 // </copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
@@ -19,10 +15,10 @@ namespace System.Windows.Dialogs
     {
         #region Constants and Fields
 
-        /// <summary>A collection of <see cref="TaskDialogButton" /></summary>
+        /// <summary>A collection of <see cref="TaskDialogButton" />.</summary>
         private TaskDialogNativeMethods.TaskDialogButtonData[] buttons;
 
-        /// <summary>/// A collection of <see cref="TaskDialogRadioButton" /></summary>
+        /// <summary>A collection of <see cref="TaskDialogRadioButton" />.</summary>
         private TaskDialogNativeMethods.TaskDialogButtonData[] radioButtons;
 
         #endregion
@@ -96,14 +92,14 @@ namespace System.Windows.Dialogs
         #region Public Methods
 
         /// <summary>Gets the buttons.</summary>
-        /// <returns>The collection of <see cref="TaskDialogButton" />'s of the dialog dialog</returns>
+        /// <returns>The collection of <see cref="TaskDialogButton" />'s of the dialog dialog.</returns>
         public TaskDialogNativeMethods.TaskDialogButtonData[] GetButtons()
         {
             return this.buttons;
         }
 
         /// <summary>Gets the radio buttons.</summary>
-        /// <returns>The collection of <see cref="TaskDialogRadioButton" />'s of the dialog dialog</returns>
+        /// <returns>The collection of <see cref="TaskDialogRadioButton" />'s of the dialog dialog.</returns>
         public TaskDialogNativeMethods.TaskDialogButtonData[] GetRadioButtons()
         {
             return this.radioButtons;

@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="UpdateStatusToStringConverter.cs"
-//            project="SevenUpdate"
-//            assembly="SevenUpdate"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="UpdateStatusToStringConverter.cs" project="SevenUpdate" assembly="SevenUpdate" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
@@ -22,7 +18,7 @@
 // </license>
 // <summary>
 //   Converts the update status to a localized string
-// </summary>
+// .</summary>
 // ***********************************************************************
 
 namespace SevenUpdate.Converters
@@ -34,7 +30,7 @@ namespace SevenUpdate.Converters
 
     using SevenUpdate.Properties;
 
-    /// <summary>Converts the update status to a localized string</summary>
+    /// <summary>Converts the update status to a localized string.</summary>
     [ValueConversion(typeof(UpdateStatus), typeof(string))]
     internal sealed class UpdateStatusToStringConverter : IValueConverter
     {
@@ -42,12 +38,12 @@ namespace SevenUpdate.Converters
 
         #region IValueConverter
 
-        /// <summary>Converts a object into another object</summary>
+        /// <summary>Converts a object into another object.</summary>
         /// <param name="value">The value produced by the binding source.</param>
         /// <param name="targetType">The type of the binding target property.</param>
         /// <param name="parameter">The converter parameter to use.</param>
         /// <param name="culture">The culture to use in the converter.</param>
-        /// <returns>the converted object</returns>
+        /// <returns>The converted object.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             switch (value is UpdateStatus ? (UpdateStatus)value : UpdateStatus.Successful)
@@ -64,12 +60,12 @@ namespace SevenUpdate.Converters
             }
         }
 
-        /// <summary>Converts a converted object back into it's original form</summary>
+        /// <summary>Converts a converted object back into it's original form.</summary>
         /// <param name="value">The value that is produced by the binding target.</param>
         /// <param name="targetType">The type to convert to.</param>
         /// <param name="parameter">The converter parameter to use.</param>
         /// <param name="culture">The culture to use in the converter.</param>
-        /// <returns>The original object</returns>
+        /// <returns>The original object.</returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return DependencyProperty.UnsetValue;

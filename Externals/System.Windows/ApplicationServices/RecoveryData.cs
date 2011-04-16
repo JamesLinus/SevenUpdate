@@ -1,9 +1,5 @@
 ﻿// ***********************************************************************
-// <copyright file="RecoveryData.cs"
-//            project="System.Windows"
-//            assembly="System.Windows"
-//            solution="SevenUpdate"
-//            company="Microsoft Corporation">
+// <copyright file="RecoveryData.cs" project="System.Windows" assembly="System.Windows" solution="SevenUpdate" company="Microsoft Corporation">
 //     Copyright (c) Microsoft Corporation. All rights reserved.
 // </copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
@@ -13,7 +9,7 @@ namespace System.Windows.ApplicationServices
 {
     /// <summary>The <see cref="System.Delegate" /> that represents the callback method invokedby the system when an application has registered for application recovery.</summary>
     /// <param name="state">An application-defined state object that is passed to the callback method.</param>
-    /// <returns>The result code</returns>
+    /// <returns>The result code.</returns>
     /// <remarks>The callback method will be invokedprior to the application being terminated by Windows Error Reporting (WER). To keep WER from terminating the application before the callback method completes, the callback method mustperiodically call the <see cref="ApplicationRestartRecoveryManager.ApplicationRecoveryInProgress" /> method.</remarks>
     /// <seealso cref="ApplicationRestartRecoveryManager.RegisterForApplicationRecovery(RecoverySettings)" />
     public delegate int RecoveryCallback(object state);

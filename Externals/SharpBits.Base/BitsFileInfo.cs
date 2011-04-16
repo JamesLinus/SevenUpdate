@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="BitsFileInfo.cs"
-//            project="SharpBits.Base"
-//            assembly="SharpBits.Base"
-//            solution="SevenUpdate"
-//            company="Xidar Solutions">
+// <copyright file="BitsFileInfo.cs" project="SharpBits.Base" assembly="SharpBits.Base" solution="SevenUpdate" company="Xidar Solutions">
 //     Copyright (c) xidar solutions. All rights reserved.
 // </copyright>
 // <author username="xidar">xidar</author>
@@ -13,7 +9,7 @@
 
 namespace SharpBits.Base
 {
-    /// <summary>The file info for the <see cref="BitsFile" /></summary>
+    /// <summary>The file info for the <see cref="BitsFile" />.</summary>
     public class BitsFileInfo
     {
         #region Constructors and Destructors
@@ -37,7 +33,7 @@ namespace SharpBits.Base
 
         #region Properties
 
-        /// <summary>Gets the local file name</summary>
+        /// <summary>Gets the local file name.</summary>
         /// <value>The name of the local.</value>
         public string LocalName
         {
@@ -47,7 +43,7 @@ namespace SharpBits.Base
             }
         }
 
-        /// <summary>Gets the remote file name</summary>
+        /// <summary>Gets the remote file name.</summary>
         public string RemoteName
         {
             get

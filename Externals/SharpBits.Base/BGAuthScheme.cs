@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="BGAuthScheme.cs"
-//            project="SharpBits.Base"
-//            assembly="SharpBits.Base"
-//            solution="SevenUpdate"
-//            company="Xidar Solutions">
+// <copyright file="BGAuthScheme.cs" project="SharpBits.Base" assembly="SharpBits.Base" solution="SevenUpdate" company="Xidar Solutions">
 //     Copyright (c) xidar solutions. All rights reserved.
 // </copyright>
 // <author username="xidar">xidar</author>
@@ -13,7 +9,7 @@
 
 namespace SharpBits.Base
 {
-    /// <summary>Authentication scheme used for the background job</summary>
+    /// <summary>Authentication scheme used for the background job.</summary>
     internal enum BGAuthScheme
     {
         /// <summary>Basic is a scheme in which the user name and password are sent in clear-text to the server or proxy.</summary>

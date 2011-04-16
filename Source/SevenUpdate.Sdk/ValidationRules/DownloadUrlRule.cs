@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="DownloadUrlRule.cs"
-//            project="SevenUpdate.Sdk"
-//            assembly="SevenUpdate.Sdk"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="DownloadUrlRule.cs" project="SevenUpdate.Sdk" assembly="SevenUpdate.Sdk" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
@@ -32,7 +28,7 @@ namespace SevenUpdate.Sdk.ValidationRules
     using System.Windows.Controls;
     using System.Windows.Properties;
 
-    /// <summary>Validates if the input is a url</summary>
+    /// <summary>Validates if the input is a url.</summary>
     [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", Justification = "Validation Rule")]
     public class DownloadUrlRule : ValidationRule
     {

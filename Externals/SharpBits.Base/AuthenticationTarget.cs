@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="AuthenticationTarget.cs"
-//            project="SharpBits.Base"
-//            assembly="SharpBits.Base"
-//            solution="SevenUpdate"
-//            company="Xidar Solutions">
+// <copyright file="AuthenticationTarget.cs" project="SharpBits.Base" assembly="SharpBits.Base" solution="SevenUpdate" company="Xidar Solutions">
 //     Copyright (c) xidar solutions. All rights reserved.
 // </copyright>
 // <author username="xidar">xidar</author>
@@ -16,7 +12,7 @@ namespace SharpBits.Base
     /// <summary>The AuthenticationTarget enumeration defines the constant values that specify whether the credentials are used for proxy or server user authentication requests.</summary>
     public enum AuthenticationTarget
     {
-        /// <summary>Use no credentials</summary>
+        /// <summary>Use no credentials.</summary>
         None = 0,
 
         /// <summary>Use credentials for server requests.</summary>

@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="NativeMethods.cs"
-//            project="System.Windows"
-//            assembly="System.Windows"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="NativeMethods.cs" project="System.Windows" assembly="System.Windows" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
@@ -26,12 +22,12 @@ namespace System.Windows.Internal
 {
     using System.Runtime.InteropServices;
 
-    /// <summary>Wrappers for Native Methods and Structs. This type is intended for internal use only</summary>
+    /// <summary>Wrappers for Native Methods and Structs. This type is intended for internal use only.</summary>
     public static class NativeMethods
     {
         #region Constants
 
-        /// <summary>Various important window messages</summary>
+        /// <summary>Various important window messages.</summary>
         internal const int WmUser = 0x0400;
 
         /// <summary>Enable/disable non-client rendering based on window style.</summary>
@@ -52,18 +48,18 @@ namespace System.Windows.Internal
         /// <summary>Potentially enable/forcibly disable transitions 0 or 1.</summary>
         internal const int TransitionsForceDisabled = 3;
 
-        /// <summary>Enable blur behind</summary>
+        /// <summary>Enable blur behind.</summary>
         internal const int BlurBehindEnable = 0x00000001;
 
-        /// <summary>The blur region has been specified</summary>
+        /// <summary>The blur region has been specified.</summary>
         internal const int BlurRegion = 0x00000002;
 
-        /// <summary>TransitionOnMaximized has been specified</summary>
+        /// <summary>TransitionOnMaximized has been specified.</summary>
         internal const int TransitionOnMaximized = 0x00000004;
 
         #endregion
 
-        /// <summary>Gets a value indicating whether if the current logged in user is an admin</summary>
+        /// <summary>Gets a value indicating whether if the current logged in user is an admin.</summary>
         public static bool IsUserAdmin
         {
             get
@@ -89,7 +85,7 @@ namespace System.Windows.Internal
         [return: MarshalAs(UnmanagedType.U4)]
         internal static extern int DwmEnableBlurBehindWindow(IntPtr handle, ref DwmBlurBehind bb);
 
-        /// <summary>Extends glass into the client area</summary>
+        /// <summary>Extends glass into the client area.</summary>
         /// <param name="handle">The handle to the window for which the frame is extended into the client area.</param>
         /// <param name="margins">A pointer to a Margins structure that describes the margins to use when extending the frame into the client area.</param>
         /// <returns>If function succeeds, it returns S_OK. Otherwise, it returns an <see cref="Result" /> error code..</returns>
@@ -98,13 +94,13 @@ namespace System.Windows.Internal
         internal static extern int DwmExtendFrameIntoClientArea(IntPtr handle, ref Margins margins);
 
         /// <summary>Gets a value that indicates whether Desktop Window Manager (DWM) composition is enabled. Applications can listen for composition state changes by handling the WM_DWMCOMPOSITIONCHANGED notification.</summary>
-        /// <returns><see langword="true" /> if composition is enabled; otherwise, <see langword="false" /></returns>
+        /// <returns><see langword="true" /> if composition is enabled; otherwise, <see langword="false" />.</returns>
         [DllImport(@"DwmApi.dll", PreserveSig = false)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool DwmIsCompositionEnabled();
 
         /// <summary>Enables or disables Desktop Window Manager (DWM) composition.</summary>
-        /// <param name="enable">if set to <see langword="true" /> DWM will be enabled</param>
+        /// <param name="enable">If set to <see langword="true" /> DWM will be enabled.</param>
         /// <returns>If function succeeds, it returns S_OK. Otherwise, it returns an <see cref="Result" /> error code.</returns>
         [DllImport(@"DwmApi.dll", PreserveSig = false)]
         [return: MarshalAs(UnmanagedType.U4)]
@@ -113,7 +109,7 @@ namespace System.Windows.Internal
         /// <summary>Retrieves the dimensions of the bounding rectangle of the specified window. The dimensions are given in screen coordinates that are relative to the upper-left corner of the screen.</summary>
         /// <param name="handle">A handle to the window.</param>
         /// <param name="rect">A pointer to a <see cref="Rect" /> structure that receives the screen coordinates of the upper-left and lower-right corners of the window.</param>
-        /// <returns><see langword="true" /> if successful</returns>
+        /// <returns><see langword="true" /> if successful.</returns>
         [DllImport(@"user32.dll", CharSet = CharSet.Auto)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool GetWindowRect(IntPtr handle, ref Rect rect);
@@ -121,7 +117,7 @@ namespace System.Windows.Internal
         /// <summary>Retrieves the coordinates of a window's client area. The client coordinates specify the upper-left and lower-right corners of the client area. Because client coordinates are relative to the upper-left corner of a window's client area, the coordinates of the upper-left corner are (0,0).</summary>
         /// <param name="handle">A handle to the window whose client coordinates are to be retrieved.</param>
         /// <param name="rect">A pointer to a <see cref="Rect" /> structure that receives the client coordinates. The left and top members are zero. The right and bottom members contain the width and height of the window.</param>
-        /// <returns><see langword="true" /> if successful</returns>
+        /// <returns><see langword="true" /> if successful.</returns>
         [DllImport(@"user32.dll", CharSet = CharSet.Auto)]
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool GetClientRect(IntPtr handle, ref Rect rect);

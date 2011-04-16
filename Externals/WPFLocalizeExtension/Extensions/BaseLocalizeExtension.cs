@@ -1,9 +1,5 @@
 ﻿// ***********************************************************************
-// <copyright file="BaseLocalizeExtension.cs"
-//            project="WPFLocalizeExtension"
-//            assembly="WPFLocalizeExtension"
-//            solution="SevenUpdate"
-//            company="Bernhard Millauer">
+// <copyright file="BaseLocalizeExtension.cs" project="WPFLocalizeExtension" assembly="WPFLocalizeExtension" solution="SevenUpdate" company="Bernhard Millauer">
 //     Copyright (c) Bernhard Millauer. All rights reserved.
 // </copyright>
 // <author username="SeriousM">Bernhard Millauer</author>
@@ -26,26 +22,26 @@ namespace WPFLocalizeExtension.Extensions
     using WPFLocalizeExtension.Engine;
 
     /// <summary>Implements the BaseLocalizeExtension.Represents a LocalizationExtension which provides a localized object of a .resx dictionary.</summary>
-    /// <typeparam name="TValue">The Markup extension to use</typeparam>
+    /// <typeparam name="TValue">The Markup extension to use.</typeparam>
     /// <remarks>If a content between two tags in xaml is set, this has the higher priority and will overwrite the settled properties</remarks>
     [MarkupExtensionReturnType(typeof(object)), ContentProperty("ResourceIdentifierKey")]
     public abstract class BaseLocalizeExtension<TValue> : MarkupExtension, IWeakEventListener, INotifyPropertyChanged
     {
         #region Constants and Fields
 
-        /// <summary>Holds the collection of assigned dependency objects as WeakReferences</summary>
+        /// <summary>Holds the collection of assigned dependency objects as WeakReferences.</summary>
         private readonly Dictionary<WeakReference, object> targetObjects;
 
-        /// <summary>Holds the name of the Assembly where the .resx is located</summary>
+        /// <summary>Holds the name of the Assembly where the .resx is located.</summary>
         private string assembly;
 
-        /// <summary>The current value</summary>
+        /// <summary>The current value.</summary>
         private TValue currentValue;
 
-        /// <summary>Holds the Name of the .resx dictionary.If it's <see langword="null" />, "Resources" will get returned</summary>
+        /// <summary>Holds the Name of the .resx dictionary.If it's <see langword="null" />, "Resources" will get returned.</summary>
         private string dict;
 
-        /// <summary>Holds the Key to a .resx object</summary>
+        /// <summary>Holds the Key to a .resx object.</summary>
         private string key;
 
         #endregion
@@ -60,7 +56,7 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>Initializes a new instance of the <see cref="BaseLocalizeExtension{TValue}" /> class. Initializes a new instance of the BaseLocalizeExtension class.</summary>
-        /// <param name="key">Three types are supported:Direct: passed key = key;Dictionary/Key pair: this have to be separated like ResXDictionaryName:<see cref="ResourceKey" />Assembly/Dictionary/Key pair: this have to be separated like ResXDictionaryName:<see cref="ResourceKey" /></param>
+        /// <param name="key">Three types are supported:Direct: passed key = key;Dictionary/Key pair: this have to be separated like ResXDictionaryName:<see cref="ResourceKey" />Assembly/Dictionary/Key pair: this have to be separated like ResXDictionaryName:<see cref="ResourceKey" />.</param>
         /// <remarks>This constructor register the <see cref="EventHandler" /><c>OnCultureChanged</c> on <c>LocalizeDictionary</c> to get an acknowledge of changing the culture</remarks>
         protected BaseLocalizeExtension(string key)
             : this()
@@ -96,15 +92,15 @@ namespace WPFLocalizeExtension.Extensions
             }
         }
 
-        /// <summary>Gets or sets the culture to force a fixed localized object</summary>
+        /// <summary>Gets or sets the culture to force a fixed localized object.</summary>
         public string ForceCulture { get; set; }
 
-        /// <summary>Gets or sets the initialize value.This is ONLY used to support the localize extension in blend!</summary>
+        /// <summary>Gets or sets the initialize value.This is ONLY used to support the localize extension in blend!.</summary>
         /// <value>The initialize value.</value>
         [EditorBrowsable(EditorBrowsableState.Never), ConstructorArgument("key")]
         public string InitializeValue { get; set; }
 
-        /// <summary>Gets or sets the Key that identifies a resource (Assembly:Dictionary:Key)</summary>
+        /// <summary>Gets or sets the Key that identifies a resource (Assembly:Dictionary:Key).</summary>
         [EditorBrowsable(EditorBrowsableState.Never)]
         public string ResourceIdentifierKey
         {
@@ -128,7 +124,7 @@ namespace WPFLocalizeExtension.Extensions
             }
         }
 
-        /// <summary>Gets or sets the name of the Assembly where the .resx is located.If it's <see langword="null" />, the executing assembly (where this LocalizeEngine is located at) will get returned</summary>
+        /// <summary>Gets or sets the name of the Assembly where the .resx is located.If it's <see langword="null" />, the executing assembly (where this LocalizeEngine is located at) will get returned.</summary>
         protected string Assembly
         {
             get
@@ -143,7 +139,7 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>Gets the current <see cref="CultureInfo" />, otherwise LocalizeDictionary.Culture will get returned.</summary>
-        /// <returns>The <see cref="CultureInfo" /></returns>
+        /// <returns>The <see cref="CultureInfo" />.</returns>
         /// <exception cref="System.ArgumentException">thrown if the parameter Culture don't defines a valid <see cref="CultureInfo" /></exception>
         protected CultureInfo Culture
         {
@@ -187,7 +183,7 @@ namespace WPFLocalizeExtension.Extensions
         [DesignOnly(true)]
         protected object DesignValue { get; set; }
 
-        /// <summary>Gets or sets the Name of the .resx dictionary.If it's <see langword="null" />, "Resources" will get returned</summary>
+        /// <summary>Gets or sets the Name of the .resx dictionary.If it's <see langword="null" />, "Resources" will get returned.</summary>
         protected string Dictionary
         {
             get
@@ -201,7 +197,7 @@ namespace WPFLocalizeExtension.Extensions
             }
         }
 
-        /// <summary>Gets or sets the Key to a .resx object</summary>
+        /// <summary>Gets or sets the Key to a .resx object.</summary>
         protected string Key
         {
             get
@@ -219,9 +215,9 @@ namespace WPFLocalizeExtension.Extensions
 
         #region Public Methods
 
-        /// <summary>Provides the Value for the first Binding</summary>
-        /// <param name="serviceProvider">The <see cref="System.Windows.Markup.IProvideValueTarget" /> provided from the <see cref="MarkupExtension" /></param>
-        /// <returns>The found item from the .resx directory or <see langword="null" /> if not found</returns>
+        /// <summary>Provides the Value for the first Binding.</summary>
+        /// <param name="serviceProvider">The <see cref="System.Windows.Markup.IProvideValueTarget" /> provided from the <see cref="MarkupExtension" />.</param>
+        /// <returns>The found item from the .resx directory or <see langword="null" /> if not found.</returns>
         /// <remarks>This method register the <see cref="EventHandler" /><c>OnCultureChanged</c> on <c>LocalizeDictionary</c> to get an acknowledge of changing the culture, if the passed <see cref="TargetObjects" /> type of <see cref="DependencyObject" />.!PROOF: On every single <see cref="UserControl" />, Window, and Page, there is a new SharedDP reference, and so there is every time a new <c>BaseLocalizeExtension</c>!Because of this, we don't need to notify every single DependencyObjects to update their value (for GC).</remarks>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
@@ -341,8 +337,8 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>Sets a binding between a <see cref="DependencyObject" /> with its <see cref="DependencyProperty" />or <see cref="PropertyInfo" /> and the <c>BaseLocalizeExtension</c>.</summary>
-        /// <param name="targetObject">The target dependency object</param>
-        /// <param name="targetProperty">The target dependency property</param>
+        /// <param name="targetObject">The target dependency object.</param>
+        /// <param name="targetProperty">The target dependency property.</param>
         /// <returns><see langword="true" /> if the binding was setup successfully, otherwise <see langword="false" /> (Binding already exists).</returns>
         /// <exception cref="ArgumentException">If the <paramref name="targetProperty" /> isnot a <see cref="DependencyProperty" /> or <see cref="PropertyInfo" />.</exception>
         public bool SetBinding(DependencyObject targetObject, object targetProperty)
@@ -387,8 +383,8 @@ namespace WPFLocalizeExtension.Extensions
             return false;
         }
 
-        /// <summary>Returns the Key that identifies a resource (Assembly:Dictionary:Key)</summary>
-        /// <returns>Format: Assembly:Dictionary:Key</returns>
+        /// <summary>Returns the Key that identifies a resource (Assembly:Dictionary:Key).</summary>
+        /// <returns>Format: Assembly:Dictionary:Key.</returns>
         public override sealed string ToString()
         {
             return base.ToString() + " -> " + this.ResourceIdentifierKey;
@@ -469,9 +465,9 @@ namespace WPFLocalizeExtension.Extensions
             // otherwise call the same method again with the base type
         }
 
-        /// <summary>This method is used to modify the passed object into the target format</summary>
-        /// <param name="input">The object that will be modified</param>
-        /// <returns>Returns the modified object</returns>
+        /// <summary>This method is used to modify the passed object into the target format.</summary>
+        /// <param name="input">The object that will be modified.</param>
+        /// <returns>Returns the modified object.</returns>
         protected abstract object FormatOutput(object input);
 
         /// <summary>This method gets the new value for the target property and call <see cref="SetNewValue" />.</summary>
@@ -481,7 +477,7 @@ namespace WPFLocalizeExtension.Extensions
             this.SetNewValue(Localize.Instance.GetLocalizedObject<object>(this.Assembly, this.Dictionary, this.Key, this.Culture));
         }
 
-        /// <summary>This method will be called through the interface, passed to theLocalizeDictionary. LocalizeDictionary.<see cref="Localize.WeakCultureChangedEventManager" /> to get notified on culture changed</summary>
+        /// <summary>This method will be called through the interface, passed to theLocalizeDictionary. LocalizeDictionary.<see cref="Localize.WeakCultureChangedEventManager" /> to get notified on culture changed.</summary>
         /// <param name="managerType">The manager Type.</param>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The event argument.</param>
@@ -491,8 +487,8 @@ namespace WPFLocalizeExtension.Extensions
             return ((IWeakEventListener)this).ReceiveWeakEvent(managerType, sender, e);
         }
 
-        /// <summary>Set the Value of the <see cref="DependencyProperty" /> to the passed Value</summary>
-        /// <param name="newValue">The new Value</param>
+        /// <summary>Set the Value of the <see cref="DependencyProperty" /> to the passed Value.</summary>
+        /// <param name="newValue">The new Value.</param>
         protected void SetNewValue(object newValue)
         {
             // set the new value to the current value, if its the type of TValue

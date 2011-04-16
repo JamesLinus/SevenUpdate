@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="GlobalSuppressions.cs"
-//            project="SevenUpdate.Base"
-//            assembly="SevenUpdate.Base"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="GlobalSuppressions.cs" project="SevenUpdate.Base" assembly="SevenUpdate.Base" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
@@ -29,7 +25,7 @@
 // Error List, point to "Suppress Message(s)", and click 
 // "In Project Suppression File".
 // You do not need to add suppressions to this file manually.
-// </summary>
+// .</summary>
 // ***********************************************************************
 using System.Diagnostics.CodeAnalysis;
 

@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="BitsFile.cs"
-//            project="SharpBits.Base"
-//            assembly="SharpBits.Base"
-//            solution="SevenUpdate"
-//            company="Xidar Solutions">
+// <copyright file="BitsFile.cs" project="SharpBits.Base" assembly="SharpBits.Base" solution="SevenUpdate" company="Xidar Solutions">
 //     Copyright (c) xidar solutions. All rights reserved.
 // </copyright>
 // <author username="xidar">xidar</author>
@@ -17,21 +13,21 @@ namespace SharpBits.Base
     using System.Collections.ObjectModel;
     using System.Runtime.InteropServices;
 
-    /// <summary>A file that can be added to a <see cref="BitsJob" /></summary>
+    /// <summary>A file that can be added to a <see cref="BitsJob" />.</summary>
     public sealed partial class BitsFile : IDisposable
     {
         #region Constants and Fields
 
-        /// <summary>The current job</summary>
+        /// <summary>The current job.</summary>
         private readonly BitsJob job;
 
-        /// <summary>Indicates if the file has been disposed</summary>
+        /// <summary>Indicates if the file has been disposed.</summary>
         private bool disposed;
 
-        /// <summary>The current <see cref="BitsFile" /></summary>
+        /// <summary>The current <see cref="BitsFile" />.</summary>
         private IBackgroundCopyFile file;
 
-        /// <summary>The current <see cref="BitsFile" /> progress</summary>
+        /// <summary>The current <see cref="BitsFile" /> progress.</summary>
         private FileProgress progress;
 
         #endregion
@@ -39,8 +35,8 @@ namespace SharpBits.Base
         #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="BitsFile" /> class.</summary>
-        /// <param name="job">The current job</param>
-        /// <param name="file">The current file within the job</param>
+        /// <param name="job">The current job.</param>
+        /// <param name="file">The current file within the job.</param>
         internal BitsFile(BitsJob job, IBackgroundCopyFile file)
         {
             if (null == file)
@@ -57,8 +53,8 @@ namespace SharpBits.Base
 
         #region Properties
 
-        /// <summary>Gets the local name of the file</summary>
-        /// <value>The filename of the local file</value>
+        /// <summary>Gets the local name of the file.</summary>
+        /// <value>The filename of the local file.</value>
         public string LocalName
         {
             get
@@ -101,8 +97,8 @@ namespace SharpBits.Base
             }
         }
 
-        /// <summary>Gets or sets the remote name of the file</summary>
-        /// <value>The remote name of the file</value>
+        /// <summary>Gets or sets the remote name of the file.</summary>
+        /// <value>The remote name of the file.</value>
         public string RemoteName
         {
             get
@@ -160,7 +156,7 @@ namespace SharpBits.Base
 
         #region Methods
 
-        /// <summary>Releases unmanaged and - optionally - managed resources</summary>
+        /// <summary>Releases unmanaged and - optionally - managed resources.</summary>
         /// <param name="disposing"><see langword="true" /> to release both managed and unmanaged resources; <see langword="false" /> to release only unmanaged resources.</param>
         private void Dispose(bool disposing)
         {
@@ -183,12 +179,12 @@ namespace SharpBits.Base
         #endregion
     }
 
-    /// <summary>A file that can be added to a <see cref="BitsJob" /></summary>
+    /// <summary>A file that can be added to a <see cref="BitsJob" />.</summary>
     public sealed partial class BitsFile
     {
         #region Constants and Fields
 
-        /// <summary>The file to download</summary>
+        /// <summary>The file to download.</summary>
         private readonly IBackgroundCopyFile2 file2;
 
         #endregion

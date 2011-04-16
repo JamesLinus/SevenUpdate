@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="UpdateReview.xaml.cs"
-//            project="SevenUpdate.Sdk"
-//            assembly="SevenUpdate.Sdk"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="UpdateReview.xaml.cs" project="SevenUpdate.Sdk" assembly="SevenUpdate.Sdk" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
@@ -27,7 +23,7 @@ namespace SevenUpdate.Sdk.Pages
     using System.Windows;
     using System.Windows.Media;
 
-    /// <summary>Interaction logic for UpdateRegistry.xaml</summary>
+    /// <summary>Interaction logic for UpdateRegistry.xaml.</summary>
     public sealed partial class UpdateReview
     {
         #region Constructors and Destructors
@@ -49,7 +45,7 @@ namespace SevenUpdate.Sdk.Pages
 
         #region Methods
 
-        /// <summary>Saves and exports the Project</summary>
+        /// <summary>Saves and exports the Project.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void SaveExportProject(object sender, RoutedEventArgs e)
@@ -57,7 +53,7 @@ namespace SevenUpdate.Sdk.Pages
             Core.SaveProject(true);
         }
 
-        /// <summary>Saves the Project</summary>
+        /// <summary>Saves the Project.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void SaveProject(object sender, RoutedEventArgs e)
@@ -65,7 +61,7 @@ namespace SevenUpdate.Sdk.Pages
             Core.SaveProject();
         }
 
-        /// <summary>Updates the UI based on whether Aero Glass is enabled</summary>
+        /// <summary>Updates the UI based on whether Aero Glass is enabled.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="CompositionChangedEventArgs" /> instance containing the event data.</param>
         private void UpdateUI(object sender, CompositionChangedEventArgs e)

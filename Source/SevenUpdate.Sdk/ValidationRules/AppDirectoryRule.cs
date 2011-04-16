@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="AppDirectoryRule.cs"
-//            project="SevenUpdate.Sdk"
-//            assembly="SevenUpdate.Sdk"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="AppDirectoryRule.cs" project="SevenUpdate.Sdk" assembly="SevenUpdate.Sdk" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
@@ -31,7 +27,7 @@ namespace SevenUpdate.Sdk.ValidationRules
 
     using SevenUpdate.Sdk.Properties;
 
-    /// <summary>Validates a value and determines if the value is a application location</summary>
+    /// <summary>Validates a value and determines if the value is a application location.</summary>
     internal sealed class AppDirectoryRule : ValidationRule
     {
         #region Public Methods

@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="ProxySettings.cs"
-//            project="SharpBits.Base"
-//            assembly="SharpBits.Base"
-//            solution="SevenUpdate"
-//            company="Xidar Solutions">
+// <copyright file="ProxySettings.cs" project="SharpBits.Base" assembly="SharpBits.Base" solution="SevenUpdate" company="Xidar Solutions">
 //     Copyright (c) xidar solutions. All rights reserved.
 // </copyright>
 // <author username="xidar">xidar</author>
@@ -13,21 +9,21 @@
 
 namespace SharpBits.Base
 {
-    /// <summary>The proxy settings for the <see cref="BitsJob" /></summary>
+    /// <summary>The proxy settings for the <see cref="BitsJob" />.</summary>
     public class ProxySettings
     {
         #region Constants and Fields
 
-        /// <summary>The job for the proxy settings</summary>
+        /// <summary>The job for the proxy settings.</summary>
         private readonly IBackgroundCopyJob job;
 
-        /// <summary>The proxy bypass list</summary>
+        /// <summary>The proxy bypass list.</summary>
         private string proxyBypassList;
 
-        /// <summary>The proxy list</summary>
+        /// <summary>The proxy list.</summary>
         private string proxyList;
 
-        /// <summary>The usage of proxy</summary>
+        /// <summary>The usage of proxy.</summary>
         private BGJobProxyUsage proxyUsage;
 
         #endregion
@@ -35,7 +31,7 @@ namespace SharpBits.Base
         #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="ProxySettings" /> class.</summary>
-        /// <param name="job">The job to set the proxy settings for</param>
+        /// <param name="job">The job to set the proxy settings for.</param>
         internal ProxySettings(IBackgroundCopyJob job)
         {
             this.job = job;
@@ -95,7 +91,7 @@ namespace SharpBits.Base
 
         #region Public Methods
 
-        /// <summary>Updates <see cref="BitsJob" /> with the proxy usage</summary>
+        /// <summary>Updates <see cref="BitsJob" /> with the proxy usage.</summary>
         public void Update()
         {
             this.job.SetProxySettings(this.proxyUsage, this.proxyList, this.proxyBypassList);

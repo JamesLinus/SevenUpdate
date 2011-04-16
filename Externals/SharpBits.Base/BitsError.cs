@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="BitsError.cs"
-//            project="SharpBits.Base"
-//            assembly="SharpBits.Base"
-//            solution="SevenUpdate"
-//            company="Xidar Solutions">
+// <copyright file="BitsError.cs" project="SharpBits.Base" assembly="SharpBits.Base" solution="SevenUpdate" company="Xidar Solutions">
 //     Copyright (c) xidar solutions. All rights reserved.
 // </copyright>
 // <author username="xidar">xidar</author>
@@ -17,15 +13,15 @@ namespace SharpBits.Base
     using System.Runtime.InteropServices;
     using System.Threading;
 
-    /// <summary>Bits error</summary>
+    /// <summary>Bits error.</summary>
     public class BitsError
     {
         #region Constants and Fields
 
-        /// <summary>The error that occurred</summary>
+        /// <summary>The error that occurred.</summary>
         private readonly IBackgroundCopyError error;
 
-        /// <summary>The job the error occurred on</summary>
+        /// <summary>The job the error occurred on.</summary>
         private readonly BitsJob job;
 
         #endregion
@@ -33,8 +29,8 @@ namespace SharpBits.Base
         #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="BitsError" /> class.</summary>
-        /// <param name= "job">The job the error occurred on</param>
-        /// <param name="error">The error that occurred</param>
+        /// <param name= "job">The job the error occurred on.</param>
+        /// <param name="error">The error that occurred.</param>
         internal BitsError(BitsJob job, IBackgroundCopyError error)
         {
             if (null == error)
@@ -135,7 +131,7 @@ namespace SharpBits.Base
         }
 
         /// <summary>Gets the file.</summary>
-        /// <value>The file that occurred the error</value>
+        /// <value>The file that occurred the error.</value>
         public BitsFile File
         {
             get

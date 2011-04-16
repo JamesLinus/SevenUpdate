@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="DirectoryInputRule.cs"
-//            project="System.Windows"
-//            assembly="System.Windows"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="DirectoryInputRule.cs" project="System.Windows" assembly="System.Windows" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
@@ -30,7 +26,7 @@ namespace System.Windows.ValidationRules
     using System.Windows.Controls;
     using System.Windows.Properties;
 
-    /// <summary>Validates if the input is a directory</summary>
+    /// <summary>Validates if the input is a directory.</summary>
     public class DirectoryInputRule : ValidationRule
     {
         #region Properties

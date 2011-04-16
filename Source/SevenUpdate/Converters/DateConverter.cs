@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="DateConverter.cs"
-//            project="SevenUpdate"
-//            assembly="SevenUpdate"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="DateConverter.cs" project="SevenUpdate" assembly="SevenUpdate" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
@@ -22,7 +18,7 @@
 // </license>
 // <summary>
 //   Converts the <see cref="DateTime"/> to a String
-// </summary>
+// .</summary>
 // ***********************************************************************
 
 namespace SevenUpdate.Converters
@@ -34,7 +30,7 @@ namespace SevenUpdate.Converters
 
     using SevenUpdate.Properties;
 
-    /// <summary>Converts the <see cref="DateTime" /> to a String</summary>
+    /// <summary>Converts the <see cref="DateTime" /> to a String.</summary>
     [ValueConversion(typeof(DateTime), typeof(string))]
     internal sealed class DateConverter : IValueConverter
     {

@@ -18,7 +18,7 @@
 // </license>
 // <summary>
 //   Contains properties and methods that are essential to the program
-// </summary>
+// .</summary>
 // ***********************************************************************
 
 namespace SevenUpdate
@@ -38,64 +38,24 @@ namespace SevenUpdate
     using SevenUpdate.Properties;
     using SevenUpdate.Windows;
 
-    /// <summary>The layout for the Info Panel</summary>
-    public enum UpdateAction
-    {
-        /// <summary>Canceled Updates</summary>
-        Canceled,
-
-        /// <summary>Check for updates</summary>
-        CheckForUpdates,
-
-        /// <summary>Checking for updates</summary>
-        CheckingForUpdates,
-
-        /// <summary>When connecting to the admin service</summary>
-        ConnectingToService,
-
-        /// <summary>When downloading of updates has been completed</summary>
-        DownloadCompleted,
-
-        /// <summary>Downloading updates</summary>
-        Downloading,
-
-        /// <summary>An Error Occurred when downloading/installing updates</summary>
-        ErrorOccurred,
-
-        /// <summary>When installation of updates have completed</summary>
-        InstallationCompleted,
-
-        /// <summary>Installing Updates</summary>
-        Installing,
-
-        /// <summary>No updates have been found</summary>
-        NoUpdates,
-
-        /// <summary>A reboot is needed to finish installing updates</summary>
-        RebootNeeded,
-
-        /// <summary>Updates have been found</summary>
-        UpdatesFound,
-    }
-
-    /// <summary>Contains properties and methods that are essential</summary>
+    /// <summary>Contains properties and methods that are essential.</summary>
     internal sealed class Core : INotifyPropertyChanged
     {
         #region Constants and Fields
 
-        /// <summary>Location of the SUI for Seven Update</summary>
+        /// <summary>Location of the SUI for Seven Update.</summary>
         private const string SevenUpdateSui = @"http://sevenupdate.com/apps/SevenUpdate";
 
-        /// <summary>The main page for Seven Update</summary>
+        /// <summary>The main page for Seven Update.</summary>
         private static readonly Main MainPage = new Main();
 
-        /// <summary>The static instance of the Core class</summary>
+        /// <summary>The static instance of the Core class.</summary>
         private static Core instance;
 
-        /// <summary>Indicates if the current user logged in is an admin</summary>
+        /// <summary>Indicates if the current user logged in is an admin.</summary>
         private static bool isAdmin;
 
-        /// <summary>The current action Seven Update is performing</summary>
+        /// <summary>The current action Seven Update is performing.</summary>
         private static UpdateAction updateAction;
 
         #endregion
@@ -105,14 +65,14 @@ namespace SevenUpdate
         /// <summary>Occurs when a property value changes.</summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
-        /// <summary>Occurs when the user cancels their update selection</summary>
+        /// <summary>Occurs when the user cancels their update selection.</summary>
         internal static event EventHandler UpdateActionChanged;
 
         #endregion
 
         #region Properties
 
-        /// <summary>Gets the update configuration settings</summary>
+        /// <summary>Gets the update configuration settings.</summary>
         public static Config Settings
         {
             get
@@ -123,7 +83,7 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Gets or sets a value indicating whether the current user enabled admin access</summary>
+        /// <summary>Gets or sets a value indicating whether the current user enabled admin access.</summary>
         /// <value><see langword="true" /> if this instance is admin; otherwise, <see langword="false" />.</value>
         public bool IsAdmin
         {
@@ -139,7 +99,7 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Gets or sets the current action relating to updates</summary>
+        /// <summary>Gets or sets the current action relating to updates.</summary>
         public UpdateAction UpdateAction
         {
             get
@@ -158,11 +118,11 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Gets or sets a collection of applications to update</summary>
-        /// <value>The collection of Sui</value>
+        /// <summary>Gets or sets a collection of applications to update.</summary>
+        /// <value>The collection of Sui.</value>
         internal static Collection<Sui> Applications { get; set; }
 
-        /// <summary>Gets the static instance of Core</summary>
+        /// <summary>Gets the static instance of Core.</summary>
         internal static Core Instance
         {
             get
@@ -171,10 +131,10 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Gets or sets a value indicating whether if an install is currently in progress and Seven Update was started after an auto check</summary>
+        /// <summary>Gets or sets a value indicating whether if an install is currently in progress and Seven Update was started after an auto check.</summary>
         internal static bool IsReconnect { get; set; }
 
-        /// <summary>Gets a collection of software that Seven Update can check for updates</summary>
+        /// <summary>Gets a collection of software that Seven Update can check for updates.</summary>
         private static IEnumerable<Sua> AppsToUpdate
         {
             get
@@ -226,8 +186,8 @@ namespace SevenUpdate
 
         #region Methods
 
-        /// <summary>Checks for updates</summary>
-        /// <param name="auto"><see langword="true" /> if it's called because of an auto update check, otherwise <see langword="false" /></param>
+        /// <summary>Checks for updates.</summary>
+        /// <param name="auto"><see langword="true" /> if it's called because of an auto update check, otherwise <see langword="false" />.</param>
         internal static void CheckForUpdates(bool auto)
         {
             if (auto)
@@ -243,7 +203,7 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Checks for updates</summary>
+        /// <summary>Checks for updates.</summary>
         internal static void CheckForUpdates()
         {
             if (AppsToUpdate == null)
@@ -291,35 +251,35 @@ namespace SevenUpdate
 
         /// <summary>The rectangle_ mouse left button down.</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The arguments generated by the event</param>
+        /// <param name="e">The arguments generated by the event.</param>
         internal static void EnableDragOnGlass(object sender, MouseButtonEventArgs e)
         {
             e.Handled = true;
         }
 
-        /// <summary>Gets the total size of a single update</summary>
-        /// <param name="files">the collection of files of an update</param>
-        /// <returns>a ulong value of the size of the update</returns>
+        /// <summary>Gets the total size of a single update.</summary>
+        /// <param name="files">The collection of files of an update.</param>
+        /// <returns>A ulong value of the size of the update.</returns>
         internal static ulong GetUpdateSize(IEnumerable<UpdateFile> files)
         {
             return files.Aggregate<UpdateFile, ulong>(0, (current, t) => current + t.FileSize);
         }
 
-        /// <summary>Goes back to the Main page</summary>
+        /// <summary>Goes back to the Main page.</summary>
         internal static void NavigateToMainPage()
         {
             MainWindow.NavService.Navigate(MainPage);
         }
 
         /// <summary>Shows either a <see cref="TaskDialog" /> or a <see cref="MessageBox" /> if running legacy windows.</summary>
-        /// <param name="instructionText">The main text to display (Blue 14pt for <see cref="TaskDialog" />)</param>
-        /// <param name="icon">The icon to display</param>
-        /// <param name="standardButtons">The standard buttons to use (with or without the custom default button text)</param>
-        /// <param name="description">A description of the message, supplements the instruction text</param>
-        /// <param name="footerText">Text to display as a footer message</param>
-        /// <param name="defaultButtonText">Text to display on the button</param>
-        /// <param name="displayShieldOnButton">Indicates if a UAC shield is to be displayed on the defaultButton</param>
-        /// <returns>Returns the result of the message</returns>
+        /// <param name="instructionText">The main text to display (Blue 14pt for <see cref="TaskDialog" />).</param>
+        /// <param name="icon">The icon to display.</param>
+        /// <param name="standardButtons">The standard buttons to use (with or without the custom default button text).</param>
+        /// <param name="description">A description of the message, supplements the instruction text.</param>
+        /// <param name="footerText">Text to display as a footer message.</param>
+        /// <param name="defaultButtonText">Text to display on the button.</param>
+        /// <param name="displayShieldOnButton">Indicates if a UAC shield is to be displayed on the defaultButton.</param>
+        /// <returns>Returns the result of the message.</returns>
         internal static TaskDialogResult ShowMessage(
             string instructionText,
             TaskDialogStandardIcon icon,
@@ -404,16 +364,16 @@ namespace SevenUpdate
         }
 
         /// <summary>Shows either a <see cref="TaskDialog" /> or a <see cref="MessageBox" /> if running legacy windows.</summary>
-        /// <param name="instructionText">The main text to display (Blue 14pt for <see cref="TaskDialog" />)</param>
-        /// <param name="icon">The icon to display</param>
-        /// <param name="description">A description of the message, supplements the instruction text</param>
+        /// <param name="instructionText">The main text to display (Blue 14pt for <see cref="TaskDialog" />).</param>
+        /// <param name="icon">The icon to display.</param>
+        /// <param name="description">A description of the message, supplements the instruction text.</param>
         private static void ShowMessage(string instructionText, TaskDialogStandardIcon icon, string description = null)
         {
             ShowMessage(instructionText, icon, TaskDialogStandardButtons.Ok, description);
         }
 
-        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged" /> Event</summary>
-        /// <param name="name">The name of the property that changed</param>
+        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged" /> Event.</summary>
+        /// <param name="name">The name of the property that changed.</param>
         private void OnPropertyChanged(string name)
         {
             var handler = this.PropertyChanged;

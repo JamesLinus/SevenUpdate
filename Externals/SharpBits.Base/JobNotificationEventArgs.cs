@@ -1,9 +1,5 @@
 ﻿// ***********************************************************************
-// <copyright file="JobNotificationEventArgs.cs"
-//            project="SharpBits.Base"
-//            assembly="SharpBits.Base"
-//            solution="SevenUpdate"
-//            company="Xidar Solutions">
+// <copyright file="JobNotificationEventArgs.cs" project="SharpBits.Base" assembly="SharpBits.Base" solution="SevenUpdate" company="Xidar Solutions">
 //     Copyright (c) xidar solutions. All rights reserved.
 // </copyright>
 // <author username="xidar">xidar</author>
@@ -15,7 +11,7 @@ namespace SharpBits.Base
 {
     using System;
 
-    /// <summary>The event data for the JobNotification event</summary>
+    /// <summary>The event data for the JobNotification event.</summary>
     public class JobNotificationEventArgs : EventArgs
     {
     }

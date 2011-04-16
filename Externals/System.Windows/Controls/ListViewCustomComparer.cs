@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="ListViewCustomComparer.cs"
-//            project="System.Windows"
-//            assembly="System.Windows"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="ListViewCustomComparer.cs" project="System.Windows" assembly="System.Windows" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
@@ -28,13 +24,13 @@ namespace System.Windows.Controls
     using System.Collections.Generic;
     using System.ComponentModel;
 
-    /// <summary>Enables the listView sorter to compare classes</summary>
+    /// <summary>Enables the listView sorter to compare classes.</summary>
     public abstract class ListViewCustomComparer : IComparer
     {
         #region Properties
 
-        /// <summary>Gets a List of strings from a column that needs to be sorted</summary>
-        /// <returns>A collection of columns that are sorted</returns>
+        /// <summary>Gets a List of strings from a column that needs to be sorted.</summary>
+        /// <returns>A collection of columns that are sorted.</returns>
         protected IEnumerable<string> SortColumnList
         {
             get
@@ -56,16 +52,16 @@ namespace System.Windows.Controls
             }
         }
 
-        /// <summary>Gets a dictionary of SortColumns</summary>
+        /// <summary>Gets a dictionary of SortColumns.</summary>
         protected Dictionary<string, ListSortDirection> SortColumns { get; private set; }
 
         #endregion
 
         #region Public Methods
 
-        /// <summary>Adds a column to the <see cref="SortColumns" /></summary>
-        /// <param name="sortColumn">a string representing a column to be sorted</param>
-        /// <param name="direction">the direction to sort</param>
+        /// <summary>Adds a column to the <see cref="SortColumns" />.</summary>
+        /// <param name="sortColumn">A string representing a column to be sorted.</param>
+        /// <param name="direction">The direction to sort.</param>
         public void AddSort(string sortColumn, ListSortDirection direction)
         {
             this.ClearSort();
@@ -95,7 +91,7 @@ namespace System.Windows.Controls
 
         #region Methods
 
-        /// <summary>Clears the sort columns</summary>
+        /// <summary>Clears the sort columns.</summary>
         private void ClearSort()
         {
             if (this.SortColumns != null)

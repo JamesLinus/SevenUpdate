@@ -1,9 +1,5 @@
 // ***********************************************************************
-// <copyright file="NativeMethods.cs"
-//            project="SevenUpdate.Helper"
-//            assembly="SevenUpdate.Helper"
-//            solution="SevenUpdate"
-//            company="Seven Software">
+// <copyright file="NativeMethods.cs" project="SevenUpdate.Helper" assembly="SevenUpdate.Helper" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="sevenalive">Robert Baker</author>
@@ -26,13 +22,13 @@ namespace SevenUpdate.Helper
 {
     using System.Runtime.InteropServices;
 
-    /// <summary>The Win32 native methods</summary>
+    /// <summary>The Win32 native methods.</summary>
     internal static class NativeMethods
     {
-        /// <summary>Moves the file using the windows command</summary>
+        /// <summary>Moves the file using the windows command.</summary>
         /// <param name="sourceFileName">The current name of the file or directory on the local computer.</param>
         /// <param name="newFileName">The new name of the file or directory on the local computer.</param>
-        /// <param name="flags">The flags that determine how to move the file</param>
+        /// <param name="flags">The flags that determine how to move the file.</param>
         /// <returns>If the function succeeds, the return value is nonzero. If the function fails, the return value is zero (0). To get extended error information, call GetLastError.</returns>
         [DllImport(@"kernel32.dll", CharSet = CharSet.Unicode)]
         [return: MarshalAs(UnmanagedType.Bool)]
