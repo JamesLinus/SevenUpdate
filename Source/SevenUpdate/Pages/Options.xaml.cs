@@ -148,12 +148,9 @@ namespace SevenUpdate.Pages
                     }
                     else
                     {
-                        if (
-                            Directory.Exists(
-                                Utilities.IsRegistryKey(machineAppList[x].Directory)
+                        if (Directory.Exists(Utilities.IsRegistryKey(machineAppList[x].Directory)
                                     ? Utilities.GetRegistryValue(machineAppList[x].Directory, machineAppList[x].ValueName, machineAppList[x].Platform)
-                                    : Utilities.ConvertPath(machineAppList[x].Directory, true, machineAppList[x].Platform)) &&
-                            machineAppList[x].IsEnabled)
+                                    : Utilities.ConvertPath(machineAppList[x].Directory, true, machineAppList[x].Platform)) && machineAppList[x].IsEnabled)
                         {
                             continue;
                         }
@@ -177,9 +174,7 @@ namespace SevenUpdate.Pages
                         continue;
                     }
 
-                    if (
-                        !Directory.Exists(
-                            Utilities.IsRegistryKey(officialApplicationList[x].Directory)
+                    if (!Directory.Exists(Utilities.IsRegistryKey(officialApplicationList[x].Directory)
                                 ? Utilities.GetRegistryValue(
                                     officialApplicationList[x].Directory, officialApplicationList[x].ValueName, officialApplicationList[x].Platform)
                                 : Utilities.ConvertPath(officialApplicationList[x].Directory, true, officialApplicationList[x].Platform)))

@@ -46,8 +46,7 @@ namespace SevenUpdate.Sdk
         #region Constants and Fields
 
         /// <summary>The location of the file that contains the collection of Projects for the SDK.</summary>
-        public static readonly string ProjectsFile = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Seven Software", "Seven Update SDK", "Projects.sul");
+        public static readonly string ProjectsFile = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Seven Update SDK", "Projects.sul");
 
         /// <summary>The application information page.</summary>
         private static AppInfo appInfoPage;

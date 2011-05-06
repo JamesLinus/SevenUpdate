@@ -37,8 +37,7 @@ namespace SevenUpdate.Sdk
         #region Constants and Fields
 
         /// <summary>The user application data location.</summary>
-        public static readonly string UserStore = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Seven Software", "Seven Update SDK");
+        public static readonly string UserStore = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Seven Update SDK");
 
         #endregion
 

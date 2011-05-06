@@ -64,7 +64,7 @@
     <Win32Resource>SevenUpdate.Base.res</Win32Resource>
   </PropertyGroup>
   <PropertyGroup>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
   </PropertyGroup>
   <PropertyGroup>
     <AssemblyOriginatorKeyFile>\Documents\Visual Studio 2010\Projects\Seven Software.pfx</AssemblyOriginatorKeyFile>

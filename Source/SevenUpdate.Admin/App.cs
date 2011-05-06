@@ -45,8 +45,7 @@ namespace SevenUpdate.Admin
         #region Constants and Fields
 
         /// <summary>The all users application data location.</summary>
-        public static readonly string AllUserStore = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Seven Software", "Seven Update");
+        public static readonly string AllUserStore = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Seven Update");
 
         /// <summary>The location of the list of applications Seven Update can update.</summary>
         public static readonly string ApplicationsFile = Path.Combine(AllUserStore, "Apps.sul");

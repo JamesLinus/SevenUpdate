@@ -32,6 +32,6 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyVersion("1.0.0.0")]
-[assembly: AssemblyFileVersion("11.4.2")]
+[assembly: AssemblyFileVersion("11.5.5")]
 [assembly: ComVisible(false)]
 [assembly: Guid("9c9e7ad5-4de8-4057-a2c5-aef12fb60f55")]

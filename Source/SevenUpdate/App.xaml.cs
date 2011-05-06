@@ -45,7 +45,7 @@ namespace SevenUpdate
 
         /// <summary>The all users application data location.</summary>
         public static readonly string AllUserStore = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Seven Software", "Seven Update");
+            Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Seven Update");
 
         /// <summary>The location of the list of applications Seven Update can update.</summary>
         public static readonly string ApplicationsFile = Path.Combine(AllUserStore, @"Apps.sul");
@@ -61,7 +61,7 @@ namespace SevenUpdate
 
         /// <summary>The location of the user application data location.</summary>
         public static readonly string UserStore = Path.Combine(
-            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Seven Software", "Seven Update");
+            Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Seven Update");
 
         /// <summary>The Seven Update list location.</summary>
         internal const string SulLocation = @"http://sevenupdate.com/apps/Apps.sul";

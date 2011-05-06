@@ -1,7 +1,5 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)"
-              GeneratedClassNamespace="SevenUpdate.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="SevenUpdate.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
     <Setting Name="lastUpdateCheck" Type="System.DateTime" Scope="User">
@@ -10,14 +8,14 @@
     <Setting Name="lastInstall" Type="System.DateTime" Scope="User">
       <Value Profile="(Default)" />
     </Setting>
-    <Setting Name="infoPopUp" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)">True</Value>
-    </Setting>
     <Setting Name="windowHeight" Type="System.Double" Scope="User">
       <Value Profile="(Default)">550</Value>
     </Setting>
     <Setting Name="windowWidth" Type="System.Double" Scope="User">
       <Value Profile="(Default)">900</Value>
+    </Setting>
+    <Setting Name="infoPopUp" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="locale" Type="System.String" Scope="User">
       <Value Profile="(Default)">en</Value>

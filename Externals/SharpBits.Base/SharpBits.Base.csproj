@@ -14,11 +14,9 @@
     </SccProjectName>
     <SccLocalPath>
     </SccLocalPath>
-    <SccAuxPath>
-    </SccAuxPath>
     <SccProvider>
     </SccProvider>
-    <SignAssembly>false</SignAssembly>
+    <SignAssembly>true</SignAssembly>
     <AssemblyOriginatorKeyFile>\Documents\Visual Studio 2010\Projects\Seven Software.pfx</AssemblyOriginatorKeyFile>
     <DelaySign>false</DelaySign>
     <FileUpgradeFlags>
@@ -193,6 +191,9 @@
       <ProductName>Windows Installer 3.1</ProductName>
       <Install>true</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Seven Software.pfx" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

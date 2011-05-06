@@ -35,7 +35,7 @@ using System.Windows.Markup;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyVersion("1.1.0.3")]
-[assembly: AssemblyFileVersion("11.3.9")]
+[assembly: AssemblyFileVersion("11.5.5")]
 [assembly: ComVisible(false)]
 [assembly: ThemeInfo(ResourceDictionaryLocation.None, ResourceDictionaryLocation.SourceAssembly)]
 [assembly: XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml/presentation", "System.Windows")]
@@ -43,3 +43,4 @@ using System.Windows.Markup;
 [assembly: XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml/presentation", "System.Windows.Converters")]
 [assembly: XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml/presentation", "System.Windows.ValidationRules")]
 [assembly: NeutralResourcesLanguage("en-US")]
+[assembly: GuidAttribute("DA793F40-F8D2-4876-94E0-0AB8C0A4F1D2")]
