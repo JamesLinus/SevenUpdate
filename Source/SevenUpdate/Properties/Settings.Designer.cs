@@ -71,17 +71,6 @@ namespace SevenUpdate.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public bool infoPopUp {
-            get {
-                return ((bool)(this["infoPopUp"]));
-            }
-            set {
-                this["infoPopUp"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("en")]
         public string locale {
             get {

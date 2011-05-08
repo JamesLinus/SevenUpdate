@@ -14,6 +14,7 @@ namespace System.Windows.Dialogs
     using System.Windows.Controls;
     using System.Windows.Internal;
     using System.Windows.Interop;
+    using System.Windows.Properties;
 
     /// <summary>Encapsulates a new-to-Vista Win32 TaskDialog window - a powerful successor to the <see cref="MessageBox" /> availablein previous versions of Windows.</summary>
     [SecurityPermission(SecurityAction.InheritanceDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
@@ -165,7 +166,7 @@ namespace System.Windows.Dialogs
 
             set
             {
-                this.ThrowIfDialogShowing(@"CanCancel can't be set while dialog is showing.");
+                this.ThrowIfDialogShowing(Resources.SetError);
                 this.canCancel = value;
             }
         }
@@ -180,7 +181,7 @@ namespace System.Windows.Dialogs
 
             set
             {
-                this.ThrowIfDialogShowing(@"Dialog caption can't be set while dialog is showing.");
+                this.ThrowIfDialogShowing(Resources.SetError);
                 this.caption = value;
             }
         }
@@ -198,7 +199,7 @@ namespace System.Windows.Dialogs
 
             set
             {
-                this.ThrowIfDialogShowing(@"Collapsed control text can't be set while dialog is showing.");
+                this.ThrowIfDialogShowing(Resources.SetError);
                 this.detailsCollapsedLabel = value;
             }
         }
@@ -213,7 +214,7 @@ namespace System.Windows.Dialogs
 
             set
             {
-                this.ThrowIfDialogShowing(@"Expanded state of the dialog can't be modified while dialog is showing.");
+                this.ThrowIfDialogShowing(Resources.SetError);
                 this.detailsExpanded = value;
             }
         }
@@ -228,7 +229,7 @@ namespace System.Windows.Dialogs
 
             set
             {
-                this.ThrowIfDialogShowing(@"Expanded control label can't be set while dialog is showing.");
+                this.ThrowIfDialogShowing(Resources.SetError);
                 this.detailsExpandedLabel = value;
             }
         }
@@ -262,7 +263,7 @@ namespace System.Windows.Dialogs
 
             set
             {
-                this.ThrowIfDialogShowing(@"Expanded information mode can't be set while dialog is showing.");
+                this.ThrowIfDialogShowing(Resources.SetError);
                 this.expansionMode = value;
             }
         }
@@ -279,10 +280,13 @@ namespace System.Windows.Dialogs
             {
                 // Set local value, then update native dialog if showing.
                 this.footerCheckBoxChecked = value;
-                if (this.NativeDialogShowing)
+                if (!this.NativeDialogShowing)
                 {
-                    this.nativeDialog.UpdateCheckBoxChecked(this.footerCheckBoxChecked.Value);
+                    return;
                 }
+
+                var checkBoxChecked = this.footerCheckBoxChecked;
+                this.nativeDialog.UpdateCheckBoxChecked(checkBoxChecked != null && checkBoxChecked.Value);
             }
         }
 
@@ -297,7 +301,7 @@ namespace System.Windows.Dialogs
 
             set
             {
-                this.ThrowIfDialogShowing(@"Checkbox text can't be set while dialog is showing.");
+                this.ThrowIfDialogShowing(Resources.SetError);
                 this.checkBoxText = value;
             }
         }
@@ -351,7 +355,7 @@ namespace System.Windows.Dialogs
 
             set
             {
-                this.ThrowIfDialogShowing(@"Hyperlinks can't be enabled/disabled while dialog is showing.");
+                this.ThrowIfDialogShowing(Resources.SetError);
                 this.hyperlinksEnabled = value;
             }
         }
@@ -404,7 +408,7 @@ namespace System.Windows.Dialogs
 
             set
             {
-                this.ThrowIfDialogShowing(@"Dialog owner cannot be modified while dialog is showing.");
+                this.ThrowIfDialogShowing(Resources.SetError);
                 this.ownerWindow = value;
             }
         }
@@ -420,12 +424,12 @@ namespace System.Windows.Dialogs
 
             set
             {
-                this.ThrowIfDialogShowing(@"Progress bar can't be changed while dialog is showing");
+                this.ThrowIfDialogShowing(Resources.SetError);
                 if (value != null)
                 {
                     if (value.HostingDialog != null)
                     {
-                        throw new InvalidOperationException(@"Progress bar cannot be hosted in multiple dialogs.");
+                        throw new InvalidOperationException(Resources.ProgressBarError);
                     }
 
                     value.HostingDialog = this;
@@ -445,7 +449,7 @@ namespace System.Windows.Dialogs
 
             set
             {
-                this.ThrowIfDialogShowing(@"Standard buttons can't be set while dialog is showing.");
+                this.ThrowIfDialogShowing(Resources.SetError);
                 this.standardButtons = value;
             }
         }
@@ -460,7 +464,7 @@ namespace System.Windows.Dialogs
 
             set
             {
-                this.ThrowIfDialogShowing(@"Startup location can't be changed while dialog is showing.");
+                this.ThrowIfDialogShowing(Resources.SetError);
                 this.startupLocation = value;
             }
         }
@@ -490,8 +494,7 @@ namespace System.Windows.Dialogs
         {
             get
             {
-                return (this.nativeDialog != null) &&
-                       (this.nativeDialog.ShowState == DialogShowState.Showing || this.nativeDialog.ShowState == DialogShowState.Closing);
+                return (this.nativeDialog != null) && (this.nativeDialog.ShowState == DialogShowState.Showing || this.nativeDialog.ShowState == DialogShowState.Closing);
             }
         }
 
@@ -502,7 +505,7 @@ namespace System.Windows.Dialogs
         /// <summary>Creates and shows a task dialog with the specified message text.</summary>
         /// <param name="text">The text to display.</param>
         /// <returns>The dialog result.</returns>
-        public static TaskDialogResult Show(string text)
+        public static TaskDialogResults Show(string text)
         {
             return ShowCoreStatic(text, TaskDialogDefaults.MainInstruction, TaskDialogDefaults.Caption);
         }
@@ -511,7 +514,7 @@ namespace System.Windows.Dialogs
         /// <param name="text">The supporting text to display.</param>
         /// <param name="instructionText">The main instruction text to display.</param>
         /// <returns>The dialog result.</returns>
-        public static TaskDialogResult Show(string text, string instructionText)
+        public static TaskDialogResults Show(string text, string instructionText)
         {
             return ShowCoreStatic(text, instructionText, TaskDialogDefaults.Caption);
         }
@@ -521,7 +524,7 @@ namespace System.Windows.Dialogs
         /// <param name="instructionText">The main instruction text to display.</param>
         /// <param name="caption">The caption for the dialog.</param>
         /// <returns>The dialog result.</returns>
-        public static TaskDialogResult Show(string text, string instructionText, string caption)
+        public static TaskDialogResults Show(string text, string instructionText, string caption)
         {
             return ShowCoreStatic(text, instructionText, caption);
         }
@@ -534,15 +537,15 @@ namespace System.Windows.Dialogs
                 throw new InvalidOperationException("Attempting to close a non-showing dialog.");
             }
 
-            this.nativeDialog.NativeClose(TaskDialogResult.Cancel);
+            this.nativeDialog.NativeClose(TaskDialogResults.Cancel);
 
             // TaskDialog's own cleanup code - 
             // which runs post show - will handle disposal of native dialog.
         }
 
-        /// <summary>Close <see cref="TaskDialog" /> with a given <see cref="TaskDialogResult" />.</summary>
-        /// <param name="closingResult"><see cref="TaskDialogResult" /> to return from the <see cref="TaskDialog" />.Show() method.</param>
-        public void Close(TaskDialogResult closingResult)
+        /// <summary>Close <see cref="TaskDialog" /> with a given <see cref="TaskDialogResults" />.</summary>
+        /// <param name="closingResult"><see cref="TaskDialogResults" /> to return from the <see cref="TaskDialog" />.Show() method.</param>
+        public void Close(TaskDialogResults closingResult)
         {
             if (!this.NativeDialogShowing)
             {
@@ -555,50 +558,9 @@ namespace System.Windows.Dialogs
             // which runs post show - will handle disposal of native dialog.
         }
 
-        /// <summary>Dispose <see cref="TaskDialog" /> Resources.</summary>
-        /// <param name="disposing">If <see langword="true" />, indicates that this is being called via Dispose rather than via the finalizer.</param>
-        public void Dispose(bool disposing)
-        {
-            if (this.disposed)
-            {
-                return;
-            }
-
-            this.disposed = true;
-
-            if (disposing)
-            {
-                // Clean up managed resources.
-                if (this.nativeDialog != null && this.nativeDialog.ShowState == DialogShowState.Showing)
-                {
-                    this.nativeDialog.NativeClose(TaskDialogResult.Cancel);
-                }
-
-                this.buttons = null;
-                this.radioButtons = null;
-                this.commandLinks = null;
-            }
-
-            // Clean up unmanaged resources SECOND, NTD counts on 
-            // being closed before being disposed.
-            if (this.nativeDialog != null)
-            {
-                this.nativeDialog.Dispose();
-                this.nativeDialog = null;
-            }
-
-            if (staticDialog == null)
-            {
-                return;
-            }
-
-            staticDialog.Dispose();
-            staticDialog = null;
-        }
-
         /// <summary>Creates and shows a task dialog.</summary>
         /// <returns>The dialog result.</returns>
-        public TaskDialogResult Show()
+        public TaskDialogResults Show()
         {
             return this.ShowCore();
         }
@@ -606,7 +568,7 @@ namespace System.Windows.Dialogs
         /// <summary>Creates and shows a modal task dialog.</summary>
         /// <param name="window">The window.</param>
         /// <returns>The dialog result.</returns>
-        public TaskDialogResult ShowDialog(Window window)
+        public TaskDialogResults ShowDialog(Window window)
         {
             this.OwnerWindowHandle = new WindowInteropHelper(window).Handle;
             return this.ShowCore();
@@ -715,8 +677,7 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>
-        ///   Handle notifications of pseudo-controls being added or removed from the collection.
-        ///   PreFilter should throw if a control cannot be added/removed in the dialog's current state.
+        ///   Handle notifications of pseudo-controls being added or removed from the collection. PreFilter should throw if a control cannot be added/removed in the dialog's current state.
         ///   PostProcess should pass on changes to native control, if appropriate.
         /// </summary>
         /// <returns><see langword="true" /> if collection change is allowed.</returns>
@@ -727,8 +688,7 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>
-        ///   Handle notifications of individual child pseudo-controls' properties changing.
-        ///   Pre filter should throw if the property cannot be set in the dialog's current state.
+        ///   Handle notifications of individual child pseudo-controls' properties changing. Pre filter should throw if the property cannot be set in the dialog's current state.
         ///   PostProcess should pass on changes to native control, if appropriate.
         /// </summary>
         /// <param name="propertyName">The name of the property.</param>
@@ -820,7 +780,6 @@ namespace System.Windows.Dialogs
             var handler = this.Closing;
             if (handler != null)
             {
-                TaskDialogButtonBase customButton;
                 var e = new TaskDialogClosingEventArgs();
 
                 // Try to identify the button - is it a standard one?
@@ -829,7 +788,7 @@ namespace System.Windows.Dialogs
                 // If not, it had better be a custom button...
                 if (buttonClicked == TaskDialogStandardButtons.None)
                 {
-                    customButton = this.GetButtonForId(id);
+                    TaskDialogButtonBase customButton = this.GetButtonForId(id);
 
                     // ... or we have a problem.
                     if (customButton == null)
@@ -839,11 +798,11 @@ namespace System.Windows.Dialogs
 
                     e.CustomButton = customButton.Name;
 
-                    e.TaskDialogResult = TaskDialogResult.CustomButtonClicked;
+                    e.TaskDialogResult = TaskDialogResults.CustomButtonClicked;
                 }
                 else
                 {
-                    e.TaskDialogResult = (TaskDialogResult)buttonClicked;
+                    e.TaskDialogResult = (TaskDialogResults)buttonClicked;
                 }
 
                 // Raise the event and determine how to proceed.
@@ -921,13 +880,11 @@ namespace System.Windows.Dialogs
         /// <returns>An array of TaskDialogButtons.</returns>
         private static TaskDialogNativeMethods.TaskDialogButtonData[] BuildButtonStructArray(IList<TaskDialogButtonBase> controls)
         {
-            TaskDialogButtonBase button;
-
             var totalButtons = controls.Count;
             var buttonStructs = new TaskDialogNativeMethods.TaskDialogButtonData[totalButtons];
             for (var i = 0; i < totalButtons; i++)
             {
-                button = controls[i];
+                TaskDialogButtonBase button = controls[i];
                 buttonStructs[i] = new TaskDialogNativeMethods.TaskDialogButtonData(button.Id, button.ToString());
             }
 
@@ -936,23 +893,23 @@ namespace System.Windows.Dialogs
 
         /// <summary>Constructs the dialog result.</summary>
         /// <param name="native">The native.</param>
-        /// <returns>The <see cref="TaskDialogResult" />.</returns>
-        private static TaskDialogResult ConstructDialogResult(NativeTaskDialog native)
+        /// <returns>The <see cref="TaskDialogResults" />.</returns>
+        private static TaskDialogResults ConstructDialogResult(NativeTaskDialog native)
         {
             Debug.Assert(native.ShowState == DialogShowState.Closed, "dialog result being constructed for hidden dialog.");
 
-            TaskDialogResult result;
+            TaskDialogResults result;
 
             var standardButton = MapButtonIdToStandardButton(native.SelectedButtonID);
 
             // If returned ID isn't a standard button, let's fetch 
             if (standardButton == TaskDialogStandardButtons.None)
             {
-                result = TaskDialogResult.CustomButtonClicked;
+                result = TaskDialogResults.CustomButtonClicked;
             }
             else
             {
-                result = (TaskDialogResult)standardButton;
+                result = (TaskDialogResults)standardButton;
             }
 
             return result;
@@ -1004,8 +961,8 @@ namespace System.Windows.Dialogs
         /// <param name="text">The text to show.</param>
         /// <param name="instructionText">The instruction text.</param>
         /// <param name="caption">The caption.</param>
-        /// <returns>The <see cref="TaskDialogResult" />.</returns>
-        private static TaskDialogResult ShowCoreStatic(string text, string instructionText, string caption)
+        /// <returns>The <see cref="TaskDialogResults" />.</returns>
+        private static TaskDialogResults ShowCoreStatic(string text, string instructionText, string caption)
         {
             // Throw PlatformNotSupportedException if the user is not running Vista or beyond
             if (Environment.OSVersion.Version.Major < 6)
@@ -1037,7 +994,7 @@ namespace System.Windows.Dialogs
             // Deal with progress bars/marquees.
             if (this.progressBar != null)
             {
-                if (this.progressBar.State == TaskDialogProgressBarState.Marquee)
+                if (this.progressBar.State == TaskDialogProgressBarState.Indeterminate)
                 {
                     settings.NativeConfiguration.flags |= TaskDialogNativeMethods.TaskDialogFlags.ShowMarqueeProgressBar;
                 }
@@ -1176,7 +1133,7 @@ namespace System.Windows.Dialogs
                 return;
             }
 
-            if (this.progressBar.State == TaskDialogProgressBarState.Marquee)
+            if (this.progressBar.State == TaskDialogProgressBarState.Indeterminate)
             {
                 return;
             }
@@ -1247,6 +1204,47 @@ namespace System.Windows.Dialogs
             }
         }
 
+        /// <summary>Dispose <see cref="TaskDialog" /> Resources.</summary>
+        /// <param name="disposing">If <see langword="true" />, indicates that this is being called via Dispose rather than via the finalizer.</param>
+        private void Dispose(bool disposing)
+        {
+            if (this.disposed)
+            {
+                return;
+            }
+
+            this.disposed = true;
+
+            if (disposing)
+            {
+                // Clean up managed resources.
+                if (this.nativeDialog != null && this.nativeDialog.ShowState == DialogShowState.Showing)
+                {
+                    this.nativeDialog.NativeClose(TaskDialogResults.Cancel);
+                }
+
+                this.buttons = null;
+                this.radioButtons = null;
+                this.commandLinks = null;
+            }
+
+            // Clean up unmanaged resources SECOND, NTD counts on 
+            // being closed before being disposed.
+            if (this.nativeDialog != null)
+            {
+                this.nativeDialog.Dispose();
+                this.nativeDialog = null;
+            }
+
+            if (staticDialog == null)
+            {
+                return;
+            }
+
+            staticDialog.Dispose();
+            staticDialog = null;
+        }
+
         /// <summary>Gets the button for id.</summary>
         /// <param name="id">The button id.</param>
         /// <returns>The <see cref="TaskDialogButton" />.</returns>
@@ -1257,9 +1255,9 @@ namespace System.Windows.Dialogs
 
         /// <summary>Shows the core.</summary>
         /// <returns>Returns the result of the <see cref="TaskDialog" />.</returns>
-        private TaskDialogResult ShowCore()
+        private TaskDialogResults ShowCore()
         {
-            TaskDialogResult result;
+            TaskDialogResults result;
 
             try
             {

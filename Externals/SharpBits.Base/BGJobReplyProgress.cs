@@ -16,9 +16,9 @@ namespace SharpBits.Base
     internal struct BGJobReplyProgress
     {
         /// <summary>Size of the file in bytes. The value is BG_SIZE_UNKNOWN if the reply has not begun.</summary>
-        public ulong BytesTotal;
+        public readonly ulong BytesTotal;
 
         /// <summary>Number of bytes transferred.</summary>
-        public ulong BytesTransferred;
+        public readonly ulong BytesTransferred;
     }
 }

@@ -45,14 +45,12 @@ namespace SevenUpdate.Sdk.ValidationRules
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             var input = value as string;
-            if (string.IsNullOrWhiteSpace(input) || input == null)
+            if (string.IsNullOrWhiteSpace(input))
             {
                 return new ValidationResult(false, Resources.FilePathInvalid);
             }
 
-            return Regex.IsMatch(input, RegistryPattern, RegexOptions.IgnoreCase)
-                       ? new ValidationResult(true, null)
-                       : new ValidationResult(false, Resources.RegistryKeyInvalid);
+            return Regex.IsMatch(input, RegistryPattern, RegexOptions.IgnoreCase) ? new ValidationResult(true, null) : new ValidationResult(false, Resources.RegistryKeyInvalid);
         }
 
         #endregion

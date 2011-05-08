@@ -7,7 +7,7 @@
 
 namespace System.Windows.Internal
 {
-    /// <summary>HRESULT WrapperThis is intended for Library Internal use only.</summary>
+    /// <summary>HRESULT Wrapper This is intended for Library Internal use only.</summary>
     public enum Result : uint
     {
         /// <summary>Result returns <see langword="false" />.</summary>

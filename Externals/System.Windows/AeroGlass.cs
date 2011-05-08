@@ -123,7 +123,14 @@ namespace System.Windows
             source.AddHook(WndProc);
 
             // Set the Background to transparent from Win32 perspective 
-            HwndSource.FromHwnd(windowHandle).CompositionTarget.BackgroundColor = Colors.Transparent;
+            var hwndSource = HwndSource.FromHwnd(windowHandle);
+            if (hwndSource != null)
+            {
+                if (hwndSource.CompositionTarget != null)
+                {
+                    hwndSource.CompositionTarget.BackgroundColor = Colors.Transparent;
+                }
+            }
 
             // Set the Background to transparent from WPF perspective 
             window.Background = Brushes.Transparent;
@@ -164,22 +171,15 @@ namespace System.Windows
                 NativeMethods.GetClientRect(handleSource.Handle, ref clientRect);
             }
 
-            var nonClientSize = new Size(
-                (windowRect.Right - windowRect.Left) - (double)(clientRect.Right - clientRect.Left),
-                (windowRect.Bottom - windowRect.Top) - (double)(clientRect.Bottom - clientRect.Top));
+            var nonClientSize = new Size((windowRect.Right - windowRect.Left) - (double)(clientRect.Right - clientRect.Left), (windowRect.Bottom - windowRect.Top) - (double)(clientRect.Bottom - clientRect.Top));
 
             // calculate size of element relative to non-client area
             var transform = element.TransformToAncestor(window);
             var topLeftFrame = transform.Transform(new Point(0, 0));
-            var bottomRightFrame =
-                transform.Transform(new Point(element.ActualWidth + nonClientSize.Width, element.ActualHeight + nonClientSize.Height));
+            var bottomRightFrame = transform.Transform(new Point(element.ActualWidth + nonClientSize.Width, element.ActualHeight + nonClientSize.Height));
 
             // Create a margin structure
-            var margins = new Margins(
-                (int)topLeftFrame.X,
-                (int)topLeftFrame.Y,
-                (int)(window.ActualWidth - bottomRightFrame.X),
-                (int)(window.ActualHeight - bottomRightFrame.Y));
+            var margins = new Margins((int)topLeftFrame.X, (int)topLeftFrame.Y, (int)(window.ActualWidth - bottomRightFrame.X), (int)(window.ActualHeight - bottomRightFrame.Y));
 
             // Extend the Frame into client area
             if (NativeMethods.DwmExtendFrameIntoClientArea(handle, ref margins) != 0)
@@ -225,7 +225,7 @@ namespace System.Windows
         /// <returns>The return value is the result of the message processing and depends on the message sent.</returns>
         private static IntPtr WndProc(IntPtr handle, int msg, IntPtr parameter, IntPtr parameter2, ref bool handled)
         {
-            if (msg == DwmMessages.CompositionChanged)
+            if (msg == 0x031E)
             {
                 if (CompositionChanged != null)
                 {

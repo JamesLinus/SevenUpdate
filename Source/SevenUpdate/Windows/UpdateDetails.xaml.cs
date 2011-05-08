@@ -69,16 +69,8 @@ namespace SevenUpdate.Windows
             this.DataContext = updateInfo;
             this.helpUrl = updateInfo.HelpUrl;
             this.infoUrl = updateInfo.InfoUrl;
-            var updateStatus = updateInfo.Status == UpdateStatus.Failed
-                                   ? Properties.Resources.Failed.ToLower(CultureInfo.CurrentCulture)
-                                   : Properties.Resources.Successful.ToLower(CultureInfo.CurrentCulture);
-            this.tbStatus.Text = updateInfo.Status == UpdateStatus.Hidden
-                                     ? string.Format(
-                                         CultureInfo.CurrentCulture,
-                                         Properties.Resources.DownloadSize,
-                                         Utilities.ConvertFileSize(updateInfo.UpdateSize))
-                                     : string.Format(
-                                         CultureInfo.CurrentCulture, Properties.Resources.InstallationStatus, updateStatus, updateInfo.InstallDate);
+            var updateStatus = updateInfo.Status == UpdateStatus.Failed ? Properties.Resources.Failed.ToLower(CultureInfo.CurrentCulture) : Properties.Resources.Successful.ToLower(CultureInfo.CurrentCulture);
+            this.tbStatus.Text = updateInfo.Status == UpdateStatus.Hidden ? string.Format(CultureInfo.CurrentCulture, Properties.Resources.DownloadSize, Utilities.ConvertFileSize(updateInfo.UpdateSize)) : string.Format(CultureInfo.CurrentCulture, Properties.Resources.InstallationStatus, updateStatus, updateInfo.InstallDate);
 
             this.ShowDialog();
             return;

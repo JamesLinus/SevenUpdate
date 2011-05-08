@@ -60,12 +60,7 @@ namespace WPFLocalizeExtension.Extensions
                 return this.FormatOutput(obj);
             }
 
-            throw new NotSupportedException(
-                string.Format(
-                    CultureInfo.CurrentCulture,
-                    "ResourceKey '{0}' returns '{1}' which is not type of System.Drawing.Bitmap",
-                    this.Key,
-                    obj.GetType().FullName));
+            throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, "ResourceKey '{0}' returns '{1}' which is not type of System.Drawing.Bitmap", this.Key, obj.GetType().FullName));
         }
 
         #endregion
@@ -79,21 +74,13 @@ namespace WPFLocalizeExtension.Extensions
         {
             if (Localize.Instance.IsInDesignMode && this.DesignValue != null)
             {
-                try
-                {
-                    return new BrushConverter().ConvertFromString((string)this.DesignValue);
-                }
-                catch (Exception)
-                {
-                    throw;
-                    return null;
-                }
+                return new BrushConverter().ConvertFromString((string)this.DesignValue);
             }
 
             return new BrushConverter().ConvertFromString((string)input);
         }
 
-        /// <summary>This method gets the new value for the target property and call <see cref="SetNewValue" />.</summary>
+        /// <summary>This method gets the new value for the target property and call <see cref="BaseLocalizeExtension{TValue}.SetNewValue" />.</summary>
         protected override void HandleNewValue()
         {
             var obj = Localize.Instance.GetLocalizedObject<object>(this.Assembly, this.Dictionary, this.Key, this.Culture);

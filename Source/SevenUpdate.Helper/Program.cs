@@ -63,9 +63,7 @@ namespace SevenUpdate.Helper
             }
             catch (Exception e)
             {
-                if (
-                    !(e is OperationCanceledException || e is UnauthorizedAccessException || e is InvalidOperationException ||
-                      e is NotSupportedException || e is Win32Exception))
+                if (!(e is OperationCanceledException || e is UnauthorizedAccessException || e is InvalidOperationException || e is NotSupportedException || e is Win32Exception))
                 {
                     throw;
                 }
@@ -95,8 +93,7 @@ namespace SevenUpdate.Helper
                         throw;
                     }
 
-                    NativeMethods.MoveFileExW(
-                        Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "reboot.lock"), null, MoveOnReboot);
+                    NativeMethods.MoveFileExW(Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "reboot.lock"), null, MoveOnReboot);
                 }
 
                 var files = Directory.GetFiles(AppDir, "*.bak");
@@ -160,8 +157,7 @@ namespace SevenUpdate.Helper
         /// <param name="arguments">The arguments to execute with the file.</param>
         /// <param name="wait">If set to <see langword="true" /> the calling thread will be blocked until process has exited.</param>
         /// <param name="hidden">If set to <see langword="true" /> the process will execute with no UI.</param>
-        /// <returns><see langword="true" /> if the process has executed successfully.</returns>
-        private static bool StartProcess(string fileName, string arguments, bool wait = false, bool hidden = true)
+        private static void StartProcess(string fileName, string arguments, bool wait = false, bool hidden = true)
         {
             using (var process = new Process())
             {
@@ -185,20 +181,18 @@ namespace SevenUpdate.Helper
                         process.WaitForExit();
                     }
 
-                    return true;
+                    return;
                 }
                 catch (Exception e)
                 {
-                    if (
-                        !(e is OperationCanceledException || e is UnauthorizedAccessException || e is InvalidOperationException ||
-                          e is NotSupportedException || e is Win32Exception))
+                    if (!(e is OperationCanceledException || e is UnauthorizedAccessException || e is InvalidOperationException || e is NotSupportedException || e is Win32Exception))
                     {
                         throw;
                     }
                 }
             }
 
-            return false;
+            return;
         }
 
         #endregion

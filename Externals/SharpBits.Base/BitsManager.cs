@@ -10,8 +10,6 @@
 namespace SharpBits.Base
 {
     using System;
-    using System.Diagnostics;
-    using System.IO;
     using System.Runtime.InteropServices;
     using System.Threading;
 
@@ -160,53 +158,6 @@ namespace SharpBits.Base
         /// <value>The collection of <see cref="BitsJob" />.</value>
         public BitsJobsDictionary Jobs { get; private set; }
 
-        /// <summary>Gets the bits version.</summary>
-        /// <value>The bits version.</value>
-        internal static BitsVersion BitsVersion
-        {
-            get
-            {
-                try
-                {
-                    var bits = FileVersionInfo.GetVersionInfo(Path.Combine(Environment.SystemDirectory, @"qmgr.dll"));
-
-                    switch (bits.FileMajorPart)
-                    {
-                        case 6:
-                            switch (bits.FileMinorPart)
-                            {
-                                case 0:
-                                    return BitsVersion.Bits1;
-                                case 2:
-                                    return BitsVersion.Bits1Dot2;
-                                case 5:
-                                    return BitsVersion.Bits1Dot5;
-                                case 6:
-                                    return BitsVersion.Bits2;
-                                case 7:
-                                    return BitsVersion.Bits2Dot5;
-                                default:
-                                    return BitsVersion.BitsUndefined;
-                            }
-
-                        case 7:
-                            return BitsVersion.Bits3;
-                        default:
-                            return BitsVersion.BitsUndefined;
-                    }
-                }
-                catch (Exception)
-                {
-                    throw;
-                    return BitsVersion.BitsUndefined;
-                }
-            }
-        }
-
-        /// <summary>Gets the background copy manager.</summary>
-        /// <value>The background copy manager.</value>
-        internal IBackgroundCopyManager BackgroundCopyManager { get; private set; }
-
         /// <summary>Gets or sets current owner of the job.</summary>
         /// <value>The current owner.</value>
         internal JobOwner CurrentOwner { get; set; }
@@ -214,6 +165,10 @@ namespace SharpBits.Base
         /// <summary>Gets the notification handler.</summary>
         /// <value>The notification handler.</value>
         internal BitsNotification NotificationHandler { get; private set; }
+
+        /// <summary>Gets or sets the background copy manager.</summary>
+        /// <value>The background copy manager.</value>
+        private IBackgroundCopyManager BackgroundCopyManager { get; set; }
 
         #endregion
 
@@ -245,12 +200,11 @@ namespace SharpBits.Base
 
         /// <summary>Enumerates the collection of <see cref="BitsJob" />, it also completes any job that has finished.</summary>
         /// <param name="jobOwner">The job owner.</param>
-        /// <returns>The collection of <see cref="BitsJob" />.</returns>
-        public BitsJobsDictionary EnumJobs(JobOwner jobOwner = JobOwner.CurrentUser)
+        public void EnumJobs(JobOwner jobOwner = JobOwner.CurrentUser)
         {
             if (this.BackgroundCopyManager == null)
             {
-                return null;
+                return;
             }
 
             this.CurrentOwner = jobOwner;
@@ -264,18 +218,6 @@ namespace SharpBits.Base
             {
                 this.Jobs.Update(jobList);
             }
-
-            return this.Jobs;
-        }
-
-        /// <summary>Gets the error description.</summary>
-        /// <param name="result">The h result.</param>
-        /// <returns>The error description.</returns>
-        public string GetErrorDescription(int result)
-        {
-            string description;
-            this.BackgroundCopyManager.GetErrorDescription(result, Convert.ToUInt32(Thread.CurrentThread.CurrentUICulture.LCID), out description);
-            return description;
         }
 
         #endregion
@@ -344,6 +286,16 @@ namespace SharpBits.Base
             this.disposed = true;
         }
 
+        /// <summary>Gets the error description.</summary>
+        /// <param name="result">The h result.</param>
+        /// <returns>The error description.</returns>
+        private string GetErrorDescription(int result)
+        {
+            string description;
+            this.BackgroundCopyManager.GetErrorDescription(result, Convert.ToUInt32(Thread.CurrentThread.CurrentUICulture.LCID), out description);
+            return description;
+        }
+
         /// <summary>Notifications the handler on job error event.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="SharpBits.Base.ErrorNotificationEventArgs" /> instance containing the event data.</param>
@@ -372,7 +324,7 @@ namespace SharpBits.Base
             if (this.Jobs.ContainsKey(e.Job.JobId))
             {
                 var job = this.Jobs[e.Job.JobId];
-                job.JobModified(sender, e);
+                job.JobModified(sender);
             }
 
             // publish the event to other subscribers
@@ -391,7 +343,7 @@ namespace SharpBits.Base
             if (this.Jobs.ContainsKey(e.Job.JobId))
             {
                 var job = this.Jobs[e.Job.JobId];
-                job.JobTransferred(sender, e);
+                job.JobTransferred(sender);
             }
 
             // publish the event to other subscribers

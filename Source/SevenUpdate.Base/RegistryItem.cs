@@ -28,8 +28,7 @@ namespace SevenUpdate
     using ProtoBuf;
 
     /// <summary>A registry entry within an update.</summary>
-    [ProtoContract, DataContract(IsReference = true), KnownType(typeof(RegistryAction)), KnownType(typeof(RegistryHive)),
-     KnownType(typeof(RegistryValueKind))]
+    [ProtoContract, DataContract(IsReference = true), KnownType(typeof(RegistryAction)), KnownType(typeof(RegistryHive)), KnownType(typeof(RegistryValueKind))]
     public sealed class RegistryItem : INotifyPropertyChanged
     {
         #region Constants and Fields

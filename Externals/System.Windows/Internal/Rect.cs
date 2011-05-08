@@ -27,15 +27,15 @@ namespace System.Windows.Internal
     internal struct Rect
     {
         /// <summary>The x-coordinate of the upper-left corner of the rectangle.</summary>
-        public int Left;
+        public readonly int Left;
 
         /// <summary>The y-coordinate of the upper-left corner of the rectangle.</summary>
-        public int Top;
+        public readonly int Top;
 
         /// <summary>The x-coordinate of the lower-right corner of the rectangle.</summary>
-        public int Right;
+        public readonly int Right;
 
         /// <summary>The y-coordinate of the lower-right corner of the rectangle.</summary>
-        public int Bottom;
+        public readonly int Bottom;
     }
 }

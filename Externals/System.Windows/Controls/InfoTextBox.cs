@@ -30,20 +30,16 @@ namespace System.Windows.Controls
         #region Constants and Fields
 
         /// <summary>Indicates if the <see cref="InfoTextBox" /> has an error.</summary>
-        private static readonly DependencyProperty HasErrorProperty = DependencyProperty.Register(
-            "HasError", typeof(bool), typeof(InfoTextBox), new PropertyMetadata(false, HasErrorPropertyChanged));
+        private static readonly DependencyProperty HasErrorProperty = DependencyProperty.Register("HasError", typeof(bool), typeof(InfoTextBox), new PropertyMetadata(false, HasErrorPropertyChanged));
 
         /// <summary>Indicates if the <see cref="InfoTextBox" /> has text.</summary>
-        private static readonly DependencyProperty HasTextProperty = DependencyProperty.Register(
-            "HasText", typeof(bool), typeof(InfoTextBox), new PropertyMetadata(false));
+        private static readonly DependencyProperty HasTextProperty = DependencyProperty.Register("HasText", typeof(bool), typeof(InfoTextBox), new PropertyMetadata(false));
 
         /// <summary>The text to display when there is no text in the <see cref="InfoTextBox" />.</summary>
-        private static readonly DependencyProperty NoteProperty = DependencyProperty.Register(
-            "Note", typeof(string), typeof(InfoTextBox), new UIPropertyMetadata(string.Empty, NotePropertyChanged));
+        private static readonly DependencyProperty NoteProperty = DependencyProperty.Register("Note", typeof(string), typeof(InfoTextBox), new UIPropertyMetadata(string.Empty, NotePropertyChanged));
 
         /// <summary>The style of the Note.</summary>
-        private static readonly DependencyProperty NoteStyleProperty = DependencyProperty.Register(
-            "NoteStyle", typeof(Style), typeof(InfoTextBox), new UIPropertyMetadata(null));
+        private static readonly DependencyProperty NoteStyleProperty = DependencyProperty.Register("NoteStyle", typeof(Style), typeof(InfoTextBox), new UIPropertyMetadata(null));
 
         /// <summary>The adorner label.</summary>
         private AdornerLabel myAdornerLabel;
@@ -63,8 +59,7 @@ namespace System.Windows.Controls
                 return;
             }
 
-            var resourceDictionary = new ResourceDictionary
-                { Source = new Uri("/System.Windows;component/Resources/Dictionary.xaml", UriKind.Relative) };
+            var resourceDictionary = new ResourceDictionary { Source = new Uri("/System.Windows;component/Resources/Dictionary.xaml", UriKind.Relative) };
             this.Resources.MergedDictionaries.Add(resourceDictionary);
         }
 
@@ -170,7 +165,7 @@ namespace System.Windows.Controls
         /// <param name="e">Provides data about the event.</param>
         protected override void OnDragEnter(DragEventArgs e)
         {
-            this.myAdornerLayer.RemoveAdorners<AdornerLabel>(this);
+            RemoveAdorners<AdornerLabel>(this.myAdornerLayer, this);
 
             base.OnDragEnter(e);
         }
@@ -235,6 +230,39 @@ namespace System.Windows.Controls
             isVisiblePropertyDescriptor.AddValueChanged(d, IsVisibleChanged);
         }
 
+        /// <summary>Removes the adorners.</summary>
+        /// <param name="adorner">The adorner.</param>
+        /// <param name="element">The element.</param>
+        /// <typeparameter name="T">The type of element</typeparameter>
+        /// <typeparam name="T">The type of element.</typeparam>
+        private static void RemoveAdorners<T>(AdornerLayer adorner, UIElement element)
+        {
+            if (adorner == null)
+            {
+                throw new ArgumentNullException("adorner");
+            }
+
+            if (element == null)
+            {
+                throw new ArgumentNullException("element");
+            }
+
+            var adorners = adorner.GetAdorners(element);
+
+            if (adorners == null)
+            {
+                return;
+            }
+
+            for (var i = adorners.Length - 1; i >= 0; i--)
+            {
+                if (adorners[i] is T)
+                {
+                    adorner.Remove(adorners[i]);
+                }
+            }
+        }
+
         /// <summary>Updates the adorner.</summary>
         /// <param name="element">The element.</param>
         /// <param name="hide">If set to <see langword="true" /> hide the adorner.</param>
@@ -246,7 +274,7 @@ namespace System.Windows.Controls
             }
 
             this.myAdornerLabel = new AdornerLabel(this, this.Note, this.NoteStyle);
-            this.myAdornerLayer.RemoveAdorners<AdornerLabel>(element);
+            RemoveAdorners<AdornerLabel>(this.myAdornerLayer, element);
 
             if (!((InfoTextBox)element).HasText && !element.IsFocused && !hide)
             {

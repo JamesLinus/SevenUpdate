@@ -134,17 +134,13 @@ namespace SharpBits.Base
         /// <param name="proxyUsage">Specifies whether to use the user's proxy settings, not to use a proxy, or to use application-specified proxy settings. The default is to use the user's proxy settings, BGJobProxyUsagePreConfig. For a list of proxy options, see the <see cref="BGJobProxyUsage" /> enumeration.</param>
         /// <param name="proxyList">A string that contains the proxies to use to transfer files. The list is space-delimited. For details on specifying a proxy, see Remarks. This parameter must be <see langword="null" /> if the value of <see cref="ProxyUsage" /> is BGJobProxyUsagePreConfig, BGJobProxyUsageNoProxy, or BGJobProxyUsageNoAutoDetect. The length of the proxy list is limited to 4,000 characters, not including the <see langword="null" /> terminator. .</param>
         /// <param name="proxyBypassList">A string that contains an optional list of host names, IP addresses, or both, that can bypass the proxy. The list is space-delimited. For details on specifying a bypass proxy, see Remarks. This parameter must be <see langword="null" /> if the value of <see cref="ProxyUsage" /> is BGJobProxyUsagePreConfig, BGJobProxyUsageNoProxy, or BGJobProxyUsageNoAutoDetect. The length of the proxy bypass list is limited to 4,000 characters, not including the <see langword="null" /> terminator. .</param>
-        void SetProxySettings(
-            BGJobProxyUsage proxyUsage, [MarshalAs(UnmanagedType.LPWStr)] string proxyList, [MarshalAs(UnmanagedType.LPWStr)] string proxyBypassList);
+        void SetProxySettings(BGJobProxyUsage proxyUsage, [MarshalAs(UnmanagedType.LPWStr)] string proxyList, [MarshalAs(UnmanagedType.LPWStr)] string proxyBypassList);
 
         /// <summary>Retrieves the proxy settings the job uses to transfer the files.</summary>
         /// <param name="proxyUsage">Specifies the proxy settings the job uses to transfer the files. For a list of proxy options, see the <see cref="BGJobProxyUsage" /> enumeration. .</param>
         /// <param name="proxyList">A string that contains one or more proxies to use to transfer files. The list is space-delimited. For details on the format of the string, see the Listing Proxy Servers section of Enabling Internet Functionality. Call the CoTaskMemFree function to free <paramref name="proxyList" /> when done.</param>
         /// <param name="proxyBypassList">A string that contains an optional list of host names or IP addresses, or both, that were not routed through the proxy. The list is space-delimited. For details on the format of the string, see the Listing the Proxy Bypass section of Enabling Internet Functionality. Call the CoTaskMemFree function to free <paramref name="proxyBypassList" /> when done.</param>
-        void GetProxySettings(
-            out BGJobProxyUsage proxyUsage,
-            [MarshalAs(UnmanagedType.LPWStr)] out string proxyList,
-            [MarshalAs(UnmanagedType.LPWStr)] out string proxyBypassList);
+        void GetProxySettings(out BGJobProxyUsage proxyUsage, [MarshalAs(UnmanagedType.LPWStr)] out string proxyList, [MarshalAs(UnmanagedType.LPWStr)] out string proxyBypassList);
 
         /// <summary>Changes the ownership of the job to the current user.</summary>
         void TakeOwnership();
@@ -195,11 +191,7 @@ namespace SharpBits.Base
         /// <param name="localName">Name of the local.</param>
         /// <param name="rangeCount">The range count.</param>
         /// <param name="ranges">The ranges.</param>
-        void AddFileWithRanges(
-            [MarshalAs(UnmanagedType.LPWStr)] string remoteUrl,
-            [MarshalAs(UnmanagedType.LPWStr)] string localName,
-            uint rangeCount,
-            [MarshalAs(UnmanagedType.LPArray)] BGFileRange[] ranges);
+        void AddFileWithRanges([MarshalAs(UnmanagedType.LPWStr)] string remoteUrl, [MarshalAs(UnmanagedType.LPWStr)] string localName, uint rangeCount, [MarshalAs(UnmanagedType.LPArray)] BGFileRange[] ranges);
 
         /// <summary>Sets the file acl flags.</summary>
         /// <param name="flags">The flags.</param>

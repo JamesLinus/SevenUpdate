@@ -26,8 +26,7 @@ namespace System.Windows.ValidationRules
     using System.Windows.Properties;
 
     /// <summary>The required input rule.</summary>
-    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1606:ElementDocumentationMustHaveSummaryText",
-        Justification = "Validation Rule")]
+    [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1606:ElementDocumentationMustHaveSummaryText", Justification = "Validation Rule")]
     public class RequiredInputRule : ValidationRule
     {
         #region Public Methods

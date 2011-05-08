@@ -43,9 +43,6 @@ namespace SevenUpdate
         /// <summary>The help website <see cref="Uri" /> of the application.</summary>
         private string helpUrl;
 
-        /// <summary>Indicates if the application is 64 bit.</summary>
-        private bool is64Bit;
-
         /// <summary>Indicates whether the SUA is enabled with Seven Update (SDK does not use this value).</summary>
         private bool isEnabled;
 
@@ -66,8 +63,7 @@ namespace SevenUpdate
         /// <param name="name">The collection of localized update names.</param>
         /// <param name="publisher">The collection of localized publisher names.</param>
         /// <param name="description">The collection of localized update descriptions.</param>
-        public Sua(
-            ObservableCollection<LocaleString> name, ObservableCollection<LocaleString> publisher, ObservableCollection<LocaleString> description)
+        public Sua(ObservableCollection<LocaleString> name, ObservableCollection<LocaleString> publisher, ObservableCollection<LocaleString> description)
         {
             this.Name = name;
             this.Publisher = publisher;
@@ -196,25 +192,6 @@ namespace SevenUpdate
 
                 // Call OnPropertyChanged whenever the property is updated
                 this.OnPropertyChanged("HelpUrl");
-            }
-        }
-
-        /// <summary>Gets or sets a value indicating whether if the application is 64 bit.</summary>
-        /// <value><see langword="true" /> if the application is 64 bit; otherwise, <see langword="false" />.</value>
-        [ProtoMember(4), DataMember, Obsolete]
-        public bool Is64Bit
-        {
-            get
-            {
-                return this.is64Bit;
-            }
-
-            set
-            {
-                this.is64Bit = value;
-
-                // Call OnPropertyChanged whenever the property is updated
-                this.OnPropertyChanged("Is64Bit");
             }
         }
 

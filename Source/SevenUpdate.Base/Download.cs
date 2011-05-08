@@ -24,6 +24,7 @@ namespace SevenUpdate
     using System.Collections.ObjectModel;
     using System.IO;
     using System.Linq;
+    using System.Net;
 
     using SharpBits.Base;
 
@@ -145,7 +146,7 @@ namespace SevenUpdate
                     continue;
                 }
 
-                Utilities.ReportError(new Exception(job.Error.Description + " " + job.Error.ErrorCode), ErrorType.DownloadError);
+                Utilities.ReportError(new WebException(job.Error.Description + " " + job.Error.ErrorCode), ErrorType.DownloadError);
                 job.Cancel();
                 jobCount--;
             }
@@ -191,6 +192,16 @@ namespace SevenUpdate
         /// <param name="bitsJob">The bits job that will download the update.</param>
         private static void DownloadUpdates(Sui application, ref BitsJob bitsJob)
         {
+            if (application == null)
+            {
+                throw new ArgumentNullException("application");
+            }
+
+            if (bitsJob == null)
+            {
+                throw new ArgumentNullException("bitsJob");
+            }
+
             for (var y = 0; y < application.Updates.Count; y++)
             {
                 // Create download directory consisting of application name and update title
@@ -200,30 +211,31 @@ namespace SevenUpdate
 
                 for (var z = 0; z < application.Updates[y].Files.Count; z++)
                 {
-                    if (application.Updates[y].Files[z].Action == FileAction.Delete ||
-                        application.Updates[y].Files[z].Action == FileAction.UnregisterThenDelete ||
-                        application.Updates[y].Files[z].Action == FileAction.CompareOnly)
+                    if (application.Updates[y].Files[z].Action == FileAction.Delete || application.Updates[y].Files[z].Action == FileAction.UnregisterThenDelete || application.Updates[y].Files[z].Action == FileAction.CompareOnly)
                     {
                         continue;
                     }
 
-                    if (Utilities.GetHash(Path.Combine(downloadDir, Path.GetFileName(application.Updates[y].Files[z].Destination))) ==
-                        application.Updates[y].Files[z].Hash)
+                    var destination = Path.GetFileName(application.Updates[y].Files[z].Destination);
+                    if (string.IsNullOrWhiteSpace(destination))
+                    {
+                        throw new InvalidOperationException();
+                    }
+
+                    if (Utilities.GetHash(Path.Combine(downloadDir, destination)) == application.Updates[y].Files[z].Hash)
                     {
                         continue;
                     }
 
                     try
                     {
-                        File.Delete(Path.Combine(downloadDir, Path.GetFileName(application.Updates[y].Files[z].Destination)));
+                        File.Delete(Path.Combine(downloadDir, destination));
                     }
                     catch (IOException)
                     {
                     }
 
-                    bitsJob.AddFile(
-                        new Uri(application.Updates[y].Files[z].Source).AbsoluteUri,
-                        Path.Combine(downloadDir, Path.GetFileName(application.Updates[y].Files[z].Destination)));
+                    bitsJob.AddFile(new Uri(application.Updates[y].Files[z].Source).AbsoluteUri, Path.Combine(downloadDir, destination));
                 }
             }
         }
@@ -296,10 +308,7 @@ namespace SevenUpdate
 
             errorOccurred = true;
 
-            var exception =
-                new Exception(e.Job.Error.File + " " + e.Job.Error.Description + " " + e.Job.Error.ErrorCode + " " + e.Job.Error.ContextDescription);
-
-            Utilities.ReportError(exception, ErrorType.DownloadError);
+            Utilities.ReportError(new WebException(e.Job.Error.File + " " + e.Job.Error.Description + " " + e.Job.Error.ErrorCode + " " + e.Job.Error.ContextDescription), ErrorType.DownloadError);
 
             if (e.Job.State != JobState.Canceled)
             {
@@ -349,8 +358,7 @@ namespace SevenUpdate
                 return;
             }
 
-            var eventArgs = new DownloadProgressChangedEventArgs(
-                e.Job.Progress.BytesTransferred, e.Job.Progress.BytesTotal, e.Job.Progress.FilesTransferred, e.Job.Progress.FilesTotal);
+            var eventArgs = new DownloadProgressChangedEventArgs(e.Job.Progress.BytesTransferred, e.Job.Progress.BytesTotal, e.Job.Progress.FilesTransferred, e.Job.Progress.FilesTotal);
             DownloadProgressChanged(null, eventArgs);
         }
 

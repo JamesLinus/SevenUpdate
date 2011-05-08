@@ -15,7 +15,6 @@ namespace WPFLocalizeExtension.Extensions
     using System.Linq;
     using System.Reflection;
     using System.Windows;
-    using System.Windows.Controls;
     using System.Windows.Data;
     using System.Windows.Markup;
 
@@ -218,7 +217,8 @@ namespace WPFLocalizeExtension.Extensions
         /// <summary>Provides the Value for the first Binding.</summary>
         /// <param name="serviceProvider">The <see cref="System.Windows.Markup.IProvideValueTarget" /> provided from the <see cref="MarkupExtension" />.</param>
         /// <returns>The found item from the .resx directory or <see langword="null" /> if not found.</returns>
-        /// <remarks>This method register the <see cref="EventHandler" /><c>OnCultureChanged</c> on <c>LocalizeDictionary</c> to get an acknowledge of changing the culture, if the passed <see cref="TargetObjects" /> type of <see cref="DependencyObject" />.!PROOF: On every single <see cref="UserControl" />, Window, and Page, there is a new SharedDP reference, and so there is every time a new <c>BaseLocalizeExtension</c>!Because of this, we don't need to notify every single DependencyObjects to update their value (for GC).</remarks>
+        /// <remarks>This method register the <see cref="EventHandler" /><c>OnCultureChanged</c> on <c>LocalizeDictionary</c> to get an acknowledge of changing the culture.
+        /// If the passed <see cref="TargetObjects" /> type of <see cref="DependencyObject" />.</remarks>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             if (serviceProvider == null)
@@ -300,40 +300,6 @@ namespace WPFLocalizeExtension.Extensions
         {
             // return the resolved localized value with the current or forced culture.
             return this.ResolveLocalizedValue(out resolvedValue, this.Culture);
-        }
-
-        /// <summary>Resolves the localized value of the current Assembly, Dictionary, Key pair.</summary>
-        /// <param name="resolvedValue">The resolved value.</param>
-        /// <param name="targetCulture">The target culture.</param>
-        /// <returns>True if the resolve was success, otherwise <see langword="false" />.</returns>
-        /// <exception>If the Assembly, Dictionary, Key pair was not found.</exception>
-        public bool ResolveLocalizedValue(out TValue resolvedValue, CultureInfo targetCulture)
-        {
-            // define the default value of the resolved value
-            resolvedValue = default(TValue);
-
-            // get the localized object from the dictionary
-            var localizedObject = Localize.Instance.GetLocalizedObject<object>(this.Assembly, this.Dictionary, this.Key, targetCulture);
-
-            // check if the found localized object is type of TValue
-            if (localizedObject is TValue)
-            {
-                // format the localized object
-                var formattedOutput = this.FormatOutput(localizedObject);
-
-                // check if the formatted output is not null
-                if (formattedOutput != null)
-                {
-                    // set the content of the resolved value
-                    resolvedValue = (TValue)formattedOutput;
-                }
-
-                // return true: resolve was successfully
-                return true;
-            }
-
-            // return false: resolve was not successfully.
-            return false;
         }
 
         /// <summary>Sets a binding between a <see cref="DependencyObject" /> with its <see cref="DependencyProperty" />or <see cref="PropertyInfo" /> and the <c>BaseLocalizeExtension</c>.</summary>
@@ -555,6 +521,40 @@ namespace WPFLocalizeExtension.Extensions
             {
                 this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
             }
+        }
+
+        /// <summary>Resolves the localized value of the current Assembly, Dictionary, Key pair.</summary>
+        /// <param name="resolvedValue">The resolved value.</param>
+        /// <param name="targetCulture">The target culture.</param>
+        /// <returns>True if the resolve was success, otherwise <see langword="false" />.</returns>
+        /// <exception>If the Assembly, Dictionary, Key pair was not found.</exception>
+        private bool ResolveLocalizedValue(out TValue resolvedValue, CultureInfo targetCulture)
+        {
+            // define the default value of the resolved value
+            resolvedValue = default(TValue);
+
+            // get the localized object from the dictionary
+            var localizedObject = Localize.Instance.GetLocalizedObject<object>(this.Assembly, this.Dictionary, this.Key, targetCulture);
+
+            // check if the found localized object is type of TValue
+            if (localizedObject is TValue)
+            {
+                // format the localized object
+                var formattedOutput = this.FormatOutput(localizedObject);
+
+                // check if the formatted output is not null
+                if (formattedOutput != null)
+                {
+                    // set the content of the resolved value
+                    resolvedValue = (TValue)formattedOutput;
+                }
+
+                // return true: resolve was successfully
+                return true;
+            }
+
+            // return false: resolve was not successfully.
+            return false;
         }
 
         #endregion

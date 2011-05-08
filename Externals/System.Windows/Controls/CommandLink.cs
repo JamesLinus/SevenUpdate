@@ -23,23 +23,15 @@ namespace System.Windows.Controls
     using System.ComponentModel;
 
     /// <summary>Implements a CommandLink button that can be used in WPF user interfaces.</summary>
-    public sealed class CommandLink : Button, INotifyPropertyChanged
+    public class CommandLink : Button, INotifyPropertyChanged
     {
         #region Constants and Fields
 
         /// <summary>The text to display below the main instruction text.</summary>
-        public static readonly DependencyProperty NoteProperty = DependencyProperty.Register(
-            "Note",
-            typeof(string),
-            typeof(CommandLink),
-            new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.AffectsRender, OnNoteChanged));
+        private static readonly DependencyProperty NoteProperty = DependencyProperty.Register("Note", typeof(string), typeof(CommandLink), new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.AffectsRender, OnNoteChanged));
 
         /// <summary>Indicates if the Uac shield is needed.</summary>
-        public static readonly DependencyProperty UseShieldProperty = DependencyProperty.Register(
-            "UseShield",
-            typeof(bool),
-            typeof(CommandLink),
-            new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender, OnUseShieldChanged));
+        private static readonly DependencyProperty UseShieldProperty = DependencyProperty.Register("UseShield", typeof(bool), typeof(CommandLink), new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender, OnUseShieldChanged));
 
         #endregion
 
@@ -59,8 +51,7 @@ namespace System.Windows.Controls
                 return;
             }
 
-            var resourceDictionary = new ResourceDictionary
-                { Source = new Uri("/System.Windows;component/Resources/Dictionary.xaml", UriKind.Relative) };
+            var resourceDictionary = new ResourceDictionary { Source = new Uri("/System.Windows;component/Resources/Dictionary.xaml", UriKind.Relative) };
             this.Resources.MergedDictionaries.Add(resourceDictionary);
         }
 

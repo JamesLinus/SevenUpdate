@@ -14,9 +14,6 @@
     <Setting Name="windowWidth" Type="System.Double" Scope="User">
       <Value Profile="(Default)">900</Value>
     </Setting>
-    <Setting Name="infoPopUp" Type="System.Boolean" Scope="User">
-      <Value Profile="(Default)" />
-    </Setting>
     <Setting Name="locale" Type="System.String" Scope="User">
       <Value Profile="(Default)">en</Value>
     </Setting>

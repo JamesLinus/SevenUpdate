@@ -194,13 +194,7 @@ namespace SevenUpdate.Windows
                         continue;
                     }
 
-                    var sla = new Eula
-                        {
-                            LicenseUrl = Core.Applications[x].Updates[y].LicenseUrl,
-                            Title = Utilities.GetLocaleString(Core.Applications[x].Updates[y].Name),
-                            AppIndex = x,
-                            UpdateIndex = y
-                        };
+                    var sla = new Eula { LicenseUrl = Core.Applications[x].Updates[y].LicenseUrl, Title = Utilities.GetLocaleString(Core.Applications[x].Updates[y].Name), AppIndex = x, UpdateIndex = y };
 
                     this.licenseInformation.Add(sla);
                 }
@@ -225,8 +219,7 @@ namespace SevenUpdate.Windows
 
             if (this.btnAction.ButtonText == Properties.Resources.Next)
             {
-                this.tbHeading.Text = string.Format(
-                    CultureInfo.CurrentCulture, Properties.Resources.AcceptLicenseTerms, this.licenseInformation[this.index].Title);
+                this.tbHeading.Text = string.Format(CultureInfo.CurrentCulture, Properties.Resources.AcceptLicenseTerms, this.licenseInformation[this.index].Title);
                 var flowDoc = new FlowDocument();
                 var para = new Paragraph();
                 var r = new Run(this.licenseText[this.index]);

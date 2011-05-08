@@ -119,8 +119,7 @@ namespace SevenUpdate
                     currentUpdateName = Utilities.GetLocaleString(applications[x].Updates[y].Name);
 
                     // TODO: Remove this code and test executing SevenUpdate.Helper as a FileAction in the Seven Update SUI file
-                    if (applications[x].AppInfo.Directory ==
-                        Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, applications[x].AppInfo.Platform))
+                    if (applications[x].AppInfo.Directory == Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, applications[x].AppInfo.Platform))
                     {
                         try
                         {
@@ -160,8 +159,7 @@ namespace SevenUpdate
                         AddHistory(applications[x], applications[x].Updates[y]);
                     }
 
-                    if (applications[x].AppInfo.Directory ==
-                        Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, Platform.AnyCpu))
+                    if (applications[x].AppInfo.Directory == Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, Platform.AnyCpu))
                     {
                         selfUpdate = true;
                     }
@@ -233,16 +231,7 @@ namespace SevenUpdate
         /// <param name="failed"><see langword="true" /> if the update failed, otherwise <see langword="false" />.</param>
         private static void AddHistory(Sui appInfo, Update updateInfo, bool failed = false)
         {
-            var hist = new Suh(updateInfo.Name, appInfo.AppInfo.Publisher, updateInfo.Description)
-                {
-                    HelpUrl = appInfo.AppInfo.HelpUrl,
-                    AppUrl = appInfo.AppInfo.AppUrl,
-                    Status = failed == false ? UpdateStatus.Successful : UpdateStatus.Failed,
-                    InfoUrl = updateInfo.InfoUrl,
-                    InstallDate = DateTime.Now.ToShortDateString(),
-                    ReleaseDate = updateInfo.ReleaseDate,
-                    Importance = updateInfo.Importance,
-                };
+            var hist = new Suh(updateInfo.Name, appInfo.AppInfo.Publisher, updateInfo.Description) { HelpUrl = appInfo.AppInfo.HelpUrl, AppUrl = appInfo.AppInfo.AppUrl, Status = failed == false ? UpdateStatus.Successful : UpdateStatus.Failed, InfoUrl = updateInfo.InfoUrl, InstallDate = DateTime.Now.ToShortDateString(), ReleaseDate = updateInfo.ReleaseDate, Importance = updateInfo.Importance, };
 
             if (UpdateInstalled != null)
             {
@@ -265,7 +254,6 @@ namespace SevenUpdate
         /// <param name="platform">A value that indicates what cpu architecture the application supports.</param>
         private static void SetRegistryItems(IList<RegistryItem> regItems, Platform platform)
         {
-            RegistryKey key;
             if (regItems == null)
             {
                 return;
@@ -274,6 +262,7 @@ namespace SevenUpdate
             for (var x = 0; x < regItems.Count; x++)
             {
                 var keyPath = Utilities.ParseRegistryKey(regItems[x].Key, platform);
+                RegistryKey key;
                 switch (keyPath)
                 {
                     case "HKEY_CLASSES_ROOT":
@@ -366,8 +355,7 @@ namespace SevenUpdate
                 shortcuts[x].Location = Utilities.ExpandInstallLocation(shortcuts[x].Location, appInfo.Directory, appInfo.Platform, appInfo.ValueName);
                 var linkName = Utilities.GetLocaleString(shortcuts[x].Name);
 
-                if (shortcuts[x].Action == ShortcutAction.Add ||
-                    (shortcuts[x].Action == ShortcutAction.Update && File.Exists(Path.Combine(shortcuts[x].Location, linkName + ".lnk"))))
+                if (shortcuts[x].Action == ShortcutAction.Add || (shortcuts[x].Action == ShortcutAction.Update && File.Exists(Path.Combine(shortcuts[x].Location, linkName + ".lnk"))))
                 {
                     if (!Directory.Exists(shortcuts[x].Location))
                     {
@@ -471,6 +459,7 @@ namespace SevenUpdate
                                     if (!(e is UnauthorizedAccessException || e is IOException))
                                     {
                                         Utilities.ReportError(e, ErrorType.InstallationError);
+                                        throw;
                                     }
 
                                     Utilities.RebootNeeded = true;
@@ -484,6 +473,7 @@ namespace SevenUpdate
                             if (!(e is UnauthorizedAccessException || e is IOException))
                             {
                                 Utilities.ReportError(e, ErrorType.InstallationError);
+                                throw;
                             }
 
                             Utilities.RebootNeeded = true;
@@ -524,6 +514,16 @@ namespace SevenUpdate
         /// <param name="downloadDirectory">The path to the download folder where the update files are located.</param>
         private static void UpdateFiles(IList<UpdateFile> files, string downloadDirectory)
         {
+            if (files == null)
+            {
+                throw new ArgumentNullException("files");
+            }
+
+            if (downloadDirectory == null)
+            {
+                throw new ArgumentNullException("downloadDirectory");
+            }
+
             for (var x = 0; x < files.Count; x++)
             {
                 files[x].Source = Path.Combine(downloadDirectory, Path.GetFileName(files[x].Destination));
@@ -542,17 +542,16 @@ namespace SevenUpdate
 
                 var x1 = x;
                 var x2 = x;
-                var task = Task.Factory.StartNew(() => UpdateFile(files[x1])).ContinueWith(
-                    delegate
+                var task = Task.Factory.StartNew(() => UpdateFile(files[x1])).ContinueWith(delegate
+                    {
+                        var installProgress = (x2 * 100) / files.Count;
+                        if (installProgress > 70)
                         {
-                            var installProgress = (x2 * 100) / files.Count;
-                            if (installProgress > 70)
-                            {
-                                installProgress -= 15;
-                            }
+                            installProgress -= 15;
+                        }
 
-                            ReportProgress(installProgress);
-                        });
+                        ReportProgress(installProgress);
+                    });
                 task.Wait();
             }
         }

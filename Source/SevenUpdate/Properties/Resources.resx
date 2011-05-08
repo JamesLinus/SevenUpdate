@@ -576,10 +576,6 @@
     <value>Development Team:</value>
     <comment>Run.Text</comment>
   </data>
-  <data name="AppCreator" xml:space="preserve">
-    <value>Robert Baker (Seven ALive) - Creator and Lead Developer</value>
-    <comment>Run.Text</comment>
-  </data>
   <data name="SharpBitsLicense" xml:space="preserve">
     <value>SharpBITS.NET is licensed under the</value>
     <comment>Run.Text</comment>

@@ -30,33 +30,6 @@ namespace System.Windows.Internal
         /// <summary>Various important window messages.</summary>
         internal const int WmUser = 0x0400;
 
-        /// <summary>Enable/disable non-client rendering based on window style.</summary>
-        internal const int NcrUseWindowStyle = 0;
-
-        /// <summary>Disabled non-client rendering; window style is ignored.</summary>
-        internal const int NcrDisabled = 1;
-
-        /// <summary>Enabled non-client rendering; window style is ignored.</summary>
-        internal const int NcrEnabled = 2;
-
-        /// <summary>Enable/disable non-client rendering Use DWMNCRP_* values.If the function succeeds, it returns S_OK. Otherwise, it returns an HRESULT error code.</summary>
-        internal const int NcRenderingEnabled = 1;
-
-        /// <summary>Non-client rendering policy.</summary>
-        internal const int NcRenderingPolicy = 2;
-
-        /// <summary>Potentially enable/forcibly disable transitions 0 or 1.</summary>
-        internal const int TransitionsForceDisabled = 3;
-
-        /// <summary>Enable blur behind.</summary>
-        internal const int BlurBehindEnable = 0x00000001;
-
-        /// <summary>The blur region has been specified.</summary>
-        internal const int BlurRegion = 0x00000002;
-
-        /// <summary>TransitionOnMaximized has been specified.</summary>
-        internal const int TransitionOnMaximized = 0x00000004;
-
         #endregion
 
         /// <summary>Gets a value indicating whether if the current logged in user is an admin.</summary>

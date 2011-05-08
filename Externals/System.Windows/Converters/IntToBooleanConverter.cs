@@ -47,7 +47,7 @@ namespace System.Windows.Converters
                 return count < 1 && System.Convert.ToBoolean(parameter, CultureInfo.CurrentCulture);
             }
 
-            return count < 1 ? false : true;
+            return !(count < 1);
         }
 
         /// <summary>Converts a converted object back into it's original form.</summary>

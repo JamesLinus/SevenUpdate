@@ -24,6 +24,7 @@ namespace SevenUpdate
     using System.Collections.ObjectModel;
     using System.Collections.Specialized;
     using System.ComponentModel;
+    using System.Globalization;
     using System.IO;
     using System.Runtime.InteropServices;
     using System.Runtime.Serialization;
@@ -405,7 +406,7 @@ namespace SevenUpdate
             if (!string.IsNullOrWhiteSpace(shortcut.Icon))
             {
                 var icon = shortcut.Icon.Split(new[] { ',' });
-                link.SetIconLocation(icon[0], Convert.ToInt32(icon[1]));
+                link.SetIconLocation(icon[0], Convert.ToInt32(icon[1], CultureInfo.InvariantCulture));
             }
 
             link.SetWorkingDirectory(Path.GetDirectoryName(shortcut.Target));
@@ -494,7 +495,7 @@ namespace SevenUpdate
             var path = new StringBuilder(pathLength);
 
             var installState = NativeMethods.MsiGetComponentPath(product.ToString(), component.ToString(), path, ref pathLength);
-            return installState == InstallState.Source ? path.ToString() : null;
+            return installState == 4 ? path.ToString() : null;
         }
 
         /// <summary>Fires the OnPropertyChanged Event with the collection changes.</summary>
@@ -532,10 +533,10 @@ namespace SevenUpdate
         private struct FileTime
         {
             /// <summary>The low-order part of the file time.</summary>
-            private uint lowDateTime;
+            private readonly uint lowDateTime;
 
             /// <summary>The high-order part of the file time.</summary>
-            private uint highDateTime;
+            private readonly uint highDateTime;
         }
 
         /// <summary>The win 32 find data.</summary>
@@ -543,36 +544,36 @@ namespace SevenUpdate
         private struct Win32FindData
         {
             /// <summary>The file attributes.</summary>
-            private uint fileAttributes;
+            private readonly uint fileAttributes;
 
             /// <summary>A FileTime structure that specifies when a file or directory was created.</summary>
-            private FileTime creationTime;
+            private readonly FileTime creationTime;
 
             /// <summary>For a file, the structure specifies when the file was last read from, written to, or for executable files, run.For a directory, the structure specifies when the directory is created. If the underlying file system does not support last access time, this member is zero.</summary>
-            private FileTime lastAccessTime;
+            private readonly FileTime lastAccessTime;
 
             /// <summary>For a file, the structure specifies when the file was last written to, truncated, or overwritten, for example, when WriteFile or SetEndOfFile are used. The date and time are not updated when file attributes or security descriptors are changed.For a directory, the structure specifies when the directory is created. If the underlying file system does not support last write time, this member is zero.</summary>
-            private FileTime lastWriteTime;
+            private readonly FileTime lastWriteTime;
 
             /// <summary>The high-order file size.</summary>
-            private uint fileSizeHigh;
+            private readonly uint fileSizeHigh;
 
             /// <summary>The low-order file size.</summary>
-            private uint fileSizeLow;
+            private readonly uint fileSizeLow;
 
             /// <summary>Reserved data.</summary>
-            private uint reserved0;
+            private readonly uint reserved0;
 
             /// <summary>Reserved data.</summary>
-            private uint reserved1;
+            private readonly uint reserved1;
 
             /// <summary>The name of the file.</summary>
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = MaxPath)]
-            private string fileName;
+            private readonly string fileName;
 
             /// <summary>The alternate name of the file.</summary>
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 14)]
-            private string alternateFileName;
+            private readonly string alternateFileName;
         }
 
         /// <summary>The c shell link.</summary>

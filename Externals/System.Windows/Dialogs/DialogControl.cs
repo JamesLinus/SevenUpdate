@@ -155,13 +155,9 @@ namespace System.Windows.Dialogs
         #region Methods
 
         /// <summary>
-        ///   Calls the hosting dialog, if it exists, to
-        ///   to indicate that a property has changed, and that 
-        ///   the dialog should do whatever is necessary 
-        ///   to propagate the change to the native control.
-        ///   Note that if the dialog isn't set yet, 
-        ///   there are no restrictions on setting the property.
-        /// .</summary>
+        ///   Calls the hosting dialog, if it exists, to to indicate that a property has changed, and that the dialog should do whatever is necessary to propagate the change to the native control.
+        ///   Note that if the dialog isn't set yet, there are no restrictions on setting the property.
+        /// </summary>
         /// <param name="propName">The name of the property that is changing.</param>
         protected void ApplyPropertyChange(string propName)
         {
@@ -174,12 +170,9 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>
-        ///   Calls the hosting dialog, if it exists, to check whether the 
-        ///   property can be set in the dialog's current state. 
-        ///   The host should throw an exception if the change is not supported.
-        ///   Note that if the dialog isn't set yet, 
-        ///   there are no restrictions on setting the property.
-        /// .</summary>
+        ///   Calls the hosting dialog, if it exists, to check whether the property can be set in the dialog's current state. The host should throw an exception if the change is not supported.
+        ///   Note that if the dialog isn't set yet, there are no restrictions on setting the property.
+        /// </summary>
         /// <param name="propName">The name of the property that is changing.</param>
         protected void CheckPropertyChangeAllowed(string propName)
         {

@@ -44,9 +44,7 @@ namespace SevenUpdate.Sdk.ValidationRules
                 return new ValidationResult(false, Resources.FilePathInvalid);
             }
 
-            input = Core.AppInfo.Directory == null
-                        ? Utilities.ConvertPath(input, true, Core.AppInfo.Platform)
-                        : Utilities.ExpandInstallLocation(input, Core.AppInfo.Directory, Core.AppInfo.Platform, Core.AppInfo.ValueName);
+            input = Core.AppInfo.Directory == null ? Utilities.ConvertPath(input, true, Core.AppInfo.Platform) : Utilities.ExpandInstallLocation(input, Core.AppInfo.Directory, Core.AppInfo.Platform, Core.AppInfo.ValueName);
             if (File.Exists(input) || Directory.Exists(input))
             {
                 return new ValidationResult(true, null);

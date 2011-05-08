@@ -53,12 +53,9 @@ namespace System.Windows.ValidationRules
             }
 
             var r = new Regex(@"^(([a-zA-Z]\:)|(\\))(\\{1}|((\\{1})[^\\]([^/:*?<>""|]*))+)$");
-            if (input != null)
+            if (!r.IsMatch(input))
             {
-                if (!r.IsMatch(input))
-                {
-                    return new ValidationResult(false, Resources.FilePathInvalid);
-                }
+                return new ValidationResult(false, Resources.FilePathInvalid);
             }
 
             var fileName = Path.GetFileName(input);

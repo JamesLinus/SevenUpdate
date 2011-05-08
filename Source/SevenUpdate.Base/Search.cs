@@ -29,6 +29,8 @@ namespace SevenUpdate
     using System.Net.Sockets;
     using System.Threading.Tasks;
 
+    using ProtoBuf;
+
     /// <summary>Contains methods to search for updates.</summary>
     public static class Search
     {
@@ -112,11 +114,10 @@ namespace SevenUpdate
                 }
                 else
                 {
-                    Sui app;
                     try
                     {
                         // Loads a SUI that was downloaded
-                        app = Utilities.Deserialize<Sui>(Utilities.DownloadFile(t.SuiUrl));
+                        var app = Utilities.Deserialize<Sui>(Utilities.DownloadFile(t.SuiUrl));
                         app.AppInfo = t;
 
                         // Check to see if any updates are available
@@ -129,7 +130,10 @@ namespace SevenUpdate
                     {
                         Utilities.ReportError(ex, ErrorType.SearchError);
 
-                        // throw;
+                        if (!(ex is FileNotFoundException || ex is FileFormatException || ex is ProtoException))
+                        {
+                            throw;
+                        }
                     }
                 }
             }
@@ -155,10 +159,16 @@ namespace SevenUpdate
         /// <param name="updates">The updates to set as found.</param>
         public static void SetUpdatesFound(IEnumerable<Sui> updates)
         {
+            if (updates == null)
+            {
+                throw new ArgumentNullException("updates");
+            }
+
             importantCount = 0;
             recommendedCount = 0;
             optionalCount = 0;
-            foreach (var update in updates.SelectMany(app => app.Updates))
+            var updateList = updates.ToList();
+            foreach (var update in updateList.SelectMany(app => app.Updates))
             {
                 switch (update.Importance)
                 {
@@ -177,7 +187,7 @@ namespace SevenUpdate
 
             if (SearchCompleted != null)
             {
-                SearchCompleted(null, new SearchCompletedEventArgs(updates, importantCount, recommendedCount, optionalCount));
+                SearchCompleted(null, new SearchCompletedEventArgs(updateList, importantCount, recommendedCount, optionalCount));
             }
         }
 
@@ -190,9 +200,7 @@ namespace SevenUpdate
         /// <returns>Returns <see langword="true" /> if found updates, otherwise <see langword="false" />.</returns>
         private static bool CheckForUpdates(ref Sui app)
         {
-            app.AppInfo.Directory = Utilities.IsRegistryKey(app.AppInfo.Directory)
-                                        ? Utilities.GetRegistryValue(app.AppInfo.Directory, app.AppInfo.ValueName, app.AppInfo.Platform)
-                                        : Utilities.ConvertPath(app.AppInfo.Directory, true, app.AppInfo.Platform);
+            app.AppInfo.Directory = Utilities.IsRegistryKey(app.AppInfo.Directory) ? Utilities.GetRegistryValue(app.AppInfo.Directory, app.AppInfo.ValueName, app.AppInfo.Platform) : Utilities.ConvertPath(app.AppInfo.Directory, true, app.AppInfo.Platform);
 
             if (!Directory.Exists(app.AppInfo.Directory))
             {
@@ -215,11 +223,9 @@ namespace SevenUpdate
                     // ReSharper disable ForCanBeConvertedToForeach
                     for (var z = 0; z < app.Updates[y].Files.Count; z++)
                     {
-                        app.Updates[y].Files[z].Destination = Utilities.ExpandInstallLocation(
-                            app.Updates[y].Files[z].Destination, app.AppInfo.Directory, app.AppInfo.Platform, app.AppInfo.ValueName);
+                        app.Updates[y].Files[z].Destination = Utilities.ExpandInstallLocation(app.Updates[y].Files[z].Destination, app.AppInfo.Directory, app.AppInfo.Platform, app.AppInfo.ValueName);
 
-                        app.Updates[y].Files[z].Source = Utilities.ExpandDownloadUrl(
-                            app.Updates[y].Files[z].Source, app.Updates[y].DownloadUrl, app.AppInfo.Platform);
+                        app.Updates[y].Files[z].Source = Utilities.ExpandDownloadUrl(app.Updates[y].Files[z].Source, app.Updates[y].DownloadUrl, app.AppInfo.Platform);
 
                         if (app.Updates[y].Files[z].Action != FileAction.ExecuteThenDelete)
                         {

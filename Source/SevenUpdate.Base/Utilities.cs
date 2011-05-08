@@ -93,15 +93,6 @@ namespace SevenUpdate
 
         #region Public Methods
 
-        /// <summary>Checks if a registry key exists.</summary>
-        /// <param name="registryKey">The path to the registry key.</param>
-        /// <param name="platform">A value that indicates what cpu architecture the application supports.</param>
-        /// <returns><see langword="true" /> if exists; otherwise, <see langword="false" />.</returns>
-        public static bool CheckRegistryKey(string registryKey, Platform platform)
-        {
-            return GetRegistryValue(registryKey, null, platform) != null;
-        }
-
         /// <summary>Converts bytes into the proper increments depending on size.</summary>
         /// <param name="bytes">The fileSize in bytes.</param>
         /// <returns>The formatted string of converted bytes.</returns>
@@ -139,28 +130,25 @@ namespace SevenUpdate
         {
             if (path == null)
             {
-                return path;
+                throw new ArgumentNullException("path");
             }
 
             var stringBuilder = new StringBuilder(path);
 
             if (expand == false)
             {
-                stringBuilder = stringBuilder.Replace(
-                    Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu), "%ALLUSERSSTARTMENU%", true);
+                stringBuilder = stringBuilder.Replace(Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu), "%ALLUSERSSTARTMENU%", true);
                 stringBuilder = stringBuilder.Replace(Environment.GetFolderPath(Environment.SpecialFolder.Programs), "%STARTMENUPROGRAMS%", true);
                 stringBuilder = stringBuilder.Replace(Environment.GetFolderPath(Environment.SpecialFolder.StartMenu), "%STARTMENU%", true);
                 stringBuilder = stringBuilder.Replace(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), "%DOCUMENTS%", true);
                 stringBuilder = stringBuilder.Replace(Environment.GetFolderPath(Environment.SpecialFolder.MyMusic), "%MUSIC%", true);
                 stringBuilder = stringBuilder.Replace(Environment.GetFolderPath(Environment.SpecialFolder.MyPictures), "%PICTURES%", true);
                 stringBuilder = stringBuilder.Replace(Environment.GetEnvironmentVariable("ProgramFiles(x86)"), "%PROGRAMFILES(x86)%", true);
-                stringBuilder = stringBuilder.Replace(
-                    Environment.GetEnvironmentVariable("COMMONPROGRAMFILES(x86)"), "%COMMONPROGRAMFILES(x86)%", true);
+                stringBuilder = stringBuilder.Replace(Environment.GetEnvironmentVariable("COMMONPROGRAMFILES(x86)"), "%COMMONPROGRAMFILES(x86)%", true);
                 stringBuilder = stringBuilder.Replace(Environment.GetEnvironmentVariable("ProgramFiles"), "%PROGRAMFILES%", true);
                 stringBuilder = stringBuilder.Replace(Environment.GetEnvironmentVariable("COMMONPROGRAMFILES"), "%COMMONPROGRAMFILES%", true);
                 stringBuilder = stringBuilder.Replace(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "%APPDATA%", true);
-                stringBuilder = stringBuilder.Replace(
-                    Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "%LOCALAPPDATA%", true);
+                stringBuilder = stringBuilder.Replace(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "%LOCALAPPDATA%", true);
                 stringBuilder = stringBuilder.Replace(Environment.GetFolderPath(Environment.SpecialFolder.Startup), "%STARTUP%", true);
                 stringBuilder = stringBuilder.Replace(Environment.GetFolderPath(Environment.SpecialFolder.Templates), "%TEMPLATES%", true);
                 stringBuilder = stringBuilder.Replace(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), "%DESKTOP%", true);
@@ -179,8 +167,7 @@ namespace SevenUpdate
             }
             else
             {
-                stringBuilder = stringBuilder.Replace(
-                    "%ALLUSERSSTARTMENU%", Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu), true);
+                stringBuilder = stringBuilder.Replace("%ALLUSERSSTARTMENU%", Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu), true);
                 stringBuilder = stringBuilder.Replace("%STARTMENUPROGRAMS%", Environment.GetFolderPath(Environment.SpecialFolder.Programs), true);
                 stringBuilder = stringBuilder.Replace("%STARTMENU%", Environment.GetFolderPath(Environment.SpecialFolder.StartMenu), true);
                 stringBuilder = stringBuilder.Replace("%DOCUMENTS%", Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), true);
@@ -193,21 +180,15 @@ namespace SevenUpdate
                     {
                         case Platform.AnyCpu:
                         case Platform.X64:
-                            stringBuilder = stringBuilder.Replace(
-                                "%COMMONPROGRAMFILES%", Environment.GetEnvironmentVariable("COMMONPROGRAMFILES"), true);
+                            stringBuilder = stringBuilder.Replace("%COMMONPROGRAMFILES%", Environment.GetEnvironmentVariable("COMMONPROGRAMFILES"), true);
                             stringBuilder = stringBuilder.Replace("%PROGRAMFILES%", Environment.GetEnvironmentVariable("ProgramFiles"), true);
-                            stringBuilder = stringBuilder.Replace(
-                                "%PROGRAMFILES(x86)%", Environment.GetEnvironmentVariable("ProgramFiles(x86)"), true);
-                            stringBuilder = stringBuilder.Replace(
-                                "%COMMONPROGRAMFILES(x86)%", Environment.GetEnvironmentVariable("COMMONPROGRAMFILES(x86)"), true);
+                            stringBuilder = stringBuilder.Replace("%PROGRAMFILES(x86)%", Environment.GetEnvironmentVariable("ProgramFiles(x86)"), true);
+                            stringBuilder = stringBuilder.Replace("%COMMONPROGRAMFILES(x86)%", Environment.GetEnvironmentVariable("COMMONPROGRAMFILES(x86)"), true);
                             break;
                         case Platform.X86:
-                            stringBuilder = stringBuilder.Replace(
-                                "%COMMONPROGRAMFILES(x86)%", Environment.GetEnvironmentVariable("COMMONPROGRAMFILES(x86)"), true);
-                            stringBuilder = stringBuilder.Replace(
-                                "%PROGRAMFILES(x86)%", Environment.GetEnvironmentVariable("ProgramFiles(x86)"), true);
-                            stringBuilder = stringBuilder.Replace(
-                                "%COMMONPROGRAMFILES%", Environment.GetEnvironmentVariable("COMMONPROGRAMFILES(x86)"), true);
+                            stringBuilder = stringBuilder.Replace("%COMMONPROGRAMFILES(x86)%", Environment.GetEnvironmentVariable("COMMONPROGRAMFILES(x86)"), true);
+                            stringBuilder = stringBuilder.Replace("%PROGRAMFILES(x86)%", Environment.GetEnvironmentVariable("ProgramFiles(x86)"), true);
+                            stringBuilder = stringBuilder.Replace("%COMMONPROGRAMFILES%", Environment.GetEnvironmentVariable("COMMONPROGRAMFILES(x86)"), true);
                             stringBuilder = stringBuilder.Replace("%PROGRAMFILES%", Environment.GetEnvironmentVariable("ProgramFiles(x86)"), true);
                             break;
                     }
@@ -221,8 +202,7 @@ namespace SevenUpdate
                 }
 
                 stringBuilder = stringBuilder.Replace("%APPDATA%", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), true);
-                stringBuilder = stringBuilder.Replace(
-                    "%LOCALAPPDATA%", Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), true);
+                stringBuilder = stringBuilder.Replace("%LOCALAPPDATA%", Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), true);
                 stringBuilder = stringBuilder.Replace("%STARTUP%", Environment.GetFolderPath(Environment.SpecialFolder.Startup), true);
                 stringBuilder = stringBuilder.Replace("%TEMPLATES%", Environment.GetFolderPath(Environment.SpecialFolder.Templates), true);
                 stringBuilder = stringBuilder.Replace("%DESKTOP%", Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), true);
@@ -368,7 +348,7 @@ namespace SevenUpdate
                     sha2.ComputeHash(stream);
                     foreach (var hashByte in sha2.Hash)
                     {
-                        buff.Append(string.Format("{0:X1}", hashByte));
+                        buff.Append(string.Format(CultureInfo.InvariantCulture, "{0:X1}", hashByte));
                     }
                 }
             }
@@ -383,12 +363,12 @@ namespace SevenUpdate
         {
             if (localeStrings == null)
             {
-                throw new ArgumentNullException(@"localeStrings");
+                throw new ArgumentNullException(@"localeStrings", "The value cannot be null");
             }
 
             if (localeStrings.Count < 1)
             {
-                throw new ArgumentException(@"localeStrings");
+                throw new ArgumentException("The collection must have at least 1 item.", "localeStrings");
             }
 
             foreach (var t in localeStrings.Where(t => t.Lang == Locale))
@@ -450,8 +430,7 @@ namespace SevenUpdate
         /// <returns><see langword="true" /> if the path is a registry key otherwise, <see langword="false" />.</returns>
         public static bool IsRegistryKey(string path)
         {
-            return Regex.IsMatch(
-                path, @"^HKLM\\|^HKEY_CLASSES_ROOT\\|^HKEY_CURRENT_USER\\|^HKEY_LOCAL_MACHINE\\|^HKEY_USERS\\|^HKU\\|^HKCR\\", RegexOptions.IgnoreCase);
+            return Regex.IsMatch(path, @"^HKLM\\|^HKEY_CLASSES_ROOT\\|^HKEY_CURRENT_USER\\|^HKEY_LOCAL_MACHINE\\|^HKEY_USERS\\|^HKU\\|^HKCR\\", RegexOptions.IgnoreCase);
         }
 
         /// <summary>Gets whether the specified path is a valid absolute file path.</summary>
@@ -608,9 +587,7 @@ namespace SevenUpdate
                 }
                 catch (Exception e)
                 {
-                    if (
-                        !(e is OperationCanceledException || e is UnauthorizedAccessException || e is InvalidOperationException ||
-                          e is NotSupportedException || e is Win32Exception))
+                    if (!(e is OperationCanceledException || e is UnauthorizedAccessException || e is InvalidOperationException || e is NotSupportedException || e is Win32Exception))
                     {
                         ErrorOccurred(null, new ErrorOccurredEventArgs(GetExceptionAsString(e), ErrorType.FatalError));
                         throw;

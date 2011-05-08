@@ -20,6 +20,7 @@
 //   The layout for the Info Panel
 // .</summary>
 // ***********************************************************************
+
 namespace SevenUpdate
 {
     /// <summary>The layout for the Info Panel.</summary>

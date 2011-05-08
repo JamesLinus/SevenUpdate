@@ -26,11 +26,6 @@ namespace WPFLocalizeExtension.Engine
         /// <summary>Holds the default <see cref="ResourceDictionary" /> name.</summary>
         public const string ResourcesName = "Resources";
 
-        /// <summary><see cref="DependencyProperty" /> DesignCulture to set the Culture.Only supported at DesignTime.</summary>
-        [DesignOnly(true)]
-        public static readonly DependencyProperty DesignCultureProperty = DependencyProperty.RegisterAttached(
-            "DesignCulture", typeof(string), typeof(Localize), new PropertyMetadata(SetCultureFromDependencyProperty));
-
         /// <summary>Holds the binding flags for the reflection to find the resource files.</summary>
         private const BindingFlags ResourceBindingFlags = BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static;
 
@@ -39,6 +34,10 @@ namespace WPFLocalizeExtension.Engine
 
         /// <summary>Holds the name of the Resource Manager.</summary>
         private const string ResourceManagerName = "ResourceManager";
+
+        /// <summary><see cref="DependencyProperty" /> DesignCulture to set the Culture.Only supported at DesignTime.</summary>
+        [DesignOnly(true)]
+        private static readonly DependencyProperty DesignCultureProperty = DependencyProperty.RegisterAttached("DesignCulture", typeof(string), typeof(Localize), new PropertyMetadata(SetCultureFromDependencyProperty));
 
         /// <summary>Holds a SyncRoot to be thread safe.</summary>
         private static readonly object SyncRoot = new object();
@@ -69,15 +68,6 @@ namespace WPFLocalizeExtension.Engine
         #endregion
 
         #region Properties
-
-        /// <summary>Gets the default <see cref="CultureInfo" /> to initialize the LocalizeDictionary.<see cref="CultureInfo" />.</summary>
-        public static CultureInfo DefaultCultureInfo
-        {
-            get
-            {
-                return CultureInfo.InvariantCulture;
-            }
-        }
 
         /// <summary>Gets the LocalizeDictionary singleton.If the underlying instance is <see langword="null" />, a instance will be created.</summary>
         public static Localize Instance
@@ -158,6 +148,15 @@ namespace WPFLocalizeExtension.Engine
             get
             {
                 return CultureInfo.CreateSpecificCulture(this.Culture.ToString());
+            }
+        }
+
+        /// <summary>Gets the default <see cref="CultureInfo" /> to initialize the LocalizeDictionary.<see cref="CultureInfo" />.</summary>
+        private static CultureInfo DefaultCultureInfo
+        {
+            get
+            {
+                return CultureInfo.InvariantCulture;
             }
         }
 
@@ -283,8 +282,7 @@ namespace WPFLocalizeExtension.Engine
         /// <param name="cultureToUse">The culture to use.</param>
         /// <returns>The found object or <see langword="null" /> if not found or wrong <typeparamref name="TType" /> is given.</returns>
         /// <typeparam name="TType">The type of object to get.</typeparam>
-        public TType GetLocalizedObject<TType>(string resourceAssembly, string resourceDictionary, string resourceKey, CultureInfo cultureToUse)
-            where TType : class
+        public TType GetLocalizedObject<TType>(string resourceAssembly, string resourceDictionary, string resourceKey, CultureInfo cultureToUse) where TType : class
         {
             // Validation
             if (resourceAssembly == null)
@@ -348,15 +346,9 @@ namespace WPFLocalizeExtension.Engine
             object retVal = resManager.GetObject(resourceKey, cultureToUse) as TType;
 
             // if the retVal is null, throw exception, if in runtime
-            if (retVal == null && !this.IsInDesignMode)
+            if (retVal == null && this.IsInDesignMode == false)
             {
-                throw new ArgumentException(
-                    string.Format(
-                        CultureInfo.CurrentCulture,
-                        "No resource key with name '{0}' in dictionary '{1}' in assembly '{2}' found! ({2}.{1}.{0})",
-                        resourceKey,
-                        resourceDictionary,
-                        resourceAssembly));
+                throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "No resource key with name '{0}' in dictionary '{1}' in assembly '{2}' found! ({2}.{1}.{0})", resourceKey, resourceDictionary, resourceAssembly));
             }
 
             // finally, return the searched object as type of the generic type
@@ -371,29 +363,6 @@ namespace WPFLocalizeExtension.Engine
         public bool ResourceKeyExists(string resourceAssembly, string resourceDictionary, string resourceKey)
         {
             return this.ResourceKeyExists(resourceAssembly, resourceDictionary, resourceKey, CultureInfo.InvariantCulture);
-        }
-
-        /// <summary>Looks up the ResourceManagers for the searched <paramref name="resourceKey" />in the <param refname="resourceDictionary" /> in the <paramref name="resourceAssembly" />with the passed culture. If the searched one does not exists with the passed culture, is will searcheduntil the invariant culture is used.</summary>
-        /// <param name="resourceAssembly">The resource assembly (e.g.: <c>BaseLocalizeExtension</c>). <see langword="null" /> = Name of the executing assembly.</param>
-        /// <param name="resourceDictionary">The dictionary to look up (e.g.: ResHelp, Resources, ...). <see langword="null" /> = Name of the default resource file (Resources).</param>
-        /// <param name="resourceKey">The key of the searched entry (e.g.: <c>btnHelp</c>, Cancel, ...). <see langword="null" /> = Exception.</param>
-        /// <param name="cultureToUse">The culture to use.</param>
-        /// <returns><see langword="true" /> if the searched one is found, otherwise <see langword="false" />.</returns>
-        public bool ResourceKeyExists(string resourceAssembly, string resourceDictionary, string resourceKey, CultureInfo cultureToUse)
-        {
-            try
-            {
-                return this.GetResourceManager(resourceAssembly, resourceDictionary, resourceKey).GetObject(resourceKey, cultureToUse) != null;
-            }
-            catch
-            {
-                if (this.IsInDesignMode)
-                {
-                    return false;
-                }
-
-                throw;
-            }
         }
 
         #endregion
@@ -457,13 +426,10 @@ namespace WPFLocalizeExtension.Engine
                 throw new ArgumentNullException("resourceKey");
             }
 
-            PropertyInfo propInfo;
-            MethodInfo methodInfo;
             Assembly assembly = null;
             ResourceManager resManager;
             string foundResource = null;
             var resManagerNameToSearch = "." + resourceDictionary + ResourceFileExtension;
-            string[] availableResources;
 
             if (this.ResourceManagerList.ContainsKey(resourceAssembly + resManagerNameToSearch))
             {
@@ -473,11 +439,7 @@ namespace WPFLocalizeExtension.Engine
             {
                 // if the assembly cannot be loaded, throw an exception
                 // go through every assembly loaded in the app domain
-                foreach (var assemblyInAppDomain in from assemblyInAppDomain in AppDomain.CurrentDomain.GetAssemblies()
-                                                    where assemblyInAppDomain.FullName != null
-                                                    let assemblyName = new AssemblyName(assemblyInAppDomain.FullName)
-                                                    where assemblyName.Name == resourceAssembly
-                                                    select assemblyInAppDomain)
+                foreach (var assemblyInAppDomain in from assemblyInAppDomain in AppDomain.CurrentDomain.GetAssemblies() where true let assemblyName = new AssemblyName(assemblyInAppDomain.FullName) where assemblyName.Name == resourceAssembly select assemblyInAppDomain)
                 {
                     // assigned the assembly
                     assembly = assemblyInAppDomain;
@@ -494,14 +456,11 @@ namespace WPFLocalizeExtension.Engine
                 }
 
                 // availableResources = Assembly.GetExecutingAssembly().GetManifestResourceNames();
-                availableResources = assembly.GetManifestResourceNames();
+                string[] availableResources = assembly.GetManifestResourceNames();
 
                 // search for the best fitting resource file. pattern: ".{NAME}.resources"
                 foreach (var t in
-                    availableResources.Where(
-                        t =>
-                        t.StartsWith(resourceAssembly + ".", StringComparison.OrdinalIgnoreCase) &&
-                        t.EndsWith(resManagerNameToSearch, StringComparison.OrdinalIgnoreCase)))
+                    availableResources.Where(t => t.StartsWith(resourceAssembly + ".", StringComparison.OrdinalIgnoreCase) && t.EndsWith(resManagerNameToSearch, StringComparison.OrdinalIgnoreCase)))
                 {
                     // take the first occurrence and break
                     foundResource = t;
@@ -511,13 +470,7 @@ namespace WPFLocalizeExtension.Engine
                 // if no one was found, exception
                 if (foundResource == null)
                 {
-                    throw new ArgumentException(
-                        string.Format(
-                            CultureInfo.CurrentCulture,
-                            "No resource key with name '{0}' in dictionary '{1}' in assembly '{2}' found! ({2}.{1}.{0})",
-                            resourceKey,
-                            resourceDictionary,
-                            resourceAssembly));
+                    throw new ArgumentException(string.Format(CultureInfo.CurrentCulture, "No resource key with name '{0}' in dictionary '{1}' in assembly '{2}' found! ({2}.{1}.{0})", resourceKey, resourceDictionary, resourceAssembly));
                 }
 
                 // remove ".resources" from the end
@@ -529,10 +482,10 @@ namespace WPFLocalizeExtension.Engine
                 try
                 {
                     // get the property info from resManager over the type from foundResource
-                    propInfo = assembly.GetType(foundResource).GetProperty(ResourceManagerName, ResourceBindingFlags);
+                    PropertyInfo propInfo = assembly.GetType(foundResource).GetProperty(ResourceManagerName, ResourceBindingFlags);
 
                     // get the GET-method from the method info
-                    methodInfo = propInfo.GetGetMethod(true);
+                    MethodInfo methodInfo = propInfo.GetGetMethod(true);
 
                     // get the static ResourceManager property
                     var resManObject = methodInfo.Invoke(null, null);
@@ -552,6 +505,29 @@ namespace WPFLocalizeExtension.Engine
 
             // return the found ResourceManager
             return resManager;
+        }
+
+        /// <summary>Looks up the ResourceManagers for the searched <paramref name="resourceKey" />in the <param refname="resourceDictionary" /> in the <paramref name="resourceAssembly" />with the passed culture. If the searched one does not exists with the passed culture, is will searcheduntil the invariant culture is used.</summary>
+        /// <param name="resourceAssembly">The resource assembly (e.g.: <c>BaseLocalizeExtension</c>). <see langword="null" /> = Name of the executing assembly.</param>
+        /// <param name="resourceDictionary">The dictionary to look up (e.g.: ResHelp, Resources, ...). <see langword="null" /> = Name of the default resource file (Resources).</param>
+        /// <param name="resourceKey">The key of the searched entry (e.g.: <c>btnHelp</c>, Cancel, ...). <see langword="null" /> = Exception.</param>
+        /// <param name="cultureToUse">The culture to use.</param>
+        /// <returns><see langword="true" /> if the searched one is found, otherwise <see langword="false" />.</returns>
+        private bool ResourceKeyExists(string resourceAssembly, string resourceDictionary, string resourceKey, CultureInfo cultureToUse)
+        {
+            try
+            {
+                return this.GetResourceManager(resourceAssembly, resourceDictionary, resourceKey).GetObject(resourceKey, cultureToUse) != null;
+            }
+            catch
+            {
+                if (this.IsInDesignMode)
+                {
+                    return false;
+                }
+
+                throw;
+            }
         }
 
         #endregion

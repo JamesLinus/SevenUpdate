@@ -180,8 +180,7 @@ namespace SevenUpdate.Sdk.Pages
                 return true;
             }
 
-            return this.tbxAppName.HasError || this.tbxPublisher.HasError || this.tbxAppUrl.HasError || this.tbxHelpUrl.HasError ||
-                   this.tbxAppLocation.HasError || this.tbxAppDescription.HasError || this.tbxSuiUrl.HasError;
+            return this.tbxAppName.HasError || this.tbxPublisher.HasError || this.tbxAppUrl.HasError || this.tbxHelpUrl.HasError || this.tbxAppLocation.HasError || this.tbxAppDescription.HasError || this.tbxSuiUrl.HasError;
         }
 
         /// <summary>Loads the application info into the UI.</summary>

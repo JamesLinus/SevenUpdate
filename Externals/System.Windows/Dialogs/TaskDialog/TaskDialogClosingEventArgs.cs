@@ -18,7 +18,7 @@ namespace System.Windows.Dialogs
         public string CustomButton { get; set; }
 
         /// <summary>Gets or sets the standard button that was clicked.</summary>
-        public TaskDialogResult TaskDialogResult { get; set; }
+        public TaskDialogResults TaskDialogResult { get; set; }
 
         #endregion
     }

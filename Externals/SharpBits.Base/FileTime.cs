@@ -16,9 +16,9 @@ namespace SharpBits.Base
     internal struct FileTime
     {
         /// <summary>Specifies the low 32 bits of the file time.</summary>
-        public uint DWLowDateTime;
+        public readonly uint DWLowDateTime;
 
         /// <summary>Specifies the high 32 bits of the file time.</summary>
-        public uint DWHighDateTime;
+        public readonly uint DWHighDateTime;
     }
 }

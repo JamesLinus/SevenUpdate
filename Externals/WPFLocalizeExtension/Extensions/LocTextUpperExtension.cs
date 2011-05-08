@@ -59,9 +59,7 @@ namespace WPFLocalizeExtension.Extensions
                 return obj;
             }
 
-            throw new NotSupportedException(
-                string.Format(
-                    CultureInfo.CurrentCulture, "ResourceKey '{0}' returns '{1}' which is not type of System.String", this.Key, obj.GetType().FullName));
+            throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, "ResourceKey '{0}' returns '{1}' which is not type of System.String", this.Key, obj.GetType().FullName));
         }
 
         #endregion
@@ -76,7 +74,7 @@ namespace WPFLocalizeExtension.Extensions
             return target == null ? string.Empty : target.ToUpper(this.Culture).Replace("�", "SS");
         }
 
-        /// <summary>This method gets the new value for the target property and call <see cref="SetNewValue" />.</summary>
+        /// <summary>This method gets the new value for the target property and call <see cref="BaseLocalizeExtension{TValue}.SetNewValue" />.</summary>
         protected override void HandleNewValue()
         {
             var obj = Localize.Instance.GetLocalizedObject<object>(this.Assembly, this.Dictionary, this.Key, this.Culture);

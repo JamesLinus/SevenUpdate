@@ -160,13 +160,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void NewRegistryItem(object sender, RoutedEventArgs e)
         {
-            var registryItem = new RegistryItem
-                {
-                    KeyValue = Properties.Resources.NewRegistryItem,
-                    Key = @"HKLM\Software\MyApp",
-                    Action = RegistryAction.Add,
-                    ValueKind = RegistryValueKind.String
-                };
+            var registryItem = new RegistryItem { KeyValue = Properties.Resources.NewRegistryItem, Key = @"HKLM\Software\MyApp", Action = RegistryAction.Add, ValueKind = RegistryValueKind.String };
             Core.UpdateInfo.RegistryItems.Add(registryItem);
         }
 
@@ -210,9 +204,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The <see cref="System.Windows.Input.KeyEventArgs" /> instance containing the event data.</param>
         private void ValidateData(object sender, KeyEventArgs e)
         {
-            if (Core.UpdateInfo.RegistryItems[this.listBox.SelectedIndex].ValueKind != RegistryValueKind.Binary &&
-                Core.UpdateInfo.RegistryItems[this.listBox.SelectedIndex].ValueKind != RegistryValueKind.DWord &&
-                Core.UpdateInfo.RegistryItems[this.listBox.SelectedIndex].ValueKind != RegistryValueKind.QWord)
+            if (Core.UpdateInfo.RegistryItems[this.listBox.SelectedIndex].ValueKind != RegistryValueKind.Binary && Core.UpdateInfo.RegistryItems[this.listBox.SelectedIndex].ValueKind != RegistryValueKind.DWord && Core.UpdateInfo.RegistryItems[this.listBox.SelectedIndex].ValueKind != RegistryValueKind.QWord)
             {
                 return;
             }

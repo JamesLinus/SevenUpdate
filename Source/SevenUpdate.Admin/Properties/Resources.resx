@@ -154,7 +154,4 @@
   <data name="trayIcon" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\trayIcon.ico;System.Drawing.Icon, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a</value>
   </data>
-  <data name="UpdateServiceInterrupted" xml:space="preserve">
-    <value>Communication with the update service has been interrupted and cannot be resumed</value>
-  </data>
 </root>

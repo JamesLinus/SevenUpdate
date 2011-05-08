@@ -56,6 +56,7 @@
     <PlatformTarget>x86</PlatformTarget>
     <UseVSHostingProcess>false</UseVSHostingProcess>
     <ErrorReport>prompt</ErrorReport>
+    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup>
     <CoreCompileDependsOn>$(CoreCompileDependsOn);CompileWin32RCFile</CoreCompileDependsOn>
@@ -92,7 +93,6 @@
     <Compile Include="Importance.cs" />
     <Compile Include="InstallCompletedEventArgs.cs" />
     <Compile Include="InstallProgressChangedEventArgs.cs" />
-    <Compile Include="InstallState.cs" />
     <Compile Include="LocaleString.cs" />
     <Compile Include="NativeMethods.cs" />
     <Compile Include="Platform.cs" />

@@ -20,36 +20,12 @@
 
 namespace SevenUpdate
 {
-    using System;
     using System.Runtime.InteropServices;
     using System.Text;
 
     /// <summary>Contains Win32 native methods.</summary>
     internal static class NativeMethods
     {
-        /// <summary>Determines the concurrency model used for incoming calls to objects created by this thread. This concurrency model can be either apartment-threaded or multi-threaded.</summary>
-        internal enum CoInit
-        {
-            /// <summary>Initializes the thread for apartment-threaded object concurrency.</summary>
-            MultiThreaded = 0x0,
-
-            /// <summary>Initializes the thread for multi-threaded object concurrency.</summary>
-            ApartmentThreaded = 0x2,
-
-            /// <summary>Disables DDE for OLE1 support.</summary>
-            DisableOle1Dde = 0x4,
-
-            /// <summary>Trade memory for speed.</summary>
-            SpeedOverMemory = 0x8
-        }
-
-        /// <summary>Initializes the COM library for use by the calling thread, sets the thread's concurrency model, and creates a new apartment for the thread if one is required.</summary>
-        /// <param name="reserved">This parameter is reserved and must be NULL.</param>
-        /// <param name="coInit">The concurrency model and initialization options for the thread. Values for this parameter are taken from the CoInit enumeration. Any combination of values can be used, except that the ApartmentThreaded and MultiThreaded flags cannot both be set. The default is MultiThreaded.</param>
-        /// <returns>If function succeeds, it returns S_OK. Otherwise, it returns an error code.</returns>
-        [DllImport(@"ole32.dll")]
-        internal static extern int CoInitializeEx(IntPtr reserved, CoInit coInit);
-
         /// <summary>Moves the file using the windows command.</summary>
         /// <param name="sourceFileName">The current name of the file or directory on the local computer.</param>
         /// <param name="newFileName">The new name of the file or directory on the local computer.</param>
@@ -66,8 +42,7 @@ namespace SevenUpdate
         /// <param name="componentPathBufferSize">A pointer to a variable that specifies the size, in characters, of the buffer pointed to by the <paramref name="componentPath" /> parameter. On input, this is the full size of the buffer, including a space for a terminating <see langword="null" /> character. If the buffer passed in is too small, the count returned does not include the terminating <see langword="null" /> character.</param>
         /// <returns>The install state of the component.</returns>
         [DllImport(@"msi.dll", CharSet = CharSet.Unicode)]
-        internal static extern InstallState MsiGetComponentPath(
-            string productCode, string componentCode, StringBuilder componentPath, ref int componentPathBufferSize);
+        internal static extern int MsiGetComponentPath(string productCode, string componentCode, StringBuilder componentPath, ref int componentPathBufferSize);
 
         /// <summary>Gets the target for the msi shortcut.</summary>
         /// <param name="targetFile">A <see langword="null" />-terminated string specifying the full path to a shortcut.</param>
@@ -76,7 +51,6 @@ namespace SevenUpdate
         /// <param name="componentCode">A GUID of the component code. This string buffer must be 39 characters long. The first 38 characters are for the GUID, and the last character is for the terminating <see langword="null" /> character. This parameter can be <see langword="null" />.</param>
         /// <returns>The return code.</returns>
         [DllImport(@"msi.dll", CharSet = CharSet.Unicode)]
-        internal static extern int MsiGetShortcutTarget(
-            string targetFile, StringBuilder productCode, StringBuilder featureID, StringBuilder componentCode);
+        internal static extern int MsiGetShortcutTarget(string targetFile, StringBuilder productCode, StringBuilder featureID, StringBuilder componentCode);
     }
 }

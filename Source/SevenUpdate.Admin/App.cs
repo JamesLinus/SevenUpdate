@@ -57,7 +57,7 @@ namespace SevenUpdate.Admin
         public static readonly string HiddenFile = Path.Combine(AllUserStore, "Hidden.suh");
 
         /// <summary>The location of the update history file.</summary>
-        public static readonly string HistoryFile = Path.Combine(AllUserStore, "History.suh");
+        private static readonly string HistoryFile = Path.Combine(AllUserStore, "History.suh");
 
         /// <summary>The WCF service host.</summary>
         private static ElevatedProcessCallback client;
@@ -112,9 +112,7 @@ namespace SevenUpdate.Admin
         {
             get
             {
-                return File.Exists(ConfigFile)
-                           ? Utilities.Deserialize<Config>(ConfigFile)
-                           : new Config { AutoOption = AutoUpdateOption.Notify, IncludeRecommended = false };
+                return File.Exists(ConfigFile) ? Utilities.Deserialize<Config>(ConfigFile) : new Config { AutoOption = AutoUpdateOption.Notify, IncludeRecommended = false };
             }
         }
 
@@ -137,43 +135,42 @@ namespace SevenUpdate.Admin
         /// <param name="e">The <see cref="System.Timers.ElapsedEventArgs" /> instance containing the event data.</param>
         private static void CheckIfRunning(object sender, ElapsedEventArgs e)
         {
-            Task.Factory.StartNew(
-                () =>
+            Task.Factory.StartNew(() =>
+                {
+                    if (File.Exists(Path.Combine(AllUserStore, "abort.lock")))
                     {
-                        if (File.Exists(Path.Combine(AllUserStore, "abort.lock")))
+                        Download.CancelDownload();
+                        Install.CancelInstall();
+                        try
                         {
-                            Download.CancelDownload();
-                            Install.CancelInstall();
-                            try
-                            {
-                                File.Delete(Path.Combine(AllUserStore, "abort.lock"));
-                            }
-                            catch (IOException)
-                            {
-                            }
+                            File.Delete(Path.Combine(AllUserStore, "abort.lock"));
                         }
+                        catch (IOException)
+                        {
+                        }
+                    }
 
 #if (!DEBUG)
-                        if (client == null)
-                        {
-                            StartWcfHost();
-                        }
+                    if (client == null)
+                    {
+                        StartWcfHost();
+                    }
 #endif
 
-                        if (IsInstalling)
-                        {
-                            return;
-                        }
+                    if (IsInstalling)
+                    {
+                        return;
+                    }
 
-                        if (Process.GetProcessesByName("SevenUpdate").Length > 0 || waiting)
-                        {
-                            return;
-                        }
+                    if (Process.GetProcessesByName("SevenUpdate").Length > 0 || waiting)
+                    {
+                        return;
+                    }
 
 #if (!DEBUG)
-                        ShutdownApp();
+                    ShutdownApp();
 #endif
-                    });
+                });
         }
 
         /// <summary>Reports that the download has completed and starts update installation if necessary.</summary>
@@ -211,8 +208,7 @@ namespace SevenUpdate.Admin
                 client.OnDownloadProgressChanged(sender, e);
             }
 
-            Application.Current.Dispatcher.BeginInvoke(
-                UpdateNotifyIcon, string.Format(CultureInfo.CurrentCulture, Resources.DownloadProgress, e.FilesTransferred, e.FilesTotal));
+            Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, string.Format(CultureInfo.CurrentCulture, Resources.DownloadProgress, e.FilesTransferred, e.FilesTotal));
         }
 
         /// <summary>Runs when there is an error searching for updates.</summary>
@@ -253,8 +249,7 @@ namespace SevenUpdate.Admin
                 client.OnInstallProgressChanged(sender, e);
             }
 
-            Application.Current.Dispatcher.BeginInvoke(
-                UpdateNotifyIcon, string.Format(CultureInfo.CurrentCulture, Resources.InstallProgress, e.CurrentProgress));
+            Application.Current.Dispatcher.BeginInvoke(UpdateNotifyIcon, string.Format(CultureInfo.CurrentCulture, Resources.InstallProgress, e.CurrentProgress));
         }
 
         /// <summary>The main execution method.</summary>
@@ -361,9 +356,7 @@ namespace SevenUpdate.Admin
                     }
                     catch (Exception e)
                     {
-                        if (
-                            !(e is OperationCanceledException || e is UnauthorizedAccessException || e is InvalidOperationException ||
-                              e is NotSupportedException))
+                        if (!(e is OperationCanceledException || e is UnauthorizedAccessException || e is InvalidOperationException || e is NotSupportedException))
                         {
                             ErrorOccurred(null, new ErrorOccurredEventArgs(Utilities.GetExceptionAsString(e), ErrorType.FatalError));
                             throw;
@@ -385,9 +378,7 @@ namespace SevenUpdate.Admin
                         }
                         catch (Exception e)
                         {
-                            if (
-                                !(e is OperationCanceledException || e is UnauthorizedAccessException || e is InvalidOperationException ||
-                                  e is NotSupportedException))
+                            if (!(e is OperationCanceledException || e is UnauthorizedAccessException || e is InvalidOperationException || e is NotSupportedException))
                             {
                                 ErrorOccurred(null, new ErrorOccurredEventArgs(Utilities.GetExceptionAsString(e), ErrorType.FatalError));
                                 throw;
@@ -426,8 +417,7 @@ namespace SevenUpdate.Admin
         {
             if (Environment.OSVersion.Version.Major < 6)
             {
-                if (notifyIcon.Text == Resources.UpdatesFoundViewThem || notifyIcon.Text == Resources.UpdatesDownloadedViewThem ||
-                    notifyIcon.Text == Resources.CheckingForUpdates)
+                if (notifyIcon.Text == Resources.UpdatesFoundViewThem || notifyIcon.Text == Resources.UpdatesDownloadedViewThem || notifyIcon.Text == Resources.CheckingForUpdates)
                 {
                     Utilities.StartProcess(Path.Combine(Utilities.AppDir, "SevenUpdate.exe"), @"Auto");
                 }
@@ -441,8 +431,7 @@ namespace SevenUpdate.Admin
                 Utilities.StartProcess(@"schtasks.exe", "/Run /TN \"SevenUpdate\"");
             }
 
-            if (notifyIcon.Text == Resources.UpdatesFoundViewThem || notifyIcon.Text == Resources.UpdatesDownloadedViewThem ||
-                notifyIcon.Text == Resources.CheckingForUpdates)
+            if (notifyIcon.Text == Resources.UpdatesFoundViewThem || notifyIcon.Text == Resources.UpdatesDownloadedViewThem || notifyIcon.Text == Resources.CheckingForUpdates)
             {
                 ShutdownApp();
             }
@@ -462,8 +451,7 @@ namespace SevenUpdate.Admin
 
             if (Applications.Count > 0)
             {
-                if (Applications[0].AppInfo.SuiUrl == @"http://sevenupdate.com/apps/SevenUpdate.sui" ||
-                    Applications[0].AppInfo.SuiUrl == @"http://sevenupdate.com/apps/SevenUpdate-dev.sui")
+                if (Applications[0].AppInfo.SuiUrl == @"http://sevenupdate.com/apps/SevenUpdate.sui" || Applications[0].AppInfo.SuiUrl == @"http://sevenupdate.com/apps/SevenUpdate-dev.sui")
                 {
                     var sevenUpdate = Applications[0];
                     Applications.Clear();

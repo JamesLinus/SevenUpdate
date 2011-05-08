@@ -35,28 +35,22 @@ namespace System.Windows.Controls
         #region Constants and Fields
 
         /// <summary>Indicates if the <see cref="ListView" /> will auto sort.</summary>
-        public static readonly DependencyProperty AutoSortProperty = DependencyProperty.RegisterAttached(
-            "AutoSort", typeof(bool), typeof(ListViewSorter), new UIPropertyMetadata(false, AutoSortCallback));
+        private static readonly DependencyProperty AutoSortProperty = DependencyProperty.RegisterAttached("AutoSort", typeof(bool), typeof(ListViewSorter), new UIPropertyMetadata(false, AutoSortCallback));
 
         /// <summary>Indicates a custom sorter that will be used.</summary>
-        public static readonly DependencyProperty CustomSorterProperty = DependencyProperty.RegisterAttached(
-            "CustomSorter", typeof(string), typeof(ListViewSorter), new FrameworkPropertyMetadata(null, CustomSorterCallback));
+        private static readonly DependencyProperty CustomSorterProperty = DependencyProperty.RegisterAttached("CustomSorter", typeof(string), typeof(ListViewSorter), new FrameworkPropertyMetadata(null, CustomSorterCallback));
 
         /// <summary>The property name to sort.</summary>
-        public static readonly DependencyProperty PropertyNameProperty = DependencyProperty.RegisterAttached(
-            "PropertyName", typeof(string), typeof(ListViewSorter), new UIPropertyMetadata(null));
+        private static readonly DependencyProperty PropertyNameProperty = DependencyProperty.RegisterAttached("PropertyName", typeof(string), typeof(ListViewSorter), new UIPropertyMetadata(null));
 
         /// <summary>The sort arrow up.</summary>
-        public static readonly DependencyProperty SortGlyphAscendingProperty = DependencyProperty.RegisterAttached(
-            "SortGlyphAscending", typeof(ImageSource), typeof(ListViewSorter), new UIPropertyMetadata(null));
+        private static readonly DependencyProperty SortGlyphAscendingProperty = DependencyProperty.RegisterAttached("SortGlyphAscending", typeof(ImageSource), typeof(ListViewSorter), new UIPropertyMetadata(null));
 
         /// <summary>The sort arrow down.</summary>
-        public static readonly DependencyProperty SortGlyphDescendingProperty = DependencyProperty.RegisterAttached(
-            "SortGlyphDescending", typeof(ImageSource), typeof(ListViewSorter), new UIPropertyMetadata(null));
+        private static readonly DependencyProperty SortGlyphDescendingProperty = DependencyProperty.RegisterAttached("SortGlyphDescending", typeof(ImageSource), typeof(ListViewSorter), new UIPropertyMetadata(null));
 
         /// <summary>The column header that was sorted.</summary>
-        private static readonly DependencyProperty SortedColumnHeaderProperty = DependencyProperty.RegisterAttached(
-            "SortedColumnHeader", typeof(GridViewColumnHeader), typeof(ListViewSorter), new UIPropertyMetadata(null));
+        private static readonly DependencyProperty SortedColumnHeaderProperty = DependencyProperty.RegisterAttached("SortedColumnHeader", typeof(GridViewColumnHeader), typeof(ListViewSorter), new UIPropertyMetadata(null));
 
         /// <summary>The current sort direction.</summary>
         private static ListSortDirection currentSortDirection;
@@ -119,6 +113,16 @@ namespace System.Windows.Controls
         /// <param name="value">The value.</param>
         public static void SetSortGlyphAscending(DependencyObject obj, ImageSource value)
         {
+            if (obj == null)
+            {
+                throw new ArgumentNullException("obj");
+            }
+
+            if (value == null)
+            {
+                throw new ArgumentNullException("value");
+            }
+
             obj.SetValue(SortGlyphAscendingProperty, value);
         }
 
@@ -127,6 +131,16 @@ namespace System.Windows.Controls
         /// <param name="value">The value.</param>
         public static void SetSortGlyphDescending(DependencyObject obj, ImageSource value)
         {
+            if (obj == null)
+            {
+                throw new ArgumentNullException("obj");
+            }
+
+            if (value == null)
+            {
+                throw new ArgumentNullException("value");
+            }
+
             obj.SetValue(SortGlyphDescendingProperty, value);
         }
 
@@ -154,12 +168,11 @@ namespace System.Windows.Controls
 
         /// <summary>Adds the sort glyph.</summary>
         /// <param name="columnHeader">The column header.</param>
-        /// <param name="direction">The direction.</param>
         /// <param name="sortGlyph">The sort glyph.</param>
-        private static void AddSortGlyph(GridViewColumnHeader columnHeader, ListSortDirection direction, ImageSource sortGlyph)
+        private static void AddSortGlyph(GridViewColumnHeader columnHeader, ImageSource sortGlyph)
         {
             var adornerLayer = AdornerLayer.GetAdornerLayer(columnHeader);
-            var glyph = new SortGlyphAdorner(columnHeader, direction, sortGlyph);
+            var glyph = new SortGlyphAdorner(columnHeader, sortGlyph);
             adornerLayer.Add(glyph);
         }
 
@@ -168,17 +181,34 @@ namespace System.Windows.Controls
         /// <param name="propertyName">Name of the property.</param>
         /// <param name="listView">The list view to sort.</param>
         /// <param name="sortedColumnHeader">The sorted column header.</param>
-        private static void ApplyCustomSort(
-            ListCollectionView view, string propertyName, ItemsControl listView, GridViewColumnHeader sortedColumnHeader)
+        private static void ApplyCustomSort(ListCollectionView view, string propertyName, ItemsControl listView, GridViewColumnHeader sortedColumnHeader)
         {
+            if (view == null)
+            {
+                throw new ArgumentNullException("view");
+            }
+
+            if (listView == null)
+            {
+                throw new ArgumentNullException("listView");
+            }
+
+            if (sortedColumnHeader == null)
+            {
+                throw new ArgumentNullException("sortedColumnHeader");
+            }
+
+            if (string.IsNullOrEmpty(propertyName))
+            {
+                throw new ArgumentNullException("propertyName");
+            }
+
             if (view.SortDescriptions.Count > 0)
             {
                 var currentSort = view.SortDescriptions[0];
                 if (currentSort.PropertyName == propertyName)
                 {
-                    currentSortDirection = currentSort.Direction == ListSortDirection.Ascending
-                                               ? ListSortDirection.Descending
-                                               : ListSortDirection.Ascending;
+                    currentSortDirection = currentSort.Direction == ListSortDirection.Ascending ? ListSortDirection.Descending : ListSortDirection.Ascending;
                 }
             }
 
@@ -208,10 +238,7 @@ namespace System.Windows.Controls
                 return;
             }
 
-            AddSortGlyph(
-                sortedColumnHeader,
-                currentSortDirection,
-                currentSortDirection == ListSortDirection.Ascending ? GetSortGlyphAscending(listView) : GetSortGlyphDescending(listView));
+            AddSortGlyph(sortedColumnHeader, currentSortDirection == ListSortDirection.Ascending ? GetSortGlyphAscending(listView) : GetSortGlyphDescending(listView));
             SetSortedColumnHeader(listView, sortedColumnHeader);
         }
 
@@ -248,10 +275,7 @@ namespace System.Windows.Controls
 
             view.SortDescriptions.Add(new SortDescription(propertyName, direction));
 
-            AddSortGlyph(
-                sortedColumnHeader,
-                direction,
-                direction == ListSortDirection.Ascending ? GetSortGlyphAscending(listView) : GetSortGlyphDescending(listView));
+            AddSortGlyph(sortedColumnHeader, direction == ListSortDirection.Ascending ? GetSortGlyphAscending(listView) : GetSortGlyphDescending(listView));
 
             SetSortedColumnHeader(listView, sortedColumnHeader);
         }
@@ -453,9 +477,6 @@ namespace System.Windows.Controls
             /// <summary>The column header.</summary>
             private readonly GridViewColumnHeader columnHeader;
 
-            /// <summary>The direction of the sort.</summary>
-            private readonly ListSortDirection direction;
-
             /// <summary>The sort glyph image.</summary>
             private readonly ImageSource sortGlyph;
 
@@ -465,13 +486,11 @@ namespace System.Windows.Controls
 
             /// <summary>Initializes a new instance of the <see cref="SortGlyphAdorner" /> class.</summary>
             /// <param name="columnHeader">The column header.</param>
-            /// <param name="direction">The direction.</param>
             /// <param name="sortGlyph">The sort glyph.</param>
-            public SortGlyphAdorner(GridViewColumnHeader columnHeader, ListSortDirection direction, ImageSource sortGlyph)
+            public SortGlyphAdorner(GridViewColumnHeader columnHeader, ImageSource sortGlyph)
                 : base(columnHeader)
             {
                 this.columnHeader = columnHeader;
-                this.direction = direction;
                 this.sortGlyph = sortGlyph;
             }
 
@@ -504,43 +523,12 @@ namespace System.Windows.Controls
                         return;
                     }
 
-                    drawingContext.PushTransform(
-                        new TranslateTransform(this.AdornedElement.RenderSize.Width - 15, (this.AdornedElement.RenderSize.Height - 5) / 2));
+                    drawingContext.PushTransform(new TranslateTransform(this.AdornedElement.RenderSize.Width - 15, (this.AdornedElement.RenderSize.Height - 5) / 2));
 
-                    drawingContext.DrawGeometry(
-                        Brushes.LightGray,
-                        new Pen(Brushes.Gray, 1.0),
-                        currentSortDirection == ListSortDirection.Ascending ? AscGeometry : DescGeometry);
+                    drawingContext.DrawGeometry(Brushes.LightGray, new Pen(Brushes.Gray, 1.0), currentSortDirection == ListSortDirection.Ascending ? AscGeometry : DescGeometry);
 
                     drawingContext.Pop();
                 }
-            }
-
-            /// <summary>Gets the default glyph.</summary>
-            /// <returns>The geometry of the sort glyph.</returns>
-            private Geometry GetDefaultGlyph()
-            {
-                var x1 = this.columnHeader.ActualWidth - 13;
-                var x2 = x1 + 10;
-                var x3 = x1 + 5;
-                var y1 = this.columnHeader.ActualHeight / (2 - 3);
-                var y2 = y1 + 5;
-
-                if (this.direction == ListSortDirection.Ascending)
-                {
-                    var tmp = y1;
-                    y1 = y2;
-                    y2 = tmp;
-                }
-
-                var pathSegmentCollection = new PathSegmentCollection { new LineSegment(new Point(x2, y1), true), new LineSegment(new Point(x3, y2), true) };
-
-                var pathFigure = new PathFigure(new Point(x1, y1), pathSegmentCollection, true);
-
-                var pathFigureCollection = new PathFigureCollection { pathFigure };
-
-                var pathGeometry = new PathGeometry(pathFigureCollection);
-                return pathGeometry;
             }
 
             #endregion

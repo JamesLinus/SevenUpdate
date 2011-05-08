@@ -53,12 +53,9 @@ namespace System.Windows.ValidationRules
             }
 
             var r = new Regex(@"^(([a-zA-Z]\:)|(\\))(\\{1}|((\\{1})[^\\]([^/:*?<>""|]*))+)$");
-            if (input != null)
+            if (!r.IsMatch(input))
             {
-                if (!r.IsMatch(input))
-                {
-                    return new ValidationResult(false, Resources.FilePathInvalid);
-                }
+                return new ValidationResult(false, Resources.FilePathInvalid);
             }
 
             var directoryName = Path.GetDirectoryName(input);
@@ -67,9 +64,7 @@ namespace System.Windows.ValidationRules
                 return this.IsRequired ? new ValidationResult(false, Resources.FilePathInvalid) : new ValidationResult(true, null);
             }
 
-            return directoryName.IndexOfAny(Path.GetInvalidPathChars()) >= 0
-                       ? new ValidationResult(false, Resources.FilePathInvalid)
-                       : new ValidationResult(true, null);
+            return directoryName.IndexOfAny(Path.GetInvalidPathChars()) >= 0 ? new ValidationResult(false, Resources.FilePathInvalid) : new ValidationResult(true, null);
         }
 
         #endregion

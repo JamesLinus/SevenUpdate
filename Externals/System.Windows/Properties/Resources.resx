@@ -123,6 +123,12 @@
   <data name="InputRequired" xml:space="preserve">
     <value>A value is required for this field</value>
   </data>
+  <data name="ProgressBarError" xml:space="preserve">
+    <value>Progress bar cannot be hosted in multiple dialogs.</value>
+  </data>
+  <data name="SetError" xml:space="preserve">
+    <value>This property cannot be set or modified while dialog is showing.</value>
+  </data>
   <data name="UrilInvalid" xml:space="preserve">
     <value>The url entered is not valid.</value>
   </data>

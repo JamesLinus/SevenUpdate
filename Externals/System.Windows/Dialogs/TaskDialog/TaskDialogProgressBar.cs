@@ -8,7 +8,7 @@
 namespace System.Windows.Dialogs
 {
     /// <summary>Provides a visual representation of the progress of a long running operation.</summary>
-    public class TaskDialogProgressBar : TaskDialogBar
+    public abstract class TaskDialogProgressBar : TaskDialogBar
     {
         #region Constants and Fields
 

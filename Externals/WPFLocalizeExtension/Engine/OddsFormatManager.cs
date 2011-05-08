@@ -21,11 +21,7 @@ namespace WPFLocalizeExtension.Engine
 
         /// <summary><see cref="DependencyProperty" /> DesignOddsFormat to set the <see cref="OddsFormatType" />.Only supported at DesignTime.</summary>
         [DesignOnly(true)]
-        public static readonly DependencyProperty DesignOddsFormatProperty = DependencyProperty.RegisterAttached(
-            "DesignOddsFormat",
-            typeof(OddsFormatType),
-            typeof(OddsFormatManager),
-            new PropertyMetadata(DefaultOddsFormatType, SetOddsFormatFromDependencyProperty));
+        private static readonly DependencyProperty DesignOddsFormatProperty = DependencyProperty.RegisterAttached("DesignOddsFormat", typeof(OddsFormatType), typeof(OddsFormatManager), new PropertyMetadata(DefaultOddsFormatType, SetOddsFormatFromDependencyProperty));
 
         /// <summary>Holds a SyncRoot to be thread safe.</summary>
         private static readonly object SyncRoot = new object();
@@ -56,15 +52,6 @@ namespace WPFLocalizeExtension.Engine
 
         #region Properties
 
-        /// <summary>Gets the default <see cref="OddsFormatType" /> to initialize the <see cref="OddsFormatManager" />.<see cref="OddsFormatType" />.</summary>
-        public static OddsFormatType DefaultOddsFormatType
-        {
-            get
-            {
-                return OddsFormatType.EU;
-            }
-        }
-
         /// <summary>Gets the <see cref="OddsFormatManager" /> singleton.If the underlying instance is <see langword="null" />, a instance will be created.</summary>
         public static OddsFormatManager Instance
         {
@@ -90,16 +77,6 @@ namespace WPFLocalizeExtension.Engine
 
                 // return the existing/new instance
                 return instance;
-            }
-        }
-
-        /// <summary>Gets a value indicating whether the status of the design mode.</summary>
-        /// <returns><see langword="true" /> if in design mode, else <see langword="false" />.</returns>
-        public bool IsInDesignMode
-        {
-            get
-            {
-                return DesignerProperties.GetIsInDesignMode(this);
             }
         }
 
@@ -132,6 +109,25 @@ namespace WPFLocalizeExtension.Engine
                 {
                     this.OnOddsFormatChanged();
                 }
+            }
+        }
+
+        /// <summary>Gets the default <see cref="OddsFormatType" /> to initialize the <see cref="OddsFormatManager" />.<see cref="OddsFormatType" />.</summary>
+        private static OddsFormatType DefaultOddsFormatType
+        {
+            get
+            {
+                return OddsFormatType.EU;
+            }
+        }
+
+        /// <summary>Gets a value indicating whether the status of the design mode.</summary>
+        /// <returns><see langword="true" /> if in design mode, else <see langword="false" />.</returns>
+        private bool IsInDesignMode
+        {
+            get
+            {
+                return DesignerProperties.GetIsInDesignMode(this);
             }
         }
 
@@ -214,8 +210,7 @@ namespace WPFLocalizeExtension.Engine
                 }
                 else
                 {
-                    throw new InvalidCastException(
-                        string.Format(CultureInfo.CurrentCulture, "\"{0}\" not defined in Enum OddsFormatType", args.NewValue));
+                    throw new InvalidCastException(string.Format(CultureInfo.CurrentCulture, "\"{0}\" not defined in Enum OddsFormatType", args.NewValue));
                 }
             }
             else

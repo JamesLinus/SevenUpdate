@@ -17,22 +17,6 @@ namespace SharpBits.Base
     {
         #region Methods
 
-        /// <summary>Converts a <see cref="DateTime" /> to <see cref="FileTime" />.</summary>
-        /// <param name="dateTime">The date time.</param>
-        /// <returns>The converted <see cref="DateTime" /> as a <see cref="FileTime" />.</returns>
-        internal static FileTime DateTimeToFileTime(DateTime dateTime)
-        {
-            long fileTime = 0;
-            if (dateTime != DateTime.MinValue)
-            {
-                // Checking for MinValue
-                fileTime = dateTime.ToFileTime();
-            }
-
-            var resultingFileTime = new FileTime { DWLowDateTime = (uint)(fileTime & 0xFFFFFFFF), DWHighDateTime = (uint)(fileTime >> 32) };
-            return resultingFileTime;
-        }
-
         /// <summary>Converts the <see cref="FileTime" /> to <see cref="DateTime" />.</summary>
         /// <param name="fileTime">The file time.</param>
         /// <returns>The converted <see cref="FileTime" /> to <see cref="DateTime" />.</returns>

@@ -13,8 +13,7 @@ namespace SharpBits.Base
     using System.Runtime.InteropServices;
 
     /// <summary>The BG_BASIC_CREDENTIALS structure identifies the user name and password to authenticate.</summary>
-    [SuppressMessage("Microsoft.Portability", "CA1900:ValueTypeFieldsShouldBePortable", MessageId = "Password", Justification = "Interop"),
-     StructLayout(LayoutKind.Sequential, Size = 8)]
+    [SuppressMessage("Microsoft.Portability", "CA1900:ValueTypeFieldsShouldBePortable", MessageId = "Password", Justification = "Interop"), StructLayout(LayoutKind.Sequential, Size = 8)]
     internal struct BGBasicCredentials
     {
         /// <summary>Null-terminated string that contains the user name to authenticate. The user name is limited to 300 characters, not including the <see langword="null" /> terminator. The format of the user name depends on the authentication scheme requested. For example, for Basic, NTLM, and Negotiate authentication, the user name is of the form "domain\user name" or "user name". For Passport authentication, the user name is an e-mail address. If <see langword="null" />, default credentials for this session context are used.</summary>

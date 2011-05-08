@@ -25,6 +25,7 @@ namespace SevenUpdate
 {
     using System;
     using System.ServiceModel;
+    using System.ServiceModel.Description;
 
     using ProtoBuf.ServiceModel;
 
@@ -36,7 +37,7 @@ namespace SevenUpdate
         #region Properties
 
         /// <summary>Gets or sets the <see cref="ServiceHost" /> instance.</summary>
-        internal static ServiceHost Instance { get; set; }
+        private static ServiceHost Instance { get; set; }
 
         #endregion
 
@@ -57,12 +58,12 @@ namespace SevenUpdate
             Instance = new ServiceHost(typeof(WcfService), baseAddress);
 
 #if (DEBUG)
-            var debug = Instance.Description.Behaviors.Find<System.ServiceModel.Description.ServiceDebugBehavior>();
+            var debug = Instance.Description.Behaviors.Find<ServiceDebugBehavior>();
 
             // if not found - add behavior with setting turned on 
             if (debug == null)
             {
-                Instance.Description.Behaviors.Add(new System.ServiceModel.Description.ServiceDebugBehavior { IncludeExceptionDetailInFaults = true });
+                Instance.Description.Behaviors.Add(new ServiceDebugBehavior { IncludeExceptionDetailInFaults = true });
             }
             else
             {
@@ -102,6 +103,7 @@ namespace SevenUpdate
                     if (!(ex is CommunicationObjectAbortedException || ex is CommunicationObjectFaultedException || ex is ObjectDisposedException))
                     {
                         Utilities.ReportError(ex, ErrorType.FatalError);
+                        throw;
                     }
                 }
             }

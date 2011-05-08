@@ -77,9 +77,7 @@ namespace SevenUpdate
         {
             get
             {
-                return File.Exists(App.ConfigFile)
-                           ? Utilities.Deserialize<Config>(App.ConfigFile)
-                           : new Config { AutoOption = AutoUpdateOption.Notify, IncludeRecommended = false };
+                return File.Exists(App.ConfigFile) ? Utilities.Deserialize<Config>(App.ConfigFile) : new Config { AutoOption = AutoUpdateOption.Notify, IncludeRecommended = false };
             }
         }
 
@@ -153,15 +151,7 @@ namespace SevenUpdate
                 ls = new LocaleString { Value = "Seven Update", Lang = "en" };
                 name.Add(ls);
 
-                var app = new Sua(name, publisher)
-                    {
-                        AppUrl = @"http://sevenupdate.com/",
-                        Directory = Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, Platform.AnyCpu),
-                        HelpUrl = @"http://sevenupdate.com/support/",
-                        Platform = Platform.AnyCpu,
-                        IsEnabled = true,
-                        SuiUrl = SevenUpdateSui
-                    };
+                var app = new Sua(name, publisher) { AppUrl = @"http://sevenupdate.com/", Directory = Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, Platform.AnyCpu), HelpUrl = @"http://sevenupdate.com/support/", Platform = Platform.AnyCpu, IsEnabled = true, SuiUrl = SevenUpdateSui };
                 if (App.IsDev)
                 {
                     app.SuiUrl += @"-dev.sui";
@@ -230,14 +220,7 @@ namespace SevenUpdate
                 else
                 {
                     Instance.UpdateAction = UpdateAction.RebootNeeded;
-                    if (
-                        ShowMessage(
-                            Resources.RebootComputer,
-                            TaskDialogStandardIcon.Information,
-                            TaskDialogStandardButtons.Cancel,
-                            Resources.RebootNeededFirst,
-                            null,
-                            Resources.RestartNow) != TaskDialogResult.Cancel)
+                    if (ShowMessage(Resources.RebootComputer, TaskDialogStandardIcon.Information, TaskDialogStandardButtons.Cancel, Resources.RebootNeededFirst, null, Resources.RestartNow) != TaskDialogResults.Cancel)
                     {
                         Utilities.StartProcess(@"shutdown.exe", "-r -t 00");
                     }
@@ -280,14 +263,7 @@ namespace SevenUpdate
         /// <param name="defaultButtonText">Text to display on the button.</param>
         /// <param name="displayShieldOnButton">Indicates if a UAC shield is to be displayed on the defaultButton.</param>
         /// <returns>Returns the result of the message.</returns>
-        internal static TaskDialogResult ShowMessage(
-            string instructionText,
-            TaskDialogStandardIcon icon,
-            TaskDialogStandardButtons standardButtons,
-            string description = null,
-            string footerText = null,
-            string defaultButtonText = null,
-            bool displayShieldOnButton = false)
+        internal static TaskDialogResults ShowMessage(string instructionText, TaskDialogStandardIcon icon, TaskDialogStandardButtons standardButtons, string description = null, string footerText = null, string defaultButtonText = null, bool displayShieldOnButton = false)
         {
             if (TaskDialog.IsPlatformSupported)
             {
@@ -304,8 +280,7 @@ namespace SevenUpdate
 
                     if (defaultButtonText != null)
                     {
-                        var button = new TaskDialogButton(@"btnCustom", defaultButtonText)
-                            { Default = true, ShowElevationIcon = displayShieldOnButton };
+                        var button = new TaskDialogButton(@"btnCustom", defaultButtonText) { Default = true, ShowElevationIcon = displayShieldOnButton };
                         td.Controls.Add(button);
                     }
 
@@ -353,13 +328,13 @@ namespace SevenUpdate
             switch (result)
             {
                 case MessageBoxResult.No:
-                    return TaskDialogResult.No;
+                    return TaskDialogResults.No;
                 case MessageBoxResult.OK:
-                    return TaskDialogResult.Ok;
+                    return TaskDialogResults.Ok;
                 case MessageBoxResult.Yes:
-                    return TaskDialogResult.Yes;
+                    return TaskDialogResults.Yes;
                 default:
-                    return TaskDialogResult.Cancel;
+                    return TaskDialogResults.Cancel;
             }
         }
 

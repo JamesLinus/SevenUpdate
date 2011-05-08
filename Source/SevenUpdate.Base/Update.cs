@@ -28,8 +28,7 @@ namespace SevenUpdate
     using ProtoBuf;
 
     /// <summary>Information on how to install a software update.</summary>
-    [ProtoContract, DataContract(IsReference = true), KnownType(typeof(ObservableCollection<LocaleString>)), KnownType(typeof(UpdateFile)),
-     KnownType(typeof(RegistryItem)), KnownType(typeof(Shortcut)), KnownType(typeof(Importance))]
+    [ProtoContract, DataContract(IsReference = true), KnownType(typeof(ObservableCollection<LocaleString>)), KnownType(typeof(UpdateFile)), KnownType(typeof(RegistryItem)), KnownType(typeof(Shortcut)), KnownType(typeof(Importance))]
     public sealed class Update : INotifyPropertyChanged
     {
         #region Constants and Fields
@@ -68,12 +67,7 @@ namespace SevenUpdate
         /// <param name="files">The collection of localized update files.</param>
         /// <param name="registryItems">The collection of registry keys and values to perform actions on in the update.</param>
         /// <param name="shortcuts">The collection of shortcuts to perform actions on in the update.</param>
-        public Update(
-            ObservableCollection<LocaleString> name,
-            ObservableCollection<LocaleString> description,
-            ObservableCollection<UpdateFile> files,
-            ObservableCollection<RegistryItem> registryItems,
-            ObservableCollection<Shortcut> shortcuts)
+        public Update(ObservableCollection<LocaleString> name, ObservableCollection<LocaleString> description, ObservableCollection<UpdateFile> files, ObservableCollection<RegistryItem> registryItems, ObservableCollection<Shortcut> shortcuts)
         {
             this.Name = name;
             this.Description = description;

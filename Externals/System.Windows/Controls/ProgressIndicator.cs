@@ -33,27 +33,23 @@ namespace System.Windows.Controls
     {
         #region Constants and Fields
 
-        /// <summary>The storyboard.</summary>
-        public static readonly DependencyProperty ElementStoryboardProperty = DependencyProperty.Register(
-            "ElementStoryboard", typeof(Storyboard), typeof(ProgressIndicator));
-
-        /// <summary>The text to display when the progress is indeterminate.</summary>
-        public static readonly DependencyProperty IndeterminateTextProperty = DependencyProperty.Register(
-            "IndeterminateText", typeof(string), typeof(ProgressIndicator));
-
-        /// <summary>Indicates if the progress is indeterminate.</summary>
-        public static readonly DependencyProperty IsIndeterminateProperty = DependencyProperty.Register(
-            "IsIndeterminate", typeof(bool), typeof(ProgressIndicator));
-
-        /// <summary>Indicates if the progress is running.</summary>
-        public static readonly DependencyProperty IsRunningProperty = DependencyProperty.Register(
-            "IsRunning", typeof(bool), typeof(ProgressIndicator), new FrameworkPropertyMetadata(IsRunningPropertyChanged));
-
         /// <summary>The element name.</summary>
         private const string ElementCanvas = "PART_Canvas";
 
         /// <summary>The dispatch timer.</summary>
         private readonly DispatcherTimer dispatcherTimer;
+
+        /// <summary>The storyboard.</summary>
+        private readonly DependencyProperty elementStoryboardProperty = DependencyProperty.Register("ElementStoryboard", typeof(Storyboard), typeof(ProgressIndicator));
+
+        /// <summary>The text to display when the progress is indeterminate.</summary>
+        private readonly DependencyProperty indeterminateTextProperty = DependencyProperty.Register("IndeterminateText", typeof(string), typeof(ProgressIndicator));
+
+        /// <summary>Indicates if the progress is indeterminate.</summary>
+        private readonly DependencyProperty isIndeterminateProperty = DependencyProperty.Register("IsIndeterminate", typeof(bool), typeof(ProgressIndicator));
+
+        /// <summary>Indicates if the progress is running.</summary>
+        private readonly DependencyProperty isRunningProperty = DependencyProperty.Register("IsRunning", typeof(bool), typeof(ProgressIndicator), new FrameworkPropertyMetadata(IsRunningPropertyChanged));
 
         /// <summary>The canvas.</summary>
         private Canvas canvas;
@@ -86,8 +82,7 @@ namespace System.Windows.Controls
                 return;
             }
 
-            var resourceDictionary = new ResourceDictionary
-                { Source = new Uri("/System.Windows;component/Resources/Dictionary.xaml", UriKind.Relative) };
+            var resourceDictionary = new ResourceDictionary { Source = new Uri("/System.Windows;component/Resources/Dictionary.xaml", UriKind.Relative) };
 
             this.Resources.MergedDictionaries.Add(resourceDictionary);
             this.dispatcherTimer = new DispatcherTimer(DispatcherPriority.Background, this.Dispatcher) { Interval = new TimeSpan(0, 0, 0, 0, 300) };
@@ -103,12 +98,12 @@ namespace System.Windows.Controls
         {
             get
             {
-                return (Storyboard)this.GetValue(ElementStoryboardProperty);
+                return (Storyboard)this.GetValue(this.elementStoryboardProperty);
             }
 
             set
             {
-                this.SetValue(ElementStoryboardProperty, value);
+                this.SetValue(this.elementStoryboardProperty, value);
             }
         }
 
@@ -118,12 +113,12 @@ namespace System.Windows.Controls
         {
             get
             {
-                return (string)this.GetValue(IndeterminateTextProperty);
+                return (string)this.GetValue(this.indeterminateTextProperty);
             }
 
             set
             {
-                this.SetValue(IndeterminateTextProperty, value);
+                this.SetValue(this.indeterminateTextProperty, value);
             }
         }
 
@@ -133,12 +128,12 @@ namespace System.Windows.Controls
         {
             get
             {
-                return (bool)this.GetValue(IsIndeterminateProperty);
+                return (bool)this.GetValue(this.isIndeterminateProperty);
             }
 
             set
             {
-                this.SetValue(IsIndeterminateProperty, value);
+                this.SetValue(this.isIndeterminateProperty, value);
             }
         }
 
@@ -148,12 +143,12 @@ namespace System.Windows.Controls
         {
             get
             {
-                return (bool)this.GetValue(IsRunningProperty);
+                return (bool)this.GetValue(this.isRunningProperty);
             }
 
             set
             {
-                this.SetValue(IsRunningProperty, value);
+                this.SetValue(this.isRunningProperty, value);
             }
         }
 

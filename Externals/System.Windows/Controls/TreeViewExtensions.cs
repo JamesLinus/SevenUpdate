@@ -31,8 +31,18 @@ namespace System.Windows.Controls
         /// <param name="treeView">The treeview control.</param>
         /// <param name="predicate">The TreeViewItem to use as a starting point.</param>
         /// <returns>The parent TreeViewItem.</returns>
-        public static TreeViewItem FindTreeViewItem(this TreeView treeView, Predicate<TreeViewItem> predicate)
+        public static TreeViewItem FindTreeViewItem(this ItemsControl treeView, Predicate<TreeViewItem> predicate)
         {
+            if (treeView == null)
+            {
+                throw new ArgumentNullException("treeView");
+            }
+
+            if (predicate == null)
+            {
+                throw new ArgumentNullException("predicate");
+            }
+
             return FindTreeViewItem(treeView.ItemContainerGenerator, treeView.Items, predicate);
         }
 
@@ -45,8 +55,7 @@ namespace System.Windows.Controls
         /// <param name="itemCollection">The item collection.</param>
         /// <param name="predicate">The TreeViewItem.</param>
         /// <returns>The TreeViewItem found.</returns>
-        private static TreeViewItem FindTreeViewItem(
-            ItemContainerGenerator parentItemContainerGenerator, ItemCollection itemCollection, Predicate<TreeViewItem> predicate)
+        private static TreeViewItem FindTreeViewItem(ItemContainerGenerator parentItemContainerGenerator, ItemCollection itemCollection, Predicate<TreeViewItem> predicate)
         {
             foreach (var trvItem in
                 from object item in itemCollection select item as TreeViewItem ?? (TreeViewItem)parentItemContainerGenerator.ContainerFromItem(item))

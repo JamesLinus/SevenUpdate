@@ -266,11 +266,7 @@ namespace System.Windows.Dialogs
         /// <param name="verificationFlagChecked"><see langword="true" /> if the verification <see cref="CheckBox" /> was checked when the dialog was dismissed; otherwise, <see langword="false" />.</param>
         /// <returns>The result.</returns>
         [DllImport(@"comctl32.dll", CharSet = CharSet.Unicode, PreserveSig = false)]
-        internal static extern Result TaskDialogIndirect(
-            [In] TaskDialogConfig taskConfig,
-            [Out] out int button,
-            [Out] out int radioButton,
-            [MarshalAs(UnmanagedType.Bool), Out] out bool verificationFlagChecked);
+        internal static extern Result TaskDialogIndirect([In] TaskDialogConfig taskConfig, [Out] out int button, [Out] out int radioButton, [MarshalAs(UnmanagedType.Bool), Out] out bool verificationFlagChecked);
 
         /// <summary>Contains the data for a <see cref="TaskDialogIcon" />.</summary>
         [StructLayout(LayoutKind.Explicit, CharSet = CharSet.Auto)]
@@ -303,11 +299,11 @@ namespace System.Windows.Dialogs
         internal struct TaskDialogButtonData
         {
             /// <summary>Indicates the value to be returned when this button is selected.</summary>
-            internal int ButtonID;
+            private readonly int ButtonID;
 
             /// <summary>The text to display on the button.</summary>
             [MarshalAs(UnmanagedType.LPWStr)]
-            internal string ButtonText;
+            private readonly string ButtonText;
 
             /// <summary>Initializes a new instance of the <see cref="TaskDialogButtonData" /> struct.</summary>
             /// <param name="buttonID">The button ID.</param>

@@ -60,9 +60,7 @@ namespace WPFLocalizeExtension.Extensions
                 return this.FormatOutput(obj);
             }
 
-            throw new NotSupportedException(
-                string.Format(
-                    CultureInfo.CurrentCulture, "ResourceKey '{0}' returns '{1}' which is not type of double", this.Key, obj.GetType().FullName));
+            throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, "ResourceKey '{0}' returns '{1}' which is not type of double", this.Key, obj.GetType().FullName));
         }
 
         #endregion
@@ -79,17 +77,9 @@ namespace WPFLocalizeExtension.Extensions
 
             if (Localize.Instance.IsInDesignMode && this.DesignValue != null)
             {
-                try
-                {
-                    args = new[] { this.DesignValue, new CultureInfo("en-US") };
+                args = new[] { this.DesignValue, new CultureInfo("en-US") };
 
-                    return (Thickness)method.Invoke(null, args);
-                }
-                catch
-                {
-                    throw;
-                    return null;
-                }
+                return (Thickness)method.Invoke(null, args);
             }
 
             args = new[] { input, new CultureInfo("en-US") };

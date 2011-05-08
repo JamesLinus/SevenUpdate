@@ -8,7 +8,7 @@
 namespace System.Windows.Dialogs
 {
     /// <summary>Represents a command-link.</summary>
-    public class TaskDialogCommandLink : TaskDialogButton
+    public abstract class TaskDialogCommandLink : TaskDialogButton
     {
         #region Constants and Fields
 

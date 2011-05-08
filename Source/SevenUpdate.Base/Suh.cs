@@ -28,8 +28,7 @@ namespace SevenUpdate
     using ProtoBuf;
 
     /// <summary>Information about an update, used by History and Hidden Updates. Not used by the SDK.</summary>
-    [ProtoContract, DataContract(IsReference = true), KnownType(typeof(UpdateStatus)), KnownType(typeof(Importance)),
-     KnownType(typeof(ObservableCollection<LocaleString>))]
+    [ProtoContract, DataContract(IsReference = true), KnownType(typeof(UpdateStatus)), KnownType(typeof(Importance)), KnownType(typeof(ObservableCollection<LocaleString>))]
     public sealed class Suh : INotifyPropertyChanged
     {
         #region Constants and Fields
@@ -66,8 +65,7 @@ namespace SevenUpdate
         /// <param name="name">The collection of localized update names.</param>
         /// <param name="publisher">The collection of localized publisher names.</param>
         /// <param name="description">The collection of localized update descriptions.</param>
-        public Suh(
-            ObservableCollection<LocaleString> name, ObservableCollection<LocaleString> publisher, ObservableCollection<LocaleString> description)
+        public Suh(ObservableCollection<LocaleString> name, ObservableCollection<LocaleString> publisher, ObservableCollection<LocaleString> description)
         {
             this.Name = name;
             this.Description = description;

@@ -22,6 +22,18 @@ namespace System.Windows.Dialogs
     {
         #region Constants and Fields
 
+        /// <summary>The native dialog configuration.</summary>
+        private readonly TaskDialogNativeMethods.TaskDialogConfig nativeDialogConfig;
+
+        /// <summary>The outer dialog.</summary>
+        private readonly TaskDialog outerDialog;
+
+        /// <summary>The dialog settings.</summary>
+        private readonly NativeTaskDialogSettings settings;
+
+        /// <summary>The strings for the dialog.</summary>
+        private readonly IntPtr[] updatedStrings = new IntPtr[Enum.GetNames(typeof(TaskDialogNativeMethods.TaskDialogElement)).Length];
+
         /// <summary>The collection of buttons.</summary>
         private IntPtr buttonArray;
 
@@ -37,12 +49,6 @@ namespace System.Windows.Dialogs
         /// <summary>Indicates if the first radio button is clicked.</summary>
         private bool firstRadioButtonClicked = true;
 
-        /// <summary>The native dialog configuration.</summary>
-        private TaskDialogNativeMethods.TaskDialogConfig nativeDialogConfig;
-
-        /// <summary>The outer dialog.</summary>
-        private TaskDialog outerDialog;
-
         /// <summary>The collection of radio buttons.</summary>
         private IntPtr radioButtonArray;
 
@@ -54,14 +60,8 @@ namespace System.Windows.Dialogs
         /// <summary>The selected radio button id.</summary>
         private int selectedRadioButtonID;
 
-        /// <summary>The dialog settings.</summary>
-        private NativeTaskDialogSettings settings;
-
         /// <summary>The state of the dialog.</summary>
         private DialogShowState showState = DialogShowState.PreShow;
-
-        /// <summary>The strings for the dialog.</summary>
-        private IntPtr[] updatedStrings = new IntPtr[Enum.GetNames(typeof(TaskDialogNativeMethods.TaskDialogElement)).Length];
 
         #endregion
 
@@ -119,15 +119,6 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>Gets the selected radio button ID.</summary>
-        internal int SelectedRadioButtonID
-        {
-            get
-            {
-                return this.selectedRadioButtonID;
-            }
-        }
-
         #endregion
 
         #region Implemented Interfaces
@@ -147,12 +138,6 @@ namespace System.Windows.Dialogs
 
         #region Methods
 
-        /// <summary>Show debug message when the native dialog is showing.</summary>
-        internal void AssertCurrentlyShowing()
-        {
-            Debug.Assert(this.showState == DialogShowState.Showing, "Update*() methods should only be called while native dialog is showing");
-        }
-
         /// <summary>
         ///   The new task dialog does not support the existing
         ///   Win32 functions for closing (e.g. EndDialog()); instead,
@@ -161,7 +146,7 @@ namespace System.Windows.Dialogs
         ///   simply call "Close" and we'll "click" the cancel button.
         /// .</summary>
         /// <param name="result">The result to give when closing the dialog.</param>
-        internal void NativeClose(TaskDialogResult result)
+        internal void NativeClose(TaskDialogResults result)
         {
             this.showState = DialogShowState.Closing;
 
@@ -169,22 +154,22 @@ namespace System.Windows.Dialogs
 
             switch (result)
             {
-                case TaskDialogResult.Close:
+                case TaskDialogResults.Close:
                     id = (int)TaskDialogNativeMethods.TaskDialogCommonButtonReturnID.Close;
                     break;
-                case TaskDialogResult.CustomButtonClicked:
+                case TaskDialogResults.CustomButtonClicked:
                     id = 9; // custom buttons
                     break;
-                case TaskDialogResult.No:
+                case TaskDialogResults.No:
                     id = (int)TaskDialogNativeMethods.TaskDialogCommonButtonReturnID.No;
                     break;
-                case TaskDialogResult.Ok:
+                case TaskDialogResults.Ok:
                     id = (int)TaskDialogNativeMethods.TaskDialogCommonButtonReturnID.OK;
                     break;
-                case TaskDialogResult.Retry:
+                case TaskDialogResults.Retry:
                     id = (int)TaskDialogNativeMethods.TaskDialogCommonButtonReturnID.Retry;
                     break;
-                case TaskDialogResult.Yes:
+                case TaskDialogResults.Yes:
                     id = (int)TaskDialogNativeMethods.TaskDialogCommonButtonReturnID.Yes;
                     break;
             }
@@ -193,8 +178,7 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>Shows the native dialog.</summary>
-        [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.string.Format(System.String,System.Object)",
-            Justification = "We are not currently handling globalization or localization")]
+        [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider", MessageId = "System.string.Format(System.String,System.Object)", Justification = "We are not currently handling globalization or localization")]
         internal void NativeShow()
         {
             // Applies config struct and other settings, then
@@ -217,8 +201,7 @@ namespace System.Windows.Dialogs
 
                 // Here is the way we use "vanilla" P/Invoke to call 
                 // TaskDialogIndirect().  
-                var result = TaskDialogNativeMethods.TaskDialogIndirect(
-                    this.nativeDialogConfig, out this.selectedButtonID, out this.selectedRadioButtonID, out this.checkBoxChecked);
+                var result = TaskDialogNativeMethods.TaskDialogIndirect(this.nativeDialogConfig, out this.selectedButtonID, out this.selectedRadioButtonID, out this.checkBoxChecked);
 
                 if (ErrorHelper.Failed(result))
                 {
@@ -379,6 +362,12 @@ namespace System.Windows.Dialogs
             return (a << 16) + b;
         }
 
+        /// <summary>Show debug message when the native dialog is showing.</summary>
+        private void AssertCurrentlyShowing()
+        {
+            Debug.Assert(this.showState == DialogShowState.Showing, "Update*() methods should only be called while native dialog is showing");
+        }
+
         /// <summary>Processes dialog messages.</summary>
         /// <param name="pointer">The handle for the dialog.</param>
         /// <param name="msg">The message code to process.</param>
@@ -411,8 +400,6 @@ namespace System.Windows.Dialogs
                     return this.HandleTick((int)parameter);
                 case TaskDialogNativeMethods.TaskDialogNotification.Destroyed:
                     return this.PerformDialogCleanup();
-                default:
-                    break;
             }
 
             return (int)Result.Ok;
@@ -433,7 +420,7 @@ namespace System.Windows.Dialogs
             // itself has been instructed to close.
             if (this.showState == DialogShowState.Showing)
             {
-                this.NativeClose(TaskDialogResult.Cancel);
+                this.NativeClose(TaskDialogResults.Cancel);
             }
 
             // Clean up custom allocated strings that were updated

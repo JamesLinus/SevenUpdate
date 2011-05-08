@@ -39,8 +39,7 @@ namespace System.Windows.ApplicationServices
         /// <param name="flags">Reserved for future use.</param>
         /// <returns>S_OK if function succeeded, otherwise the error result.</returns>
         [DllImport(@"kernel32.dll", CharSet = CharSet.Unicode), PreserveSig]
-        internal static extern Result RegisterApplicationRecoveryCallback(
-            InternalRecoveryCallback callback, IntPtr parameter, uint pingInterval, uint flags);
+        internal static extern Result RegisterApplicationRecoveryCallback(InternalRecoveryCallback callback, IntPtr parameter, uint pingInterval, uint flags);
 
         /// <summary>Registers the active instance of an application for restart.</summary>
         /// <param name="commandLineArgs">A pointer to a Unicode string that specifies the command-line arguments for the application when it is restarted.</param>
@@ -48,15 +47,6 @@ namespace System.Windows.ApplicationServices
         /// <returns>S_OK if function succeeded, otherwise the error result.</returns>
         [DllImport(@"kernel32.dll"), PreserveSig]
         internal static extern Result RegisterApplicationRestart([MarshalAs(UnmanagedType.BStr)] string commandLineArgs, RestartRestrictions flags);
-
-        /// <summary>Gets the application restart settings.</summary>
-        /// <param name="process">The pointer to the process.</param>
-        /// <param name="commandLine">The pointer to the command line args.</param>
-        /// <param name="size">The size of the settings.</param>
-        /// <param name="flags">The options that indicate what to do with the application restarts.</param>
-        /// <returns>S_OK if function succeeded, otherwise the error result.</returns>
-        [DllImport(@"kernel32.dll", CharSet = CharSet.Unicode, SetLastError = true), PreserveSig]
-        internal static extern Result GetApplicationRestartSettings(IntPtr process, IntPtr commandLine, ref uint size, out RestartRestrictions flags);
 
         /// <summary>Removes the active instance of an application from the recovery list.</summary>
         /// <returns>S_OK if function succeeded, otherwise the error result.</returns>

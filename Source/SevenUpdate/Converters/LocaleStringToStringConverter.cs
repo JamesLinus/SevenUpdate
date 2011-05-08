@@ -51,9 +51,7 @@ namespace SevenUpdate.Converters
             var localeStrings = value as Collection<LocaleString>;
 
             // Loops through the collection of LocaleStrings
-            return localeStrings != null
-                       ? localeStrings.Where(t => t.Lang == Utilities.Locale).Select(t => t.Value).FirstOrDefault()
-                       : Resources.NotAvailable;
+            return localeStrings != null ? localeStrings.Where(t => t.Lang == Utilities.Locale).Select(t => t.Value).FirstOrDefault() : Resources.NotAvailable;
         }
 
         /// <summary>Converts a converted object back into it's original form.</summary>

@@ -16,15 +16,15 @@ namespace SharpBits.Base
     internal struct BGJobProgress
     {
         /// <summary>Total number of bytes to transfer for the job.</summary>
-        public ulong BytesTotal;
+        public readonly ulong BytesTotal;
 
         /// <summary>Number of bytes transferred.</summary>
-        public ulong BytesTransferred;
+        public readonly ulong BytesTransferred;
 
         /// <summary>Total number of files to transfer for this job.</summary>
-        public uint FilesTotal;
+        public readonly uint FilesTotal;
 
         /// <summary>Number of files transferred.</summary>
-        public uint FilesTransferred;
+        public readonly uint FilesTransferred;
     }
 }

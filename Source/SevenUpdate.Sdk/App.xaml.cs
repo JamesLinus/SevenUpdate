@@ -152,15 +152,12 @@ namespace SevenUpdate.Sdk
                 return;
             }
 
-#if !DEBUG
-
             // register for Application Restart
             ApplicationRestartRecoveryManager.RegisterForApplicationRestart(new RestartSettings(string.Empty, RestartRestrictions.NotOnReboot));
 
             // register for Application Recovery
             var recoverySettings = new RecoverySettings(new RecoveryData(PerformRecovery, null), 4000);
             ApplicationRestartRecoveryManager.RegisterForApplicationRecovery(recoverySettings);
-#endif
         }
 
         /// <summary>Sets the Windows 7 <see cref="JumpList" />.</summary>
@@ -170,13 +167,7 @@ namespace SevenUpdate.Sdk
             var jumpList = new JumpList { ShowRecentCategory = true };
 
             // Configure a new JumpTask
-            var jumpTask = new JumpTask
-                {
-                    IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"),
-                    IconResourceIndex = 6,
-                    Title = Sdk.Properties.Resources.CreateProject,
-                    Arguments = @"-newproject"
-                };
+            var jumpTask = new JumpTask { IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"), IconResourceIndex = 6, Title = Sdk.Properties.Resources.CreateProject, Arguments = @"-newproject" };
 
             jumpList.JumpItems.Add(jumpTask);
             JumpList.SetJumpList(Current, jumpList);

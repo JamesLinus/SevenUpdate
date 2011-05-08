@@ -42,7 +42,7 @@ namespace SevenUpdate.Sdk.ValidationRules
         {
             var input = value as string;
 
-            if (string.IsNullOrWhiteSpace(input) || input == null)
+            if (string.IsNullOrWhiteSpace(input))
             {
                 return new ValidationResult(false, Resources.FilePathInvalid);
             }

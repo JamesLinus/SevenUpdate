@@ -138,7 +138,6 @@
     <Compile Include="ErrorNotificationEventArgs.cs" />
     <Compile Include="FileAclOptions.cs" />
     <Compile Include="FileTime.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="IBackgroundCopyCallback.cs" />
     <Compile Include="IBackgroundCopyError.cs" />
     <Compile Include="IBackgroundCopyFile.cs" />

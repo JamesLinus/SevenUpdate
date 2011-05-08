@@ -8,7 +8,7 @@
 namespace System.Windows.Dialogs
 {
     /// <summary>Defines a radio button that can be hosted in by a <see cref="TaskDialog" /> object.</summary>
-    public class TaskDialogRadioButton : TaskDialogButtonBase
+    public abstract class TaskDialogRadioButton : TaskDialogButtonBase
     {
         #region Constructors and Destructors
 

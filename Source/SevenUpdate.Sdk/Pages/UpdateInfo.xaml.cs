@@ -91,8 +91,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <returns><see langword="true" /> if this instance has errors; otherwise, <see langword="false" />.</returns>
         private bool HasErrors()
         {
-            return this.tbxUpdateName.HasError || this.tbxUpdateDetails.HasError || this.tbxSourceLocation.HasError ||
-                   this.imgReleaseDate.Visibility == Visibility.Visible;
+            return this.tbxUpdateName.HasError || this.tbxUpdateDetails.HasError || this.tbxSourceLocation.HasError || this.imgReleaseDate.Visibility == Visibility.Visible;
         }
 
         /// <summary>Loads the <see cref="LocaleString" />'s for the <see cref="Update" /> into the UI.</summary>

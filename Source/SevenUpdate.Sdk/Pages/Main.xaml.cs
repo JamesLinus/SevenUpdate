@@ -142,8 +142,7 @@ namespace SevenUpdate.Sdk.Pages
                 {
                     if (File.Exists(Path.Combine(App.UserStore, Core.Projects[index[0]].ApplicationName + ".sui")))
                     {
-                        var updates =
-                            Utilities.Deserialize<Collection<Update>>(Path.Combine(App.UserStore, Core.Projects[index[0]].ApplicationName + ".sui"));
+                        var updates = Utilities.Deserialize<Collection<Update>>(Path.Combine(App.UserStore, Core.Projects[index[0]].ApplicationName + ".sui"));
                         updates.RemoveAt(index[1]);
                         Utilities.Serialize(updates, Path.Combine(App.UserStore, Core.Projects[index[0]].ApplicationName + ".sui"));
                     }

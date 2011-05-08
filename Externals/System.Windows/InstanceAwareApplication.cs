@@ -152,13 +152,6 @@ namespace System.Windows
 
         #region Methods
 
-        /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
-        /// <param name="disposing">Dispose unmanaged resources.</param>
-        protected virtual void Dispose(bool disposing)
-        {
-            this.TryDisposeSynchronizationObjects();
-        }
-
         /// <summary>Raises the <see cref="E:System.Windows.Application.Exit" /> event.</summary>
         /// <param name="e">An <see cref="T:System.Windows.ExitEventArgs" /> that contains the event data.</param>
         protected override sealed void OnExit(ExitEventArgs e)
@@ -236,9 +229,7 @@ namespace System.Windows
                     prefix = GlobalPrefix;
 
                     // ReSharper disable PossibleNullReferenceException
-                    identity =
-                        WindowsIdentity.GetCurrent().Groups.FirstOrDefault(
-                            reference => reference.Translate(typeof(SecurityIdentifier)).Value.Equals(UsersSidValue));
+                    identity = WindowsIdentity.GetCurrent().Groups.FirstOrDefault(reference => reference.Translate(typeof(SecurityIdentifier)).Value.Equals(UsersSidValue));
                 }
                 else
                 {
@@ -263,8 +254,7 @@ namespace System.Windows
         {
             // By default, the application is marked using the entry assembly Guid!
             var assembly = Assembly.GetEntryAssembly();
-            var guidAttribute =
-                assembly.GetCustomAttributes(typeof(GuidAttribute), false).FirstOrDefault(obj => (obj is GuidAttribute)) as GuidAttribute;
+            var guidAttribute = assembly.GetCustomAttributes(typeof(GuidAttribute), false).FirstOrDefault(obj => (obj is GuidAttribute)) as GuidAttribute;
             return guidAttribute != null ? guidAttribute.Value : null;
         }
 
@@ -274,6 +264,13 @@ namespace System.Windows
         private static Uri GetPipeUri(string applicationPath)
         {
             return new Uri(string.Format(CultureInfo.CurrentCulture, @"net.pipe://localhost/{0}/", applicationPath));
+        }
+
+        /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
+        /// <param name="disposing">Dispose unmanaged resources.</param>
+        private void Dispose(bool disposing)
+        {
+            this.TryDisposeSynchronizationObjects();
         }
 
         /// <summary>Initializes the first application instance.</summary>
@@ -362,9 +359,7 @@ namespace System.Windows
             }
             catch (Exception ex)
             {
-                Debug.WriteLine(
-                    "Exception while signaling first application instance (signal while first application shutdown?)" + Environment.NewLine + ex,
-                    this.GetType().ToString());
+                Debug.WriteLine("Exception while signaling first application instance (signal while first application shutdown?)" + Environment.NewLine + ex, this.GetType().ToString());
                 throw;
             }
 
@@ -394,8 +389,7 @@ namespace System.Windows
             this.firstInstanceMutex = new Mutex(false, firstInstanceMutexName, out isNew, mutexSecurity);
             this.serviceInitializationMutex = new Mutex(false, serviceInitializationMutexName, out isNew, mutexSecurity);
             this.serviceReadySemaphore = new EventWaitHandle(false, EventResetMode.ManualReset, serviceReadySemaphoreName, out isNew, eventSecurity);
-            this.signaledToFirstInstanceSemaphore = new EventWaitHandle(
-                false, EventResetMode.AutoReset, signaledToFirstInstanceSemaphoreName, out isNew, eventSecurity);
+            this.signaledToFirstInstanceSemaphore = new EventWaitHandle(false, EventResetMode.AutoReset, signaledToFirstInstanceSemaphoreName, out isNew, eventSecurity);
         }
 
         /// <summary>Called on next application instance startup.</summary>

@@ -120,9 +120,7 @@ namespace SevenUpdate.Sdk.Pages
             }
 
             var fileLocation = Utilities.ConvertPath(source.Text, true, Core.AppInfo.Platform);
-            var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
-                                       ? Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Platform)
-                                       : Core.AppInfo.Directory;
+            var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory) ? Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Platform) : Core.AppInfo.Directory;
 
             installDirectory = Utilities.ConvertPath(installDirectory, true, Core.AppInfo.Platform);
 
@@ -188,14 +186,7 @@ namespace SevenUpdate.Sdk.Pages
 
             var icon = Utilities.ConvertPath(importedShortcut.Icon, false, Core.AppInfo.Platform);
             icon = icon.Replace(Core.AppInfo.Directory, "%INSTALLDIR%");
-            var shortcut = new Shortcut
-                {
-                    Arguments = importedShortcut.Arguments,
-                    Icon = icon,
-                    Location = path,
-                    Action = ShortcutAction.Update,
-                    Target = Utilities.ConvertPath(importedShortcut.Target, false, Core.AppInfo.Platform),
-                };
+            var shortcut = new Shortcut { Arguments = importedShortcut.Arguments, Icon = icon, Location = path, Action = ShortcutAction.Update, Target = Utilities.ConvertPath(importedShortcut.Target, false, Core.AppInfo.Platform), };
 
             shortcut.Name.Add(new LocaleString(Path.GetFileNameWithoutExtension(file[0]), Utilities.Locale));
 
@@ -251,9 +242,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs" /> instance containing the event data.</param>
         private void LocateIcon(object sender, MouseButtonEventArgs e)
         {
-            var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
-                                       ? Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Platform)
-                                       : Core.AppInfo.Directory;
+            var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory) ? Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Platform) : Core.AppInfo.Directory;
 
             installDirectory = Utilities.ConvertPath(installDirectory, true, Core.AppInfo.Platform);
 
@@ -274,9 +263,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs" /> instance containing the event data.</param>
         private void LocateShortcutLocation(object sender, MouseButtonEventArgs e)
         {
-            var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
-                                       ? Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Platform)
-                                       : Core.AppInfo.Directory;
+            var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory) ? Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Platform) : Core.AppInfo.Directory;
 
             installDirectory = Utilities.ConvertPath(installDirectory, true, Core.AppInfo.Platform);
             var shortcut = Core.OpenFileDialog(installDirectory, null, false, "lnk", true);
@@ -298,9 +285,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs" /> instance containing the event data.</param>
         private void LocateShortcutTarget(object sender, MouseButtonEventArgs e)
         {
-            var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
-                                       ? Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Platform)
-                                       : Core.AppInfo.Directory;
+            var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory) ? Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Platform) : Core.AppInfo.Directory;
 
             installDirectory = Utilities.ConvertPath(installDirectory, true, Core.AppInfo.Platform);
             var files = Core.OpenFileDialog(installDirectory);

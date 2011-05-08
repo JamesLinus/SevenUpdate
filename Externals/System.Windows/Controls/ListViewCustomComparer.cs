@@ -64,6 +64,11 @@ namespace System.Windows.Controls
         /// <param name="direction">The direction to sort.</param>
         public void AddSort(string sortColumn, ListSortDirection direction)
         {
+            if (string.IsNullOrEmpty(sortColumn))
+            {
+                throw new ArgumentNullException("sortColumn");
+            }
+
             this.ClearSort();
             if (this.SortColumns == null)
             {

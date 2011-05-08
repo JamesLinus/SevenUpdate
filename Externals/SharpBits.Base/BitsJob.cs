@@ -15,7 +15,7 @@ namespace SharpBits.Base
     using System.Runtime.InteropServices;
 
     /// <summary>Contains data about the files to download or upload using BITS.</summary>
-    public partial class BitsJob
+    public sealed partial class BitsJob
     {
         #region Constants and Fields
 
@@ -521,13 +521,17 @@ namespace SharpBits.Base
             }
         }
 
-        /// <summary>Gets the current <see cref="BitsJob" />.</summary>
+        /// <summary>Gets the notification target.</summary>
+        /// <value>The notification target.</value>
+        internal IBackgroundCopyCallback NotificationTarget { get; private set; }
+
+        /// <summary>Gets or sets the current <see cref="BitsJob" />.</summary>
         /// <value>The <see cref="BitsJob" />.</value>
-        internal IBackgroundCopyJob Job { get; private set; }
+        private IBackgroundCopyJob Job { get; set; }
 
         /// <summary>Gets or sets the notification interface.</summary>
         /// <value>The notification interface.</value>
-        internal IBackgroundCopyCallback NotificationInterface
+        private IBackgroundCopyCallback NotificationInterface
         {
             get
             {
@@ -559,10 +563,6 @@ namespace SharpBits.Base
                 }
             }
         }
-
-        /// <summary>Gets or sets the notification target.</summary>
-        /// <value>The notification target.</value>
-        internal IBackgroundCopyCallback NotificationTarget { get; set; }
 
         #endregion
 
@@ -640,8 +640,7 @@ namespace SharpBits.Base
         }
 
         /// <summary>Enumerate the <see cref="BitsFile" /> collection.</summary>
-        /// <returns>The collection of <see cref="BitsFile" />'s.</returns>
-        public BitsFilesCollection EnumerateFiles()
+        public void EnumerateFiles()
         {
             try
             {
@@ -654,7 +653,7 @@ namespace SharpBits.Base
                 this.manager.PublishException(this, exception);
             }
 
-            return this.Files;
+            return;
         }
 
         /// <summary>Resumes the <see cref="BitsJob" />.</summary>
@@ -743,8 +742,7 @@ namespace SharpBits.Base
 
         /// <summary>Fires the event when the job has been modified.</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="NotificationEventArgs" /> instance containing the event data.</param>
-        internal void JobModified(object sender, NotificationEventArgs e)
+        internal void JobModified(object sender)
         {
             if (this.jobModified != null)
             {
@@ -754,8 +752,7 @@ namespace SharpBits.Base
 
         /// <summary>Fires the event when the job has transferred.</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="NotificationEventArgs" /> instance containing the event data.</param>
-        internal void JobTransferred(object sender, NotificationEventArgs e)
+        internal void JobTransferred(object sender)
         {
             if (this.jobTransferred != null)
             {
@@ -772,7 +769,7 @@ namespace SharpBits.Base
 
         /// <summary>Releases unmanaged and - optionally - managed resources.</summary>
         /// <param name="disposing"><see langword="true" /> to release both managed and unmanaged resources; otherwise, <see langword="false" /> to release only unmanaged resources.</param>
-        protected virtual void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if (!this.disposed)
             {
@@ -803,7 +800,7 @@ namespace SharpBits.Base
     }
 
     /// <summary>Contains data about the files to download or upload using BITS.</summary>
-    public partial class BitsJob
+    public sealed partial class BitsJob
     {
         #region Constants and Fields
 
@@ -1012,8 +1009,7 @@ namespace SharpBits.Base
                 if (this.job2 != null && credentials != null)
                 {
                     // only supported from IBackgroundCopyJob2 and above
-                    var authCredentials = new BGAuthCredentials
-                        { Scheme = (BGAuthScheme)credentials.AuthenticationScheme, Target = (BGAuthTarget)credentials.AuthenticationTarget };
+                    var authCredentials = new BGAuthCredentials { Scheme = (BGAuthScheme)credentials.AuthenticationScheme, Target = (BGAuthTarget)credentials.AuthenticationTarget };
                     authCredentials.Credentials.Basic.Password = credentials.Password;
                     authCredentials.Credentials.Basic.UserName = credentials.UserName;
                     this.job2.SetCredentials(ref authCredentials);
@@ -1103,7 +1099,7 @@ namespace SharpBits.Base
     }
 
     /// <summary>Contains data about the files to download or upload using BITS.</summary>
-    public partial class BitsJob : IDisposable
+    public sealed partial class BitsJob : IDisposable
     {
         #region Constants and Fields
 
@@ -1223,7 +1219,7 @@ namespace SharpBits.Base
     }
 
     /// <summary>Contains data about the files to download or upload using BITS.</summary>
-    public partial class BitsJob
+    public sealed partial class BitsJob
     {
         #region Constants and Fields
 

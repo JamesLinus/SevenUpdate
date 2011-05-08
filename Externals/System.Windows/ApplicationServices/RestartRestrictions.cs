@@ -4,6 +4,7 @@
 // </copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
 // ***********************************************************************
+
 namespace System.Windows.ApplicationServices
 {
     /// <summary>Specifies the conditions when Windows Error Reportingshould not restart an application that has registeredfor automatic restart.</summary>

@@ -17,7 +17,7 @@ namespace SharpBits.Base
 
     /// <summary>The collection of <see cref="BitsJob" />'s.</summary>
     [Serializable]
-    public class BitsJobsDictionary : Dictionary<Guid, BitsJob>, IDisposable
+    public sealed class BitsJobsDictionary : Dictionary<Guid, BitsJob>, IDisposable
     {
         #region Constants and Fields
 
@@ -58,7 +58,7 @@ namespace SharpBits.Base
         /// <summary>Initializes a new instance of the <see cref="BitsJobsDictionary" /> class.</summary>
         /// <param name="info">The serialization info.</param>
         /// <param name="context">The context.</param>
-        protected BitsJobsDictionary(SerializationInfo info, StreamingContext context)
+        private BitsJobsDictionary(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
             if (info == null)
@@ -73,9 +73,9 @@ namespace SharpBits.Base
 
         #region Properties
 
-        /// <summary>Gets the jobs.</summary>
+        /// <summary>Gets or sets the jobs.</summary>
         /// <value>The jobs of the current collection.</value>
-        internal IEnumBackgroundCopyJobs Jobs { get; private set; }
+        private IEnumBackgroundCopyJobs Jobs { get; set; }
 
         #endregion
 
@@ -129,7 +129,7 @@ namespace SharpBits.Base
 
         /// <summary>Releases unmanaged and - optionally - managed resources.</summary>
         /// <param name="disposing"><see langword="true" /> to release both managed and unmanaged resources; otherwise, <see langword="false" /> to release only unmanaged resources.</param>
-        protected virtual void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if (!this.disposed)
             {
@@ -151,8 +151,6 @@ namespace SharpBits.Base
         private void Update()
         {
             uint count;
-            IBackgroundCopyJob currentJob;
-            BitsJob job;
             var currentList = this.ToDictionary(entry => entry.Key, entry => entry.Value);
             this.Jobs.Reset();
             this.Clear();
@@ -160,6 +158,7 @@ namespace SharpBits.Base
             for (var i = 0; i < count; i++)
             {
                 uint fetchedCount;
+                IBackgroundCopyJob currentJob;
                 this.Jobs.Next(1, out currentJob, out fetchedCount);
                 if (fetchedCount != 1)
                 {
@@ -168,6 +167,7 @@ namespace SharpBits.Base
 
                 Guid guid;
                 currentJob.GetId(out guid);
+                BitsJob job;
                 if (currentList.ContainsKey(guid))
                 {
                     job = currentList[guid];

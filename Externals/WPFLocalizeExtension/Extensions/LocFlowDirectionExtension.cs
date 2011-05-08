@@ -54,9 +54,7 @@ namespace WPFLocalizeExtension.Extensions
                 return this.FormatOutput(obj);
             }
 
-            throw new NotSupportedException(
-                string.Format(
-                    CultureInfo.CurrentCulture, "ResourceKey '{0}' returns '{1}' which is not type of FlowDirection", this.Key, obj.GetType().FullName));
+            throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, "ResourceKey '{0}' returns '{1}' which is not type of FlowDirection", this.Key, obj.GetType().FullName));
         }
 
         #endregion
@@ -70,21 +68,13 @@ namespace WPFLocalizeExtension.Extensions
         {
             if (Localize.Instance.IsInDesignMode && this.DesignValue != null)
             {
-                try
-                {
-                    return Enum.Parse(typeof(FlowDirection), (string)this.DesignValue, true);
-                }
-                catch (Exception)
-                {
-                    throw;
-                    return null;
-                }
+                return Enum.Parse(typeof(FlowDirection), (string)this.DesignValue, true);
             }
 
             return Enum.Parse(typeof(FlowDirection), (string)input, true);
         }
 
-        /// <summary>This method gets the new value for the target property and call <see cref="SetNewValue" />.</summary>
+        /// <summary>This method gets the new value for the target property and call <see cref="BaseLocalizeExtension{TValue}.SetNewValue" />.</summary>
         protected override void HandleNewValue()
         {
             var obj = Localize.Instance.GetLocalizedObject<object>(this.Assembly, this.Dictionary, this.Key, this.Culture);

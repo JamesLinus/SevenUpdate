@@ -33,6 +33,11 @@ namespace SevenUpdate
         /// <param name="method">The method to invoke.</param>
         public static void BeginInvoke(this Dispatcher dispatcher, Action method)
         {
+            if (method == null)
+            {
+                throw new ArgumentNullException("method");
+            }
+
             if (dispatcher != null)
             {
                 dispatcher.BeginInvoke(method, DispatcherPriority.Background, null);
@@ -43,7 +48,7 @@ namespace SevenUpdate
         /// <param name="dispatcher">The dispatcher object.</param>
         /// <param name="method">The method to invoke.</param>
         /// <param name="parameter">The parameter to pass to the method.</param>
-        /// <typeparam name="T">The method to invoke.</typeparam>
+        /// <typeparam name="T">The method to invoke under the UI thread.</typeparam>
         public static void BeginInvoke<T>(this Dispatcher dispatcher, Action<T> method, T parameter)
         {
             if (dispatcher != null)

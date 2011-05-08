@@ -50,9 +50,7 @@ namespace SevenUpdate.Converters
 
             if (dateTime != DateTime.MinValue)
             {
-                return dateTime.Date.Equals(DateTime.Now.Date)
-                           ? string.Format(CultureInfo.CurrentCulture, Resources.TodayAt, dateTime.ToShortTimeString())
-                           : string.Format(CultureInfo.CurrentCulture, Resources.TimeAt, dateTime.ToShortDateString(), dateTime.ToShortTimeString());
+                return dateTime.Date.Equals(DateTime.Now.Date) ? string.Format(CultureInfo.CurrentCulture, Resources.TodayAt, dateTime.ToShortTimeString()) : string.Format(CultureInfo.CurrentCulture, Resources.TimeAt, dateTime.ToShortDateString(), dateTime.ToShortTimeString());
             }
 
             return Resources.Never;

@@ -13,7 +13,7 @@ namespace SharpBits.Base
     using System.Collections.ObjectModel;
 
     /// <summary>Collection of <see cref="BitsFile" />.</summary>
-    public class BitsFilesCollection : Collection<BitsFile>, IDisposable
+    public sealed class BitsFilesCollection : Collection<BitsFile>, IDisposable
     {
         #region Constants and Fields
 
@@ -80,7 +80,7 @@ namespace SharpBits.Base
 
         /// <summary>Releases unmanaged and - optionally - managed resources.</summary>
         /// <param name="disposing"><see langword="true" /> to release both managed and unmanaged resources; otherwise, <see langword="false" /> to release only unmanaged resources.</param>
-        protected virtual void Dispose(bool disposing)
+        private void Dispose(bool disposing)
         {
             if (!this.disposed)
             {

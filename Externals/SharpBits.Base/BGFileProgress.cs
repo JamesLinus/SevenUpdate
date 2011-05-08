@@ -16,12 +16,12 @@ namespace SharpBits.Base
     internal struct BGFileProgress
     {
         /// <summary>Size of the file in bytes.</summary>
-        public ulong BytesTotal;
+        public readonly ulong BytesTotal;
 
         /// <summary>Number of bytes transferred.</summary>
-        public ulong BytesTransferred;
+        public readonly ulong BytesTransferred;
 
         /// <summary>For downloads, the value is <see langword="true" /> if the file is available to the user; otherwise, the value is <see langword="false" />.</summary>
-        public int Completed;
+        public readonly int Completed;
     }
 }

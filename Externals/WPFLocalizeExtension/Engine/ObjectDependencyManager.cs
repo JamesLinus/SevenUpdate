@@ -27,9 +27,8 @@ namespace WPFLocalizeExtension.Engine
         /// <summary>This method adds a new object dependency.</summary>
         /// <param name="weakRef">The <see cref="WeakReference" />, which ensures the live cycle of <paramref name="value" />.</param>
         /// <param name="value">The object, which should stay alive as long <paramref name="weakRef" /> is alive.</param>
-        /// <returns><see langword="true" />, if the binding was successfully, otherwise <see langword="false" />.</returns>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public static bool AddObjectDependency(WeakReference weakRef, object value)
+        public static void AddObjectDependency(WeakReference weakRef, object value)
         {
             // run the clean up to ensure that only objects are watched they are really still alive
             CleanUp();
@@ -57,9 +56,6 @@ namespace WPFLocalizeExtension.Engine
                 throw new InvalidOperationException("The WeakReference.Target cannot be the same as value");
             }
 
-            // holds the status of registration of the object dependency
-            var itemRegistered = false;
-
             // check if the objToHold is contained in the internalList.
             if (!InternalList.ContainsKey(value))
             {
@@ -67,8 +63,6 @@ namespace WPFLocalizeExtension.Engine
                 var lst = new List<WeakReference> { weakRef };
 
                 InternalList.Add(value, lst);
-
-                itemRegistered = true;
             }
             else
             {
@@ -77,19 +71,21 @@ namespace WPFLocalizeExtension.Engine
                 if (!lst.Contains(weakRef))
                 {
                     lst.Add(weakRef);
-
-                    itemRegistered = true;
                 }
             }
 
             // return the status of the registration
-            return itemRegistered;
+            return;
         }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>This method cleans up all independent (!<see cref="WeakReference" />.IsAlive) objects or a single object.</summary>
         /// <param name="value">If defined, the associated object dependency will be removed instead of a full CleanUp.</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        public static void CleanUp(object value = null)
+        private static void CleanUp(object value = null)
         {
             // if a particular object is passed, remove it.
             if (value != null)
