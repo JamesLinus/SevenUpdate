@@ -259,19 +259,19 @@ namespace SevenUpdate
         {
             var jumpList = new JumpList();
 
-            var jumpTask = new JumpTask { IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"), IconResourceIndex = 2, Title = SevenUpdate.Properties.Resources.CheckForUpdates, Arguments = "-check", };
+            var jumpTask = new JumpTask { IconResourcePath = Path.Combine(Utilities.AppDir, "Shared", @"SevenUpdate.Base.dll"), IconResourceIndex = 2, Title = SevenUpdate.Properties.Resources.CheckForUpdates, Arguments = "-check", };
 
             jumpList.JumpItems.Add(jumpTask);
 
-            jumpTask = new JumpTask { IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"), IconResourceIndex = 5, Title = SevenUpdate.Properties.Resources.RestoreHiddenUpdates, Arguments = "-hidden" };
+            jumpTask = new JumpTask { IconResourcePath = Path.Combine(Utilities.AppDir, "Shared", @"SevenUpdate.Base.dll"), IconResourceIndex = 5, Title = SevenUpdate.Properties.Resources.RestoreHiddenUpdates, Arguments = "-hidden" };
 
             jumpList.JumpItems.Add(jumpTask);
 
-            jumpTask = new JumpTask { IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"), IconResourceIndex = 4, Title = SevenUpdate.Properties.Resources.ViewUpdateHistory, Arguments = "-history", };
+            jumpTask = new JumpTask { IconResourcePath = Path.Combine(Utilities.AppDir, "Shared", @"SevenUpdate.Base.dll"), IconResourceIndex = 4, Title = SevenUpdate.Properties.Resources.ViewUpdateHistory, Arguments = "-history", };
 
             jumpList.JumpItems.Add(jumpTask);
 
-            jumpTask = new JumpTask { IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"), IconResourceIndex = 3, Title = SevenUpdate.Properties.Resources.ChangeSettings, Arguments = "-settings", };
+            jumpTask = new JumpTask { IconResourcePath = Path.Combine(Utilities.AppDir, "Shared", @"SevenUpdate.Base.dll"), IconResourceIndex = 3, Title = SevenUpdate.Properties.Resources.ChangeSettings, Arguments = "-settings", };
 
             jumpList.JumpItems.Add(jumpTask);
 

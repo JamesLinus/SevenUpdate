@@ -235,7 +235,7 @@ namespace SevenUpdate.Sdk
                 return;
             }
 
-            var jumpTask = new JumpTask { IconResourcePath = Path.Combine(Utilities.AppDir, @"SevenUpdate.Base.dll"), IconResourceIndex = 8, Title = Utilities.GetLocaleString(UpdateInfo.Name), Arguments = @"-edit " + AppIndex + " " + UpdateIndex };
+            var jumpTask = new JumpTask { IconResourcePath = Path.Combine(Utilities.AppDir, "Shared", @"SevenUpdate.Base.dll"), IconResourceIndex = 8, Title = Utilities.GetLocaleString(UpdateInfo.Name), Arguments = @"-edit " + AppIndex + " " + UpdateIndex };
 
             JumpList.AddToRecentCategory(jumpTask);
 
