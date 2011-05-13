@@ -34,8 +34,7 @@ namespace SevenUpdate.Admin
         /// <param name="callbackInstance">The callback instance context.</param>
         /// <param name="binding">The service binding configuration.</param>
         /// <param name="remoteAddress">The url for the service.</param>
-        public ElevatedProcessCallback(InstanceContext callbackInstance, Binding binding, EndpointAddress remoteAddress)
-            : base(callbackInstance, binding, remoteAddress)
+        public ElevatedProcessCallback(InstanceContext callbackInstance, Binding binding, EndpointAddress remoteAddress) : base(callbackInstance, binding, remoteAddress)
         {
         }
 

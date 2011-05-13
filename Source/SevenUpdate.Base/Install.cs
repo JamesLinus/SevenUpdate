@@ -38,7 +38,7 @@ namespace SevenUpdate
         /// <summary>Gets an int that indicates to move a file on reboot.</summary>
         private const int MoveOnReboot = 5;
 
-        /// <summary>Indicates if the installation of updates should be cancelled.</summary>
+        /// <summary>Indicates if the installation of updates should be canceled.</summary>
         private static bool cancelInstall;
 
         /// <summary>The localized name of the current update being installed.</summary>

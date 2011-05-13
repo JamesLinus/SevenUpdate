@@ -58,8 +58,7 @@ namespace SharpBits.Base
         /// <summary>Initializes a new instance of the <see cref="BitsJobsDictionary" /> class.</summary>
         /// <param name="info">The serialization info.</param>
         /// <param name="context">The context.</param>
-        private BitsJobsDictionary(SerializationInfo info, StreamingContext context)
-            : base(info, context)
+        private BitsJobsDictionary(SerializationInfo info, StreamingContext context) : base(info, context)
         {
             if (info == null)
             {

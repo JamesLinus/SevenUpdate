@@ -11,16 +11,16 @@ namespace SharpBits.Base
 {
     using System.Runtime.InteropServices;
 
-    /// <summary>Use the information in the IBackgroundCopyError interface to determine the cause of the error and if the transferprocess can proceed.</summary>
+    /// <summary>Use the information in the IBackgroundCopyError interface to determine the cause of the error and if the transfer process can proceed.</summary>
     [Guid("19C613A0-FCB8-4F28-81AE-897C3D078F81"), InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown), ComImportAttribute]
     internal interface IBackgroundCopyError
     {
-        /// <summary>Retrieves the error code and identify the contextin which the error occurred.</summary>
+        /// <summary>Retrieves the error code and identify the context in which the error occurred.</summary>
         /// <param name="context">Context in which the error occurred. For a list of context values, see the <see cref="BGErrorContext" /> enumeration.</param>
         /// <param name="code">Error code of the error that occurred.</param>
         void GetError(out BGErrorContext context, [MarshalAs(UnmanagedType.Error)] out int code);
 
-        /// <summary>Retrieves an interface pointer to the file objectassociated with the error.</summary>
+        /// <summary>Retrieves an interface pointer to the file object associated with the error.</summary>
         /// <param name="val">An <see cref="IBackgroundCopyFile" /> interface pointer whose methods you use to determine the local and remote file names associated with the error. The file parameter is set to <see langword="null" /> if the error is not associated with the local or remote file. When done, release file.</param>
         void GetFile([MarshalAs(UnmanagedType.Interface)] out IBackgroundCopyFile val);
 

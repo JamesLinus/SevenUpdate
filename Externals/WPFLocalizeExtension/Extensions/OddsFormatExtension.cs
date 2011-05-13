@@ -44,8 +44,7 @@ namespace WPFLocalizeExtension.Extensions
         /// <summary>Initializes a new instance of the <see cref="OddsFormatExtension" /> class.Initialize the <c>BaseLocalizeExtension"</c>.</summary>
         /// <param name="displayValue">The display Value.</param>
         /// <remarks>This constructor register the <see cref="EventHandler" /><c>OnCultureChanged</c> on <c>LocalizeDictionary</c>to get an acknowledge of changing the culture.</remarks>
-        public OddsFormatExtension(decimal displayValue)
-            : this()
+        public OddsFormatExtension(decimal displayValue) : this()
         {
             this.displayValue = displayValue;
         }
@@ -261,7 +260,7 @@ namespace WPFLocalizeExtension.Extensions
         /// <param name="managerType">The manager Type.</param>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The event argument.</param>
-        /// <returns><see langword="true" /> if the listener handled the event. It is considered an error by the<see cref="T:System.Windows.WeakEventManager" /> handling in WPF�to register alistener for an event that the listener does not handle. Regardless,the method should return <see langword="false" /> if it receives an event that it does not recognize or handle.</returns>
+        /// <returns><see langword="true" /> if the listener handled the event. It is considered an error by the<see cref="T:System.Windows.WeakEventManager" /> handling in WPF�to register a listener for an event that the listener does not handle. Regardless,the method should return <see langword="false" /> if it receives an event that it does not recognize or handle.</returns>
         bool IWeakEventListener.ReceiveWeakEvent(Type managerType, object sender, EventArgs e)
         {
             // if the passed handler is type of LocalizeDictionary.WeakCultureChangedEventManager, handle it
@@ -381,7 +380,7 @@ namespace WPFLocalizeExtension.Extensions
             return false;
         }
 
-        /// <summary>If Culture property defines a valid <see cref="CultureInfo" />, a <see cref="CultureInfo" /> instance will getcreated and returned, otherwise LocalizeDictionary.Culture will get returned.</summary>
+        /// <summary>If Culture property defines a valid <see cref="CultureInfo" />, a <see cref="CultureInfo" /> instance will get created and returned, otherwise LocalizeDictionary.Culture will get returned.</summary>
         /// <returns>The <see cref="CultureInfo" />.</returns>
         private OddsFormatType GetForcedOddsFormatOrDefault()
         {

@@ -27,8 +27,7 @@ namespace WPFLocalizeExtension.Extensions
 
         /// <summary>Initializes a new instance of the <see cref="LocTextLowerExtension" /> class.</summary>
         /// <param name="key">The resource identifier.</param>
-        public LocTextLowerExtension(string key)
-            : base(key)
+        public LocTextLowerExtension(string key) : base(key)
         {
         }
 

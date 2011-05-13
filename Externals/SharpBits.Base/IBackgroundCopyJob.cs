@@ -12,7 +12,7 @@ namespace SharpBits.Base
     using System;
     using System.Runtime.InteropServices;
 
-    /// <summary>Use the IBackgroundCopyJob interface to add files to the job, set the priority level of the job, determine the stateof the job, and to start and stop the job.</summary>
+    /// <summary>Use the IBackgroundCopyJob interface to add files to the job, set the priority level of the job, determine the state of the job, and to start and stop the job.</summary>
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown), GuidAttribute("37668D37-507E-4160-9316-26306D150B12"), ComImportAttribute]
     internal interface IBackgroundCopyJob
     {
@@ -102,7 +102,7 @@ namespace SharpBits.Base
         /// <param name="val">Identifies the events that your application receives. The following table lists the event notification flag values.</param>
         void GetNotifyFlags(out BGJobNotificationTypes val);
 
-        /// <summary>Specifies a pointer to your implementation of the<see cref="IBackgroundCopyCallback" /> interface (callbacks). Theinterface receives notification based on the event notification flags you set.</summary>
+        /// <summary>Specifies a pointer to your implementation of the<see cref="IBackgroundCopyCallback" /> interface (callbacks). The interface receives notification based on the event notification flags you set.</summary>
         /// <param name="val">An <see cref="IBackgroundCopyCallback" /> interface pointer. To remove the current callback interface pointer, set this parameter to <see langword="null" />.</param>
         void SetNotifyInterface([MarshalAs(UnmanagedType.IUnknown)] object val);
 

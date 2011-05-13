@@ -8,7 +8,7 @@
 namespace System.Windows.Dialogs
 {
     /// <summary>Represents a command-link.</summary>
-    public abstract class TaskDialogCommandLink : TaskDialogButton
+    public class TaskDialogCommandLink : TaskDialogButton
     {
         #region Constants and Fields
 
@@ -27,8 +27,7 @@ namespace System.Windows.Dialogs
         /// <summary>Initializes a new instance of the <see cref="TaskDialogCommandLink" /> class.</summary>
         /// <param name="name">The name for this button.</param>
         /// <param name="text">The label for this button.</param>
-        protected TaskDialogCommandLink(string name, string text)
-            : base(name, text)
+        protected TaskDialogCommandLink(string name, string text) : base(name, text)
         {
         }
 
@@ -36,8 +35,7 @@ namespace System.Windows.Dialogs
         /// <param name="name">The name for this button.</param>
         /// <param name="text">The label for this button.</param>
         /// <param name="instruction">The instruction for this command link.</param>
-        protected TaskDialogCommandLink(string name, string text, string instruction)
-            : base(name, text)
+        protected TaskDialogCommandLink(string name, string text, string instruction) : base(name, text)
         {
             this.instruction = instruction;
         }

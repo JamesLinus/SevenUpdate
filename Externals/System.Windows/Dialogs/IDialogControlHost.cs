@@ -7,7 +7,7 @@
 
 namespace System.Windows.Dialogs
 {
-    /// <summary>Indicates that the implementing class is a dialog that can hostcustomizable dialog controls (subclasses of <see cref="DialogControl" />).</summary>
+    /// <summary>Indicates that the implementing class is a dialog that can host customizable dialog controls (subclasses of <see cref="DialogControl" />).</summary>
     public interface IDialogControlHost
     {
         #region Public Methods

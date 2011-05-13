@@ -102,8 +102,8 @@ namespace SevenUpdate.Sdk.Windows
         /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
         private void LoadWindowSize(object sender, RoutedEventArgs e)
         {
-            this.Height = Settings.Default.windowHeight;
-            this.Width = Settings.Default.windowWidth;
+            this.Height = Settings.Default.WindowHeight;
+            this.Width = Settings.Default.WindowWidth;
         }
 
         /// <summary>When Seven Update is closing, save the Window Width and Height in the settings.</summary>
@@ -111,8 +111,8 @@ namespace SevenUpdate.Sdk.Windows
         /// <param name="e">The <see cref="System.ComponentModel.CancelEventArgs" /> instance containing the event data.</param>
         private void SaveWindowSize(object sender, CancelEventArgs e)
         {
-            Settings.Default.windowHeight = this.Height;
-            Settings.Default.windowWidth = this.Width;
+            Settings.Default.WindowHeight = this.Height;
+            Settings.Default.WindowWidth = this.Width;
             Settings.Default.Save();
             Application.Current.Shutdown(0);
         }

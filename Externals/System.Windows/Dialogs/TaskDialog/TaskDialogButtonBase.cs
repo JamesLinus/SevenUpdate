@@ -7,7 +7,7 @@
 
 namespace System.Windows.Dialogs
 {
-    /// <summary>Defines the abstract base class for task dialog buttons.Classes that inherit from this class will inheritthe Text property defined in this class.</summary>
+    /// <summary>Defines the abstract base class for task dialog buttons.Classes that inherit from this class will inherit the Text property defined in this class.</summary>
     public abstract class TaskDialogButtonBase : TaskDialogControl
     {
         #region Constants and Fields
@@ -33,8 +33,7 @@ namespace System.Windows.Dialogs
         /// <summary>Initializes a new instance of the <see cref="TaskDialogButtonBase" /> class.</summary>
         /// <param name="name">The name for this button.</param>
         /// <param name="text">The label for this button.</param>
-        protected TaskDialogButtonBase(string name, string text)
-            : base(name)
+        protected TaskDialogButtonBase(string name, string text) : base(name)
         {
             this.text = text;
         }
@@ -67,7 +66,7 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>Gets or sets a value indicating whether whether thebutton is enabled. The enabled state can cannot be changedbefore the dialog is shown.</summary>
+        /// <summary>Gets or sets a value indicating whether whether the button is enabled. The enabled state can cannot be changed before the dialog is shown.</summary>
         public bool Enabled
         {
             get

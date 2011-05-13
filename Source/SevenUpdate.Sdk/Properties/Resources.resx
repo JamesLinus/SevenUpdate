@@ -843,8 +843,8 @@
     <value>BSD license</value>
     <comment>Run.Text</comment>
   </data>
-  <data name="protobufLicense" xml:space="preserve">
-    <value>protobuf-net is licensed under the</value>
+  <data name="ProtobufLicense" xml:space="preserve">
+    <value>Protobuf.net is licensed under the</value>
     <comment>Run.Text</comment>
   </data>
   <data name="ApacheLicense" xml:space="preserve">

@@ -93,7 +93,7 @@ namespace SevenUpdate.Helper
                         throw;
                     }
 
-                    NativeMethods.MoveFileExW(Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "reboot.lock"), null, MoveOnReboot);
+                    NativeMethods.MoveFileEXW(Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "reboot.lock"), null, MoveOnReboot);
                 }
 
                 var files = Directory.GetFiles(AppDir, "*.bak");
@@ -108,9 +108,10 @@ namespace SevenUpdate.Helper
                     {
                         if (!(e is UnauthorizedAccessException || e is IOException))
                         {
+                            throw;
                         }
 
-                        NativeMethods.MoveFileExW(t, null, MoveOnReboot);
+                        NativeMethods.MoveFileEXW(t, null, MoveOnReboot);
                     }
                 }
 

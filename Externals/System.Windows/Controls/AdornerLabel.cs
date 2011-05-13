@@ -40,8 +40,7 @@ namespace System.Windows.Controls
         /// <param name="adornedElement">The adorned element.</param>
         /// <param name="label">The label.</param>
         /// <param name="labelStyle">The label style.</param>
-        public AdornerLabel(UIElement adornedElement, string label, Style labelStyle)
-            : base(adornedElement)
+        public AdornerLabel(UIElement adornedElement, string label, Style labelStyle) : base(adornedElement)
         {
             this.textBlock = new TextBlock { Style = labelStyle, Text = label };
         }

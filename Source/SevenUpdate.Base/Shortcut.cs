@@ -124,9 +124,9 @@ namespace SevenUpdate
         private interface IPersist
         {
             /// <summary>Gets the class ID.</summary>
-            /// <param name="classID">The class ID.</param>
+            /// <param name="classId">The class ID.</param>
             [PreserveSig]
-            void GetClassID(out Guid classID);
+            void GetClassID(out Guid classId);
         }
 
         /// <summary>Enables an object to be loaded from or saved to a disk file, rather than a storage object or stream.Because the information needed to open a file varies greatly from one application to another, the implementation of IPersistFile::Load on the object must also open its disk file.</summary>
@@ -134,8 +134,8 @@ namespace SevenUpdate
         private interface IPersistFile : IPersist
         {
             /// <summary>Gets the class ID.</summary>
-            /// <param name="classID">The class ID.</param>
-            new void GetClassID(out Guid classID);
+            /// <param name="classId">The class ID.</param>
+            new void GetClassID(out Guid classId);
 
             /// <summary>Determines whether an object has changed since it was last saved to its current file.</summary>
             /// <returns>The error result.</returns>
@@ -178,14 +178,14 @@ namespace SevenUpdate
             void GetPath([MarshalAs(UnmanagedType.LPWStr)] StringBuilder file, int maxPath, ref Win32FindData data, uint flags);
 
             /// <summary>Retrieves the list of item identifiers for a Shell link object.</summary>
-            /// <param name="identifer">The indentifer list.</param>
+            /// <param name="identifier">The indentifer list.</param>
             [PreserveSig]
-            void GetIDList(out IntPtr identifer);
+            void GetIDList(out IntPtr identifier);
 
             /// <summary>Sets the pointer to an item identifier list (PIDL) for a Shell link object.</summary>
-            /// <param name="identifer">The indentifer list.</param>
+            /// <param name="identifier">The indentifer list.</param>
             [PreserveSig]
-            void SetIDList(IntPtr identifer);
+            void SetIDList(IntPtr identifier);
 
             /// <summary>Retrieves the description string for a Shell link object.</summary>
             /// <param name="description">The description of the shortcut.</param>
@@ -393,7 +393,7 @@ namespace SevenUpdate
                 throw new ArgumentNullException(@"shortcut");
             }
 
-            var shellLink = new CShellLink();
+            var shellLink = new ShellLink();
             var link = (IShellLink)shellLink;
 
             link.SetArguments(shortcut.arguments);
@@ -426,7 +426,7 @@ namespace SevenUpdate
         /// <returns>The data for the shortcut.</returns>
         public static Shortcut GetShortcutData(string shortcutName)
         {
-            var link = new CShellLink();
+            var link = new ShellLink();
             ((IPersistFile)link).Load(shortcutName, Read);
 
             var sb = new StringBuilder(MaxPath);
@@ -578,7 +578,7 @@ namespace SevenUpdate
 
         /// <summary>The c shell link.</summary>
         [Guid("00021401-0000-0000-C000-000000000046"), ClassInterfaceAttribute(ClassInterfaceType.None), ComImportAttribute]
-        private class CShellLink
+        private class ShellLink
         {
         }
     }

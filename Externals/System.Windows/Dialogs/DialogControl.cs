@@ -61,8 +61,7 @@ namespace System.Windows.Dialogs
 
         /// <summary>Initializes a new instance of the <see cref="DialogControl" /> class.</summary>
         /// <param name="name">The name for this dialog.</param>
-        protected DialogControl(string name)
-            : this()
+        protected DialogControl(string name) : this()
         {
             this.Name = name;
         }
@@ -71,7 +70,7 @@ namespace System.Windows.Dialogs
 
         #region Properties
 
-        /// <summary>Gets or sets the native dialog that is hosting this control. This property is <see langword="null" /> isthere is not associated dialog.</summary>
+        /// <summary>Gets or sets the native dialog that is hosting this control. This property is <see langword="null" /> is there is not associated dialog.</summary>
         /// <value>The hosting dialog.</value>
         public IDialogControlHost HostingDialog
         {

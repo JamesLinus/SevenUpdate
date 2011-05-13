@@ -123,12 +123,12 @@ namespace System.Windows
             source.AddHook(WndProc);
 
             // Set the Background to transparent from Win32 perspective 
-            var hwndSource = HwndSource.FromHwnd(windowHandle);
-            if (hwndSource != null)
+            var handleSource = HwndSource.FromHwnd(windowHandle);
+            if (handleSource != null)
             {
-                if (hwndSource.CompositionTarget != null)
+                if (handleSource.CompositionTarget != null)
                 {
-                    hwndSource.CompositionTarget.BackgroundColor = Colors.Transparent;
+                    handleSource.CompositionTarget.BackgroundColor = Colors.Transparent;
                 }
             }
 
@@ -141,7 +141,7 @@ namespace System.Windows
         /// <summary>Excludes a UI element from the Aero Glass frame.</summary>
         /// <param name="element">The element to exclude.</param>
         /// <param name="window">The window the element resides in.</param>
-        /// <remarks>cMany non-WPF rendered controls (i.e., the ExplorerBrowser control) will notrender properly on top of an Aero Glass frame.</remarks>
+        /// <remarks>cMany non-WPF rendered controls (i.e., the ExplorerBrowser control) will not render properly on top of an Aero Glass frame.</remarks>
         public static void ExcludeElementFromAeroGlass(FrameworkElement element, Window window)
         {
             if (element == null)

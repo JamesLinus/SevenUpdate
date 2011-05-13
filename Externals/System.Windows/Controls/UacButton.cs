@@ -108,7 +108,7 @@ namespace System.Windows.Controls
 
         /// <summary>Gets or sets a value indicating whether the caller desires the <see cref="ShieldIcon" /> to be displayed.  This is a dependency property.</summary>
         /// <value>A Boolean that indicates if the <see cref="ShieldIcon" /> caller wants the <see cref="ShieldIcon" />  displayed.</value>
-        /// <remarks>This is only an indication of desire.  If the operating system does not support UAC or the user is alreadyelevated, any request to display is ignored.</remarks>
+        /// <remarks>This is only an indication of desire.  If the operating system does not support UAC or the user is already elevated, any request to display is ignored.</remarks>
         public bool IsShieldNeeded
         {
             get
@@ -226,7 +226,7 @@ namespace System.Windows.Controls
         }
 
         /// <summary>Returns current "actual" <see cref="ToolTip" />.</summary>
-        /// <returns>If both <see cref="ToolTipElevated" /> and <see cref="ToolTipNotElevated" /> are <see langword="null" />,<see cref="Button.ToolTip" /> is returned.Otherwise <see cref="ToolTipElevated" /> or <see cref="ToolTipNotElevated" /> is returnedbased on <see cref="IsShieldNeeded" />.</returns>
+        /// <returns>If both <see cref="ToolTipElevated" /> and <see cref="ToolTipNotElevated" /> are <see langword="null" />,<see cref="Button.ToolTip" /> is returned.Otherwise <see cref="ToolTipElevated" /> or <see cref="ToolTipNotElevated" /> is returned based on <see cref="IsShieldNeeded" />.</returns>
         /// <remarks>
         /// </remarks>
         private object GetToolTip()

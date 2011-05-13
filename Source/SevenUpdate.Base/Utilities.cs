@@ -53,7 +53,7 @@ namespace SevenUpdate
 
         #region Events
 
-        /// <summary>Occurs when an error occurrs.</summary>
+        /// <summary>Occurs when an error occurs.</summary>
         public static event EventHandler<ErrorOccurredEventArgs> ErrorOccurred;
 
         #endregion
@@ -519,7 +519,7 @@ namespace SevenUpdate
 
         /// <summary>Reports the error that occurred to a log file.</summary>
         /// <param name="exception">The exception to write in the log.</param>
-        /// <param name="errorType">The type of error that ocurred.</param>
+        /// <param name="errorType">The type of error that occurred.</param>
         public static void ReportError(Exception exception, ErrorType errorType)
         {
             if (exception == null)
@@ -546,9 +546,9 @@ namespace SevenUpdate
             }
             catch (AggregateException ae)
             {
-                foreach (var e in ae.InnerExceptions)
+                if (ae.InnerExceptions.Any())
                 {
-                    throw e;
+                    throw;
                 }
             }
         }

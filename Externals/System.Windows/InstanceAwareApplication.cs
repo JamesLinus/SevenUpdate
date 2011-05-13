@@ -80,8 +80,7 @@ namespace System.Windows
 
         /// <summary>Initializes a new instance of the <see cref="InstanceAwareApplication" /> class.</summary>
         /// <exception cref="T:System.InvalidOperationException">More than one instance of the <see cref="T:System.Windows.Application" /> class is created per <see cref="T:System.AppDomain" />.</exception>
-        protected InstanceAwareApplication()
-            : this(ApplicationInstanceAwareness.Host)
+        protected InstanceAwareApplication() : this(ApplicationInstanceAwareness.Host)
         {
         }
 
@@ -151,6 +150,13 @@ namespace System.Windows
         #endregion
 
         #region Methods
+
+        /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
+        /// <param name="disposing">Dispose unmanaged resources.</param>
+        protected virtual void Dispose(bool disposing)
+        {
+            this.TryDisposeSynchronizationObjects();
+        }
 
         /// <summary>Raises the <see cref="E:System.Windows.Application.Exit" /> event.</summary>
         /// <param name="e">An <see cref="T:System.Windows.ExitEventArgs" /> that contains the event data.</param>
@@ -264,13 +270,6 @@ namespace System.Windows
         private static Uri GetPipeUri(string applicationPath)
         {
             return new Uri(string.Format(CultureInfo.CurrentCulture, @"net.pipe://localhost/{0}/", applicationPath));
-        }
-
-        /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
-        /// <param name="disposing">Dispose unmanaged resources.</param>
-        private void Dispose(bool disposing)
-        {
-            this.TryDisposeSynchronizationObjects();
         }
 
         /// <summary>Initializes the first application instance.</summary>

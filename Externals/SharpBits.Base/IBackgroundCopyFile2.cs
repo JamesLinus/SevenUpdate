@@ -12,7 +12,7 @@ namespace SharpBits.Base
     using System;
     using System.Runtime.InteropServices;
 
-    /// <summary>The IBackgroundCopyFile2 interface contains information about a filethat is part of a job. The IBackgroundCopyFile2 interface is used to specify a new remote name for the file andretrieve the list of ranges to download.</summary>
+    /// <summary>The IBackgroundCopyFile2 interface contains information about a file that is part of a job. The IBackgroundCopyFile2 interface is used to specify a new remote name for the file and retrieve the list of ranges to download.</summary>
     [Guid("83E81B93-0873-474D-8A8C-F2018B1A939C"), InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown), ComImportAttribute]
     internal interface IBackgroundCopyFile2
     {

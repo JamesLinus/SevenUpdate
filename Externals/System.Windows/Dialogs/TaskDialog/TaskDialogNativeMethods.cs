@@ -11,17 +11,16 @@ namespace System.Windows.Dialogs
     using System.Windows.Controls;
     using System.Windows.Internal;
 
-    /// <summary>Internal class containing most native interop declarations usedthroughout the library.Functions that are not performance intensive belong in this class.</summary>
+    /// <summary>Internal class containing most native interop declarations used throughout the library.Functions that are not performance intensive belong in this class.</summary>
     internal static class TaskDialogNativeMethods
     {
-        /// <summary>The <see cref="TaskDialog" /> callback.</summary>
+        /// <summary>The <see cref="TaskDialog"/> callback.</summary>
         /// <param name="handle">The handle for the dialog.</param>
         /// <param name="msg">The message id.</param>
         /// <param name="parameter">The parameter.</param>
         /// <param name="parameterLength">The length of the parameter.</param>
-        /// <param name="data">The data for the callback.</param>
-        /// <returns>The result of the <see cref="TaskDialog" />.</returns>
-        internal delegate int TaskDialogCallBack(IntPtr handle, uint msg, IntPtr parameter, IntPtr parameterLength, IntPtr data);
+        /// <returns>The result of the <see cref="TaskDialog"/>.</returns>
+        internal delegate int TaskDialogCallBack(IntPtr handle, uint msg, IntPtr parameter, IntPtr parameterLength);
 
         #region Enums
 
@@ -49,7 +48,7 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>The button return ids.</summary>
-        internal enum TaskDialogCommonButtonReturnID
+        internal enum TaskDialogCommonButtonReturnId
         {
             /// <summary>The button returned OK.</summary>
             OK = 1,
@@ -159,49 +158,49 @@ namespace System.Windows.Dialogs
         internal enum TaskDialogMessage
         {
             /// <summary>Recreates a task dialog with new contents, simulating the functionality of a multi-page wizard.</summary>
-            NavigatePage = NativeMethods.WmUser + 101,
+            NavigatePage = NativeMethods.WMUser + 101,
 
             /// <summary>Simulates the action of a button click in a dialog.</summary>
-            ClickButton = NativeMethods.WmUser + 102,
+            ClickButton = NativeMethods.WMUser + 102,
 
             /// <summary>Parameter = 0 (nonMarque) parameter != 0 (Marquee).</summary>
-            SetMarqueeProgressBar = NativeMethods.WmUser + 103,
+            SetMarqueeProgressBar = NativeMethods.WMUser + 103,
 
             /// <summary>Sets the current state of the progress bar.</summary>
-            SetProgressBarState = NativeMethods.WmUser + 104,
+            SetProgressBarState = NativeMethods.WMUser + 104,
 
             /// <summary>Sets the minimum and maximum values for the hosted progress bar.</summary>
-            SetProgressBarRange = NativeMethods.WmUser + 105,
+            SetProgressBarRange = NativeMethods.WMUser + 105,
 
             /// <summary>Sets the current position for a progress bar.</summary>
-            SetProgressBarPos = NativeMethods.WmUser + 106,
+            SetProgressBarPos = NativeMethods.WMUser + 106,
 
             /// <summary>Indicates whether the hosted progress bar should be displayed in marquee mode.</summary>
-            SetProgressBarMarquee = NativeMethods.WmUser + 107,
+            SetProgressBarMarquee = NativeMethods.WMUser + 107,
 
             /// <summary>Updates a text element in a task dialog.</summary>
-            SetElementText = NativeMethods.WmUser + 108,
+            SetElementText = NativeMethods.WMUser + 108,
 
             /// <summary>Simulates the action of a radio button click in a task dialog.</summary>
-            ClickRadioButton = NativeMethods.WmUser + 110,
+            ClickRadioButton = NativeMethods.WMUser + 110,
 
             /// <summary>Enables or disables a push button in a task dialog.</summary>
-            EnableButton = NativeMethods.WmUser + 111,
+            EnableButton = NativeMethods.WMUser + 111,
 
             /// <summary>Enables or disables a radio button in a task dialog.</summary>
-            EnableRadioButton = NativeMethods.WmUser + 112,
+            EnableRadioButton = NativeMethods.WMUser + 112,
 
             /// <summary>Simulates the action of a verification checkbox click in a task dialog.</summary>
-            ClickVerification = NativeMethods.WmUser + 113,
+            ClickVerification = NativeMethods.WMUser + 113,
 
             /// <summary>Updates a text element in a task dialog.</summary>
-            UpdateElementText = NativeMethods.WmUser + 114,
+            UpdateElementText = NativeMethods.WMUser + 114,
 
             /// <summary>Specifies whether a given task dialog button or command link should have a UAC shield icon; that is, whether the action invoked by the button requires elevation.</summary>
-            SetButtonElevationRequiredState = NativeMethods.WmUser + 115,
+            SetButtonElevationRequiredState = NativeMethods.WMUser + 115,
 
             /// <summary>Refreshes the icon of a task dialog.</summary>
-            UpdateIcon = NativeMethods.WmUser + 116
+            UpdateIcon = NativeMethods.WMUser + 116
         }
 
         /// <summary>The notification ids.</summary>
@@ -260,15 +259,15 @@ namespace System.Windows.Dialogs
         #endregion
 
         /// <summary>The TaskDialogIndirect function creates, displays, and operates a task dialog. The task dialog contains application-defined icons, messages, title, verification check box, command links, push buttons, and radio buttons. This function can register a callback function to receive notification messages.</summary>
-        /// <param name="taskConfig">A pointer to a <see cref="TaskDialogConfig" /> structure that contains information used to display the task dialog.</param>
-        /// <param name="button">Address of a variable that receives one of the button IDs specified in the <paramref name="button" /> member of the <paramref name="taskConfig" /> parameter. If this parameter is <see langword="null" />, no value is returned.</param>
-        /// <param name="radioButton">Address of a variable that receives one of the button IDs specified in the <paramref name="radioButton" /> member of the <paramref name="taskConfig" /> parameter. If this parameter is <see langword="null" />, no value is returned.</param>
-        /// <param name="verificationFlagChecked"><see langword="true" /> if the verification <see cref="CheckBox" /> was checked when the dialog was dismissed; otherwise, <see langword="false" />.</param>
+        /// <param name="taskConfig">A pointer to a <see cref="TaskDialogConfig"/> structure that contains information used to display the task dialog.</param>
+        /// <param name="button">Address of a variable that receives one of the button IDs specified in the <paramref name="button"/> member of the <paramref name="taskConfig"/> parameter. If this parameter is <see langword="null"/>, no value is returned.</param>
+        /// <param name="radioButton">Address of a variable that receives one of the button IDs specified in the <paramref name="radioButton"/> member of the <paramref name="taskConfig"/> parameter. If this parameter is <see langword="null"/>, no value is returned.</param>
+        /// <param name="verificationFlagChecked"><see langword="true"/> if the verification <see cref="CheckBox"/> was checked when the dialog was dismissed; otherwise, <see langword="false"/>.</param>
         /// <returns>The result.</returns>
         [DllImport(@"comctl32.dll", CharSet = CharSet.Unicode, PreserveSig = false)]
         internal static extern Result TaskDialogIndirect([In] TaskDialogConfig taskConfig, [Out] out int button, [Out] out int radioButton, [MarshalAs(UnmanagedType.Bool), Out] out bool verificationFlagChecked);
 
-        /// <summary>Contains the data for a <see cref="TaskDialogIcon" />.</summary>
+        /// <summary>Contains the data for a <see cref="TaskDialogIcon"/>.</summary>
         [StructLayout(LayoutKind.Explicit, CharSet = CharSet.Auto)]
         internal struct TaskDialogConfigIconUnion
         {
@@ -294,7 +293,7 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>Contains the data for a <see cref="TaskDialogButton" />.</summary>
+        /// <summary>Contains the data for a <see cref="TaskDialogButton"/>.</summary>
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 4)]
         internal struct TaskDialogButtonData
         {
@@ -306,18 +305,18 @@ namespace System.Windows.Dialogs
             private readonly string ButtonText;
 
             /// <summary>Initializes a new instance of the <see cref="TaskDialogButtonData" /> struct.</summary>
-            /// <param name="buttonID">The button ID.</param>
+            /// <param name="buttonId">The button ID.</param>
             /// <param name="buttonText">The button text.</param>
-            public TaskDialogButtonData(int buttonID, string buttonText)
+            public TaskDialogButtonData(int buttonId, string buttonText)
             {
-                this.ButtonID = buttonID;
+                this.ButtonID = buttonId;
                 this.ButtonText = buttonText;
             }
         }
 
         /// <summary>Contains information used to display a task dialog.</summary>
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 4)]
-        internal class TaskDialogConfig
+        internal class TaskDialogConfig : IDisposable
         {
             /// <summary>Specifies the structure size, in bytes.</summary>
             internal uint Size;
@@ -398,6 +397,53 @@ namespace System.Windows.Dialogs
 
             /// <summary>The width of the task dialog's client area. If 0, the task dialog manager will calculate the ideal width.</summary>
             internal uint Width;
+
+            #region Destructor
+
+            /// <summary>Finalizes an instance of the TaskDialogConfig class.</summary>
+            ~TaskDialogConfig()
+            {
+                this.Dispose(false);
+            }
+
+            #endregion
+
+            #region IDisposable Implementation
+
+            protected bool disposed;
+
+            protected virtual void Dispose(bool disposing)
+            {
+                lock (this)
+                {
+                    // Do nothing if the object has already been disposed of.
+                    if (this.disposed)
+                    {
+                        return;
+                    }
+
+                    if (disposing)
+                    {
+                        // Release disposable objects used by this instance here.
+                    }
+
+                    // Release unmanaged resources here. Don't access reference type fields.
+
+                    // Remember that the object has been disposed of.
+                    this.disposed = true;
+                }
+            }
+
+            /// <summary></summary>
+            public virtual void Dispose()
+            {
+                this.Dispose(false);
+
+                // Unregister object for finalization.
+                GC.SuppressFinalize(this);
+            }
+
+            #endregion
         }
     }
 }

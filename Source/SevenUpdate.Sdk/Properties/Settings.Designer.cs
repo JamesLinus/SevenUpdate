@@ -26,36 +26,36 @@ namespace SevenUpdate.Sdk.Properties {
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public double windowHeight {
+        public double WindowHeight {
             get {
-                return ((double)(this["windowHeight"]));
+                return ((double)(this["WindowHeight"]));
             }
             set {
-                this["windowHeight"] = value;
+                this["WindowHeight"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0")]
-        public double windowWidth {
+        public double WindowWidth {
             get {
-                return ((double)(this["windowWidth"]));
+                return ((double)(this["WindowWidth"]));
             }
             set {
-                this["windowWidth"] = value;
+                this["WindowWidth"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("en")]
-        public string locale {
+        public string Locale {
             get {
-                return ((string)(this["locale"]));
+                return ((string)(this["Locale"]));
             }
             set {
-                this["locale"] = value;
+                this["Locale"] = value;
             }
         }
     }

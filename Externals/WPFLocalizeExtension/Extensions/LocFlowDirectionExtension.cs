@@ -28,8 +28,7 @@ namespace WPFLocalizeExtension.Extensions
 
         /// <summary>Initializes a new instance of the <see cref="LocFlowDirectionExtension" /> class.</summary>
         /// <param name="key">The resource identifier.</param>
-        public LocFlowDirectionExtension(string key)
-            : base(key)
+        public LocFlowDirectionExtension(string key) : base(key)
         {
         }
 

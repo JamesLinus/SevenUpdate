@@ -456,7 +456,7 @@ namespace WPFLocalizeExtension.Engine
                 }
 
                 // availableResources = Assembly.GetExecutingAssembly().GetManifestResourceNames();
-                string[] availableResources = assembly.GetManifestResourceNames();
+                var availableResources = assembly.GetManifestResourceNames();
 
                 // search for the best fitting resource file. pattern: ".{NAME}.resources"
                 foreach (var t in
@@ -482,10 +482,10 @@ namespace WPFLocalizeExtension.Engine
                 try
                 {
                     // get the property info from resManager over the type from foundResource
-                    PropertyInfo propInfo = assembly.GetType(foundResource).GetProperty(ResourceManagerName, ResourceBindingFlags);
+                    var propInfo = assembly.GetType(foundResource).GetProperty(ResourceManagerName, ResourceBindingFlags);
 
                     // get the GET-method from the method info
-                    MethodInfo methodInfo = propInfo.GetGetMethod(true);
+                    var methodInfo = propInfo.GetGetMethod(true);
 
                     // get the static ResourceManager property
                     var resManObject = methodInfo.Invoke(null, null);
@@ -507,7 +507,7 @@ namespace WPFLocalizeExtension.Engine
             return resManager;
         }
 
-        /// <summary>Looks up the ResourceManagers for the searched <paramref name="resourceKey" />in the <param refname="resourceDictionary" /> in the <paramref name="resourceAssembly" />with the passed culture. If the searched one does not exists with the passed culture, is will searcheduntil the invariant culture is used.</summary>
+        /// <summary>Looks up the ResourceManagers for the searched <paramref name="resourceKey" />in the <param refname="resourceDictionary" /> in the <paramref name="resourceAssembly" />with the passed culture. If the searched one does not exists with the passed culture, is will searched until the invariant culture is used.</summary>
         /// <param name="resourceAssembly">The resource assembly (e.g.: <c>BaseLocalizeExtension</c>). <see langword="null" /> = Name of the executing assembly.</param>
         /// <param name="resourceDictionary">The dictionary to look up (e.g.: ResHelp, Resources, ...). <see langword="null" /> = Name of the default resource file (Resources).</param>
         /// <param name="resourceKey">The key of the searched entry (e.g.: <c>btnHelp</c>, Cancel, ...). <see langword="null" /> = Exception.</param>
@@ -639,7 +639,7 @@ namespace WPFLocalizeExtension.Engine
                 this.isListening = false;
             }
 
-            /// <summary>This method is called if the LocalizeDictionary.OnCultureChangedis called and the listening process is enabled.</summary>
+            /// <summary>This method is called if the LocalizeDictionary.OnCultureChanged is called and the listening process is enabled.</summary>
             private void Instance_OnCultureChanged()
             {
                 // tells every listener in the list that the event is occurred

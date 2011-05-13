@@ -26,7 +26,7 @@ namespace SharpBits.Base
         /// <param name="localName">A string that contains the name of the file on the server. For information on specifying the remote name, see the RemoteName member and Remarks section of the <see cref="BGFileInfo" /> structure. .</param>
         void AddFile([MarshalAs(UnmanagedType.LPWStr)] string remoteUrl, [MarshalAs(UnmanagedType.LPWStr)] string localName);
 
-        /// <summary>Returns an interface pointer to an enumeratorobject that you use to enumerate the files in the job.</summary>
+        /// <summary>Returns an interface pointer to an enumerator object that you use to enumerate the files in the job.</summary>
         /// <param name="enum"><see cref="IEnumBackgroundCopyFiles" /> interface pointer that you use to enumerate the files in the job. Release enumFiles when done. .</param>
         void EnumFiles([MarshalAs(UnmanagedType.Interface)] out IEnumBackgroundCopyFiles @enum);
 
@@ -54,7 +54,7 @@ namespace SharpBits.Base
         /// <param name="val">Contains data that you can use to calculate the percentage of the job that is complete. For more information, see <see cref="BGJobProgress" />. .</param>
         void GetProgress(out BGJobProgress val);
 
-        /// <summary>Retrieves timestamps for activities relatedto the job, such as the time the job was created.</summary>
+        /// <summary>Retrieves timestamps for activities related to the job, such as the time the job was created.</summary>
         /// <param name="val">Contains job-related time stamps. For available time stamps, see the BGJob_TIMES structure.</param>
         void GetTimes(out BGJobTimes val);
 

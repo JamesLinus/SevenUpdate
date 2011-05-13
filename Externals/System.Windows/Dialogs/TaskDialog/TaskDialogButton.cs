@@ -22,8 +22,7 @@ namespace System.Windows.Dialogs
         /// <summary>Initializes a new instance of the <see cref="TaskDialogButton" /> class.</summary>
         /// <param name="name">The name of the button.</param>
         /// <param name="text">The button label.</param>
-        public TaskDialogButton(string name, string text)
-            : base(name, text)
+        public TaskDialogButton(string name, string text) : base(name, text)
         {
         }
 

@@ -121,16 +121,16 @@ namespace SevenUpdate
 
         /// <summary>Raises the Application.Exit event.</summary>
         /// <param name="e">An ExitEventArgs that contains the event data.</param>
-        /// <param name="firstInstance">If set to <see langword="true" /> the current instance is the first application instance.</param>
+        /// <param name="firstInstance">If set to <see langword="true"/> the current instance is the first application instance.</param>
         protected override void OnExit(ExitEventArgs e, bool firstInstance)
         {
             UnregisterApplicationRecoveryAndRestart();
             base.OnExit(e, firstInstance);
         }
 
-        /// <summary>Raises the <see cref="InstanceAwareApplication.Startup" /> event.</summary>
-        /// <param name="e">The <see cref="System.Windows.StartupEventArgs" /> instance containing the event data.</param>
-        /// <param name="isFirstInstance">If set to <see langword="true" /> the current instance is the first application instance.</param>
+        /// <summary>Raises the <see cref="InstanceAwareApplication.Startup"/> event.</summary>
+        /// <param name="e">The <see cref="System.Windows.StartupEventArgs"/> instance containing the event data.</param>
+        /// <param name="isFirstInstance">If set to <see langword="true"/> the current instance is the first application instance.</param>
         protected override void OnStartup(StartupEventArgs e, bool isFirstInstance)
         {
             Init();
@@ -185,8 +185,8 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Raises the <see cref="InstanceAwareApplication.StartupNextInstance" /> event.</summary>
-        /// <param name="e">The <see cref="StartupNextInstanceEventArgs" /> instance containing the event data.</param>
+        /// <summary>Raises the <see cref="InstanceAwareApplication.StartupNextInstance"/> event.</summary>
+        /// <param name="e">The <see cref="StartupNextInstanceEventArgs"/> instance containing the event data.</param>
         protected override void OnStartupNextInstance(StartupNextInstanceEventArgs e)
         {
             base.OnStartupNextInstance(e);
@@ -196,7 +196,7 @@ namespace SevenUpdate
         /// <summary>Gets the application ready for startup.</summary>
         private static void Init()
         {
-            Utilities.Locale = Settings.Default.locale;
+            Utilities.Locale = Settings.Default.Locale;
 
             Directory.CreateDirectory(UserStore);
 
@@ -249,7 +249,8 @@ namespace SevenUpdate
             }
 
 #if !DEBUG
-    // register for Application Restart
+
+            // register for Application Restart
             ApplicationRestartRecoveryManager.RegisterForApplicationRestart(new RestartSettings(string.Empty, RestartRestrictions.NotOnReboot));
 #endif
         }

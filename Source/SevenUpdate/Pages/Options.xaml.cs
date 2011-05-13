@@ -40,7 +40,7 @@ namespace SevenUpdate.Pages
     {
         #region Constants and Fields
 
-        /// <summary>The offical collection of the applications that Seven Update can update.</summary>
+        /// <summary>The official collection of the applications that Seven Update can update.</summary>
         private static ObservableCollection<Sua> apps;
 
         /// <summary>The local collection of the apps that Seven Update can update.</summary>
@@ -110,9 +110,9 @@ namespace SevenUpdate.Pages
             e.Handled = true;
         }
 
-        /// <summary>Loads the settings and <see cref="Sua" /> list when the page is loaded.</summary>
+        /// <summary>Loads the settings and <see cref="Sua"/> list when the page is loaded.</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void Init(object sender, RoutedEventArgs e)
         {
             this.lvApps.Cursor = Cursors.Wait;
@@ -220,7 +220,7 @@ namespace SevenUpdate.Pages
 
         /// <summary>Goes back to the Main page.</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void NavigateToMainPage(object sender, RoutedEventArgs e)
         {
             Core.NavigateToMainPage();
@@ -228,7 +228,7 @@ namespace SevenUpdate.Pages
 
         /// <summary>Navigates to a Uri.</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Navigation.RequestNavigateEventArgs" /> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.Navigation.RequestNavigateEventArgs"/> instance containing the event data.</param>
         private void NavigateToUri(object sender, RequestNavigateEventArgs e)
         {
             Utilities.StartProcess(e.Uri.AbsoluteUri);
@@ -236,9 +236,9 @@ namespace SevenUpdate.Pages
             e.Handled = true;
         }
 
-        /// <summary>Limit the size of the <see cref="GridViewColumn" /> when it's being resized.</summary>
+        /// <summary>Limit the size of the <see cref="GridViewColumn"/> when it's being resized.</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Controls.Primitives.DragDeltaEventArgs" /> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.Controls.Primitives.DragDeltaEventArgs"/> instance containing the event data.</param>
         private void RestrictColumn(object sender, DragDeltaEventArgs e)
         {
             ListViewExtensions.LimitColumnSize((Thumb)e.OriginalSource);
@@ -246,7 +246,7 @@ namespace SevenUpdate.Pages
 
         /// <summary>Saves the settings and goes back to the Main page.</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
         private void SaveSettings(object sender, RoutedEventArgs e)
         {
             if (WcfService.SaveSettings(this.config.AutoOption != AutoUpdateOption.Never, this.config, machineAppList))
@@ -255,7 +255,7 @@ namespace SevenUpdate.Pages
             }
         }
 
-        /// <summary>Updates the list with the <see cref="machineAppList" />.</summary>
+        /// <summary>Updates the list with the <see cref="machineAppList"/>.</summary>
         private void UpdateList()
         {
             this.lvApps.Cursor = Cursors.Arrow;
@@ -267,7 +267,7 @@ namespace SevenUpdate.Pages
 
         /// <summary>Changes the UI depending on whether Aero Glass is enabled.</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="CompositionChangedEventArgs" /> instance containing the event data.</param>
+        /// <param name="e">The <see cref="CompositionChangedEventArgs"/> instance containing the event data.</param>
         private void UpdateUI(object sender, CompositionChangedEventArgs e)
         {
             if (e.IsGlassEnabled)

@@ -11,7 +11,7 @@ namespace SharpBits.Base
 {
     using System.Runtime.InteropServices;
 
-    /// <summary>The IBackgroundCopyFile interface contains information about a filethat is part of a job. For example, you can use the interfaces methods to retrieve the local and remote names of thefile and transfer progress information.</summary>
+    /// <summary>The IBackgroundCopyFile interface contains information about a file that is part of a job. For example, you can use the interfaces methods to retrieve the local and remote names of the file and transfer progress information.</summary>
     [Guid("01B7BD23-FB88-4A77-8490-5891D3E4653A"), InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown), ComImportAttribute]
     internal interface IBackgroundCopyFile
     {

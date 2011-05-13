@@ -8,7 +8,7 @@
 namespace System.Windows.Dialogs
 {
     /// <summary>Provides a visual representation of the progress of a long running operation.</summary>
-    public abstract class TaskDialogProgressBar : TaskDialogBar
+    public class TaskDialogProgressBar : TaskDialogBar
     {
         #region Constants and Fields
 
@@ -32,8 +32,7 @@ namespace System.Windows.Dialogs
 
         /// <summary>Initializes a new instance of the <see cref="TaskDialogProgressBar" /> class.</summary>
         /// <param name="name">The name of the control.</param>
-        protected TaskDialogProgressBar(string name)
-            : base(name)
+        protected TaskDialogProgressBar(string name) : base(name)
         {
         }
 

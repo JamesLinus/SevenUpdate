@@ -47,10 +47,10 @@ namespace SevenUpdate
         /// <summary>Gets the target for the msi shortcut.</summary>
         /// <param name="targetFile">A <see langword="null" />-terminated string specifying the full path to a shortcut.</param>
         /// <param name="productCode">A GUID for the product code of the shortcut. This string buffer must be 39 characters long. The first 38 characters are for the GUID, and the last character is for the terminating <see langword="null" /> character. This parameter can be <see langword="null" />.</param>
-        /// <param name="featureID">The feature name of the shortcut. The string buffer must be MAX_FEATURE_CHARS+1 characters long. This parameter can be <see langword="null" />.</param>
+        /// <param name="featureId">The feature name of the shortcut. The string buffer must be MAX_FEATURE_CHARS+1 characters long. This parameter can be <see langword="null" />.</param>
         /// <param name="componentCode">A GUID of the component code. This string buffer must be 39 characters long. The first 38 characters are for the GUID, and the last character is for the terminating <see langword="null" /> character. This parameter can be <see langword="null" />.</param>
         /// <returns>The return code.</returns>
         [DllImport(@"msi.dll", CharSet = CharSet.Unicode)]
-        internal static extern int MsiGetShortcutTarget(string targetFile, StringBuilder productCode, StringBuilder featureID, StringBuilder componentCode);
+        internal static extern int MsiGetShortcutTarget(string targetFile, StringBuilder productCode, StringBuilder featureId, StringBuilder componentCode);
     }
 }

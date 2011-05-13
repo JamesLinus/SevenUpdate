@@ -29,8 +29,7 @@ namespace WPFLocalizeExtension.Extensions
 
         /// <summary>Initializes a new instance of the <see cref="LocBrushExtension" /> class.</summary>
         /// <param name="key">The resource identifier.</param>
-        public LocBrushExtension(string key)
-            : base(key)
+        public LocBrushExtension(string key) : base(key)
         {
         }
 

@@ -11,7 +11,7 @@ namespace SharpBits.Base
 {
     using System.Runtime.InteropServices;
 
-    /// <summary>Implement the IBackgroundCopyCallback interface to receive notification that a job is complete, has been modified, oris in error. Clients use this interface instead of polling for the status of the job.</summary>
+    /// <summary>Implement the IBackgroundCopyCallback interface to receive notification that a job is complete, has been modified, or is in error. Clients use this interface instead of polling for the status of the job.</summary>
     [ComImport, Guid("97EA99C7-0186-4AD4-8DF9-C5B4E0ED6B22"), InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     internal interface IBackgroundCopyCallback
     {

@@ -76,17 +76,17 @@ namespace SevenUpdate.Windows
             return;
         }
 
-        /// <summary>Launches the Help <see cref="Uri" />.</summary>
+        /// <summary>Launches the Help <see cref="Uri"/>.</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs" /> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
         private void NavigateToHelpUrl(object sender, MouseButtonEventArgs e)
         {
             Utilities.StartProcess(this.helpUrl);
         }
 
-        /// <summary>Launches the More Information <see cref="Uri" />.</summary>
+        /// <summary>Launches the More Information <see cref="Uri"/>.</summary>
         /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs" /> instance containing the event data.</param>
+        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
         private void NavigateToInfoUrl(object sender, MouseButtonEventArgs e)
         {
             Utilities.StartProcess(this.infoUrl);

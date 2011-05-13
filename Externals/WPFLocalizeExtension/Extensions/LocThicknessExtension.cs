@@ -29,8 +29,7 @@ namespace WPFLocalizeExtension.Extensions
 
         /// <summary>Initializes a new instance of the <see cref="LocThicknessExtension" /> class.</summary>
         /// <param name="key">The resource identifier.</param>
-        public LocThicknessExtension(string key)
-            : base(key)
+        public LocThicknessExtension(string key) : base(key)
         {
         }
 

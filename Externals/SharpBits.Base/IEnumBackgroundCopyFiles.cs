@@ -11,7 +11,7 @@ namespace SharpBits.Base
 {
     using System.Runtime.InteropServices;
 
-    /// <summary>Use the IEnumBackgroundCopyFiles interface to enumerate the filesthat a job contains. To get an IEnumBackgroundCopyFiles interface pointer, call the <see cref="IBackgroundCopyJob" />::EnumFiles method.</summary>
+    /// <summary>Use the IEnumBackgroundCopyFiles interface to enumerate the files that a job contains. To get an IEnumBackgroundCopyFiles interface pointer, call the <see cref="IBackgroundCopyJob" />::EnumFiles method.</summary>
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown), GuidAttribute("CA51E165-C365-424C-8D41-24AAA4FF3C40"), ComImportAttribute]
     internal interface IEnumBackgroundCopyFiles
     {

@@ -114,9 +114,9 @@ namespace SevenUpdate.Admin.Properties {
             }
         }
         
-        public static System.Drawing.Icon trayIcon {
+        public static System.Drawing.Icon TrayIcon {
             get {
-                object obj = ResourceManager.GetObject("trayIcon", resourceCulture);
+                object obj = ResourceManager.GetObject("TrayIcon", resourceCulture);
                 return ((System.Drawing.Icon)(obj));
             }
         }

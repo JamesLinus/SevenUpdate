@@ -55,10 +55,10 @@ namespace System.Windows.Dialogs
         // Configuration is applied at dialog creation time.
 
         /// <summary>The selected button id.</summary>
-        private int selectedButtonID;
+        private int selectedButtonId;
 
         /// <summary>The selected radio button id.</summary>
-        private int selectedRadioButtonID;
+        private int selectedRadioButtonId;
 
         /// <summary>The state of the dialog.</summary>
         private DialogShowState showState = DialogShowState.PreShow;
@@ -111,11 +111,11 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>Gets the selected button ID.</summary>
-        internal int SelectedButtonID
+        internal int SelectedButtonId
         {
             get
             {
-                return this.selectedButtonID;
+                return this.selectedButtonId;
             }
         }
 
@@ -150,27 +150,27 @@ namespace System.Windows.Dialogs
         {
             this.showState = DialogShowState.Closing;
 
-            var id = (int)TaskDialogNativeMethods.TaskDialogCommonButtonReturnID.Cancel;
+            var id = (int)TaskDialogNativeMethods.TaskDialogCommonButtonReturnId.Cancel;
 
             switch (result)
             {
                 case TaskDialogResults.Close:
-                    id = (int)TaskDialogNativeMethods.TaskDialogCommonButtonReturnID.Close;
+                    id = (int)TaskDialogNativeMethods.TaskDialogCommonButtonReturnId.Close;
                     break;
                 case TaskDialogResults.CustomButtonClicked:
                     id = 9; // custom buttons
                     break;
                 case TaskDialogResults.No:
-                    id = (int)TaskDialogNativeMethods.TaskDialogCommonButtonReturnID.No;
+                    id = (int)TaskDialogNativeMethods.TaskDialogCommonButtonReturnId.No;
                     break;
                 case TaskDialogResults.Ok:
-                    id = (int)TaskDialogNativeMethods.TaskDialogCommonButtonReturnID.OK;
+                    id = (int)TaskDialogNativeMethods.TaskDialogCommonButtonReturnId.OK;
                     break;
                 case TaskDialogResults.Retry:
-                    id = (int)TaskDialogNativeMethods.TaskDialogCommonButtonReturnID.Retry;
+                    id = (int)TaskDialogNativeMethods.TaskDialogCommonButtonReturnId.Retry;
                     break;
                 case TaskDialogResults.Yes:
-                    id = (int)TaskDialogNativeMethods.TaskDialogCommonButtonReturnID.Yes;
+                    id = (int)TaskDialogNativeMethods.TaskDialogCommonButtonReturnId.Yes;
                     break;
             }
 
@@ -201,7 +201,7 @@ namespace System.Windows.Dialogs
 
                 // Here is the way we use "vanilla" P/Invoke to call 
                 // TaskDialogIndirect().  
-                var result = TaskDialogNativeMethods.TaskDialogIndirect(this.nativeDialogConfig, out this.selectedButtonID, out this.selectedRadioButtonID, out this.checkBoxChecked);
+                var result = TaskDialogNativeMethods.TaskDialogIndirect(this.nativeDialogConfig, out this.selectedButtonId, out this.selectedRadioButtonId, out this.checkBoxChecked);
 
                 if (ErrorHelper.Failed(result))
                 {
@@ -233,12 +233,12 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>Updates the button enabled.</summary>
-        /// <param name="buttonID">The button ID.</param>
+        /// <param name="buttonId">The button ID.</param>
         /// <param name="enabled">If set to <see langword="true" /> [enabled].</param>
-        internal void UpdateButtonEnabled(int buttonID, bool enabled)
+        internal void UpdateButtonEnabled(int buttonId, bool enabled)
         {
             this.AssertCurrentlyShowing();
-            this.SendMessageHelper(TaskDialogNativeMethods.TaskDialogMessage.EnableButton, buttonID, enabled ? 1 : 0);
+            this.SendMessageHelper(TaskDialogNativeMethods.TaskDialogMessage.EnableButton, buttonId, enabled ? 1 : 0);
         }
 
         /// <summary>Updates the check box checked.</summary>
@@ -321,12 +321,12 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>Update the radio button when enabled has changed.</summary>
-        /// <param name="buttonID">The button ID.</param>
+        /// <param name="buttonId">The button ID.</param>
         /// <param name="enabled">If set to <see langword="true" /> the radio button is enabled.</param>
-        internal void UpdateRadioButtonEnabled(int buttonID, bool enabled)
+        internal void UpdateRadioButtonEnabled(int buttonId, bool enabled)
         {
             this.AssertCurrentlyShowing();
-            this.SendMessageHelper(TaskDialogNativeMethods.TaskDialogMessage.EnableRadioButton, buttonID, enabled ? 1 : 0);
+            this.SendMessageHelper(TaskDialogNativeMethods.TaskDialogMessage.EnableRadioButton, buttonId, enabled ? 1 : 0);
         }
 
         /// <summary>Updates the content text.</summary>
@@ -375,7 +375,7 @@ namespace System.Windows.Dialogs
         /// <param name="parameterLength">The hyperlink id.</param>
         /// <param name="data">The data to process.</param>
         /// <returns>The result for the dialog.</returns>
-        private int DialogProc(IntPtr pointer, uint msg, IntPtr parameter, IntPtr parameterLength, IntPtr data)
+        private int DialogProc(IntPtr pointer, uint msg, IntPtr parameter, IntPtr parameterLength)
         {
             // Fetch the HWND - it may be the first time we're getting it.
             this.dialogPointer = pointer;
@@ -465,6 +465,11 @@ namespace System.Windows.Dialogs
             if (this.outerDialog != null)
             {
                 this.outerDialog.Dispose();
+            }
+
+            if (this.nativeDialogConfig != null)
+            {
+                this.nativeDialogConfig.Dispose();
             }
         }
 

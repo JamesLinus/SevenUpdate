@@ -49,12 +49,12 @@ BEGIN
         BEGIN
             VALUE "CompanyName", "Seven Software"
             VALUE "FileDescription", "SevenUpdate.Base"
-            VALUE "FileVersion", "11.5.4"
+            VALUE "FileVersion", "11.5.8"
             VALUE "InternalName", "SevenUpdate.Base"
             VALUE "LegalCopyright", "Copyright © Seven Software"
             VALUE "OriginalFilename", "SevenUpdate.Base"
             VALUE "ProductName", "Seven Update"
-            VALUE "ProductVersion", "1.2.3"
+            VALUE "ProductVersion", "1.3"
         END
     END
     BLOCK "VarFileInfo"

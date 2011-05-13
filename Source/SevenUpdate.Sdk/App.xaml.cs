@@ -98,7 +98,7 @@ namespace SevenUpdate.Sdk
         /// <param name="isFirstInstance">If set to <see langword="true" /> the current instance is the first application instance.</param>
         protected override void OnStartup(StartupEventArgs e, bool isFirstInstance)
         {
-            Utilities.Locale = Settings.Default.locale;
+            Utilities.Locale = Settings.Default.Locale;
             base.OnStartup(e, isFirstInstance);
 
             if (!isFirstInstance)

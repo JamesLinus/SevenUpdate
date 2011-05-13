@@ -49,8 +49,8 @@ namespace System.Windows.Dialogs
             // function should ultimately decide.
         }
 
-        /// <summary>Recursively searches for the control who's id matches the valuepassed in the <paramref name="id" /> parameter.</summary>
-        /// <param name="id">An integer containing the identifier of thecontrol being searched for.</param>
+        /// <summary>Recursively searches for the control who's id matches the value passed in the <paramref name="id" /> parameter.</summary>
+        /// <param name="id">An integer containing the identifier of the control being searched for.</param>
         /// <returns>A <see cref="DialogControl" /> who's id matches the value of the<paramref name="id" /> parameter.</returns>
         internal DialogControl GetControlById(int id)
         {

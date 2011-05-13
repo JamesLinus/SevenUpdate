@@ -31,8 +31,7 @@ namespace WPFLocalizeExtension.Extensions
 
         /// <summary>Initializes a new instance of the <see cref="LocImageExtension" /> class.</summary>
         /// <param name="key">The resource identifier.</param>
-        public LocImageExtension(string key)
-            : base(key)
+        public LocImageExtension(string key) : base(key)
         {
         }
 

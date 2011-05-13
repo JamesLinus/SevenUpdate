@@ -35,7 +35,7 @@ namespace SevenUpdate
 
     /// <summary>Contains methods and events that run a WCF service.</summary>
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant, InstanceContextMode = InstanceContextMode.PerSession)]
-    public class WcfService : IElevatedProcessCallback
+    internal class WcfService : IElevatedProcessCallback
     {
         #region Constants and Fields
 
@@ -155,7 +155,7 @@ namespace SevenUpdate
         #region Methods
 
         /// <summary>Aborts the installation of updates.</summary>
-        /// <returns><see langword="true" /> if the install was aborted, otherwise <see langword="false" />.</returns>
+        /// <returns><see langword="true"/> if the install was aborted, otherwise <see langword="false"/>.</returns>
         internal static bool AbortInstall()
         {
             var abort = Utilities.StartProcess(Path.Combine(Utilities.AppDir, @"SevenUpdate.Admin.exe"), "Abort");
@@ -220,8 +220,8 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Connects to the <see cref="SevenUpdate" />.Admin sub program.</summary>
-        /// <returns><see langword="true" /> if the connection to <see cref="WcfService" /> was successful.</returns>
+        /// <summary>Connects to the <see cref="SevenUpdate"/>.Admin sub program.</summary>
+        /// <returns><see langword="true"/> if the connection to <see cref="WcfService"/> was successful.</returns>
         internal static bool Connect()
         {
             MyServiceHost.StartService();
@@ -256,7 +256,7 @@ namespace SevenUpdate
             return true;
         }
 
-        /// <summary>Disconnects from <see cref="SevenUpdate" />.Admin.</summary>
+        /// <summary>Disconnects from <see cref="SevenUpdate"/>.Admin.</summary>
         internal static void Disconnect()
         {
             Core.Instance.IsAdmin = false;
@@ -282,7 +282,7 @@ namespace SevenUpdate
 
         /// <summary>Hides an update.</summary>
         /// <param name="hiddenUpdate">The update to hide.</param>
-        /// <returns><see langword="true" /> if the admin process was executed.</returns>
+        /// <returns><see langword="true"/> if the admin process was executed.</returns>
         internal static bool HideUpdate(Suh hiddenUpdate)
         {
             if (!Connect())
@@ -318,7 +318,7 @@ namespace SevenUpdate
 
         /// <summary>Hides multiple updates.</summary>
         /// <param name="hiddenUpdates">The list of updates to hide.</param>
-        /// <returns><see langword="true" /> if the admin process was executed, otherwise <see langword="false" />.</returns>
+        /// <returns><see langword="true"/> if the admin process was executed, otherwise <see langword="false"/>.</returns>
         internal static bool HideUpdates(Collection<Suh> hiddenUpdates)
         {
             if (!Connect())
@@ -349,7 +349,7 @@ namespace SevenUpdate
         }
 
         /// <summary>Installs selected updates.</summary>
-        /// <returns><see langword="true" /> if the admin process was executed, otherwise <see langword="false" />.</returns>
+        /// <returns><see langword="true"/> if the admin process was executed, otherwise <see langword="false"/>.</returns>
         internal static bool Install()
         {
             if (!Connect())
@@ -385,11 +385,11 @@ namespace SevenUpdate
             return true;
         }
 
-        /// <summary>Save the settings and call <see cref="SevenUpdate" />.Admin to commit them.</summary>
-        /// <param name="autoOn"><see langword="true" /> if auto updates are enabled, otherwise <see langword="false" />.</param>
+        /// <summary>Save the settings and call <see cref="SevenUpdate"/>.Admin to commit them.</summary>
+        /// <param name="autoOn"><see langword="true"/> if auto updates are enabled, otherwise <see langword="false"/>.</param>
         /// <param name="options">The options to save.</param>
         /// <param name="sul">The list of application to update to save.</param>
-        /// <returns><see langword="true" /> if the admin process was executed, otherwise <see langword="false" />.</returns>
+        /// <returns><see langword="true"/> if the admin process was executed, otherwise <see langword="false"/>.</returns>
         internal static bool SaveSettings(bool autoOn, Config options, Collection<Sua> sul)
         {
             if (!Connect())
@@ -429,7 +429,7 @@ namespace SevenUpdate
 
         /// <summary>Removes an update from the hidden list.</summary>
         /// <param name="hiddenUpdate">The hidden update to show.</param>
-        /// <returns><see langword="true" /> if the admin process was executed, otherwise <see langword="false" />.</returns>
+        /// <returns><see langword="true"/> if the admin process was executed, otherwise <see langword="false"/>.</returns>
         internal static bool ShowUpdate(Suh hiddenUpdate)
         {
             if (!Connect())

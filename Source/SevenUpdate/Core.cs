@@ -17,8 +17,8 @@
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // <summary>
-//   Contains properties and methods that are essential to the program
-// .</summary>
+//   Contains properties and methods that are essential to the program.
+// </summary>
 // ***********************************************************************
 
 namespace SevenUpdate
@@ -177,7 +177,7 @@ namespace SevenUpdate
         #region Methods
 
         /// <summary>Checks for updates.</summary>
-        /// <param name="auto"><see langword="true" /> if it's called because of an auto update check, otherwise <see langword="false" />.</param>
+        /// <param name="auto"><see langword="true"/> if it's called because of an auto update check, otherwise <see langword="false"/>.</param>
         internal static void CheckForUpdates(bool auto)
         {
             if (auto)
@@ -214,7 +214,7 @@ namespace SevenUpdate
                 if (Utilities.RebootNeeded == false)
                 {
                     Instance.UpdateAction = UpdateAction.CheckingForUpdates;
-                    Properties.Settings.Default.lastUpdateCheck = DateTime.Now;
+                    Properties.Settings.Default.LastUpdateCheck = DateTime.Now;
                     Search.SearchForUpdatesAsync(AppsToUpdate, Path.Combine(App.AllUserStore, "downloads"));
                 }
                 else
@@ -254,8 +254,8 @@ namespace SevenUpdate
             MainWindow.NavService.Navigate(MainPage);
         }
 
-        /// <summary>Shows either a <see cref="TaskDialog" /> or a <see cref="MessageBox" /> if running legacy windows.</summary>
-        /// <param name="instructionText">The main text to display (Blue 14pt for <see cref="TaskDialog" />).</param>
+        /// <summary>Shows either a <see cref="TaskDialog"/> or a <see cref="MessageBox"/> if running legacy windows.</summary>
+        /// <param name="instructionText">The main text to display (Blue 14pt for <see cref="TaskDialog"/>).</param>
         /// <param name="icon">The icon to display.</param>
         /// <param name="standardButtons">The standard buttons to use (with or without the custom default button text).</param>
         /// <param name="description">A description of the message, supplements the instruction text.</param>
@@ -338,8 +338,8 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Shows either a <see cref="TaskDialog" /> or a <see cref="MessageBox" /> if running legacy windows.</summary>
-        /// <param name="instructionText">The main text to display (Blue 14pt for <see cref="TaskDialog" />).</param>
+        /// <summary>Shows either a <see cref="TaskDialog"/> or a <see cref="MessageBox"/> if running legacy windows.</summary>
+        /// <param name="instructionText">The main text to display (Blue 14pt for <see cref="TaskDialog"/>).</param>
         /// <param name="icon">The icon to display.</param>
         /// <param name="description">A description of the message, supplements the instruction text.</param>
         private static void ShowMessage(string instructionText, TaskDialogStandardIcon icon, string description = null)
@@ -347,7 +347,7 @@ namespace SevenUpdate
             ShowMessage(instructionText, icon, TaskDialogStandardButtons.Ok, description);
         }
 
-        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged" /> Event.</summary>
+        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged"/> Event.</summary>
         /// <param name="name">The name of the property that changed.</param>
         private void OnPropertyChanged(string name)
         {

@@ -32,7 +32,7 @@ namespace SevenUpdate.Converters
 
     using SevenUpdate.Properties;
 
-    /// <summary>Converts a <see cref="LocaleString" /> to a localized string.</summary>
+    /// <summary>Converts a <see cref="LocaleString"/> to a localized string.</summary>
     [ValueConversion(typeof(LocaleString), typeof(string))]
     internal sealed class LocaleStringToStringConverter : IValueConverter
     {

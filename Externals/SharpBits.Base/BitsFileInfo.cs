@@ -10,7 +10,7 @@
 namespace SharpBits.Base
 {
     /// <summary>The file info for the <see cref="BitsFile" />.</summary>
-    public abstract class BitsFileInfo
+    public class BitsFileInfo
     {
         #region Constructors and Destructors
 

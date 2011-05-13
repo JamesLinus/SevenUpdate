@@ -7,7 +7,7 @@
 
 namespace System.Windows.ApplicationServices
 {
-    /// <summary>Specifies the conditions when Windows Error Reportingshould not restart an application that has registeredfor automatic restart.</summary>
+    /// <summary>Specifies the conditions when Windows Error Reporting should not restart an application that has registered for automatic restart.</summary>
     [Flags]
     public enum RestartRestrictions
     {
@@ -20,7 +20,7 @@ namespace System.Windows.ApplicationServices
         /// <summary>Do not restart when the application is hung.</summary>
         NotOnHang = 2,
 
-        /// <summary>Do not restart when the application is terminateddue to a system update.</summary>
+        /// <summary>Do not restart when the application is terminated due to a system update.</summary>
         NotOnPatch = 4,
 
         /// <summary>Do not restart when the application is terminated because of a system reboot.</summary>

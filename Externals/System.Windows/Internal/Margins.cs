@@ -28,8 +28,7 @@ namespace System.Windows.Internal
     {
         /// <summary>Initializes a new instance of the <see cref="Margins" /> struct.</summary>
         /// <param name="fullWindow">If set to <see langword="true" /> the margin is set to the full window.</param>
-        public Margins(bool fullWindow)
-            : this()
+        public Margins(bool fullWindow) : this()
         {
             this.LeftWidth = this.RightWidth = this.TopHeight = this.BottomHeight = fullWindow ? -1 : 0;
         }
@@ -39,8 +38,7 @@ namespace System.Windows.Internal
         /// <param name="top">Height of the top border that retains its size.</param>
         /// <param name="right">Width of the right border that retains its size.</param>
         /// <param name="bottom">Height of the bottom border that retains its size.</param>
-        public Margins(int left, int top, int right, int bottom)
-            : this()
+        public Margins(int left, int top, int right, int bottom) : this()
         {
             this.LeftWidth = left;
             this.RightWidth = right;

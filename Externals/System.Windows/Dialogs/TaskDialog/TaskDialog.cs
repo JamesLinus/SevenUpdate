@@ -16,7 +16,7 @@ namespace System.Windows.Dialogs
     using System.Windows.Interop;
     using System.Windows.Properties;
 
-    /// <summary>Encapsulates a new-to-Vista Win32 TaskDialog window - a powerful successor to the <see cref="MessageBox" /> availablein previous versions of Windows.</summary>
+    /// <summary>Encapsulates a new-to-Vista Win32 TaskDialog window - a powerful successor to the <see cref="MessageBox" /> available in previous versions of Windows.</summary>
     [SecurityPermission(SecurityAction.InheritanceDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
     public sealed class TaskDialog : IDialogControlHost, IDisposable
     {
@@ -413,7 +413,7 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>Gets or sets the progress bar on the task dialog. ProgressBar a visual representationof the progress of a long running operation.</summary>
+        /// <summary>Gets or sets the progress bar on the task dialog. ProgressBar a visual representation of the progress of a long running operation.</summary>
         /// <value>The progress bar.</value>
         public TaskDialogProgressBar ProgressBar
         {
@@ -788,7 +788,7 @@ namespace System.Windows.Dialogs
                 // If not, it had better be a custom button...
                 if (buttonClicked == TaskDialogStandardButtons.None)
                 {
-                    TaskDialogButtonBase customButton = this.GetButtonForId(id);
+                    var customButton = this.GetButtonForId(id);
 
                     // ... or we have a problem.
                     if (customButton == null)
@@ -884,7 +884,7 @@ namespace System.Windows.Dialogs
             var buttonStructs = new TaskDialogNativeMethods.TaskDialogButtonData[totalButtons];
             for (var i = 0; i < totalButtons; i++)
             {
-                TaskDialogButtonBase button = controls[i];
+                var button = controls[i];
                 buttonStructs[i] = new TaskDialogNativeMethods.TaskDialogButtonData(button.Id, button.ToString());
             }
 
@@ -900,7 +900,7 @@ namespace System.Windows.Dialogs
 
             TaskDialogResults result;
 
-            var standardButton = MapButtonIdToStandardButton(native.SelectedButtonID);
+            var standardButton = MapButtonIdToStandardButton(native.SelectedButtonId);
 
             // If returned ID isn't a standard button, let's fetch 
             if (standardButton == TaskDialogStandardButtons.None)
@@ -928,29 +928,29 @@ namespace System.Windows.Dialogs
         /// <returns>The <see cref="TaskDialogButton" />.</returns>
         private static TaskDialogStandardButtons MapButtonIdToStandardButton(int id)
         {
-            switch ((TaskDialogNativeMethods.TaskDialogCommonButtonReturnID)id)
+            switch ((TaskDialogNativeMethods.TaskDialogCommonButtonReturnId)id)
             {
-                case TaskDialogNativeMethods.TaskDialogCommonButtonReturnID.OK:
+                case TaskDialogNativeMethods.TaskDialogCommonButtonReturnId.OK:
                     return TaskDialogStandardButtons.Ok;
-                case TaskDialogNativeMethods.TaskDialogCommonButtonReturnID.Cancel:
+                case TaskDialogNativeMethods.TaskDialogCommonButtonReturnId.Cancel:
                     return TaskDialogStandardButtons.Cancel;
-                case TaskDialogNativeMethods.TaskDialogCommonButtonReturnID.Abort:
+                case TaskDialogNativeMethods.TaskDialogCommonButtonReturnId.Abort:
 
                     // Included for completeness in API - 
                     // we can't pass in an Abort standard button.
                     return TaskDialogStandardButtons.None;
-                case TaskDialogNativeMethods.TaskDialogCommonButtonReturnID.Retry:
+                case TaskDialogNativeMethods.TaskDialogCommonButtonReturnId.Retry:
                     return TaskDialogStandardButtons.Retry;
-                case TaskDialogNativeMethods.TaskDialogCommonButtonReturnID.Ignore:
+                case TaskDialogNativeMethods.TaskDialogCommonButtonReturnId.Ignore:
 
                     // Included for completeness in API - 
                     // we can't pass in an Ignore standard button.
                     return TaskDialogStandardButtons.None;
-                case TaskDialogNativeMethods.TaskDialogCommonButtonReturnID.Yes:
+                case TaskDialogNativeMethods.TaskDialogCommonButtonReturnId.Yes:
                     return TaskDialogStandardButtons.Yes;
-                case TaskDialogNativeMethods.TaskDialogCommonButtonReturnID.No:
+                case TaskDialogNativeMethods.TaskDialogCommonButtonReturnId.No:
                     return TaskDialogStandardButtons.No;
-                case TaskDialogNativeMethods.TaskDialogCommonButtonReturnID.Close:
+                case TaskDialogNativeMethods.TaskDialogCommonButtonReturnId.Close:
                     return TaskDialogStandardButtons.Close;
                 default:
                     return TaskDialogStandardButtons.None;

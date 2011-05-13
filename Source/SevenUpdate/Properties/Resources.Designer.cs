@@ -889,11 +889,11 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to protobuf-net is licensed under the.
+        ///   Looks up a localized string similar to Protobuf.net is licensed under the.
         /// </summary>
-        public static string protobufLicense {
+        public static string ProtobufLicense {
             get {
-                return ResourceManager.GetString("protobufLicense", resourceCulture);
+                return ResourceManager.GetString("ProtobufLicense", resourceCulture);
             }
         }
         

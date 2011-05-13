@@ -24,9 +24,9 @@ namespace SharpBits.Base
         void CreateJob([MarshalAs(UnmanagedType.LPWStr)] string displayName, BGJobType type, out Guid jobId, [MarshalAs(UnmanagedType.Interface)] out IBackgroundCopyJob job);
 
         /// <summary>Retrieves a given job from the queue.</summary>
-        /// <param name="jobID">Identifies the job to retrieve from the transfer queue. The <see cref="CreateJob" /> method returns the job identifier.</param>
+        /// <param name="jobId">Identifies the job to retrieve from the transfer queue. The <see cref="CreateJob" /> method returns the job identifier.</param>
         /// <param name="job">An <see cref="IBackgroundCopyJob" /> interface pointer to the job specified by JobID. When done, release job.</param>
-        void GetJob(ref Guid jobID, [MarshalAs(UnmanagedType.Interface)] out IBackgroundCopyJob job);
+        void GetJob(ref Guid jobId, [MarshalAs(UnmanagedType.Interface)] out IBackgroundCopyJob job);
 
         /// <summary>Retrieves an enumerator object that you use to enumerate jobs in the queue.</summary>
         /// <param name="flags">Specifies whose jobs to include in the enumeration. If <paramref name="flags" /> is set to 0, the user receives all jobs that they own in the transfer queue. The following table lists the enumeration options.</param>

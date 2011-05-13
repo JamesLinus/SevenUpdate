@@ -487,8 +487,7 @@ namespace System.Windows.Controls
             /// <summary>Initializes a new instance of the <see cref="SortGlyphAdorner" /> class.</summary>
             /// <param name="columnHeader">The column header.</param>
             /// <param name="sortGlyph">The sort glyph.</param>
-            public SortGlyphAdorner(GridViewColumnHeader columnHeader, ImageSource sortGlyph)
-                : base(columnHeader)
+            public SortGlyphAdorner(GridViewColumnHeader columnHeader, ImageSource sortGlyph) : base(columnHeader)
             {
                 this.columnHeader = columnHeader;
                 this.sortGlyph = sortGlyph;

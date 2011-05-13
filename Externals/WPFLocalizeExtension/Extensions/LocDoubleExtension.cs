@@ -27,8 +27,7 @@ namespace WPFLocalizeExtension.Extensions
 
         /// <summary>Initializes a new instance of the <see cref="LocDoubleExtension" /> class.</summary>
         /// <param name="key">The resource identifier.</param>
-        public LocDoubleExtension(string key)
-            : base(key)
+        public LocDoubleExtension(string key) : base(key)
         {
         }
 

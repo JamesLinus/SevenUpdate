@@ -19,7 +19,7 @@ namespace SharpBits.Base
         /// <summary>Converts a string-format security identifier (SID) into a valid, functional SID. You can use this function to retrieve a SID that the ConvertSidToStringSid function converted to string format.</summary>
         /// <param name="sid">A pointer to a <see langword="null" />-terminated string containing the string-format SID to convert. The SID string can use either the standard S-R-I-S-S� format for SID strings, or the SID string constant format, such as "BA" for built-in administrators.</param>
         /// <param name="sidPointer">A pointer to a variable that receives a pointer to the converted SID. To free the returned buffer, call the LocalFree function.</param>
-        /// <returns><see langword="true" /> if function succecced.</returns>
+        /// <returns><see langword="true" /> if function succeeded.</returns>
         [DllImport(@"advapi32.dll", CharSet = CharSet.Unicode)]
         [return: MarshalAsAttribute(UnmanagedType.Bool)]
         internal static extern bool ConvertStringSidToSidW(string sid, ref IntPtr sidPointer);
@@ -32,7 +32,7 @@ namespace SharpBits.Base
         /// <param name="referencedDomainName">A pointer to a buffer that receives a <see langword="null" />-terminated string that contains the name of the domain where the account name was found.</param>
         /// <param name="domainNameSize">On input, specifies the size, of the <paramref name="referencedDomainName" /> buffer. If the function fails because the buffer is too small or if <paramref name="referencedDomainName" /> is zero, <paramref name="referencedDomainName" /> receives the required buffer size, including the terminating <see langword="null" /> character.</param>
         /// <param name="use">A pointer to a variable that receives a SidNameUse value that indicates the type of the account.</param>
-        /// <returns><see langword="true" /> if function succecced.</returns>
+        /// <returns><see langword="true" /> if function succeeded.</returns>
         [DllImport(@"advapi32.dll", CharSet = CharSet.Unicode)]
         [return: MarshalAsAttribute(UnmanagedType.Bool)]
         internal static extern bool LookupAccountSidW(string systemName, IntPtr sid, StringBuilder name, ref long nameSize, StringBuilder referencedDomainName, ref long domainNameSize, ref int use);

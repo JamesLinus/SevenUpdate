@@ -282,7 +282,7 @@ namespace SevenUpdate.Admin
 
             using (notifyIcon = new NotifyIcon())
             {
-                notifyIcon.Icon = Resources.trayIcon;
+                notifyIcon.Icon = Resources.TrayIcon;
                 notifyIcon.Text = Resources.CheckingForUpdates;
                 notifyIcon.Visible = false;
 

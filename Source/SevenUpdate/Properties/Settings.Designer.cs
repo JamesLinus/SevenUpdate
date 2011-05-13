@@ -25,59 +25,59 @@ namespace SevenUpdate.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.DateTime lastUpdateCheck {
+        public global::System.DateTime LastUpdateCheck {
             get {
-                return ((global::System.DateTime)(this["lastUpdateCheck"]));
+                return ((global::System.DateTime)(this["LastUpdateCheck"]));
             }
             set {
-                this["lastUpdateCheck"] = value;
+                this["LastUpdateCheck"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        public global::System.DateTime lastInstall {
+        public global::System.DateTime LastInstall {
             get {
-                return ((global::System.DateTime)(this["lastInstall"]));
+                return ((global::System.DateTime)(this["LastInstall"]));
             }
             set {
-                this["lastInstall"] = value;
+                this["LastInstall"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("550")]
-        public double windowHeight {
+        public double WindowHeight {
             get {
-                return ((double)(this["windowHeight"]));
+                return ((double)(this["WindowHeight"]));
             }
             set {
-                this["windowHeight"] = value;
+                this["WindowHeight"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("900")]
-        public double windowWidth {
+        public double WindowWidth {
             get {
-                return ((double)(this["windowWidth"]));
+                return ((double)(this["WindowWidth"]));
             }
             set {
-                this["windowWidth"] = value;
+                this["WindowWidth"] = value;
             }
         }
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("en")]
-        public string locale {
+        public string Locale {
             get {
-                return ((string)(this["locale"]));
+                return ((string)(this["Locale"]));
             }
             set {
-                this["locale"] = value;
+                this["Locale"] = value;
             }
         }
     }

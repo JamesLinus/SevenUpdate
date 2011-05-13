@@ -65,10 +65,10 @@ namespace System.Windows.Controls
                     return trvItem;
                 }
 
-                var nestedSearchResut = FindTreeViewItem(trvItem.ItemContainerGenerator, trvItem.Items, predicate);
-                if (nestedSearchResut != null)
+                var nestedSearchResult = FindTreeViewItem(trvItem.ItemContainerGenerator, trvItem.Items, predicate);
+                if (nestedSearchResult != null)
                 {
-                    return nestedSearchResut;
+                    return nestedSearchResult;
                 }
             }
 

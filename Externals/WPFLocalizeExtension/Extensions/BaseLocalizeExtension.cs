@@ -57,8 +57,7 @@ namespace WPFLocalizeExtension.Extensions
         /// <summary>Initializes a new instance of the <see cref="BaseLocalizeExtension{TValue}" /> class. Initializes a new instance of the BaseLocalizeExtension class.</summary>
         /// <param name="key">Three types are supported:Direct: passed key = key;Dictionary/Key pair: this have to be separated like ResXDictionaryName:<see cref="ResourceKey" />Assembly/Dictionary/Key pair: this have to be separated like ResXDictionaryName:<see cref="ResourceKey" />.</param>
         /// <remarks>This constructor register the <see cref="EventHandler" /><c>OnCultureChanged</c> on <c>LocalizeDictionary</c> to get an acknowledge of changing the culture</remarks>
-        protected BaseLocalizeExtension(string key)
-            : this()
+        protected BaseLocalizeExtension(string key) : this()
         {
             // parse the key value and split it up if necessary
             Localize.ParseKey(key, out this.assembly, out this.dict, out this.key);
@@ -306,7 +305,7 @@ namespace WPFLocalizeExtension.Extensions
         /// <param name="targetObject">The target dependency object.</param>
         /// <param name="targetProperty">The target dependency property.</param>
         /// <returns><see langword="true" /> if the binding was setup successfully, otherwise <see langword="false" /> (Binding already exists).</returns>
-        /// <exception cref="ArgumentException">If the <paramref name="targetProperty" /> isnot a <see cref="DependencyProperty" /> or <see cref="PropertyInfo" />.</exception>
+        /// <exception cref="ArgumentException">If the <paramref name="targetProperty" /> is not a <see cref="DependencyProperty" /> or <see cref="PropertyInfo" />.</exception>
         public bool SetBinding(DependencyObject targetObject, object targetProperty)
         {
             if (!(targetProperty is DependencyProperty || targetProperty is PropertyInfo))

@@ -12,7 +12,7 @@ namespace SharpBits.Base
     using System;
     using System.Runtime.InteropServices;
 
-    /// <summary>Use the IBackgroundCopyJob2 interface to retrieve reply data from an upload-reply job, determine the progress of thereply data transfer to the client, request command line execution, and provide credentials for proxy and remote server authentication requests.</summary>
+    /// <summary>Use the IBackgroundCopyJob2 interface to retrieve reply data from an upload-reply job, determine the progress of the reply data transfer to the client, request command line execution, and provide credentials for proxy and remote server authentication requests.</summary>
     [ComImport, InterfaceType(ComInterfaceType.InterfaceIsIUnknown), Guid("54B50739-686F-45EB-9DFF-D6A9A0FAA9AF")]
     internal interface IBackgroundCopyJob2
     {
