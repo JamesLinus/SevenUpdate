@@ -66,7 +66,7 @@ namespace System.Windows.Dialogs
                 // Check if min / max differ
                 if (value < this.Minimum)
                 {
-                    throw new ArgumentException(@"Maximum value provided must be greater than the minimum value", "value");
+                    throw new ArgumentException(Properties.Resources.MaximumValueGreater, "value");
                 }
 
                 this.maximum = value;
@@ -89,13 +89,13 @@ namespace System.Windows.Dialogs
                 // Check for positive numbers
                 if (value < 0)
                 {
-                    throw new ArgumentException(@"Minimum value provided must be a positive number", "value");
+                    throw new ArgumentException(Properties.Resources.MinimumValuePositive, "value");
                 }
 
                 // Check if min / max differ
                 if (value >= this.Maximum)
                 {
-                    throw new ArgumentException(@"Minimum value provided must less than the maximum value", "value");
+                    throw new ArgumentException(Properties.Resources.MinimumLessValue, "value");
                 }
 
                 this.minimum = value;
@@ -118,12 +118,12 @@ namespace System.Windows.Dialogs
                 // Check for positive numbers
                 if (value < this.Minimum)
                 {
-                    throw new ArgumentException(@"Value provided must be greater than or equal to minimum value", "value");
+                    throw new ArgumentException(Properties.Resources.ValueGreater, "value");
                 }
 
                 if (value > this.Maximum)
                 {
-                    throw new ArgumentException(@"Value provided must be less than or equal to the maximum value", "value");
+                    throw new ArgumentException(Properties.Resources.ValueLess, "value");
                 }
 
                 this.value = value;

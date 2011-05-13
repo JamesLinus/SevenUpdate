@@ -79,6 +79,33 @@ namespace System.Windows.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Maximum value provided must be greater than the minimum value.
+        /// </summary>
+        public static string MaximumValueGreater {
+            get {
+                return ResourceManager.GetString("MaximumValueGreater", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minimum value provided must less than the maximum value.
+        /// </summary>
+        public static string MinimumLessValue {
+            get {
+                return ResourceManager.GetString("MinimumLessValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Minimum value provided must be a positive number.
+        /// </summary>
+        public static string MinimumValuePositive {
+            get {
+                return ResourceManager.GetString("MinimumValuePositive", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Progress bar cannot be hosted in multiple dialogs..
         /// </summary>
         public static string ProgressBarError {
@@ -102,6 +129,24 @@ namespace System.Windows.Properties {
         public static string UrilInvalid {
             get {
                 return ResourceManager.GetString("UrilInvalid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value provided must be greater than or equal to minimum value.
+        /// </summary>
+        public static string ValueGreater {
+            get {
+                return ResourceManager.GetString("ValueGreater", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Value provided must be less than or equal to the maximum value.
+        /// </summary>
+        public static string ValueLess {
+            get {
+                return ResourceManager.GetString("ValueLess", resourceCulture);
             }
         }
     }
