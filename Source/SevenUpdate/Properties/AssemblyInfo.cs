@@ -36,7 +36,7 @@ using System.Windows;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyVersion("1.3")]
-[assembly: AssemblyFileVersion("11.5.8")]
+[assembly: AssemblyFileVersion("11.5.12")]
 [assembly: CLSCompliant(false)]
 [assembly: ComVisible(false)]
 [assembly: NeutralResourcesLanguage("en-US")]

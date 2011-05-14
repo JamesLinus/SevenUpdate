@@ -20,7 +20,7 @@ using System.Windows.Markup;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyVersion("1.1")]
-[assembly: AssemblyFileVersion("11.5.8")]
+[assembly: AssemblyFileVersion("11.5.12")]
 [assembly: CLSCompliant(false)]
 [assembly: ComVisible(false)]
 [assembly: Guid("59ffa091-2f23-45bc-8212-125250bf213d")]

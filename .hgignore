@@ -15,3 +15,4 @@ glob:Source/SevenUpdate.Sdk.Tools
 glob:*.csproj.vs10x
 syntax: glob
 Source/SevenUpdate/Settings.StyleCop
+Source/SevenUpdate.sln.docstates

@@ -32,7 +32,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyVersionAttribute("1.3")]
-[assembly: AssemblyFileVersionAttribute("11.5.8")]
+[assembly: AssemblyFileVersionAttribute("11.5.12")]
 [assembly: CLSCompliant(false)]
 [assembly: ComVisible(false)]
 [assembly: NeutralResourcesLanguage("en-US")]

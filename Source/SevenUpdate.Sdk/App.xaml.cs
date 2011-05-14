@@ -165,9 +165,8 @@ namespace SevenUpdate.Sdk
         {
             // Create JumpTask
             var jumpList = new JumpList { ShowRecentCategory = true };
-
             // Configure a new JumpTask
-            var jumpTask = new JumpTask { IconResourcePath = Path.Combine(Utilities.AppDir, "Shared", @"SevenUpdate.Base.dll"), IconResourceIndex = 6, Title = Sdk.Properties.Resources.CreateProject, Arguments = @"-newproject" };
+            var jumpTask = new JumpTask { IconResourcePath = Path.Combine(Directory.GetParent(Utilities.AppDir).FullName, "Shared", @"SevenUpdate.Base.dll"), IconResourceIndex = 6, Title = Sdk.Properties.Resources.CreateProject, Arguments = @"-newproject" };
 
             jumpList.JumpItems.Add(jumpTask);
             JumpList.SetJumpList(Current, jumpList);

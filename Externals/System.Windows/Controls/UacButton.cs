@@ -62,6 +62,7 @@ namespace System.Windows.Controls
             this.Loaded += this.OnLoaded;
             this.IsEnabledChanged -= this.ChangeUacIcon;
             this.IsEnabledChanged += this.ChangeUacIcon;
+
             var stackPanel = new StackPanel { Orientation = Orientation.Horizontal };
 
             var imgShield = new Image { Source = this.IsEnabled ? Shield : ShieldDisabled, Stretch = Stretch.None, Margin = new Thickness(0, 0, 5, 0) };

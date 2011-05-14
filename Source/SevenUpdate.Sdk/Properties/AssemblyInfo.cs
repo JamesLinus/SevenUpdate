@@ -33,7 +33,7 @@ using System.Windows;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyVersion("1.3")]
-[assembly: AssemblyFileVersion("11.5.8")]
+[assembly: AssemblyFileVersion("11.5.12")]
 [assembly: CLSCompliant(false)]
 [assembly: ComVisible(false)]
 [assembly: GuidAttribute("82893A11-B7D9-48D2-87B1-9F6F19B17300")]
