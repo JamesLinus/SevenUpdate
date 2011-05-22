@@ -62,7 +62,7 @@ namespace SevenUpdate
         public static readonly string UserStore = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Seven Update");
 
         /// <summary>The Seven Update list location.</summary>
-        internal const string SulLocation = @"http://sevenupdate.com/apps/Apps.sul";
+        internal const string SulLocation = @"http://apps.sevenupdate.com/list.sul";
 
         #endregion
 

@@ -116,6 +116,7 @@ namespace SevenUpdate.Pages
         private void Init(object sender, RoutedEventArgs e)
         {
             this.lvApps.Cursor = Cursors.Wait;
+            this.tbDownloading.Visibility = Visibility.Visible;
             this.config = Core.Settings;
             this.DataContext = this.config;
             this.lvApps.ItemsSource = null;
@@ -139,7 +140,17 @@ namespace SevenUpdate.Pages
                 machineAppList = null;
             }
 
-            if (machineAppList != null)
+            if (machineAppList == null)
+            {
+                machineAppList = new ObservableCollection<Sua>();
+            }
+
+            if (officialApplicationList == null)
+            {
+                officialApplicationList = new ObservableCollection<Sua>();
+            }
+
+            if (machineAppList.Count > 0)
             {
                 for (var x = 0; x < machineAppList.Count; x++)
                 {
@@ -161,7 +172,7 @@ namespace SevenUpdate.Pages
                 }
             }
 
-            if (officialApplicationList != null)
+            if (officialApplicationList.Count > 0)
             {
                 for (var x = 0; x < officialApplicationList.Count; x++)
                 {
@@ -180,7 +191,7 @@ namespace SevenUpdate.Pages
                         continue;
                     }
 
-                    if (machineAppList == null)
+                    if (machineAppList.Count < 1)
                     {
                         continue;
                     }
@@ -201,7 +212,7 @@ namespace SevenUpdate.Pages
                     }
                 }
 
-                if (machineAppList != null)
+                if (machineAppList.Count > 0)
                 {
                     foreach (var t in machineAppList)
                     {
@@ -210,7 +221,7 @@ namespace SevenUpdate.Pages
                 }
             }
 
-            if (officialApplicationList != null)
+            if (officialApplicationList.Count > 0)
             {
                 machineAppList = officialApplicationList;
             }
@@ -259,10 +270,12 @@ namespace SevenUpdate.Pages
         private void UpdateList()
         {
             this.lvApps.Cursor = Cursors.Arrow;
-            if (machineAppList != null)
+            if (machineAppList.Count < 1)
             {
-                this.lvApps.ItemsSource = machineAppList;
             }
+
+            this.tbDownloading.Visibility = Visibility.Hidden;
+            this.lvApps.ItemsSource = machineAppList;
         }
 
         /// <summary>Changes the UI depending on whether Aero Glass is enabled.</summary>

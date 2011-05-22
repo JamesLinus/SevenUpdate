@@ -74,7 +74,7 @@
     <Reference Include="protobuf-net">
       <HintPath>..\..\Externals\protobuf-net.dll</HintPath>
       <EmbedInteropTypes>False</EmbedInteropTypes>
-      <Private>True</Private>
+      <Private>False</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Runtime.Serialization" />

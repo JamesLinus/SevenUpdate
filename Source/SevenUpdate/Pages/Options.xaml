@@ -33,7 +33,7 @@
 
     <Separator Grid.ColumnSpan="3" Background="#FFDFDFDF" Margin="0" Grid.Row="9" VerticalAlignment="Top" />
     <ScrollViewer VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="3" Grid.Row="9">
-      <ListView SelectionMode="Single" Name="lvApps" MinWidth="800" Thumb.DragDelta="RestrictColumn" Foreground="Black" ListViewSorter.CustomSorter="SevenUpdate.CustomComparer.SuaSorter,SevenUpdate" BorderThickness="0" AlternationCount="2" TabIndex="3">
+      <ListView SelectionMode="Single" Name="lvApps" MinWidth="800" Thumb.DragDelta="RestrictColumn" Foreground="Black" ListViewSorter.CustomSorter="SevenUpdate.CustomComparer.SuaSorter,SevenUpdate" BorderThickness="0" AlternationCount="2" TabIndex="3" d:DataContext="{d:DesignInstance Type=SevenUpdate:Sua}">
         <ListView.Resources>
           <ToolTip x:Key="itemToolTip">
             <TextBlock Text="{Binding Path=Description, Converter={StaticResource localeStringToString}}" TextWrapping="Wrap" MaxWidth="500" />
@@ -68,7 +68,19 @@
         </ListView.ItemContainerStyle>
       </ListView>
     </ScrollViewer>
-    <TextBlock Style="{StaticResource glassText}" HorizontalAlignment="Left" Padding="2" Text="{LocText SevenUpdate:Resources:PleaseWaitDownloading}" VerticalAlignment="Center" Grid.Column="1" Grid.Row="10" Margin="0,9" Grid.ColumnSpan="2" Visibility="{Binding ElementName=lvApps, Path=Items.Count, Converter={StaticResource intToVisibility}, ConverterParameter=True}" />
+    <TextBlock HorizontalAlignment="Left" Padding="2" Text="{LocText SevenUpdate:Resources:PleaseWaitDownloading}" VerticalAlignment="Center" Grid.Column="1" Grid.Row="10" Margin="0,9" Grid.ColumnSpan="2" Name="tbDownloading">
+      <TextBlock.Style>
+        <Style TargetType="TextBlock" BasedOn="{StaticResource glassText}">
+          <Style.Triggers>
+            <Trigger Property="IsMouseOver" Value="True">
+              <Setter Property="TextDecorations" Value="Underline" />
+              <Setter Property="Foreground" Value="#FF3399FF" />
+            </Trigger>
+          </Style.Triggers>
+        </Style>
+      </TextBlock.Style>
+    </TextBlock>
+
     <StackPanel Grid.Column="2" Grid.Row="10" HorizontalAlignment="Right" VerticalAlignment="Bottom" Orientation="Horizontal" Margin="0,0,11,10">
       <UacButton IsDefault="True" MinHeight="23" MinWidth="75" Padding="5,1" Click="SaveSettings" ButtonText="{LocText SevenUpdate:Resources:Save}" Name="btnSave" TabIndex="4" x:FieldModifier="private" />
       <Button Content="{LocText SevenUpdate:Resources:Cancel}" HorizontalContentAlignment="Center" IsDefault="False" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Margin="8,0,0,0" IsCancel="True" TabIndex="5" Click="NavigateToMainPage" />

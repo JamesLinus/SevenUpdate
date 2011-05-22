@@ -45,7 +45,13 @@ namespace SevenUpdate.Sdk.ValidationRules
             }
 
             input = Core.AppInfo.Directory == null ? Utilities.ConvertPath(input, true, Core.AppInfo.Platform) : Utilities.ExpandInstallLocation(input, Core.AppInfo.Directory, Core.AppInfo.Platform, Core.AppInfo.ValueName);
-            if (File.Exists(input) || Directory.Exists(input))
+
+            if (string.IsNullOrEmpty(input) || input.IndexOfAny(Path.GetInvalidPathChars()) >= 0)
+            {
+                return new ValidationResult(false, Resources.FilePathInvalid);
+            }
+
+            if (File.Exists(input) || Directory.Exists(Path.GetDirectoryName(input)))
             {
                 return new ValidationResult(true, null);
             }
@@ -53,11 +59,6 @@ namespace SevenUpdate.Sdk.ValidationRules
             if (Uri.IsWellFormedUriString(input, UriKind.Absolute))
             {
                 return new ValidationResult(true, null);
-            }
-
-            if (string.IsNullOrEmpty(input) || input.IndexOfAny(Path.GetInvalidPathChars()) >= 0)
-            {
-                return new ValidationResult(false, Resources.FilePathInvalid);
             }
 
             return new ValidationResult(false, Resources.FilePathInvalid);

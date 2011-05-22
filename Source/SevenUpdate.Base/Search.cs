@@ -114,25 +114,42 @@ namespace SevenUpdate
                 }
                 else
                 {
+                    // Loads a SUI that was downloaded
+                    Sui app = null;
                     try
                     {
-                        // Loads a SUI that was downloaded
-                        var app = Utilities.Deserialize<Sui>(Utilities.DownloadFile(t.SuiUrl));
-                        app.AppInfo = t;
-
-                        // Check to see if any updates are available
-                        if (CheckForUpdates(ref app))
-                        {
-                            applicationsFound.Add(app);
-                        }
+                        app = Utilities.Deserialize<Sui>(Utilities.DownloadFile(t.SuiUrl));
+                    }
+                    catch (WebException ex)
+                    {
+                        Utilities.ReportError(ex, ErrorType.SearchError);
                     }
                     catch (Exception ex)
                     {
                         Utilities.ReportError(ex, ErrorType.SearchError);
+                        throw;
+                    }
 
-                        if (!(ex is FileNotFoundException || ex is FileFormatException || ex is ProtoException))
+                    if (app != null)
+                    {
+                        app.AppInfo = t;
+
+                        try
                         {
-                            throw;
+                            // Check to see if any updates are available
+                            if (CheckForUpdates(ref app))
+                            {
+                                applicationsFound.Add(app);
+                            }
+                        }
+                        catch (Exception ex)
+                        {
+                            Utilities.ReportError(ex, ErrorType.SearchError);
+
+                            if (!(ex is FileNotFoundException || ex is FileFormatException || ex is ProtoException))
+                            {
+                                throw;
+                            }
                         }
                     }
                 }

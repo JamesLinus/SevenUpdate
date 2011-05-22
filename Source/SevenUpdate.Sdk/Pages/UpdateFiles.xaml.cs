@@ -137,7 +137,7 @@ namespace SevenUpdate.Sdk.Pages
                 this.AddFile(files[x], pathToFiles, impersonateAppDirectory);
             }
 
-            this.listBox.SelectedIndex = 0;
+            this.listBox.SelectedIndex = this.listBox.SelectedIndex + 1;
         }
 
         /// <summary>Browses for a folder contains files to add to the <see cref="UpdateFile" /> collection.</summary>
@@ -209,14 +209,20 @@ namespace SevenUpdate.Sdk.Pages
                     updateFile.Args = null;
                     this.tbxArgs.IsEnabled = false;
                     this.tbxDownloadUrl.IsEnabled = false;
+                    this.tbxDownloadUrl.HasError = false;
+                    this.tbxInstallLocation.HasError = !new AppDirectoryRule().Validate(this.tbxInstallLocation.Text, null).IsValid;
+                    this.tbxInstallLocation.ToolTip = this.tbxInstallLocation.HasError ? Properties.Resources.FilePathInvalid : null;
                     break;
 
                 default:
                     this.tbxArgs.IsEnabled = true;
                     this.tbxDownloadUrl.IsEnabled = true;
 
-                    // this.tbxDownloadUrl.HasError = !new DownloadUrlRule().Validate(this.tbxDownloadUrl.Text, null).IsValid;
-                    // this.tbxDownloadUrl.ToolTip = this.tbxDownloadUrl.HasError ? Properties.Resources.UrlNotValid : null;
+                    this.tbxDownloadUrl.HasError = !new DownloadUrlRule { IsRequired = true }.Validate(this.tbxDownloadUrl.Text, null).IsValid;
+                    this.tbxDownloadUrl.ToolTip = this.tbxDownloadUrl.HasError ? Properties.Resources.UrlNotValid : null;
+
+                    this.tbxInstallLocation.HasError = !new AppDirectoryRule().Validate(this.tbxInstallLocation.Text, null).IsValid;
+                    this.tbxInstallLocation.ToolTip = this.tbxInstallLocation.HasError ? Properties.Resources.FilePathInvalid : null;
                     break;
             }
 
@@ -418,7 +424,12 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             }
 
-            textBox.HasError = !new DownloadUrlRule().Validate(textBox.Text, null).IsValid;
+            if (!textBox.IsEnabled)
+            {
+                return;
+            }
+
+            textBox.HasError = !new DownloadUrlRule { IsRequired = true }.Validate(textBox.Text, null).IsValid;
             textBox.ToolTip = textBox.HasError ? Properties.Resources.UrlNotValid : null;
 
             if (!textBox.HasError && this.listBox.SelectedItem != null)
@@ -435,6 +446,11 @@ namespace SevenUpdate.Sdk.Pages
             var textBox = sender as InfoTextBox;
 
             if (textBox == null)
+            {
+                return;
+            }
+
+            if (!textBox.IsEnabled)
             {
                 return;
             }

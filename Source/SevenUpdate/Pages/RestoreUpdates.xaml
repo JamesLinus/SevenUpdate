@@ -1,5 +1,5 @@
 <!-- Copyright (c) Robert Baker, Seven Software -->
-<Page x:Class="SevenUpdate.Pages.RestoreUpdates" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" mc:Ignorable="d" MinWidth="850" MinHeight="500" ShowsNavigationUI="False" Loaded="GetHiddenUpdates">
+<Page x:Class="SevenUpdate.Pages.RestoreUpdates" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:SevenUpdate="clr-namespace:SevenUpdate;assembly=SevenUpdate.Base" mc:Ignorable="d" MinWidth="850" MinHeight="500" ShowsNavigationUI="False" Loaded="GetHiddenUpdates">
   <!-- Grid-->
   <Grid>
     <Grid.RowDefinitions>
@@ -15,7 +15,7 @@
       <TextBlock Style="{StaticResource glassText}" FontSize="16" Padding="2" Text="{LocText SevenUpdate:Resources:RestoreHiddenUpdates}" VerticalAlignment="Center" Margin="15,-2,0,0" Name="tbTitle" x:FieldModifier="private" />
     </StackPanel>
 
-    <ListView AlternationCount="2" SelectionMode="Single" Grid.Row="1" Name="lvHiddenUpdates" MinWidth="800" Thumb.DragDelta="RestrictColumn" Foreground="Black" BorderThickness="0" MouseDoubleClick="ShowDetailsDialog" ListViewSorter.CustomSorter="SevenUpdate.CustomComparer.SuhSorter,SevenUpdate" TabIndex="0" x:FieldModifier="private">
+    <ListView AlternationCount="2" SelectionMode="Single" Grid.Row="1" Name="lvHiddenUpdates" MinWidth="800" Thumb.DragDelta="RestrictColumn" Foreground="Black" BorderThickness="0" MouseDoubleClick="ShowDetailsDialog" ListViewSorter.CustomSorter="SevenUpdate.CustomComparer.SuhSorter,SevenUpdate" TabIndex="0" x:FieldModifier="private" d:DataContext="{d:DesignInstance Type=SevenUpdate:Suh}">
       <ListView.Resources>
         <ContextMenu x:Key="ItemContextMenu">
           <MenuItem Header="{LocText SevenUpdate:Resources:ViewDetails}" Click="ShowDetailsDialog" />

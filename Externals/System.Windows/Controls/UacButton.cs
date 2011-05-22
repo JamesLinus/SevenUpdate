@@ -228,8 +228,6 @@ namespace System.Windows.Controls
 
         /// <summary>Returns current "actual" <see cref="ToolTip" />.</summary>
         /// <returns>If both <see cref="ToolTipElevated" /> and <see cref="ToolTipNotElevated" /> are <see langword="null" />,<see cref="Button.ToolTip" /> is returned.Otherwise <see cref="ToolTipElevated" /> or <see cref="ToolTipNotElevated" /> is returned based on <see cref="IsShieldNeeded" />.</returns>
-        /// <remarks>
-        /// </remarks>
         private object GetToolTip()
         {
             if (this.ToolTipElevated == null && this.ToolTipNotElevated == null)

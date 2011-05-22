@@ -23,7 +23,7 @@ namespace System.Windows.Dialogs
         #region Constants and Fields
 
         /// <summary>The native dialog configuration.</summary>
-        private readonly TaskDialogNativeMethods.TaskDialogConfig nativeDialogConfig;
+        private readonly TaskDialogConfig nativeDialogConfig;
 
         /// <summary>The outer dialog.</summary>
         private readonly TaskDialog outerDialog;
@@ -32,7 +32,7 @@ namespace System.Windows.Dialogs
         private readonly NativeTaskDialogSettings settings;
 
         /// <summary>The strings for the dialog.</summary>
-        private readonly IntPtr[] updatedStrings = new IntPtr[Enum.GetNames(typeof(TaskDialogNativeMethods.TaskDialogElement)).Length];
+        private readonly IntPtr[] updatedStrings = new IntPtr[Enum.GetNames(typeof(TaskDialogElement)).Length];
 
         /// <summary>The collection of buttons.</summary>
         private IntPtr buttonArray;
@@ -150,31 +150,31 @@ namespace System.Windows.Dialogs
         {
             this.showState = DialogShowState.Closing;
 
-            var id = (int)TaskDialogNativeMethods.TaskDialogCommonButtonReturnId.Cancel;
+            var id = (int)TaskDialogCommonButtonReturnId.Cancel;
 
             switch (result)
             {
                 case TaskDialogResults.Close:
-                    id = (int)TaskDialogNativeMethods.TaskDialogCommonButtonReturnId.Close;
+                    id = (int)TaskDialogCommonButtonReturnId.Close;
                     break;
                 case TaskDialogResults.CustomButtonClicked:
                     id = 9; // custom buttons
                     break;
                 case TaskDialogResults.No:
-                    id = (int)TaskDialogNativeMethods.TaskDialogCommonButtonReturnId.No;
+                    id = (int)TaskDialogCommonButtonReturnId.No;
                     break;
                 case TaskDialogResults.Ok:
-                    id = (int)TaskDialogNativeMethods.TaskDialogCommonButtonReturnId.OK;
+                    id = (int)TaskDialogCommonButtonReturnId.OK;
                     break;
                 case TaskDialogResults.Retry:
-                    id = (int)TaskDialogNativeMethods.TaskDialogCommonButtonReturnId.Retry;
+                    id = (int)TaskDialogCommonButtonReturnId.Retry;
                     break;
                 case TaskDialogResults.Yes:
-                    id = (int)TaskDialogNativeMethods.TaskDialogCommonButtonReturnId.Yes;
+                    id = (int)TaskDialogCommonButtonReturnId.Yes;
                     break;
             }
 
-            this.SendMessageHelper(TaskDialogNativeMethods.TaskDialogMessage.ClickButton, id, 0);
+            this.SendMessageHelper(TaskDialogMessage.ClickButton, id, 0);
         }
 
         /// <summary>Shows the native dialog.</summary>
@@ -238,7 +238,7 @@ namespace System.Windows.Dialogs
         internal void UpdateButtonEnabled(int buttonId, bool enabled)
         {
             this.AssertCurrentlyShowing();
-            this.SendMessageHelper(TaskDialogNativeMethods.TaskDialogMessage.EnableButton, buttonId, enabled ? 1 : 0);
+            this.SendMessageHelper(TaskDialogMessage.EnableButton, buttonId, enabled ? 1 : 0);
         }
 
         /// <summary>Updates the check box checked.</summary>
@@ -246,7 +246,7 @@ namespace System.Windows.Dialogs
         internal void UpdateCheckBoxChecked(bool isChecked)
         {
             this.AssertCurrentlyShowing();
-            this.SendMessageHelper(TaskDialogNativeMethods.TaskDialogMessage.ClickVerification, isChecked ? 1 : 0, 1);
+            this.SendMessageHelper(TaskDialogMessage.ClickVerification, isChecked ? 1 : 0, 1);
         }
 
         /// <summary>Updates the elevation icon.</summary>
@@ -255,42 +255,42 @@ namespace System.Windows.Dialogs
         internal void UpdateElevationIcon(int buttonId, bool showIcon)
         {
             this.AssertCurrentlyShowing();
-            this.SendMessageHelper(TaskDialogNativeMethods.TaskDialogMessage.SetButtonElevationRequiredState, buttonId, Convert.ToInt32(showIcon));
+            this.SendMessageHelper(TaskDialogMessage.SetButtonElevationRequiredState, buttonId, Convert.ToInt32(showIcon));
         }
 
         /// <summary>Updates the expanded text.</summary>
         /// <param name="expandedText">The expanded text.</param>
         internal void UpdateExpandedText(string expandedText)
         {
-            this.UpdateTextCore(expandedText, TaskDialogNativeMethods.TaskDialogElement.ExpandedInformation);
+            this.UpdateTextCore(expandedText, TaskDialogElement.ExpandedInformation);
         }
 
         /// <summary>Updates the footer icon.</summary>
         /// <param name="footerIcon">The footer icon.</param>
         internal void UpdateFooterIcon(TaskDialogStandardIcon footerIcon)
         {
-            this.UpdateIconCore(footerIcon, TaskDialogNativeMethods.TaskDialogIconElement.IconFooter);
+            this.UpdateIconCore(footerIcon, TaskDialogIconElement.IconFooter);
         }
 
         /// <summary>Updates the footer text.</summary>
         /// <param name="footerText">The footer text.</param>
         internal void UpdateFooterText(string footerText)
         {
-            this.UpdateTextCore(footerText, TaskDialogNativeMethods.TaskDialogElement.Footer);
+            this.UpdateTextCore(footerText, TaskDialogElement.Footer);
         }
 
         /// <summary>Updates the instruction.</summary>
         /// <param name="instruction">The instruction.</param>
         internal void UpdateInstruction(string instruction)
         {
-            this.UpdateTextCore(instruction, TaskDialogNativeMethods.TaskDialogElement.MainInstruction);
+            this.UpdateTextCore(instruction, TaskDialogElement.MainInstruction);
         }
 
         /// <summary>Updates the main icon.</summary>
         /// <param name="mainIcon">The main icon.</param>
         internal void UpdateMainIcon(TaskDialogStandardIcon mainIcon)
         {
-            this.UpdateIconCore(mainIcon, TaskDialogNativeMethods.TaskDialogIconElement.IconMain);
+            this.UpdateIconCore(mainIcon, TaskDialogIconElement.IconMain);
         }
 
         /// <summary>Updates the progress bar range.</summary>
@@ -301,7 +301,7 @@ namespace System.Windows.Dialogs
             // Build range LPARAM - note it is in REVERSE intuitive order.
             var range = MakeLongParameter(this.settings.ProgressBarMaximum, this.settings.ProgressBarMinimum);
 
-            this.SendMessageHelper(TaskDialogNativeMethods.TaskDialogMessage.SetProgressBarRange, 0, range);
+            this.SendMessageHelper(TaskDialogMessage.SetProgressBarRange, 0, range);
         }
 
         /// <summary>Updates the state of the progress bar.</summary>
@@ -309,7 +309,7 @@ namespace System.Windows.Dialogs
         internal void UpdateProgressBarState(TaskDialogProgressBarState state)
         {
             this.AssertCurrentlyShowing();
-            this.SendMessageHelper(TaskDialogNativeMethods.TaskDialogMessage.SetProgressBarState, (int)state, 0);
+            this.SendMessageHelper(TaskDialogMessage.SetProgressBarState, (int)state, 0);
         }
 
         /// <summary>Updates the progress bar value.</summary>
@@ -317,7 +317,7 @@ namespace System.Windows.Dialogs
         internal void UpdateProgressBarValue(int i)
         {
             this.AssertCurrentlyShowing();
-            this.SendMessageHelper(TaskDialogNativeMethods.TaskDialogMessage.SetProgressBarPos, i, 0);
+            this.SendMessageHelper(TaskDialogMessage.SetProgressBarPos, i, 0);
         }
 
         /// <summary>Update the radio button when enabled has changed.</summary>
@@ -326,22 +326,22 @@ namespace System.Windows.Dialogs
         internal void UpdateRadioButtonEnabled(int buttonId, bool enabled)
         {
             this.AssertCurrentlyShowing();
-            this.SendMessageHelper(TaskDialogNativeMethods.TaskDialogMessage.EnableRadioButton, buttonId, enabled ? 1 : 0);
+            this.SendMessageHelper(TaskDialogMessage.EnableRadioButton, buttonId, enabled ? 1 : 0);
         }
 
         /// <summary>Updates the content text.</summary>
         /// <param name="text">The text to update.</param>
         internal void UpdateText(string text)
         {
-            this.UpdateTextCore(text, TaskDialogNativeMethods.TaskDialogElement.Content);
+            this.UpdateTextCore(text, TaskDialogElement.Content);
         }
 
         /// <summary>Allocates and marshals buttons.</summary>
         /// <param name="buttons">The collection of buttons.</param>
         /// <returns>The result.</returns>
-        private static IntPtr AllocateAndMarshalButtons(ICollection<TaskDialogNativeMethods.TaskDialogButtonData> buttons)
+        private static IntPtr AllocateAndMarshalButtons(ICollection<TaskDialogButtonData> buttons)
         {
-            var initialPtr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(TaskDialogNativeMethods.TaskDialogButtonData)) * buttons.Count);
+            var initialPtr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(TaskDialogButtonData)) * buttons.Count);
 
             var currentPtr = initialPtr;
             foreach (var button in buttons)
@@ -373,7 +373,6 @@ namespace System.Windows.Dialogs
         /// <param name="msg">The message code to process.</param>
         /// <param name="parameter">The button id.</param>
         /// <param name="parameterLength">The hyperlink id.</param>
-        /// <param name="data">The data to process.</param>
         /// <returns>The result for the dialog.</returns>
         private int DialogProc(IntPtr pointer, uint msg, IntPtr parameter, IntPtr parameterLength)
         {
@@ -382,23 +381,23 @@ namespace System.Windows.Dialogs
 
             // Big switch on the various notifications the 
             // dialog proc can get.
-            switch ((TaskDialogNativeMethods.TaskDialogNotification)msg)
+            switch ((TaskDialogNotification)msg)
             {
-                case TaskDialogNativeMethods.TaskDialogNotification.Created:
+                case TaskDialogNotification.Created:
                     var result = this.PerformDialogInitialization();
                     this.outerDialog.RaiseOpenedEvent();
                     return result;
-                case TaskDialogNativeMethods.TaskDialogNotification.ButtonClicked:
+                case TaskDialogNotification.ButtonClicked:
                     return this.HandleButtonClick((int)parameter);
-                case TaskDialogNativeMethods.TaskDialogNotification.RadioButtonClicked:
+                case TaskDialogNotification.RadioButtonClicked:
                     return this.HandleRadioButtonClick((int)parameter);
-                case TaskDialogNativeMethods.TaskDialogNotification.HyperlinkClicked:
+                case TaskDialogNotification.HyperlinkClicked:
                     return this.HandleHyperlinkClick(parameterLength);
-                case TaskDialogNativeMethods.TaskDialogNotification.Help:
+                case TaskDialogNotification.Help:
                     return this.HandleHelpInvocation();
-                case TaskDialogNativeMethods.TaskDialogNotification.Timer:
+                case TaskDialogNotification.Timer:
                     return this.HandleTick((int)parameter);
-                case TaskDialogNativeMethods.TaskDialogNotification.Destroyed:
+                case TaskDialogNotification.Destroyed:
                     return this.PerformDialogCleanup();
             }
 
@@ -475,7 +474,7 @@ namespace System.Windows.Dialogs
 
         /// <summary>Frees the old string.</summary>
         /// <param name="element">The element.</param>
-        private void FreeOldString(TaskDialogNativeMethods.TaskDialogElement element)
+        private void FreeOldString(TaskDialogElement element)
         {
             var elementIndex = (int)element;
             if (this.updatedStrings[elementIndex] == IntPtr.Zero)
@@ -539,7 +538,7 @@ namespace System.Windows.Dialogs
             // it (somewhat confusingly)issues a radio button clicked event
             // - we mask that out - though ONLY if
             // we do have a default radio button
-            if (this.firstRadioButtonClicked && !this.IsOptionSet(TaskDialogNativeMethods.TaskDialogFlags.NoDefaultRadioButton))
+            if (this.firstRadioButtonClicked && !this.IsOptionSet(TaskDialogFlags.NoDefaultRadioButton))
             {
                 this.firstRadioButtonClicked = false;
             }
@@ -565,9 +564,9 @@ namespace System.Windows.Dialogs
         /// <summary>Determines whether [is option set] [the specified flag].</summary>
         /// <param name="flag">The option flags.</param>
         /// <returns><see langword="true" /> if [is option set] [the specified flag]; otherwise, <see langword="false" />.</returns>
-        private bool IsOptionSet(TaskDialogNativeMethods.TaskDialogFlags flag)
+        private bool IsOptionSet(TaskDialogFlags flag)
         {
-            return (this.nativeDialogConfig.flags & flag) == flag;
+            return (this.nativeDialogConfig.Flags & flag) == flag;
         }
 
         // Allocates a new string on the unmanaged heap, 
@@ -577,7 +576,7 @@ namespace System.Windows.Dialogs
         /// <param name="s">The string to create.</param>
         /// <param name="element">The element.</param>
         /// <returns>The pointer for the new string.</returns>
-        private IntPtr MakeNewString(string s, TaskDialogNativeMethods.TaskDialogElement element)
+        private IntPtr MakeNewString(string s, TaskDialogElement element)
         {
             var newStringPtr = Marshal.StringToHGlobalUni(s);
             this.updatedStrings[(int)element] = newStringPtr;
@@ -630,7 +629,7 @@ namespace System.Windows.Dialogs
         private int PerformDialogInitialization()
         {
             // Initialize Progress or Marquee Bar.
-            if (this.IsOptionSet(TaskDialogNativeMethods.TaskDialogFlags.ShowProgressBar))
+            if (this.IsOptionSet(TaskDialogFlags.ShowProgressBar))
             {
                 this.UpdateProgressBarRange();
 
@@ -646,7 +645,7 @@ namespace System.Windows.Dialogs
                 // second SendMessage is required if the state is non-Normal.
                 this.UpdateProgressBarValue(this.settings.ProgressBarValue);
             }
-            else if (this.IsOptionSet(TaskDialogNativeMethods.TaskDialogFlags.ShowMarqueeProgressBar))
+            else if (this.IsOptionSet(TaskDialogFlags.ShowMarqueeProgressBar))
             {
                 // TDM_SET_PROGRESS_BAR_MARQUEE is necessary 
                 // to cause the marquee to start animating.
@@ -654,7 +653,7 @@ namespace System.Windows.Dialogs
                 // round-tripped when the marquee is
                 // is set to different states, so it never has to 
                 // be touched/sent again.
-                this.SendMessageHelper(TaskDialogNativeMethods.TaskDialogMessage.SetProgressBarMarquee, 1, 0);
+                this.SendMessageHelper(TaskDialogMessage.SetProgressBarMarquee, 1, 0);
                 this.UpdateProgressBarState(this.settings.ProgressBarState);
             }
 
@@ -674,7 +673,7 @@ namespace System.Windows.Dialogs
         /// <param name="parameter">The button id to send.</param>
         /// <param name="parameterLength">The hyperlink.</param>
         /// <returns>The result.</returns>
-        private int SendMessageHelper(TaskDialogNativeMethods.TaskDialogMessage msg, int parameter, long parameterLength)
+        private int SendMessageHelper(TaskDialogMessage msg, int parameter, long parameterLength)
         {
             // Be sure to at least assert here - 
             // messages to invalid handles often just disappear silently
@@ -686,21 +685,21 @@ namespace System.Windows.Dialogs
         /// <summary>Updates the icon.</summary>
         /// <param name="icon">The icon to display.</param>
         /// <param name="element">The element where the icon is displayed.</param>
-        private void UpdateIconCore(TaskDialogStandardIcon icon, TaskDialogNativeMethods.TaskDialogIconElement element)
+        private void UpdateIconCore(TaskDialogStandardIcon icon, TaskDialogIconElement element)
         {
             this.AssertCurrentlyShowing();
-            this.SendMessageHelper(TaskDialogNativeMethods.TaskDialogMessage.UpdateIcon, (int)element, (long)icon);
+            this.SendMessageHelper(TaskDialogMessage.UpdateIcon, (int)element, (long)icon);
         }
 
         /// <summary>Updates the text.</summary>
         /// <param name="text">The text to display.</param>
         /// <param name="element">The element where the text is displayed on.</param>
-        private void UpdateTextCore(string text, TaskDialogNativeMethods.TaskDialogElement element)
+        private void UpdateTextCore(string text, TaskDialogElement element)
         {
             this.AssertCurrentlyShowing();
 
             this.FreeOldString(element);
-            this.SendMessageHelper(TaskDialogNativeMethods.TaskDialogMessage.SetElementText, (int)element, (long)this.MakeNewString(text, element));
+            this.SendMessageHelper(TaskDialogMessage.SetElementText, (int)element, (long)this.MakeNewString(text, element));
         }
 
         #endregion

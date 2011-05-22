@@ -7,6 +7,8 @@
 
 namespace System.Windows.Dialogs
 {
+    using System.Windows.Properties;
+
     /// <summary>Provides a visual representation of the progress of a long running operation.</summary>
     public class TaskDialogProgressBar : TaskDialogBar
     {
@@ -66,7 +68,7 @@ namespace System.Windows.Dialogs
                 // Check if min / max differ
                 if (value < this.Minimum)
                 {
-                    throw new ArgumentException(Properties.Resources.MaximumValueGreater, "value");
+                    throw new ArgumentException(Resources.MaximumValueGreater, "value");
                 }
 
                 this.maximum = value;
@@ -89,13 +91,13 @@ namespace System.Windows.Dialogs
                 // Check for positive numbers
                 if (value < 0)
                 {
-                    throw new ArgumentException(Properties.Resources.MinimumValuePositive, "value");
+                    throw new ArgumentException(Resources.MinimumValuePositive, "value");
                 }
 
                 // Check if min / max differ
                 if (value >= this.Maximum)
                 {
-                    throw new ArgumentException(Properties.Resources.MinimumLessValue, "value");
+                    throw new ArgumentException(Resources.MinimumLessValue, "value");
                 }
 
                 this.minimum = value;
@@ -118,12 +120,12 @@ namespace System.Windows.Dialogs
                 // Check for positive numbers
                 if (value < this.Minimum)
                 {
-                    throw new ArgumentException(Properties.Resources.ValueGreater, "value");
+                    throw new ArgumentException(Resources.ValueGreater, "value");
                 }
 
                 if (value > this.Maximum)
                 {
-                    throw new ArgumentException(Properties.Resources.ValueLess, "value");
+                    throw new ArgumentException(Resources.ValueLess, "value");
                 }
 
                 this.value = value;
