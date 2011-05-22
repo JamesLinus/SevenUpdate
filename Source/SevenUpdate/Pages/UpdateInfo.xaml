@@ -45,7 +45,7 @@
                   <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem.Hidden}" Value="True">
                     <Setter Property="MenuItem.Header" Value="{x:Static Properties:Resources.ShowUpdate}" />
                   </DataTrigger>
-                  <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem.DownloadUrl}" Value="http://sevenupdate.com/apps/SevenUpdate">
+                  <DataTrigger Binding="{Binding RelativeSource={RelativeSource FindAncestor, AncestorType=ContextMenu}, Path=PlacementTarget.SelectedItem.DownloadUrl}" Value="http://apps.sevenupdate.com/SevenUpdate">
                     <Setter Property="MenuItem.IsEnabled" Value="False" />
                   </DataTrigger>
                   <DataTrigger Binding="{Binding IsAdmin}" Value="True">

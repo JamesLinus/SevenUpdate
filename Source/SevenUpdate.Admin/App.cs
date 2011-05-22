@@ -451,7 +451,7 @@ namespace SevenUpdate.Admin
 
             if (Applications.Count > 0)
             {
-                if (Applications[0].AppInfo.SuiUrl == @"http://sevenupdate.com/apps/SevenUpdate.sui" || Applications[0].AppInfo.SuiUrl == @"http://sevenupdate.com/apps/SevenUpdate-dev.sui")
+                if (Applications[0].AppInfo.SuiUrl == @"http://apps.sevenupdate.com/SevenUpdate.sui" || Applications[0].AppInfo.SuiUrl == @"http://apps.sevenupdate.com/SevenUpdate-dev.sui")
                 {
                     var sevenUpdate = Applications[0];
                     Applications.Clear();

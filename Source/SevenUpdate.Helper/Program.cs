@@ -93,7 +93,7 @@ namespace SevenUpdate.Helper
                         throw;
                     }
 
-                    NativeMethods.MoveFileEXW(Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "reboot.lock"), null, MoveOnReboot);
+                    NativeMethods.MoveFileExW(Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "reboot.lock"), null, MoveOnReboot);
                 }
 
                 var files = Directory.GetFiles(AppDir, "*.bak");
@@ -111,7 +111,7 @@ namespace SevenUpdate.Helper
                             throw;
                         }
 
-                        NativeMethods.MoveFileEXW(t, null, MoveOnReboot);
+                        NativeMethods.MoveFileExW(t, null, MoveOnReboot);
                     }
                 }
 

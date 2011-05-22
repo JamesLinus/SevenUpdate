@@ -43,8 +43,8 @@ namespace SevenUpdate
     {
         #region Constants and Fields
 
-        /// <summary>Location of the SUI for Seven Update.</summary>
-        private const string SevenUpdateSui = @"http://sevenupdate.com/apps/SevenUpdate";
+        /// <summary>Gets the main location where Seven Update files are stored.</summary>
+        internal const string SevenUpdateUrl = @"http://apps.sevenupdate.com/SevenUpdate";
 
         /// <summary>The main page for Seven Update.</summary>
         private static readonly Main MainPage = new Main();
@@ -151,7 +151,7 @@ namespace SevenUpdate
                 ls = new LocaleString { Value = "Seven Update", Lang = "en" };
                 name.Add(ls);
 
-                var app = new Sua(name, publisher) { AppUrl = @"http://sevenupdate.com/", Directory = Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, Platform.AnyCpu), HelpUrl = @"http://sevenupdate.com/support/", Platform = Platform.AnyCpu, IsEnabled = true, SuiUrl = SevenUpdateSui };
+                var app = new Sua(name, publisher) { AppUrl = @"http://sevenupdate.com/", Directory = @"HKLM\Software\Microsoft\Windows\CurrentVersion\App Paths\SevenUpdate.exe", ValueName = "Path", HelpUrl = @"http://sevenupdate.com/support/", Platform = Platform.AnyCpu, IsEnabled = true, SuiUrl = SevenUpdateUrl };
                 if (App.IsDev)
                 {
                     app.SuiUrl += @"-dev.sui";

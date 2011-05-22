@@ -202,7 +202,7 @@ namespace SevenUpdate
 
             try
             {
-                var channel = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Seven Software\Seven Update", "channel", null).ToString();
+                var channel = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Seven Update", "channel", null).ToString();
 
                 if (channel == "dev")
                 {

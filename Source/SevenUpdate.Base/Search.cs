@@ -146,7 +146,7 @@ namespace SevenUpdate
                         {
                             Utilities.ReportError(ex, ErrorType.SearchError);
 
-                            if (!(ex is FileNotFoundException || ex is FileFormatException || ex is ProtoException))
+                            if (!(ex is FileNotFoundException || ex is FileFormatException || ex is ProtoException || ex is NullReferenceException))
                             {
                                 throw;
                             }

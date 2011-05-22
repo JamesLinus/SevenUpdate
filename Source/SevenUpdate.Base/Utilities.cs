@@ -147,8 +147,8 @@ namespace SevenUpdate
                 stringBuilder = stringBuilder.Replace(Environment.GetEnvironmentVariable("COMMONPROGRAMFILES(x86)"), "%COMMONPROGRAMFILES(x86)%", true);
                 stringBuilder = stringBuilder.Replace(Environment.GetEnvironmentVariable("ProgramFiles"), "%PROGRAMFILES%", true);
                 stringBuilder = stringBuilder.Replace(Environment.GetEnvironmentVariable("COMMONPROGRAMFILES"), "%COMMONPROGRAMFILES%", true);
-                stringBuilder = stringBuilder.Replace(Path.GetTempPath(), "%TMP%", true);
-                stringBuilder = stringBuilder.Replace(Path.GetTempPath(), "%TEMP%", true);
+                stringBuilder = stringBuilder.Replace(Environment.GetEnvironmentVariable("TEMP"), "%TMP%", true);
+                stringBuilder = stringBuilder.Replace(Environment.GetEnvironmentVariable("TEMP"), "%TEMP%", true);
                 stringBuilder = stringBuilder.Replace(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "%APPDATA%", true);
                 stringBuilder = stringBuilder.Replace(Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), "%LOCALAPPDATA%", true);
                 stringBuilder = stringBuilder.Replace(Environment.GetFolderPath(Environment.SpecialFolder.Startup), "%STARTUP%", true);
@@ -201,8 +201,8 @@ namespace SevenUpdate
                     stringBuilder = stringBuilder.Replace("%PROGRAMFILES%", Environment.GetEnvironmentVariable("ProgramFiles"), true);
                 }
 
-                stringBuilder = stringBuilder.Replace("%TEMP%", Path.GetTempPath(), true);
-                stringBuilder = stringBuilder.Replace("%TMP%", Path.GetTempPath(), true);
+                stringBuilder = stringBuilder.Replace("%TEMP%", Environment.GetEnvironmentVariable("TEMP"), true);
+                stringBuilder = stringBuilder.Replace("%TMP%", Environment.GetEnvironmentVariable("TEMP"), true);
                 stringBuilder = stringBuilder.Replace("%APPDATA%", Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), true);
                 stringBuilder = stringBuilder.Replace("%LOCALAPPDATA%", Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData), true);
                 stringBuilder = stringBuilder.Replace("%STARTUP%", Environment.GetFolderPath(Environment.SpecialFolder.Startup), true);

@@ -32,6 +32,6 @@ namespace SevenUpdate.Helper
         /// <returns>If the function succeeds, the return value is nonzero. If the function fails, the return value is zero (0). To get extended error information, call GetLastError.</returns>
         [DllImport(@"kernel32.dll", CharSet = CharSet.Unicode)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool MoveFileEXW(string sourceFileName, string newFileName, int flags);
+        internal static extern bool MoveFileExW(string sourceFileName, string newFileName, int flags);
     }
 }

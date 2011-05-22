@@ -118,21 +118,21 @@ namespace SevenUpdate
 
                     currentUpdateName = Utilities.GetLocaleString(applications[x].Updates[y].Name);
 
-                    // TODO: Remove this code and test executing SevenUpdate.Helper as a FileAction in the Seven Update SUI file
-                    if (applications[x].AppInfo.Directory == Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, applications[x].AppInfo.Platform))
-                    {
-                        try
-                        {
-                            var process = Process.GetProcessesByName(@"SevenUpdate.Helper");
-                            if (process.Length > 0)
-                            {
-                                process[0].Kill();
-                            }
-                        }
-                        catch (UnauthorizedAccessException)
-                        {
-                        }
-                    }
+                    //// TODO: Remove this code and test executing SevenUpdate.Helper as a FileAction in the Seven Update SUI file
+                    //if (applications[x].AppInfo.Directory == Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Update", true, applications[x].AppInfo.Platform))
+                    //{
+                    //    try
+                    //    {
+                    //        var process = Process.GetProcessesByName(@"SevenUpdate.Helper");
+                    //        if (process.Length > 0)
+                    //        {
+                    //            process[0].Kill();
+                    //        }
+                    //    }
+                    //    catch (UnauthorizedAccessException)
+                    //    {
+                    //    }
+                    //}
 
                     ReportProgress(5);
 
@@ -159,10 +159,10 @@ namespace SevenUpdate
                         AddHistory(applications[x], applications[x].Updates[y]);
                     }
 
-                    if (applications[x].AppInfo.Directory == Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Software\Seven Update", true, Platform.AnyCpu))
-                    {
-                        selfUpdate = true;
-                    }
+                    //if (applications[x].AppInfo.Directory == Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Update", true, Platform.AnyCpu))
+                    //{
+                    //    selfUpdate = true;
+                    //}
 
                     ReportProgress(100);
 
@@ -207,10 +207,10 @@ namespace SevenUpdate
                 }
             }
 
-            if (selfUpdate)
-            {
-                Utilities.StartProcess(Path.Combine(Utilities.AppDir, @"SevenUpdate.Helper.exe"), "-cleanup");
-            }
+            //if (selfUpdate)
+            //{
+            //    Utilities.StartProcess(Path.Combine(Utilities.AppDir, @"SevenUpdate.Helper.exe"), "-cleanup");
+            //}
 
             IsInstalling = false;
             if (InstallCompleted != null)

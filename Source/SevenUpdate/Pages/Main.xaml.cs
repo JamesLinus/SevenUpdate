@@ -577,24 +577,23 @@ namespace SevenUpdate.Pages
                     e.OptionalCount += e.RecommendedCount;
                 }
 
-                var sevenUpdateSui = @"http://sevenupdate.com/apps/SevenUpdate";
-
+                string suiUrl = null;
                 if (App.IsDev)
                 {
-                    sevenUpdateSui += @"-dev.sui";
+                    suiUrl = Core.SevenUpdateUrl + @"-dev.sui";
                 }
 
                 if (App.IsBeta)
                 {
-                    sevenUpdateSui += @"-beta.sui";
+                    suiUrl = Core.SevenUpdateUrl + @"-beta.sui";
                 }
 
                 if (!App.IsDev && !App.IsBeta)
                 {
-                    sevenUpdateSui += @".sui";
+                    suiUrl = Core.SevenUpdateUrl + @".sui";
                 }
 
-                if (Core.Applications[0].AppInfo.SuiUrl == sevenUpdateSui)
+                if (Core.Applications[0].AppInfo.SuiUrl == suiUrl)
                 {
                     var sevenUpdate = Core.Applications[0];
                     Core.Applications.Clear();
