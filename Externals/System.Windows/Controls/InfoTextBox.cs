@@ -30,7 +30,10 @@ namespace System.Windows.Controls
         #region Constants and Fields
 
         /// <summary>Indicates if the <see cref="InfoTextBox" /> has an error.</summary>
-        private static readonly DependencyProperty HasErrorProperty = DependencyProperty.Register("HasError", typeof(bool), typeof(InfoTextBox), new PropertyMetadata(false, HasErrorPropertyChanged));
+        private static readonly DependencyProperty HasErrorProperty = DependencyProperty.Register("HasError", typeof(bool), typeof(InfoTextBox), new PropertyMetadata(false));
+
+        /// <summary>Indicates if the <see cref="InfoTextBox" /> has a warning.</summary>
+        private static readonly DependencyProperty HasWarningProperty = DependencyProperty.Register("HasWarning", typeof(bool), typeof(InfoTextBox), new PropertyMetadata(false));
 
         /// <summary>Indicates if the <see cref="InfoTextBox" /> has text.</summary>
         private static readonly DependencyProperty HasTextProperty = DependencyProperty.Register("HasText", typeof(bool), typeof(InfoTextBox), new PropertyMetadata(false));
@@ -78,6 +81,20 @@ namespace System.Windows.Controls
             set
             {
                 this.SetValue(HasErrorProperty, value);
+            }
+        }
+
+        /// <summary>Gets or sets a value indicating whether the input has a validation warning.</summary>
+        public bool HasWarning
+        {
+            get
+            {
+                return (bool)this.GetValue(HasWarningProperty);
+            }
+
+            set
+            {
+                this.SetValue(HasWarningProperty, value);
             }
         }
 
@@ -191,13 +208,6 @@ namespace System.Windows.Controls
             }
 
             base.OnTextChanged(e);
-        }
-
-        /// <summary>Updates the style when the HasError property changes.</summary>
-        /// <param name="d">The dependency object.</param>
-        /// <param name="e">The <see cref="System.Windows.DependencyPropertyChangedEventArgs" /> instance containing the event data.</param>
-        private static void HasErrorPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
-        {
         }
 
         /// <summary>Determines whether the <see cref="InfoTextBox" /> is Visible.</summary>
