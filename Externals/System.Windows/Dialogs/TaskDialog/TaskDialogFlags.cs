@@ -4,6 +4,7 @@
 // </copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
 // ***********************************************************************
+
 namespace System.Windows.Dialogs
 {
     /// <summary>Specifies the behavior of the task dialog.</summary>

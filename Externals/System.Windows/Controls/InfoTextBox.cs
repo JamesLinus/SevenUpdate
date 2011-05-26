@@ -32,11 +32,11 @@ namespace System.Windows.Controls
         /// <summary>Indicates if the <see cref="InfoTextBox" /> has an error.</summary>
         private static readonly DependencyProperty HasErrorProperty = DependencyProperty.Register("HasError", typeof(bool), typeof(InfoTextBox), new PropertyMetadata(false));
 
-        /// <summary>Indicates if the <see cref="InfoTextBox" /> has a warning.</summary>
-        private static readonly DependencyProperty HasWarningProperty = DependencyProperty.Register("HasWarning", typeof(bool), typeof(InfoTextBox), new PropertyMetadata(false));
-
         /// <summary>Indicates if the <see cref="InfoTextBox" /> has text.</summary>
         private static readonly DependencyProperty HasTextProperty = DependencyProperty.Register("HasText", typeof(bool), typeof(InfoTextBox), new PropertyMetadata(false));
+
+        /// <summary>Indicates if the <see cref="InfoTextBox" /> has a warning.</summary>
+        private static readonly DependencyProperty HasWarningProperty = DependencyProperty.Register("HasWarning", typeof(bool), typeof(InfoTextBox), new PropertyMetadata(false));
 
         /// <summary>The text to display when there is no text in the <see cref="InfoTextBox" />.</summary>
         private static readonly DependencyProperty NoteProperty = DependencyProperty.Register("Note", typeof(string), typeof(InfoTextBox), new UIPropertyMetadata(string.Empty, NotePropertyChanged));

@@ -4,6 +4,7 @@
 // </copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
 // ***********************************************************************
+
 namespace System.Windows.Dialogs
 {
     /// <summary>Specifies the push buttons displayed in the task dialog. If no common buttons are specified and no custom buttons are specified using the Buttons and Buttons members, the task dialog will contain the OK button by default.</summary>
