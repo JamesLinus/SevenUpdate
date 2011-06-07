@@ -5,15 +5,12 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//    Seven Update is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//    Seven Update is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
+//    License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any
+//    later version. Seven Update is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+//    even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//    You should have received a copy of the GNU General Public License
+//    GNU General Public License for more details. You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
@@ -214,13 +211,13 @@ namespace System.Windows.Controls
         #region Methods
 
         /// <summary>
-        ///   Handles a change to the <see cref="ButtonText" /> property.
+        ///   Handles a change to the <c>ButtonText</c> property.
         /// </summary>
         /// <param name="obj">
         ///   The dependency object.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.DependencyPropertyChangedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.DependencyPropertyChangedEventArgs</c> instance containing the event data.
         /// </param>
         private static void OnButtonTextChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
@@ -240,13 +237,13 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        ///   Handles a change to the <see cref="IsShieldNeeded" /> property.
+        ///   Handles a change to the <c>IsShieldNeeded</c> property.
         /// </summary>
         /// <param name="obj">
         ///   The dependency object.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.DependencyPropertyChangedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.DependencyPropertyChangedEventArgs</c> instance containing the event data.
         /// </param>
         /// <remarks>
         ///   Adds or removes the UACShieldAdorner as appropriate
@@ -267,13 +264,13 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        ///   Handles a change to the <see cref="ShieldIcon" /> property.
+        ///   Handles a change to the <c>ShieldIcon</c> property.
         /// </summary>
         /// <param name="obj">
         ///   The dependency object.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.DependencyPropertyChangedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.DependencyPropertyChangedEventArgs</c> instance containing the event data.
         /// </param>
         private static void OnShieldIconChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
@@ -296,7 +293,7 @@ namespace System.Windows.Controls
         ///   The object that raised the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.DependencyPropertyChangedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.DependencyPropertyChangedEventArgs</c> instance containing the event data.
         /// </param>
         private void ChangeUacIcon(object sender, DependencyPropertyChangedEventArgs e)
         {
@@ -316,11 +313,11 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        ///   Returns current "actual" <see cref="ToolTip" />.
+        ///   Returns current "actual" <c>ToolTip</c>.
         /// </summary>
         /// <returns>
-        ///   If both <see cref="ToolTipElevated" /> and <see cref="ToolTipNotElevated" /> are <c>null</c>,<see
-        ///   cref="Button.ToolTip" /> is returned.Otherwise <see cref="ToolTipElevated" /> or <see cref="ToolTipNotElevated" /> is returned based on <see
+        ///   If both <c>ToolTipElevated</c> and <c>ToolTipNotElevated</c> are <c>null</c>,<c>Button.ToolTip</c>
+        ///   is returned.Otherwise <c>ToolTipElevated</c> or <c>ToolTipNotElevated</c> is returned based on <see
         ///    cref="IsShieldNeeded" />.
         /// </returns>
         private object GetToolTip()
@@ -340,7 +337,7 @@ namespace System.Windows.Controls
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.
         /// </param>
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
@@ -348,7 +345,7 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        ///   When a property has changed, call the <see cref="OnPropertyChanged" /> Event.
+        ///   When a property has changed, call the <c>OnPropertyChanged</c> Event.
         /// </summary>
         /// <param name="name">
         ///   The property name that has changed.

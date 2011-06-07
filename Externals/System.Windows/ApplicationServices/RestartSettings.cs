@@ -15,20 +15,22 @@ namespace System.Windows.ApplicationServices
     ///   Specifies the options for an application to be automatically restarted by Windows Error Reporting.
     /// </summary>
     /// <remarks>
-    ///   Regardless of these settings, the application will not be restarted if it executed for less than 60 seconds before terminating.
+    ///   Regardless of these settings, the application will not be restarted if it executed for less than 60 seconds
+    ///   before terminating.
     /// </remarks>
     public class RestartSettings
     {
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="RestartSettings" /> class.
+        ///   Initializes a new instance of the <c>RestartSettings</c> class.
         /// </summary>
         /// <param name="commandLine">
         ///   The command line arguments used to restart the application.
         /// </param>
         /// <param name="restrict">
-        ///   A bitwise combination of the <see cref="RestartRestrictions" />values that specify when the application should not be restarted.
+        ///   A bitwise combination of the <c>RestartRestrictions</c>values that specify when the application should not
+        ///   be restarted.
         /// </param>
         public RestartSettings(string commandLine, RestartRestrictions restrict)
         {
@@ -60,7 +62,8 @@ namespace System.Windows.ApplicationServices
         ///   Returns a string representation of the current state of this object.
         /// </summary>
         /// <returns>
-        ///   A <see cref="System.String" /> that displays the command line arguments and restrictions for restarting the application.
+        ///   A <c>System.String</c> that displays the command line arguments and restrictions for restarting
+        ///   the application.
         /// </returns>
         [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider",
             MessageId = "System.string.Format(System.String,System.Object,System.Object)",

@@ -31,7 +31,7 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="TaskDialogCommandLink" /> class.
+        ///   Initializes a new instance of the <c>TaskDialogCommandLink</c> class.
         /// </summary>
         /// <param name="name">
         ///   The name for this button.
@@ -44,7 +44,7 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="TaskDialogCommandLink" /> class.
+        ///   Initializes a new instance of the <c>TaskDialogCommandLink</c> class.
         /// </summary>
         /// <param name="name">
         ///   The name for this button.
@@ -88,7 +88,7 @@ namespace System.Windows.Dialogs
         ///   Returns a string representation of this object.
         /// </summary>
         /// <returns>
-        ///   A <see cref="System.String" /> .
+        ///   A <c>System.String</c> .
         /// </returns>
         public override string ToString()
         {

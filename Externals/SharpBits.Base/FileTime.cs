@@ -12,8 +12,7 @@ namespace SharpBits.Base
     using System.Runtime.InteropServices;
 
     /// <summary>
-    ///   This structure is a 64-bit value representing the number of 100-nanosecond intervals since January 1,
-    ///   1601.
+    ///   This structure is a 64-bit value representing the number of 100-nanosecond intervals since January 1, 1601.
     /// </summary>
     [StructLayout(LayoutKind.Sequential, Pack = 4, Size = 0)]
     internal struct FileTime

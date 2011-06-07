@@ -8,8 +8,8 @@
 namespace System.Windows.Dialogs
 {
     /// <summary>
-    ///   Indicates that the implementing class is a dialog that can host customizable dialog controls (subclasses of <see
-    ///    cref="DialogControl" />).
+    ///   Indicates that the implementing class is a dialog that can host customizable dialog controls (subclasses of
+    ///   <c>DialogControl</c>).
     /// </summary>
     public interface IDialogControlHost
     {
@@ -32,8 +32,9 @@ namespace System.Windows.Dialogs
         void ApplyControlPropertyChange(string propertyName, DialogControl control);
 
         /// <summary>
-        ///   Handle notifications of pseudo-controls being added or removed from the collection.PreFilter should throw if a control cannot be added/removed in the dialog's current state.
-        ///   PostProcess should pass on changes to native control, if appropriate.
+        ///   Handle notifications of pseudo-controls being added or removed from the collection.PreFilter should throw
+        ///   if a control cannot be added/removed in the dialog's current state. PostProcess should pass on changes to
+        ///   native control, if appropriate.
         /// </summary>
         /// <returns>
         ///   <c>True</c> if collection change is allowed.
@@ -41,14 +42,15 @@ namespace System.Windows.Dialogs
         bool IsCollectionChangeAllowed();
 
         /// <summary>
-        ///   Handle notifications of individual child pseudo-controls' properties changing. Pre filter should throw if the property cannot be set in the dialog's current state.
-        ///   PostProcess should pass on changes to native control, if appropriate.
+        ///   Handle notifications of individual child pseudo-controls' properties changing. Pre filter should throw if
+        ///   the property cannot be set in the dialog's current state. PostProcess should pass on changes to native
+        ///   control, if appropriate.
         /// </summary>
         /// <param name="propertyName">
         ///   The name of the property.
         /// </param>
         /// <param name="control">
-        ///   The control <paramref name = "propertyName" /> applies to.
+        ///   The control <paramref name="propertyName" /> applies to.
         /// </param>
         /// <returns>
         ///   <c>True</c> if the property change is allowed.

@@ -5,15 +5,12 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//    Seven Update is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//    Seven Update is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
+//    License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any
+//    later version. Seven Update is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+//    even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//    You should have received a copy of the GNU General Public License
+//    GNU General Public License for more details. You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
@@ -36,7 +33,7 @@ namespace SevenUpdate.Sdk.Windows
     ///   Interaction logic for MainWindow.xaml.
     /// </summary>
     [ContentProperty]
-    [TemplatePart(Name = "PART_NavWinCP", Type = typeof(ContentPresenter))]
+    [TemplatePart(Name="PART_NavWinCP", Type = typeof(ContentPresenter))]
     public sealed partial class MainWindow
     {
         #region Constructors and Destructors
@@ -73,7 +70,7 @@ namespace SevenUpdate.Sdk.Windows
         ///   Enables Aero Glass on the Window.
         /// </summary>
         /// <param name="e">
-        ///   The <see cref="EventArgs" /> instance containing the event data.
+        ///   The <c>EventArgs</c> instance containing the event data.
         /// </param>
         protected override void OnSourceInitialized(EventArgs e)
         {
@@ -89,7 +86,7 @@ namespace SevenUpdate.Sdk.Windows
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="CompositionChangedEventArgs" /> instance containing the event data.
+        ///   The <c>CompositionChangedEventArgs</c> instance containing the event data.
         /// </param>
         private void ChangeWindowChrome(object sender, CompositionChangedEventArgs e)
         {
@@ -110,7 +107,7 @@ namespace SevenUpdate.Sdk.Windows
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.Input.MouseButtonEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.
         /// </param>
         private void EnableDragOnGlass(object sender, MouseButtonEventArgs e)
         {
@@ -127,7 +124,7 @@ namespace SevenUpdate.Sdk.Windows
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.
         /// </param>
         private void LoadWindowSize(object sender, RoutedEventArgs e)
         {
@@ -142,7 +139,7 @@ namespace SevenUpdate.Sdk.Windows
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.ComponentModel.CancelEventArgs" /> instance containing the event data.
+        ///   The <c>System.ComponentModel.CancelEventArgs</c> instance containing the event data.
         /// </param>
         private void SaveWindowSize(object sender, CancelEventArgs e)
         {

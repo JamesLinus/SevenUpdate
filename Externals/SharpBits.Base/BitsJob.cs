@@ -76,7 +76,7 @@ namespace SharpBits.Base
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="BitsJob" /> class.
+        ///   Initializes a new instance of the <c>BitsJob</c> class.
         /// </summary>
         /// <param name="manager">
         ///   The manager for the BITS.
@@ -92,8 +92,8 @@ namespace SharpBits.Base
             this.job3 = this.Job as IBackgroundCopyJob3;
             this.job4 = this.Job as IBackgroundCopyJob4;
 
-            // store existing notification handler and route message to this as well
-            // otherwise it may break system download jobs
+            // store existing notification handler and route message to this as well otherwise it may break system
+            // download jobs
             if (this.NotificationInterface != null)
             {
                 this.NotificationTarget = this.NotificationInterface; // pointer to the existing one;
@@ -684,7 +684,7 @@ namespace SharpBits.Base
         }
 
         /// <summary>
-        ///   Adds the files the current <see cref="BitsJob" />.
+        ///   Adds the files the current <c>BitsJob</c>.
         /// </summary>
         /// <param name="files">
         ///   The files.
@@ -706,7 +706,7 @@ namespace SharpBits.Base
         }
 
         /// <summary>
-        ///   Cancels the <see cref="BitsJob" />.
+        ///   Cancels the <c>BitsJob</c>.
         /// </summary>
         public void Cancel()
         {
@@ -721,7 +721,7 @@ namespace SharpBits.Base
         }
 
         /// <summary>
-        ///   Completes and removes the <see cref="BitsJob" /> from the collection.
+        ///   Completes and removes the <c>BitsJob</c> from the collection.
         /// </summary>
         public void Complete()
         {
@@ -736,7 +736,7 @@ namespace SharpBits.Base
         }
 
         /// <summary>
-        ///   Enumerate the <see cref="BitsFile" /> collection.
+        ///   Enumerate the <c>BitsFile</c> collection.
         /// </summary>
         public void EnumerateFiles()
         {
@@ -755,7 +755,7 @@ namespace SharpBits.Base
         }
 
         /// <summary>
-        ///   Resumes the <see cref="BitsJob" />.
+        ///   Resumes the <c>BitsJob</c>.
         /// </summary>
         public void Resume()
         {
@@ -770,7 +770,7 @@ namespace SharpBits.Base
         }
 
         /// <summary>
-        ///   Suspends the <see cref="BitsJob" />.
+        ///   Suspends the <c>BitsJob</c>.
         /// </summary>
         public void Suspend()
         {
@@ -846,7 +846,7 @@ namespace SharpBits.Base
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="SharpBits.Base.ErrorNotificationEventArgs" /> instance containing the event data.
+        ///   The <c>SharpBits.Base.ErrorNotificationEventArgs</c> instance containing the event data.
         /// </param>
         internal void JobError(object sender, ErrorNotificationEventArgs e)
         {
@@ -899,7 +899,8 @@ namespace SharpBits.Base
         ///   Releases unmanaged and - optionally - managed resources.
         /// </summary>
         /// <param name="disposing">
-        ///   <c>True</c> to release both managed and unmanaged resources; otherwise, <c>False</c> to release only unmanaged resources.
+        ///   <c>True</c> to release both managed and unmanaged resources; otherwise, <c>False</c> to release only
+        ///   unmanaged resources.
         /// </param>
         private void Dispose(bool disposing)
         {

@@ -9,7 +9,7 @@ namespace System.Windows.Dialogs
     using Runtime.InteropServices;
 
     /// <summary>
-    ///   Contains the data for a <see cref="TaskDialogIcon" />.
+    ///   Contains the data for a <c>TaskDialogIcon</c>.
     /// </summary>
     [StructLayout(LayoutKind.Explicit, CharSet = CharSet.Auto)]
     internal struct TaskDialogConfigIconUnion
@@ -33,7 +33,7 @@ namespace System.Windows.Dialogs
         private readonly IntPtr Spacer;
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="TaskDialogConfigIconUnion" /> struct.
+        ///   Initializes a new instance of the <c>TaskDialogConfigIconUnion</c> struct.
         /// </summary>
         /// <param name="i">
         ///   The icon identifier.

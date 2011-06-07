@@ -44,7 +44,7 @@ namespace SharpBits.Base
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="BitsNotification" /> class.
+        ///   Initializes a new instance of the <c>BitsNotification</c> class.
         /// </summary>
         /// <param name="manager">
         ///   The manager.
@@ -116,10 +116,14 @@ namespace SharpBits.Base
         ///   Called when an error occurs.
         /// </summary>
         /// <param name="copyJob">
-        ///   Contains job-related information, such as the number of bytes and files transferred before the error occurred. It also contains the methods to resume and cancel the job. Do not release pJob; BITS releases the interface when the JobError method returns.
+        ///   Contains job-related information, such as the number of bytes and files transferred before the error
+        ///   occurred. It also contains the methods to resume and cancel the job. Do not release pJob; BITS releases
+        ///   the interface when the JobError method returns.
         /// </param>
         /// <param name="error">
-        ///   Contains error information, such as the file being processed at the time the fatal error occurred and a description of the error. Do not release pError; BITS releases the interface when the JobError method returns.
+        ///   Contains error information, such as the file being processed at the time the fatal error occurred and a
+        ///   description of the error. Do not release pError; BITS releases the interface when the JobError method
+        ///   returns.
         /// </param>
         public void JobError(IBackgroundCopyJob copyJob, IBackgroundCopyError error)
         {
@@ -176,7 +180,8 @@ namespace SharpBits.Base
         ///   Called when a job is modified.
         /// </summary>
         /// <param name="copyJob">
-        ///   Contains the methods for accessing property, progress, and state information of the job. Do not release pJob; BITS releases the interface when the JobModification method returns.
+        ///   Contains the methods for accessing property, progress, and state information of the job. Do not release
+        ///   pJob; BITS releases the interface when the JobModification method returns.
         /// </param>
         /// <param name="reserved">
         ///   Reserved for future use.
@@ -236,7 +241,8 @@ namespace SharpBits.Base
         ///   Called when all of the files in the job have successfully transferred.
         /// </summary>
         /// <param name="copyJob">
-        ///   Contains job-related information, such as the time the job completed, the number of bytes transferred, and the number of files transferred. Do not release pJob; BITS releases the interface when the method returns.
+        ///   Contains job-related information, such as the time the job completed, the number of bytes transferred, and
+        ///   the number of files transferred. Do not release pJob; BITS releases the interface when the method returns.
         /// </param>
         public void JobTransferred(IBackgroundCopyJob copyJob)
         {

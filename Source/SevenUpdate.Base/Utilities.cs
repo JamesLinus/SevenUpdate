@@ -5,15 +5,12 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//    Seven Update is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//    Seven Update is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
+//    License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any
+//    later version. Seven Update is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+//    even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//    You should have received a copy of the GNU General Public License
+//    GNU General Public License for more details. You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
@@ -330,7 +327,7 @@ namespace SevenUpdate
         /// <returns>
         ///   Returns the object.
         /// </returns>
-        /// <typeparam name = "T">
+        /// <typeparam name="T">
         ///   The class to serialize.
         /// </typeparam>
         public static T Deserialize<T>(string fileName) where T : class
@@ -363,7 +360,7 @@ namespace SevenUpdate
         /// <returns>
         ///   Returns the object.
         /// </returns>
-        /// <typeparam name = "T">
+        /// <typeparam name="T">
         ///   The class to deserialize.
         /// </typeparam>
         public static T Deserialize<T>(Stream stream) where T : class
@@ -394,7 +391,7 @@ namespace SevenUpdate
         ///   A Uri pointing to the location of the file to download.
         /// </param>
         /// <returns>
-        ///   The downloaded file <see cref="Stream" />.
+        ///   The downloaded file <c>Stream</c>.
         /// </returns>
         public static Stream DownloadFile(string url)
         {
@@ -439,7 +436,8 @@ namespace SevenUpdate
         ///   A value that indicates what cpu architecture the application supports.
         /// </param>
         /// <param name="valueName">
-        ///   A string that contains a value name of the registry key that contains the directory location, this parameter is optional and can be <c>null</c>.
+        ///   A string that contains a value name of the registry key that contains the directory location, this
+        ///   parameter is optional and can be <c>null</c>.
         /// </param>
         /// <returns>
         ///   A string of the path expanded.
@@ -523,7 +521,7 @@ namespace SevenUpdate
         ///   Gets the preferred localized string from a collection of localized strings.
         /// </summary>
         /// <param name="localeStrings">
-        ///   A collection of <see cref="LocaleString" />'s.
+        ///   A collection of <c>LocaleString</c>'s.
         /// </param>
         /// <returns>
         ///   A localized string.
@@ -764,7 +762,7 @@ namespace SevenUpdate
         /// <param name="fileName">
         ///   The location of a file that will be serialized.
         /// </param>
-        /// <typeparam name = "T">
+        /// <typeparam name="T">
         ///   The class to serialize.
         /// </typeparam>
         public static void Serialize<T>(T item, string fileName) where T : class
@@ -877,7 +875,7 @@ namespace SevenUpdate
         /// <returns>
         ///   Returns the object.
         /// </returns>
-        /// <typeparam name = "T">
+        /// <typeparam name="T">
         ///   The class to deserialize.
         /// </typeparam>
         private static T DeserializeFile<T>(string fileName) where T : class
@@ -900,7 +898,7 @@ namespace SevenUpdate
         /// <returns>
         ///   Returns the object.
         /// </returns>
-        /// <typeparam name = "T">
+        /// <typeparam name="T">
         ///   The class to deserialize.
         /// </typeparam>
         private static T DeserializeStream<T>(Stream stream) where T : class
@@ -913,7 +911,7 @@ namespace SevenUpdate
         ///   Replaces a string within a string.
         /// </summary>
         /// <param name="sb">
-        ///   The <see cref="StringBuilder" /> object.
+        ///   The <c>StringBuilder</c> object.
         /// </param>
         /// <param name="find">
         ///   A string to find in the complete string.
@@ -925,7 +923,7 @@ namespace SevenUpdate
         ///   If set to <c>True</c> case is ignored.
         /// </param>
         /// <returns>
-        ///   The <see cref="StringBuilder" /> with replacements.
+        ///   The <c>StringBuilder</c> with replacements.
         /// </returns>
         private static StringBuilder Replace(this StringBuilder sb, string find, string replaceValue, bool ignoreCase)
         {
@@ -985,7 +983,7 @@ namespace SevenUpdate
         /// <param name="fileName">
         ///   The location of a file that will be serialized.
         /// </param>
-        /// <typeparam name = "T">
+        /// <typeparam name="T">
         ///   The class to serialize.
         /// </typeparam>
         private static void SerializeFile<T>(T item, string fileName) where T : class

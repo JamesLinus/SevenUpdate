@@ -42,7 +42,7 @@ namespace WPFLocalizeExtension.Extensions
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="LocTextExtension" /> class.
+        ///   Initializes a new instance of the <c>LocTextExtension</c> class.
         /// </summary>
         /// <param name="key">
         ///   The resource identifier.
@@ -65,7 +65,7 @@ namespace WPFLocalizeExtension.Extensions
         #region Enums
 
         /// <summary>
-        ///   This enumeration is used to determine the type of the return value of <see cref="GetAppendText" />.
+        ///   This enumeration is used to determine the type of the return value of <c>GetAppendText</c>.
         /// </summary>
         private enum TextAppendType
         {
@@ -85,8 +85,8 @@ namespace WPFLocalizeExtension.Extensions
         #region Properties
 
         /// <summary>
-        ///   Gets or sets the format segment 1.This will be used to replace format place holders from the localized text.<see
-        ///   cref="LocTextLowerExtension" /> and <c>LocTextUpperExtension</c> will format this segment.
+        ///   Gets or sets the format segment 1.This will be used to replace format place holders from the localized
+        ///   text.<c>LocTextLowerExtension</c> and <c>LocTextUpperExtension</c> will format this segment.
         /// </summary>
         /// <value>The format segment 1.</value>
         public string FormatSegment1
@@ -104,8 +104,8 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>
-        ///   Gets or sets the format segment 2.This will be used to replace format place holders from the localized text.<see
-        ///   cref="LocTextUpperExtension" /> and <c>LocTextLowerExtension</c> will format this segment.
+        ///   Gets or sets the format segment 2.This will be used to replace format place holders from the localized
+        ///   text.<c>LocTextUpperExtension</c> and <c>LocTextLowerExtension</c> will format this segment.
         /// </summary>
         /// <value>The format segment 2.</value>
         public string FormatSegment2
@@ -123,8 +123,8 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>
-        ///   Gets or sets the format segment 3.This will be used to replace format place holders from the localized text.<see
-        ///   cref="LocTextUpperExtension" /> and <c>LocTextLowerExtension</c> will format this segment.
+        ///   Gets or sets the format segment 3.This will be used to replace format place holders from the localized
+        ///   text.<c>LocTextUpperExtension</c> and <c>LocTextLowerExtension</c> will format this segment.
         /// </summary>
         /// <value>The format segment 3.</value>
         public string FormatSegment3
@@ -142,8 +142,8 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>
-        ///   Gets or sets the format segment 4.This will be used to replace format place holders from the localized text.<see
-        ///   cref="LocTextUpperExtension" /> and <c>LocTextLowerExtension</c> will format this segment.
+        ///   Gets or sets the format segment 4.This will be used to replace format place holders from the localized
+        ///   text.<c>LocTextUpperExtension</c> and <c>LocTextLowerExtension</c> will format this segment.
         /// </summary>
         /// <value>The format segment 4.</value>
         public string FormatSegment4
@@ -161,8 +161,8 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>
-        ///   Gets or sets the format segment 5.This will be used to replace format place holders from the localized text.<see
-        ///   cref="LocTextUpperExtension" /> and <c>LocTextLowerExtension</c> will format this segment.
+        ///   Gets or sets the format segment 5.This will be used to replace format place holders from the localized
+        ///   text.<c>LocTextUpperExtension</c> and <c>LocTextLowerExtension</c> will format this segment.
         /// </summary>
         /// <value>The format segment 5.</value>
         public string FormatSegment5
@@ -222,10 +222,10 @@ namespace WPFLocalizeExtension.Extensions
         #region Public Methods
 
         /// <summary>
-        ///   Provides the Value for the first Binding as <see cref="System.String" />.
+        ///   Provides the Value for the first Binding as <c>System.String</c>.
         /// </summary>
         /// <param name="serviceProvider">
-        ///   The <see cref="System.Windows.Markup.IProvideValueTarget" /> provided from the <see cref="MarkupExtension" />.
+        ///   The <c>System.Windows.Markup.IProvideValueTarget</c> provided from the <c>MarkupExtension</c>.
         /// </param>
         /// <returns>
         ///   The found item from the .resx directory or <c>null</c> if not found.
@@ -319,7 +319,8 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>
-        ///   This method formats the localized text.If the passed target text is <c>null</c>, string.empty will be returned.
+        ///   This method formats the localized text.If the passed target text is <c>null</c>, string.empty will be
+        ///   returned.
         /// </summary>
         /// <param name="target">
         ///   The text to format.
@@ -333,7 +334,8 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>
-        ///   This method gets the new value for the target property and call <see cref="BaseLocalizeExtension{TValue}.SetNewValue" />.
+        ///   This method gets the new value for the target property and call <see
+        ///   cref="BaseLocalizeExtension{TValue}.SetNewValue" />.
         /// </summary>
         protected override void HandleNewValue()
         {
@@ -341,10 +343,11 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>
-        ///   Returns the prefix or suffix text, depending on the supplied <see cref="TextAppendType" />.If the prefix or suffix is <c>null</c>, it will be returned a string.empty.
+        ///   Returns the prefix or suffix text, depending on the supplied <c>TextAppendType</c>.If the prefix or suffix
+        ///   is <c>null</c>, it will be returned a string.empty.
         /// </summary>
         /// <param name="at">
-        ///   The <see cref="TextAppendType" /> defines the format of the return value.
+        ///   The <c>TextAppendType</c> defines the format of the return value.
         /// </param>
         /// <returns>
         ///   Returns the formated prefix or suffix.
@@ -354,8 +357,8 @@ namespace WPFLocalizeExtension.Extensions
             // define a return value
             var retVal = string.Empty;
 
-            // check if it should be a prefix, the format will be [PREFIX],
-            // or check if it should be a suffix, the format will be [SUFFIX]
+            // check if it should be a prefix, the format will be [PREFIX], or check if it should be a suffix, the
+            // format will be [SUFFIX]
             if (at == TextAppendType.Prefix && !string.IsNullOrEmpty(this.prefix))
             {
                 retVal = this.prefix;
@@ -370,16 +373,16 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>
-        ///   Initializes the <see cref="LocTextExtension" /> extension.
+        ///   Initializes the <c>LocTextExtension</c> extension.
         /// </summary>
         private void InitializeLocText()
         {
             this.formatSegments = new string[5];
             this.formatSegments.Initialize();
 
-            // removed this call, because of the fact, 
-            // if the LocTextExtension is defined with "LocTextExtension Key=abc" and not with "LocTextExtension abc".
-            // the value will be set at call ProvideValue, AFTER the Key Property is set.
+            // removed this call, because of the fact, if the LocTextExtension is defined with "LocTextExtension
+            // Key=abc" and not with "LocTextExtension abc". the value will be set at call ProvideValue, AFTER the Key
+            // Property is set.
 
             ////SetNewValue(FormatOutput(null));
         }

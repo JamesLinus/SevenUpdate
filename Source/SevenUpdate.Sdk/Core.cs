@@ -5,15 +5,12 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//    Seven Update is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//    Seven Update is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
+//    License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any
+//    later version. Seven Update is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+//    even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//    You should have received a copy of the GNU General Public License
+//    GNU General Public License for more details. You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
@@ -383,7 +380,8 @@ namespace SevenUpdate.Sdk
         ///   Opens a OpenFileDialog.
         /// </summary>
         /// <param name="initialDirectory">
-        ///   Gets or sets the initial directory displayed when the dialog is shown. A <c>null</c> or empty string indicates that the dialog is using the default directory.
+        ///   Gets or sets the initial directory displayed when the dialog is shown. A <c>null</c> or empty string
+        ///   indicates that the dialog is using the default directory.
         /// </param>
         /// <param name="initialFileName">
         ///   Gets or sets the initial filename displayed when the dialog is shown.
@@ -392,10 +390,12 @@ namespace SevenUpdate.Sdk
         ///   Gets or sets a value that determines whether the user can select more than one file.
         /// </param>
         /// <param name="defaultExtension">
-        ///   Gets or sets the default file extension to be added to the file names. If the value is <c>null</c> or empty, the extension is not added to the file names.
+        ///   Gets or sets the default file extension to be added to the file names. If the value is <c>null</c> or
+        ///   empty, the extension is not added to the file names.
         /// </param>
         /// <param name="navigateToShortcut">
-        ///   Gets or sets a value that controls whether shortcuts should be treated as their target items, allowing an application to open a .lnk file.
+        ///   Gets or sets a value that controls whether shortcuts should be treated as their target items, allowing an
+        ///   application to open a .lnk file.
         /// </param>
         /// <returns>
         ///   A collection of the selected files.
@@ -451,13 +451,15 @@ namespace SevenUpdate.Sdk
         ///   Opens a SaveFileDialog.
         /// </summary>
         /// <param name="initialDirectory">
-        ///   Gets or sets the initial directory displayed when the dialog is shown. A <c>null</c> or empty string indicates that the dialog is using the default directory.
+        ///   Gets or sets the initial directory displayed when the dialog is shown. A <c>null</c> or empty string
+        ///   indicates that the dialog is using the default directory.
         /// </param>
         /// <param name="defaultFileName">
         ///   Sets the default file name.
         /// </param>
         /// <param name="defaultExtension">
-        ///   Gets or sets the default file extension to be added to the file names. If the value is <c>null</c> or empty, the extension is not added to the file names.
+        ///   Gets or sets the default file extension to be added to the file names. If the value is <c>null</c> or
+        ///   empty, the extension is not added to the file names.
         /// </param>
         /// <returns>
         ///   Gets the selected filename.
@@ -635,13 +637,13 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>
-        ///   Shows either a <see cref="TaskDialog" /> or a <see cref="System.Windows.MessageBox" /> if running legacy windows.
+        ///   Shows either a <c>TaskDialog</c> or a <c>System.Windows.MessageBox</c> if running legacy windows.
         /// </summary>
         /// <param name="instructionText">
-        ///   The main text to display (Blue 14pt for <see cref="TaskDialog" />).
+        ///   The main text to display (Blue 14pt for <c>TaskDialog</c>).
         /// </param>
         /// <param name="icon">
-        ///   The <see cref="TaskDialogStandardIcon" /> to display.
+        ///   The <c>TaskDialogStandardIcon</c> to display.
         /// </param>
         /// <param name="description">
         ///   A description of the message, supplements the instruction text.
@@ -704,10 +706,10 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>
-        ///   Shows either a <see cref="TaskDialog" /> or a <see cref="System.Windows.MessageBox" /> if running legacy windows.
+        ///   Shows either a <c>TaskDialog</c> or a <c>System.Windows.MessageBox</c> if running legacy windows.
         /// </summary>
         /// <param name="instructionText">
-        ///   The main text to display (Blue 14pt for <see cref="TaskDialog" />).
+        ///   The main text to display (Blue 14pt for <c>TaskDialog</c>).
         /// </param>
         /// <param name="icon">
         ///   The icon to use.

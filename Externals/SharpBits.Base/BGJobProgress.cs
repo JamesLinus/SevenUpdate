@@ -12,8 +12,8 @@ namespace SharpBits.Base
     using System.Runtime.InteropServices;
 
     /// <summary>
-    ///   The BG_JOB_PROGRESS structure provides job-related progress information, such as the number of bytes and
-    ///   files transferred.
+    ///   The BG_JOB_PROGRESS structure provides job-related progress information, such as the number of bytes and files
+    ///   transferred.
     /// </summary>
     [StructLayout(LayoutKind.Sequential, Pack = 8, Size = 0)]
     internal struct BGJobProgress

@@ -10,8 +10,8 @@
 namespace SharpBits.Base
 {
     /// <summary>
-    ///   The AuthenticationTarget enumeration defines the constant values that specify whether the credentials are
-    ///   used for proxy or server user authentication requests.
+    ///   The AuthenticationTarget enumeration defines the constant values that specify whether the credentials are used
+    ///   for proxy or server user authentication requests.
     /// </summary>
     public enum AuthenticationTarget
     {

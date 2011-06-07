@@ -5,15 +5,12 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//    Seven Update is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//    Seven Update is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
+//    License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any
+//    later version. Seven Update is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+//    even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//    You should have received a copy of the GNU General Public License
+//    GNU General Public License for more details. You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
@@ -77,7 +74,7 @@ namespace SevenUpdate
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="Sua" /> class.
+        ///   Initializes a new instance of the <c>Sua</c> class.
         /// </summary>
         /// <param name="name">
         ///   The collection of localized update names.
@@ -114,7 +111,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="Sua" /> class.
+        ///   Initializes a new instance of the <c>Sua</c> class.
         /// </summary>
         /// <param name="name">
         ///   The collection of localized update names.
@@ -246,7 +243,8 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        ///   Gets or sets a value indicating whether the SUA is enabled with Seven Update (SDK does not use this value).
+        ///   Gets or sets a value indicating whether the SUA is enabled with Seven Update (SDK does not use this
+        ///   value).
         /// </summary>
         /// <value><c>True</c> if this instance is enabled; otherwise, <c>False</c>.</value>
         [ProtoMember(5)]
@@ -381,7 +379,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        ///   When a property has changed, call the <see cref="OnPropertyChanged" /> Event.
+        ///   When a property has changed, call the <c>OnPropertyChanged</c> Event.
         /// </summary>
         /// <param name="propertyName">
         ///   The name of the property.

@@ -9,7 +9,7 @@ namespace System.Windows.Dialogs
     using Runtime.InteropServices;
 
     /// <summary>
-    ///   Contains the data for a <see cref="TaskDialogButton" />.
+    ///   Contains the data for a <c>TaskDialogButton</c>.
     /// </summary>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 4)]
     internal struct TaskDialogButtonData
@@ -26,7 +26,7 @@ namespace System.Windows.Dialogs
         private readonly string ButtonText;
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="TaskDialogButtonData" /> struct.
+        ///   Initializes a new instance of the <c>TaskDialogButtonData</c> struct.
         /// </summary>
         /// <param name="buttonId">
         ///   The button ID.

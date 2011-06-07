@@ -10,8 +10,8 @@
 namespace SharpBits.Base
 {
     /// <summary>
-    ///   The BG_JOB_PROXY_USAGE enumeration type defines constant values that you use to specify which proxy to
-    ///   use for file transfers.
+    ///   The BG_JOB_PROXY_USAGE enumeration type defines constant values that you use to specify which proxy to use for
+    ///   file transfers.
     /// </summary>
     internal enum BGJobProxyUsage
     {

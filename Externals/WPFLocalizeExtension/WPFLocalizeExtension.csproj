@@ -110,6 +110,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Engine\WeakCultureChangedEventManager.cs" />
+    <Compile Include="Engine\WeakOddsFormatChangedEventManager.cs" />
     <Compile Include="Extensions\BaseLocalizeExtension.cs" />
     <Compile Include="Engine\Localize.cs" />
     <Compile Include="Engine\LocalizedObjectOperation.cs" />

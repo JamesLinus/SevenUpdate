@@ -15,7 +15,7 @@ namespace System.Windows.Dialogs
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="HyperlinkClickedEventArgs" /> class.
+        ///   Initializes a new instance of the <c>HyperlinkClickedEventArgs</c> class.
         /// </summary>
         /// <param name="link">
         ///   The text of the hyperlink that was clicked.

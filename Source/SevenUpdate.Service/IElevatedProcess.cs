@@ -5,15 +5,12 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//    Seven Update is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//    Seven Update is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
+//    License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any
+//    later version. Seven Update is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+//    even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//    You should have received a copy of the GNU General Public License
+//    GNU General Public License for more details. You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
@@ -70,7 +67,7 @@ namespace SevenUpdate.Service
         void HideUpdate(Suh hiddenUpdate);
 
         /// <summary>
-        ///   Hides a collection of <see cref="Suh" /> to hide.
+        ///   Hides a collection of <c>Suh</c> to hide.
         /// </summary>
         /// <param name="hiddenUpdates">
         ///   The collection of updates to hide.
@@ -80,7 +77,7 @@ namespace SevenUpdate.Service
         void HideUpdates(Collection<Suh> hiddenUpdates);
 
         /// <summary>
-        ///   Gets a collection of <see cref="Sui" />.
+        ///   Gets a collection of <c>Sui</c>.
         /// </summary>
         /// <param name="applicationUpdates">
         ///   The collection of applications and updates to install.
@@ -100,7 +97,8 @@ namespace SevenUpdate.Service
         void ShowUpdate(Suh hiddenUpdate);
 
         /// <summary>
-        ///   Requests shutdown of the admin process. App will only shutdown if it's not installing updates. To shutdown when updates are being installed, execute the admin process with the 'Abort' argument.
+        ///   Requests shutdown of the admin process. App will only shutdown if it's not installing updates. To shutdown
+        ///   when updates are being installed, execute the admin process with the 'Abort' argument.
         /// </summary>
         [OperationContract(IsOneWay = false)]
         [ProtoBehavior]

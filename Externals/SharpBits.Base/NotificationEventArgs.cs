@@ -17,7 +17,7 @@ namespace SharpBits.Base
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="NotificationEventArgs" /> class.
+        ///   Initializes a new instance of the <c>NotificationEventArgs</c> class.
         /// </summary>
         /// <param name="job">
         ///   The job the event occurred for.

@@ -5,15 +5,12 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//    Seven Update is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//    Seven Update is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
+//    License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any
+//    later version. Seven Update is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+//    even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//    You should have received a copy of the GNU General Public License
+//    GNU General Public License for more details. You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
@@ -97,13 +94,13 @@ namespace SevenUpdate.Sdk.Pages
         #region Methods
 
         /// <summary>
-        ///   Opens a <see cref="OpenFileDialog" /> to browse for the application install location.
+        ///   Opens a <c>OpenFileDialog</c> to browse for the application install location.
         /// </summary>
         /// <param name="sender">
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.Input.MouseButtonEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.
         /// </param>
         private void BrowseForAppLocation(object sender, MouseButtonEventArgs e)
         {
@@ -169,7 +166,7 @@ namespace SevenUpdate.Sdk.Pages
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.
         /// </param>
         private void ChangeToFileSystemLocation(object sender, RoutedEventArgs e)
         {
@@ -190,7 +187,7 @@ namespace SevenUpdate.Sdk.Pages
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.
         /// </param>
         private void ChangeToRegistryLocation(object sender, RoutedEventArgs e)
         {
@@ -211,7 +208,7 @@ namespace SevenUpdate.Sdk.Pages
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.Input.KeyboardFocusChangedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.Input.KeyboardFocusChangedEventArgs</c> instance containing the event data.
         /// </param>
         private void ConvertPath(object sender, KeyboardFocusChangedEventArgs e)
         {
@@ -246,7 +243,7 @@ namespace SevenUpdate.Sdk.Pages
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.
         /// </param>
         private void LoadAppInfo(object sender, RoutedEventArgs e)
         {
@@ -326,13 +323,13 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>
-        ///   Loads the <see cref="LocaleString" />'s for the <see cref="Sua" /> into the UI.
+        ///   Loads the <c>LocaleString</c>'s for the <c>Sua</c> into the UI.
         /// </summary>
         /// <param name="sender">
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.Controls.SelectionChangedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.Controls.SelectionChangedEventArgs</c> instance containing the event data.
         /// </param>
         private void LoadLocaleStrings(object sender, SelectionChangedEventArgs e)
         {
@@ -393,7 +390,7 @@ namespace SevenUpdate.Sdk.Pages
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.
         /// </param>
         private void MoveOn(object sender, RoutedEventArgs e)
         {
@@ -414,7 +411,7 @@ namespace SevenUpdate.Sdk.Pages
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.
         /// </param>
         private void SaveSua(object sender, RoutedEventArgs e)
         {
@@ -498,7 +495,7 @@ namespace SevenUpdate.Sdk.Pages
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="CompositionChangedEventArgs" /> instance containing the event data.
+        ///   The <c>CompositionChangedEventArgs</c> instance containing the event data.
         /// </param>
         private void UpdateUI(object sender, CompositionChangedEventArgs e)
         {

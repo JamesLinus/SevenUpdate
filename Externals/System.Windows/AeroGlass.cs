@@ -8,8 +8,8 @@
 //    Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
 //    License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any
 //    later version. Seven Update is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//    even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. 
-//    See the GNU General Public License for more details. You should have received a copy of the GNU General Public License
+//    even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
+//    License for more details. You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
@@ -281,7 +281,8 @@ namespace System.Windows
         ///   Additional message information. The contents of this parameter depend on the value of the msg parameter.
         /// </param>
         /// <param name="parameter2">
-        ///   Another additional message information. The contents of this parameter depend on the value of the msg parameter.
+        ///   Another additional message information. The contents of this parameter depend on the value of the msg
+        ///   parameter.
         /// </param>
         /// <param name="handled">
         ///   If set to <c>True</c> the event was handled.

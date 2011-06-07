@@ -12,20 +12,24 @@ namespace System.Windows.ApplicationServices
     using Runtime.InteropServices;
 
     /// <summary>
-    ///   Provides access to the Application Restart and Recovery features available in Windows Vista or higher. Application Restart and Recovery lets an application do some recovery work to save data before the process exits.
+    ///   Provides access to the Application Restart and Recovery features available in Windows Vista or higher.
+    ///   Application Restart and Recovery lets an application do some recovery work to save data before the process
+    ///   exits.
     /// </summary>
     public static class ApplicationRestartRecoveryManager
     {
         #region Public Methods
 
         /// <summary>
-        ///   Called by an application's <see cref="RecoveryCallback" /> method to indicate that the recovery work is complete.
+        ///   Called by an application's <c>RecoveryCallback</c> method to indicate that the recovery work is complete.
         /// </summary>
         /// <remarks>
-        ///   This should be the last call made by the <see cref="RecoveryCallback" /> method becauseWindows Error Reporting will terminate the application after this method is invoked.
+        ///   This should be the last call made by the <c>RecoveryCallback</c> method becauseWindows Error Reporting
+        ///   will terminate the application after this method is invoked.
         /// </remarks>
         /// <param name="success">
-        ///   <c>True</c> to indicate the the program was able to complete its recovery work before terminating; otherwise <c>False</c>.
+        ///   <c>True</c> to indicate the the program was able to complete its recovery work before terminating;
+        ///   otherwise <c>False</c>.
         /// </param>
         public static void ApplicationRecoveryFinished(bool success)
         {
@@ -39,10 +43,11 @@ namespace System.Windows.ApplicationServices
         }
 
         /// <summary>
-        ///   Called by an application's <see cref="RecoveryCallback" /> method to indicate that it is still performing recovery work.
+        ///   Called by an application's <c>RecoveryCallback</c> method to indicate that it is still performing recovery
+        ///   work.
         /// </summary>
         /// <returns>
-        ///   A <see cref="System.Boolean" /> value indicating whether the user canceled the recovery.
+        ///   A <c>System.Boolean</c> value indicating whether the user canceled the recovery.
         /// </returns>
         public static bool ApplicationRecoveryInProgress()
         {
@@ -68,7 +73,8 @@ namespace System.Windows.ApplicationServices
         ///   Registers an application for recovery by Application Restart and Recovery.
         /// </summary>
         /// <param name="settings">
-        ///   An object that specifies the callback method, an optional parameter to pass to the callback method and a time interval.
+        ///   An object that specifies the callback method, an optional parameter to pass to the callback method and a
+        ///   time interval.
         /// </param>
         /// <remarks>
         ///   The time interval is the period of time within which the recovery callback method calls the <see
@@ -100,10 +106,12 @@ namespace System.Windows.ApplicationServices
         }
 
         /// <summary>
-        ///   Registers an application for automatic restart if the application is terminated by Windows Error Reporting.
+        ///   Registers an application for automatic restart if the application is terminated by Windows Error
+        ///   Reporting.
         /// </summary>
         /// <param name="settings">
-        ///   An object that specifies the command line arguments used to restart the application, and the conditions under which the application should not be restarted.
+        ///   An object that specifies the command line arguments used to restart the application, and the conditions
+        ///   under which the application should not be restarted.
         /// </param>
         /// <remarks>
         ///   A registered application will not be restarted if it executed for less than 60 seconds before terminating.

@@ -33,8 +33,8 @@ namespace SharpBits.Base
         BGNotifyDisable = 0x0004,
 
         /// <summary>
-        ///   The job has been modified. For example, a property value changed, the state of the job changed, or progress is made transferring the files.
-        ///   This flag is ignored if command line notification is specified.
+        ///   The job has been modified. For example, a property value changed, the state of the job changed, or
+        ///   progress is made transferring the files. This flag is ignored if command line notification is specified.
         /// </summary>
         BGNotifyJobModification = 0x0008,
     }

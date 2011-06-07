@@ -5,15 +5,12 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//    Seven Update is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//    Seven Update is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
+//    License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any
+//    later version. Seven Update is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+//    even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//    You should have received a copy of the GNU General Public License
+//    GNU General Public License for more details. You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
@@ -72,13 +69,13 @@ namespace SevenUpdate.Sdk.Pages
         #region Methods
 
         /// <summary>
-        ///   Deletes the selected <see cref="RegistryItem" /> from the <see cref="ListBox" />.
+        ///   Deletes the selected <c>RegistryItem</c> from the <c>ListBox</c>.
         /// </summary>
         /// <param name="sender">
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.Input.KeyEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.Input.KeyEventArgs</c> instance containing the event data.
         /// </param>
         private void DeleteRegistryItem(object sender, KeyEventArgs e)
         {
@@ -123,7 +120,7 @@ namespace SevenUpdate.Sdk.Pages
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.
         /// </param>
         private void ImportRegistryFile(object sender, RoutedEventArgs e)
         {
@@ -150,7 +147,7 @@ namespace SevenUpdate.Sdk.Pages
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.
         /// </param>
         private void LoadUI(object sender, RoutedEventArgs e)
         {
@@ -167,7 +164,7 @@ namespace SevenUpdate.Sdk.Pages
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.
         /// </param>
         private void MoveOn(object sender, RoutedEventArgs e)
         {
@@ -188,7 +185,7 @@ namespace SevenUpdate.Sdk.Pages
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.
         /// </param>
         private void NavigateToMainPage(object sender, RoutedEventArgs e)
         {
@@ -196,13 +193,13 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>
-        ///   Adds a new <see cref="RegistryItem" />.
+        ///   Adds a new <c>RegistryItem</c>.
         /// </summary>
         /// <param name="sender">
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.
         /// </param>
         private void NewRegistryItem(object sender, RoutedEventArgs e)
         {
@@ -217,13 +214,13 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>
-        ///   Removes all <see cref="RegistryItem" />'s from the collection.
+        ///   Removes all <c>RegistryItem</c>'s from the collection.
         /// </summary>
         /// <param name="sender">
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.
         /// </param>
         private void RemoveAll(object sender, RoutedEventArgs e)
         {
@@ -231,13 +228,13 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>
-        ///   Removes a <see cref="RegistryItem" /> from a collection.
+        ///   Removes a <c>RegistryItem</c> from a collection.
         /// </summary>
         /// <param name="sender">
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.
         /// </param>
         private void RemoveSelected(object sender, RoutedEventArgs e)
         {
@@ -251,7 +248,7 @@ namespace SevenUpdate.Sdk.Pages
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="CompositionChangedEventArgs" /> instance containing the event data.
+        ///   The <c>CompositionChangedEventArgs</c> instance containing the event data.
         /// </param>
         private void UpdateUI(object sender, CompositionChangedEventArgs e)
         {
@@ -270,13 +267,13 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>
-        ///   Restricts the input to the characters needed for <see cref="RegistryValueKind" />.
+        ///   Restricts the input to the characters needed for <c>RegistryValueKind</c>.
         /// </summary>
         /// <param name="sender">
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.Input.KeyEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.Input.KeyEventArgs</c> instance containing the event data.
         /// </param>
         private void ValidateData(object sender, KeyEventArgs e)
         {
@@ -328,7 +325,7 @@ namespace SevenUpdate.Sdk.Pages
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="TextChangedEventArgs" /> instance containing the event data.
+        ///   The <c>TextChangedEventArgs</c> instance containing the event data.
         /// </param>
         private void ValidateRegistryPath(object sender, TextChangedEventArgs e)
         {

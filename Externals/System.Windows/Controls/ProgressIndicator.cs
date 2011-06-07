@@ -6,15 +6,12 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//    Seven Update is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//    Seven Update is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
+//    License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any
+//    later version. Seven Update is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+//    even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//    You should have received a copy of the GNU General Public License
+//    GNU General Public License for more details. You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
@@ -248,13 +245,13 @@ namespace System.Windows.Controls
         #region Methods
 
         /// <summary>
-        ///   Stops or starts the progress indicator based on the <see cref="IsRunning" /> property.
+        ///   Stops or starts the progress indicator based on the <c>IsRunning</c> property.
         /// </summary>
         /// <param name="d">
         ///   The dependency object.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.DependencyPropertyChangedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.DependencyPropertyChangedEventArgs</c> instance containing the event data.
         /// </param>
         private static void IsRunningPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -277,7 +274,7 @@ namespace System.Windows.Controls
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.EventArgs" /> instance containing the event data.
+        ///   The <c>System.EventArgs</c> instance containing the event data.
         /// </param>
         private void Animate(object sender, EventArgs e)
         {
@@ -314,7 +311,7 @@ namespace System.Windows.Controls
         private void StartStoryboard(FrameworkElement element)
         {
             NameScope.SetNameScope(this, new NameScope());
-            element.Name = "Element";
+            element.Name="Element";
 
             NameScope.SetNameScope(element, NameScope.GetNameScope(this));
             NameScope.GetNameScope(this).RegisterName(element.Name, element);

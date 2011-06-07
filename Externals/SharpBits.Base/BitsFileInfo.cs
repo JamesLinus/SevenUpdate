@@ -10,14 +10,14 @@
 namespace SharpBits.Base
 {
     /// <summary>
-    ///   The file info for the <see cref="BitsFile" />.
+    ///   The file info for the <c>BitsFile</c>.
     /// </summary>
     public class BitsFileInfo
     {
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="BitsFileInfo" /> class.
+        ///   Initializes a new instance of the <c>BitsFileInfo</c> class.
         /// </summary>
         /// <param name="remoteName">
         ///   Name of the remote.

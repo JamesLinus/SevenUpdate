@@ -6,15 +6,12 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//    Seven Update is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//    Seven Update is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
+//    License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any
+//    later version. Seven Update is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+//    even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//    You should have received a copy of the GNU General Public License
+//    GNU General Public License for more details. You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
@@ -36,7 +33,7 @@ namespace System.Windows.Controls
     using Primitives;
 
     /// <summary>
-    ///   Sorts a <see cref="ListView" />.
+    ///   Sorts a <c>ListView</c>.
     /// </summary>
     public static class ListViewSorter
     {
@@ -115,13 +112,13 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        ///   Sets the <see cref="GridViewColumn" /> sorter.
+        ///   Sets the <c>GridViewColumn</c> sorter.
         /// </summary>
         /// <param name="obj">
-        ///   The <see cref="DependencyObject" /> to set the sorter to.
+        ///   The <c>DependencyObject</c> to set the sorter to.
         /// </param>
         /// <param name="comparerName">
-        ///   The <see cref="IComparer" /> to set as the sorter.
+        ///   The <c>IComparer</c> to set as the sorter.
         /// </param>
         public static void SetCustomSorter(DependencyObject obj, string comparerName)
         {
@@ -400,7 +397,7 @@ namespace System.Windows.Controls
         ///   The dependency object.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.DependencyPropertyChangedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.DependencyPropertyChangedEventArgs</c> instance containing the event data.
         /// </param>
         private static void AutoSortCallback(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
@@ -435,7 +432,7 @@ namespace System.Windows.Controls
         ///   The dependency object.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.DependencyPropertyChangedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.DependencyPropertyChangedEventArgs</c> instance containing the event data.
         /// </param>
         private static void CustomSorterCallback(DependencyObject o, DependencyPropertyChangedEventArgs e)
         {
@@ -469,14 +466,14 @@ namespace System.Windows.Controls
         /// <summary>
         ///   Gets the ancestor.
         /// </summary>
-        /// <typeparameter name = "T">The Ancestor class</typeparameter>
+        /// <typeparameter name="T">The Ancestor class</typeparameter>
         /// <param name="reference">
         ///   The reference.
         /// </param>
         /// <returns>
         ///   Returns the ancestor class.
         /// </returns>
-        /// <typeparam name = "T">
+        /// <typeparam name="T">
         ///   The ancestor class.
         /// </typeparam>
         private static T GetAncestor<T>(DependencyObject reference) where T : DependencyObject
@@ -505,13 +502,13 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        ///   Gets the <see cref="GridViewColumn" /> sorter.
+        ///   Gets the <c>GridViewColumn</c> sorter.
         /// </summary>
         /// <param name="obj">
-        ///   The <see cref="DependencyObject" /> to get the sorter from.
+        ///   The <c>DependencyObject</c> to get the sorter from.
         /// </param>
         /// <returns>
-        ///   An <see cref="IComparer" /> for CustomSorter.
+        ///   An <c>IComparer</c> for CustomSorter.
         /// </returns>
         private static string GetCustomSorter(DependencyObject obj)
         {
@@ -539,7 +536,7 @@ namespace System.Windows.Controls
         ///   The dependency object.
         /// </param>
         /// <returns>
-        ///   The <see cref="ImageSource" /> for the sort glyph.
+        ///   The <c>ImageSource</c> for the sort glyph.
         /// </returns>
         private static ImageSource GetSortGlyphAscending(DependencyObject obj)
         {
@@ -553,7 +550,7 @@ namespace System.Windows.Controls
         ///   The dependency object.
         /// </param>
         /// <returns>
-        ///   The <see cref="ImageSource" /> for the sort glyph.
+        ///   The <c>ImageSource</c> for the sort glyph.
         /// </returns>
         private static ImageSource GetSortGlyphDescending(DependencyObject obj)
         {
@@ -596,13 +593,13 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        ///   Handles the Click event of the <see cref="GridViewColumnHeader" /> control.
+        ///   Handles the Click event of the <c>GridViewColumnHeader</c> control.
         /// </summary>
         /// <param name="sender">
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.
         /// </param>
         private static void SortColumn(object sender, RoutedEventArgs e)
         {
@@ -676,7 +673,7 @@ namespace System.Windows.Controls
             #region Constructors and Destructors
 
             /// <summary>
-            ///   Initializes a new instance of the <see cref="SortGlyphAdorner" /> class.
+            ///   Initializes a new instance of the <c>SortGlyphAdorner</c> class.
             /// </summary>
             /// <param name="columnHeader">
             ///   The column header.
@@ -695,7 +692,9 @@ namespace System.Windows.Controls
             #region Methods
 
             /// <summary>
-            ///   When overridden in a derived class, participates in rendering operations that are directed by the layout system. The rendering instructions for this element are not used directly when this method is invoked, and are instead preserved for later asynchronous use by layout and drawing.
+            ///   When overridden in a derived class, participates in rendering operations that are directed by the
+            ///   layout system. The rendering instructions for this element are not used directly when this method is
+            ///   invoked, and are instead preserved for later asynchronous use by layout and drawing.
             /// </summary>
             /// <param name="drawingContext">
             ///   The drawing instructions for a specific element. This context is provided to the layout system.

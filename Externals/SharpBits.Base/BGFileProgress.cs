@@ -29,7 +29,8 @@ namespace SharpBits.Base
         public readonly ulong BytesTransferred;
 
         /// <summary>
-        ///   For downloads, the value is <c>True</c> if the file is available to the user; otherwise, the value is <c>False</c>.
+        ///   For downloads, the value is <c>True</c> if the file is available to the user; otherwise, the value is
+        ///   <c>False</c>.
         /// </summary>
         public readonly int Completed;
     }

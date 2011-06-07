@@ -10,7 +10,7 @@
 namespace SharpBits.Base
 {
     /// <summary>
-    ///   The current status of the <see cref="BitsJob" />.
+    ///   The current status of the <c>BitsJob</c>.
     /// </summary>
     public enum JobState
     {

@@ -19,17 +19,20 @@ namespace SharpBits.Base
         #region Constants and Fields
 
         /// <summary>
-        ///   Identifies the credentials to use for the specified authentication scheme. For details, see the BG_AUTH_CREDENTIALS_UNION union.
+        ///   Identifies the credentials to use for the specified authentication scheme. For details, see the
+        ///   BG_AUTH_CREDENTIALS_UNION union.
         /// </summary>
         public BGAuthCredentialsUnion Credentials;
 
         /// <summary>
-        ///   Identifies the scheme to use for authentication (for example, Basic or NTLM). For a list of values, see the BG_AUTH_SCHEME enumeration.
+        ///   Identifies the scheme to use for authentication (for example, Basic or NTLM). For a list of values, see
+        ///   the BG_AUTH_SCHEME enumeration.
         /// </summary>
         public BGAuthScheme Scheme;
 
         /// <summary>
-        ///   Identifies whether to use the credentials for a proxy or server authentication request. For a list of values, see the BG_AUTH_TARGET enumeration.
+        ///   Identifies whether to use the credentials for a proxy or server authentication request. For a list of
+        ///   values, see the BG_AUTH_TARGET enumeration.
         /// </summary>
         public BGAuthTarget Target;
 

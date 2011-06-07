@@ -17,7 +17,7 @@ namespace WPFLocalizeExtension.Extensions
     using Engine;
 
     /// <summary>
-    ///   <c>BaseLocalizeExtension</c> for brush objects as string (uses <see cref="TypeConverter" />).
+    ///   <c>BaseLocalizeExtension</c> for brush objects as string (uses <c>TypeConverter</c>).
     /// </summary>
     [MarkupExtensionReturnType(typeof(Brush))]
     public class LocBrushExtension : BaseLocalizeExtension<Brush>
@@ -32,7 +32,7 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="LocBrushExtension" /> class.
+        ///   Initializes a new instance of the <c>LocBrushExtension</c> class.
         /// </summary>
         /// <param name="key">
         ///   The resource identifier.
@@ -46,10 +46,10 @@ namespace WPFLocalizeExtension.Extensions
         #region Public Methods
 
         /// <summary>
-        ///   Provides the Value for the first Binding as <see cref="System.Windows.Media.Brush" />.
+        ///   Provides the Value for the first Binding as <c>System.Windows.Media.Brush</c>.
         /// </summary>
         /// <param name="serviceProvider">
-        ///   The <see cref="System.Windows.Markup.IProvideValueTarget" /> provided from the <see cref="MarkupExtension" />.
+        ///   The <c>System.Windows.Markup.IProvideValueTarget</c> provided from the <c>MarkupExtension</c>.
         /// </param>
         /// <returns>
         ///   The found item from the .resx directory or <c>null</c> if not found.
@@ -105,7 +105,8 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>
-        ///   This method gets the new value for the target property and call <see cref="BaseLocalizeExtension{TValue}.SetNewValue" />.
+        ///   This method gets the new value for the target property and call <see
+        ///   cref="BaseLocalizeExtension{TValue}.SetNewValue" />.
         /// </summary>
         protected override void HandleNewValue()
         {

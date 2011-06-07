@@ -21,10 +21,12 @@ namespace System.Windows.Dialogs
     using Runtime.InteropServices;
 
     /// <summary>
-    ///   Encapsulates the native logic required to create,  configure, and show a <see cref="TaskDialog" />, via the TaskDialogIndirect() Win32 function.
+    ///   Encapsulates the native logic required to create,  configure, and show a <c>TaskDialog</c>, via the
+    ///   TaskDialogIndirect() Win32 function.
     /// </summary>
     /// <remarks>
-    ///   A new instance of this class should  be created for each Message Box show, as the handles for <see cref="TaskDialog" /> do not remain constant across calls to TaskDialogIndirect.
+    ///   A new instance of this class should  be created for each Message Box show, as the handles for <c>TaskDialog</c>
+    ///   do not remain constant across calls to TaskDialogIndirect.
     /// </remarks>
     internal sealed class NativeTaskDialog : IDisposable
     {
@@ -102,7 +104,7 @@ namespace System.Windows.Dialogs
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="NativeTaskDialog" /> class.
+        ///   Initializes a new instance of the <c>NativeTaskDialog</c> class.
         /// </summary>
         /// <param name="settings">
         ///   The settings.
@@ -123,7 +125,7 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>
-        ///   Finalizes an instance of the <see cref="NativeTaskDialog" /> class.
+        ///   Finalizes an instance of the <c>NativeTaskDialog</c> class.
         /// </summary>
         ~NativeTaskDialog()
         {
@@ -174,7 +176,7 @@ namespace System.Windows.Dialogs
         #region IDisposable
 
         /// <summary>
-        ///   Finalizes an instance of the <see cref="NativeTaskDialog" /> class.
+        ///   Finalizes an instance of the <c>NativeTaskDialog</c> class.
         /// </summary>
         public void Dispose()
         {
@@ -189,12 +191,9 @@ namespace System.Windows.Dialogs
         #region Methods
 
         /// <summary>
-        ///   The new task dialog does not support the existing
-        ///   Win32 functions for closing (e.g. EndDialog()); instead,
-        ///   a "click button" message is sent. In this case, we're
-        ///   abstracting out to say that the <see cref="TaskDialog" /> consumer can
-        ///   simply call "Close" and we'll "click" the cancel button.
-        ///   .
+        ///   The new task dialog does not support the existing Win32 functions for closing (e.g. EndDialog()); instead,
+        ///   a "click button" message is sent. In this case, we're abstracting out to say that the <c>TaskDialog</c>
+        ///   consumer can simply call "Close" and we'll "click" the cancel button. .
         /// </summary>
         /// <param name="result">
         ///   The result to give when closing the dialog.
@@ -238,26 +237,23 @@ namespace System.Windows.Dialogs
             Justification = "We are not currently handling globalization or localization")]
         internal void NativeShow()
         {
-            // Applies config struct and other settings, then
-            // calls main Win32 function.
+            // Applies config struct and other settings, then calls main Win32 function.
             if (this.settings == null)
             {
                 throw new InvalidOperationException("An error has occurred in dialog configuration.");
             }
 
-            // Do a last-minute parse of the various dialog control lists,  
-            // and only allocate the memory at the last minute.
+            // Do a last-minute parse of the various dialog control lists, and only allocate the memory at the last
+            // minute.
             this.MarshalDialogControlStructs();
 
-            // Make the call and show the dialog.
-            // NOTE: this call is BLOCKING, though the thread 
-            // WILL re-enter via the DialogProc.
+            // Make the call and show the dialog. NOTE: this call is BLOCKING, though the thread WILL re-enter via the
+            // DialogProc.
             try
             {
                 this.showState = DialogShowState.Showing;
 
-                // Here is the way we use "vanilla" P/Invoke to call 
-                // TaskDialogIndirect().  
+                // Here is the way we use "vanilla" P/Invoke to call TaskDialogIndirect().
                 var result = TaskDialogNativeMethods.TaskDialogIndirect(
                     this.nativeDialogConfig,
                     out this.selectedButtonId,
@@ -530,8 +526,7 @@ namespace System.Windows.Dialogs
             // Fetch the HWND - it may be the first time we're getting it.
             this.dialogPointer = pointer;
 
-            // Big switch on the various notifications the 
-            // dialog proc can get.
+            // Big switch on the various notifications the dialog proc can get.
             switch ((TaskDialogNotification)msg)
             {
                 case TaskDialogNotification.Created:
@@ -570,17 +565,14 @@ namespace System.Windows.Dialogs
 
             this.disposed = true;
 
-            // Single biggest resource - make sure the dialog 
-            // itself has been instructed to close.
+            // Single biggest resource - make sure the dialog itself has been instructed to close.
             if (this.showState == DialogShowState.Showing)
             {
                 this.NativeClose(TaskDialogResults.Cancel);
             }
 
-            // Clean up custom allocated strings that were updated
-            // while the dialog was showing. Note that the strings
-            // passed in the initial TaskDialogIndirect call will
-            // be cleaned up automatically by the default 
+            // Clean up custom allocated strings that were updated while the dialog was showing. Note that the strings
+            // passed in the initial TaskDialogIndirect call will be cleaned up automatically by the default
 
             // marshalling logic.
             if (this.updatedStrings != null)
@@ -645,8 +637,7 @@ namespace System.Windows.Dialogs
             this.updatedStrings[elementIndex] = IntPtr.Zero;
         }
 
-        // Once the task dialog HWND is open, we need to send 
-        // additional messages to configure it.
+        // Once the task dialog HWND is open, we need to send additional messages to configure it.
 
         /// <summary>
         ///   Handles the button click.
@@ -659,19 +650,16 @@ namespace System.Windows.Dialogs
         /// </returns>
         private int HandleButtonClick(int id)
         {
-            // First we raise a Click event, if there is a custom button
-            // However, we implement Close() by sending a cancel button, so 
-            // we don't want to raise a click event in response to that.
+            // First we raise a Click event, if there is a custom button However, we implement Close() by sending a
+            // cancel button, so we don't want to raise a click event in response to that.
             if (this.showState != DialogShowState.Closing)
             {
                 this.outerDialog.RaiseButtonClickEvent(id);
             }
 
-            // Once that returns, we raise a Closing event for the dialog
-            // The Win32 API handles button clicking-and-closing 
-            // as an atomic action,
-            // but it is more .NET friendly to split them up.
-            // Unfortunately, we do NOT have the return values at this stage.
+            // Once that returns, we raise a Closing event for the dialog The Win32 API handles button
+            // clicking-and-closing as an atomic action, but it is more .NET friendly to split them up. Unfortunately,
+            // we do NOT have the return values at this stage.
             return id <= 9 ? this.outerDialog.RaiseClosingEvent(id) : 1;
         }
 
@@ -715,8 +703,8 @@ namespace System.Windows.Dialogs
         /// </returns>
         private int HandleRadioButtonClick(int id)
         {
-            // When the dialog sets the radio button to default, 
-            // it (somewhat confusingly)issues a radio button clicked event
+            // When the dialog sets the radio button to default, it (somewhat confusingly)issues a radio button clicked
+            // event
             // - we mask that out - though ONLY if
             // we do have a default radio button
             if (this.firstRadioButtonClicked && !this.IsOptionSet(TaskDialogFlags.NoDefaultRadioButton))
@@ -728,8 +716,7 @@ namespace System.Windows.Dialogs
                 this.outerDialog.RaiseButtonClickEvent(id);
             }
 
-            // Note: we don't raise Closing, as radio 
-            // buttons are non-committing buttons
+            // Note: we don't raise Closing, as radio buttons are non-committing buttons
             return ErrorHelper.Ignored;
         }
 
@@ -762,8 +749,7 @@ namespace System.Windows.Dialogs
             return (this.nativeDialogConfig.Flags & flag) == flag;
         }
 
-        // Allocates a new string on the unmanaged heap, 
-        // and stores the pointer so we can free it later.
+        // Allocates a new string on the unmanaged heap, and stores the pointer so we can free it later.
 
         /// <summary>
         ///   Makes a new string.
@@ -784,17 +770,12 @@ namespace System.Windows.Dialogs
             return newStringPtr;
         }
 
-        // Checks to see if the given element already has an 
-        // updated string, and if so, 
-        // frees it. This is done in preparation for a call to 
-        // MakeNewString(), to prevent
-        // leaks from multiple updates calls on the same element 
+        // Checks to see if the given element already has an updated string, and if so, frees it. This is done in
+        // preparation for a call to MakeNewString(), to prevent leaks from multiple updates calls on the same element
         // within a single native dialog lifetime.
 
-        // Builds the actual configuration that the 
-        // NativeTaskDialog (and underlying Win32 API)
-        // expects, by parsing the various control lists, 
-        // marshaling to the unmanaged heap, etc.
+        // Builds the actual configuration that the NativeTaskDialog (and underlying Win32 API) expects, by parsing the
+        // various control lists, marshaling to the unmanaged heap, etc.
 
         /// <summary>
         ///   Marshals the dialog control structs.
@@ -844,26 +825,20 @@ namespace System.Windows.Dialogs
             {
                 this.UpdateProgressBarRange();
 
-                // The order of the following is important - 
-                // state is more important than value, 
-                // and non-normal states turn off the bar value change 
-                // animation, which is likely the intended
-                // and preferable behavior.
+                // The order of the following is important - state is more important than value, and non-normal states
+                // turn off the bar value change animation, which is likely the intended and preferable behavior.
                 this.UpdateProgressBarState(this.settings.ProgressBarState);
                 this.UpdateProgressBarValue(this.settings.ProgressBarValue);
 
-                // Due to a bug that wasn't fixed in time for RTM of Vista,
-                // second SendMessage is required if the state is non-Normal.
+                // Due to a bug that wasn't fixed in time for RTM of Vista, second SendMessage is required if the state
+                // is non-Normal.
                 this.UpdateProgressBarValue(this.settings.ProgressBarValue);
             }
             else if (this.IsOptionSet(TaskDialogFlags.ShowMarqueeProgressBar))
             {
-                // TDM_SET_PROGRESS_BAR_MARQUEE is necessary 
-                // to cause the marquee to start animating.
-                // Note that this internal task dialog setting is 
-                // round-tripped when the marquee is
-                // is set to different states, so it never has to 
-                // be touched/sent again.
+                // TDM_SET_PROGRESS_BAR_MARQUEE is necessary to cause the marquee to start animating. Note that this
+                // internal task dialog setting is round-tripped when the marquee is is set to different states, so it
+                // never has to be touched/sent again.
                 this.SendMessageHelper(TaskDialogMessage.SetProgressBarMarquee, 1, 0);
                 this.UpdateProgressBarState(this.settings.ProgressBarState);
             }
@@ -896,8 +871,7 @@ namespace System.Windows.Dialogs
         /// </returns>
         private int SendMessageHelper(TaskDialogMessage msg, int parameter, long parameterLength)
         {
-            // Be sure to at least assert here - 
-            // messages to invalid handles often just disappear silently
+            // Be sure to at least assert here - messages to invalid handles often just disappear silently
             Debug.Assert(true, "HWND for dialog is null during SendMessage");
 
             return

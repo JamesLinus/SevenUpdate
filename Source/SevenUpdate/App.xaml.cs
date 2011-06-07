@@ -5,21 +5,17 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//    Seven Update is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//    Seven Update is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
+//    License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any
+//    later version. Seven Update is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+//    even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//    You should have received a copy of the GNU General Public License
+//    GNU General Public License for more details. You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // <summary>
 //   Interaction logic for App.xaml
-// .</summary>
-// ***********************************************************************
+// .</summary> ***********************************************************************
 
 namespace SevenUpdate
 {
@@ -165,10 +161,10 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        ///   Raises the <see cref="InstanceAwareApplication.Startup" /> event.
+        ///   Raises the <c>InstanceAwareApplication.Startup</c> event.
         /// </summary>
         /// <param name="e">
-        ///   The <see cref="System.Windows.StartupEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.StartupEventArgs</c> instance containing the event data.
         /// </param>
         /// <param name="isFirstInstance">
         ///   If set to <c>True</c> the current instance is the first application instance.
@@ -244,10 +240,10 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        ///   Raises the <see cref="InstanceAwareApplication.StartupNextInstance" /> event.
+        ///   Raises the <c>InstanceAwareApplication.StartupNextInstance</c> event.
         /// </summary>
         /// <param name="e">
-        ///   The <see cref="StartupNextInstanceEventArgs" /> instance containing the event data.
+        ///   The <c>StartupNextInstanceEventArgs</c> instance containing the event data.
         /// </param>
         protected override void OnStartupNextInstance(StartupNextInstanceEventArgs e)
         {

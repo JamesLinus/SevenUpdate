@@ -1,7 +1,6 @@
 ﻿<!-- Copyright (c) Robert Baker, Seven Software -->
 <ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:controls="clr-namespace:System.Windows.Controls"
-                    x:Class="System.Windows.Resources.d__documents_visual_studio_2010_projects_sevenupdate_externals_system_windows_resources_dictionary_xaml">
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:controls="clr-namespace:System.Windows.Controls">
   <BooleanToVisibilityConverter x:Key="VisibilityOfBool" />
 
   <!--CommandLink Style-->

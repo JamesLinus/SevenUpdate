@@ -22,7 +22,7 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="TaskDialogControl" /> class.
+        ///   Initializes a new instance of the <c>TaskDialogControl</c> class.
         /// </summary>
         /// <param name="name">
         ///   The name for this control.

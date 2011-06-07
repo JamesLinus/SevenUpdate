@@ -8,7 +8,8 @@
 namespace System.Windows.ApplicationServices
 {
     /// <summary>
-    ///   Specifies the conditions when Windows Error Reporting should not restart an application that has registered for automatic restart.
+    ///   Specifies the conditions when Windows Error Reporting should not restart an application that has registered
+    ///   for automatic restart.
     /// </summary>
     [Flags]
     public enum RestartRestrictions

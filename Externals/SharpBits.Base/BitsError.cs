@@ -35,7 +35,7 @@ namespace SharpBits.Base
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="BitsError" /> class.
+        ///   Initializes a new instance of the <c>BitsError</c> class.
         /// </summary>
         /// <param name="job">
         ///   The job the error occurred on.

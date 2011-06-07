@@ -5,15 +5,12 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//    Seven Update is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//    Seven Update is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
+//    License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any
+//    later version. Seven Update is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+//    even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//    You should have received a copy of the GNU General Public License
+//    GNU General Public License for more details. You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // <summary>
@@ -161,8 +158,8 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        ///   Gets or sets a value indicating whether if an install is currently in progress and Seven Update was started
-        ///   after an auto check.
+        ///   Gets or sets a value indicating whether if an install is currently in progress and Seven Update was
+        ///   started after an auto check.
         /// </summary>
         internal static bool IsReconnect { get; set; }
 
@@ -191,7 +188,7 @@ namespace SevenUpdate
                     {
                         AppUrl = @"http://sevenupdate.com/",
                         Directory = @"HKLM\Software\Microsoft\Windows\CurrentVersion\App Paths\SevenUpdate.exe",
-                        ValueName = "Path",
+                        ValueName="Path",
                         HelpUrl = @"http://sevenupdate.com/support/",
                         Platform = Platform.AnyCpu,
                         IsEnabled = true,
@@ -327,10 +324,10 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        ///   Shows either a <see cref="TaskDialog" /> or a <see cref="MessageBox" /> if running legacy windows.
+        ///   Shows either a <c>TaskDialog</c> or a <c>MessageBox</c> if running legacy windows.
         /// </summary>
         /// <param name="instructionText">
-        ///   The main text to display (Blue 14pt for <see cref="TaskDialog" />).
+        ///   The main text to display (Blue 14pt for <c>TaskDialog</c>).
         /// </param>
         /// <param name="icon">
         ///   The icon to display.
@@ -439,10 +436,10 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        ///   Shows either a <see cref="TaskDialog" /> or a <see cref="MessageBox" /> if running legacy windows.
+        ///   Shows either a <c>TaskDialog</c> or a <c>MessageBox</c> if running legacy windows.
         /// </summary>
         /// <param name="instructionText">
-        ///   The main text to display (Blue 14pt for <see cref="TaskDialog" />).
+        ///   The main text to display (Blue 14pt for <c>TaskDialog</c>).
         /// </param>
         /// <param name="icon">
         ///   The icon to display.
@@ -456,7 +453,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        ///   When a property has changed, call the <see cref="OnPropertyChanged" /> Event.
+        ///   When a property has changed, call the <c>OnPropertyChanged</c> Event.
         /// </summary>
         /// <param name="name">
         ///   The name of the property that changed.

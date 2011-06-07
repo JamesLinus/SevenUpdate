@@ -5,21 +5,17 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//    Seven Update is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//    Seven Update is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
+//    License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any
+//    later version. Seven Update is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+//    even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//    You should have received a copy of the GNU General Public License
+//    GNU General Public License for more details. You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // <summary>
 //   Interaction logic for Options.xaml
-// .</summary>
-// ***********************************************************************
+// .</summary> ***********************************************************************
 
 namespace SevenUpdate.Pages
 {
@@ -129,13 +125,13 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        ///   Loads the settings and <see cref="Sua" /> list when the page is loaded.
+        ///   Loads the settings and <c>Sua</c> list when the page is loaded.
         /// </summary>
         /// <param name="sender">
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.
         /// </param>
         private void Init(object sender, RoutedEventArgs e)
         {
@@ -150,7 +146,8 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        ///   Loads the list of Seven Update applications and sets the UI, if no application list was downloaded, load the stored list on the system.
+        ///   Loads the list of Seven Update applications and sets the UI, if no application list was downloaded, load
+        ///   the stored list on the system.
         /// </summary>
         /// <param name="officialApplicationList">
         ///   The official application list from the server.
@@ -248,8 +245,7 @@ namespace SevenUpdate.Pages
                         if (officialApplicationList[x].Directory == machineAppList[y].Directory &&
                             officialApplicationList[x].Platform == machineAppList[y].Platform)
                         {
-                            // if (officialAppList[x].Source != machineAppList[y].Source)
-                            // continue;
+                            // if (officialAppList[x].Source != machineAppList[y].Source) continue;
                             officialApplicationList[x].IsEnabled = machineAppList[y].IsEnabled;
                             machineAppList.RemoveAt(y);
                             y--;
@@ -283,7 +279,7 @@ namespace SevenUpdate.Pages
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.
         /// </param>
         private void NavigateToMainPage(object sender, RoutedEventArgs e)
         {
@@ -297,7 +293,7 @@ namespace SevenUpdate.Pages
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.Navigation.RequestNavigateEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.Navigation.RequestNavigateEventArgs</c> instance containing the event data.
         /// </param>
         private void NavigateToUri(object sender, RequestNavigateEventArgs e)
         {
@@ -307,13 +303,13 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        ///   Limit the size of the <see cref="GridViewColumn" /> when it's being resized.
+        ///   Limit the size of the <c>GridViewColumn</c> when it's being resized.
         /// </summary>
         /// <param name="sender">
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.Controls.Primitives.DragDeltaEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.Controls.Primitives.DragDeltaEventArgs</c> instance containing the event data.
         /// </param>
         private void RestrictColumn(object sender, DragDeltaEventArgs e)
         {
@@ -327,7 +323,7 @@ namespace SevenUpdate.Pages
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.
         /// </param>
         private void SaveSettings(object sender, RoutedEventArgs e)
         {
@@ -338,7 +334,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        ///   Updates the list with the <see cref="machineAppList" />.
+        ///   Updates the list with the <c>machineAppList</c>.
         /// </summary>
         private void UpdateList()
         {
@@ -358,7 +354,7 @@ namespace SevenUpdate.Pages
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="CompositionChangedEventArgs" /> instance containing the event data.
+        ///   The <c>CompositionChangedEventArgs</c> instance containing the event data.
         /// </param>
         private void UpdateUI(object sender, CompositionChangedEventArgs e)
         {

@@ -36,7 +36,8 @@ namespace SharpBits.Base
         QueueManagerNotification = 3,
 
         /// <summary>
-        ///   The error was related to the specified local file. For example, permission was denied or the volume was unavailable.
+        ///   The error was related to the specified local file. For example, permission was denied or the volume was
+        ///   unavailable.
         /// </summary>
         LocalFile = 4,
 
@@ -46,7 +47,8 @@ namespace SharpBits.Base
         RemoteFile = 5,
 
         /// <summary>
-        ///   The transport layer generated the error. These errors are general transport failures; errors not specific to the remote file.
+        ///   The transport layer generated the error. These errors are general transport failures; errors not specific
+        ///   to the remote file.
         /// </summary>
         GeneralTransport = 6,
     }

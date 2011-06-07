@@ -5,21 +5,17 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//    Seven Update is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//    Seven Update is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
+//    License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any
+//    later version. Seven Update is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+//    even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//    You should have received a copy of the GNU General Public License
+//    GNU General Public License for more details. You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // <summary>
 //   Interaction logic for LicenseAgreement.xaml
-// .</summary>
-// ***********************************************************************
+// .</summary> ***********************************************************************
 
 namespace SevenUpdate.Windows
 {
@@ -80,7 +76,7 @@ namespace SevenUpdate.Windows
         #region Methods
 
         /// <summary>
-        ///   Loads the <see cref="licenseInformation" /> and shows the form.
+        ///   Loads the <c>licenseInformation</c> and shows the form.
         /// </summary>
         /// <returns>
         ///   Returns the dialog result.
@@ -109,7 +105,7 @@ namespace SevenUpdate.Windows
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.
         /// </param>
         private void Cancel(object sender, RoutedEventArgs e)
         {
@@ -124,7 +120,7 @@ namespace SevenUpdate.Windows
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.ComponentModel.RunWorkerCompletedEventArgs" /> instance containing the event data.
+        ///   The <c>System.ComponentModel.RunWorkerCompletedEventArgs</c> instance containing the event data.
         /// </param>
         private void DisplayLicense(object sender, RunWorkerCompletedEventArgs e)
         {
@@ -154,13 +150,13 @@ namespace SevenUpdate.Windows
         }
 
         /// <summary>
-        ///   Downloads the <see cref="licenseInformation" />.
+        ///   Downloads the <c>licenseInformation</c>.
         /// </summary>
         /// <param name="sender">
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.
         /// </param>
         private void DownloadLicenseInformation(object sender, RoutedEventArgs e)
         {
@@ -184,7 +180,7 @@ namespace SevenUpdate.Windows
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.ComponentModel.DoWorkEventArgs" /> instance containing the event data.
+        ///   The <c>System.ComponentModel.DoWorkEventArgs</c> instance containing the event data.
         /// </param>
         private void DownloadLicenses(object sender, DoWorkEventArgs e)
         {
@@ -254,7 +250,7 @@ namespace SevenUpdate.Windows
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.
         /// </param>
         private void PerformAction(object sender, RoutedEventArgs e)
         {
@@ -307,7 +303,7 @@ namespace SevenUpdate.Windows
         #endregion
 
         /// <summary>
-        ///   Data containing the <see cref="Update" /> license agreement.
+        ///   Data containing the <c>Update</c> license agreement.
         /// </summary>
         private struct Eula
         {

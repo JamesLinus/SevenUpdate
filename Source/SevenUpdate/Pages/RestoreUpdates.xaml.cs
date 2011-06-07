@@ -5,21 +5,17 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//    Seven Update is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//    Seven Update is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
+//    License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any
+//    later version. Seven Update is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+//    even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//    You should have received a copy of the GNU General Public License
+//    GNU General Public License for more details. You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // <summary>
 //   Interaction logic for RestoreUpdates.xaml
-// .</summary>
-// ***********************************************************************
+// .</summary> ***********************************************************************
 
 namespace SevenUpdate.Pages
 {
@@ -95,13 +91,13 @@ namespace SevenUpdate.Pages
         #region Methods
 
         /// <summary>
-        ///   Gets the hidden updates and loads them in the <see cref="ListView" />.
+        ///   Gets the hidden updates and loads them in the <c>ListView</c>.
         /// </summary>
         /// <param name="sender">
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.
         /// </param>
         private void GetHiddenUpdates(object sender, RoutedEventArgs e)
         {
@@ -126,7 +122,7 @@ namespace SevenUpdate.Pages
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.
         /// </param>
         private void NavigateToMainPage(object sender, RoutedEventArgs e)
         {
@@ -140,7 +136,7 @@ namespace SevenUpdate.Pages
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.
         /// </param>
         private void RestoreUpdate(object sender, RoutedEventArgs e)
         {
@@ -167,13 +163,13 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>
-        ///   Limit the size of the <see cref="GridViewColumn" /> when it's being resized.
+        ///   Limit the size of the <c>GridViewColumn</c> when it's being resized.
         /// </summary>
         /// <param name="sender">
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.Controls.Primitives.DragDeltaEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.Controls.Primitives.DragDeltaEventArgs</c> instance containing the event data.
         /// </param>
         private void RestrictColumn(object sender, DragDeltaEventArgs e)
         {
@@ -187,7 +183,7 @@ namespace SevenUpdate.Pages
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.Input.MouseButtonEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.
         /// </param>
         private void ShowDetails(object sender, MouseButtonEventArgs e)
         {
@@ -207,7 +203,7 @@ namespace SevenUpdate.Pages
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.
         /// </param>
         private void ShowDetailsDialog(object sender, RoutedEventArgs e)
         {
@@ -222,7 +218,7 @@ namespace SevenUpdate.Pages
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="CompositionChangedEventArgs" /> instance containing the event data.
+        ///   The <c>CompositionChangedEventArgs</c> instance containing the event data.
         /// </param>
         private void UpdateUI(object sender, CompositionChangedEventArgs e)
         {
@@ -247,7 +243,7 @@ namespace SevenUpdate.Pages
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.
         /// </param>
         private void UpdateUIOnUpdateSelection(object sender, RoutedEventArgs e)
         {

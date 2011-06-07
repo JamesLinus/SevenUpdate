@@ -10,7 +10,7 @@
 namespace SharpBits.Base
 {
     /// <summary>
-    ///   The <see cref="BitsJob" /> Progress.
+    ///   The <c>BitsJob</c> Progress.
     /// </summary>
     public class JobProgress
     {
@@ -26,7 +26,7 @@ namespace SharpBits.Base
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="JobProgress" /> class.
+        ///   Initializes a new instance of the <c>JobProgress</c> class.
         /// </summary>
         /// <param name="jobProgress">
         ///   The job progress.

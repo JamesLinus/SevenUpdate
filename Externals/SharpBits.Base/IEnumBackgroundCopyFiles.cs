@@ -13,7 +13,7 @@ namespace SharpBits.Base
 
     /// <summary>
     ///   Use the IEnumBackgroundCopyFiles interface to enumerate the files that a job contains. To get an
-    ///   IEnumBackgroundCopyFiles interface pointer, call the <see cref="IBackgroundCopyJob" />::EnumFiles method.
+    ///   IEnumBackgroundCopyFiles interface pointer, call the <c>IBackgroundCopyJob</c>::EnumFiles method.
     /// </summary>
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     [GuidAttribute("CA51E165-C365-424C-8D41-24AAA4FF3C40")]
@@ -27,11 +27,13 @@ namespace SharpBits.Base
         ///   Number of elements requested.
         /// </param>
         /// <param name="copyFile">
-        ///   Array of <see cref="IBackgroundCopyFile" /> objects. You must release each object in <paramref name = "copyFile" /> when done.
+        ///   Array of <c>IBackgroundCopyFile</c> objects. You must release each object in <paramref name="copyFile" />
+        ///   when done.
         /// </param>
         /// <param name="fetched">
-        ///   Number of elements returned in <paramref name = "copyFile" />. You can set fetched to <c>null</c> if <paramref
-        ///    name = "celt" /> is one. Otherwise, initialize the value of fetched to 0 before calling this method.
+        ///   Number of elements returned in <paramref name="copyFile" />. You can set fetched to <c>null</c> if
+        ///   <paramref
+        ///    name="celt" /> is one. Otherwise, initialize the value of fetched to 0 before calling this method.
         /// </param>
         void Next(uint celt, [MarshalAs(UnmanagedType.Interface)] out IBackgroundCopyFile copyFile, out uint fetched);
 
@@ -52,7 +54,8 @@ namespace SharpBits.Base
         ///   Creates another enumerator that contains the same enumeration state as the current enumerator.
         /// </summary>
         /// <param name="enum">
-        ///   Receives the interface pointer to the enumeration object. If the method is unsuccessful, the value of this output variable is undefined. You must release enumFiles when done.
+        ///   Receives the interface pointer to the enumeration object. If the method is unsuccessful, the value of this
+        ///   output variable is undefined. You must release enumFiles when done.
         /// </param>
         void Clone([MarshalAs(UnmanagedType.Interface)] out IEnumBackgroundCopyFiles @enum);
 

@@ -10,7 +10,7 @@
 namespace SharpBits.Base
 {
     /// <summary>
-    ///   The type of <see cref="BitsJob" />.
+    ///   The type of <c>BitsJob</c>.
     /// </summary>
     public enum JobType
     {

@@ -80,7 +80,8 @@ namespace System.Windows.Dialogs
         UpdateElementText = NativeMethods.WMUser + 114,
 
         /// <summary>
-        ///   Specifies whether a given task dialog button or command link should have a UAC shield icon; that is, whether the action invoked by the button requires elevation.
+        ///   Specifies whether a given task dialog button or command link should have a UAC shield icon; that is,
+        ///   whether the action invoked by the button requires elevation.
         /// </summary>
         SetButtonElevationRequiredState = NativeMethods.WMUser + 115,
 

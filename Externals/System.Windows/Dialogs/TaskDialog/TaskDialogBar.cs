@@ -31,7 +31,7 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="TaskDialogBar" /> class.
+        ///   Initializes a new instance of the <c>TaskDialogBar</c> class.
         /// </summary>
         /// <param name="name">
         ///   The name for this control.

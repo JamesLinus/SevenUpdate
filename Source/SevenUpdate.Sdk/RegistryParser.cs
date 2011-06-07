@@ -5,15 +5,12 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//    Seven Update is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//    Seven Update is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
+//    License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any
+//    later version. Seven Update is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+//    even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//    You should have received a copy of the GNU General Public License
+//    GNU General Public License for more details. You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
@@ -108,7 +105,7 @@ namespace SevenUpdate.Sdk
         #region Public Methods
 
         /// <summary>
-        ///   Parses a registry file into a <see cref="RegistryItem" />.
+        ///   Parses a registry file into a <c>RegistryItem</c>.
         /// </summary>
         /// <param name="file">
         ///   The reg file.
@@ -131,11 +128,10 @@ namespace SevenUpdate.Sdk
                 rawRegFileData = fileStream.ReadToEnd();
             }
 
-            // Nuke all comments (these have given me a royal headache 
-            // to try to workaround but it is unfortunately the ONLY way I can do the
-            // conversion correctly, the comments confuse the Regular Expression filters)
-            // Also the way Reg2Inf processes the lines makes it impossible to know which
-            // comment goes where esp. after addition of DelReg support.
+            // Nuke all comments (these have given me a royal headache to try to workaround but it is unfortunately the
+            // ONLY way I can do the conversion correctly, the comments confuse the Regular Expression filters) Also the
+            // way Reg2Inf processes the lines makes it impossible to know which comment goes where esp. after addition
+            // of DelReg support.
             rawRegFileData = Regex.Replace(
                 rawRegFileData,
                 @"^\s*;\s*.*",
@@ -146,8 +142,8 @@ namespace SevenUpdate.Sdk
             rawRegFileData = RegexRootKey.Replace(rawRegFileData, SplitToken + @"$0");
             var dataArray = Regex.Split(rawRegFileData, SplitToken, RegexOptions.IgnoreCase | RegexOptions.Multiline);
 
-            // Check for Windows REG file signature to determine how to
-            // process hex(2) and hex(7) (DBCS or SBCS) and remove from the array
+            // Check for Windows REG file signature to determine how to process hex(2) and hex(7) (DBCS or SBCS) and
+            // remove from the array
             if (dataArray[0].StartsWith(RegV5Signature, StringComparison.OrdinalIgnoreCase))
             {
                 regVersionSignature = 5;
@@ -182,7 +178,9 @@ namespace SevenUpdate.Sdk
         ///   Line to apply fixes to.
         /// </param>
         /// <param name="skipQuotesConversion">
-        ///   REG_MULTI_SZ, REG_SZ (hex notation) and REG_EXPAND_SZ already put the quotes correctly so if you fix them again you will damage the value, so for those put <c>True</c> here to skip that part and only to do the double-quote and percent fixes.
+        ///   REG_MULTI_SZ, REG_SZ (hex notation) and REG_EXPAND_SZ already put the quotes correctly so if you fix them
+        ///   again you will damage the value, so for those put <c>True</c> here to skip that part and only to do the
+        ///   double-quote and percent fixes.
         /// </param>
         /// <returns>
         ///   The line with the fixes applied.
@@ -308,8 +306,8 @@ namespace SevenUpdate.Sdk
                     return true;
                 }
 
-                // In case of hex(4) notation, very little changes are needed - no
-                // reverse needed as in hex(4) they are already revered and in the correct format for INF
+                // In case of hex(4) notation, very little changes are needed - no reverse needed as in hex(4) they are
+                // already revered and in the correct format for INF
                 if (Regex.IsMatch(valueData, @"^([0-9A-Fa-f]{1,2},)+[0-9A-Fa-f]{1,2}$", RegexOptions.ExplicitCapture))
                 {
                     valueData = valueData.TrimEnd(new[] { ',' });
@@ -385,9 +383,8 @@ namespace SevenUpdate.Sdk
                 // Check for empty ValueData
                 if (string.IsNullOrEmpty(valueData.Trim()))
                 {
-                    // Set Flag - Undocumented but used inside XP Setup's own files to specify 
-                    // REG_MULTI_SZ. The documented method seems to be to use 0x10000
-                    // Return Partial Line
+                    // Set Flag - Undocumented but used inside XP Setup's own files to specify REG_MULTI_SZ. The
+                    // documented method seems to be to use 0x10000 Return Partial Line
                     methodResult.Data = valueName;
                     methodResult.ValueKind = RegistryValueKind.MultiString;
                     return true;
@@ -399,9 +396,8 @@ namespace SevenUpdate.Sdk
                 // Create a StringBuilder for holding the semi-processed string
                 var valueDataBuilder = new StringBuilder(valueData.Length);
 
-                // Convert the bytes back to the string using the new
-                // UnicodeEncoding method for v5 signature (DBCS) and using
-                // the old method for v4 signature which uses SBCS.
+                // Convert the bytes back to the string using the new UnicodeEncoding method for v5 signature (DBCS) and
+                // using the old method for v4 signature which uses SBCS.
                 if (regVersionSignature == 5)
                 {
                     // RegEx match all pairs of bytes
@@ -425,8 +421,8 @@ namespace SevenUpdate.Sdk
                 }
                 else
                 {
-                    // Use old behavior - invalid and non-printable chars will convert to ? (63)
-                    // Convert 00 to a carriage return / line-feed (CR-LF): 0d 0a
+                    // Use old behavior - invalid and non-printable chars will convert to ? (63) Convert 00 to a
+                    // carriage return / line-feed (CR-LF): 0d 0a
                     valueData = Regex.Replace(
                         valueData,
                         @"00",
@@ -528,8 +524,7 @@ namespace SevenUpdate.Sdk
                     return true;
                 }
 
-                // Get the string with UnicodeEncoding
-                // Create an array to hold the hex values
+                // Get the string with UnicodeEncoding Create an array to hold the hex values
                 var temporaryArray =
                     new List<string>(valueData.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
 
@@ -616,9 +611,8 @@ namespace SevenUpdate.Sdk
                 }
                 else
                 {
-                    // Nuke all 00s to prevent conversion to null, if this line causes
-                    // changes ValueData then its 99% possible that the wrong REG signature
-                    // is present in the REG file being processed.
+                    // Nuke all 00s to prevent conversion to null, if this line causes changes ValueData then its 99%
+                    // possible that the wrong REG signature is present in the REG file being processed.
                     valueData = Regex.Replace(valueData, @"00,?", string.Empty);
 
                     // Create an array to hold the hex values
@@ -710,9 +704,7 @@ namespace SevenUpdate.Sdk
                 return methodResult;
             }
 
-            // ValueNameData string definition
-            // ValueData string definition
-            // Is ValueData string ?
+            // ValueNameData string definition ValueData string definition Is ValueData string ?
             var valueDataIsString = false;
 
             // Define Match object that will test all criteria
@@ -754,8 +746,8 @@ namespace SevenUpdate.Sdk
             // Fix ValueData - Remove SPACE / TAB / CR / LF from beginning and end
             valueData = valueData.Trim();
 
-            // If ValueData is equal to -, this means that this is a removal instruction
-            // and the line should be added to the DelReg part of the INFConversionResult instance
+            // If ValueData is equal to -, this means that this is a removal instruction and the line should be added to
+            // the DelReg part of the INFConversionResult instance
             if (string.Compare(valueData, "-", StringComparison.CurrentCulture) == 0)
             {
                 methodResult.Data = null;
@@ -764,8 +756,7 @@ namespace SevenUpdate.Sdk
                 return methodResult;
             }
 
-            // If ValueData is still empty, that means a normal string value with its
-            // value explicitly set to blank
+            // If ValueData is still empty, that means a normal string value with its value explicitly set to blank
             if (string.IsNullOrEmpty(valueData))
             {
                 methodResult.KeyValue = valueName;
@@ -872,7 +863,8 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>
-        ///   Puts ValueData on single line and removes from the beginning and end the following: space, tab, CR, LF, extra commas.
+        ///   Puts ValueData on single line and removes from the beginning and end the following: space, tab, CR, LF,
+        ///   extra commas.
         /// </summary>
         /// <param name="valueData">
         ///   ValueData string to operate on.
@@ -906,7 +898,8 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>
-        ///   Method for converting the hex byte string to a byte value + a check that converts all above ASCII bytes to ?.
+        ///   Method for converting the hex byte string to a byte value + a check that converts all above ASCII bytes to
+        ///   ?.
         /// </summary>
         /// <param name="value">
         ///   The byte string.
@@ -926,7 +919,8 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>
-        ///   Method for converting the hex byte string to a byte value + a check that converts all above ASCII bytes to ? but allows CRLF characters.
+        ///   Method for converting the hex byte string to a byte value + a check that converts all above ASCII bytes to
+        ///   ? but allows CRLF characters.
         /// </summary>
         /// <param name="value">
         ///   The byte string.
@@ -1056,10 +1050,8 @@ namespace SevenUpdate.Sdk
             regLines.AddRange(
                 Regex.Split(regBlock, SplitToken + @"\s*", RegexOptions.Multiline | RegexOptions.ExplicitCapture));
 
-            // Internal check for splitter validity
-            // The last entry of the array MUST be empty, otherwise
-            // something didn't match and that can never be a comment 
-            // because we strip them in an earlier stage of processing.
+            // Internal check for splitter validity The last entry of the array MUST be empty, otherwise something
+            // didn't match and that can never be a comment because we strip them in an earlier stage of processing.
             if (regLines[regLines.Count - 1].Length != 0)
             {
                 return;

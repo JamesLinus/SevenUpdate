@@ -14,12 +14,13 @@ namespace System.Windows.Dialogs
     using Runtime.InteropServices;
 
     /// <summary>
-    ///   Internal class containing most native interop declarations used throughout the library.Functions that are not performance intensive belong in this class.
+    ///   Internal class containing most native interop declarations used throughout the library.Functions that are not
+    ///   performance intensive belong in this class.
     /// </summary>
     internal static class TaskDialogNativeMethods
     {
         /// <summary>
-        ///   The <see cref="TaskDialog" /> callback.
+        ///   The <c>TaskDialog</c> callback.
         /// </summary>
         /// <param name="handle">
         ///   The handle for the dialog.
@@ -34,26 +35,32 @@ namespace System.Windows.Dialogs
         ///   The length of the parameter.
         /// </param>
         /// <returns>
-        ///   The result of the <see cref="TaskDialog" />.
+        ///   The result of the <c>TaskDialog</c>.
         /// </returns>
         internal delegate int TaskDialogCallBack(IntPtr handle, uint msg, IntPtr parameter, IntPtr parameterLength);
 
         /// <summary>
-        ///   The TaskDialogIndirect function creates, displays, and operates a task dialog. The task dialog contains application-defined icons, messages, title, verification check box, command links, push buttons, and radio buttons. This function can register a callback function to receive notification messages.
+        ///   The TaskDialogIndirect function creates, displays, and operates a task dialog. The task dialog contains
+        ///   application-defined icons, messages, title, verification check box, command links, push buttons, and radio
+        ///   buttons. This function can register a callback function to receive notification messages.
         /// </summary>
         /// <param name="taskConfig">
-        ///   A pointer to a <see cref="TaskDialogConfig" /> structure that contains information used to display the task dialog.
+        ///   A pointer to a <c>TaskDialogConfig</c> structure that contains information used to display the task
+        ///   dialog.
         /// </param>
         /// <param name="button">
-        ///   Address of a variable that receives one of the button IDs specified in the <paramref name = "button" /> member of the <paramref
-        ///    name = "taskConfig" /> parameter. If this parameter is <c>null</c>, no value is returned.
+        ///   Address of a variable that receives one of the button IDs specified in the <paramref name="button" />
+        ///   member of the <paramref
+        ///    name="taskConfig" /> parameter. If this parameter is <c>null</c>, no value is returned.
         /// </param>
         /// <param name="radioButton">
-        ///   Address of a variable that receives one of the button IDs specified in the <paramref name = "radioButton" /> member of the <paramref
-        ///    name = "taskConfig" /> parameter. If this parameter is <c>null</c>, no value is returned.
+        ///   Address of a variable that receives one of the button IDs specified in the <paramref name="radioButton" />
+        ///   member of the <paramref
+        ///    name="taskConfig" /> parameter. If this parameter is <c>null</c>, no value is returned.
         /// </param>
         /// <param name="verificationFlagChecked">
-        ///   <c>True</c> if the verification <see cref="CheckBox" /> was checked when the dialog was dismissed; otherwise, <c>False</c>.
+        ///   <c>True</c> if the verification <c>CheckBox</c> was checked when the dialog was dismissed; otherwise,
+        ///   <c>False</c>.
         /// </param>
         /// <returns>
         ///   The result.

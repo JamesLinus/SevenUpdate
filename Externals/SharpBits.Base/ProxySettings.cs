@@ -10,7 +10,7 @@
 namespace SharpBits.Base
 {
     /// <summary>
-    ///   The proxy settings for the <see cref="BitsJob" />.
+    ///   The proxy settings for the <c>BitsJob</c>.
     /// </summary>
     public class ProxySettings
     {
@@ -41,7 +41,7 @@ namespace SharpBits.Base
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="ProxySettings" /> class.
+        ///   Initializes a new instance of the <c>ProxySettings</c> class.
         /// </summary>
         /// <param name="job">
         ///   The job to set the proxy settings for.
@@ -112,7 +112,7 @@ namespace SharpBits.Base
         #region Public Methods
 
         /// <summary>
-        ///   Updates <see cref="BitsJob" /> with the proxy usage.
+        ///   Updates <c>BitsJob</c> with the proxy usage.
         /// </summary>
         public void Update()
         {

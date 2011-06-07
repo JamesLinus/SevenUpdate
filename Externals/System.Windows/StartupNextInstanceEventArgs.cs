@@ -26,7 +26,7 @@ namespace System.Windows
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="StartupNextInstanceEventArgs" /> class.
+        ///   Initializes a new instance of the <c>StartupNextInstanceEventArgs</c> class.
         /// </summary>
         /// <param name="args">
         ///   The arguments passed to the program.

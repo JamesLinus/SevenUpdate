@@ -6,15 +6,12 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//    Seven Update is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//    Seven Update is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
+//    License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any
+//    later version. Seven Update is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+//    even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//    You should have received a copy of the GNU General Public License
+//    GNU General Public License for more details. You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
@@ -26,7 +23,7 @@ namespace System.Windows.Controls
     using Documents;
 
     /// <summary>
-    ///   A <see cref="TextBox" /> that includes help text and error indicators.
+    ///   A <c>TextBox</c> that includes help text and error indicators.
     /// </summary>
     public sealed class InfoTextBox : TextBox
     {
@@ -216,7 +213,8 @@ namespace System.Windows.Controls
         #region Methods
 
         /// <summary>
-        ///   Invoked whenever an unhandled <see cref="DragDrop" />.DragEnter attached routed event reaches an element derived from this class in its route. Implement this method to add class handling for this event.
+        ///   Invoked whenever an unhandled <c>DragDrop</c>.DragEnter attached routed event reaches an element derived
+        ///   from this class in its route. Implement this method to add class handling for this event.
         /// </summary>
         /// <param name="e">
         ///   Provides data about the event.
@@ -229,7 +227,8 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        ///   Invoked whenever an unhandled <see cref="DragDrop" />.DragLeave attached routed event reaches an element derived from this class in its route. Implement this method to add class handling for this event.
+        ///   Invoked whenever an unhandled <c>DragDrop</c>.DragLeave attached routed event reaches an element derived
+        ///   from this class in its route. Implement this method to add class handling for this event.
         /// </summary>
         /// <param name="e">
         ///   Provides data about the event.
@@ -245,7 +244,8 @@ namespace System.Windows.Controls
         ///   Is called when content in this editing control changes.
         /// </summary>
         /// <param name="e">
-        ///   The arguments that are associated with the <see cref="E:System.Windows.Controls.Primitives.TextBoxBase.TextChanged" /> event.
+        ///   The arguments that are associated with the <see
+        ///   cref="E:System.Windows.Controls.Primitives.TextBoxBase.TextChanged" /> event.
         /// </param>
         protected override void OnTextChanged(TextChangedEventArgs e)
         {
@@ -260,13 +260,13 @@ namespace System.Windows.Controls
         }
 
         /// <summary>
-        ///   Determines whether the <see cref="InfoTextBox" /> is Visible.
+        ///   Determines whether the <c>InfoTextBox</c> is Visible.
         /// </summary>
         /// <param name="sender">
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.EventArgs" /> instance containing the event data.
+        ///   The <c>System.EventArgs</c> instance containing the event data.
         /// </param>
         private static new void IsVisibleChanged(object sender, EventArgs e)
         {
@@ -286,7 +286,7 @@ namespace System.Windows.Controls
         ///   The dependency object.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.DependencyPropertyChangedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.DependencyPropertyChangedEventArgs</c> instance containing the event data.
         /// </param>
         private static void NotePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
@@ -311,8 +311,8 @@ namespace System.Windows.Controls
         /// <param name="element">
         ///   The element.
         /// </param>
-        /// <typeparameter name = "T">The type of element</typeparameter>
-        /// <typeparam name = "T">
+        /// <typeparameter name="T">The type of element</typeparameter>
+        /// <typeparam name="T">
         ///   The type of element.
         /// </typeparam>
         private static void RemoveAdorners<T>(AdornerLayer adorner, UIElement element)

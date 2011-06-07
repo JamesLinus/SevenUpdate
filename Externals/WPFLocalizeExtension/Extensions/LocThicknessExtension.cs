@@ -32,7 +32,7 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="LocThicknessExtension" /> class.
+        ///   Initializes a new instance of the <c>LocThicknessExtension</c> class.
         /// </summary>
         /// <param name="key">
         ///   The resource identifier.
@@ -49,7 +49,7 @@ namespace WPFLocalizeExtension.Extensions
         ///   Provides the Value for the first Binding as Thickness.
         /// </summary>
         /// <param name="serviceProvider">
-        ///   The <see cref="System.Windows.Markup.IProvideValueTarget" /> provided from the <see cref="MarkupExtension" />.
+        ///   The <c>System.Windows.Markup.IProvideValueTarget</c> provided from the <c>MarkupExtension</c>.
         /// </param>
         /// <returns>
         ///   The found item from the .resx directory or <c>null</c> if not found.
@@ -113,7 +113,8 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>
-        ///   This method gets the new value for the target property and call <see cref="BaseLocalizeExtension{TValue}.SetNewValue" />.
+        ///   This method gets the new value for the target property and call <see
+        ///   cref="BaseLocalizeExtension{TValue}.SetNewValue" />.
         /// </summary>
         protected override void HandleNewValue()
         {

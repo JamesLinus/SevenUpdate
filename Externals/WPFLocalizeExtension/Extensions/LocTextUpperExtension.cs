@@ -30,7 +30,7 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="LocTextUpperExtension" /> class.
+        ///   Initializes a new instance of the <c>LocTextUpperExtension</c> class.
         /// </summary>
         /// <param name="key">
         ///   The resource identifier.
@@ -44,10 +44,10 @@ namespace WPFLocalizeExtension.Extensions
         #region Public Methods
 
         /// <summary>
-        ///   Provides the Value for the first Binding as <see cref="System.String" />.
+        ///   Provides the Value for the first Binding as <c>System.String</c>.
         /// </summary>
         /// <param name="serviceProvider">
-        ///   The <see cref="System.Windows.Markup.IProvideValueTarget" /> provided from the <see cref="MarkupExtension" />.
+        ///   The <c>System.Windows.Markup.IProvideValueTarget</c> provided from the <c>MarkupExtension</c>.
         /// </param>
         /// <returns>
         ///   The found item from the .resx directory or <c>null</c> if not found.
@@ -85,7 +85,8 @@ namespace WPFLocalizeExtension.Extensions
         #region Methods
 
         /// <summary>
-        ///   This method formats the localized text.If the passed target text is <c>null</c>, string.empty will be returned.
+        ///   This method formats the localized text.If the passed target text is <c>null</c>, string.empty will be
+        ///   returned.
         /// </summary>
         /// <param name="target">
         ///   The text to format.
@@ -99,7 +100,8 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>
-        ///   This method gets the new value for the target property and call <see cref="BaseLocalizeExtension{TValue}.SetNewValue" />.
+        ///   This method gets the new value for the target property and call <see
+        ///   cref="BaseLocalizeExtension{TValue}.SetNewValue" />.
         /// </summary>
         protected override void HandleNewValue()
         {

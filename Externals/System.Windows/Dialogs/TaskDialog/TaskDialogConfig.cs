@@ -17,34 +17,52 @@ namespace System.Windows.Dialogs
     internal class TaskDialogConfig : IDisposable
     {
         /// <summary>
-        ///   Gets or sets a pointer that references the string to be used to label the button for expanding the expandable information. This parameter can be either a <c>null</c>-terminated string or an integer resource identifier passed to the MAKEINTRESOURCE macro. This member is ignored when the <c>ExpandedInformation</c> member is <c>null</c>. If this member is <c>null</c> and the CollapsedControlText is specified, then the CollapsedControlText value will be used for this member as well.
+        ///   Gets or sets a pointer that references the string to be used to label the button for expanding the
+        ///   expandable information. This parameter can be either a <c>null</c>-terminated string or an integer
+        ///   resource identifier passed to the MAKEINTRESOURCE macro. This member is ignored when the
+        ///   <c>ExpandedInformation</c> member is <c>null</c>. If this member is <c>null</c> and the
+        ///   CollapsedControlText is specified, then the CollapsedControlText value will be used for this member as
+        ///   well.
         /// </summary>
         [MarshalAs(UnmanagedType.LPWStr)]
         internal string CollapsedControlText;
 
         /// <summary>
-        ///   Gets or sets a pointer that references the string to be used for the dialog's primary content. This parameter can be either a <c>null</c>-terminated string or an integer resource identifier passed to the MAKEINTRESOURCE macro. If the EnableHyperlinks flag is specified for the flags member, then this string may contain hyperlinks in the form: <a
+        ///   Gets or sets a pointer that references the string to be used for the dialog's primary content. This
+        ///   parameter can be either a <c>null</c>-terminated string or an integer resource identifier passed to the
+        ///   MAKEINTRESOURCE macro. If the EnableHyperlinks flag is specified for the flags member, then this string
+        ///   may contain hyperlinks in the form: <a
         ///    href = "executablestring">Hyperlink Text</a>.
         /// </summary>
         [MarshalAs(UnmanagedType.LPWStr)]
         internal string Content;
 
         /// <summary>
-        ///   Gets or sets a pointer that references the string to be used for displaying additional information. This parameter can be either a <c>null</c>-terminated string or an integer resource identifier passed to the MAKEINTRESOURCE macro. The additional information is displayed either immediately below the content or below the footer text depending on whether the ExpanderFooterArea flag is specified. If the EnableHyperlinks flag is specified for the flags member, then this string may contain hyperlinks in the form: <a
+        ///   Gets or sets a pointer that references the string to be used for displaying additional information. This
+        ///   parameter can be either a <c>null</c>-terminated string or an integer resource identifier passed to the
+        ///   MAKEINTRESOURCE macro. The additional information is displayed either immediately below the content or
+        ///   below the footer text depending on whether the ExpanderFooterArea flag is specified. If the
+        ///   EnableHyperlinks flag is specified for the flags member, then this string may contain hyperlinks in the
+        ///   form: <a
         ///    href = "executablestring">Hyperlink Text</a>.
         /// </summary>
         [MarshalAs(UnmanagedType.LPWStr)]
         internal string ExpandedInformation;
 
         /// <summary>
-        ///   Gets or sets a pointer that references the string to be used to label the button for collapsing the expandable information. This parameter can be either a <c>null</c>-terminated string or an integer resource identifier passed to the MAKEINTRESOURCE macro. This member is ignored when the <c>ExpandedInformation</c> member is <c>null</c>. If this member is <c>null</c> and the <c>CollapsedControlText"</c> is specified, then the <c>CollapsedControlText</c> value will be used for this member as well.
+        ///   Gets or sets a pointer that references the string to be used to label the button for collapsing the
+        ///   expandable information. This parameter can be either a <c>null</c>-terminated string or an integer
+        ///   resource identifier passed to the MAKEINTRESOURCE macro. This member is ignored when the
+        ///   <c>ExpandedInformation</c> member is <c>null</c>. If this member is <c>null</c> and the
+        ///   <c>CollapsedControlText"</c> is specified, then the <c>CollapsedControlText</c> value will be used for
+        ///   this member as well.
         /// </summary>
         [MarshalAs(UnmanagedType.LPWStr)]
         internal string ExpandedControlText;
 
         /// <summary>
-        ///   Gets or sets a pointer to the string to be used in the footer area of the task dialog. This parameter can be either a 
-        ///   <c>null</c>-terminated string or an integer resource identifier passed to the MAKEINTRESOURCE
+        ///   Gets or sets a pointer to the string to be used in the footer area of the task dialog. This parameter can
+        ///   be either a <c>null</c>-terminated string or an integer resource identifier passed to the MAKEINTRESOURCE
         ///   macro. If the EnableHyperlinks flag is specified for the flags member, then this string may contain
         ///   hyperlinks in this form.
         /// </summary>
@@ -52,20 +70,27 @@ namespace System.Windows.Dialogs
         internal string Footer;
 
         /// <summary>
-        ///   Gets or sets a pointer that references the string to be used for the main instruction. This parameter can be either a <c>null</c>-terminated string or an integer resource identifier passed to the MAKEINTRESOURCE macro.
+        ///   Gets or sets a pointer that references the string to be used for the main instruction. This parameter can
+        ///   be either a <c>null</c>-terminated string or an integer resource identifier passed to the MAKEINTRESOURCE
+        ///   macro.
         /// </summary>
         [MarshalAs(UnmanagedType.LPWStr)]
         internal string MainInstruction;
 
         /// <summary>
-        ///   Gets or sets a pointer that references the string to be used to label the verification <c>CheckBox</c>. This parameter can be either a <c>null</c>-terminated string or an integer resource identifier passed to the MAKEINTRESOURCE macro. If this parameter is <c>null</c>, the verification <see
-        ///    cref="CheckBox" /> is not displayed in the task dialog. If the VerificationFlagChecked parameter of TaskDialogIndirect is <c>null</c>, the <c>CheckBox</c> is not enabled.
+        ///   Gets or sets a pointer that references the string to be used to label the verification <c>CheckBox</c>.
+        ///   This parameter can be either a <c>null</c>-terminated string or an integer resource identifier passed to
+        ///   the MAKEINTRESOURCE macro. If this parameter is <c>null</c>, the verification <see
+        ///    cref="CheckBox" /> is not displayed in the task dialog. If the VerificationFlagChecked parameter of
+        ///    TaskDialogIndirect is <c>null</c>, the <c>CheckBox</c> is not enabled.
         /// </summary>
         [MarshalAs(UnmanagedType.LPWStr)]
         internal string VerificationText;
 
         /// <summary>
-        ///   Gets or sets a pointer that references the string to be used for the task dialog title. This parameter can be either a <c>null</c>-terminated string or an integer resource identifier passed to the MakeIntResource macro. If this parameter is <c>null</c>, the filename of the executable program is used.
+        ///   Gets or sets a pointer that references the string to be used for the task dialog title. This parameter can
+        ///   be either a <c>null</c>-terminated string or an integer resource identifier passed to the MakeIntResource
+        ///   macro. If this parameter is <c>null</c>, the filename of the executable program is used.
         /// </summary>
         [MarshalAs(UnmanagedType.LPWStr)]
         internal string WindowTitle;
@@ -73,7 +98,7 @@ namespace System.Windows.Dialogs
         #region Destructor
 
         /// <summary>
-        ///   Finalizes an instance of the <see cref="TaskDialogConfig" /> class.
+        ///   Finalizes an instance of the <c>TaskDialogConfig</c> class.
         /// </summary>
         ~TaskDialogConfig()
         {
@@ -83,7 +108,9 @@ namespace System.Windows.Dialogs
         #endregion
 
         /// <summary>
-        ///   Gets or sets a the push buttons displayed in the task dialog. If no common buttons are specified and no custom buttons are specified using the buttons and pButtons members, the task dialog will contain the OK button by default.
+        ///   Gets or sets a the push buttons displayed in the task dialog. If no common buttons are specified and no
+        ///   custom buttons are specified using the buttons and pButtons members, the task dialog will contain the OK
+        ///   button by default.
         /// </summary>
         internal TaskDialogCommonButtonFlags CommonButtons { get; set; }
 
@@ -120,14 +147,16 @@ namespace System.Windows.Dialogs
         internal TaskDialogFlags Flags { get; set; }
 
         /// <summary>
-        ///   Gets or sets the number of entries in the buttons array that is used to create buttons or command links in the dialog. If this member is zero and no common buttons have been specified using the <c>CommonButtons</c> member, then the task dialog will have a single OK button displayed.
+        ///   Gets or sets the number of entries in the buttons array that is used to create buttons or command links in
+        ///   the dialog. If this member is zero and no common buttons have been specified using the
+        ///   <c>CommonButtons</c> member, then the task dialog will have a single OK button displayed.
         /// </summary>
         internal uint ButtonLength { get; set; }
 
         /// <summary>
-        ///   Gets or sets a pointer to an array of <c>TaskDialogButton</c> structures containing the
-        ///   definition of the custom buttons that are to be displayed in the dialog. This array must contain at least
-        ///   the number of entries that are specified by the buttons member.
+        ///   Gets or sets a pointer to an array of <c>TaskDialogButton</c> structures containing the definition of the
+        ///   custom buttons that are to be displayed in the dialog. This array must contain at least the number of
+        ///   entries that are specified by the buttons member.
         /// </summary>
         internal IntPtr ButtonCollection { get; set; }
 
@@ -139,15 +168,15 @@ namespace System.Windows.Dialogs
         internal int DefaultButton { get; set; }
 
         /// <summary>
-        ///   Gets or sets the number of entries in the <c>RadioButtonCollection</c> that is used to create
-        ///   radio buttons in the dialog.
+        ///   Gets or sets the number of entries in the <c>RadioButtonCollection</c> that is used to create radio
+        ///   buttons in the dialog.
         /// </summary>
         internal uint RadioButtonsLength { get; set; }
 
         /// <summary>
-        ///   Gets or sets a pointer to an array of <c>TaskDialogButton</c> structures containing the
-        ///   definition of the radio buttons that are to be displayed in the dialog. This array must contain at least
-        ///   the number of entries that are specified by the cRadioButtons member. This parameter can be <c>null</c>.
+        ///   Gets or sets a pointer to an array of <c>TaskDialogButton</c> structures containing the definition of the
+        ///   radio buttons that are to be displayed in the dialog. This array must contain at least the number of
+        ///   entries that are specified by the cRadioButtons member. This parameter can be <c>null</c>.
         /// </summary>
         internal IntPtr RadioButtonCollection { get; set; }
 
@@ -168,7 +197,8 @@ namespace System.Windows.Dialogs
         internal IntPtr CallbackData { get; set; }
 
         /// <summary>
-        ///   Gets or sets the width of the task dialog's client area. If 0, the task dialog manager will calculate the ideal width.
+        ///   Gets or sets the width of the task dialog's client area. If 0, the task dialog manager will calculate the
+        ///   ideal width.
         /// </summary>
         internal uint Width { get; set; }
 

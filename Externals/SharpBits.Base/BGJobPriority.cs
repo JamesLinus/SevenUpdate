@@ -10,8 +10,8 @@
 namespace SharpBits.Base
 {
     /// <summary>
-    ///   The BG_JOB_PRIORITY enumeration type defines the constant values that you use to specify the priority
-    ///   level of the job.
+    ///   The BG_JOB_PRIORITY enumeration type defines the constant values that you use to specify the priority level of
+    ///   the job.
     /// </summary>
     internal enum BGJobPriority
     {

@@ -5,15 +5,12 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//    Seven Update is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//    Seven Update is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
+//    License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any
+//    later version. Seven Update is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+//    even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//    You should have received a copy of the GNU General Public License
+//    GNU General Public License for more details. You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
@@ -67,13 +64,13 @@ namespace SevenUpdate.Sdk.Pages
         #region Methods
 
         /// <summary>
-        ///   Updates the UI based on the <see cref="TreeViewItem" /> selected.
+        ///   Updates the UI based on the <c>TreeViewItem</c> selected.
         /// </summary>
         /// <param name="sender">
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="EventArgs" /> instance containing the event data.
+        ///   The <c>EventArgs</c> instance containing the event data.
         /// </param>
         private void ChangeUI(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
@@ -128,13 +125,13 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>
-        ///   Deletes an item from the <see cref="TreeView" /> and Project collection.
+        ///   Deletes an item from the <c>TreeView</c> and Project collection.
         /// </summary>
         /// <param name="sender">
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.
         /// </param>
         private void DeleteItem(object sender, RoutedEventArgs e)
         {
@@ -182,7 +179,7 @@ namespace SevenUpdate.Sdk.Pages
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.
         /// </param>
         private void EditSelectedItem(object sender, RoutedEventArgs e)
         {
@@ -232,13 +229,13 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>
-        ///   Loads the collection of <see cref="Project" />'s into the UI.
+        ///   Loads the collection of <c>Project</c>'s into the UI.
         /// </summary>
         /// <param name="sender">
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.
         /// </param>
         private void LoadUI(object sender, RoutedEventArgs e)
         {
@@ -252,7 +249,7 @@ namespace SevenUpdate.Sdk.Pages
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.Input.MouseButtonEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.
         /// </param>
         private void NavigateToSupport(object sender, MouseButtonEventArgs e)
         {
@@ -266,7 +263,7 @@ namespace SevenUpdate.Sdk.Pages
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.
         /// </param>
         private void NewProject(object sender, RoutedEventArgs e)
         {
@@ -274,13 +271,13 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>
-        ///   Creates a new update for the selected <see cref="Project" />.
+        ///   Creates a new update for the selected <c>Project</c>.
         /// </summary>
         /// <param name="sender">
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.
         /// </param>
         private void NewUpdate(object sender, RoutedEventArgs e)
         {
@@ -288,13 +285,13 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>
-        ///   Opens a dialog and saves the <see cref="Sua" /> for the selected project.
+        ///   Opens a dialog and saves the <c>Sua</c> for the selected project.
         /// </summary>
         /// <param name="sender">
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.
         /// </param>
         private void ReleaseSua(object sender, RoutedEventArgs e)
         {
@@ -324,7 +321,7 @@ namespace SevenUpdate.Sdk.Pages
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.
         /// </param>
         private void ReleaseSui(object sender, RoutedEventArgs e)
         {
@@ -349,13 +346,13 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>
-        ///   Selects the <see cref="TreeViewItem" /> when right clicking on the <see cref="TreeView" />.
+        ///   Selects the <c>TreeViewItem</c> when right clicking on the <c>TreeView</c>.
         /// </summary>
         /// <param name="sender">
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.Input.MouseButtonEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.
         /// </param>
         private void SelectedItemOnRightClick(object sender, MouseButtonEventArgs e)
         {
@@ -393,7 +390,7 @@ namespace SevenUpdate.Sdk.Pages
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.Input.MouseButtonEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.
         /// </param>
         private void ShowAboutDialog(object sender, MouseButtonEventArgs e)
         {
@@ -408,7 +405,7 @@ namespace SevenUpdate.Sdk.Pages
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="CompositionChangedEventArgs" /> instance containing the event data.
+        ///   The <c>CompositionChangedEventArgs</c> instance containing the event data.
         /// </param>
         private void UpdateUI(object sender, CompositionChangedEventArgs e)
         {

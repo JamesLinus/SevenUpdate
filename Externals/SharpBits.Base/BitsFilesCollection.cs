@@ -13,7 +13,7 @@ namespace SharpBits.Base
     using System.Collections.ObjectModel;
 
     /// <summary>
-    ///   Collection of <see cref="BitsFile" />.
+    ///   Collection of <c>BitsFile</c>.
     /// </summary>
     public sealed class BitsFilesCollection : Collection<BitsFile>, IDisposable
     {
@@ -39,7 +39,7 @@ namespace SharpBits.Base
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="BitsFilesCollection" /> class.
+        ///   Initializes a new instance of the <c>BitsFilesCollection</c> class.
         /// </summary>
         /// <param name="job">
         ///   The current job.
@@ -76,7 +76,7 @@ namespace SharpBits.Base
         #region Methods
 
         /// <summary>
-        ///   Refreshes the <see cref="BitsFile" /> collection.
+        ///   Refreshes the <c>BitsFile</c> collection.
         /// </summary>
         internal void Refresh()
         {
@@ -100,7 +100,8 @@ namespace SharpBits.Base
         ///   Releases unmanaged and - optionally - managed resources.
         /// </summary>
         /// <param name="disposing">
-        ///   <c>True</c> to release both managed and unmanaged resources; otherwise, <c>False</c> to release only unmanaged resources.
+        ///   <c>True</c> to release both managed and unmanaged resources; otherwise, <c>False</c> to release only
+        ///   unmanaged resources.
         /// </param>
         private void Dispose(bool disposing)
         {

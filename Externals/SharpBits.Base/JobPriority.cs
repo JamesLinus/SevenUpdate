@@ -10,7 +10,7 @@
 namespace SharpBits.Base
 {
     /// <summary>
-    ///   The <see cref="BitsJob" /> priority.
+    ///   The <c>BitsJob</c> priority.
     /// </summary>
     public enum JobPriority
     {

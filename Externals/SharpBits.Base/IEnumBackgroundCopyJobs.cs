@@ -12,9 +12,8 @@ namespace SharpBits.Base
     using System.Runtime.InteropServices;
 
     /// <summary>
-    ///   Use the IEnumBackgroundCopyJobs interface to enumerate the list of jobs in the transfer queue. To get an
-    ///   <see cref="IEnumBackgroundCopyJobs" /> interface pointer, call the <see cref="IBackgroundCopyManager" />::
-    ///   EnumJobs method.
+    ///   Use the IEnumBackgroundCopyJobs interface to enumerate the list of jobs in the transfer queue. To get an <see
+    ///   cref="IEnumBackgroundCopyJobs" /> interface pointer, call the <c>IBackgroundCopyManager</c>:: EnumJobs method.
     /// </summary>
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
     [GuidAttribute("1AF4F612-3B71-466F-8F58-7B6F73AC57AD")]
@@ -28,11 +27,13 @@ namespace SharpBits.Base
         ///   Number of elements requested.
         /// </param>
         /// <param name="copyJob">
-        ///   Array of <see cref="IBackgroundCopyJob" /> objects. You must release each object in <paramref name = "copyJob" /> when done.
+        ///   Array of <c>IBackgroundCopyJob</c> objects. You must release each object in <paramref name = "copyJob" />
+        ///   when done.
         /// </param>
         /// <param name="celtFetched">
-        ///   Number of elements returned in <paramref name = "copyJob" />. You can set fetched to <c>null</c> if <paramref
-        ///    name = "copyJob" /> is one. Otherwise, initialize the value of fetched to 0 before calling this method.
+        ///   Number of elements returned in <paramref name="copyJob" />. You can set fetched to <c>null</c> if
+        ///   <paramref
+        ///    name="copyJob" /> is one. Otherwise, initialize the value of fetched to 0 before calling this method.
         /// </param>
         void Next(uint celt, [MarshalAs(UnmanagedType.Interface)] out IBackgroundCopyJob copyJob, out uint celtFetched);
 
@@ -53,7 +54,8 @@ namespace SharpBits.Base
         ///   Creates another enumerator that contains the same enumeration state as the current one.
         /// </summary>
         /// <param name="enum">
-        ///   Receives the interface pointer to the enumeration object. If the method is unsuccessful, the value of this output variable is undefined. You must release enumJobs when done.
+        ///   Receives the interface pointer to the enumeration object. If the method is unsuccessful, the value of this
+        ///   output variable is undefined. You must release enumJobs when done.
         /// </param>
         void Clone([MarshalAs(UnmanagedType.Interface)] out IEnumBackgroundCopyJobs @enum);
 

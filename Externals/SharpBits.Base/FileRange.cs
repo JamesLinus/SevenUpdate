@@ -17,7 +17,7 @@ namespace SharpBits.Base
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="FileRange" /> class.
+        ///   Initializes a new instance of the <c>FileRange</c> class.
         /// </summary>
         /// <param name="initialOffset">
         ///   The initial offset.
@@ -31,7 +31,7 @@ namespace SharpBits.Base
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="FileRange" /> class.
+        ///   Initializes a new instance of the <c>FileRange</c> class.
         /// </summary>
         /// <param name="fileRange">
         ///   The file range.

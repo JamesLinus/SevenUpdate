@@ -10,7 +10,7 @@
 namespace SharpBits.Base
 {
     /// <summary>
-    ///   Specifies the owner of the current <see cref="BitsJob" />.
+    ///   Specifies the owner of the current <c>BitsJob</c>.
     /// </summary>
     public enum JobOwner
     {

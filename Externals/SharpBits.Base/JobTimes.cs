@@ -12,7 +12,7 @@ namespace SharpBits.Base
     using System;
 
     /// <summary>
-    ///   Data containing various <see cref="DateTime" />'s about the <see cref="BitsJob" />.
+    ///   Data containing various <c>DateTime</c>'s about the <c>BitsJob</c>.
     /// </summary>
     public class JobTimes
     {
@@ -28,7 +28,7 @@ namespace SharpBits.Base
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="JobTimes" /> class.
+        ///   Initializes a new instance of the <c>JobTimes</c> class.
         /// </summary>
         /// <param name="jobTimes">
         ///   The job times.

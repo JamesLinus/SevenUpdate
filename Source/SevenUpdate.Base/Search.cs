@@ -5,15 +5,12 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//    Seven Update is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//    Seven Update is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
+//    License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any
+//    later version. Seven Update is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+//    even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//    You should have received a copy of the GNU General Public License
+//    GNU General Public License for more details. You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
@@ -205,7 +202,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        ///   Manually sets an <see cref="Sui" /> collection has updates found.
+        ///   Manually sets an <c>Sui</c> collection has updates found.
         /// </summary>
         /// <param name="updates">
         ///   The updates to set as found.
@@ -306,7 +303,8 @@ namespace SevenUpdate
                     // ReSharper restore ForCanBeConvertedToForeach
                 }
 
-                // If the update does not have any files or if the update only contains execute and delete, then let's remove the update.
+                // If the update does not have any files or if the update only contains execute and delete, then let's
+                // remove the update.
                 if (app.Updates[y].Files.Count == 0 || remove)
                 {
                     app.Updates.Remove(app.Updates[y]);
@@ -394,12 +392,8 @@ namespace SevenUpdate
                                 z--;
                             }
 
-                            // else if (Utilities.GetHash(downloadFile) != update.Files[z].Hash)
-                            // {
-                            // if (update.Files[z].Action != FileAction.CompareOnly)
-                            // {
-                            // size += update.Files[z].FileSize;
-                            // }
+                            // else if (Utilities.GetHash(downloadFile) != update.Files[z].Hash) { if
+                            // (update.Files[z].Action != FileAction.CompareOnly) { size += update.Files[z].FileSize; }
                             // }
                             break;
                     }
@@ -445,10 +439,8 @@ namespace SevenUpdate
                                 z--;
                             }
 
-                            // else if (Utilities.GetHash(downloadFile) != update.Files[z].Hash)
-                            // {
-                            // size += update.Files[z].FileSize;
-                            // }
+                            // else if (Utilities.GetHash(downloadFile) != update.Files[z].Hash) { size +=
+                            // update.Files[z].FileSize; }
                             break;
                     }
                 }

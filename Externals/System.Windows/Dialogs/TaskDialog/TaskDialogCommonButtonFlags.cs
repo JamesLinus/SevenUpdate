@@ -8,7 +8,9 @@
 namespace System.Windows.Dialogs
 {
     /// <summary>
-    ///   Specifies the push buttons displayed in the task dialog. If no common buttons are specified and no custom buttons are specified using the Buttons and Buttons members, the task dialog will contain the OK button by default.
+    ///   Specifies the push buttons displayed in the task dialog. If no common buttons are specified and no custom
+    ///   buttons are specified using the Buttons and Buttons members, the task dialog will contain the OK button by
+    ///   default.
     /// </summary>
     [Flags]
     internal enum TaskDialogCommonButtonFlags
@@ -29,7 +31,8 @@ namespace System.Windows.Dialogs
         NoButton = 0x0004,
 
         /// <summary>
-        ///   The task dialog contains the push button: Cancel. If this button is specified, the task dialog will respond to typical cancel actions (Alt-F4 and Escape).
+        ///   The task dialog contains the push button: Cancel. If this button is specified, the task dialog will
+        ///   respond to typical cancel actions (Alt-F4 and Escape).
         /// </summary>
         CancelButton = 0x0008,
 

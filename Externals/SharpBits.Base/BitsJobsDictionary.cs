@@ -16,7 +16,7 @@ namespace SharpBits.Base
     using System.Security.Permissions;
 
     /// <summary>
-    ///   The collection of <see cref="BitsJob" />'s.
+    ///   The collection of <c>BitsJob</c>'s.
     /// </summary>
     [Serializable]
     public sealed class BitsJobsDictionary : Dictionary<Guid, BitsJob>, IDisposable
@@ -47,7 +47,7 @@ namespace SharpBits.Base
         // only required for initialization
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="BitsJobsDictionary" /> class.
+        ///   Initializes a new instance of the <c>BitsJobsDictionary</c> class.
         /// </summary>
         /// <param name="manager">
         ///   The manager.
@@ -58,7 +58,7 @@ namespace SharpBits.Base
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="BitsJobsDictionary" /> class.
+        ///   Initializes a new instance of the <c>BitsJobsDictionary</c> class.
         /// </summary>
         /// <param name="manager">
         ///   The manager.
@@ -74,7 +74,7 @@ namespace SharpBits.Base
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="BitsJobsDictionary" /> class.
+        ///   Initializes a new instance of the <c>BitsJobsDictionary</c> class.
         /// </summary>
         /// <param name="info">
         ///   The serialization info.
@@ -168,7 +168,8 @@ namespace SharpBits.Base
         ///   Releases unmanaged and - optionally - managed resources.
         /// </summary>
         /// <param name="disposing">
-        ///   <c>True</c> to release both managed and unmanaged resources; otherwise, <c>False</c> to release only unmanaged resources.
+        ///   <c>True</c> to release both managed and unmanaged resources; otherwise, <c>False</c> to release only
+        ///   unmanaged resources.
         /// </param>
         private void Dispose(bool disposing)
         {
@@ -189,7 +190,7 @@ namespace SharpBits.Base
         }
 
         /// <summary>
-        ///   Updates the <see cref="BitsJob" /> collection.
+        ///   Updates the <c>BitsJob</c> collection.
         /// </summary>
         private void Update()
         {

@@ -14,8 +14,8 @@ namespace SharpBits.Base
     using System.Threading;
 
     /// <summary>
-    ///   Use the <see cref="IBackgroundCopyManager" /> interface to create transfer jobs, retrieve an enumerator
-    ///   object that contains the jobs in the queue, and to retrieve individual jobs from the queue.
+    ///   Use the <c>IBackgroundCopyManager</c> interface to create transfer jobs, retrieve an enumerator object that
+    ///   contains the jobs in the queue, and to retrieve individual jobs from the queue.
     /// </summary>
     public sealed class BitsManager : IDisposable
     {
@@ -217,14 +217,16 @@ namespace SharpBits.Base
         ///   Creates a new transfer job.
         /// </summary>
         /// <param name="displayName">
-        ///   Null-terminated string that contains a display name for the job. Typically, the display name is used to identify the job in a user interface. Note that more than one job may have the same display name. Must not be <c>null</c>.The name is limited to 256 characters, not including the <c>null</c> terminator.
+        ///   Null-terminated string that contains a display name for the job. Typically, the display name is used to
+        ///   identify the job in a user interface. Note that more than one job may have the same display name. Must not
+        ///   be <c>null</c>.The name is limited to 256 characters, not including the <c>null</c> terminator.
         /// </param>
         /// <param name="jobType">
-        ///   Type of transfer job, such as <see cref="JobType" />.Download. For a list of transfer types, see the <see
+        ///   Type of transfer job, such as <c>JobType</c>.Download. For a list of transfer types, see the <see
         ///    cref="JobType" /> enumeration.
         /// </param>
         /// <returns>
-        ///   The <see cref="BitsJob" /> created.
+        ///   The <c>BitsJob</c> created.
         /// </returns>
         public BitsJob CreateJob(string displayName, JobType jobType)
         {
@@ -247,7 +249,7 @@ namespace SharpBits.Base
         }
 
         /// <summary>
-        ///   Enumerates the collection of <see cref="BitsJob" />, it also completes any job that has finished.
+        ///   Enumerates the collection of <c>BitsJob</c>, it also completes any job that has finished.
         /// </summary>
         /// <param name="jobOwner">
         ///   The job owner.
@@ -331,7 +333,8 @@ namespace SharpBits.Base
         ///   Releases unmanaged and - optionally - managed resources.
         /// </summary>
         /// <param name="disposing">
-        ///   <c>True</c> to release both managed and unmanaged resources; otherwise, <c>False</c> to release only unmanaged resources.
+        ///   <c>True</c> to release both managed and unmanaged resources; otherwise, <c>False</c> to release only
+        ///   unmanaged resources.
         /// </param>
         private void Dispose(bool disposing)
         {
@@ -378,7 +381,7 @@ namespace SharpBits.Base
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="SharpBits.Base.ErrorNotificationEventArgs" /> instance containing the event data.
+        ///   The <c>SharpBits.Base.ErrorNotificationEventArgs</c> instance containing the event data.
         /// </param>
         private void NotificationHandlerOnJobErrorEvent(object sender, ErrorNotificationEventArgs e)
         {
@@ -403,7 +406,7 @@ namespace SharpBits.Base
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="NotificationEventArgs" /> instance containing the event data.
+        ///   The <c>NotificationEventArgs</c> instance containing the event data.
         /// </param>
         private void NotificationHandlerOnJobModifiedEvent(object sender, NotificationEventArgs e)
         {
@@ -428,7 +431,7 @@ namespace SharpBits.Base
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="NotificationEventArgs" /> instance containing the event data.
+        ///   The <c>NotificationEventArgs</c> instance containing the event data.
         /// </param>
         private void NotificationHandlerOnJobTransferredEvent(object sender, NotificationEventArgs e)
         {

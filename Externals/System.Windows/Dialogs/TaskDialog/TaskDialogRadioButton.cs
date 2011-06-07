@@ -8,7 +8,7 @@
 namespace System.Windows.Dialogs
 {
     /// <summary>
-    ///   Defines a radio button that can be hosted in by a <see cref="TaskDialog" /> object.
+    ///   Defines a radio button that can be hosted in by a <c>TaskDialog</c> object.
     /// </summary>
     public class TaskDialogRadioButton : TaskDialogButtonBase
     {
@@ -22,13 +22,13 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="TaskDialogRadioButton" /> class.
+        ///   Initializes a new instance of the <c>TaskDialogRadioButton</c> class.
         /// </summary>
         /// <param name="name">
         ///   The name for this control.
         /// </param>
         /// <param name="text">
-        ///   The value for this controls<see cref="TaskDialogButtonBase.Text" /> property.
+        ///   The value for this controls<c>TaskDialogButtonBase.Text</c> property.
         /// </param>
         protected TaskDialogRadioButton(string name, string text) : base(name, text)
         {

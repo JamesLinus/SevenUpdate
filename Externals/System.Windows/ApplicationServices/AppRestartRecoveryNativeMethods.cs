@@ -45,7 +45,8 @@ namespace System.Windows.ApplicationServices
         ///   Indicates that the calling application is continuing to recover data.
         /// </summary>
         /// <param name="canceled">
-        ///   Indicates whether the user has canceled the recovery process. Set by WER if the user clicks the Cancel button.
+        ///   Indicates whether the user has canceled the recovery process. Set by WER if the user clicks the Cancel
+        ///   button.
         /// </param>
         /// <returns>
         ///   S_OK if function succeeded, otherwise the error result.
@@ -56,7 +57,8 @@ namespace System.Windows.ApplicationServices
             [Out] [MarshalAs(UnmanagedType.Bool)] out bool canceled);
 
         /// <summary>
-        ///   Retrieves a pointer to the callback routine registered for the specified process. The address returned is in the virtual address space of the process.
+        ///   Retrieves a pointer to the callback routine registered for the specified process. The address returned is
+        ///   in the virtual address space of the process.
         /// </summary>
         /// <param name="callback">
         ///   A pointer to the recovery callback function.
@@ -82,7 +84,8 @@ namespace System.Windows.ApplicationServices
         ///   Registers the active instance of an application for restart.
         /// </summary>
         /// <param name="commandLineArgs">
-        ///   A pointer to a Unicode string that specifies the command-line arguments for the application when it is restarted.
+        ///   A pointer to a Unicode string that specifies the command-line arguments for the application when it is
+        ///   restarted.
         /// </param>
         /// <param name="flags">
         ///   The flags.

@@ -25,7 +25,8 @@ namespace WPFLocalizeExtension.Extensions
     ///   Represents a OddsFormatExtension which provides a formated decimal odds value.
     /// </summary>
     /// <remarks>
-    ///   If a content between two tags in Xaml is set, this has the higher priority and will overwrite the settled properties
+    ///   If a content between two tags in Xaml is set, this has the higher priority and will overwrite the settled
+    ///   properties
     /// </remarks>
     [MarkupExtensionReturnType(typeof(string))]
     [ContentProperty("ResourceIdentifierKey")]
@@ -53,13 +54,15 @@ namespace WPFLocalizeExtension.Extensions
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="OddsFormatExtension" /> class.Initialize the <c>BaseLocalizeExtension"</c>.
+        ///   Initializes a new instance of the <c>OddsFormatExtension</c> class.Initialize the
+        ///   <c>BaseLocalizeExtension"</c>.
         /// </summary>
         /// <param name="displayValue">
         ///   The display Value.
         /// </param>
         /// <remarks>
-        ///   This constructor register the <see cref="EventHandler" /><c>OnCultureChanged</c> on <c>LocalizeDictionary</c>to get an acknowledge of changing the culture.
+        ///   This constructor register the <c>EventHandler</c><c>OnCultureChanged</c> on <c>LocalizeDictionary</c>to
+        ///   get an acknowledge of changing the culture.
         /// </remarks>
         public OddsFormatExtension(decimal displayValue) : this()
         {
@@ -67,7 +70,8 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>
-        ///   Prevents a default instance of the OddsFormatExtension class from being created. Initialize the <c>BaseLocalizeExtension</c>.
+        ///   Prevents a default instance of the OddsFormatExtension class from being created. Initialize the
+        ///   <c>BaseLocalizeExtension</c>.
         /// </summary>
         private OddsFormatExtension()
         {
@@ -143,7 +147,7 @@ namespace WPFLocalizeExtension.Extensions
         #region Public Methods
 
         /// <summary>
-        ///   Converts a decimal odds into a localized odds string in the current <see cref="OddsFormatType" />.
+        ///   Converts a decimal odds into a localized odds string in the current <c>OddsFormatType</c>.
         /// </summary>
         /// <param name="sourceOdds">
         ///   The source odds.
@@ -158,7 +162,7 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>
-        ///   Converts a decimal odds into a localized odds string in the defined <see cref="OddsFormatType" />.
+        ///   Converts a decimal odds into a localized odds string in the defined <c>OddsFormatType</c>.
         /// </summary>
         /// <param name="sourceOdds">
         ///   The source odds.
@@ -178,18 +182,18 @@ namespace WPFLocalizeExtension.Extensions
         ///   Provides the Value for the first Binding.
         /// </summary>
         /// <param name="serviceProvider">
-        ///   The <see cref="IProvideValueTarget" /> provided from the <see cref="MarkupExtension" />.
+        ///   The <c>IProvideValueTarget</c> provided from the <c>MarkupExtension</c>.
         /// </param>
         /// <returns>
         ///   The found item from the .resx directory or <c>null</c> if not found.
         /// </returns>
         /// <remarks>
-        ///   This method register the <see cref="EventHandler" /><c>OnCultureChanged</c> on <c>LocalizeDictionary</c>
-        ///   to get an acknowledge of changing the culture, if the passed <see cref="TargetObjects" /> type of <see
+        ///   This method register the <c>EventHandler</c><c>OnCultureChanged</c> on <c>LocalizeDictionary</c> to get an
+        ///   acknowledge of changing the culture, if the passed <c>TargetObjects</c> type of <see
         ///    cref="DependencyObject" />.
-        ///   !PROOF: On every single <see cref="UserControl" />, Window, and Page,
-        ///   there is a new SparedDP reference, and so there is every time a new <c>BaseLocalizeExtension</c>!
-        ///   Because of this, we don't need to notify every single DependencyObjects to update their value (for GC).
+        ///   !PROOF: On every single <c>UserControl</c>, Window, and Page, there is a new SparedDP reference, and so
+        ///   there is every time a new <c>BaseLocalizeExtension</c>! Because of this, we don't need to notify every
+        ///   single DependencyObjects to update their value (for GC).
         /// </remarks>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
@@ -240,12 +244,13 @@ namespace WPFLocalizeExtension.Extensions
                 // add the target as an dependency object as weak reference to the dependency object list
                 this.targetObjects.Add(new WeakReference(service.TargetObject));
 
-                // adds this localize extension to the ObjectDependencyManager to ensure the lifetime along with the target object
+                // adds this localize extension to the ObjectDependencyManager to ensure the lifetime along with the
+                // target object
                 ObjectDependencyManager.AddObjectDependency(new WeakReference(service.TargetObject), this);
             }
 
-            // if the service.TargetObject is System.Windows.SharedDp (= not a DependencyObject), we return "this".
-            // the SharedDp will call this instance later again.
+            // if the service.TargetObject is System.Windows.SharedDp (= not a DependencyObject), we return "this". the
+            // SharedDp will call this instance later again.
             if (!(service.TargetObject is DependencyObject))
             {
                 // by returning "this", the provide value will be called later again.
@@ -258,7 +263,8 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>
-        ///   Sets a binding between a <see cref="DependencyObject" /> with its<see cref="DependencyProperty" /> and this <c>BaseLocalizeExtension</c>.
+        ///   Sets a binding between a <c>DependencyObject</c> with its<c>DependencyProperty</c> and this
+        ///   <c>BaseLocalizeExtension</c>.
         /// </summary>
         /// <param name="targetObject">
         ///   The target dependency object.
@@ -292,7 +298,8 @@ namespace WPFLocalizeExtension.Extensions
                 // add the target as an dependency object as weak reference to the dependency object list
                 this.targetObjects.Add(new WeakReference(targetObject));
 
-                // adds this localize extension to the ObjectDependencyManager to ensure the lifetime along with the target object
+                // adds this localize extension to the ObjectDependencyManager to ensure the lifetime along with the
+                // target object
                 ObjectDependencyManager.AddObjectDependency(new WeakReference(targetObject), this);
 
                 var oddsString = GetLocalizedOddsString(
@@ -328,7 +335,8 @@ namespace WPFLocalizeExtension.Extensions
         #region IWeakEventListener
 
         /// <summary>
-        ///   This method will be called through the interface, passed to the<see cref="Localize.WeakCultureChangedEventManager" /> to get notified on culture changed.
+        ///   This method will be called through the interface, passed to the<see cref="WeakCultureChangedEventManager"
+        ///   /> to get notified on culture changed.
         /// </summary>
         /// <param name="managerType">
         ///   The manager Type.
@@ -341,12 +349,14 @@ namespace WPFLocalizeExtension.Extensions
         /// </param>
         /// <returns>
         ///   <c>True</c> if the listener handled the event. It is considered an error by the<see
-        ///   cref="T:System.Windows.WeakEventManager" /> handling in WPF�to register a listener for an event that the listener does not handle. Regardless,the method should return <c>False</c> if it receives an event that it does not recognize or handle.
+        ///   cref="T:System.Windows.WeakEventManager" /> handling in WPF�to register a listener for an event that the
+        ///   listener does not handle. Regardless,the method should return <c>False</c> if it receives an event that it
+        ///   does not recognize or handle.
         /// </returns>
         bool IWeakEventListener.ReceiveWeakEvent(Type managerType, object sender, EventArgs e)
         {
             // if the passed handler is type of LocalizeDictionary.WeakCultureChangedEventManager, handle it
-            if (managerType == typeof(OddsFormatManager.WeakOddsFormatChangedEventManager))
+            if (managerType == typeof(WeakOddsFormatChangedEventManager))
             {
                 // call to handle the new value
                 this.HandleNewValue();
@@ -366,7 +376,7 @@ namespace WPFLocalizeExtension.Extensions
         #region Methods
 
         /// <summary>
-        ///   Converts a decimal odds into a localized odds string in the defined <see cref="OddsFormatType" />.
+        ///   Converts a decimal odds into a localized odds string in the defined <c>OddsFormatType</c>.
         /// </summary>
         /// <param name="sourceOdds">
         ///   The source odds.
@@ -381,7 +391,7 @@ namespace WPFLocalizeExtension.Extensions
         ///   The ready to use odds string.
         /// </returns>
         /// <remarks>
-        ///   The specific Culture has to be a "xx-xx" culture to support the value.<see cref="ToString" /> method.
+        ///   The specific Culture has to be a "xx-xx" culture to support the value.<c>ToString</c> method.
         /// </remarks>
         private static string GetLocalizedOddsString(
             decimal sourceOdds, OddsFormatType oddsType, IFormatProvider specificCulture)
@@ -563,10 +573,11 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>
-        ///   If Culture property defines a valid <see cref="CultureInfo" />, a <see cref="CultureInfo" /> instance will get created and returned, otherwise LocalizeDictionary.Culture will get returned.
+        ///   If Culture property defines a valid <c>CultureInfo</c>, a <c>CultureInfo</c> instance will get created and
+        ///   returned, otherwise LocalizeDictionary.Culture will get returned.
         /// </summary>
         /// <returns>
-        ///   The <see cref="CultureInfo" />.
+        ///   The <c>CultureInfo</c>.
         /// </returns>
         private OddsFormatType GetForcedOddsFormatOrDefault()
         {
@@ -574,7 +585,7 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>
-        ///   This method gets the new value for the target property and call <see cref="SetNewValue" />.
+        ///   This method gets the new value for the target property and call <c>SetNewValue</c>.
         /// </summary>
         private void HandleNewValue()
         {
@@ -585,7 +596,7 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>
-        ///   Set the Value of the <see cref="DependencyProperty" /> to the passed Value.
+        ///   Set the Value of the <c>DependencyProperty</c> to the passed Value.
         /// </summary>
         /// <param name="newValue">
         ///   The new Value.

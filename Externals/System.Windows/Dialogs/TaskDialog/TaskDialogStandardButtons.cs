@@ -8,7 +8,7 @@
 namespace System.Windows.Dialogs
 {
     /// <summary>
-    ///   Identifies one of the standard buttons that can be displayed via <see cref="TaskDialog" />.
+    ///   Identifies one of the standard buttons that can be displayed via <c>TaskDialog</c>.
     /// </summary>
     [Flags]
     public enum TaskDialogStandardButtons

@@ -15,10 +15,10 @@ namespace System.Windows.Dialogs
     /// <summary>
     ///   Strongly typed collection for dialog controls.
     /// </summary>
-    /// <typeparam name = "T">
-    ///   The <see cref="DialogControl" />.
+    /// <typeparam name="T">
+    ///   The <c>DialogControl</c>.
     /// </typeparam>
-    /// <typeparameter name = "T">The <see cref="DialogControl" /></typeparameter>
+    /// <typeparameter name="T">The <c>DialogControl</c></typeparameter>
     public sealed class DialogControlCollection<T> : Collection<T> where T : DialogControl
     {
         #region Constants and Fields
@@ -33,7 +33,8 @@ namespace System.Windows.Dialogs
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="DialogControlCollection{T}" /> class. Initializes a new instance of the <see
+        ///   Initializes a new instance of the <c>DialogControlCollection{T}</c> class. Initializes a new
+        ///   instance of the <see
         ///    cref="DialogControlCollection&lt;T&gt;" /> class.
         /// </summary>
         /// <param name="host">
@@ -49,7 +50,8 @@ namespace System.Windows.Dialogs
         #region Methods
 
         /// <summary>
-        ///   Recursively searches for a given control id in the collection passed via the <paramref name = "subControl" /> parameter.
+        ///   Recursively searches for a given control id in the collection passed via the <paramref name="subControl"
+        ///   /> parameter.
         /// </summary>
         /// <param name="subControl">
         ///   A Collection of CommonFileDialogControls.
@@ -58,7 +60,7 @@ namespace System.Windows.Dialogs
         ///   An int containing the identifier of the control being searched for.
         /// </param>
         /// <returns>
-        ///   A <see cref="DialogControl" /> who's Id matches the value of the <paramref name = "id" /> parameter.
+        ///   A <c>DialogControl</c> who's Id matches the value of the <paramref name="id" /> parameter.
         /// </returns>
         internal static DialogControl GetSubControlById(IEnumerable<T> subControl, int id)
         {
@@ -67,18 +69,18 @@ namespace System.Windows.Dialogs
                        ? null
                        : subControl.Cast<DialogControl>().FirstOrDefault(control => control.Id == id);
 
-            // Control id not found - likely an error, but the calling 
-            // function should ultimately decide.
+            // Control id not found - likely an error, but the calling function should ultimately decide.
         }
 
         /// <summary>
-        ///   Recursively searches for the control who's id matches the value passed in the <paramref name = "id" /> parameter.
+        ///   Recursively searches for the control who's id matches the value passed in the <paramref name="id" />
+        ///   parameter.
         /// </summary>
         /// <param name="id">
         ///   An integer containing the identifier of the control being searched for.
         /// </param>
         /// <returns>
-        ///   A <see cref="DialogControl" /> who's id matches the value of the<paramref name = "id" /> parameter.
+        ///   A <c>DialogControl</c> who's id matches the value of the<paramref name="id" /> parameter.
         /// </returns>
         internal DialogControl GetControlById(int id)
         {
@@ -95,12 +97,12 @@ namespace System.Windows.Dialogs
         ///   The item to insert.
         /// </param>
         /// <permission cref="System.InvalidOperationException">
-        ///   A control with the same name already exists in this collection -or- the control is being hosted by another dialog -or- the associated dialog is showing and cannot be modified.
+        ///   A control with the same name already exists in this collection -or- the control is being hosted by another
+        ///   dialog -or- the associated dialog is showing and cannot be modified.
         /// </permission>
         protected override void InsertItem(int index, T control)
         {
-            // Check for duplicates, lack of host, 
-            // and during-show adds.
+            // Check for duplicates, lack of host, and during-show adds.
             if (this.Items.Contains(control))
             {
                 throw new InvalidOperationException("Dialog cannot have more than one control with the same name.");
@@ -136,8 +138,7 @@ namespace System.Windows.Dialogs
         /// </permission>
         protected override void RemoveItem(int index)
         {
-            // Notify that we're about to remove a control.
-            // Throw if dialog showing.
+            // Notify that we're about to remove a control. Throw if dialog showing.
             if (!this.hostingDialog.IsCollectionChangeAllowed())
             {
                 throw new InvalidOperationException(

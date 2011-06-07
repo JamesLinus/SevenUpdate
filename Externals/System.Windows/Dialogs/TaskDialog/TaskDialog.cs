@@ -8,21 +8,16 @@
 namespace System.Windows.Dialogs
 {
     using Collections.Generic;
-
     using Diagnostics;
-
     using Internal;
-
     using Interop;
-
     using Linq;
-
     using Properties;
-
     using Security.Permissions;
 
     /// <summary>
-    ///   Encapsulates a new-to-Vista Win32 TaskDialog window - a powerful successor to the <see cref="MessageBox" /> available in previous versions of Windows.
+    ///   Encapsulates a new-to-Vista Win32 TaskDialog window - a powerful successor to the <c>MessageBox</c> available
+    ///   in previous versions of Windows.
     /// </summary>
     [SecurityPermission(SecurityAction.InheritanceDemand, Flags = SecurityPermissionFlag.UnmanagedCode)]
     public sealed class TaskDialog : IDialogControlHost, IDisposable
@@ -177,7 +172,7 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>
-        ///   Finalizes an instance of the <see cref="TaskDialog" /> class.
+        ///   Finalizes an instance of the <c>TaskDialog</c> class.
         /// </summary>
         ~TaskDialog()
         {
@@ -519,7 +514,8 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>
-        ///   Gets or sets the progress bar on the task dialog. ProgressBar a visual representation of the progress of a long running operation.
+        ///   Gets or sets the progress bar on the task dialog. ProgressBar a visual representation of the progress of a
+        ///   long running operation.
         /// </summary>
         /// <value>The progress bar.</value>
         public TaskDialogProgressBar ProgressBar
@@ -671,7 +667,7 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>
-        ///   Close <see cref="TaskDialog" />.
+        ///   Close <c>TaskDialog</c>.
         /// </summary>
         public void Close()
         {
@@ -682,15 +678,14 @@ namespace System.Windows.Dialogs
 
             this.nativeDialog.NativeClose(TaskDialogResults.Cancel);
 
-            // TaskDialog's own cleanup code - 
-            // which runs post show - will handle disposal of native dialog.
+            // TaskDialog's own cleanup code - which runs post show - will handle disposal of native dialog.
         }
 
         /// <summary>
-        ///   Close <see cref="TaskDialog" /> with a given <see cref="TaskDialogResults" />.
+        ///   Close <c>TaskDialog</c> with a given <c>TaskDialogResults</c>.
         /// </summary>
         /// <param name="closingResult">
-        ///   <see cref="TaskDialogResults" /> to return from the <see cref="TaskDialog" />.Show() method.
+        ///   <c>TaskDialogResults</c> to return from the <c>TaskDialog</c>.Show() method.
         /// </param>
         public void Close(TaskDialogResults closingResult)
         {
@@ -701,8 +696,7 @@ namespace System.Windows.Dialogs
 
             this.nativeDialog.NativeClose(closingResult);
 
-            // TaskDialog's own cleanup code - 
-            // which runs post show - will handle disposal of native dialog.
+            // TaskDialog's own cleanup code - which runs post show - will handle disposal of native dialog.
         }
 
         /// <summary>
@@ -742,15 +736,15 @@ namespace System.Windows.Dialogs
         /// </summary>
         void IDialogControlHost.ApplyCollectionChanged()
         {
-            // If we're showing, we should never get here - 
-            // the changing notification would have thrown and the 
-            // property would not have been changed.
+            // If we're showing, we should never get here - the changing notification would have thrown and the property
+            // would not have been changed.
         }
 
         /// <summary>
-        ///   Called when a control currently in the collection has a property changed.
-        ///   This is basically to screen out property changes that cannot occur while the dialog is showing because the Win32 API has no way for us to propagate the changes until we re-invoke the Win32 call.
-        ///   Called when a control currently in the collection has a property changed - this handles propagating the new property values to the Win32 API. 
+        ///   Called when a control currently in the collection has a property changed. This is basically to screen out
+        ///   property changes that cannot occur while the dialog is showing because the Win32 API has no way for us to
+        ///   propagate the changes until we re-invoke the Win32 call. Called when a control currently in the collection
+        ///   has a property changed - this handles propagating the new property values to the Win32 API. 
         ///   If there isn't a way to change the Win32 value, then we should have already screened out the property set  in NotifyControlPropertyChanging.
         /// </summary>
         /// <param name="propertyName">
@@ -761,8 +755,7 @@ namespace System.Windows.Dialogs
         /// </param>
         void IDialogControlHost.ApplyControlPropertyChange(string propertyName, DialogControl control)
         {
-            // We only need to apply changes to the 
-            // native dialog when it actually exists.
+            // We only need to apply changes to the native dialog when it actually exists.
             if (!this.NativeDialogShowing)
             {
                 return;
@@ -833,15 +826,15 @@ namespace System.Windows.Dialogs
                 return;
             }
 
-            // Do nothing with property change - 
-            // note that this shouldn't ever happen, we should have
-            // either thrown on the changing event, or we handle above.
+            // Do nothing with property change - note that this shouldn't ever happen, we should have either thrown on
+            // the changing event, or we handle above.
             Debug.Assert(true, "Control property changed notification not handled properly - being ignored");
         }
 
         /// <summary>
-        ///   Handle notifications of pseudo-controls being added or removed from the collection. PreFilter should throw if a control cannot be added/removed in the dialog's current state.
-        ///   PostProcess should pass on changes to native control, if appropriate.
+        ///   Handle notifications of pseudo-controls being added or removed from the collection. PreFilter should throw
+        ///   if a control cannot be added/removed in the dialog's current state. PostProcess should pass on changes to
+        ///   native control, if appropriate.
         /// </summary>
         /// <returns>
         ///   <c>True</c> if collection change is allowed.
@@ -853,14 +846,15 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>
-        ///   Handle notifications of individual child pseudo-controls' properties changing. Pre filter should throw if the property cannot be set in the dialog's current state.
-        ///   PostProcess should pass on changes to native control, if appropriate.
+        ///   Handle notifications of individual child pseudo-controls' properties changing. Pre filter should throw if
+        ///   the property cannot be set in the dialog's current state. PostProcess should pass on changes to native
+        ///   control, if appropriate.
         /// </summary>
         /// <param name="propertyName">
         ///   The name of the property.
         /// </param>
         /// <param name="control">
-        ///   The control <paramref name = "propertyName" /> applies to.
+        ///   The control <paramref name="propertyName" /> applies to.
         /// </param>
         /// <returns>
         ///   <c>True</c> if the property change is allowed.
@@ -878,8 +872,8 @@ namespace System.Windows.Dialogs
 
             if (!this.NativeDialogShowing)
             {
-                // Certain properties can't be changed if the dialog is not showing
-                // we need a handle created before we can set these...
+                // Certain properties can't be changed if the dialog is not showing we need a handle created before we
+                // can set these...
                 switch (propertyName)
                 {
                     case "Enabled":
@@ -891,8 +885,7 @@ namespace System.Windows.Dialogs
             }
             else
             {
-                // If the dialog is showing, we can only 
-                // allow some properties to change.
+                // If the dialog is showing, we can only allow some properties to change.
                 switch (propertyName)
                 {
                         // Properties that CAN'T be changed while dialog is showing.
@@ -919,7 +912,7 @@ namespace System.Windows.Dialogs
         #region IDisposable
 
         /// <summary>
-        ///   Dispose <see cref="TaskDialog" /> Resources.
+        ///   Dispose <c>TaskDialog</c> Resources.
         /// </summary>
         public void Dispose()
         {
@@ -944,9 +937,8 @@ namespace System.Windows.Dialogs
             // First check to see if the ID matches a custom button.
             var button = this.GetButtonForId(id);
 
-            // If a custom button was found, 
-            // raise the event - if not, it's a standard button, and
-            // we don't support custom event handling for the standard buttons
+            // If a custom button was found, raise the event - if not, it's a standard button, and we don't support
+            // custom event handling for the standard buttons
             if (button != null)
             {
                 button.RaiseClickEvent();
@@ -954,10 +946,12 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>
-        ///   Raises the closing event.Gives event subscriber a chance to prevent the dialog from closing, based on the current state of the application and the button used to commit. Note that we don't have full access at this stage to the full dialog state.
+        ///   Raises the closing event.Gives event subscriber a chance to prevent the dialog from closing, based on the
+        ///   current state of the application and the button used to commit. Note that we don't have full access at
+        ///   this stage to the full dialog state.
         /// </summary>
         /// <param name="id">
-        ///   The id for the <see cref="TaskDialog" />.
+        ///   The id for the <c>TaskDialog</c>.
         /// </param>
         /// <returns>
         ///   An integer.
@@ -1110,7 +1104,7 @@ namespace System.Windows.Dialogs
         ///   The native.
         /// </param>
         /// <returns>
-        ///   The <see cref="TaskDialogResults" />.
+        ///   The <c>TaskDialogResults</c>.
         /// </returns>
         private static TaskDialogResults ConstructDialogResult(NativeTaskDialog native)
         {
@@ -1155,7 +1149,7 @@ namespace System.Windows.Dialogs
         ///   The button id.
         /// </param>
         /// <returns>
-        ///   The <see cref="TaskDialogButton" />.
+        ///   The <c>TaskDialogButton</c>.
         /// </returns>
         private static TaskDialogStandardButtons MapButtonIdToStandardButton(int id)
         {
@@ -1167,15 +1161,13 @@ namespace System.Windows.Dialogs
                     return TaskDialogStandardButtons.Cancel;
                 case TaskDialogCommonButtonReturnId.Abort:
 
-                    // Included for completeness in API - 
-                    // we can't pass in an Abort standard button.
+                    // Included for completeness in API - we can't pass in an Abort standard button.
                     return TaskDialogStandardButtons.None;
                 case TaskDialogCommonButtonReturnId.Retry:
                     return TaskDialogStandardButtons.Retry;
                 case TaskDialogCommonButtonReturnId.Ignore:
 
-                    // Included for completeness in API - 
-                    // we can't pass in an Ignore standard button.
+                    // Included for completeness in API - we can't pass in an Ignore standard button.
                     return TaskDialogStandardButtons.None;
                 case TaskDialogCommonButtonReturnId.Yes:
                     return TaskDialogStandardButtons.Yes;
@@ -1189,7 +1181,7 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>
-        ///   Shows the <see cref="TaskDialog" />.
+        ///   Shows the <c>TaskDialog</c>.
         /// </summary>
         /// <param name="text">
         ///   The text to show.
@@ -1201,7 +1193,7 @@ namespace System.Windows.Dialogs
         ///   The caption.
         /// </param>
         /// <returns>
-        ///   The <see cref="TaskDialogResults" />.
+        ///   The <c>TaskDialogResults</c>.
         /// </returns>
         private static TaskDialogResults ShowCoreStatic(string text, string instructionText, string caption)
         {
@@ -1214,13 +1206,12 @@ namespace System.Windows.Dialogs
             // If no instance cached yet, create it.
             if (staticDialog == null)
             {
-                // New TaskDialog will automatically pick up defaults when 
-                // a new config structure is created as part of ShowCore().
+                // New TaskDialog will automatically pick up defaults when a new config structure is created as part of
+                // ShowCore().
                 staticDialog = new TaskDialog();
             }
 
-            // Set the few relevant properties, 
-            // and go with the defaults for the others.
+            // Set the few relevant properties, and go with the defaults for the others.
             staticDialog.text = text;
             staticDialog.instructionText = instructionText;
             staticDialog.caption = caption;
@@ -1249,27 +1240,21 @@ namespace System.Windows.Dialogs
                 }
             }
 
-            // Build the native struct arrays that NativeTaskDialog 
-            // needs - though NTD will handle
-            // the heavy lifting marshalling to make sure 
-            // all the cleanup is centralized there.
+            // Build the native struct arrays that NativeTaskDialog needs - though NTD will handle the heavy lifting
+            // marshalling to make sure all the cleanup is centralized there.
             if (this.buttons.Count > 0 || this.commandLinks.Count > 0)
             {
-                // These are the actual arrays/lists of 
-                // the structs that we'll copy to the 
-                // unmanaged heap.
+                // These are the actual arrays/lists of the structs that we'll copy to the unmanaged heap.
                 var sourceList = this.buttons.Count > 0 ? this.buttons : this.commandLinks;
                 settings.SetButtons(BuildButtonStructArray(sourceList));
 
-                // Apply option flag that forces all 
-                // custom buttons to render as command links.
+                // Apply option flag that forces all custom buttons to render as command links.
                 if (this.commandLinks.Count > 0)
                 {
                     settings.NativeConfiguration.Flags |= TaskDialogFlags.UseCommandLinks;
                 }
 
-                // Set default button and add elevation icons 
-                // to appropriate buttons.
+                // Set default button and add elevation icons to appropriate buttons.
                 settings.NativeConfiguration.DefaultButton = FindDefaultButtonId(sourceList);
 
                 ApplyElevatedIcons(settings, sourceList);
@@ -1314,8 +1299,7 @@ namespace System.Windows.Dialogs
         /// </param>
         private void ApplyGeneralNativeConfiguration(TaskDialogConfig dialogConfig)
         {
-            // If an owner wasn't specifically specified, 
-            // we'll use the program main window.
+            // If an owner wasn't specifically specified, we'll use the program main window.
             if (this.ownerWindow != IntPtr.Zero)
             {
                 dialogConfig.HandleParent = this.ownerWindow;
@@ -1367,11 +1351,8 @@ namespace System.Windows.Dialogs
                 options |= TaskDialogFlags.PositionRelativeToWindow;
             }
 
-            // Note: no validation required, as we allow this to 
-            // be set even if there is no expanded information 
-            // text because that could be added later.
-            // Default for Win32 API is to expand into (and after) 
-            // the content area.
+            // Note: no validation required, as we allow this to be set even if there is no expanded information text
+            // because that could be added later. Default for Win32 API is to expand into (and after) the content area.
             if (this.expansionMode == TaskDialogExpandedDetailsLocation.ExpandFooter)
             {
                 options |= TaskDialogFlags.ExpandFooterArea;
@@ -1409,7 +1390,7 @@ namespace System.Windows.Dialogs
         ///   Sets important text properties.
         /// </summary>
         /// <param name="dialogConfig">
-        ///   An instance of a <see cref="TaskDialogConfig" /> object.
+        ///   An instance of a <c>TaskDialogConfig</c> object.
         /// </param>
         private void ApplyTextConfiguration(TaskDialogConfig dialogConfig)
         {
@@ -1424,29 +1405,24 @@ namespace System.Windows.Dialogs
             dialogConfig.VerificationText = this.checkBoxText;
         }
 
-        // Cleans up data and structs from a single 
-        // native dialog Show() invocation.
+        // Cleans up data and structs from a single native dialog Show() invocation.
 
-        // Dispose pattern - cleans up data and structs for 
-        // a) any native dialog currently showing, and
-        // b) anything else that the outer TaskDialog has.
+        // Dispose pattern - cleans up data and structs for a) any native dialog currently showing, and b) anything else
+        // that the outer TaskDialog has.
 
         /// <summary>
         ///   Cleans up.
         /// </summary>
         private void CleanUp()
         {
-            // Reset values that would be considered 
-            // 'volatile' in a given instance.
+            // Reset values that would be considered 'volatile' in a given instance.
             if (this.progressBar != null)
             {
                 this.progressBar.Reset();
             }
 
-            // Clean out sorted control lists - 
-            // though we don't of course clear the main controls collection,
-            // so the controls are still around; we'll 
-            // resort on next show, since the collection may have changed.
+            // Clean out sorted control lists - though we don't of course clear the main controls collection, so the
+            // controls are still around; we'll resort on next show, since the collection may have changed.
             if (this.buttons != null)
             {
                 this.buttons.Clear();
@@ -1472,7 +1448,7 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>
-        ///   Dispose <see cref="TaskDialog" /> Resources.
+        ///   Dispose <c>TaskDialog</c> Resources.
         /// </summary>
         /// <param name="disposing">
         ///   If <c>True</c>, indicates that this is being called via Dispose rather than via the finalizer.
@@ -1499,8 +1475,7 @@ namespace System.Windows.Dialogs
                 this.commandLinks = null;
             }
 
-            // Clean up unmanaged resources SECOND, NTD counts on 
-            // being closed before being disposed.
+            // Clean up unmanaged resources SECOND, NTD counts on being closed before being disposed.
             if (this.nativeDialog != null)
             {
                 this.nativeDialog.Dispose();
@@ -1523,7 +1498,7 @@ namespace System.Windows.Dialogs
         ///   The button id.
         /// </param>
         /// <returns>
-        ///   The <see cref="TaskDialogButton" />.
+        ///   The <c>TaskDialogButton</c>.
         /// </returns>
         private TaskDialogButtonBase GetButtonForId(int id)
         {
@@ -1534,7 +1509,7 @@ namespace System.Windows.Dialogs
         ///   Shows the core.
         /// </summary>
         /// <returns>
-        ///   Returns the result of the <see cref="TaskDialog" />.
+        ///   Returns the result of the <c>TaskDialog</c>.
         /// </returns>
         private TaskDialogResults ShowCore()
         {
@@ -1542,31 +1517,25 @@ namespace System.Windows.Dialogs
 
             try
             {
-                // Populate control lists, based on current 
-                // contents - note we are somewhat late-bound 
-                // on our control lists, to support XAML scenarios.
+                // Populate control lists, based on current contents - note we are somewhat late-bound on our control
+                // lists, to support XAML scenarios.
                 this.SortDialogControls();
 
-                // First, let's make sure it even makes 
-                // sense to try a show.
+                // First, let's make sure it even makes sense to try a show.
                 this.ValidateCurrentDialogSettings();
 
-                // Create settings object for new dialog, 
-                // based on current state.
+                // Create settings object for new dialog, based on current state.
                 var settings = new NativeTaskDialogSettings();
                 this.ApplyCoreSettings(settings);
                 this.ApplySupplementalSettings(settings);
 
-                // Show the dialog.
-                // NOTE: this is a BLOCKING call; the dialog proc callbacks
-                // will be executed by the same thread as the 
-                // Show() call before the thread of execution 
-                // continues to the end of this method.
+                // Show the dialog. NOTE: this is a BLOCKING call; the dialog proc callbacks will be executed by the
+                // same thread as the Show() call before the thread of execution continues to the end of this method.
                 this.nativeDialog = new NativeTaskDialog(settings, this);
                 this.nativeDialog.NativeShow();
 
-                // Build and return dialog result to public API - leaving it
-                // null after an exception is thrown is fine in this case
+                // Build and return dialog result to public API - leaving it null after an exception is thrown is fine
+                // in this case
                 result = ConstructDialogResult(this.nativeDialog);
                 this.footerCheckBoxChecked = this.nativeDialog.CheckBoxChecked;
             }
@@ -1588,8 +1557,7 @@ namespace System.Windows.Dialogs
             {
                 var commandLink = control as TaskDialogCommandLink;
 
-                // Loop through child controls 
-                // and sort the controls based on type.
+                // Loop through child controls and sort the controls based on type.
                 if (commandLink != null)
                 {
                     if (string.IsNullOrEmpty(commandLink.Instruction))
@@ -1671,11 +1639,8 @@ namespace System.Windows.Dialogs
                 throw new InvalidOperationException(@"Checkbox text must be provided to enable the dialog checkbox.");
             }
 
-            // Progress bar validation.
-            // Make sure the progress bar values are valid.
-            // the Win32 API will valiantly try to rationalize 
-            // bizarre min/max/value combinations, but we'll save
-            // it the trouble by validating.
+            // Progress bar validation. Make sure the progress bar values are valid. the Win32 API will valiantly try to
+            // rationalize bizarre min/max/value combinations, but we'll save it the trouble by validating.
             if (this.progressBar != null)
             {
                 if (!this.progressBar.HasValidValues)
@@ -1685,17 +1650,15 @@ namespace System.Windows.Dialogs
                 }
             }
 
-            // Validate Buttons collection.
-            // Make sure we don't have buttons AND 
-            // command-links - the Win32 API treats them as different
-            // flavors of a single button struct.
+            // Validate Buttons collection. Make sure we don't have buttons AND command-links - the Win32 API treats
+            // them as different flavors of a single button struct.
             if (this.buttons.Count > 0 && this.commandLinks.Count > 0)
             {
                 throw new NotSupportedException("Dialog cannot display both non-standard buttons and command links.");
             }
 
-            // if (buttons.Count > 0 && standardButtons != TaskDialogStandardButtons.None)
-            // throw new NotSupportedException("Dialog cannot display both non-standard buttons and standard buttons.");
+            // if (buttons.Count > 0 && standardButtons != TaskDialogStandardButtons.None) throw new
+            // NotSupportedException("Dialog cannot display both non-standard buttons and standard buttons.");
         }
 
         #endregion

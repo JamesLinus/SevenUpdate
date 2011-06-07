@@ -24,7 +24,7 @@ namespace System.Windows.Dialogs
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="TaskDialogButton" /> class.
+        ///   Initializes a new instance of the <c>TaskDialogButton</c> class.
         /// </summary>
         /// <param name="name">
         ///   The name of the button.

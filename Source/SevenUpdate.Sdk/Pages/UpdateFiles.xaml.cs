@@ -5,21 +5,17 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//    Seven Update is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//    Seven Update is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
+//    License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any
+//    later version. Seven Update is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+//    even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//    You should have received a copy of the GNU General Public License
+//    GNU General Public License for more details. You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // <summary>
 //   Interaction logic for UpdateFiles.xaml
-// .</summary>
-// ***********************************************************************
+// .</summary> ***********************************************************************
 
 namespace SevenUpdate.Sdk.Pages
 {
@@ -91,7 +87,7 @@ namespace SevenUpdate.Sdk.Pages
         ///   Gets the size of the file.
         /// </summary>
         /// <param name="file">
-        ///   The <see cref="UpdateFile" /> to get the file size for.
+        ///   The <c>UpdateFile</c> to get the file size for.
         /// </param>
         /// <param name="fileLocation">
         ///   The location for the file.
@@ -168,7 +164,7 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>
-        ///   Adds multiple files to the <see cref="UpdateFile" /> collection.
+        ///   Adds multiple files to the <c>UpdateFile</c> collection.
         /// </summary>
         /// <param name="files">
         ///   A list of files to add to the update.
@@ -191,13 +187,13 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>
-        ///   Browses for a folder contains files to add to the <see cref="UpdateFile" /> collection.
+        ///   Browses for a folder contains files to add to the <c>UpdateFile</c> collection.
         /// </summary>
         /// <param name="sender">
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.
         /// </param>
         private void BrowseFolder(object sender, RoutedEventArgs e)
         {
@@ -221,13 +217,13 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>
-        ///   Browses for a file to add to the <see cref="UpdateFile" /> collection.
+        ///   Browses for a file to add to the <c>UpdateFile</c> collection.
         /// </summary>
         /// <param name="sender">
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.
         /// </param>
         private void BrowseForFile(object sender, RoutedEventArgs e)
         {
@@ -250,7 +246,7 @@ namespace SevenUpdate.Sdk.Pages
         ///   Calculates the hash.
         /// </summary>
         /// <param name="file">
-        ///   The <see cref="UpdateFile" /> to update the hash for.
+        ///   The <c>UpdateFile</c> to update the hash for.
         /// </param>
         /// <param name="fileLocation">
         ///   The alternate location of the file.
@@ -275,13 +271,13 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>
-        ///   Changes the UI based on the selected <see cref="UpdateFile" />'s <see cref="FileAction" />.
+        ///   Changes the UI based on the selected <c>UpdateFile</c>'s <c>FileAction</c>.
         /// </summary>
         /// <param name="sender">
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.Controls.SelectionChangedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.Controls.SelectionChangedEventArgs</c> instance containing the event data.
         /// </param>
         private void ChangeUI(object sender, SelectionChangedEventArgs e)
         {
@@ -349,7 +345,7 @@ namespace SevenUpdate.Sdk.Pages
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.Input.KeyboardFocusChangedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.Input.KeyboardFocusChangedEventArgs</c> instance containing the event data.
         /// </param>
         private void ConvertPath(object sender, KeyboardFocusChangedEventArgs e)
         {
@@ -374,13 +370,13 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>
-        ///   Deletes an item from the <see cref="System.Windows.Controls.ListBox" /> on delete key down.
+        ///   Deletes an item from the <c>System.Windows.Controls.ListBox</c> on delete key down.
         /// </summary>
         /// <param name="sender">
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.Input.KeyEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.Input.KeyEventArgs</c> instance containing the event data.
         /// </param>
         private void DeleteItem(object sender, KeyEventArgs e)
         {
@@ -430,7 +426,7 @@ namespace SevenUpdate.Sdk.Pages
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.
         /// </param>
         private void MoveOn(object sender, RoutedEventArgs e)
         {
@@ -451,7 +447,7 @@ namespace SevenUpdate.Sdk.Pages
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.
         /// </param>
         private void NavigateToMainPage(object sender, RoutedEventArgs e)
         {
@@ -459,13 +455,13 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>
-        ///   Removes all files from the <see cref="UpdateFile" /> collection.
+        ///   Removes all files from the <c>UpdateFile</c> collection.
         /// </summary>
         /// <param name="sender">
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.
         /// </param>
         private void RemoveAllFiles(object sender, RoutedEventArgs e)
         {
@@ -473,13 +469,13 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>
-        ///   Removes a files from the <see cref="UpdateFile" /> collection.
+        ///   Removes a files from the <c>UpdateFile</c> collection.
         /// </summary>
         /// <param name="sender">
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.
         /// </param>
         private void RemoveFile(object sender, RoutedEventArgs e)
         {
@@ -487,13 +483,13 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>
-        ///   Opens a dialog to browse for the selected file in the <see cref="UpdateFile" /> collection.
+        ///   Opens a dialog to browse for the selected file in the <c>UpdateFile</c> collection.
         /// </summary>
         /// <param name="sender">
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.Input.MouseButtonEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.
         /// </param>
         private void UpdateFile(object sender, MouseButtonEventArgs e)
         {
@@ -524,13 +520,13 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>
-        ///   Updates the hash for the selected <see cref="UpdateFile" />.
+        ///   Updates the hash for the selected <c>UpdateFile</c>.
         /// </summary>
         /// <param name="sender">
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="System.Windows.Input.MouseButtonEventArgs" /> instance containing the event data.
+        ///   The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.
         /// </param>
         private void UpdateHash(object sender, MouseButtonEventArgs e)
         {
@@ -561,7 +557,7 @@ namespace SevenUpdate.Sdk.Pages
         ///   The object that called the event.
         /// </param>
         /// <param name="e">
-        ///   The <see cref="CompositionChangedEventArgs" /> instance containing the event data.
+        ///   The <c>CompositionChangedEventArgs</c> instance containing the event data.
         /// </param>
         private void UpdateUI(object sender, CompositionChangedEventArgs e)
         {

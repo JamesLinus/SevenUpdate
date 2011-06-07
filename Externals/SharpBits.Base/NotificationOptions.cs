@@ -32,7 +32,8 @@ namespace SharpBits.Base
         NotificationDisabled = 4,
 
         /// <summary>
-        ///   The job has been modified. For example, a property value changed, the state of the job changed, or progress is made transferring the files.
+        ///   The job has been modified. For example, a property value changed, the state of the job changed, or
+        ///   progress is made transferring the files.
         /// </summary>
         JobModified = 8,
     }

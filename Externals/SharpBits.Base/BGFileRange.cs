@@ -28,7 +28,8 @@ namespace SharpBits.Base
         public ulong InitialOffset;
 
         /// <summary>
-        ///   Number of bytes in the range. To indicate that the range extends to the end of the file, specify BG_LENGTH_TO_EOF.
+        ///   Number of bytes in the range. To indicate that the range extends to the end of the file, specify
+        ///   BG_LENGTH_TO_EOF.
         /// </summary>
         public ulong Length;
     }

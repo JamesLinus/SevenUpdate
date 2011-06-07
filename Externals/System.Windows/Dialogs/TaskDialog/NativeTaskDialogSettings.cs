@@ -12,7 +12,7 @@ namespace System.Windows.Dialogs
     using Runtime.InteropServices;
 
     /// <summary>
-    ///   Encapsulates additional configuration needed by <see cref="NativeTaskDialog" /> that it can't get from the <see
+    ///   Encapsulates additional configuration needed by <c>NativeTaskDialog</c> that it can't get from the <see
     ///    cref="TaskDialogConfig" /> struct.
     /// </summary>
     internal sealed class NativeTaskDialogSettings
@@ -117,7 +117,7 @@ namespace System.Windows.Dialogs
         ///   Gets the buttons.
         /// </summary>
         /// <returns>
-        ///   The collection of <see cref="TaskDialogButton" />'s of the dialog dialog.
+        ///   The collection of <c>TaskDialogButton</c>'s of the dialog dialog.
         /// </returns>
         public TaskDialogButtonData[] GetButtons()
         {
@@ -128,7 +128,7 @@ namespace System.Windows.Dialogs
         ///   Gets the radio buttons.
         /// </summary>
         /// <returns>
-        ///   The collection of <see cref="TaskDialogRadioButton" />'s of the dialog dialog.
+        ///   The collection of <c>TaskDialogRadioButton</c>'s of the dialog dialog.
         /// </returns>
         public TaskDialogButtonData[] GetRadioButtons()
         {

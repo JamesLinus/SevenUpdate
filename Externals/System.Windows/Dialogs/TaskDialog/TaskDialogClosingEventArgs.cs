@@ -10,7 +10,7 @@ namespace System.Windows.Dialogs
     using ComponentModel;
 
     /// <summary>
-    ///   Data associated with <see cref="TaskDialog.Closing" /> event.
+    ///   Data associated with <c>TaskDialog.Closing</c> event.
     /// </summary>
     public class TaskDialogClosingEventArgs : CancelEventArgs
     {

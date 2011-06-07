@@ -20,13 +20,13 @@ namespace SharpBits.Base
         #region Methods
 
         /// <summary>
-        ///   Converts the <see cref="FileTime" /> to <see cref="DateTime" />.
+        ///   Converts the <c>FileTime</c> to <c>DateTime</c>.
         /// </summary>
         /// <param name="fileTime">
         ///   The file time.
         /// </param>
         /// <returns>
-        ///   The converted <see cref="FileTime" /> to <see cref="DateTime" />.
+        ///   The converted <c>FileTime</c> to <c>DateTime</c>.
         /// </returns>
         internal static DateTime FileTimeToDateTime(FileTime fileTime)
         {

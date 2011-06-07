@@ -15,7 +15,7 @@ namespace System.Windows.Dialogs
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="TaskDialogTickEventArgs" /> class.
+        ///   Initializes a new instance of the <c>TaskDialogTickEventArgs</c> class.
         /// </summary>
         /// <param name="totalTicks">
         ///   The total number of ticks since the control was activated.

@@ -12,7 +12,7 @@ namespace SharpBits.Base
     using System;
 
     /// <summary>
-    ///   The <see cref="BitsFile" /> progress.
+    ///   The <c>BitsFile</c> progress.
     /// </summary>
     public class FileProgress
     {
@@ -28,7 +28,7 @@ namespace SharpBits.Base
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="FileProgress" /> class.
+        ///   Initializes a new instance of the <c>FileProgress</c> class.
         /// </summary>
         /// <param name="fileProgress">
         ///   The file progress.

@@ -29,7 +29,8 @@ namespace System.Windows
     using Threading;
 
     /// <summary>
-    ///   Class used to define a WPF application which is aware of subsequent application instances running, either locally (per session) or globally (per host).
+    ///   Class used to define a WPF application which is aware of subsequent application instances running, either
+    ///   locally (per session) or globally (per host).
     /// </summary>
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class InstanceAwareApplication : Application, IPriorApplicationInstance, IDisposable
@@ -73,7 +74,8 @@ namespace System.Windows
         private readonly ApplicationInstanceAwareness awareness;
 
         /// <summary>
-        ///   Flag used to determine if the synchronization objects (and the inter-process communication service) have been disposed.
+        ///   Flag used to determine if the synchronization objects (and the inter-process communication service) have
+        ///   been disposed.
         /// </summary>
         private bool disposed;
 
@@ -98,7 +100,8 @@ namespace System.Windows
         private EventWaitHandle serviceReadySemaphore;
 
         /// <summary>
-        ///   The synchronization object used to signal a subsequent application instance that the first one received the notification.
+        ///   The synchronization object used to signal a subsequent application instance that the first one received
+        ///   the notification.
         /// </summary>
         private EventWaitHandle signaledToFirstInstanceSemaphore;
 
@@ -109,8 +112,8 @@ namespace System.Windows
         /// <summary>
         ///   Initializes a new instance of the InstanceAwareApplication class.
         /// </summary>
-        /// <exception cref="System.InvalidOperationException">More than one instance of the <c>System.Windows.Application</c> class
-        /// is created per <c>System.AppDomain</c>.</exception>
+        /// <exception cref="System.InvalidOperationException">More than one instance of the
+        /// <c>System.Windows.Application</c> class is created per <c>System.AppDomain</c>.</exception>
         public InstanceAwareApplication() : this(ApplicationInstanceAwareness.Host)
         {
         }
@@ -139,7 +142,8 @@ namespace System.Windows
         #region Events
 
         /// <summary>
-        ///   Occurs when the <c>System.Windows.Application.Run()</c> or <c>System.Windows.Application.Run(Window)</c> method of the next <c>InstanceAwareApplication</c> having the same <c>Guid</c> is called.
+        ///   Occurs when the <c>System.Windows.Application.Run()</c> or <c>System.Windows.Application.Run(Window)</c>
+        ///   method of the next <c>InstanceAwareApplication</c> having the same <c>Guid</c> is called.
         /// </summary>
         public event EventHandler<StartupNextInstanceEventArgs> StartupNextInstance;
 
@@ -204,7 +208,8 @@ namespace System.Windows
         /// <param name="e">An <c>System.Windows.ExitEventArgs</c> that contains the event data.</param>
         protected override void OnExit(ExitEventArgs e)
         {
-            // On exit, try to dispose everything related to the synchronization context and the inter-process communication service...
+            // On exit, try to dispose everything related to the synchronization context and the inter-process
+            // communication service...
             this.TryDisposeSynchronizationObjects();
             base.OnExit(e);
         }
@@ -243,14 +248,16 @@ namespace System.Windows
         }
 
         /// <summary>
-        ///   Called when the startup of the current application was unsuccessfully signaled to the prior application instance.
+        ///   Called when the startup of the current application was unsuccessfully signaled to the prior application
+        ///   instance.
         /// </summary>
         protected virtual void OnStartupSignaledToPriorApplicationFailed()
         {
         }
 
         /// <summary>
-        ///   Called when the startup of the current application was successfully signaled to the prior application instance.
+        ///   Called when the startup of the current application was successfully signaled to the prior application
+        ///   instance.
         /// </summary>
         protected virtual void OnStartupSignaledToPriorApplicationSucceeded()
         {
@@ -523,7 +530,8 @@ namespace System.Windows
 
             if (this.IsFirstInstance)
             {
-                // Signal other applications that the service is not ready anymore (it is, but since the application is going to shutdown, it is the same...)
+                // Signal other applications that the service is not ready anymore (it is, but since the application is
+                // going to shutdown, it is the same...)
                 this.serviceReadySemaphore.Reset();
 
                 // Stop the service...

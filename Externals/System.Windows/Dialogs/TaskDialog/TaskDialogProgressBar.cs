@@ -43,7 +43,7 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="TaskDialogProgressBar" /> class.
+        ///   Initializes a new instance of the <c>TaskDialogProgressBar</c> class.
         /// </summary>
         /// <param name="name">
         ///   The name of the control.
@@ -53,7 +53,7 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="TaskDialogProgressBar" /> class.
+        ///   Initializes a new instance of the <c>TaskDialogProgressBar</c> class.
         /// </summary>
         /// <param name="minimum">
         ///   The minimum value for this control.

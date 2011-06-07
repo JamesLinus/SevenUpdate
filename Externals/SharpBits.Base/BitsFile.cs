@@ -14,7 +14,7 @@ namespace SharpBits.Base
     using System.Runtime.InteropServices;
 
     /// <summary>
-    ///   A file that can be added to a <see cref="BitsJob" />.
+    ///   A file that can be added to a <c>BitsJob</c>.
     /// </summary>
     public sealed partial class BitsFile : IDisposable
     {
@@ -45,7 +45,7 @@ namespace SharpBits.Base
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="BitsFile" /> class.
+        ///   Initializes a new instance of the <c>BitsFile</c> class.
         /// </summary>
         /// <exception cref="ArgumentNullException">
         ///   Thrown when one or more required arguments are <c>null</c>.
@@ -169,8 +169,7 @@ namespace SharpBits.Base
         #region IDisposable
 
         /// <summary>
-        ///   Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged
-        ///   resources.
+        ///   Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
         /// </summary>
         public void Dispose()
         {
@@ -188,8 +187,8 @@ namespace SharpBits.Base
         ///   Releases unmanaged and - optionally - managed resources.
         /// </summary>
         /// <param name="disposing">
-        ///   <c>True</c> to release both managed and unmanaged resources; otherwise,
-        ///   <c>False</c> to release only unmanaged resources.
+        ///   <c>True</c> to release both managed and unmanaged resources; otherwise, <c>False</c> to release only
+        ///   unmanaged resources.
         /// </param>
         private void Dispose(bool disposing)
         {
@@ -213,7 +212,7 @@ namespace SharpBits.Base
     }
 
     /// <summary>
-    ///   A file that can be added to a <see cref="BitsJob" />.
+    ///   A file that can be added to a <c>BitsJob</c>.
     /// </summary>
     public sealed partial class BitsFile
     {

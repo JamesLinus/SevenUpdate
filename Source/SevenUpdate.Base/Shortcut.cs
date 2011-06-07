@@ -5,15 +5,12 @@
 // <author username="sevenalive">Robert Baker</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
 //  This file is part of Seven Update.
-//    Seven Update is free software: you can redistribute it and/or modify
-//    it under the terms of the GNU General Public License as published by
-//    the Free Software Foundation, either version 3 of the License, or
-//    (at your option) any later version.
-//    Seven Update is distributed in the hope that it will be useful,
-//    but WITHOUT ANY WARRANTY; without even the implied warranty of
+//    Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
+//    License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any
+//    later version. Seven Update is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+//    even the implied warranty of
 //    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details.
-//    You should have received a copy of the GNU General Public License
+//    GNU General Public License for more details. You should have received a copy of the GNU General Public License
 //    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
@@ -97,7 +94,7 @@ namespace SevenUpdate
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref="Shortcut" /> class.
+        ///   Initializes a new instance of the <c>Shortcut</c> class.
         /// </summary>
         /// <param name="name">
         ///   The collection of localized update names.
@@ -172,7 +169,9 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        ///   Enables an object to be loaded from or saved to a disk file, rather than a storage object or stream.Because the information needed to open a file varies greatly from one application to another, the implementation of IPersistFile::Load on the object must also open its disk file.
+        ///   Enables an object to be loaded from or saved to a disk file, rather than a storage object or
+        ///   stream.Because the information needed to open a file varies greatly from one application to another, the
+        ///   implementation of IPersistFile::Load on the object must also open its disk file.
         /// </summary>
         [ComImport]
         [Guid("0000010b-0000-0000-C000-000000000046")]
@@ -203,7 +202,10 @@ namespace SevenUpdate
             ///   The absolute path of the file to be opened.
             /// </param>
             /// <param name="mode">
-            ///   The access mode to be used when opening the file. Possible values are taken from the Stgm enumeration. The method can treat this value as a suggestion, adding more restrictive permissions if necessary. If mode is 0, the implementation should open the file using whatever default permissions are used when a user opens the file.
+            ///   The access mode to be used when opening the file. Possible values are taken from the Stgm enumeration.
+            ///   The method can treat this value as a suggestion, adding more restrictive permissions if necessary. If
+            ///   mode is 0, the implementation should open the file using whatever default permissions are used when a
+            ///   user opens the file.
             /// </param>
             [PreserveSig]
             void Load([MarshalAs(UnmanagedType.LPWStr)] string fileName, uint mode);
@@ -212,16 +214,23 @@ namespace SevenUpdate
             ///   Saves a copy of the object to the specified file.
             /// </summary>
             /// <param name="fileName">
-            ///   The absolute path of the file to which the object should be saved. If fileName is null, the object should save its data to the current file, if there is one.
+            ///   The absolute path of the file to which the object should be saved. If fileName is null, the object
+            ///   should save its data to the current file, if there is one.
             /// </param>
             /// <param name="remember">
-            ///   Indicates whether the fileName parameter is to be used as the current working file. If <c>True</c>, fileName becomes the current file and the object should clear its dirty flag after the save.If <c>False</c>, this save operation is a Save A Copy As ... operation. In this case, the current file is unchanged and the object should not clear its dirty flag.If fileName is null, the implementation should ignore the remember flag.
+            ///   Indicates whether the fileName parameter is to be used as the current working file. If <c>True</c>,
+            ///   fileName becomes the current file and the object should clear its dirty flag after the save.If
+            ///   <c>False</c>, this save operation is a Save A Copy As ... operation. In this case, the current file is
+            ///   unchanged and the object should not clear its dirty flag.If fileName is null, the implementation
+            ///   should ignore the remember flag.
             /// </param>
             [PreserveSig]
             void Save([MarshalAs(UnmanagedType.LPWStr)] string fileName, [MarshalAs(UnmanagedType.Bool)] bool remember);
 
             /// <summary>
-            ///   Notifies the object that it can write to its file. It does this by notifying the object that it can revert from NoScribble mode (in which it must not write to its file), to Normal mode (in which it can).The component enters NoScribble mode when it receives an IPersistFile::Save call.
+            ///   Notifies the object that it can write to its file. It does this by notifying the object that it can
+            ///   revert from NoScribble mode (in which it must not write to its file), to Normal mode (in which it
+            ///   can).The component enters NoScribble mode when it receives an IPersistFile::Save call.
             /// </summary>
             /// <param name="fileName">
             ///   The absolute path of the file where the object was saved previously.
@@ -230,10 +239,12 @@ namespace SevenUpdate
             void SaveCompleted([MarshalAs(UnmanagedType.LPWStr)] string fileName);
 
             /// <summary>
-            ///   Retrieves the current name of the file associated with the object. If there is no current working file, this method retrieves the default save prompt for the object.
+            ///   Retrieves the current name of the file associated with the object. If there is no current working
+            ///   file, this method retrieves the default save prompt for the object.
             /// </summary>
             /// <param name="fileName">
-            ///   The path for the current file or the default file name prompt (such as *.txt). If an error occurs, fileName is set to null.
+            ///   The path for the current file or the default file name prompt (such as *.txt). If an error occurs,
+            ///   fileName is set to null.
             /// </param>
             [PreserveSig]
             void GetCurFile([MarshalAs(UnmanagedType.LPWStr)] string fileName);
@@ -375,7 +386,8 @@ namespace SevenUpdate
             void GetShowCmd(out int showCmd);
 
             /// <summary>
-            ///   Sets the show command for a Shell link object. The show command sets the initial show state of the window.
+            ///   Sets the show command for a Shell link object. The show command sets the initial show state of the
+            ///   window.
             /// </summary>
             /// <param name="showCmd">
             ///   The show command.
@@ -429,7 +441,8 @@ namespace SevenUpdate
             ///   Attempts to find the target of a Shell link, even if it has been moved or renamed.
             /// </summary>
             /// <param name="handle">
-            ///   A handle to the window that the Shell will use as the parent for a dialog box. The Shell displays the dialog box if it needs to prompt the user for more information while resolving a Shell link.
+            ///   A handle to the window that the Shell will use as the parent for a dialog box. The Shell displays the
+            ///   dialog box if it needs to prompt the user for more information while resolving a Shell link.
             /// </param>
             /// <param name="flags">
             ///   The action options.
@@ -742,7 +755,7 @@ namespace SevenUpdate
         }
 
         /// <summary>
-        ///   When a property has changed, call the <see cref="OnPropertyChanged" /> Event.
+        ///   When a property has changed, call the <c>OnPropertyChanged</c> Event.
         /// </summary>
         /// <param name="propertyName">
         ///   The name of the property.
@@ -793,12 +806,18 @@ namespace SevenUpdate
             private readonly FileTime creationTime;
 
             /// <summary>
-            ///   For a file, the structure specifies when the file was last read from, written to, or for executable files, run.For a directory, the structure specifies when the directory is created. If the underlying file system does not support last access time, this member is zero.
+            ///   For a file, the structure specifies when the file was last read from, written to, or for executable
+            ///   files, run.For a directory, the structure specifies when the directory is created. If the underlying
+            ///   file system does not support last access time, this member is zero.
             /// </summary>
             private readonly FileTime lastAccessTime;
 
             /// <summary>
-            ///   For a file, the structure specifies when the file was last written to, truncated, or overwritten, for example, when WriteFile or SetEndOfFile are used. The date and time are not updated when file attributes or security descriptors are changed.For a directory, the structure specifies when the directory is created. If the underlying file system does not support last write time, this member is zero.
+            ///   For a file, the structure specifies when the file was last written to, truncated, or overwritten, for
+            ///   example, when WriteFile or SetEndOfFile are used. The date and time are not updated when file
+            ///   attributes or security descriptors are changed.For a directory, the structure specifies when the
+            ///   directory is created. If the underlying file system does not support last write time, this member is
+            ///   zero.
             /// </summary>
             private readonly FileTime lastWriteTime;
 
