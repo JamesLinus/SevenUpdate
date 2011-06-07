@@ -7,19 +7,29 @@
 
 namespace System.Windows.Dialogs
 {
-    /// <summary>The task dialog elements.</summary>
+    /// <summary>
+    ///   The task dialog elements.
+    /// </summary>
     internal enum TaskDialogElement
     {
-        /// <summary>The main portion of the dialog.</summary>
+        /// <summary>
+        ///   The main portion of the dialog.
+        /// </summary>
         Content,
 
-        /// <summary>Content in the expander.</summary>
+        /// <summary>
+        ///   Content in the expander.
+        /// </summary>
         ExpandedInformation,
 
-        /// <summary>The footer of the dialog.</summary>
+        /// <summary>
+        ///   The footer of the dialog.
+        /// </summary>
         Footer,
 
-        /// <summary>The main instructions for the dialog.</summary>
+        /// <summary>
+        ///   The main instructions for the dialog.
+        /// </summary>
         MainInstruction
     }
 }

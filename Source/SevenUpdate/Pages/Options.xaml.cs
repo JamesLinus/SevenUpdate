@@ -35,25 +35,35 @@ namespace SevenUpdate.Pages
     using System.Windows.Media;
     using System.Windows.Navigation;
 
-    /// <summary>Interaction logic for Options.xaml.</summary>
+    /// <summary>
+    ///   Interaction logic for Options.xaml.
+    /// </summary>
     public partial class Options
     {
         #region Constants and Fields
 
-        /// <summary>The official collection of the applications that Seven Update can update.</summary>
+        /// <summary>
+        ///   The official collection of the applications that Seven Update can update.
+        /// </summary>
         private static ObservableCollection<Sua> apps;
 
-        /// <summary>The local collection of the apps that Seven Update can update.</summary>
+        /// <summary>
+        ///   The local collection of the apps that Seven Update can update.
+        /// </summary>
         private static ObservableCollection<Sua> machineAppList;
 
-        /// <summary>The program configuration.</summary>
+        /// <summary>
+        ///   The program configuration.
+        /// </summary>
         private Config config;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="Options" /> class.</summary>
+        /// <summary>
+        ///   Initializes a new instance of the Options class.
+        /// </summary>
         public Options()
         {
             this.InitializeComponent();
@@ -84,7 +94,9 @@ namespace SevenUpdate.Pages
 
         #region Methods
 
-        /// <summary>Downloads the Seven Update Application List.</summary>
+        /// <summary>
+        ///   Downloads the Seven Update Application List.
+        /// </summary>
         private static void DownloadSul()
         {
             try
@@ -101,18 +113,30 @@ namespace SevenUpdate.Pages
             }
         }
 
-        /// <summary>Navigates to the Seven Update privacy policy.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The event data.</param>
+        /// <summary>
+        ///   Navigates to the Seven Update privacy policy.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The event data.
+        /// </param>
         private void GoToPrivacyPolicy(object sender, RequestNavigateEventArgs e)
         {
             Utilities.StartProcess("http://sevenupdate.com/privacy");
             e.Handled = true;
         }
 
-        /// <summary>Loads the settings and <see cref="Sua"/> list when the page is loaded.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <summary>
+        ///   Loads the settings and <see cref="Sua" /> list when the page is loaded.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        /// </param>
         private void Init(object sender, RoutedEventArgs e)
         {
             this.lvApps.Cursor = Cursors.Wait;
@@ -121,11 +145,16 @@ namespace SevenUpdate.Pages
             this.DataContext = this.config;
             this.lvApps.ItemsSource = null;
             machineAppList = null;
-            Task.Factory.StartNew(DownloadSul).ContinueWith(delegate { this.Dispatcher.BeginInvoke(() => this.LoadSul(apps)); });
+            Task.Factory.StartNew(DownloadSul).ContinueWith(
+                delegate { this.Dispatcher.BeginInvoke(() => this.LoadSul(apps)); });
         }
 
-        /// <summary>Loads the list of Seven Update applications and sets the UI, if no application list was downloaded, load the stored list on the system.</summary>
-        /// <param name="officialApplicationList">The official application list from the server.</param>
+        /// <summary>
+        ///   Loads the list of Seven Update applications and sets the UI, if no application list was downloaded, load the stored list on the system.
+        /// </summary>
+        /// <param name="officialApplicationList">
+        ///   The official application list from the server.
+        /// </param>
         private void LoadSul(ObservableCollection<Sua> officialApplicationList = null)
         {
             try
@@ -159,7 +188,16 @@ namespace SevenUpdate.Pages
                     }
                     else
                     {
-                        if (Directory.Exists(Utilities.IsRegistryKey(machineAppList[x].Directory) ? Utilities.GetRegistryValue(machineAppList[x].Directory, machineAppList[x].ValueName, machineAppList[x].Platform) : Utilities.ConvertPath(machineAppList[x].Directory, true, machineAppList[x].Platform)) && machineAppList[x].IsEnabled)
+                        if (
+                            Directory.Exists(
+                                Utilities.IsRegistryKey(machineAppList[x].Directory)
+                                    ? Utilities.GetRegistryValue(
+                                        machineAppList[x].Directory,
+                                        machineAppList[x].ValueName,
+                                        machineAppList[x].Platform)
+                                    : Utilities.ConvertPath(
+                                        machineAppList[x].Directory, true, machineAppList[x].Platform)) &&
+                            machineAppList[x].IsEnabled)
                         {
                             continue;
                         }
@@ -183,7 +221,15 @@ namespace SevenUpdate.Pages
                         continue;
                     }
 
-                    if (!Directory.Exists(Utilities.IsRegistryKey(officialApplicationList[x].Directory) ? Utilities.GetRegistryValue(officialApplicationList[x].Directory, officialApplicationList[x].ValueName, officialApplicationList[x].Platform) : Utilities.ConvertPath(officialApplicationList[x].Directory, true, officialApplicationList[x].Platform)))
+                    if (
+                        !Directory.Exists(
+                            Utilities.IsRegistryKey(officialApplicationList[x].Directory)
+                                ? Utilities.GetRegistryValue(
+                                    officialApplicationList[x].Directory,
+                                    officialApplicationList[x].ValueName,
+                                    officialApplicationList[x].Platform)
+                                : Utilities.ConvertPath(
+                                    officialApplicationList[x].Directory, true, officialApplicationList[x].Platform)))
                     {
                         // Remove the application from the list if it is not installed
                         officialApplicationList.RemoveAt(x);
@@ -199,7 +245,8 @@ namespace SevenUpdate.Pages
                     for (var y = 0; y < machineAppList.Count; y++)
                     {
                         // Check if the app in both lists are the same
-                        if (officialApplicationList[x].Directory == machineAppList[y].Directory && officialApplicationList[x].Platform == machineAppList[y].Platform)
+                        if (officialApplicationList[x].Directory == machineAppList[y].Directory &&
+                            officialApplicationList[x].Platform == machineAppList[y].Platform)
                         {
                             // if (officialAppList[x].Source != machineAppList[y].Source)
                             // continue;
@@ -229,17 +276,29 @@ namespace SevenUpdate.Pages
             this.Dispatcher.BeginInvoke(this.UpdateList);
         }
 
-        /// <summary>Goes back to the Main page.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <summary>
+        ///   Goes back to the Main page.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        /// </param>
         private void NavigateToMainPage(object sender, RoutedEventArgs e)
         {
             Core.NavigateToMainPage();
         }
 
-        /// <summary>Navigates to a Uri.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Navigation.RequestNavigateEventArgs"/> instance containing the event data.</param>
+        /// <summary>
+        ///   Navigates to a Uri.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="System.Windows.Navigation.RequestNavigateEventArgs" /> instance containing the event data.
+        /// </param>
         private void NavigateToUri(object sender, RequestNavigateEventArgs e)
         {
             Utilities.StartProcess(e.Uri.AbsoluteUri);
@@ -247,17 +306,29 @@ namespace SevenUpdate.Pages
             e.Handled = true;
         }
 
-        /// <summary>Limit the size of the <see cref="GridViewColumn"/> when it's being resized.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Controls.Primitives.DragDeltaEventArgs"/> instance containing the event data.</param>
+        /// <summary>
+        ///   Limit the size of the <see cref="GridViewColumn" /> when it's being resized.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="System.Windows.Controls.Primitives.DragDeltaEventArgs" /> instance containing the event data.
+        /// </param>
         private void RestrictColumn(object sender, DragDeltaEventArgs e)
         {
             ListViewExtensions.LimitColumnSize((Thumb)e.OriginalSource);
         }
 
-        /// <summary>Saves the settings and goes back to the Main page.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <summary>
+        ///   Saves the settings and goes back to the Main page.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        /// </param>
         private void SaveSettings(object sender, RoutedEventArgs e)
         {
             if (WcfService.SaveSettings(this.config.AutoOption != AutoUpdateOption.Never, this.config, machineAppList))
@@ -266,7 +337,9 @@ namespace SevenUpdate.Pages
             }
         }
 
-        /// <summary>Updates the list with the <see cref="machineAppList"/>.</summary>
+        /// <summary>
+        ///   Updates the list with the <see cref="machineAppList" />.
+        /// </summary>
         private void UpdateList()
         {
             this.lvApps.Cursor = Cursors.Arrow;
@@ -278,9 +351,15 @@ namespace SevenUpdate.Pages
             this.lvApps.ItemsSource = machineAppList;
         }
 
-        /// <summary>Changes the UI depending on whether Aero Glass is enabled.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="CompositionChangedEventArgs"/> instance containing the event data.</param>
+        /// <summary>
+        ///   Changes the UI depending on whether Aero Glass is enabled.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="CompositionChangedEventArgs" /> instance containing the event data.
+        /// </param>
         private void UpdateUI(object sender, CompositionChangedEventArgs e)
         {
             if (e.IsGlassEnabled)

@@ -20,24 +20,40 @@
 
 namespace System.Windows.Internal
 {
-    using System.Runtime.InteropServices;
+    using Runtime.InteropServices;
 
-    /// <summary>Defines the margins of windows that have visual styles applied.</summary>
+    /// <summary>
+    ///   Defines the margins of windows that have visual styles applied.
+    /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct Margins
     {
-        /// <summary>Initializes a new instance of the <see cref="Margins" /> struct.</summary>
-        /// <param name="fullWindow">If set to <see langword="true" /> the margin is set to the full window.</param>
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="Margins" /> struct.
+        /// </summary>
+        /// <param name="fullWindow">
+        ///   If set to <c>True</c> the margin is set to the full window.
+        /// </param>
         public Margins(bool fullWindow) : this()
         {
             this.LeftWidth = this.RightWidth = this.TopHeight = this.BottomHeight = fullWindow ? -1 : 0;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="Margins" /> struct.</summary>
-        /// <param name="left">Width of the left border that retains its size.</param>
-        /// <param name="top">Height of the top border that retains its size.</param>
-        /// <param name="right">Width of the right border that retains its size.</param>
-        /// <param name="bottom">Height of the bottom border that retains its size.</param>
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="Margins" /> struct.
+        /// </summary>
+        /// <param name="left">
+        ///   Width of the left border that retains its size.
+        /// </param>
+        /// <param name="top">
+        ///   Height of the top border that retains its size.
+        /// </param>
+        /// <param name="right">
+        ///   Width of the right border that retains its size.
+        /// </param>
+        /// <param name="bottom">
+        ///   Height of the bottom border that retains its size.
+        /// </param>
         public Margins(int left, int top, int right, int bottom) : this()
         {
             this.LeftWidth = left;
@@ -46,16 +62,24 @@ namespace System.Windows.Internal
             this.BottomHeight = bottom;
         }
 
-        /// <summary>Gets the width of the left border that retains its size.</summary>
+        /// <summary>
+        ///   Gets the width of the left border that retains its size.
+        /// </summary>
         public int LeftWidth { get; private set; }
 
-        /// <summary>Gets the width of the right border that retains its size.</summary>
+        /// <summary>
+        ///   Gets the width of the right border that retains its size.
+        /// </summary>
         public int RightWidth { get; private set; }
 
-        /// <summary>Gets the height of the top border that retains its size.</summary>
+        /// <summary>
+        ///   Gets the height of the top border that retains its size.
+        /// </summary>
         public int TopHeight { get; private set; }
 
-        /// <summary>Gets the height of the bottom border that retains its size.</summary>
+        /// <summary>
+        ///   Gets the height of the bottom border that retains its size.
+        /// </summary>
         public int BottomHeight { get; private set; }
     }
 }

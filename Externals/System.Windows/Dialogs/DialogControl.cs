@@ -7,43 +7,63 @@
 
 namespace System.Windows.Dialogs
 {
-    using System.Diagnostics;
+    using Diagnostics;
 
-    /// <summary>Dialog Show State.</summary>
+    /// <summary>
+    ///   Dialog Show State.
+    /// </summary>
     internal enum DialogShowState
     {
-        /// <summary>The dialog is about to be shown.</summary>
+        /// <summary>
+        ///   The dialog is about to be shown.
+        /// </summary>
         PreShow,
 
-        /// <summary>Currently Showing.</summary>
+        /// <summary>
+        ///   Currently Showing.
+        /// </summary>
         Showing,
 
-        /// <summary>Currently Closing.</summary>
+        /// <summary>
+        ///   Currently Closing.
+        /// </summary>
         Closing,
 
-        /// <summary>Closed dialog.</summary>
+        /// <summary>
+        ///   Closed dialog.
+        /// </summary>
         Closed
     }
 
-    /// <summary>Abstract base class for all dialog controls.</summary>
+    /// <summary>
+    ///   Abstract base class for all dialog controls.
+    /// </summary>
     public abstract class DialogControl
     {
         #region Constants and Fields
 
-        /// <summary>The next ID.</summary>
+        /// <summary>
+        ///   The next ID.
+        /// </summary>
         private static int nextId = 9;
 
-        /// <summary>The hosting dialog.</summary>
+        /// <summary>
+        ///   The hosting dialog.
+        /// </summary>
         private IDialogControlHost hostingDialog;
 
-        /// <summary>The control name.</summary>
+        /// <summary>
+        ///   The control name.
+        /// </summary>
         private string name;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="DialogControl" /> class.</summary>
+        /// <summary>
+        ///   Initializes a new instance of the DialogControl class.
+        /// </summary>
         protected DialogControl()
         {
             this.Id = nextId;
@@ -59,8 +79,12 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>Initializes a new instance of the <see cref="DialogControl" /> class.</summary>
-        /// <param name="name">The name for this dialog.</param>
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="DialogControl" /> class.
+        /// </summary>
+        /// <param name="name">
+        ///   The name for this dialog.
+        /// </param>
         protected DialogControl(string name) : this()
         {
             this.Name = name;
@@ -70,7 +94,9 @@ namespace System.Windows.Dialogs
 
         #region Properties
 
-        /// <summary>Gets or sets the native dialog that is hosting this control. This property is <see langword="null" /> is there is not associated dialog.</summary>
+        /// <summary>
+        ///   Gets or sets the native dialog that is hosting this control. This property is <c>null</c> is there is not associated dialog.
+        /// </summary>
         /// <value>The hosting dialog.</value>
         public IDialogControlHost HostingDialog
         {
@@ -85,14 +111,20 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>Gets the identifier for this control.</summary>
-        /// <value>An <see cref="System.Int32" /> value.</value>
+        /// <summary>
+        ///   Gets the identifier for this control.
+        /// </summary>
+        /// <value>An <c>System.Int32</c> value.</value>
         public int Id { get; private set; }
 
-        /// <summary>Gets or sets the name for this control.</summary>
-        /// <value>A <see cref="System.String" /> value.</value>
-        /// <remarks>The name of the control should not be modified once set</remarks>
-        /// <exception cref="System.ArgumentException">The name cannot be <see langword="null" /> or a zero-length string.</exception>
+        /// <summary>
+        ///   Gets or sets the name for this control.
+        /// </summary>
+        /// <value>A <c>System.String</c> value.</value>
+        /// <remarks>
+        ///   The name of the control should not be modified once set
+        /// </remarks>
+        /// <exception cref="System.ArgumentException">The name cannot be <c>null</c> or a zero-length string.</exception>
         /// <exception cref="System.InvalidOperationException">The name has already been set.</exception>
         public string Name
         {
@@ -127,9 +159,15 @@ namespace System.Windows.Dialogs
 
         #region Public Methods
 
-        /// <summary>Compares two objects to determine whether they are equal.</summary>
-        /// <param name="obj">The object to compare against.</param>
-        /// <returns>A <see cref="System.Boolean" /> value.</returns>
+        /// <summary>
+        ///   Compares two objects to determine whether they are equal.
+        /// </summary>
+        /// <param name="obj">
+        ///   The object to compare against.
+        /// </param>
+        /// <returns>
+        ///   A <see cref="System.Boolean" /> value.
+        /// </returns>
         public override bool Equals(object obj)
         {
             var control = obj as DialogControl;
@@ -142,8 +180,12 @@ namespace System.Windows.Dialogs
             return false;
         }
 
-        /// <summary>Serves as a hash function for a particular type.</summary>
-        /// <returns>An <see cref="System.Int32" /> hash code for this control.</returns>
+        /// <summary>
+        ///   Serves as a hash function for a particular type.
+        /// </summary>
+        /// <returns>
+        ///   An <see cref="System.Int32" /> hash code for this control.
+        /// </returns>
         public override int GetHashCode()
         {
             return this.name == null ? this.ToString().GetHashCode() : this.name.GetHashCode();
@@ -157,7 +199,9 @@ namespace System.Windows.Dialogs
         ///   Calls the hosting dialog, if it exists, to to indicate that a property has changed, and that the dialog should do whatever is necessary to propagate the change to the native control.
         ///   Note that if the dialog isn't set yet, there are no restrictions on setting the property.
         /// </summary>
-        /// <param name="propName">The name of the property that is changing.</param>
+        /// <param name="propName">
+        ///   The name of the property that is changing.
+        /// </param>
         protected void ApplyPropertyChange(string propName)
         {
             Debug.Assert(!string.IsNullOrEmpty(propName), "Property changed was not specified");
@@ -172,7 +216,9 @@ namespace System.Windows.Dialogs
         ///   Calls the hosting dialog, if it exists, to check whether the property can be set in the dialog's current state. The host should throw an exception if the change is not supported.
         ///   Note that if the dialog isn't set yet, there are no restrictions on setting the property.
         /// </summary>
-        /// <param name="propName">The name of the property that is changing.</param>
+        /// <param name="propName">
+        ///   The name of the property that is changing.
+        /// </param>
         protected void CheckPropertyChangeAllowed(string propName)
         {
             Debug.Assert(!string.IsNullOrEmpty(propName), "Property to change was not specified");

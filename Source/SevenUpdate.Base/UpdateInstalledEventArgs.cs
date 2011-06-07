@@ -25,20 +25,29 @@ namespace SevenUpdate
 
     using ProtoBuf;
 
-    /// <summary>Provides event data for the InstallProgressChanged event.</summary>
-    [ProtoContract, DataContract]
+    /// <summary>
+    ///   Provides event data for the InstallProgressChanged event.
+    /// </summary>
+    [ProtoContract]
+    [DataContract]
     public sealed class UpdateInstalledEventArgs : EventArgs
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="UpdateInstalledEventArgs" /> class.</summary>
-        /// <param name="update">The update information that was installed.</param>
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="UpdateInstalledEventArgs" /> class.
+        /// </summary>
+        /// <param name="update">
+        ///   The update information that was installed.
+        /// </param>
         public UpdateInstalledEventArgs(Suh update)
         {
             this.Update = update;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="UpdateInstalledEventArgs" /> class.</summary>
+        /// <summary>
+        ///   Initializes a new instance of the UpdateInstalledEventArgs class.
+        /// </summary>
         public UpdateInstalledEventArgs()
         {
         }
@@ -47,8 +56,11 @@ namespace SevenUpdate
 
         #region Properties
 
-        /// <summary>Gets the update information that was installed.</summary>
-        [ProtoMember(1), DataMember]
+        /// <summary>
+        ///   Gets the update information that was installed.
+        /// </summary>
+        [ProtoMember(1)]
+        [DataMember]
         public Suh Update { get; private set; }
 
         #endregion

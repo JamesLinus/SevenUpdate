@@ -9,21 +9,31 @@
 
 namespace System.Windows
 {
-    /// <summary>Class used to define the arguments of another application instance startup.</summary>
+    /// <summary>
+    ///   Class used to define the arguments of another application instance startup.
+    /// </summary>
     public sealed class StartupNextInstanceEventArgs : EventArgs
     {
         #region Constants and Fields
 
-        /// <summary>The application arguments.</summary>
+        /// <summary>
+        ///   The application arguments.
+        /// </summary>
         private readonly string[] args;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="StartupNextInstanceEventArgs" /> class.</summary>
-        /// <param name="args">The arguments passed to the program.</param>
-        /// <param name="bringToFront">If set to <see langword="true" /> the application main window will be brought to front.</param>
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="StartupNextInstanceEventArgs" /> class.
+        /// </summary>
+        /// <param name="args">
+        ///   The arguments passed to the program.
+        /// </param>
+        /// <param name="bringToFront">
+        ///   If set to <c>True</c> the application main window will be brought to front.
+        /// </param>
         public StartupNextInstanceEventArgs(string[] args, bool bringToFront = true)
         {
             if (args == null)
@@ -39,17 +49,26 @@ namespace System.Windows
 
         #region Properties
 
-        /// <summary>Gets a value indicating whether the application main window has to be brought to foreground.</summary>
-        /// <value><see langword="True" /> if the application window has to be brought to foreground, otherwise <see langword="false" />.</value>
+        /// <summary>
+        ///   Gets a value indicating whether the application main window has to be brought to foreground.
+        /// </summary>
+        /// <value><c>True</c> if the application window has to be brought to foreground, otherwise 
+        /// <c>False</c>.</value>
         public bool BringToForeground { get; private set; }
 
         #endregion
 
         #region Public Methods
 
-        /// <summary>Gets the arguments passed to the other application.</summary>
-        /// <returns>Returns the arguments passed to the application.</returns>
-        /// <value>The arguments passed to the other application.</value>
+        /// <summary>
+        ///   Gets the arguments passed to the other application.
+        /// </summary>
+        /// <returns>
+        ///   Returns the arguments passed to the application.
+        /// </returns>
+        /// <value>
+        ///   The arguments passed to the other application.
+        /// </value>
         public string[] GetArgs()
         {
             return this.args;

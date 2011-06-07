@@ -12,29 +12,43 @@ namespace SharpBits.Base
     using System;
     using System.Runtime.InteropServices;
 
-    /// <summary>The notification class for the bits manager.</summary>
+    /// <summary>
+    ///   The notification class for the bits manager.
+    /// </summary>
     internal class BitsNotification : IBackgroundCopyCallback
     {
         #region Constants and Fields
 
-        /// <summary>The BITS manager.</summary>
+        /// <summary>
+        ///   The BITS manager.
+        /// </summary>
         private readonly BitsManager manager;
 
-        /// <summary>Occurs when a <see cref="BitsJob" /> error occurs.</summary>
+        /// <summary>
+        ///   Occurs when a <c>BitsJob</c> error occurs.
+        /// </summary>
         private EventHandler<ErrorNotificationEventArgs> errorOccurred;
 
-        /// <summary>Occurs when a <see cref="BitsJob" /> is modified.</summary>
+        /// <summary>
+        ///   Occurs when a <c>BitsJob</c> is modified.
+        /// </summary>
         private EventHandler<NotificationEventArgs> onJobModified;
 
-        /// <summary>Occurs when a <see cref="BitsJob" /> is transfered.</summary>
+        /// <summary>
+        ///   Occurs when a <c>BitsJob</c> is transfered.
+        /// </summary>
         private EventHandler<NotificationEventArgs> onJobTransfered;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="BitsNotification" /> class.</summary>
-        /// <param name="manager">The manager.</param>
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="BitsNotification" /> class.
+        /// </summary>
+        /// <param name="manager">
+        ///   The manager.
+        /// </param>
         internal BitsNotification(BitsManager manager)
         {
             this.manager = manager;
@@ -44,7 +58,9 @@ namespace SharpBits.Base
 
         #region Events
 
-        /// <summary>Occurs when [on job error event].</summary>
+        /// <summary>
+        ///   Occurs when [on job error event].
+        /// </summary>
         public event EventHandler<ErrorNotificationEventArgs> OnJobErrorEvent
         {
             add
@@ -58,7 +74,9 @@ namespace SharpBits.Base
             }
         }
 
-        /// <summary>Occurs when [on job modified event].</summary>
+        /// <summary>
+        ///   Occurs when [on job modified event].
+        /// </summary>
         public event EventHandler<NotificationEventArgs> OnJobModifiedEvent
         {
             add
@@ -72,7 +90,9 @@ namespace SharpBits.Base
             }
         }
 
-        /// <summary>Occurs when [on job transferred event].</summary>
+        /// <summary>
+        ///   Occurs when [on job transferred event].
+        /// </summary>
         public event EventHandler<NotificationEventArgs> OnJobTransferredEvent
         {
             add
@@ -92,9 +112,15 @@ namespace SharpBits.Base
 
         #region IBackgroundCopyCallback
 
-        /// <summary>Called when an error occurs.</summary>
-        /// <param name="copyJob">Contains job-related information, such as the number of bytes and files transferred before the error occurred. It also contains the methods to resume and cancel the job. Do not release pJob; BITS releases the interface when the JobError method returns.</param>
-        /// <param name="error">Contains error information, such as the file being processed at the time the fatal error occurred and a description of the error. Do not release pError; BITS releases the interface when the JobError method returns.</param>
+        /// <summary>
+        ///   Called when an error occurs.
+        /// </summary>
+        /// <param name="copyJob">
+        ///   Contains job-related information, such as the number of bytes and files transferred before the error occurred. It also contains the methods to resume and cancel the job. Do not release pJob; BITS releases the interface when the JobError method returns.
+        /// </param>
+        /// <param name="error">
+        ///   Contains error information, such as the file being processed at the time the fatal error occurred and a description of the error. Do not release pError; BITS releases the interface when the JobError method returns.
+        /// </param>
         public void JobError(IBackgroundCopyJob copyJob, IBackgroundCopyError error)
         {
             if (this.manager == null)
@@ -146,9 +172,15 @@ namespace SharpBits.Base
             }
         }
 
-        /// <summary>Called when a job is modified.</summary>
-        /// <param name="copyJob">Contains the methods for accessing property, progress, and state information of the job. Do not release pJob; BITS releases the interface when the JobModification method returns.</param>
-        /// <param name="reserved">Reserved for future use.</param>
+        /// <summary>
+        ///   Called when a job is modified.
+        /// </summary>
+        /// <param name="copyJob">
+        ///   Contains the methods for accessing property, progress, and state information of the job. Do not release pJob; BITS releases the interface when the JobModification method returns.
+        /// </param>
+        /// <param name="reserved">
+        ///   Reserved for future use.
+        /// </param>
         public void JobModification(IBackgroundCopyJob copyJob, uint reserved)
         {
             if (this.manager == null)
@@ -200,8 +232,12 @@ namespace SharpBits.Base
             }
         }
 
-        /// <summary>Called when all of the files in the job have successfully transferred.</summary>
-        /// <param name="copyJob">Contains job-related information, such as the time the job completed, the number of bytes transferred, and the number of files transferred. Do not release pJob; BITS releases the interface when the method returns.</param>
+        /// <summary>
+        ///   Called when all of the files in the job have successfully transferred.
+        /// </summary>
+        /// <param name="copyJob">
+        ///   Contains job-related information, such as the time the job completed, the number of bytes transferred, and the number of files transferred. Do not release pJob; BITS releases the interface when the method returns.
+        /// </param>
         public void JobTransferred(IBackgroundCopyJob copyJob)
         {
             if (this.manager == null)

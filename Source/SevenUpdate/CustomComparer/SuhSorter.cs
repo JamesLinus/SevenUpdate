@@ -27,15 +27,26 @@ namespace SevenUpdate.CustomComparer
     using System.ComponentModel;
     using System.Windows.Controls;
 
-    /// <summary>Sorts the SUH Class.</summary>
+    /// <summary>
+    ///   Sorts the SUH Class.
+    /// </summary>
     internal sealed class SuhSorter : ListViewCustomComparer
     {
         #region Public Methods
 
-        /// <summary>Compares two objects and returns a value indicating whether one is less than, equal to, or greater than the other.</summary>
-        /// <param name="x">The first object to compare.</param>
-        /// <param name="y">The second object to compare.</param>
-        /// <returns>Value Condition Less than zero <paramref name="x"/> is less than <paramref name="y"/>. Zero <paramref name="x"/> equals <paramref name="y"/>.Greater than zero <paramref name="x"/> is greater than <paramref name="y"/>.</returns>
+        /// <summary>
+        ///   Compares two objects and returns a value indicating whether one is less than, equal to, or greater than the other.
+        /// </summary>
+        /// <param name="x">
+        ///   The first object to compare.
+        /// </param>
+        /// <param name="y">
+        ///   The second object to compare.
+        /// </param>
+        /// <returns>
+        ///   Value Condition Less than zero <paramref name = "x" /> is less than <paramref name = "y" />. Zero <paramref name = "x" /> equals <paramref
+        ///    name = "y" />.Greater than zero <paramref name = "x" /> is greater than <paramref name = "y" />.
+        /// </returns>
         public override int Compare(object x, object y)
         {
             var first = (Suh)x;

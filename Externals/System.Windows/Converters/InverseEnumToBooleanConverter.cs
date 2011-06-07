@@ -20,10 +20,13 @@
 
 namespace System.Windows.Converters
 {
-    using System.Globalization;
-    using System.Windows.Data;
+    using Data;
 
-    /// <summary>Converts the Enum to a Boolean.</summary>
+    using Globalization;
+
+    /// <summary>
+    ///   Converts the Enum to a Boolean.
+    /// </summary>
     [ValueConversion(typeof(Enum), typeof(bool))]
     public class InverseEnumToBooleanConverter : IValueConverter
     {
@@ -31,12 +34,24 @@ namespace System.Windows.Converters
 
         #region IValueConverter
 
-        /// <summary>Converts a value.</summary>
-        /// <param name="value">The value produced by the binding source.</param>
-        /// <param name="targetType">The type of the binding target property.</param>
-        /// <param name="parameter">The converter parameter to use.</param>
-        /// <param name="culture">The culture to use in the converter.</param>
-        /// <returns>A converted value. If the method returns <see langword="null" />, the valid <see langword="null" /> value is used.</returns>
+        /// <summary>
+        ///   Converts a value.
+        /// </summary>
+        /// <param name="value">
+        ///   The value produced by the binding source.
+        /// </param>
+        /// <param name="targetType">
+        ///   The type of the binding target property.
+        /// </param>
+        /// <param name="parameter">
+        ///   The converter parameter to use.
+        /// </param>
+        /// <param name="culture">
+        ///   The culture to use in the converter.
+        /// </param>
+        /// <returns>
+        ///   A converted value. If the method returns <c>null</c>, the valid <c>null</c> value is used.
+        /// </returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
             if (value == null)
@@ -47,12 +62,24 @@ namespace System.Windows.Converters
             return !value.Equals(parameter);
         }
 
-        /// <summary>Converts a value.</summary>
-        /// <param name="value">The value that is produced by the binding target.</param>
-        /// <param name="targetType">The type to convert to.</param>
-        /// <param name="parameter">The converter parameter to use.</param>
-        /// <param name="culture">The culture to use in the converter.</param>
-        /// <returns>A converted value. If the method returns <see langword="null" />, the valid <see langword="null" /> value is used.</returns>
+        /// <summary>
+        ///   Converts a value.
+        /// </summary>
+        /// <param name="value">
+        ///   The value that is produced by the binding target.
+        /// </param>
+        /// <param name="targetType">
+        ///   The type to convert to.
+        /// </param>
+        /// <param name="parameter">
+        ///   The converter parameter to use.
+        /// </param>
+        /// <param name="culture">
+        ///   The culture to use in the converter.
+        /// </param>
+        /// <returns>
+        ///   A converted value. If the method returns <c>null</c>, the valid <c>null</c> value is used.
+        /// </returns>
         public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
         {
             return DependencyProperty.UnsetValue;

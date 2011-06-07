@@ -7,31 +7,49 @@
 
 namespace System.Windows.Dialogs
 {
-    /// <summary>The button return ids.</summary>
+    /// <summary>
+    ///   The button return ids.
+    /// </summary>
     internal enum TaskDialogCommonButtonReturnId
     {
-        /// <summary>The button returned OK.</summary>
+        /// <summary>
+        ///   The button returned OK.
+        /// </summary>
         OK = 1,
 
-        /// <summary>The button returned cancel.</summary>
+        /// <summary>
+        ///   The button returned cancel.
+        /// </summary>
         Cancel = 2,
 
-        /// <summary>The button return abort.</summary>
+        /// <summary>
+        ///   The button return abort.
+        /// </summary>
         Abort = 3,
 
-        /// <summary>The button returned retry.</summary>
+        /// <summary>
+        ///   The button returned retry.
+        /// </summary>
         Retry = 4,
 
-        /// <summary>The button was ignored.</summary>
+        /// <summary>
+        ///   The button was ignored.
+        /// </summary>
         Ignore = 5,
 
-        /// <summary>The button returned yes.</summary>
+        /// <summary>
+        ///   The button returned yes.
+        /// </summary>
         Yes = 6,
 
-        /// <summary>The button returned no.</summary>
+        /// <summary>
+        ///   The button returned no.
+        /// </summary>
         No = 7,
 
-        /// <summary>The button returned close.</summary>
+        /// <summary>
+        ///   The button returned close.
+        /// </summary>
         Close = 8
     }
 }

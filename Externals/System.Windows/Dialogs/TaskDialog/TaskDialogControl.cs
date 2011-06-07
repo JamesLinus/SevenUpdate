@@ -7,18 +7,26 @@
 
 namespace System.Windows.Dialogs
 {
-    /// <summary>Declares the abstract base class for all custom task dialog controls.</summary>
+    /// <summary>
+    ///   Declares the abstract base class for all custom task dialog controls.
+    /// </summary>
     public abstract class TaskDialogControl : DialogControl
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="TaskDialogControl" /> class.</summary>
+        /// <summary>
+        ///   Initializes a new instance of the TaskDialogControl class.
+        /// </summary>
         protected TaskDialogControl()
         {
         }
 
-        /// <summary>Initializes a new instance of the <see cref="TaskDialogControl" /> class.</summary>
-        /// <param name="name">The name for this control.</param>
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="TaskDialogControl" /> class.
+        /// </summary>
+        /// <param name="name">
+        ///   The name for this control.
+        /// </param>
         protected TaskDialogControl(string name) : base(name)
         {
         }

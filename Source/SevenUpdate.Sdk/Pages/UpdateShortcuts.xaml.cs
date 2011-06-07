@@ -31,14 +31,18 @@ namespace SevenUpdate.Sdk.Pages
     using System.Windows.Media;
     using System.Windows.ValidationRules;
 
-    using SevenUpdate.Sdk.Windows;
+    using Windows;
 
-    /// <summary>Interaction logic for UpdateShortcuts.xaml.</summary>
+    /// <summary>
+    ///   Interaction logic for UpdateShortcuts.xaml.
+    /// </summary>
     public sealed partial class UpdateShortcuts
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="UpdateShortcuts" /> class.</summary>
+        /// <summary>
+        ///   Initializes a new instance of the UpdateShortcuts class.
+        /// </summary>
         public UpdateShortcuts()
         {
             this.InitializeComponent();
@@ -68,18 +72,30 @@ namespace SevenUpdate.Sdk.Pages
 
         #region Methods
 
-        /// <summary>Fires the OnPropertyChanged Event with the collection changes.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The event data.</param>
+        /// <summary>
+        ///   Fires the OnPropertyChanged Event with the collection changes.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The event data.
+        /// </param>
         private void ChangeDescription(object sender, RoutedEventArgs e)
         {
             var textBox = (InfoTextBox)sender;
             Core.UpdateLocaleStrings(textBox.Text, Core.UpdateInfo.Shortcuts[Core.SelectedShortcut].Description);
         }
 
-        /// <summary>Fires the OnPropertyChanged Event with the collection changes.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The event data.</param>
+        /// <summary>
+        ///   Fires the OnPropertyChanged Event with the collection changes.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The event data.
+        /// </param>
         private void ChangeName(object sender, RoutedEventArgs e)
         {
             var textBox = (InfoTextBox)sender;
@@ -92,9 +108,15 @@ namespace SevenUpdate.Sdk.Pages
             Core.UpdateLocaleStrings(textBox.Text, Core.UpdateInfo.Shortcuts[Core.SelectedShortcut].Name);
         }
 
-        /// <summary>Clears the UI of errors.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="DependencyPropertyChangedEventArgs" /> instance containing the event data.</param>
+        /// <summary>
+        ///   Clears the UI of errors.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="DependencyPropertyChangedEventArgs" /> instance containing the event data.
+        /// </param>
         private void ClearError(object sender, DependencyPropertyChangedEventArgs e)
         {
             var textBox = (InfoTextBox)sender;
@@ -108,9 +130,15 @@ namespace SevenUpdate.Sdk.Pages
             textBox.ToolTip = false;
         }
 
-        /// <summary>Converts a path to system variables.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Input.KeyboardFocusChangedEventArgs" /> instance containing the event data.</param>
+        /// <summary>
+        ///   Converts a path to system variables.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="System.Windows.Input.KeyboardFocusChangedEventArgs" /> instance containing the event data.
+        /// </param>
         private void ConvertPath(object sender, KeyboardFocusChangedEventArgs e)
         {
             var source = e.Source as InfoTextBox;
@@ -120,7 +148,10 @@ namespace SevenUpdate.Sdk.Pages
             }
 
             var fileLocation = Utilities.ConvertPath(source.Text, true, Core.AppInfo.Platform);
-            var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory) ? Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Platform) : Core.AppInfo.Directory;
+            var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
+                                       ? Utilities.GetRegistryValue(
+                                           Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Platform)
+                                       : Core.AppInfo.Directory;
 
             installDirectory = Utilities.ConvertPath(installDirectory, true, Core.AppInfo.Platform);
 
@@ -130,9 +161,15 @@ namespace SevenUpdate.Sdk.Pages
             source.Text = Utilities.ConvertPath(installUrl, false, Core.AppInfo.Platform);
         }
 
-        /// <summary>Deletes the selected UpdateShortcut from the collection.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Input.KeyEventArgs" /> instance containing the event data.</param>
+        /// <summary>
+        ///   Deletes the selected UpdateShortcut from the collection.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="System.Windows.Input.KeyEventArgs" /> instance containing the event data.
+        /// </param>
         private void DeleteShortcut(object sender, KeyEventArgs e)
         {
             var index = this.listBox.SelectedIndex;
@@ -155,8 +192,12 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        /// <summary>Determines whether this instance has errors.</summary>
-        /// <returns><see langword="true" /> if this instance has errors; otherwise, <see langword="false" />.</returns>
+        /// <summary>
+        ///   Determines whether this instance has errors.
+        /// </summary>
+        /// <returns>
+        ///   <c>True</c> if this instance has errors; otherwise, <c>False</c>.
+        /// </returns>
         private bool HasErrors()
         {
             if (Core.UpdateInfo.Shortcuts.Count == 0)
@@ -167,12 +208,19 @@ namespace SevenUpdate.Sdk.Pages
             return this.tbxName.HasError || this.tbxSaveLocation.HasError || this.tbxTarget.HasError;
         }
 
-        /// <summary>Opens a dialog to browse for the shortcut to import.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
+        /// <summary>
+        ///   Opens a dialog to browse for the shortcut to import.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        /// </param>
         private void ImportShortcut(object sender, RoutedEventArgs e)
         {
-            var file = Core.OpenFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu), null, false, "lnk", true);
+            var file = Core.OpenFileDialog(
+                Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu), null, false, "lnk", true);
 
             if (file == null)
             {
@@ -181,12 +229,20 @@ namespace SevenUpdate.Sdk.Pages
 
             var importedShortcut = Shortcut.GetShortcutData(file[0]);
 
-            var path = Utilities.ConvertPath(Path.GetDirectoryName(importedShortcut.Location), false, Core.AppInfo.Platform);
+            var path = Utilities.ConvertPath(
+                Path.GetDirectoryName(importedShortcut.Location), false, Core.AppInfo.Platform);
             path = path.Replace(Core.AppInfo.Directory, "%INSTALLDIR%");
 
             var icon = Utilities.ConvertPath(importedShortcut.Icon, false, Core.AppInfo.Platform);
             icon = icon.Replace(Core.AppInfo.Directory, "%INSTALLDIR%");
-            var shortcut = new Shortcut { Arguments = importedShortcut.Arguments, Icon = icon, Location = path, Action = ShortcutAction.Update, Target = Utilities.ConvertPath(importedShortcut.Target, false, Core.AppInfo.Platform), };
+            var shortcut = new Shortcut
+                {
+                    Arguments = importedShortcut.Arguments,
+                    Icon = icon,
+                    Location = path,
+                    Action = ShortcutAction.Update,
+                    Target = Utilities.ConvertPath(importedShortcut.Target, false, Core.AppInfo.Platform),
+                };
 
             shortcut.Name.Add(new LocaleString(Path.GetFileNameWithoutExtension(file[0]), Utilities.Locale));
 
@@ -194,9 +250,15 @@ namespace SevenUpdate.Sdk.Pages
             this.listBox.SelectedIndex = Core.UpdateInfo.Shortcuts.Count - 1;
         }
 
-        /// <summary>Load the <see cref="LocaleString" />'s into the UI.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Controls.SelectionChangedEventArgs" /> instance containing the event data.</param>
+        /// <summary>
+        ///   Load the <see cref="LocaleString" />'s into the UI.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="System.Windows.Controls.SelectionChangedEventArgs" /> instance containing the event data.
+        /// </param>
         private void LoadLocaleStrings(object sender, SelectionChangedEventArgs e)
         {
             if (this.tbxDescription == null || this.cbxLocale.SelectedIndex < 0)
@@ -207,7 +269,8 @@ namespace SevenUpdate.Sdk.Pages
             Utilities.Locale = ((ComboBoxItem)this.cbxLocale.SelectedItem).Tag.ToString();
 
             var found = false;
-            var shortcutDescriptions = Core.UpdateInfo.Shortcuts[this.listBox.SelectedIndex].Description ?? new ObservableCollection<LocaleString>();
+            var shortcutDescriptions = Core.UpdateInfo.Shortcuts[this.listBox.SelectedIndex].Description ??
+                                       new ObservableCollection<LocaleString>();
 
             // Load Values
             foreach (var t in shortcutDescriptions.Where(t => t.Lang == Utilities.Locale))
@@ -222,7 +285,8 @@ namespace SevenUpdate.Sdk.Pages
             }
 
             found = false;
-            var shortcutNames = Core.UpdateInfo.Shortcuts[this.listBox.SelectedIndex].Name ?? new ObservableCollection<LocaleString>();
+            var shortcutNames = Core.UpdateInfo.Shortcuts[this.listBox.SelectedIndex].Name ??
+                                new ObservableCollection<LocaleString>();
 
             // Load Values
             foreach (var t in shortcutNames.Where(t => t.Lang == Utilities.Locale))
@@ -237,12 +301,21 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        /// <summary>Opens a dialog to browse for the shortcut icon.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs" /> instance containing the event data.</param>
+        /// <summary>
+        ///   Opens a dialog to browse for the shortcut icon.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="System.Windows.Input.MouseButtonEventArgs" /> instance containing the event data.
+        /// </param>
         private void LocateIcon(object sender, MouseButtonEventArgs e)
         {
-            var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory) ? Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Platform) : Core.AppInfo.Directory;
+            var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
+                                       ? Utilities.GetRegistryValue(
+                                           Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Platform)
+                                       : Core.AppInfo.Directory;
 
             installDirectory = Utilities.ConvertPath(installDirectory, true, Core.AppInfo.Platform);
 
@@ -258,12 +331,21 @@ namespace SevenUpdate.Sdk.Pages
             Core.UpdateInfo.Shortcuts[this.listBox.SelectedIndex].Icon = fileUrl;
         }
 
-        /// <summary>Opens a dialog to browse for the shortcut location.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs" /> instance containing the event data.</param>
+        /// <summary>
+        ///   Opens a dialog to browse for the shortcut location.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="System.Windows.Input.MouseButtonEventArgs" /> instance containing the event data.
+        /// </param>
         private void LocateShortcutLocation(object sender, MouseButtonEventArgs e)
         {
-            var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory) ? Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Platform) : Core.AppInfo.Directory;
+            var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
+                                       ? Utilities.GetRegistryValue(
+                                           Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Platform)
+                                       : Core.AppInfo.Directory;
 
             installDirectory = Utilities.ConvertPath(installDirectory, true, Core.AppInfo.Platform);
             var shortcut = Core.OpenFileDialog(installDirectory, null, false, "lnk", true);
@@ -280,12 +362,21 @@ namespace SevenUpdate.Sdk.Pages
             Core.UpdateInfo.Shortcuts[this.listBox.SelectedIndex].Location = fileUrl;
         }
 
-        /// <summary>Opens a dialog to browse for the shortcut target.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs" /> instance containing the event data.</param>
+        /// <summary>
+        ///   Opens a dialog to browse for the shortcut target.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="System.Windows.Input.MouseButtonEventArgs" /> instance containing the event data.
+        /// </param>
         private void LocateShortcutTarget(object sender, MouseButtonEventArgs e)
         {
-            var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory) ? Utilities.GetRegistryValue(Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Platform) : Core.AppInfo.Directory;
+            var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
+                                       ? Utilities.GetRegistryValue(
+                                           Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Platform)
+                                       : Core.AppInfo.Directory;
 
             installDirectory = Utilities.ConvertPath(installDirectory, true, Core.AppInfo.Platform);
             var files = Core.OpenFileDialog(installDirectory);
@@ -294,9 +385,15 @@ namespace SevenUpdate.Sdk.Pages
             Core.UpdateInfo.Shortcuts[this.listBox.SelectedIndex].Target = fileUrl;
         }
 
-        /// <summary>Navigates to the next page if no errors exist.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
+        /// <summary>
+        ///   Navigates to the next page if no errors exist.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        /// </param>
         private void MoveOn(object sender, RoutedEventArgs e)
         {
             if (!this.HasErrors())
@@ -309,41 +406,71 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        /// <summary>Navigates to the main page.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
+        /// <summary>
+        ///   Navigates to the main page.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        /// </param>
         private void NavigateToMainPage(object sender, RoutedEventArgs e)
         {
             MainWindow.NavService.Navigate(Core.MainPage);
         }
 
-        /// <summary>Removes all Shortcuts from the collection.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
+        /// <summary>
+        ///   Removes all Shortcuts from the collection.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        /// </param>
         private void RemoveAllShortcuts(object sender, RoutedEventArgs e)
         {
             Core.UpdateInfo.Shortcuts.RemoveAt(this.listBox.SelectedIndex);
         }
 
-        /// <summary>Removes the selected Shortcuts from the collection.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
+        /// <summary>
+        ///   Removes the selected Shortcuts from the collection.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        /// </param>
         private void RemoveShortcut(object sender, RoutedEventArgs e)
         {
             Core.UpdateInfo.Shortcuts.Clear();
         }
 
-        /// <summary>Sets the selected shortcut.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Controls.SelectionChangedEventArgs" /> instance containing the event data.</param>
+        /// <summary>
+        ///   Sets the selected shortcut.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="System.Windows.Controls.SelectionChangedEventArgs" /> instance containing the event data.
+        /// </param>
         private void SetSelectedShortcut(object sender, SelectionChangedEventArgs e)
         {
             Core.SelectedShortcut = this.listBox.SelectedIndex;
         }
 
-        /// <summary>Updates the UI based on whether Aero Glass is enabled.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="CompositionChangedEventArgs" /> instance containing the event data.</param>
+        /// <summary>
+        ///   Updates the UI based on whether Aero Glass is enabled.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="CompositionChangedEventArgs" /> instance containing the event data.
+        /// </param>
         private void UpdateUI(object sender, CompositionChangedEventArgs e)
         {
             if (e.IsGlassEnabled)
@@ -360,9 +487,15 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        /// <summary>Validates the input to make sure it's a valid directory.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="TextChangedEventArgs" /> instance containing the event data.</param>
+        /// <summary>
+        ///   Validates the input to make sure it's a valid directory.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="TextChangedEventArgs" /> instance containing the event data.
+        /// </param>
         private void ValidateDirectoryPath(object sender, TextChangedEventArgs e)
         {
             var textBox = (InfoTextBox)sender;
@@ -372,14 +505,24 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             }
 
-            textBox.HasError = !new DirectoryInputRule { IsRequired = true }.Validate(Utilities.ExpandInstallLocation(textBox.Text, Core.AppInfo.Directory, Core.AppInfo.Platform, Core.AppInfo.ValueName), null).IsValid;
+            textBox.HasError =
+                !new DirectoryInputRule { IsRequired = true }.Validate(
+                    Utilities.ExpandInstallLocation(
+                        textBox.Text, Core.AppInfo.Directory, Core.AppInfo.Platform, Core.AppInfo.ValueName),
+                    null).IsValid;
 
             textBox.ToolTip = textBox.HasError ? Properties.Resources.FilePathInvalid : null;
         }
 
-        /// <summary>Validates the input to make sure it's a valid file.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="TextChangedEventArgs" /> instance containing the event data.</param>
+        /// <summary>
+        ///   Validates the input to make sure it's a valid file.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="TextChangedEventArgs" /> instance containing the event data.
+        /// </param>
         private void ValidateFileName(object sender, TextChangedEventArgs e)
         {
             var textBox = (InfoTextBox)sender;
@@ -391,11 +534,16 @@ namespace SevenUpdate.Sdk.Pages
 
             if (textBox.Name == "tbxName")
             {
-                textBox.HasError = string.IsNullOrWhiteSpace(textBox.Text) || textBox.Text.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0;
+                textBox.HasError = string.IsNullOrWhiteSpace(textBox.Text) ||
+                                   textBox.Text.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0;
             }
             else
             {
-                textBox.HasError = !new FileNameInputRule { IsRequired = true }.Validate(Utilities.ExpandInstallLocation(textBox.Text, Core.AppInfo.Directory, Core.AppInfo.Platform, Core.AppInfo.ValueName), null).IsValid;
+                textBox.HasError =
+                    !new FileNameInputRule { IsRequired = true }.Validate(
+                        Utilities.ExpandInstallLocation(
+                            textBox.Text, Core.AppInfo.Directory, Core.AppInfo.Platform, Core.AppInfo.ValueName),
+                        null).IsValid;
             }
 
             textBox.ToolTip = textBox.HasError ? Properties.Resources.FilePathInvalid : null;

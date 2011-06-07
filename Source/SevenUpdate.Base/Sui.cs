@@ -26,21 +26,32 @@ namespace SevenUpdate
 
     using ProtoBuf;
 
-    /// <summary>The collection of updates and the application info.</summary>
-    [ProtoContract, DataContract(IsReference = true), KnownType(typeof(Sua)), KnownType(typeof(ObservableCollection<Update>))]
+    /// <summary>
+    ///   The collection of updates and the application info.
+    /// </summary>
+    [ProtoContract]
+    [DataContract(IsReference = true)]
+    [KnownType(typeof(Sua))]
+    [KnownType(typeof(ObservableCollection<Update>))]
     public sealed class Sui : INotifyPropertyChanged
     {
         #region Constants and Fields
 
-        /// <summary>The application information.</summary>
+        /// <summary>
+        ///   The application information.
+        /// </summary>
         private Sua appInfo;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="Sui" /> class.</summary>
-        /// <param name="updates">The collection of updates for the application.</param>
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="Sui" /> class.
+        /// </summary>
+        /// <param name="updates">
+        ///   The collection of updates for the application.
+        /// </param>
         public Sui(ObservableCollection<Update> updates)
         {
             this.Updates = updates;
@@ -53,14 +64,22 @@ namespace SevenUpdate
             this.Updates = new ObservableCollection<Update>();
         }
 
-        /// <summary>Initializes a new instance of the <see cref="Sui" /> class.</summary>
+        /// <summary>
+        ///   Initializes a new instance of the Sui class.
+        /// </summary>
         public Sui()
         {
         }
 
-        /// <summary>Initializes a new instance of the <see cref="Sui" /> class.</summary>
-        /// <param name="appInfo">The software information for the application updates.</param>
-        /// <param name="updates">The collection of updates for the application.</param>
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="Sui" /> class.
+        /// </summary>
+        /// <param name="appInfo">
+        ///   The software information for the application updates.
+        /// </param>
+        /// <param name="updates">
+        ///   The collection of updates for the application.
+        /// </param>
         public Sui(Sua appInfo, ObservableCollection<Update> updates)
         {
             this.AppInfo = appInfo;
@@ -71,15 +90,20 @@ namespace SevenUpdate
 
         #region Events
 
-        /// <summary>Occurs when a property has changed.</summary>
+        /// <summary>
+        ///   Occurs when a property has changed.
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
 
         #region Properties
 
-        /// <summary>Gets or sets the software information for the application updates.</summary>
-        [ProtoMember(2), DataMember]
+        /// <summary>
+        ///   Gets or sets the software information for the application updates.
+        /// </summary>
+        [ProtoMember(2)]
+        [DataMember]
         public Sua AppInfo
         {
             get
@@ -96,16 +120,23 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Gets the collection of updates for the application.</summary>
-        [ProtoMember(1), DataMember]
+        /// <summary>
+        ///   Gets the collection of updates for the application.
+        /// </summary>
+        [ProtoMember(1)]
+        [DataMember]
         public ObservableCollection<Update> Updates { get; private set; }
 
         #endregion
 
         #region Methods
 
-        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged" /> Event.</summary>
-        /// <param name="name">The name of the property that changed.</param>
+        /// <summary>
+        ///   When a property has changed, call the <see cref="OnPropertyChanged" /> Event.
+        /// </summary>
+        /// <param name="name">
+        ///   The name of the property that changed.
+        /// </param>
         private void OnPropertyChanged(string name)
         {
             var handler = this.PropertyChanged;

@@ -23,12 +23,16 @@ namespace SevenUpdate.Sdk.Pages
     using System.Windows;
     using System.Windows.Media;
 
-    /// <summary>Interaction logic for UpdateRegistry.xaml.</summary>
+    /// <summary>
+    ///   Interaction logic for UpdateRegistry.xaml.
+    /// </summary>
     public sealed partial class UpdateReview
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="UpdateReview" /> class.</summary>
+        /// <summary>
+        ///   Initializes a new instance of the UpdateReview class.
+        /// </summary>
         public UpdateReview()
         {
             this.InitializeComponent();
@@ -38,32 +42,52 @@ namespace SevenUpdate.Sdk.Pages
 
             this.MouseLeftButtonDown += Core.EnableDragOnGlass;
             AeroGlass.CompositionChanged += this.UpdateUI;
-            this.tbTitle.Foreground = AeroGlass.IsGlassEnabled ? Brushes.Black : new SolidColorBrush(Color.FromRgb(0, 51, 153));
+            this.tbTitle.Foreground = AeroGlass.IsGlassEnabled
+                                          ? Brushes.Black
+                                          : new SolidColorBrush(Color.FromRgb(0, 51, 153));
         }
 
         #endregion
 
         #region Methods
 
-        /// <summary>Saves and exports the Project.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
+        /// <summary>
+        ///   Saves and exports the Project.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        /// </param>
         private void SaveExportProject(object sender, RoutedEventArgs e)
         {
             Core.SaveProject(true);
         }
 
-        /// <summary>Saves the Project.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
+        /// <summary>
+        ///   Saves the Project.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        /// </param>
         private void SaveProject(object sender, RoutedEventArgs e)
         {
             Core.SaveProject();
         }
 
-        /// <summary>Updates the UI based on whether Aero Glass is enabled.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="CompositionChangedEventArgs" /> instance containing the event data.</param>
+        /// <summary>
+        ///   Updates the UI based on whether Aero Glass is enabled.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="CompositionChangedEventArgs" /> instance containing the event data.
+        /// </param>
         private void UpdateUI(object sender, CompositionChangedEventArgs e)
         {
             this.tbTitle.Foreground = e.IsGlassEnabled ? Brushes.Black : new SolidColorBrush(Color.FromRgb(0, 51, 153));

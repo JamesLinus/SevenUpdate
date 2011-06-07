@@ -781,7 +781,7 @@ namespace SevenUpdate.Properties {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} optional update are available.
+        ///   Looks up a localized string similar to {0} optional updates are available.
         /// </summary>
         public static string OptionalUpdatesAvailable {
             get {

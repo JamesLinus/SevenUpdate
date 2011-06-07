@@ -7,13 +7,19 @@
 
 namespace System.Windows.Dialogs
 {
-    /// <summary>The icon elements for the dialog.</summary>
+    /// <summary>
+    ///   The icon elements for the dialog.
+    /// </summary>
     internal enum TaskDialogIconElement
     {
-        /// <summary>The main icon.</summary>
+        /// <summary>
+        ///   The main icon.
+        /// </summary>
         IconMain,
 
-        /// <summary>The footer icon.</summary>
+        /// <summary>
+        ///   The footer icon.
+        /// </summary>
         IconFooter
     }
 }

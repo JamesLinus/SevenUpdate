@@ -25,17 +25,27 @@ namespace SevenUpdate.Sdk.ValidationRules
     using System.IO;
     using System.Windows.Controls;
 
-    using SevenUpdate.Sdk.Properties;
+    using Properties;
 
-    /// <summary>Validates a value and determines if the value is a application location.</summary>
+    /// <summary>
+    ///   Validates a value and determines if the value is a application location.
+    /// </summary>
     internal sealed class AppDirectoryRule : ValidationRule
     {
         #region Public Methods
 
-        /// <summary>When overridden in a derived class, performs validation checks on a value.</summary>
-        /// <param name="value">The value from the binding target to check.</param>
-        /// <param name="cultureInfo">The culture to use in this rule.</param>
-        /// <returns>A <see cref="T:System.Windows.Controls.ValidationResult" /> object.</returns>
+        /// <summary>
+        ///   When overridden in a derived class, performs validation checks on a value.
+        /// </summary>
+        /// <param name="value">
+        ///   The value from the binding target to check.
+        /// </param>
+        /// <param name="cultureInfo">
+        ///   The culture to use in this rule.
+        /// </param>
+        /// <returns>
+        ///   A <see cref="T:System.Windows.Controls.ValidationResult" /> object.
+        /// </returns>
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             var input = value as string;
@@ -44,7 +54,10 @@ namespace SevenUpdate.Sdk.ValidationRules
                 return new ValidationResult(false, Resources.FilePathInvalid);
             }
 
-            input = Core.AppInfo.Directory == null ? Utilities.ConvertPath(input, true, Core.AppInfo.Platform) : Utilities.ExpandInstallLocation(input, Core.AppInfo.Directory, Core.AppInfo.Platform, Core.AppInfo.ValueName);
+            input = Core.AppInfo.Directory == null
+                        ? Utilities.ConvertPath(input, true, Core.AppInfo.Platform)
+                        : Utilities.ExpandInstallLocation(
+                            input, Core.AppInfo.Directory, Core.AppInfo.Platform, Core.AppInfo.ValueName);
 
             if (string.IsNullOrEmpty(input) || input.IndexOfAny(Path.GetInvalidPathChars()) >= 0)
             {

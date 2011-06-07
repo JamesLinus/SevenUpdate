@@ -7,19 +7,29 @@
 
 namespace System.Windows.Dialogs
 {
-    /// <summary>The task dialog main icons.</summary>
+    /// <summary>
+    ///   The task dialog main icons.
+    /// </summary>
     internal enum TaskDialogIcon
     {
-        /// <summary>An exclamation-point icon appears in the task dialog.</summary>
+        /// <summary>
+        ///   An exclamation-point icon appears in the task dialog.
+        /// </summary>
         WarningIcon = 65535,
 
-        /// <summary>A stop-sign icon appears in the task dialog.</summary>
+        /// <summary>
+        ///   A stop-sign icon appears in the task dialog.
+        /// </summary>
         ErrorIcon = 65534,
 
-        /// <summary>An icon consisting of a lowercase letter i in a circle appears in the task dialog.</summary>
+        /// <summary>
+        ///   An icon consisting of a lowercase letter i in a circle appears in the task dialog.
+        /// </summary>
         InformationIcon = 65533,
 
-        /// <summary>A shield icon appears in the task dialog.</summary>
+        /// <summary>
+        ///   A shield icon appears in the task dialog.
+        /// </summary>
         ShieldIcon = 65532
     }
 }

@@ -14,21 +14,29 @@ namespace WPFLocalizeExtension.Extensions
     using System.Windows.Markup;
     using System.Windows.Media;
 
-    using WPFLocalizeExtension.Engine;
+    using Engine;
 
-    /// <summary><c>BaseLocalizeExtension</c> for brush objects as string (uses <see cref="TypeConverter" />).</summary>
+    /// <summary>
+    ///   <c>BaseLocalizeExtension</c> for brush objects as string (uses <see cref="TypeConverter" />).
+    /// </summary>
     [MarkupExtensionReturnType(typeof(Brush))]
     public class LocBrushExtension : BaseLocalizeExtension<Brush>
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="LocBrushExtension" /> class.</summary>
+        /// <summary>
+        ///   Initializes a new instance of the LocBrushExtension class.
+        /// </summary>
         public LocBrushExtension()
         {
         }
 
-        /// <summary>Initializes a new instance of the <see cref="LocBrushExtension" /> class.</summary>
-        /// <param name="key">The resource identifier.</param>
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="LocBrushExtension" /> class.
+        /// </summary>
+        /// <param name="key">
+        ///   The resource identifier.
+        /// </param>
         public LocBrushExtension(string key) : base(key)
         {
         }
@@ -37,9 +45,15 @@ namespace WPFLocalizeExtension.Extensions
 
         #region Public Methods
 
-        /// <summary>Provides the Value for the first Binding as <see cref="System.Windows.Media.Brush" />.</summary>
-        /// <param name="serviceProvider">The <see cref="System.Windows.Markup.IProvideValueTarget" /> provided from the <see cref="MarkupExtension" />.</param>
-        /// <returns>The found item from the .resx directory or <see langword="null" /> if not found.</returns>
+        /// <summary>
+        ///   Provides the Value for the first Binding as <see cref="System.Windows.Media.Brush" />.
+        /// </summary>
+        /// <param name="serviceProvider">
+        ///   The <see cref="System.Windows.Markup.IProvideValueTarget" /> provided from the <see cref="MarkupExtension" />.
+        /// </param>
+        /// <returns>
+        ///   The found item from the .resx directory or <c>null</c> if not found.
+        /// </returns>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             var obj = base.ProvideValue(serviceProvider);
@@ -59,16 +73,27 @@ namespace WPFLocalizeExtension.Extensions
                 return this.FormatOutput(obj);
             }
 
-            throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, "ResourceKey '{0}' returns '{1}' which is not type of System.Drawing.Bitmap", this.Key, obj.GetType().FullName));
+            throw new NotSupportedException(
+                string.Format(
+                    CultureInfo.CurrentCulture,
+                    "ResourceKey '{0}' returns '{1}' which is not type of System.Drawing.Bitmap",
+                    this.Key,
+                    obj.GetType().FullName));
         }
 
         #endregion
 
         #region Methods
 
-        /// <summary>This method is used to modify the passed object into the target format.</summary>
-        /// <param name="input">The object that will be modified.</param>
-        /// <returns>Returns the modified object.</returns>
+        /// <summary>
+        ///   This method is used to modify the passed object into the target format.
+        /// </summary>
+        /// <param name="input">
+        ///   The object that will be modified.
+        /// </param>
+        /// <returns>
+        ///   Returns the modified object.
+        /// </returns>
         protected override object FormatOutput(object input)
         {
             if (Localize.Instance.IsInDesignMode && this.DesignValue != null)
@@ -79,10 +104,13 @@ namespace WPFLocalizeExtension.Extensions
             return new BrushConverter().ConvertFromString((string)input);
         }
 
-        /// <summary>This method gets the new value for the target property and call <see cref="BaseLocalizeExtension{TValue}.SetNewValue" />.</summary>
+        /// <summary>
+        ///   This method gets the new value for the target property and call <see cref="BaseLocalizeExtension{TValue}.SetNewValue" />.
+        /// </summary>
         protected override void HandleNewValue()
         {
-            var obj = Localize.Instance.GetLocalizedObject<object>(this.Assembly, this.Dictionary, this.Key, this.Culture);
+            var obj = Localize.Instance.GetLocalizedObject<object>(
+                this.Assembly, this.Dictionary, this.Key, this.Culture);
             this.SetNewValue(new BrushConverter().ConvertFromString((string)obj));
         }
 

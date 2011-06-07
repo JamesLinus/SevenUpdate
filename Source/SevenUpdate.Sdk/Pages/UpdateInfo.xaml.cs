@@ -28,14 +28,18 @@ namespace SevenUpdate.Sdk.Pages
     using System.Windows.Media;
     using System.Windows.ValidationRules;
 
-    using SevenUpdate.Sdk.Windows;
+    using Windows;
 
-    /// <summary>Interaction logic for UpdateInfo.xaml.</summary>
+    /// <summary>
+    ///   Interaction logic for UpdateInfo.xaml.
+    /// </summary>
     public sealed partial class UpdateInfo
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="UpdateInfo" /> class.</summary>
+        /// <summary>
+        ///   Initializes a new instance of the UpdateInfo class.
+        /// </summary>
         public UpdateInfo()
         {
             this.InitializeComponent();
@@ -67,9 +71,15 @@ namespace SevenUpdate.Sdk.Pages
 
         #region Methods
 
-        /// <summary>Fires the OnPropertyChanged Event with the collection changes.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The event data.</param>
+        /// <summary>
+        ///   Fires the OnPropertyChanged Event with the collection changes.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The event data.
+        /// </param>
         private void ChangeDescription(object sender, RoutedEventArgs e)
         {
             var textBox = (InfoTextBox)sender;
@@ -77,9 +87,15 @@ namespace SevenUpdate.Sdk.Pages
             Core.UpdateLocaleStrings(textBox.Text, Core.UpdateInfo.Description);
         }
 
-        /// <summary>Fires the OnPropertyChanged Event with the collection changes.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The event data.</param>
+        /// <summary>
+        ///   Fires the OnPropertyChanged Event with the collection changes.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The event data.
+        /// </param>
         private void ChangeName(object sender, RoutedEventArgs e)
         {
             var textBox = (InfoTextBox)sender;
@@ -87,16 +103,27 @@ namespace SevenUpdate.Sdk.Pages
             Core.UpdateLocaleStrings(textBox.Text, Core.UpdateInfo.Name);
         }
 
-        /// <summary>Determines whether this instance has errors.</summary>
-        /// <returns><see langword="true" /> if this instance has errors; otherwise, <see langword="false" />.</returns>
+        /// <summary>
+        ///   Determines whether this instance has errors.
+        /// </summary>
+        /// <returns>
+        ///   <c>True</c> if this instance has errors; otherwise, <c>False</c>.
+        /// </returns>
         private bool HasErrors()
         {
-            return this.tbxUpdateName.HasError || this.tbxUpdateDetails.HasError || this.tbxSourceLocation.HasError || this.imgReleaseDate.Visibility == Visibility.Visible;
+            return this.tbxUpdateName.HasError || this.tbxUpdateDetails.HasError || this.tbxSourceLocation.HasError ||
+                   this.imgReleaseDate.Visibility == Visibility.Visible;
         }
 
-        /// <summary>Loads the <see cref="LocaleString" />'s for the <see cref="Update" /> into the UI.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Controls.SelectionChangedEventArgs" /> instance containing the event data.</param>
+        /// <summary>
+        ///   Loads the <see cref="LocaleString" />'s for the <see cref="Update" /> into the UI.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="System.Windows.Controls.SelectionChangedEventArgs" /> instance containing the event data.
+        /// </param>
         private void LoadLocaleStrings(object sender, SelectionChangedEventArgs e)
         {
             if (this.tbxUpdateName == null || this.cbxLocale.SelectedIndex < 0)
@@ -135,9 +162,15 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        /// <summary>Loads the <see cref="Update" /> information to the UI.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
+        /// <summary>
+        ///   Loads the <see cref="Update" /> information to the UI.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        /// </param>
         private void LoadUI(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(this.tbxUpdateDetails.Text))
@@ -181,9 +214,15 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        /// <summary>Moves on to the next pages if no errors are present.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
+        /// <summary>
+        ///   Moves on to the next pages if no errors are present.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        /// </param>
         private void MoveOn(object sender, RoutedEventArgs e)
         {
             if (!this.HasErrors())
@@ -196,17 +235,29 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        /// <summary>Navigates to the main page.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.</param>
+        /// <summary>
+        ///   Navigates to the main page.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        /// </param>
         private void NavigateToMainPage(object sender, RoutedEventArgs e)
         {
             MainWindow.NavService.Navigate(Core.MainPage);
         }
 
-        /// <summary>Updates the UI based on whether Aero Glass is enabled.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="CompositionChangedEventArgs" /> instance containing the event data.</param>
+        /// <summary>
+        ///   Updates the UI based on whether Aero Glass is enabled.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="CompositionChangedEventArgs" /> instance containing the event data.
+        /// </param>
         private void UpdateUI(object sender, CompositionChangedEventArgs e)
         {
             if (e.IsGlassEnabled)
@@ -223,9 +274,15 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        /// <summary>Validates the textbox to see if required input exists.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The event data.</param>
+        /// <summary>
+        ///   Validates the textbox to see if required input exists.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The event data.
+        /// </param>
         private void ValidateInputRequired(object sender, TextChangedEventArgs e)
         {
             var textBox = (InfoTextBox)sender;
@@ -242,9 +299,15 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        /// <summary>Validates input to see if it's a valid URL.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The event data.</param>
+        /// <summary>
+        ///   Validates input to see if it's a valid URL.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The event data.
+        /// </param>
         private void ValidateUrlInput(object sender, TextChangedEventArgs e)
         {
             var textBox = (InfoTextBox)sender;
@@ -254,7 +317,11 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             }
 
-            textBox.HasError = !new UrlInputRule { IsRequired = textBox.Name == @"tbxSourceLocation" }.Validate(textBox.Text, null).IsValid;
+            textBox.HasError =
+                !new UrlInputRule
+                    {
+                        IsRequired = textBox.Name == @"tbxSourceLocation"
+                    }.Validate(textBox.Text, null).IsValid;
             textBox.ToolTip = textBox.HasError ? Properties.Resources.UrlNotValid : null;
         }
 

@@ -25,4 +25,5 @@ using System.Windows.Markup;
 [assembly: ComVisible(false)]
 [assembly: Guid("59ffa091-2f23-45bc-8212-125250bf213d")]
 [assembly: XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml/presentation", "WPFLocalizeExtension.Engine")]
-[assembly: XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml/presentation", "WPFLocalizeExtension.Extensions")]
+[assembly:
+    XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml/presentation", "WPFLocalizeExtension.Extensions")]

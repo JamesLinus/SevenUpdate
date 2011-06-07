@@ -29,9 +29,11 @@ namespace SevenUpdate.Admin
 
     using Microsoft.Win32;
 
-    using SevenUpdate.Service;
+    using Service;
 
-    /// <summary>Contains methods to execute for the service callback.</summary>
+    /// <summary>
+    ///   Contains methods to execute for the service callback.
+    /// </summary>
     [CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant)]
     public class WcfServiceCallback : IElevatedProcess
     {
@@ -39,8 +41,12 @@ namespace SevenUpdate.Admin
 
         #region IElevatedProcess
 
-        /// <summary>Adds an application to Seven Update, so it can manage updates for it.</summary>
-        /// <param name="application">The application to add to Seven Update.</param>
+        /// <summary>
+        ///   Adds an application to Seven Update, so it can manage updates for it.
+        /// </summary>
+        /// <param name="application">
+        ///   The application to add to Seven Update.
+        /// </param>
         public void AddApp(Sua application)
         {
             if (application == null)
@@ -77,10 +83,18 @@ namespace SevenUpdate.Admin
             Utilities.Serialize(sul, App.ApplicationsFile);
         }
 
-        /// <summary>Changes the program settings.</summary>
-        /// <param name="applications">The applications Seven Update will check and manage updates for.</param>
-        /// <param name="options">The Seven Update settings.</param>
-        /// <param name="autoCheck">If set to <see langword="true" /> automatic updates will be enabled.</param>
+        /// <summary>
+        ///   Changes the program settings.
+        /// </summary>
+        /// <param name="applications">
+        ///   The applications Seven Update will check and manage updates for.
+        /// </param>
+        /// <param name="options">
+        ///   The Seven Update settings.
+        /// </param>
+        /// <param name="autoCheck">
+        ///   If set to <c>True</c> automatic updates will be enabled.
+        /// </param>
         public void ChangeSettings(Collection<Sua> applications, Config options, bool autoCheck)
         {
             if (!autoCheck)
@@ -88,7 +102,8 @@ namespace SevenUpdate.Admin
                 if (Environment.OSVersion.Version.Major < 6)
                 {
                     // ReSharper disable PossibleNullReferenceException
-                    Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true).DeleteValue("Seven Update Automatic Checking", false);
+                    Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true).DeleteValue(
+                        "Seven Update Automatic Checking", false);
 
                     // ReSharper restore PossibleNullReferenceException
                 }
@@ -101,7 +116,10 @@ namespace SevenUpdate.Admin
             {
                 if (Environment.OSVersion.Version.Major < 6)
                 {
-                    Registry.SetValue(@"HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run", "Seven Update Automatic Checking", Path.Combine(Utilities.AppDir, "SevenUpdate.Helper.exe"));
+                    Registry.SetValue(
+                        @"HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run",
+                        "Seven Update Automatic Checking",
+                        Path.Combine(Utilities.AppDir, "SevenUpdate.Helper.exe"));
                 }
                 else
                 {
@@ -113,19 +131,29 @@ namespace SevenUpdate.Admin
             Utilities.Serialize(options, App.ConfigFile);
         }
 
-        /// <summary>Hides a single update.</summary>
-        /// <param name="hiddenUpdate">The update to hide.</param>
+        /// <summary>
+        ///   Hides a single update.
+        /// </summary>
+        /// <param name="hiddenUpdate">
+        ///   The update to hide.
+        /// </param>
         public void HideUpdate(Suh hiddenUpdate)
         {
-            var hidden = (File.Exists(App.HiddenFile) ? Utilities.Deserialize<Collection<Suh>>(App.HiddenFile) : new Collection<Suh>()) ?? new Collection<Suh>();
+            var hidden = (File.Exists(App.HiddenFile)
+                              ? Utilities.Deserialize<Collection<Suh>>(App.HiddenFile)
+                              : new Collection<Suh>()) ?? new Collection<Suh>();
 
             hidden.Add(hiddenUpdate);
 
             Utilities.Serialize(hidden, App.HiddenFile);
         }
 
-        /// <summary>Hides a collection of <see cref="Suh" /> to hide.</summary>
-        /// <param name="hiddenUpdates">The collection of updates to hide.</param>
+        /// <summary>
+        ///   Hides a collection of <see cref="Suh" /> to hide.
+        /// </summary>
+        /// <param name="hiddenUpdates">
+        ///   The collection of updates to hide.
+        /// </param>
         public void HideUpdates(Collection<Suh> hiddenUpdates)
         {
             if (hiddenUpdates == null)
@@ -143,8 +171,12 @@ namespace SevenUpdate.Admin
             Utilities.Serialize(hiddenUpdates, App.HiddenFile);
         }
 
-        /// <summary>Gets a collection of <see cref="Sui" />.</summary>
-        /// <param name="applicationUpdates">The collection of applications and updates to install.</param>
+        /// <summary>
+        ///   Gets a collection of <see cref="Sui" />.
+        /// </summary>
+        /// <param name="applicationUpdates">
+        ///   The collection of applications and updates to install.
+        /// </param>
         public void InstallUpdates(Collection<Sui> applicationUpdates)
         {
             try
@@ -166,11 +198,18 @@ namespace SevenUpdate.Admin
             }
 
             App.Applications = applicationUpdates;
-            Task.Factory.StartNew(() => Download.DownloadUpdates(applicationUpdates, "SevenUpdate", Path.Combine(App.AllUserStore, "downloads"), true));
+            Task.Factory.StartNew(
+                () =>
+                Download.DownloadUpdates(
+                    applicationUpdates, "SevenUpdate", Path.Combine(App.AllUserStore, "downloads"), true));
         }
 
-        /// <summary>The update to show and remove from hidden updates.</summary>
-        /// <param name="hiddenUpdate">The hidden update to show.</param>
+        /// <summary>
+        ///   The update to show and remove from hidden updates.
+        /// </summary>
+        /// <param name="hiddenUpdate">
+        ///   The hidden update to show.
+        /// </param>
         public void ShowUpdate(Suh hiddenUpdate)
         {
             if (hiddenUpdate == null)
@@ -178,7 +217,9 @@ namespace SevenUpdate.Admin
                 throw new ArgumentNullException("hiddenUpdate");
             }
 
-            var show = File.Exists(App.HiddenFile) ? Utilities.Deserialize<Collection<Suh>>(App.HiddenFile) : new Collection<Suh>();
+            var show = File.Exists(App.HiddenFile)
+                           ? Utilities.Deserialize<Collection<Suh>>(App.HiddenFile)
+                           : new Collection<Suh>();
 
             if (show == null)
             {
@@ -188,7 +229,11 @@ namespace SevenUpdate.Admin
 
             for (var x = 0; x < show.Count; x++)
             {
-                if (show[x].Importance == hiddenUpdate.Importance && show[x].Status == hiddenUpdate.Status && show[x].UpdateSize == hiddenUpdate.UpdateSize && show[x].HelpUrl == hiddenUpdate.HelpUrl && show[x].InfoUrl == hiddenUpdate.InfoUrl && show[x].AppUrl == hiddenUpdate.AppUrl && show[x].Description[0].Value == hiddenUpdate.Description[0].Value && show[x].Name[0].Value == hiddenUpdate.Name[0].Value)
+                if (show[x].Importance == hiddenUpdate.Importance && show[x].Status == hiddenUpdate.Status &&
+                    show[x].UpdateSize == hiddenUpdate.UpdateSize && show[x].HelpUrl == hiddenUpdate.HelpUrl &&
+                    show[x].InfoUrl == hiddenUpdate.InfoUrl && show[x].AppUrl == hiddenUpdate.AppUrl &&
+                    show[x].Description[0].Value == hiddenUpdate.Description[0].Value &&
+                    show[x].Name[0].Value == hiddenUpdate.Name[0].Value)
                 {
                     show.RemoveAt(x);
                 }
@@ -204,17 +249,20 @@ namespace SevenUpdate.Admin
             }
         }
 
-        /// <summary>Shutdown the admin process if it's not installing updates. Execute the admin process with Abort.</summary>
+        /// <summary>
+        ///   Shutdown the admin process if it's not installing updates. Execute the admin process with Abort.
+        /// </summary>
         public void Shutdown()
         {
-            Task.Factory.StartNew(() =>
-                {
-                    Thread.Sleep(500);
-                    if (!App.IsInstalling)
+            Task.Factory.StartNew(
+                () =>
                     {
-                        Environment.Exit(0);
-                    }
-                });
+                        Thread.Sleep(500);
+                        if (!App.IsInstalling)
+                        {
+                            Environment.Exit(0);
+                        }
+                    });
         }
 
         #endregion

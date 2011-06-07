@@ -41,6 +41,7 @@ using System.Windows.Markup;
 [assembly: XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml/presentation", "System.Windows")]
 [assembly: XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml/presentation", "System.Windows.Controls")]
 [assembly: XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml/presentation", "System.Windows.Converters")]
-[assembly: XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml/presentation", "System.Windows.ValidationRules")]
+[assembly:
+    XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml/presentation", "System.Windows.ValidationRules")]
 [assembly: NeutralResourcesLanguage("en-US")]
 [assembly: GuidAttribute("DA793F40-F8D2-4876-94E0-0AB8C0A4F1D2")]

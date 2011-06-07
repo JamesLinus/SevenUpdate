@@ -31,48 +31,91 @@ namespace SevenUpdate.Sdk
 
     using Microsoft.Win32;
 
-    /// <summary>Parses a reg file.</summary>
+    /// <summary>
+    ///   Parses a reg file.
+    /// </summary>
     internal sealed class RegistryParser
     {
         #region Constants and Fields
 
-        /// <summary>The signature of a reg version 4 file.</summary>
+        /// <summary>
+        ///   The signature of a reg version 4 file.
+        /// </summary>
         private const string RegV4Signature = "REGEDIT4\r\n";
 
-        /// <summary>The signature of a reg version 5 file.</summary>
+        /// <summary>
+        ///   The signature of a reg version 5 file.
+        /// </summary>
         private const string RegV5Signature = "Windows Registry Editor Version 5.00\r\n";
 
-        /// <summary>The regex that splits lines.</summary>
-        private static readonly Regex LineSplitter = new Regex(@"^[^\r\n\v\t]*[\t\x20]*=[\t\x20]*((\\[\x20\t]*\s*)|[^\r\n])*", RegexOptions.IgnoreCase | RegexOptions.Multiline | RegexOptions.ExplicitCapture);
+        /// <summary>
+        ///   The regex that splits lines.
+        /// </summary>
+        private static readonly Regex LineSplitter =
+            new Regex(
+                @"^[^\r\n\v\t]*[\t\x20]*=[\t\x20]*((\\[\x20\t]*\s*)|[^\r\n])*",
+                RegexOptions.IgnoreCase | RegexOptions.Multiline | RegexOptions.ExplicitCapture);
 
-        /// <summary>The regex that matches values.</summary>
-        private static readonly Regex RegexOtherValueMatcher = new Regex(@"^(@|""(?<Value>.*)"")\s*=\s*(?<Data>[^"";]*)([\x20\s]*;+[^\r\n]*)?", RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.ExplicitCapture);
+        /// <summary>
+        ///   The regex that matches values.
+        /// </summary>
+        private static readonly Regex RegexOtherValueMatcher =
+            new Regex(
+                @"^(@|""(?<Value>.*)"")\s*=\s*(?<Data>[^"";]*)([\x20\s]*;+[^\r\n]*)?",
+                RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.ExplicitCapture);
 
-        /// <summary>The regex that matches the root key.</summary>
-        private static readonly Regex RegexRootKey = new Regex(@"^\[-?(?<RootKey>(HKEY_LOCAL_MACHINE|HKEY_CURRENT_USER|HKEY_CLASSES_ROOT|HKEY_USERS|HKLM|HKCU|HKCR|HKU))", RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
+        /// <summary>
+        ///   The regex that matches the root key.
+        /// </summary>
+        private static readonly Regex RegexRootKey =
+            new Regex(
+                @"^\[-?(?<RootKey>(HKEY_LOCAL_MACHINE|HKEY_CURRENT_USER|HKEY_CLASSES_ROOT|HKEY_USERS|HKLM|HKCU|HKCR|HKU))",
+                RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
 
-        /// <summary>The regex that matches a string value.</summary>
-        private static readonly Regex RegexStringValueMatcher = new Regex(@"^(@|""(?<Value>.*)"")\s*=\s*\""(?<Data>.*)""([\x20\s]*;+[^\r\n]*)?", RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.ExplicitCapture);
+        /// <summary>
+        ///   The regex that matches a string value.
+        /// </summary>
+        private static readonly Regex RegexStringValueMatcher =
+            new Regex(
+                @"^(@|""(?<Value>.*)"")\s*=\s*\""(?<Data>.*)""([\x20\s]*;+[^\r\n]*)?",
+                RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.ExplicitCapture);
 
-        /// <summary>The regex that matches a sub key.</summary>
-        private static readonly Regex RegexSubKey = new Regex(@"^\[-?(HKEY_LOCAL_MACHINE|HKEY_CURRENT_USER|HKEY_CLASSES_ROOT|HKEY_USERS|HKLM|HKCU|HKCR|HKU)\\(?<Subkey>.*)\]", RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
+        /// <summary>
+        ///   The regex that matches a sub key.
+        /// </summary>
+        private static readonly Regex RegexSubKey =
+            new Regex(
+                @"^\[-?(HKEY_LOCAL_MACHINE|HKEY_CURRENT_USER|HKEY_CLASSES_ROOT|HKEY_USERS|HKLM|HKCU|HKCR|HKU)\\(?<Subkey>.*)\]",
+                RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
 
-        /// <summary>The regex that matches the split token.</summary>
+        /// <summary>
+        ///   The regex that matches the split token.
+        /// </summary>
         private static readonly string SplitToken = @"_!Split" + new Random().Next(99) + "!_";
 
-        /// <summary>A collection of <see cref="RegistryItem" />'s that are in the reg file.</summary>
+        /// <summary>
+        ///   A collection of <c>RegistryItem</c>'s that are in the reg file.
+        /// </summary>
         private readonly Collection<RegistryItem> regItem = new Collection<RegistryItem>();
 
-        /// <summary>The signature of the reg file.</summary>
+        /// <summary>
+        ///   The signature of the reg file.
+        /// </summary>
         private static int regVersionSignature;
 
         #endregion
 
         #region Public Methods
 
-        /// <summary>Parses a registry file into a <see cref="RegistryItem" />.</summary>
-        /// <param name="file">The reg file.</param>
-        /// <returns>String of lines to be returned.</returns>
+        /// <summary>
+        ///   Parses a registry file into a <see cref="RegistryItem" />.
+        /// </summary>
+        /// <param name="file">
+        ///   The reg file.
+        /// </param>
+        /// <returns>
+        ///   String of lines to be returned.
+        /// </returns>
         public IEnumerable<RegistryItem> Parse(string file)
         {
             if (!File.Exists(file))
@@ -93,7 +136,11 @@ namespace SevenUpdate.Sdk
             // conversion correctly, the comments confuse the Regular Expression filters)
             // Also the way Reg2Inf processes the lines makes it impossible to know which
             // comment goes where esp. after addition of DelReg support.
-            rawRegFileData = Regex.Replace(rawRegFileData, @"^\s*;\s*.*", "\r\n", RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.IgnoreCase);
+            rawRegFileData = Regex.Replace(
+                rawRegFileData,
+                @"^\s*;\s*.*",
+                "\r\n",
+                RegexOptions.Multiline | RegexOptions.ExplicitCapture | RegexOptions.IgnoreCase);
 
             // Split Data into Array, where each element is a complete registry block
             rawRegFileData = RegexRootKey.Replace(rawRegFileData, SplitToken + @"$0");
@@ -128,52 +175,90 @@ namespace SevenUpdate.Sdk
 
         #region Methods
 
-        /// <summary>Apply fixes to the line.</summary>
-        /// <param name="line">Line to apply fixes to.</param>
-        /// <param name="skipQuotesConversion">REG_MULTI_SZ, REG_SZ (hex notation) and REG_EXPAND_SZ already put the quotes correctly so if you fix them again you will damage the value, so for those put <see langword="true" /> here to skip that part and only to do the double-quote and percent fixes.</param>
-        /// <returns>The line with the fixes applied.</returns>
+        /// <summary>
+        ///   Apply fixes to the line.
+        /// </summary>
+        /// <param name="line">
+        ///   Line to apply fixes to.
+        /// </param>
+        /// <param name="skipQuotesConversion">
+        ///   REG_MULTI_SZ, REG_SZ (hex notation) and REG_EXPAND_SZ already put the quotes correctly so if you fix them again you will damage the value, so for those put <c>True</c> here to skip that part and only to do the double-quote and percent fixes.
+        /// </param>
+        /// <returns>
+        ///   The line with the fixes applied.
+        /// </returns>
         private static string ApplyFixes(string line, bool skipQuotesConversion)
         {
             if (!skipQuotesConversion)
             {
                 // Change Double backslashes to only one
-                line = Regex.Replace(line, @"\\\\", @"\", RegexOptions.IgnoreCase | RegexOptions.Multiline | RegexOptions.ExplicitCapture);
+                line = Regex.Replace(
+                    line, @"\\\\", @"\", RegexOptions.IgnoreCase | RegexOptions.Multiline | RegexOptions.ExplicitCapture);
 
                 // Change escaped quotes to single quote
-                line = Regex.Replace(line, @"\\""", @"""", RegexOptions.Singleline | RegexOptions.ExplicitCapture | RegexOptions.IgnoreCase);
+                line = Regex.Replace(
+                    line,
+                    @"\\""",
+                    @"""",
+                    RegexOptions.Singleline | RegexOptions.ExplicitCapture | RegexOptions.IgnoreCase);
             }
 
             // Change single quote to double quote
-            line = Regex.Replace(line, @"""", @"""""", RegexOptions.Singleline | RegexOptions.ExplicitCapture | RegexOptions.IgnoreCase);
+            line = Regex.Replace(
+                line, @"""", @"""""", RegexOptions.Singleline | RegexOptions.ExplicitCapture | RegexOptions.IgnoreCase);
 
             // Code to fix the percentages
-            line = Regex.Replace(line, @"%", @"%%", RegexOptions.ExplicitCapture | RegexOptions.Singleline | RegexOptions.IgnoreCase);
+            line = Regex.Replace(
+                line, @"%", @"%%", RegexOptions.ExplicitCapture | RegexOptions.Singleline | RegexOptions.IgnoreCase);
 
             return line;
         }
 
-        /// <summary>Method for finding empty strings.</summary>
-        /// <param name="item">The reg item.</param>
-        /// <returns>A value indicating if the string is .</returns>
+        /// <summary>
+        ///   Method for finding empty strings.
+        /// </summary>
+        /// <param name="item">
+        ///   The reg item.
+        /// </param>
+        /// <returns>
+        ///   A value indicating if the string is .
+        /// </returns>
         private static bool EmptyString(string item)
         {
             return item.Length == 0;
         }
 
-        /// <summary>Matches Binary data from the key/value.</summary>
-        /// <param name="methodResult">The data from the match.</param>
-        /// <param name="valueName">The name of the value.</param>
-        /// <param name="valueData">The data for the value.</param>
-        /// <returns><see langword="true" /> if it was a match, otherwise; <see langword="false" />.</returns>
+        /// <summary>
+        ///   Matches Binary data from the key/value.
+        /// </summary>
+        /// <param name="methodResult">
+        ///   The data from the match.
+        /// </param>
+        /// <param name="valueName">
+        ///   The name of the value.
+        /// </param>
+        /// <param name="valueData">
+        ///   The data for the value.
+        /// </param>
+        /// <returns>
+        ///   <c>True</c> if it was a match, otherwise; <c>False</c>.
+        /// </returns>
         private static bool MatchBinary(ref RegistryItem methodResult, string valueName, string valueData)
         {
-            if (Regex.IsMatch(valueData, @"^hex(\(0*3\))?:(([0-9|A-F]{2}),?)*", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Multiline))
+            if (Regex.IsMatch(
+                valueData,
+                @"^hex(\(0*3\))?:(([0-9|A-F]{2}),?)*",
+                RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Multiline))
             {
                 // Put everything on one line
                 valueData = PutOnOneLineAndTrim(valueData);
 
                 // Remove hex: or hex(3): at the beginning
-                valueData = Regex.Replace(valueData, @"^hex(\(0*3\))?:", string.Empty, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline);
+                valueData = Regex.Replace(
+                    valueData,
+                    @"^hex(\(0*3\))?:",
+                    string.Empty,
+                    RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline);
                 methodResult.ValueKind = RegistryValueKind.Binary;
                 methodResult.Data = valueData;
                 methodResult.KeyValue = valueName;
@@ -185,17 +270,34 @@ namespace SevenUpdate.Sdk
             return false;
         }
 
-        /// <summary>Matches DWord from the key/value.</summary>
-        /// <param name="methodResult">The data from the match.</param>
-        /// <param name="valueName">The name of the value.</param>
-        /// <param name="valueData">The data for the value.</param>
-        /// <returns><see langword="true" /> if it was a match, otherwise; <see langword="false" />.</returns>
+        /// <summary>
+        ///   Matches DWord from the key/value.
+        /// </summary>
+        /// <param name="methodResult">
+        ///   The data from the match.
+        /// </param>
+        /// <param name="valueName">
+        ///   The name of the value.
+        /// </param>
+        /// <param name="valueData">
+        ///   The data for the value.
+        /// </param>
+        /// <returns>
+        ///   <c>True</c> if it was a match, otherwise; <c>False</c>.
+        /// </returns>
         private static bool MatchDWord(ref RegistryItem methodResult, string valueName, string valueData)
         {
-            if (Regex.IsMatch(valueData, @"^(dword:([0-9A-Fa-f]){1,8})|(hex\(0*4\):([0-9A-Fa-f]{1,2},?)+)", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline))
+            if (Regex.IsMatch(
+                valueData,
+                @"^(dword:([0-9A-Fa-f]){1,8})|(hex\(0*4\):([0-9A-Fa-f]{1,2},?)+)",
+                RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline))
             {
                 // Remove dword: at the beginning
-                valueData = Regex.Replace(valueData, @"^(dword|hex\(0*4\)):", string.Empty, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline);
+                valueData = Regex.Replace(
+                    valueData,
+                    @"^(dword|hex\(0*4\)):",
+                    string.Empty,
+                    RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline);
 
                 // Check for empty ValueData
                 if (string.IsNullOrEmpty(valueData.Trim()))
@@ -226,7 +328,10 @@ namespace SevenUpdate.Sdk
 
                     // Put a comma after each 2 digits
                     var digitsSeparated = new StringBuilder();
-                    var splitThem = Regex.Matches(valueData, @"(([0-9]|[A-F]){2})", RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.RightToLeft);
+                    var splitThem = Regex.Matches(
+                        valueData,
+                        @"(([0-9]|[A-F]){2})",
+                        RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.RightToLeft);
                     digitsSeparated.Append(splitThem[0].Value + ",");
                     digitsSeparated.Append(splitThem[1].Value + ",");
                     digitsSeparated.Append(splitThem[2].Value + ",");
@@ -243,20 +348,37 @@ namespace SevenUpdate.Sdk
             return false;
         }
 
-        /// <summary>Matches MutiString from the key/value.</summary>
-        /// <param name="methodResult">The data from the match.</param>
-        /// <param name="valueName">The name of the value.</param>
-        /// <param name="valueData">The data for the value.</param>
-        /// <returns><see langword="true" /> if it was a match, otherwise; <see langword="false" />.</returns>
+        /// <summary>
+        ///   Matches MutiString from the key/value.
+        /// </summary>
+        /// <param name="methodResult">
+        ///   The data from the match.
+        /// </param>
+        /// <param name="valueName">
+        ///   The name of the value.
+        /// </param>
+        /// <param name="valueData">
+        ///   The data for the value.
+        /// </param>
+        /// <returns>
+        ///   <c>True</c> if it was a match, otherwise; <c>False</c>.
+        /// </returns>
         private static bool MatchMutiString(ref RegistryItem methodResult, string valueName, string valueData)
         {
-            if (Regex.IsMatch(valueData, @"^hex\(0*7\):(([0-9|A-F]{2}),?)*", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Multiline))
+            if (Regex.IsMatch(
+                valueData,
+                @"^hex\(0*7\):(([0-9|A-F]{2}),?)*",
+                RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Multiline))
             {
                 // Put everything on one line
                 valueData = PutOnOneLineAndTrim(valueData);
 
                 // Remove hex(7): at the beginning
-                valueData = Regex.Replace(valueData, @"^hex\(0*7\):", string.Empty, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline);
+                valueData = Regex.Replace(
+                    valueData,
+                    @"^hex\(0*7\):",
+                    string.Empty,
+                    RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline);
 
                 // Remove trailing 00,00s is now done by the RegEx below the following block
 
@@ -283,7 +405,10 @@ namespace SevenUpdate.Sdk
                 if (regVersionSignature == 5)
                 {
                     // RegEx match all pairs of bytes
-                    var readInTwos = Regex.Matches(valueData, @"[a-zA-Z0-9]{2},[a-zA-Z0-9]{2}", RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
+                    var readInTwos = Regex.Matches(
+                        valueData,
+                        @"[a-zA-Z0-9]{2},[a-zA-Z0-9]{2}",
+                        RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
                     foreach (Match found in readInTwos)
                     {
                         if (string.Compare(found.Value, "00,00", StringComparison.CurrentCulture) != 0)
@@ -302,7 +427,11 @@ namespace SevenUpdate.Sdk
                 {
                     // Use old behavior - invalid and non-printable chars will convert to ? (63)
                     // Convert 00 to a carriage return / line-feed (CR-LF): 0d 0a
-                    valueData = Regex.Replace(valueData, @"00", @"0d,0a", RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
+                    valueData = Regex.Replace(
+                        valueData,
+                        @"00",
+                        @"0d,0a",
+                        RegexOptions.Multiline | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture);
 
                     // Convert to byte and back to characters using ASCIIEncoding
                     var z = new List<string>(valueData.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
@@ -310,7 +439,11 @@ namespace SevenUpdate.Sdk
                     valueDataBuilder.Append(Encoding.Default.GetString(y.ToArray()));
                 }
 
-                multiStringEntries.AddRange(Regex.Split(valueDataBuilder.ToString(), @"\r\n", RegexOptions.Singleline | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture));
+                multiStringEntries.AddRange(
+                    Regex.Split(
+                        valueDataBuilder.ToString(),
+                        @"\r\n",
+                        RegexOptions.Singleline | RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture));
 
                 // multiStringEntries.RemoveAt((multiStringEntries.Count-1));
                 multiStringEntries.RemoveAll(EmptyString);
@@ -347,23 +480,44 @@ namespace SevenUpdate.Sdk
             return false;
         }
 
-        /// <summary>Matches hex data from the key/value.</summary>
-        /// <param name="methodResult">The data from the match.</param>
-        /// <param name="valueName">The name of the value.</param>
-        /// <param name="valueData">The data for the value.</param>
-        /// <returns><see langword="true" /> if it was a match, otherwise; <see langword="false" />.</returns>
+        /// <summary>
+        ///   Matches hex data from the key/value.
+        /// </summary>
+        /// <param name="methodResult">
+        ///   The data from the match.
+        /// </param>
+        /// <param name="valueName">
+        ///   The name of the value.
+        /// </param>
+        /// <param name="valueData">
+        ///   The data for the value.
+        /// </param>
+        /// <returns>
+        ///   <c>True</c> if it was a match, otherwise; <c>False</c>.
+        /// </returns>
         private static bool MatchStringHex(ref RegistryItem methodResult, string valueName, string valueData)
         {
-            if (Regex.IsMatch(valueData, @"^hex\(0*1\):(([0-9|A-F]{2}),?)*", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Multiline))
+            if (Regex.IsMatch(
+                valueData,
+                @"^hex\(0*1\):(([0-9|A-F]{2}),?)*",
+                RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Multiline))
             {
                 // Put everything on one line
                 valueData = PutOnOneLineAndTrim(valueData);
 
                 // Remove hex(1): at the beginning
-                valueData = Regex.Replace(valueData, @"^hex\(0*1\):", string.Empty, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline);
+                valueData = Regex.Replace(
+                    valueData,
+                    @"^hex\(0*1\):",
+                    string.Empty,
+                    RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline);
 
                 // Remove trailing 00,00s
-                valueData = Regex.Replace(valueData, @",00,00$", string.Empty, RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.ExplicitCapture);
+                valueData = Regex.Replace(
+                    valueData,
+                    @",00,00$",
+                    string.Empty,
+                    RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.ExplicitCapture);
 
                 // Check for empty ValueData
                 if (string.IsNullOrEmpty(valueData.Trim()))
@@ -376,7 +530,8 @@ namespace SevenUpdate.Sdk
 
                 // Get the string with UnicodeEncoding
                 // Create an array to hold the hex values
-                var temporaryArray = new List<string>(valueData.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+                var temporaryArray =
+                    new List<string>(valueData.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
 
                 // Treat as DBCS (Double byte characters)
                 var byteArray = temporaryArray.ConvertAll(String2Byte);
@@ -400,23 +555,44 @@ namespace SevenUpdate.Sdk
             return false;
         }
 
-        /// <summary>Matches ExpandString from the key/value.</summary>
-        /// <param name="methodResult">The data from the match.</param>
-        /// <param name="valueName">The name of the value.</param>
-        /// <param name="valueData">The data for the value.</param>
-        /// <returns><see langword="true" /> if it was a match, otherwise; <see langword="false" />.</returns>
+        /// <summary>
+        ///   Matches ExpandString from the key/value.
+        /// </summary>
+        /// <param name="methodResult">
+        ///   The data from the match.
+        /// </param>
+        /// <param name="valueName">
+        ///   The name of the value.
+        /// </param>
+        /// <param name="valueData">
+        ///   The data for the value.
+        /// </param>
+        /// <returns>
+        ///   <c>True</c> if it was a match, otherwise; <c>False</c>.
+        /// </returns>
         private static bool MathExpandString(ref RegistryItem methodResult, string valueName, string valueData)
         {
-            if (Regex.IsMatch(valueData, @"^hex\(0*2\):(([0-9|A-F]{2}),?)*", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Multiline))
+            if (Regex.IsMatch(
+                valueData,
+                @"^hex\(0*2\):(([0-9|A-F]{2}),?)*",
+                RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Multiline))
             {
                 // Put everything on one line
                 valueData = PutOnOneLineAndTrim(valueData);
 
                 // Remove hex(2): at the beginning
-                valueData = Regex.Replace(valueData, @"^hex\(0*2\):", string.Empty, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline);
+                valueData = Regex.Replace(
+                    valueData,
+                    @"^hex\(0*2\):",
+                    string.Empty,
+                    RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline);
 
                 // Remove trailing 00,00s (v5) or 00s (v4)
-                valueData = Regex.Replace(valueData, @",00,00$", string.Empty, RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.ExplicitCapture);
+                valueData = Regex.Replace(
+                    valueData,
+                    @",00,00$",
+                    string.Empty,
+                    RegexOptions.IgnoreCase | RegexOptions.Singleline | RegexOptions.ExplicitCapture);
 
                 // Check for empty ValueData
                 if (string.IsNullOrEmpty(valueData.Trim()))
@@ -431,7 +607,8 @@ namespace SevenUpdate.Sdk
                 if (regVersionSignature == 5)
                 {
                     // Create an array to hold the hex values
-                    var temporaryArray = new List<string>(valueData.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+                    var temporaryArray =
+                        new List<string>(valueData.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
 
                     // Treat as DBCS (Double byte characters)
                     var byteArray = temporaryArray.ConvertAll(String2Byte);
@@ -445,7 +622,8 @@ namespace SevenUpdate.Sdk
                     valueData = Regex.Replace(valueData, @"00,?", string.Empty);
 
                     // Create an array to hold the hex values
-                    var temporaryArray = new List<string>(valueData.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
+                    var temporaryArray =
+                        new List<string>(valueData.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries));
 
                     // Treat as SBCS (Single byte characters)
                     var byteArray = temporaryArray.ConvertAll(String2ByteForAscii);
@@ -467,20 +645,43 @@ namespace SevenUpdate.Sdk
             return false;
         }
 
-        /// <summary>Common processing for normal binary types.</summary>
-        /// <param name="hexType">Single char for hex type.</param>
-        /// <param name="valueNameData">Value Name for generating INF format line.</param>
-        /// <param name="valueData">ValueData to operate on.</param>
-        /// <param name="flag">INF flag for this binary type.</param>
-        /// <param name="methodResult">Instance to return result in.</param>
-        /// <returns>Finished INFConversionResult instance.</returns>
-        private static RegistryItem ProcessBinaryType(char hexType, ref string valueNameData, ref string valueData, RegistryValueKind flag, ref RegistryItem methodResult)
+        /// <summary>
+        ///   Common processing for normal binary types.
+        /// </summary>
+        /// <param name="hexType">
+        ///   Single char for hex type.
+        /// </param>
+        /// <param name="valueNameData">
+        ///   Value Name for generating INF format line.
+        /// </param>
+        /// <param name="valueData">
+        ///   ValueData to operate on.
+        /// </param>
+        /// <param name="flag">
+        ///   INF flag for this binary type.
+        /// </param>
+        /// <param name="methodResult">
+        ///   Instance to return result in.
+        /// </param>
+        /// <returns>
+        ///   Finished INFConversionResult instance.
+        /// </returns>
+        private static RegistryItem ProcessBinaryType(
+            char hexType,
+            ref string valueNameData,
+            ref string valueData,
+            RegistryValueKind flag,
+            ref RegistryItem methodResult)
         {
             // Put everything on one line
             valueData = PutOnOneLineAndTrim(valueData);
 
             // Remove hex: at the beginning
-            valueData = Regex.Replace(valueData, @"^hex\(0*" + hexType + @"\):", string.Empty, RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline);
+            valueData = Regex.Replace(
+                valueData,
+                @"^hex\(0*" + hexType + @"\):",
+                string.Empty,
+                RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline);
             methodResult.ValueKind = flag;
             methodResult.KeyValue = valueNameData;
 
@@ -489,9 +690,15 @@ namespace SevenUpdate.Sdk
             return methodResult;
         }
 
-        /// <summary>Internal method for extracting the data part of the reg line.</summary>
-        /// <param name="line">A line in the registry file.</param>
-        /// <returns>Object containing AddReg or DelReg INF format partial lines for further processing.</returns>
+        /// <summary>
+        ///   Internal method for extracting the data part of the reg line.
+        /// </summary>
+        /// <param name="line">
+        ///   A line in the registry file.
+        /// </param>
+        /// <returns>
+        ///   Object containing AddReg or DelReg INF format partial lines for further processing.
+        /// </returns>
         private static RegistryItem ProcessRegLine(string line)
         {
             // Create new INFConversionResult to hold result of this method
@@ -600,66 +807,113 @@ namespace SevenUpdate.Sdk
             }
 
             // hex(a):  | REG_RESOURCE_REQUIRED
-            if (Regex.IsMatch(valueData, @"^hex\(0*a\):(([0-9|A-F]{2}),?)*", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Multiline))
+            if (Regex.IsMatch(
+                valueData,
+                @"^hex\(0*a\):(([0-9|A-F]{2}),?)*",
+                RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Multiline))
             {
                 return ProcessBinaryType('a', ref valueName, ref valueData, RegistryValueKind.None, ref methodResult);
             }
 
             // hex(b):  | REG_QWORD
-            if (Regex.IsMatch(valueData, @"^hex\(0*b\):(([0-9|A-F]{2}),?)*", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline))
+            if (Regex.IsMatch(
+                valueData,
+                @"^hex\(0*b\):(([0-9|A-F]{2}),?)*",
+                RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Singleline))
             {
                 return ProcessBinaryType('b', ref valueName, ref valueData, RegistryValueKind.QWord, ref methodResult);
             }
 
             // hex(8):  |  REG_RESOURCE_LIST
-            if (Regex.IsMatch(valueData, @"^hex\(0*8\):(([0-9|A-F]{2}),?)*", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Multiline))
+            if (Regex.IsMatch(
+                valueData,
+                @"^hex\(0*8\):(([0-9|A-F]{2}),?)*",
+                RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Multiline))
             {
                 return ProcessBinaryType('8', ref valueName, ref valueData, RegistryValueKind.None, ref methodResult);
             }
 
             // hex(9):  |  REG_FULL_RESOURCE_DESCRIPTORS
-            if (Regex.IsMatch(valueData, @"^hex\(0*9\):(([0-9|A-F]{2}),?)*", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Multiline))
+            if (Regex.IsMatch(
+                valueData,
+                @"^hex\(0*9\):(([0-9|A-F]{2}),?)*",
+                RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Multiline))
             {
                 return ProcessBinaryType('9', ref valueName, ref valueData, RegistryValueKind.None, ref methodResult);
             }
 
             // hex(5):  |  REG_DWORD_BIG_ENDIAN
-            if (Regex.IsMatch(valueData, @"^hex\(0*5\):(([0-9|A-F]{2}),?)*", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Multiline))
+            if (Regex.IsMatch(
+                valueData,
+                @"^hex\(0*5\):(([0-9|A-F]{2}),?)*",
+                RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Multiline))
             {
                 return ProcessBinaryType('5', ref valueName, ref valueData, RegistryValueKind.DWord, ref methodResult);
             }
 
             // hex(6):  |  REG_LINK
-            if (Regex.IsMatch(valueData, @"^hex\(0*6\):(([0-9|A-F]{2}),?)*", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Multiline))
+            if (Regex.IsMatch(
+                valueData,
+                @"^hex\(0*6\):(([0-9|A-F]{2}),?)*",
+                RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Multiline))
             {
                 return ProcessBinaryType('6', ref valueName, ref valueData, RegistryValueKind.None, ref methodResult);
             }
 
             // hex(0):  |  REG_NONE
-            return Regex.IsMatch(valueData, @"^hex\(0*0\):(([0-9|A-F]{2}),?)*", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Multiline) ? ProcessBinaryType('0', ref valueName, ref valueData, RegistryValueKind.None, ref methodResult) : methodResult;
+            return Regex.IsMatch(
+                valueData,
+                @"^hex\(0*0\):(([0-9|A-F]{2}),?)*",
+                RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture | RegexOptions.Multiline)
+                       ? ProcessBinaryType('0', ref valueName, ref valueData, RegistryValueKind.None, ref methodResult)
+                       : methodResult;
 
             // Fallback in case nothing matches
         }
 
-        /// <summary>Puts ValueData on single line and removes from the beginning and end the following: space, tab, CR, LF, extra commas.</summary>
-        /// <param name="valueData">ValueData string to operate on.</param>
-        /// <returns>Cleaned up and fixed string.</returns>
+        /// <summary>
+        ///   Puts ValueData on single line and removes from the beginning and end the following: space, tab, CR, LF, extra commas.
+        /// </summary>
+        /// <param name="valueData">
+        ///   ValueData string to operate on.
+        /// </param>
+        /// <returns>
+        ///   Cleaned up and fixed string.
+        /// </returns>
         private static string PutOnOneLineAndTrim(string valueData)
         {
-            return Regex.Replace(valueData, @",\\\r\n\s*", @",", RegexOptions.IgnoreCase | RegexOptions.Multiline | RegexOptions.ExplicitCapture).Trim(new[] { '\r', '\n', '\x20', '\t', ',' });
+            return
+                Regex.Replace(
+                    valueData,
+                    @",\\\r\n\s*",
+                    @",",
+                    RegexOptions.IgnoreCase | RegexOptions.Multiline | RegexOptions.ExplicitCapture).Trim(
+                        new[] { '\r', '\n', '\x20', '\t', ',' });
         }
 
-        /// <summary>Method for converting the hex byte string to a byte value.</summary>
-        /// <param name="value">The byte string.</param>
-        /// <returns>The byte from the parsed string.</returns>
+        /// <summary>
+        ///   Method for converting the hex byte string to a byte value.
+        /// </summary>
+        /// <param name="value">
+        ///   The byte string.
+        /// </param>
+        /// <returns>
+        ///   The byte from the parsed string.
+        /// </returns>
         private static byte String2Byte(string value)
         {
             return byte.Parse(value, NumberStyles.HexNumber, CultureInfo.CurrentCulture);
         }
 
-        /// <summary>Method for converting the hex byte string to a byte value + a check that converts all above ASCII bytes to ?.</summary>
-        /// <param name="value">The byte string.</param>
-        /// <returns>The byte from the parsed ascii string.</returns>
+        /// <summary>
+        ///   Method for converting the hex byte string to a byte value + a check that converts all above ASCII bytes to ?.
+        /// </summary>
+        /// <param name="value">
+        ///   The byte string.
+        /// </param>
+        /// <returns>
+        ///   The byte from the parsed ascii string.
+        /// </returns>
         private static byte String2ByteForAscii(string value)
         {
             var b = byte.Parse(value, NumberStyles.HexNumber, CultureInfo.CurrentCulture);
@@ -671,9 +925,15 @@ namespace SevenUpdate.Sdk
             return b;
         }
 
-        /// <summary>Method for converting the hex byte string to a byte value + a check that converts all above ASCII bytes to ? but allows CRLF characters.</summary>
-        /// <param name="value">The byte string.</param>
-        /// <returns>The byte from the parsed ascii string with crlf line endings.</returns>
+        /// <summary>
+        ///   Method for converting the hex byte string to a byte value + a check that converts all above ASCII bytes to ? but allows CRLF characters.
+        /// </summary>
+        /// <param name="value">
+        ///   The byte string.
+        /// </param>
+        /// <returns>
+        ///   The byte from the parsed ascii string with crlf line endings.
+        /// </returns>
         private static byte String2ByteForAsciiAllowCrlf(string value)
         {
             var b = byte.Parse(value, NumberStyles.HexNumber, CultureInfo.CurrentCulture);
@@ -690,8 +950,12 @@ namespace SevenUpdate.Sdk
             return b;
         }
 
-        /// <summary>Internal method for processing extracted REG format blocks. Real processing takes place here.</summary>
-        /// <param name="regBlock">The reg block.</param>
+        /// <summary>
+        ///   Internal method for processing extracted REG format blocks. Real processing takes place here.
+        /// </summary>
+        /// <param name="regBlock">
+        ///   The reg block.
+        /// </param>
         private void ProcessRegBlock(string regBlock)
         {
             // Define variable for RootKey
@@ -755,13 +1019,18 @@ namespace SevenUpdate.Sdk
             if (Regex.IsMatch(regBlock, @"^\[-HK", RegexOptions.IgnoreCase | RegexOptions.ExplicitCapture))
             {
                 // Then return data to DelReg instead of AddReg property of INFConversionResult instance
-                var regBlockResult = new RegistryItem { Key = infRootKey + infSubKeyValue, Action = RegistryAction.DeleteKey };
+                var regBlockResult = new RegistryItem
+                    { Key = infRootKey + infSubKeyValue, Action = RegistryAction.DeleteKey };
                 this.regItem.Add(regBlockResult);
                 return;
             }
 
             // Put RegBlock header out of the way to process lines (Remove header)
-            regBlock = Regex.Replace(regBlock, RegexSubKey + @"\r\n", string.Empty, RegexOptions.ExplicitCapture | RegexOptions.IgnoreCase | RegexOptions.Multiline);
+            regBlock = Regex.Replace(
+                regBlock,
+                RegexSubKey + @"\r\n",
+                string.Empty,
+                RegexOptions.ExplicitCapture | RegexOptions.IgnoreCase | RegexOptions.Multiline);
 
             // CleanUp RegBlock from extra carriage returns
             regBlock = regBlock.Trim();
@@ -784,7 +1053,8 @@ namespace SevenUpdate.Sdk
 
             // Do the actual splitting and cleanup
             var regLines = new List<string>();
-            regLines.AddRange(Regex.Split(regBlock, SplitToken + @"\s*", RegexOptions.Multiline | RegexOptions.ExplicitCapture));
+            regLines.AddRange(
+                Regex.Split(regBlock, SplitToken + @"\s*", RegexOptions.Multiline | RegexOptions.ExplicitCapture));
 
             // Internal check for splitter validity
             // The last entry of the array MUST be empty, otherwise

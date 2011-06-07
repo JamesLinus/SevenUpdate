@@ -11,29 +11,57 @@ namespace SharpBits.Base
 {
     using System.Runtime.InteropServices;
 
-    /// <summary>Use the IEnumBackgroundCopyFiles interface to enumerate the files that a job contains. To get an IEnumBackgroundCopyFiles interface pointer, call the <see cref="IBackgroundCopyJob" />::EnumFiles method.</summary>
-    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown), GuidAttribute("CA51E165-C365-424C-8D41-24AAA4FF3C40"), ComImportAttribute]
+    /// <summary>
+    ///   Use the IEnumBackgroundCopyFiles interface to enumerate the files that a job contains. To get an
+    ///   IEnumBackgroundCopyFiles interface pointer, call the <see cref="IBackgroundCopyJob" />::EnumFiles method.
+    /// </summary>
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+    [GuidAttribute("CA51E165-C365-424C-8D41-24AAA4FF3C40")]
+    [ComImportAttribute]
     internal interface IEnumBackgroundCopyFiles
     {
-        /// <summary>Retrieves a specified number of items in the enumeration sequence.</summary>
-        /// <param name="celt">Number of elements requested.</param>
-        /// <param name="copyFile">Array of <see cref="IBackgroundCopyFile" /> objects. You must release each object in <paramref name="copyFile" /> when done.</param>
-        /// <param name="fetched">Number of elements returned in <paramref name="copyFile" />. You can set fetched to <see langword="null" /> if <paramref name="celt" /> is one. Otherwise, initialize the value of fetched to 0 before calling this method.</param>
+        /// <summary>
+        ///   Retrieves a specified number of items in the enumeration sequence.
+        /// </summary>
+        /// <param name="celt">
+        ///   Number of elements requested.
+        /// </param>
+        /// <param name="copyFile">
+        ///   Array of <see cref="IBackgroundCopyFile" /> objects. You must release each object in <paramref name = "copyFile" /> when done.
+        /// </param>
+        /// <param name="fetched">
+        ///   Number of elements returned in <paramref name = "copyFile" />. You can set fetched to <c>null</c> if <paramref
+        ///    name = "celt" /> is one. Otherwise, initialize the value of fetched to 0 before calling this method.
+        /// </param>
         void Next(uint celt, [MarshalAs(UnmanagedType.Interface)] out IBackgroundCopyFile copyFile, out uint fetched);
 
-        /// <summary>Skips a specified number of items in the enumeration sequence.</summary>
-        /// <param name="celt">Number of elements to skip.</param>
+        /// <summary>
+        ///   Skips a specified number of items in the enumeration sequence.
+        /// </summary>
+        /// <param name="celt">
+        ///   Number of elements to skip.
+        /// </param>
         void Skip(uint celt);
 
-        /// <summary>Resets the enumeration sequence to the beginning.</summary>
+        /// <summary>
+        ///   Resets the enumeration sequence to the beginning.
+        /// </summary>
         void Reset();
 
-        /// <summary>Creates another enumerator that contains the same enumeration state as the current enumerator.</summary>
-        /// <param name="enum">Receives the interface pointer to the enumeration object. If the method is unsuccessful, the value of this output variable is undefined. You must release enumFiles when done.</param>
+        /// <summary>
+        ///   Creates another enumerator that contains the same enumeration state as the current enumerator.
+        /// </summary>
+        /// <param name="enum">
+        ///   Receives the interface pointer to the enumeration object. If the method is unsuccessful, the value of this output variable is undefined. You must release enumFiles when done.
+        /// </param>
         void Clone([MarshalAs(UnmanagedType.Interface)] out IEnumBackgroundCopyFiles @enum);
 
-        /// <summary>Retrieves the number of items in the enumeration.</summary>
-        /// <param name="count">Number of files in the enumeration.</param>
+        /// <summary>
+        ///   Retrieves the number of items in the enumeration.
+        /// </summary>
+        /// <param name="count">
+        ///   Number of files in the enumeration.
+        /// </param>
         void GetCount(out uint count);
     }
 }

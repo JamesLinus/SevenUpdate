@@ -7,27 +7,35 @@
 
 namespace System.Windows.Dialogs
 {
-    using System.Windows.Controls;
-
-    /// <summary>Defines a common class for all task dialog bar controls, such as the progress and marquee bars.</summary>
+    /// <summary>
+    ///   Defines a common class for all task dialog bar controls, such as the progress and marquee bars.
+    /// </summary>
     public class TaskDialogBar : TaskDialogControl
     {
         #region Constants and Fields
 
-        /// <summary>The <see cref="ProgressBar" /> State.</summary>
+        /// <summary>
+        ///   The <c>ProgressBar</c> State.
+        /// </summary>
         private TaskDialogProgressBarState state;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="TaskDialogBar" /> class.</summary>
+        /// <summary>
+        ///   Initializes a new instance of the TaskDialogBar class.
+        /// </summary>
         protected TaskDialogBar()
         {
         }
 
-        /// <summary>Initializes a new instance of the <see cref="TaskDialogBar" /> class.</summary>
-        /// <param name="name">The name for this control.</param>
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="TaskDialogBar" /> class.
+        /// </summary>
+        /// <param name="name">
+        ///   The name for this control.
+        /// </param>
         protected TaskDialogBar(string name) : base(name)
         {
         }
@@ -36,7 +44,9 @@ namespace System.Windows.Dialogs
 
         #region Properties
 
-        /// <summary>Gets or sets the state of the progress bar.</summary>
+        /// <summary>
+        ///   Gets or sets the state of the progress bar.
+        /// </summary>
         public TaskDialogProgressBarState State
         {
             get
@@ -56,7 +66,9 @@ namespace System.Windows.Dialogs
 
         #region Methods
 
-        /// <summary>Resets the state of the control to normal.</summary>
+        /// <summary>
+        ///   Resets the state of the control to normal.
+        /// </summary>
         protected internal virtual void Reset()
         {
             this.state = TaskDialogProgressBarState.Normal;

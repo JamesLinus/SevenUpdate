@@ -28,21 +28,27 @@ namespace SevenUpdate
 
     using ProtoBuf.ServiceModel;
 
-    using SevenUpdate.Service;
+    using Service;
 
-    /// <summary>Contains methods to start the WCF service host.</summary>
+    /// <summary>
+    ///   Contains methods to start the WCF service host.
+    /// </summary>
     internal static class MyServiceHost
     {
         #region Properties
 
-        /// <summary>Gets or sets the <see cref="ServiceHost" /> instance.</summary>
+        /// <summary>
+        ///   Gets or sets the <c>ServiceHost</c> instance.
+        /// </summary>
         private static ServiceHost Instance { get; set; }
 
         #endregion
 
         #region Methods
 
-        /// <summary>Starts the service.</summary>
+        /// <summary>
+        ///   Starts the service.
+        /// </summary>
         internal static void StartService()
         {
             if (Instance != null)
@@ -50,7 +56,8 @@ namespace SevenUpdate
                 return;
             }
 
-            var binding = new NetNamedPipeBinding { Name = "sevenupdatebinding", Security = { Mode = NetNamedPipeSecurityMode.Transport } };
+            var binding = new NetNamedPipeBinding
+                { Name = "sevenupdatebinding", Security = { Mode = NetNamedPipeSecurityMode.Transport } };
 
             var baseAddress = new Uri("net.pipe://localhost/sevenupdate/");
 
@@ -71,7 +78,8 @@ namespace SevenUpdate
             }
 
 #endif
-            Instance.AddServiceEndpoint(typeof(IElevatedProcessCallback), binding, baseAddress).Behaviors.Add(new ProtoEndpointBehavior());
+            Instance.AddServiceEndpoint(typeof(IElevatedProcessCallback), binding, baseAddress).Behaviors.Add(
+                new ProtoEndpointBehavior());
             try
             {
                 Instance.Open();
@@ -82,7 +90,9 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Stops the service.</summary>
+        /// <summary>
+        ///   Stops the service.
+        /// </summary>
         internal static void StopService()
         {
             if (Instance == null)
@@ -99,7 +109,9 @@ namespace SevenUpdate
                 }
                 catch (Exception ex)
                 {
-                    if (!(ex is CommunicationObjectAbortedException || ex is CommunicationObjectFaultedException || ex is ObjectDisposedException))
+                    if (
+                        !(ex is CommunicationObjectAbortedException || ex is CommunicationObjectFaultedException ||
+                          ex is ObjectDisposedException))
                     {
                         Utilities.ReportError(ex, ErrorType.FatalError);
                         throw;

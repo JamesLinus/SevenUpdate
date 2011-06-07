@@ -9,13 +9,19 @@
 
 namespace SharpBits.Base
 {
-    /// <summary>The location from which to download the code.</summary>
+    /// <summary>
+    ///   The location from which to download the code.
+    /// </summary>
     internal enum BGAuthTarget
     {
-        /// <summary>Use credentials for server requests.</summary>
+        /// <summary>
+        ///   Use credentials for server requests.
+        /// </summary>
         Server = 1,
 
-        /// <summary>Use credentials for proxy requests.</summary>
+        /// <summary>
+        ///   Use credentials for proxy requests.
+        /// </summary>
         Proxy = 2,
     }
 }

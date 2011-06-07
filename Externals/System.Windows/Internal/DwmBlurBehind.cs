@@ -20,22 +20,32 @@
 
 namespace System.Windows.Internal
 {
-    using System.Runtime.InteropServices;
+    using Runtime.InteropServices;
 
-    /// <summary>Specifies Desktop Window Manager (DWM) blur behind properties.</summary>
+    /// <summary>
+    ///   Specifies Desktop Window Manager (DWM) blur behind properties.
+    /// </summary>
     [StructLayout(LayoutKind.Sequential)]
     internal struct DwmBlurBehind
     {
-        /// <summary>A bitwise combination of DWM Blur Behind Constants values indicating which members are set.</summary>
+        /// <summary>
+        ///   A bitwise combination of DWM Blur Behind Constants values indicating which members are set.
+        /// </summary>
         public BlurBehindOptions Flags;
 
-        /// <summary>Registers the window handle to DWM blur behind; <see langword="false" /> to unregister the window handle from DWM blur behind.</summary>
+        /// <summary>
+        ///   Registers the window handle to DWM blur behind; <c>False</c> to unregister the window handle from DWM blur behind.
+        /// </summary>
         public bool Enable;
 
-        /// <summary>The region within the client area to apply the blur behind. A <see langword="null" /> value will apply the blur behind the entire client area.</summary>
+        /// <summary>
+        ///   The region within the client area to apply the blur behind. A <c>null</c> value will apply the blur behind the entire client area.
+        /// </summary>
         public IntPtr RegionBlur;
 
-        /// <summary>Window's colorization should transition to match the maximized windows; otherwise, <see langword="false" />.</summary>
+        /// <summary>
+        ///   Window's colorization should transition to match the maximized windows; otherwise, <c>False</c>.
+        /// </summary>
         public bool TransitionOnMaximized;
     }
 }

@@ -9,13 +9,19 @@
 
 namespace SharpBits.Base
 {
-    /// <summary>Specifies the owner of the current <see cref="BitsJob" />.</summary>
+    /// <summary>
+    ///   Specifies the owner of the current <see cref="BitsJob" />.
+    /// </summary>
     public enum JobOwner
     {
-        /// <summary>The current logged in user.</summary>
+        /// <summary>
+        ///   The current logged in user.
+        /// </summary>
         CurrentUser = 0,
 
-        /// <summary>The administrators group or system.</summary>
+        /// <summary>
+        ///   The administrators group or system.
+        /// </summary>
         AllUsers = 1,
     }
 }

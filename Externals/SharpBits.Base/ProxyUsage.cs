@@ -9,19 +9,29 @@
 
 namespace SharpBits.Base
 {
-    /// <summary>The proxy use.</summary>
+    /// <summary>
+    ///   The proxy use.
+    /// </summary>
     public enum ProxyUsage
     {
-        /// <summary>Use the current configuration.</summary>
+        /// <summary>
+        ///   Use the current configuration.
+        /// </summary>
         PreConfig,
 
-        /// <summary>Don't use a proxy.</summary>
+        /// <summary>
+        ///   Don't use a proxy.
+        /// </summary>
         NoProxy,
 
-        /// <summary>Override proxy settings.</summary>
+        /// <summary>
+        ///   Override proxy settings.
+        /// </summary>
         Override,
 
-        /// <summary>Auto detect proxy settings.</summary>
+        /// <summary>
+        ///   Auto detect proxy settings.
+        /// </summary>
         AutoDetect,
     }
 }

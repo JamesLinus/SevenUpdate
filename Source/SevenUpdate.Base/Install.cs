@@ -29,62 +29,92 @@ namespace SevenUpdate
 
     using Microsoft.Win32;
 
-    /// <summary>Class containing methods to install updates.</summary>
+    /// <summary>
+    ///   Class containing methods to install updates.
+    /// </summary>
     public static class Install
     {
         #region Constants and Fields
 
-        /// <summary>Gets an int that indicates to move a file on reboot.</summary>
+        /// <summary>
+        ///   Gets an int that indicates to move a file on reboot.
+        /// </summary>
         private const int MoveOnReboot = 5;
 
-        /// <summary>Indicates if the installation of updates should be canceled.</summary>
+        /// <summary>
+        ///   Indicates if the installation of updates should be canceled.
+        /// </summary>
         private static bool cancelInstall;
 
-        /// <summary>The localized name of the current update being installed.</summary>
+        /// <summary>
+        ///   The localized name of the current update being installed.
+        /// </summary>
         private static string currentUpdateName;
 
-        /// <summary>Indicates if an error has occurred.</summary>
+        /// <summary>
+        ///   Indicates if an error has occurred.
+        /// </summary>
         private static bool errorOccurred;
 
-        /// <summary>The total number of updates being installed.</summary>
+        /// <summary>
+        ///   The total number of updates being installed.
+        /// </summary>
         private static int updateCount;
 
-        /// <summary>The index position of the current update being installed.</summary>
+        /// <summary>
+        ///   The index position of the current update being installed.
+        /// </summary>
         private static int updateIndex;
 
         #endregion
 
         #region Events
 
-        /// <summary>Occurs when the installation completed.</summary>
+        /// <summary>
+        ///   Occurs when the installation completed.
+        /// </summary>
         public static event EventHandler<InstallCompletedEventArgs> InstallCompleted;
 
-        /// <summary>Occurs when the installation progress changed.</summary>
+        /// <summary>
+        ///   Occurs when the installation progress changed.
+        /// </summary>
         public static event EventHandler<InstallProgressChangedEventArgs> InstallProgressChanged;
 
-        /// <summary>Occurs when the installation progress changed.</summary>
+        /// <summary>
+        ///   Occurs when the installation progress changed.
+        /// </summary>
         public static event EventHandler<UpdateInstalledEventArgs> UpdateInstalled;
 
         #endregion
 
         #region Properties
 
-        /// <summary>Gets a value indicating whether Seven Update is installing updates.</summary>
+        /// <summary>
+        ///   Gets a value indicating whether Seven Update is installing updates.
+        /// </summary>
         public static bool IsInstalling { get; private set; }
 
         #endregion
 
         #region Public Methods
 
-        /// <summary>Cancel the installation of updates.</summary>
+        /// <summary>
+        ///   Cancel the installation of updates.
+        /// </summary>
         public static void CancelInstall()
         {
             cancelInstall = true;
         }
 
-        /// <summary>Installs updates.</summary>
-        /// <param name="applications">The collection of applications to install updates.</param>
-        /// <param name="downloadDirectory">The directory containing the app update files.</param>
+        /// <summary>
+        ///   Installs updates.
+        /// </summary>
+        /// <param name="applications">
+        ///   The collection of applications to install updates.
+        /// </param>
+        /// <param name="downloadDirectory">
+        ///   The directory containing the app update files.
+        /// </param>
         public static void InstallUpdates(Collection<Sui> applications, string downloadDirectory)
         {
             if (applications == null)
@@ -96,8 +126,6 @@ namespace SevenUpdate
             {
                 throw new ArgumentNullException("applications");
             }
-
-            var selfUpdate = false;
 
             IsInstalling = true;
             updateCount = applications.Sum(t => t.Updates.Count);
@@ -116,22 +144,6 @@ namespace SevenUpdate
                     }
 
                     currentUpdateName = Utilities.GetLocaleString(applications[x].Updates[y].Name);
-
-                    //// TODO: Remove this code and test executing SevenUpdate.Helper as a FileAction in the Seven Update SUI file
-                    //if (applications[x].AppInfo.Directory == Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Update", true, applications[x].AppInfo.Platform))
-                    //{
-                    //    try
-                    //    {
-                    //        var process = Process.GetProcessesByName(@"SevenUpdate.Helper");
-                    //        if (process.Length > 0)
-                    //        {
-                    //            process[0].Kill();
-                    //        }
-                    //    }
-                    //    catch (UnauthorizedAccessException)
-                    //    {
-                    //    }
-                    //}
 
                     ReportProgress(5);
 
@@ -158,11 +170,10 @@ namespace SevenUpdate
                         AddHistory(applications[x], applications[x].Updates[y]);
                     }
 
-                    //if (applications[x].AppInfo.Directory == Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Update", true, Platform.AnyCpu))
-                    //{
-                    //    selfUpdate = true;
-                    //}
-
+                    // if (applications[x].AppInfo.Directory == Utilities.ConvertPath(@"%PROGRAMFILES%\Seven Update", true, Platform.AnyCpu))
+                    // {
+                    // selfUpdate = true;
+                    // }
                     ReportProgress(100);
 
                     updateIndex++;
@@ -173,15 +184,19 @@ namespace SevenUpdate
 
             if (Utilities.RebootNeeded)
             {
-                if (!File.Exists(Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "reboot.lock")))
+                var fileName = Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "reboot.lock");
+                if (!File.Exists(fileName))
                 {
-                    using (var file = File.Create(Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "reboot.lock")))
+                    using (var file = File.Create(fileName))
                     {
                         file.WriteByte(0);
                     }
                 }
 
-                NativeMethods.MoveFileExW(Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "reboot.lock"), null, MoveOnReboot);
+                NativeMethods.MoveFileExW(
+                    Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "reboot.lock"),
+                    null,
+                    MoveOnReboot);
 
                 if (Directory.Exists(downloadDirectory))
                 {
@@ -206,11 +221,10 @@ namespace SevenUpdate
                 }
             }
 
-            //if (selfUpdate)
-            //{
-            //    Utilities.StartProcess(Path.Combine(Utilities.AppDir, @"SevenUpdate.Helper.exe"), "-cleanup");
-            //}
-
+            // if (selfUpdate)
+            // {
+            // Utilities.StartProcess(Path.Combine(Utilities.AppDir, @"SevenUpdate.Helper.exe"), "-cleanup");
+            // }
             IsInstalling = false;
             if (InstallCompleted != null)
             {
@@ -224,13 +238,30 @@ namespace SevenUpdate
 
         #region Methods
 
-        /// <summary>Adds an update to the update history.</summary>
-        /// <param name="appInfo">The application information.</param>
-        /// <param name="updateInfo">The update information.</param>
-        /// <param name="failed"><see langword="true" /> if the update failed, otherwise <see langword="false" />.</param>
+        /// <summary>
+        ///   Adds an update to the update history.
+        /// </summary>
+        /// <param name="appInfo">
+        ///   The application information.
+        /// </param>
+        /// <param name="updateInfo">
+        ///   The update information.
+        /// </param>
+        /// <param name="failed">
+        ///   <c>True</c> if the update failed, otherwise <c>False</c>.
+        /// </param>
         private static void AddHistory(Sui appInfo, Update updateInfo, bool failed = false)
         {
-            var hist = new Suh(updateInfo.Name, appInfo.AppInfo.Publisher, updateInfo.Description) { HelpUrl = appInfo.AppInfo.HelpUrl, AppUrl = appInfo.AppInfo.AppUrl, Status = failed == false ? UpdateStatus.Successful : UpdateStatus.Failed, InfoUrl = updateInfo.InfoUrl, InstallDate = DateTime.Now.ToShortDateString(), ReleaseDate = updateInfo.ReleaseDate, Importance = updateInfo.Importance, };
+            var hist = new Suh(updateInfo.Name, appInfo.AppInfo.Publisher, updateInfo.Description)
+                {
+                    HelpUrl = appInfo.AppInfo.HelpUrl,
+                    AppUrl = appInfo.AppInfo.AppUrl,
+                    Status = failed == false ? UpdateStatus.Successful : UpdateStatus.Failed,
+                    InfoUrl = updateInfo.InfoUrl,
+                    InstallDate = DateTime.Now.ToShortDateString(),
+                    ReleaseDate = updateInfo.ReleaseDate,
+                    Importance = updateInfo.Importance,
+                };
 
             if (UpdateInstalled != null)
             {
@@ -238,19 +269,31 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Reports the installation progress.</summary>
-        /// <param name="installProgress">The current install progress percentage.</param>
+        /// <summary>
+        ///   Reports the installation progress.
+        /// </summary>
+        /// <param name="installProgress">
+        ///   The current install progress percentage.
+        /// </param>
         private static void ReportProgress(int installProgress)
         {
             if (InstallProgressChanged != null)
             {
-                InstallProgressChanged(null, new InstallProgressChangedEventArgs(currentUpdateName, installProgress, updateIndex, updateCount));
+                InstallProgressChanged(
+                    null,
+                    new InstallProgressChangedEventArgs(currentUpdateName, installProgress, updateIndex, updateCount));
             }
         }
 
-        /// <summary>Sets the registry items of an update.</summary>
-        /// <param name="regItems">The registry changes to install on the system.</param>
-        /// <param name="platform">A value that indicates what cpu architecture the application supports.</param>
+        /// <summary>
+        ///   Sets the registry items of an update.
+        /// </summary>
+        /// <param name="regItems">
+        ///   The registry changes to install on the system.
+        /// </param>
+        /// <param name="platform">
+        ///   A value that indicates what cpu architecture the application supports.
+        /// </param>
         private static void SetRegistryItems(IList<RegistryItem> regItems, Platform platform)
         {
             if (regItems == null)
@@ -338,9 +381,15 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Installs the shortcuts of an update.</summary>
-        /// <param name="shortcuts">The shortcuts to install on the system.</param>
-        /// <param name="appInfo">The application information.</param>
+        /// <summary>
+        ///   Installs the shortcuts of an update.
+        /// </summary>
+        /// <param name="shortcuts">
+        ///   The shortcuts to install on the system.
+        /// </param>
+        /// <param name="appInfo">
+        ///   The application information.
+        /// </param>
         private static void SetShortcuts(IList<Shortcut> shortcuts, Sua appInfo)
         {
             if (shortcuts == null)
@@ -351,10 +400,13 @@ namespace SevenUpdate
             // Choose the path for the shortcut
             for (var x = 0; x < shortcuts.Count; x++)
             {
-                shortcuts[x].Location = Utilities.ExpandInstallLocation(shortcuts[x].Location, appInfo.Directory, appInfo.Platform, appInfo.ValueName);
+                shortcuts[x].Location = Utilities.ExpandInstallLocation(
+                    shortcuts[x].Location, appInfo.Directory, appInfo.Platform, appInfo.ValueName);
                 var linkName = Utilities.GetLocaleString(shortcuts[x].Name);
 
-                if (shortcuts[x].Action == ShortcutAction.Add || (shortcuts[x].Action == ShortcutAction.Update && File.Exists(Path.Combine(shortcuts[x].Location, linkName + ".lnk"))))
+                if (shortcuts[x].Action == ShortcutAction.Add ||
+                    (shortcuts[x].Action == ShortcutAction.Update &&
+                     File.Exists(Path.Combine(shortcuts[x].Location, linkName + ".lnk"))))
                 {
                     if (!Directory.Exists(shortcuts[x].Location))
                     {
@@ -381,8 +433,12 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Updates the file on the system.</summary>
-        /// <param name="file">The file to install or update.</param>
+        /// <summary>
+        ///   Updates the file on the system.
+        /// </summary>
+        /// <param name="file">
+        ///   The file to install or update.
+        /// </param>
         private static void UpdateFile(UpdateFile file)
         {
             switch (file.Action)
@@ -508,9 +564,15 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Installs the files in the update.</summary>
-        /// <param name="files">The collection of files to update.</param>
-        /// <param name="downloadDirectory">The path to the download folder where the update files are located.</param>
+        /// <summary>
+        ///   Installs the files in the update.
+        /// </summary>
+        /// <param name="files">
+        ///   The collection of files to update.
+        /// </param>
+        /// <param name="downloadDirectory">
+        ///   The path to the download folder where the update files are located.
+        /// </param>
         private static void UpdateFiles(IList<UpdateFile> files, string downloadDirectory)
         {
             if (files == null)
@@ -541,16 +603,17 @@ namespace SevenUpdate
 
                 var x1 = x;
                 var x2 = x;
-                var task = Task.Factory.StartNew(() => UpdateFile(files[x1])).ContinueWith(delegate
-                    {
-                        var installProgress = (x2 * 100) / files.Count;
-                        if (installProgress > 70)
+                var task = Task.Factory.StartNew(() => UpdateFile(files[x1])).ContinueWith(
+                    delegate
                         {
-                            installProgress -= 15;
-                        }
+                            var installProgress = (x2 * 100) / files.Count;
+                            if (installProgress > 70)
+                            {
+                                installProgress -= 15;
+                            }
 
-                        ReportProgress(installProgress);
-                    });
+                            ReportProgress(installProgress);
+                        });
                 task.Wait();
             }
         }

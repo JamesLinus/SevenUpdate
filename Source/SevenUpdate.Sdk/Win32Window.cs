@@ -23,29 +23,41 @@ namespace SevenUpdate.Sdk
     using System;
     using System.Windows.Forms;
 
-    /// <summary>A Win32 window.</summary>
+    /// <summary>
+    ///   A Win32 window.
+    /// </summary>
     public sealed class Win32Window : IWin32Window, IDisposable
     {
         #region Constants and Fields
 
-        /// <summary>The pointer to the window.</summary>
+        /// <summary>
+        ///   The pointer to the window.
+        /// </summary>
         private readonly IntPtr windowHandle;
 
-        /// <summary>Indicates if the window is disposed.</summary>
+        /// <summary>
+        ///   Indicates if the window is disposed.
+        /// </summary>
         private bool disposed;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="Win32Window" /> class.</summary>
-        /// <param name="handle">The handle.</param>
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="Win32Window" /> class.
+        /// </summary>
+        /// <param name="handle">
+        ///   The handle.
+        /// </param>
         public Win32Window(IntPtr handle)
         {
             this.windowHandle = handle;
         }
 
-        /// <summary>Finalizes an instance of the <see cref="Win32Window" /> class.</summary>
+        /// <summary>
+        ///   Finalizes an instance of the <see cref="Win32Window" /> class.
+        /// </summary>
         ~Win32Window()
         {
             this.Dispose(false);
@@ -55,7 +67,9 @@ namespace SevenUpdate.Sdk
 
         #region Properties
 
-        /// <summary>Gets the handle to the window represented by the implementer.</summary>
+        /// <summary>
+        ///   Gets the handle to the window represented by the implementer.
+        /// </summary>
         /// <returns>A handle to the window represented by the implementer.</returns>
         IntPtr IWin32Window.Handle
         {
@@ -71,7 +85,9 @@ namespace SevenUpdate.Sdk
 
         #region IDisposable
 
-        /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
+        /// <summary>
+        ///   Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+        /// </summary>
         public void Dispose()
         {
             this.Dispose(false);
@@ -86,8 +102,12 @@ namespace SevenUpdate.Sdk
 
         #region Methods
 
-        /// <summary>Releases unmanaged and - optionally - managed resources.</summary>
-        /// <param name="disposing">Release both managed and unmanaged resources; <see langword="false" /> to release only unmanaged resources.</param>
+        /// <summary>
+        ///   Releases unmanaged and - optionally - managed resources.
+        /// </summary>
+        /// <param name="disposing">
+        ///   Release both managed and unmanaged resources; <c>False</c> to release only unmanaged resources.
+        /// </param>
         private void Dispose(bool disposing)
         {
             lock (this)

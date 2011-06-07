@@ -7,29 +7,45 @@
 
 namespace System.Windows.Internal
 {
-    /// <summary>Provide Error Message Helper Methods.This is intended for Library Internal use only.</summary>
+    /// <summary>
+    ///   Provide Error Message Helper Methods.This is intended for Library Internal use only.
+    /// </summary>
     public static class ErrorHelper
     {
         #region Constants and Fields
 
-        /// <summary>This is intended for Library Internal use only.</summary>
+        /// <summary>
+        ///   This is intended for Library Internal use only.
+        /// </summary>
         public const int Ignored = (int)Result.Ok;
 
         #endregion
 
         #region Public Methods
 
-        /// <summary>This is intended for Library Internal use only.</summary>
-        /// <param name="result">The error code.</param>
-        /// <returns>True if the error code indicates failure.</returns>
+        /// <summary>
+        ///   This is intended for Library Internal use only.
+        /// </summary>
+        /// <param name="result">
+        ///   The error code.
+        /// </param>
+        /// <returns>
+        ///   True if the error code indicates failure.
+        /// </returns>
         public static bool Failed(Result result)
         {
             return (int)result < 0;
         }
 
-        /// <summary>This is intended for Library Internal use only.</summary>
-        /// <param name="result">The error code.</param>
-        /// <returns>True if the error code indicates success.</returns>
+        /// <summary>
+        ///   This is intended for Library Internal use only.
+        /// </summary>
+        /// <param name="result">
+        ///   The error code.
+        /// </param>
+        /// <returns>
+        ///   True if the error code indicates success.
+        /// </returns>
         public static bool Succeeded(int result)
         {
             return result >= 0;

@@ -206,7 +206,7 @@
     <comment>TextBlock.Text</comment>
   </data>
   <data name="OptionalUpdatesAvailable" xml:space="preserve">
-    <value>{0} optional update are available</value>
+    <value>{0} optional updates are available</value>
     <comment>TextBlock.Text</comment>
   </data>
   <data name="OptionalUpdateSelected" xml:space="preserve">

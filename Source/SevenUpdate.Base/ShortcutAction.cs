@@ -25,20 +25,33 @@ namespace SevenUpdate
 
     using ProtoBuf;
 
-    /// <summary>The action to preform on the shortcut.</summary>
-    [ProtoContract, DataContract, DefaultValue(Add)]
+    /// <summary>
+    ///   The action to preform on the shortcut.
+    /// </summary>
+    [ProtoContract]
+    [DataContract]
+    [DefaultValue(Add)]
     public enum ShortcutAction
     {
-        /// <summary>Adds a shortcut.</summary>
-        [ProtoEnum, EnumMember]
+        /// <summary>
+        ///   Adds a shortcut.
+        /// </summary>
+        [ProtoEnum]
+        [EnumMember]
         Add = 0,
 
-        /// <summary>Updates a shortcut only if it exists.</summary>
-        [ProtoEnum, EnumMember]
+        /// <summary>
+        ///   Updates a shortcut only if it exists.
+        /// </summary>
+        [ProtoEnum]
+        [EnumMember]
         Update = 1,
 
-        /// <summary>Deletes a shortcut.</summary>
-        [ProtoEnum, EnumMember]
+        /// <summary>
+        ///   Deletes a shortcut.
+        /// </summary>
+        [ProtoEnum]
+        [EnumMember]
         Delete = 2
     }
 }

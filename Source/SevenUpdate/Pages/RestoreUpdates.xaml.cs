@@ -34,21 +34,27 @@ namespace SevenUpdate.Pages
     using System.Windows.Input;
     using System.Windows.Media;
 
-    using SevenUpdate.Windows;
+    using Windows;
 
-    /// <summary>Interaction logic for Update_History.xaml.</summary>
+    /// <summary>
+    ///   Interaction logic for Update_History.xaml.
+    /// </summary>
     public sealed partial class RestoreUpdates
     {
         #region Constants and Fields
 
-        /// <summary>Gets or sets a collection of SUH items.</summary>
+        /// <summary>
+        ///   Gets or sets a collection of SUH items.
+        /// </summary>
         private ObservableCollection<Suh> hiddenUpdates;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="RestoreUpdates" /> class.</summary>
+        /// <summary>
+        ///   Initializes a new instance of the RestoreUpdates class.
+        /// </summary>
         public RestoreUpdates()
         {
             this.InitializeComponent();
@@ -79,16 +85,24 @@ namespace SevenUpdate.Pages
 
         #region Events
 
-        /// <summary>Occurs when one or more hidden updates have been restored.</summary>
+        /// <summary>
+        ///   Occurs when one or more hidden updates have been restored.
+        /// </summary>
         public static event EventHandler<EventArgs> RestoredHiddenUpdate;
 
         #endregion
 
         #region Methods
 
-        /// <summary>Gets the hidden updates and loads them in the <see cref="ListView"/>.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <summary>
+        ///   Gets the hidden updates and loads them in the <see cref="ListView" />.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        /// </param>
         private void GetHiddenUpdates(object sender, RoutedEventArgs e)
         {
             if (!File.Exists(App.HiddenFile))
@@ -105,17 +119,29 @@ namespace SevenUpdate.Pages
             this.lvHiddenUpdates.ItemsSource = this.hiddenUpdates;
         }
 
-        /// <summary>Goes back to the Main page.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <summary>
+        ///   Goes back to the Main page.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        /// </param>
         private void NavigateToMainPage(object sender, RoutedEventArgs e)
         {
             Core.NavigateToMainPage();
         }
 
-        /// <summary>Un hides one or more updates and navigates to the Main page.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <summary>
+        ///   Un hides one or more updates and navigates to the Main page.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        /// </param>
         private void RestoreUpdate(object sender, RoutedEventArgs e)
         {
             for (var x = 0; x < this.hiddenUpdates.Count; x++)
@@ -140,17 +166,29 @@ namespace SevenUpdate.Pages
             Core.NavigateToMainPage();
         }
 
-        /// <summary>Limit the size of the <see cref="GridViewColumn"/> when it's being resized.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Controls.Primitives.DragDeltaEventArgs"/> instance containing the event data.</param>
+        /// <summary>
+        ///   Limit the size of the <see cref="GridViewColumn" /> when it's being resized.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="System.Windows.Controls.Primitives.DragDeltaEventArgs" /> instance containing the event data.
+        /// </param>
         private void RestrictColumn(object sender, DragDeltaEventArgs e)
         {
             ListViewExtensions.LimitColumnSize((Thumb)e.OriginalSource);
         }
 
-        /// <summary>Shows the selected update details.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
+        /// <summary>
+        ///   Shows the selected update details.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="System.Windows.Input.MouseButtonEventArgs" /> instance containing the event data.
+        /// </param>
         private void ShowDetails(object sender, MouseButtonEventArgs e)
         {
             if (e.ClickCount != 2 || this.lvHiddenUpdates.SelectedIndex == -1)
@@ -162,18 +200,30 @@ namespace SevenUpdate.Pages
             details.ShowDialog(this.hiddenUpdates[this.lvHiddenUpdates.SelectedIndex]);
         }
 
-        /// <summary>Shows the selected update details.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <summary>
+        ///   Shows the selected update details.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        /// </param>
         private void ShowDetailsDialog(object sender, RoutedEventArgs e)
         {
             var details = new UpdateDetails();
             details.ShowDialog(this.hiddenUpdates[this.lvHiddenUpdates.SelectedIndex]);
         }
 
-        /// <summary>Changes the UI depending on whether Aero Glass is enabled.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="CompositionChangedEventArgs"/> instance containing the event data.</param>
+        /// <summary>
+        ///   Changes the UI depending on whether Aero Glass is enabled.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="CompositionChangedEventArgs" /> instance containing the event data.
+        /// </param>
         private void UpdateUI(object sender, CompositionChangedEventArgs e)
         {
             if (e.IsGlassEnabled)
@@ -190,14 +240,21 @@ namespace SevenUpdate.Pages
             }
         }
 
-        /// <summary>Updates the UI when an update check box is clicked.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <summary>
+        ///   Updates the UI when an update check box is clicked.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        /// </param>
         private void UpdateUIOnUpdateSelection(object sender, RoutedEventArgs e)
         {
             var checkedCount = this.hiddenUpdates.Count(t => t.Status == UpdateStatus.Visible);
 
-            this.tbSelectedUpdates.Text = string.Format(CultureInfo.CurrentCulture, Properties.Resources.TotalSelectedUpdates, checkedCount);
+            this.tbSelectedUpdates.Text = string.Format(
+                CultureInfo.CurrentCulture, Properties.Resources.TotalSelectedUpdates, checkedCount);
             this.btnRestore.IsEnabled = checkedCount > 0;
         }
 

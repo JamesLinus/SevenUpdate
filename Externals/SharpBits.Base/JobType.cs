@@ -9,19 +9,29 @@
 
 namespace SharpBits.Base
 {
-    /// <summary>The type of <see cref="BitsJob" />.</summary>
+    /// <summary>
+    ///   The type of <see cref="BitsJob" />.
+    /// </summary>
     public enum JobType
     {
-        /// <summary>Downloads a file.</summary>
+        /// <summary>
+        ///   Downloads a file.
+        /// </summary>
         Download,
 
-        /// <summary>Uploads a file without progress.</summary>
+        /// <summary>
+        ///   Uploads a file without progress.
+        /// </summary>
         Upload,
 
-        /// <summary>Uploads a file and reply's with progress.</summary>
+        /// <summary>
+        ///   Uploads a file and reply's with progress.
+        /// </summary>
         UploadReply,
 
-        /// <summary>Unknown job.</summary>
+        /// <summary>
+        ///   Unknown job.
+        /// </summary>
         Unknown,
     }
 }

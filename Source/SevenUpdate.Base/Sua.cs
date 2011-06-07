@@ -20,7 +20,6 @@
 
 namespace SevenUpdate
 {
-    using System;
     using System.Collections.ObjectModel;
     using System.Collections.Specialized;
     using System.ComponentModel;
@@ -28,42 +27,71 @@ namespace SevenUpdate
 
     using ProtoBuf;
 
-    /// <summary>Seven Update Application information.</summary>
-    [ProtoContract, DataContract(IsReference = true), KnownType(typeof(ObservableCollection<LocaleString>))]
+    /// <summary>
+    ///   Seven Update Application information.
+    /// </summary>
+    [ProtoContract]
+    [DataContract(IsReference = true)]
+    [KnownType(typeof(ObservableCollection<LocaleString>))]
     public sealed class Sua : INotifyPropertyChanged
     {
         #region Constants and Fields
 
-        /// <summary>The <see cref="Uri" /> for the application's website.</summary>
+        /// <summary>
+        ///   The <c>Uri</c> for the application's website.
+        /// </summary>
         private string appUrl;
 
-        /// <summary>The directory where the application is installed.</summary>
+        /// <summary>
+        ///   The directory where the application is installed.
+        /// </summary>
         private string directory;
 
-        /// <summary>The help website <see cref="Uri" /> of the application.</summary>
+        /// <summary>
+        ///   The help website <c>Uri</c> of the application.
+        /// </summary>
         private string helpUrl;
 
-        /// <summary>Indicates whether the SUA is enabled with Seven Update (SDK does not use this value).</summary>
+        /// <summary>
+        ///   Indicates whether the SUA is enabled with Seven Update (SDK does not use this value).
+        /// </summary>
         private bool isEnabled;
 
-        /// <summary>Indicates the cpu platform the application can run under.</summary>
+        /// <summary>
+        ///   Indicates the cpu platform the application can run under.
+        /// </summary>
         private Platform platform;
 
-        /// <summary>The <see cref="Uri" /> pointing to the sui file containing the application updates.</summary>
+        /// <summary>
+        ///   The <c>Uri</c> pointing to the sui file containing the application updates.
+        /// </summary>
         private string suiUrl;
 
-        /// <summary>The name of the value to the registry key that contains the application directory location.</summary>
+        /// <summary>
+        ///   The name of the value to the registry key that contains the application directory location.
+        /// </summary>
         private string valueName;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="Sua" /> class.</summary>
-        /// <param name="name">The collection of localized update names.</param>
-        /// <param name="publisher">The collection of localized publisher names.</param>
-        /// <param name="description">The collection of localized update descriptions.</param>
-        public Sua(ObservableCollection<LocaleString> name, ObservableCollection<LocaleString> publisher, ObservableCollection<LocaleString> description)
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="Sua" /> class.
+        /// </summary>
+        /// <param name="name">
+        ///   The collection of localized update names.
+        /// </param>
+        /// <param name="publisher">
+        ///   The collection of localized publisher names.
+        /// </param>
+        /// <param name="description">
+        ///   The collection of localized update descriptions.
+        /// </param>
+        public Sua(
+            ObservableCollection<LocaleString> name,
+            ObservableCollection<LocaleString> publisher,
+            ObservableCollection<LocaleString> description)
         {
             this.Name = name;
             this.Publisher = publisher;
@@ -85,9 +113,15 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Initializes a new instance of the <see cref="Sua" /> class.</summary>
-        /// <param name="name">The collection of localized update names.</param>
-        /// <param name="publisher">The collection of localized publisher names.</param>
+        /// <summary>
+        ///   Initializes a new instance of the <see cref="Sua" /> class.
+        /// </summary>
+        /// <param name="name">
+        ///   The collection of localized update names.
+        /// </param>
+        /// <param name="publisher">
+        ///   The collection of localized publisher names.
+        /// </param>
         public Sua(ObservableCollection<LocaleString> name, ObservableCollection<LocaleString> publisher)
         {
             this.Name = name;
@@ -114,7 +148,9 @@ namespace SevenUpdate
             this.Publisher.CollectionChanged += this.PublisherCollectionChanged;
         }
 
-        /// <summary>Initializes a new instance of the <see cref="Sua" /> class.</summary>
+        /// <summary>
+        ///   Initializes a new instance of the Sua class.
+        /// </summary>
         public Sua()
         {
             this.Name = new ObservableCollection<LocaleString>();
@@ -126,16 +162,21 @@ namespace SevenUpdate
 
         #region Events
 
-        /// <summary>Occurs when a property has changed.</summary>
+        /// <summary>
+        ///   Occurs when a property has changed.
+        /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
 
         #region Properties
 
-        /// <summary>Gets or sets the <see cref="Uri" /> for the application's website.</summary>
+        /// <summary>
+        ///   Gets or sets the <c>Uri</c> for the application's website.
+        /// </summary>
         /// <value>The application website.</value>
-        [ProtoMember(8, IsRequired = false), DataMember]
+        [ProtoMember(8, IsRequired = false)]
+        [DataMember]
         public string AppUrl
         {
             get
@@ -152,14 +193,20 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Gets the collection of localized descriptions for the application.</summary>
+        /// <summary>
+        ///   Gets the collection of localized descriptions for the application.
+        /// </summary>
         /// <value>The application description.</value>
-        [ProtoMember(2), DataMember]
+        [ProtoMember(2)]
+        [DataMember]
         public ObservableCollection<LocaleString> Description { get; private set; }
 
-        /// <summary>Gets or sets the directory where the application is installed.</summary>
+        /// <summary>
+        ///   Gets or sets the directory where the application is installed.
+        /// </summary>
         /// <value>The install directory.</value>
-        [ProtoMember(3), DataMember]
+        [ProtoMember(3)]
+        [DataMember]
         public string Directory
         {
             get
@@ -176,9 +223,12 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Gets or sets the help website <see cref="Uri" /> of the application.</summary>
+        /// <summary>
+        ///   Gets or sets the help website <c>Uri</c> of the application.
+        /// </summary>
         /// <value>The help and support website for the application.</value>
-        [ProtoMember(9, IsRequired = false), DataMember]
+        [ProtoMember(9, IsRequired = false)]
+        [DataMember]
         public string HelpUrl
         {
             get
@@ -195,9 +245,12 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Gets or sets a value indicating whether the SUA is enabled with Seven Update (SDK does not use this value).</summary>
-        /// <value><see langword="true" /> if this instance is enabled; otherwise, <see langword="false" />.</value>
-        [ProtoMember(5), DataMember]
+        /// <summary>
+        ///   Gets or sets a value indicating whether the SUA is enabled with Seven Update (SDK does not use this value).
+        /// </summary>
+        /// <value><c>True</c> if this instance is enabled; otherwise, <c>False</c>.</value>
+        [ProtoMember(5)]
+        [DataMember]
         public bool IsEnabled
         {
             get
@@ -214,13 +267,19 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Gets the collection of localized application names.</summary>
+        /// <summary>
+        ///   Gets the collection of localized application names.
+        /// </summary>
         /// <value>The name of the application localized.</value>
-        [ProtoMember(1), DataMember]
+        [ProtoMember(1)]
+        [DataMember]
         public ObservableCollection<LocaleString> Name { get; private set; }
 
-        /// <summary>Gets or sets the cpu platform the application can run under.</summary>
-        [ProtoMember(11), DataMember]
+        /// <summary>
+        ///   Gets or sets the cpu platform the application can run under.
+        /// </summary>
+        [ProtoMember(11)]
+        [DataMember]
         public Platform Platform
         {
             get
@@ -237,14 +296,20 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Gets the collection of localized publisher names.</summary>
+        /// <summary>
+        ///   Gets the collection of localized publisher names.
+        /// </summary>
         /// <value>The publisher.</value>
-        [ProtoMember(6), DataMember]
+        [ProtoMember(6)]
+        [DataMember]
         public ObservableCollection<LocaleString> Publisher { get; private set; }
 
-        /// <summary>Gets or sets the <see cref="Uri" /> pointing to the sui file containing the application updates.</summary>
+        /// <summary>
+        ///   Gets or sets the <c>Uri</c> pointing to the sui file containing the application updates.
+        /// </summary>
         /// <value>The url pointing to the sui file.</value>
-        [ProtoMember(7), DataMember]
+        [ProtoMember(7)]
+        [DataMember]
         public string SuiUrl
         {
             get
@@ -261,9 +326,12 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Gets or sets the name of the value to the registry key that contains the application directory location.</summary>
+        /// <summary>
+        ///   Gets or sets the name of the value to the registry key that contains the application directory location.
+        /// </summary>
         /// <value>The name of the value.</value>
-        [ProtoMember(10, IsRequired = false), DataMember]
+        [ProtoMember(10, IsRequired = false)]
+        [DataMember]
         public string ValueName
         {
             get
@@ -284,24 +352,40 @@ namespace SevenUpdate
 
         #region Methods
 
-        /// <summary>Fires the OnPropertyChanged Event with the collection changes.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The event data.</param>
+        /// <summary>
+        ///   Fires the OnPropertyChanged Event with the collection changes.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The event data.
+        /// </param>
         private void DescriptionCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             this.OnPropertyChanged("Description");
         }
 
-        /// <summary>Fires the OnPropertyChanged Event with the collection changes.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The event data.</param>
+        /// <summary>
+        ///   Fires the OnPropertyChanged Event with the collection changes.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The event data.
+        /// </param>
         private void NameCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             this.OnPropertyChanged("Name");
         }
 
-        /// <summary>When a property has changed, call the <see cref="OnPropertyChanged" /> Event.</summary>
-        /// <param name="propertyName">The name of the property.</param>
+        /// <summary>
+        ///   When a property has changed, call the <see cref="OnPropertyChanged" /> Event.
+        /// </summary>
+        /// <param name="propertyName">
+        ///   The name of the property.
+        /// </param>
         private void OnPropertyChanged(string propertyName)
         {
             var handler = this.PropertyChanged;
@@ -312,9 +396,15 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Fires the OnPropertyChanged Event with the collection changes.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The event data.</param>
+        /// <summary>
+        ///   Fires the OnPropertyChanged Event with the collection changes.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The event data.
+        /// </param>
         private void PublisherCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             this.OnPropertyChanged("Publisher");

@@ -31,21 +31,27 @@ namespace SevenUpdate.Pages
     using System.Windows.Input;
     using System.Windows.Media;
 
-    using SevenUpdate.Windows;
+    using Windows;
 
-    /// <summary>Interaction logic for UpdateHistory.xaml.</summary>
+    /// <summary>
+    ///   Interaction logic for UpdateHistory.xaml.
+    /// </summary>
     public partial class UpdateHistory
     {
         #region Constants and Fields
 
-        /// <summary>Gets or sets a collection of SUH items.</summary>
+        /// <summary>
+        ///   Gets or sets a collection of SUH items.
+        /// </summary>
         private ObservableCollection<Suh> updateHistory;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref="UpdateHistory" /> class.</summary>
+        /// <summary>
+        ///   Initializes a new instance of the UpdateHistory class.
+        /// </summary>
         public UpdateHistory()
         {
             this.InitializeComponent();
@@ -73,9 +79,15 @@ namespace SevenUpdate.Pages
 
         #region Methods
 
-        /// <summary>Gets the update history and loads it to the listView.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <summary>
+        ///   Gets the update history and loads it to the listView.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        /// </param>
         private void GetHistory(object sender, RoutedEventArgs e)
         {
             if (!File.Exists(App.HistoryFile))
@@ -94,17 +106,29 @@ namespace SevenUpdate.Pages
             this.updateHistory.CollectionChanged += this.RefreshDataView;
         }
 
-        /// <summary>Goes back to the Main page.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <summary>
+        ///   Goes back to the Main page.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        /// </param>
         private void NavigateToMainPage(object sender, RoutedEventArgs e)
         {
             Core.NavigateToMainPage();
         }
 
-        /// <summary>Updates the <see cref="CollectionView"/> when the collection changes.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="NotifyCollectionChangedEventArgs"/> instance containing the event data.</param>
+        /// <summary>
+        ///   Updates the <see cref="CollectionView" /> when the collection changes.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="NotifyCollectionChangedEventArgs" /> instance containing the event data.
+        /// </param>
         private void RefreshDataView(object sender, NotifyCollectionChangedEventArgs e)
         {
             // update the view when item change is NOT caused by replacement
@@ -117,9 +141,15 @@ namespace SevenUpdate.Pages
             dataView.Refresh();
         }
 
-        /// <summary>Shows the selected update details.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.Input.MouseButtonEventArgs"/> instance containing the event data.</param>
+        /// <summary>
+        ///   Shows the selected update details.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="System.Windows.Input.MouseButtonEventArgs" /> instance containing the event data.
+        /// </param>
         private void ShowDetails(object sender, MouseButtonEventArgs e)
         {
             if (e.ClickCount != 2 || this.lvUpdateHistory.SelectedIndex == -1)
@@ -131,18 +161,30 @@ namespace SevenUpdate.Pages
             details.ShowDialog(this.updateHistory[this.lvUpdateHistory.SelectedIndex]);
         }
 
-        /// <summary>Shows the selected update details.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="System.Windows.RoutedEventArgs"/> instance containing the event data.</param>
+        /// <summary>
+        ///   Shows the selected update details.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="System.Windows.RoutedEventArgs" /> instance containing the event data.
+        /// </param>
         private void ShowDetailsDialog(object sender, RoutedEventArgs e)
         {
             var details = new UpdateDetails();
             details.ShowDialog(this.updateHistory[this.lvUpdateHistory.SelectedIndex]);
         }
 
-        /// <summary>Changes the UI depending on whether Aero Glass is enabled.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <see cref="CompositionChangedEventArgs"/> instance containing the event data.</param>
+        /// <summary>
+        ///   Changes the UI depending on whether Aero Glass is enabled.
+        /// </summary>
+        /// <param name="sender">
+        ///   The object that called the event.
+        /// </param>
+        /// <param name="e">
+        ///   The <see cref="CompositionChangedEventArgs" /> instance containing the event data.
+        /// </param>
         private void UpdateUI(object sender, CompositionChangedEventArgs e)
         {
             if (e.IsGlassEnabled)

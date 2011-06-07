@@ -12,8 +12,13 @@ namespace SharpBits.Base
     using System.Runtime.InteropServices;
     using System.Security.Permissions;
 
-    /// <summary>Entry point to the BITS infrastructure.</summary>
-    [Guid("4991D34B-80A1-4291-83B6-3328366B9097"), ClassInterfaceAttribute(ClassInterfaceType.None), ComImportAttribute, SecurityPermission(SecurityAction.Demand, UnmanagedCode = true)]
+    /// <summary>
+    ///   Entry point to the BITS infrastructure.
+    /// </summary>
+    [Guid("4991D34B-80A1-4291-83B6-3328366B9097")]
+    [ClassInterfaceAttribute(ClassInterfaceType.None)]
+    [ComImportAttribute]
+    [SecurityPermission(SecurityAction.Demand, UnmanagedCode = true)]
     internal class BackgroundCopyManager
     {
     }
