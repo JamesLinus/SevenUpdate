@@ -22,52 +22,38 @@ namespace SevenUpdate
 
     using ProtoBuf;
 
-    /// <summary>
-    ///   Indicates a type of error that can occur.
-    /// </summary>
+    /// <summary>Indicates a type of error that can occur.</summary>
     [ProtoContract]
     [DataContract]
     [DefaultValue(GeneralError)]
     public enum ErrorType
     {
-        /// <summary>
-        ///   An error that occurred while trying to download updates.
-        /// </summary>
+        /// <summary>An error that occurred while trying to download updates.</summary>
         [ProtoEnum]
         [EnumMember]
         DownloadError,
 
-        /// <summary>
-        ///   An error that occurred while trying to install updates.
-        /// </summary>
+        /// <summary>An error that occurred while trying to install updates.</summary>
         [ProtoEnum]
         [EnumMember]
         InstallationError,
 
-        /// <summary>
-        ///   A general network connection error.
-        /// </summary>
+        /// <summary>A general network connection error.</summary>
         [ProtoEnum]
         [EnumMember]
         FatalNetworkError,
 
-        /// <summary>
-        ///   An unspecified error, non fatal.
-        /// </summary>
+        /// <summary>An unspecified error, non fatal.</summary>
         [ProtoEnum]
         [EnumMember]
         GeneralError,
 
-        /// <summary>
-        ///   An unspecified error that prevents Seven Update from continuing.
-        /// </summary>
+        /// <summary>An unspecified error that prevents Seven Update from continuing.</summary>
         [ProtoEnum]
         [EnumMember]
         FatalError,
 
-        /// <summary>
-        ///   An error that occurs while searching for updates.
-        /// </summary>
+        /// <summary>An error that occurs while searching for updates.</summary>
         [ProtoEnum]
         [EnumMember]
         SearchError

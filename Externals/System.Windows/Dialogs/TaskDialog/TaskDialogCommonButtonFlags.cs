@@ -15,19 +15,13 @@ namespace System.Windows.Dialogs
     [Flags]
     internal enum TaskDialogCommonButtonFlags
     {
-        /// <summary>
-        ///   The task dialog contains the push button: OK.
-        /// </summary>
+        /// <summary>The task dialog contains the push button: OK.</summary>
         OkButton = 0x0001,
 
-        /// <summary>
-        ///   The task dialog contains the push button: Yes.
-        /// </summary>
+        /// <summary>The task dialog contains the push button: Yes.</summary>
         YesButton = 0x0002,
 
-        /// <summary>
-        ///   The task dialog contains the push button: No.
-        /// </summary>
+        /// <summary>The task dialog contains the push button: No.</summary>
         NoButton = 0x0004,
 
         /// <summary>
@@ -36,14 +30,10 @@ namespace System.Windows.Dialogs
         /// </summary>
         CancelButton = 0x0008,
 
-        /// <summary>
-        ///   The task dialog contains the push button: Retry.
-        /// </summary>
+        /// <summary>The task dialog contains the push button: Retry.</summary>
         RetryButton = 0x0010,
 
-        /// <summary>
-        ///   The task dialog contains the push button: Close.
-        /// </summary>
+        /// <summary>The task dialog contains the push button: Close.</summary>
         CloseButton = 0x0020
     }
 }

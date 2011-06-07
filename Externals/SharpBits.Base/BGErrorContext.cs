@@ -15,24 +15,16 @@ namespace SharpBits.Base
     /// </summary>
     internal enum BGErrorContext
     {
-        /// <summary>
-        ///   An error has not occurred.
-        /// </summary>
+        /// <summary>An error has not occurred.</summary>
         None = 0,
 
-        /// <summary>
-        ///   The error context is unknown.
-        /// </summary>
+        /// <summary>The error context is unknown.</summary>
         Unknown = 1,
 
-        /// <summary>
-        ///   The transfer queue manager generated the error.
-        /// </summary>
+        /// <summary>The transfer queue manager generated the error.</summary>
         GeneralQueueManager = 2,
 
-        /// <summary>
-        ///   The error was generated while the queue manager was notifying the client of an event.
-        /// </summary>
+        /// <summary>The error was generated while the queue manager was notifying the client of an event.</summary>
         QueueManagerNotification = 3,
 
         /// <summary>
@@ -41,9 +33,7 @@ namespace SharpBits.Base
         /// </summary>
         LocalFile = 4,
 
-        /// <summary>
-        ///   The error was related to the specified remote file. For example, the Url is not accessible.
-        /// </summary>
+        /// <summary>The error was related to the specified remote file. For example, the Url is not accessible.</summary>
         RemoteFile = 5,
 
         /// <summary>

@@ -27,78 +27,54 @@ namespace System.Windows.Controls
 
     using Threading;
 
-    /// <summary>
-    ///   Displays a progress circle.
-    /// </summary>
+    /// <summary>Displays a progress circle.</summary>
     [TemplatePart(Name = ElementCanvas, Type = typeof(Canvas))]
     public sealed class ProgressIndicator : RangeBase
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   The element name.
-        /// </summary>
+        /// <summary>The element name.</summary>
         private const string ElementCanvas = "PART_Canvas";
 
-        /// <summary>
-        ///   The dispatch timer.
-        /// </summary>
+        /// <summary>The dispatch timer.</summary>
         private readonly DispatcherTimer dispatcherTimer;
 
-        /// <summary>
-        ///   The storyboard.
-        /// </summary>
+        /// <summary>The storyboard.</summary>
         private readonly DependencyProperty elementStoryboardProperty = DependencyProperty.Register(
             "ElementStoryboard", typeof(Storyboard), typeof(ProgressIndicator));
 
-        /// <summary>
-        ///   The text to display when the progress is indeterminate.
-        /// </summary>
+        /// <summary>The text to display when the progress is indeterminate.</summary>
         private readonly DependencyProperty indeterminateTextProperty = DependencyProperty.Register(
             "IndeterminateText", typeof(string), typeof(ProgressIndicator));
 
-        /// <summary>
-        ///   Indicates if the progress is indeterminate.
-        /// </summary>
+        /// <summary>Indicates if the progress is indeterminate.</summary>
         private readonly DependencyProperty isIndeterminateProperty = DependencyProperty.Register(
             "IsIndeterminate", typeof(bool), typeof(ProgressIndicator));
 
-        /// <summary>
-        ///   Indicates if the progress is running.
-        /// </summary>
+        /// <summary>Indicates if the progress is running.</summary>
         private readonly DependencyProperty isRunningProperty = DependencyProperty.Register(
             "IsRunning",
             typeof(bool),
             typeof(ProgressIndicator),
             new FrameworkPropertyMetadata(IsRunningPropertyChanged));
 
-        /// <summary>
-        ///   The canvas.
-        /// </summary>
+        /// <summary>The canvas.</summary>
         private Canvas canvas;
 
-        /// <summary>
-        ///   The canvas elements.
-        /// </summary>
+        /// <summary>The canvas elements.</summary>
         private Array canvasElements;
 
-        /// <summary>
-        ///   Indicates if the progress runs clockwise.
-        /// </summary>
+        /// <summary>Indicates if the progress runs clockwise.</summary>
         private bool clockwise;
 
-        /// <summary>
-        ///   The index for the progress.
-        /// </summary>
+        /// <summary>The index for the progress.</summary>
         private int index;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>
-        ///   Initializes static members of the ProgressIndicator class.
-        /// </summary>
+        /// <summary>Initializes static members of the ProgressIndicator class.</summary>
         static ProgressIndicator()
         {
             DefaultStyleKeyProperty.OverrideMetadata(
@@ -106,9 +82,7 @@ namespace System.Windows.Controls
             MaximumProperty.OverrideMetadata(typeof(ProgressIndicator), new FrameworkPropertyMetadata(100.0));
         }
 
-        /// <summary>
-        ///   Initializes a new instance of the ProgressIndicator class.
-        /// </summary>
+        /// <summary>Initializes a new instance of the ProgressIndicator class.</summary>
         public ProgressIndicator()
         {
             if (this.Resources.Count != 0)
@@ -130,9 +104,7 @@ namespace System.Windows.Controls
 
         #region Properties
 
-        /// <summary>
-        ///   Gets or sets the element storyboard.
-        /// </summary>
+        /// <summary>Gets or sets the element storyboard.</summary>
         /// <value>The element storyboard.</value>
         public Storyboard ElementStoryboard
         {
@@ -147,9 +119,7 @@ namespace System.Windows.Controls
             }
         }
 
-        /// <summary>
-        ///   Gets or sets the indeterminate text.
-        /// </summary>
+        /// <summary>Gets or sets the indeterminate text.</summary>
         /// <value>The indeterminate text.</value>
         public string IndeterminateText
         {
@@ -164,9 +134,7 @@ namespace System.Windows.Controls
             }
         }
 
-        /// <summary>
-        ///   Gets or sets a value indicating whether this instance is indeterminate.
-        /// </summary>
+        /// <summary>Gets or sets a value indicating whether this instance is indeterminate.</summary>
         /// <value><c>True</c> if this instance is indeterminate; otherwise, <c>False</c>.</value>
         public bool IsIndeterminate
         {
@@ -181,9 +149,7 @@ namespace System.Windows.Controls
             }
         }
 
-        /// <summary>
-        ///   Gets or sets a value indicating whether this instance is running.
-        /// </summary>
+        /// <summary>Gets or sets a value indicating whether this instance is running.</summary>
         /// <value><c>True</c> if this instance is running; otherwise, <c>False</c>.</value>
         public bool IsRunning
         {
@@ -244,15 +210,9 @@ namespace System.Windows.Controls
 
         #region Methods
 
-        /// <summary>
-        ///   Stops or starts the progress indicator based on the <c>IsRunning</c> property.
-        /// </summary>
-        /// <param name="d">
-        ///   The dependency object.
-        /// </param>
-        /// <param name="e">
-        ///   The <c>System.Windows.DependencyPropertyChangedEventArgs</c> instance containing the event data.
-        /// </param>
+        /// <summary>Stops or starts the progress indicator based on the <c>IsRunning</c> property.</summary>
+        /// <param name="d">  The dependency object.</param>
+        /// <param name="e">  The <c>System.Windows.DependencyPropertyChangedEventArgs</c> instance containing the event data.</param>
         private static void IsRunningPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var progressIndicator = (ProgressIndicator)d;
@@ -267,15 +227,9 @@ namespace System.Windows.Controls
             }
         }
 
-        /// <summary>
-        ///   Animates the progress wheel.
-        /// </summary>
-        /// <param name="sender">
-        ///   The object that called the event.
-        /// </param>
-        /// <param name="e">
-        ///   The <c>System.EventArgs</c> instance containing the event data.
-        /// </param>
+        /// <summary>Animates the progress wheel.</summary>
+        /// <param name="sender">  The object that called the event.</param>
+        /// <param name="e">  The <c>System.EventArgs</c> instance containing the event data.</param>
         private void Animate(object sender, EventArgs e)
         {
             if (this.canvasElements == null || this.ElementStoryboard == null)
@@ -292,9 +246,7 @@ namespace System.Windows.Controls
             this.index = (this.index + 1) % this.canvasElements.Length;
         }
 
-        /// <summary>
-        ///   Starts this instance.
-        /// </summary>
+        /// <summary>Starts this instance.</summary>
         private void Start()
         {
             this.dispatcherTimer.Tick -= this.Animate;
@@ -302,12 +254,8 @@ namespace System.Windows.Controls
             this.dispatcherTimer.Start();
         }
 
-        /// <summary>
-        ///   Starts the storyboard.
-        /// </summary>
-        /// <param name="element">
-        ///   The element.
-        /// </param>
+        /// <summary>Starts the storyboard.</summary>
+        /// <param name="element">  The element.</param>
         private void StartStoryboard(FrameworkElement element)
         {
             NameScope.SetNameScope(this, new NameScope());
@@ -328,9 +276,7 @@ namespace System.Windows.Controls
             storyboard.Begin(element);
         }
 
-        /// <summary>
-        ///   Stops this instance.
-        /// </summary>
+        /// <summary>Stops this instance.</summary>
         private void Stop()
         {
             this.dispatcherTimer.Stop();

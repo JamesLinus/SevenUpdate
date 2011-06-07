@@ -13,36 +13,24 @@ namespace SharpBits.Base
     using System.Runtime.InteropServices;
     using System.Threading;
 
-    /// <summary>
-    ///   Bits error.
-    /// </summary>
+    /// <summary>Bits error.</summary>
     public class BitsError
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   The error that occurred.
-        /// </summary>
+        /// <summary>The error that occurred.</summary>
         private readonly IBackgroundCopyError error;
 
-        /// <summary>
-        ///   The job the error occurred on.
-        /// </summary>
+        /// <summary>The job the error occurred on.</summary>
         private readonly BitsJob job;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>
-        ///   Initializes a new instance of the <c>BitsError</c> class.
-        /// </summary>
-        /// <param name="job">
-        ///   The job the error occurred on.
-        /// </param>
-        /// <param name="error">
-        ///   The error that occurred.
-        /// </param>
+        /// <summary>Initializes a new instance of the <c>BitsError</c> class.</summary>
+        /// <param name="job">  The job the error occurred on.</param>
+        /// <param name="error">  The error that occurred.</param>
         internal BitsError(BitsJob job, IBackgroundCopyError error)
         {
             if (null == error)
@@ -58,9 +46,7 @@ namespace SharpBits.Base
 
         #region Properties
 
-        /// <summary>
-        ///   Gets the context description.
-        /// </summary>
+        /// <summary>Gets the context description.</summary>
         /// <value>The context description.</value>
         public string ContextDescription
         {
@@ -81,9 +67,7 @@ namespace SharpBits.Base
             }
         }
 
-        /// <summary>
-        ///   Gets the description.
-        /// </summary>
+        /// <summary>Gets the description.</summary>
         /// <value>The description.</value>
         public string Description
         {
@@ -104,9 +88,7 @@ namespace SharpBits.Base
             }
         }
 
-        /// <summary>
-        ///   Gets the error code.
-        /// </summary>
+        /// <summary>Gets the error code.</summary>
         /// <value>The error code.</value>
         public int ErrorCode
         {
@@ -128,9 +110,7 @@ namespace SharpBits.Base
             }
         }
 
-        /// <summary>
-        ///   Gets the error context.
-        /// </summary>
+        /// <summary>Gets the error context.</summary>
         /// <value>The error context.</value>
         public ErrorContext ErrorContext
         {
@@ -152,9 +132,7 @@ namespace SharpBits.Base
             }
         }
 
-        /// <summary>
-        ///   Gets the file.
-        /// </summary>
+        /// <summary>Gets the file.</summary>
         /// <value>The file that occurred the error.</value>
         public BitsFile File
         {
@@ -175,9 +153,7 @@ namespace SharpBits.Base
             }
         }
 
-        /// <summary>
-        ///   Gets the protocol.
-        /// </summary>
+        /// <summary>Gets the protocol.</summary>
         /// <value>The protocol.</value>
         public string Protocol
         {

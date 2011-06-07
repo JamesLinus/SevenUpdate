@@ -7,9 +7,7 @@
 
 namespace System.Windows.Dialogs
 {
-    /// <summary>
-    ///   The notification ids.
-    /// </summary>
+    /// <summary>The notification ids.</summary>
     internal enum TaskDialogNotification
     {
         /// <summary>

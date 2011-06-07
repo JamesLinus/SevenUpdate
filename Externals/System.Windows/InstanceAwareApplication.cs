@@ -37,39 +37,25 @@ namespace System.Windows
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   The milliseconds to wait to determine if the current instance is the first one.
-        /// </summary>
+        /// <summary>The milliseconds to wait to determine if the current instance is the first one.</summary>
         private const double FirstInstanceTimeoutMilliseconds = 500;
 
-        /// <summary>
-        ///   The mutex prefix used if the application instance must be single per machine.
-        /// </summary>
+        /// <summary>The mutex prefix used if the application instance must be single per machine.</summary>
         private const string GlobalPrefix = @"Global\";
 
-        /// <summary>
-        ///   The mutex prefix used if the application instance must be single per user session.
-        /// </summary>
+        /// <summary>The mutex prefix used if the application instance must be single per user session.</summary>
         private const string LocalPrefix = @"Local\";
 
-        /// <summary>
-        ///   The milliseconds to wait for the prior instance to signal that the startup information have been received.
-        /// </summary>
+        /// <summary>The milliseconds to wait for the prior instance to signal that the startup information have been received.</summary>
         private const double PriorInstanceSignaledTimeoutMilliseconds = 2500;
 
-        /// <summary>
-        ///   The milliseconds to wait for the service to be ready.
-        /// </summary>
+        /// <summary>The milliseconds to wait for the service to be ready.</summary>
         private const double ServiceReadyTimeoutMilliseconds = 1000;
 
-        /// <summary>
-        ///   The SID value to be used to retrieve the <c>Users</c> group identity.
-        /// </summary>
+        /// <summary>The SID value to be used to retrieve the <c>Users</c> group identity.</summary>
         private const string UsersSidValue = "S-1-5-32-545";
 
-        /// <summary>
-        ///   Gets or sets the instance awareness of the application.
-        /// </summary>
+        /// <summary>Gets or sets the instance awareness of the application.</summary>
         /// <value>The instance awareness of the application.</value>
         private readonly ApplicationInstanceAwareness awareness;
 
@@ -79,24 +65,16 @@ namespace System.Windows
         /// </summary>
         private bool disposed;
 
-        /// <summary>
-        ///   The synchronization object owned by the first instance.
-        /// </summary>
+        /// <summary>The synchronization object owned by the first instance.</summary>
         private Mutex firstInstanceMutex;
 
-        /// <summary>
-        ///   The host used to communicate between multiple application instances.
-        /// </summary>
+        /// <summary>The host used to communicate between multiple application instances.</summary>
         private ServiceHost serviceHost;
 
-        /// <summary>
-        ///   The synchronization object used to synchronize the service creation or destruction.
-        /// </summary>
+        /// <summary>The synchronization object used to synchronize the service creation or destruction.</summary>
         private Mutex serviceInitializationMutex;
 
-        /// <summary>
-        ///   The synchronization object used to signal that the service is ready.
-        /// </summary>
+        /// <summary>The synchronization object used to signal that the service is ready.</summary>
         private EventWaitHandle serviceReadySemaphore;
 
         /// <summary>
@@ -109,18 +87,14 @@ namespace System.Windows
 
         #region Constructors and Destructors
 
-        /// <summary>
-        ///   Initializes a new instance of the InstanceAwareApplication class.
-        /// </summary>
+        /// <summary>Initializes a new instance of the InstanceAwareApplication class.</summary>
         /// <exception cref="System.InvalidOperationException">More than one instance of the
         /// <c>System.Windows.Application</c> class is created per <c>System.AppDomain</c>.</exception>
         public InstanceAwareApplication() : this(ApplicationInstanceAwareness.Host)
         {
         }
 
-        /// <summary>
-        ///   Initializes a new instance of the InstanceAwareApplication class.
-        /// </summary>
+        /// <summary>Initializes a new instance of the InstanceAwareApplication class.</summary>
         /// <param name="awareness">The instance awareness of the application.</param>
         /// <exception cref="System.InvalidOperationException">More than one instance of the
         /// <c>System.Windows.Application</c> class is created per <c>System.AppDomain</c>.</exception>
@@ -129,9 +103,7 @@ namespace System.Windows
             this.awareness = awareness;
         }
 
-        /// <summary>
-        ///   Finalizes an instance of the InstanceAwareApplication class.
-        /// </summary>
+        /// <summary>Finalizes an instance of the InstanceAwareApplication class.</summary>
         ~InstanceAwareApplication()
         {
             this.Dispose(false);
@@ -151,15 +123,9 @@ namespace System.Windows
 
         #region Properties
 
-        /// <summary>
-        ///   Gets a value indicating whether the current application instance is the first one.
-        /// </summary>
-        /// <value>
-        ///   <c>True</c> if the current application instance is the first one, otherwise <c>false</c>.
-        /// </value>
-        /// <remarks>
-        ///   The first application instance gets notified about subsequent application instances startup.
-        /// </remarks>
+        /// <summary>Gets a value indicating whether the current application instance is the first one.</summary>
+        /// <value><c>True</c> if the current application instance is the first one, otherwise <c>false</c>.</value>
+        /// <remarks>The first application instance gets notified about subsequent application instances startup.</remarks>
         public bool IsFirstInstance { get; private set; }
 
         #endregion
@@ -168,9 +134,7 @@ namespace System.Windows
 
         #region IDisposable
 
-        /// <summary>
-        ///   Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
+        /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
         void IDisposable.Dispose()
         {
             this.Dispose(true);
@@ -181,9 +145,7 @@ namespace System.Windows
 
         #region IPriorApplicationInstance
 
-        /// <summary>
-        ///   Signals the startup of the next application instance.
-        /// </summary>
+        /// <summary>Signals the startup of the next application instance.</summary>
         /// <param name="args">The parameters used to run the next instance of the application.</param>
         void IPriorApplicationInstance.SignalStartupNextInstance(string[] args)
         {
@@ -202,9 +164,7 @@ namespace System.Windows
 
         #region Methods
 
-        /// <summary>
-        ///   Raises the <c>System.Windows.Application.Exit</c> event.
-        /// </summary>
+        /// <summary>Raises the <c>System.Windows.Application.Exit</c> event.</summary>
         /// <param name="e">An <c>System.Windows.ExitEventArgs</c> that contains the event data.</param>
         protected override void OnExit(ExitEventArgs e)
         {
@@ -214,9 +174,7 @@ namespace System.Windows
             base.OnExit(e);
         }
 
-        /// <summary>
-        ///   Raises the <c>System.Windows.Application.Startup</c> event.
-        /// </summary>
+        /// <summary>Raises the <c>System.Windows.Application.Startup</c> event.</summary>
         /// <param name="e">A <c>System.Windows.StartupEventArgs</c> that contains the event data.</param>
         protected override sealed void OnStartup(StartupEventArgs e)
         {
@@ -224,9 +182,7 @@ namespace System.Windows
             this.OnStartup(e, this.IsFirstInstance);
         }
 
-        /// <summary>
-        ///   Raises the <c>System.Windows.Application.Startup</c> event.
-        /// </summary>
+        /// <summary>Raises the <c>System.Windows.Application.Startup</c> event.</summary>
         /// <param name="e">The <c>System.Windows.StartupEventArgs</c> instance containing the event data.</param>
         /// <param name="isFirstInstance">If set to <c>true</c> the current instance is the first application instance.</param>
         protected virtual void OnStartup(StartupEventArgs e, bool isFirstInstance)
@@ -234,9 +190,7 @@ namespace System.Windows
             base.OnStartup(e);
         }
 
-        /// <summary>
-        ///   Raises the <c>InstanceAwareApplication.StartupNextInstance</c> event.
-        /// </summary>
+        /// <summary>Raises the <c>InstanceAwareApplication.StartupNextInstance</c> event.</summary>
         /// <param name="e">The <c>StartupNextInstanceEventArgs</c> instance containing the event data.</param>
         protected virtual void OnStartupNextInstance(StartupNextInstanceEventArgs e)
         {
@@ -263,9 +217,7 @@ namespace System.Windows
         {
         }
 
-        /// <summary>
-        ///   Extracts some parameters from the specified <c>ApplicationInstanceAwareness</c> value.
-        /// </summary>
+        /// <summary>Extracts some parameters from the specified <c>ApplicationInstanceAwareness</c> value.</summary>
         /// <param name="awareness">The <c>ApplicationInstanceAwareness</c> value to extract parameters from.</param>
         /// <param name="prefix">The synchronization object prefix.</param>
         /// <param name="identity">The identity used to handle the synchronization object.</param>
@@ -302,9 +254,7 @@ namespace System.Windows
             }
         }
 
-        /// <summary>
-        ///   Gets the <c>Uri</c> of the pipe used for inter-process communication.
-        /// </summary>
+        /// <summary>Gets the <c>Uri</c> of the pipe used for inter-process communication.</summary>
         /// <param name="applicationPath">The application unique path, used to define the <c>Uri</c> pipe.</param>
         /// <returns>The <c>Uri</c> of the pipe used for inter-process communication.</returns>
         private static Uri GetPipeUri(string applicationPath)
@@ -312,9 +262,7 @@ namespace System.Windows
             return new Uri(string.Format("net.pipe://localhost/{0}/", applicationPath));
         }
 
-        /// <summary>
-        ///   Releases unmanaged and - optionally - managed resources
-        /// </summary>
+        /// <summary>Releases unmanaged and - optionally - managed resources</summary>
         /// <param name="disposing"><c>True</c> to release both managed and unmanaged resources, <c>false</c> to release only unmanaged resources.</param>
         private void Dispose(bool disposing)
         {
@@ -329,9 +277,7 @@ namespace System.Windows
             }
         }
 
-        /// <summary>
-        ///   Gets the application unique identifier.
-        /// </summary>
+        /// <summary>Gets the application unique identifier.</summary>
         /// <returns>The application unique identifier.</returns>
         private string GetApplicationId()
         {
@@ -344,9 +290,7 @@ namespace System.Windows
             return guidAttribute.Value;
         }
 
-        /// <summary>
-        ///   Initializes the first application instance.
-        /// </summary>
+        /// <summary>Initializes the first application instance.</summary>
         /// <param name="uri">The <c>Uri</c> used by the service that allows for inter-process communication.</param>
         private void InitializeFirstInstance(Uri uri)
         {
@@ -373,9 +317,7 @@ namespace System.Windows
             }
         }
 
-        /// <summary>
-        ///   Initializes the application instance.
-        /// </summary>
+        /// <summary>Initializes the application instance.</summary>
         /// <param name="e">The <c>System.Windows.StartupEventArgs</c> instance containing the event data.</param>
         /// <returns><c>True</c> if the current instance is the first application instance, otherwise <c>false</c>.</returns>
         private bool InitializeInstance(StartupEventArgs e)
@@ -426,9 +368,7 @@ namespace System.Windows
             return isFirstInstance;
         }
 
-        /// <summary>
-        ///   Initializes the next application instance.
-        /// </summary>
+        /// <summary>Initializes the next application instance.</summary>
         /// <param name="uri">The <c>Uri</c> used by the service that allows for inter-process communication.</param>
         /// <param name="args">The arguments passed to the current instance.</param>
         /// <returns><c>True</c> if the prior instance was notified about curernt instance startup, otherwise <c>false</c>.</returns>
@@ -462,9 +402,7 @@ namespace System.Windows
                     TimeSpan.FromMilliseconds(PriorInstanceSignaledTimeoutMilliseconds), false);
         }
 
-        /// <summary>
-        ///   Initializes the synchronization objects needed to deal with multiple instances of the same application.
-        /// </summary>
+        /// <summary>Initializes the synchronization objects needed to deal with multiple instances of the same application.</summary>
         /// <param name="baseName">The base name of the synchronization objects.</param>
         /// <param name="identity">The identity to be associated to the synchronization objects.</param>
         private void InitializeSynchronizationObjects(string baseName, IdentityReference identity)
@@ -492,9 +430,7 @@ namespace System.Windows
                 false, EventResetMode.AutoReset, signaledToFirstInstanceSemaphoreName, out isNew, eventSecurity);
         }
 
-        /// <summary>
-        ///   Called on next application instance startup.
-        /// </summary>
+        /// <summary>Called on next application instance startup.</summary>
         /// <param name="args">The parameters used to run the next instance of the application.</param>
         private void OnStartupNextApplicationInstance(string[] args)
         {
@@ -516,9 +452,7 @@ namespace System.Windows
             CodeAccessPermission.RevertAssert();
         }
 
-        /// <summary>
-        ///   Tries the dispose synchronization objects (if needed).
-        /// </summary>
+        /// <summary>Tries the dispose synchronization objects (if needed).</summary>
         private void TryDisposeSynchronizationObjects()
         {
             if (this.disposed)

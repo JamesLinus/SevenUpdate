@@ -19,25 +19,19 @@ namespace System.Windows.Controls
 {
     using Input;
 
-    /// <summary>
-    ///   Implements BackButton that can be used in WPF user interfaces.
-    /// </summary>
+    /// <summary>Implements BackButton that can be used in WPF user interfaces.</summary>
     public sealed class BackButton : Button
     {
         #region Constructors and Destructors
 
-        /// <summary>
-        ///   Initializes static members of the BackButton class.
-        /// </summary>
+        /// <summary>Initializes static members of the BackButton class.</summary>
         static BackButton()
         {
             DefaultStyleKeyProperty.OverrideMetadata(
                 typeof(BackButton), new FrameworkPropertyMetadata(typeof(BackButton)));
         }
 
-        /// <summary>
-        ///   Initializes a new instance of the BackButton class.
-        /// </summary>
+        /// <summary>Initializes a new instance of the BackButton class.</summary>
         public BackButton()
         {
             if (this.Resources.Count != 0)

@@ -20,9 +20,7 @@ namespace System.Windows.ApplicationServices
     {
         #region Public Methods
 
-        /// <summary>
-        ///   Called by an application's <c>RecoveryCallback</c> method to indicate that the recovery work is complete.
-        /// </summary>
+        /// <summary>Called by an application's <c>RecoveryCallback</c> method to indicate that the recovery work is complete.</summary>
         /// <remarks>
         ///   This should be the last call made by the <c>RecoveryCallback</c> method becauseWindows Error Reporting
         ///   will terminate the application after this method is invoked.
@@ -46,9 +44,7 @@ namespace System.Windows.ApplicationServices
         ///   Called by an application's <c>RecoveryCallback</c> method to indicate that it is still performing recovery
         ///   work.
         /// </summary>
-        /// <returns>
-        ///   A <c>System.Boolean</c> value indicating whether the user canceled the recovery.
-        /// </returns>
+        /// <returns>A <c>System.Boolean</c> value indicating whether the user canceled the recovery.</returns>
         public static bool ApplicationRecoveryInProgress()
         {
             // Throw PlatformNotSupportedException if the user is not running Vista or beyond
@@ -69,9 +65,7 @@ namespace System.Windows.ApplicationServices
             return canceled;
         }
 
-        /// <summary>
-        ///   Registers an application for recovery by Application Restart and Recovery.
-        /// </summary>
+        /// <summary>Registers an application for recovery by Application Restart and Recovery.</summary>
         /// <param name="settings">
         ///   An object that specifies the callback method, an optional parameter to pass to the callback method and a
         ///   time interval.
@@ -113,9 +107,7 @@ namespace System.Windows.ApplicationServices
         ///   An object that specifies the command line arguments used to restart the application, and the conditions
         ///   under which the application should not be restarted.
         /// </param>
-        /// <remarks>
-        ///   A registered application will not be restarted if it executed for less than 60 seconds before terminating.
-        /// </remarks>
+        /// <remarks>A registered application will not be restarted if it executed for less than 60 seconds before terminating.</remarks>
         public static void RegisterForApplicationRestart(RestartSettings settings)
         {
             // Throw PlatformNotSupportedException if the user is not running Vista or beyond
@@ -142,9 +134,7 @@ namespace System.Windows.ApplicationServices
             }
         }
 
-        /// <summary>
-        ///   Removes an application's recovery registration.
-        /// </summary>
+        /// <summary>Removes an application's recovery registration.</summary>
         public static void UnregisterApplicationRecovery()
         {
             // Throw PlatformNotSupportedException if the user is not running Vista or beyond
@@ -161,9 +151,7 @@ namespace System.Windows.ApplicationServices
             }
         }
 
-        /// <summary>
-        ///   Removes an application's restart registration.
-        /// </summary>
+        /// <summary>Removes an application's restart registration.</summary>
         public static void UnregisterApplicationRestart()
         {
             // Throw PlatformNotSupportedException if the user is not running Vista or beyond

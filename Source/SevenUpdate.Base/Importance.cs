@@ -22,38 +22,28 @@ namespace SevenUpdate
 
     using ProtoBuf;
 
-    /// <summary>
-    ///   Contains the UpdateType of the update.
-    /// </summary>
+    /// <summary>Contains the UpdateType of the update.</summary>
     [ProtoContract]
     [DataContract]
     [DefaultValue(Important)]
     public enum Importance
     {
-        /// <summary>
-        ///   Important update.
-        /// </summary>
+        /// <summary>Important update.</summary>
         [ProtoEnum]
         [EnumMember]
         Important = 0,
 
-        /// <summary>
-        ///   Locale or language.
-        /// </summary>
+        /// <summary>Locale or language.</summary>
         [ProtoEnum]
         [EnumMember]
         Locale = 1,
 
-        /// <summary>
-        ///   Optional update.
-        /// </summary>
+        /// <summary>Optional update.</summary>
         [ProtoEnum]
         [EnumMember]
         Optional = 2,
 
-        /// <summary>
-        ///   Recommended update.
-        /// </summary>
+        /// <summary>Recommended update.</summary>
         [ProtoEnum]
         [EnumMember]
         Recommended = 3

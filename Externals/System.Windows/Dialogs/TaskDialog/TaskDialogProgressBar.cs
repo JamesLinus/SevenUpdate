@@ -9,61 +9,39 @@ namespace System.Windows.Dialogs
 {
     using Properties;
 
-    /// <summary>
-    ///   Provides a visual representation of the progress of a long running operation.
-    /// </summary>
+    /// <summary>Provides a visual representation of the progress of a long running operation.</summary>
     public class TaskDialogProgressBar : TaskDialogBar
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   The maximum value.
-        /// </summary>
+        /// <summary>The maximum value.</summary>
         private int maximum = TaskDialogDefaults.ProgressBarMaximumValue;
 
-        /// <summary>
-        ///   The minimum value.
-        /// </summary>
+        /// <summary>The minimum value.</summary>
         private int minimum = TaskDialogDefaults.ProgressBarMinimumValue;
 
-        /// <summary>
-        ///   The progress bar value.
-        /// </summary>
+        /// <summary>The progress bar value.</summary>
         private int value = TaskDialogDefaults.ProgressBarMinimumValue;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>
-        ///   Initializes a new instance of the TaskDialogProgressBar class.
-        /// </summary>
+        /// <summary>Initializes a new instance of the TaskDialogProgressBar class.</summary>
         protected TaskDialogProgressBar()
         {
         }
 
-        /// <summary>
-        ///   Initializes a new instance of the <c>TaskDialogProgressBar</c> class.
-        /// </summary>
-        /// <param name="name">
-        ///   The name of the control.
-        /// </param>
+        /// <summary>Initializes a new instance of the <c>TaskDialogProgressBar</c> class.</summary>
+        /// <param name="name">  The name of the control.</param>
         protected TaskDialogProgressBar(string name) : base(name)
         {
         }
 
-        /// <summary>
-        ///   Initializes a new instance of the <c>TaskDialogProgressBar</c> class.
-        /// </summary>
-        /// <param name="minimum">
-        ///   The minimum value for this control.
-        /// </param>
-        /// <param name="maximum">
-        ///   The maximum value for this control.
-        /// </param>
-        /// <param name="value">
-        ///   The current value for this control.
-        /// </param>
+        /// <summary>Initializes a new instance of the <c>TaskDialogProgressBar</c> class.</summary>
+        /// <param name="minimum">  The minimum value for this control.</param>
+        /// <param name="maximum">  The maximum value for this control.</param>
+        /// <param name="value">  The current value for this control.</param>
         protected TaskDialogProgressBar(int minimum, int maximum, int value)
         {
             this.Minimum = minimum;
@@ -75,9 +53,7 @@ namespace System.Windows.Dialogs
 
         #region Properties
 
-        /// <summary>
-        ///   Gets or sets the maximum value for the control.
-        /// </summary>
+        /// <summary>Gets or sets the maximum value for the control.</summary>
         public int Maximum
         {
             get
@@ -100,9 +76,7 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>
-        ///   Gets or sets the minimum value for the control.
-        /// </summary>
+        /// <summary>Gets or sets the minimum value for the control.</summary>
         public int Minimum
         {
             get
@@ -131,9 +105,7 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>
-        ///   Gets or sets the current value for the control.
-        /// </summary>
+        /// <summary>Gets or sets the current value for the control.</summary>
         public int Value
         {
             get
@@ -161,9 +133,7 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>
-        ///   Gets a value indicating whether this instance has valid values.
-        /// </summary>
+        /// <summary>Gets a value indicating whether this instance has valid values.</summary>
         /// <value><c>True</c> if this instance has valid values; otherwise, <c>False</c>.</value>
         internal bool HasValidValues
         {
@@ -177,9 +147,7 @@ namespace System.Windows.Dialogs
 
         #region Methods
 
-        /// <summary>
-        ///   Resets the control to its minimum value.
-        /// </summary>
+        /// <summary>Resets the control to its minimum value.</summary>
         protected internal override void Reset()
         {
             base.Reset();

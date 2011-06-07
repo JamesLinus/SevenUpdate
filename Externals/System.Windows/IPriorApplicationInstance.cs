@@ -11,17 +11,13 @@ namespace System.Windows
 {
     using ServiceModel;
 
-    /// <summary>
-    ///   Interface used to signal a prior instance of the application about the startup another instance.
-    /// </summary>
+    /// <summary>Interface used to signal a prior instance of the application about the startup another instance.</summary>
     [ServiceContract]
     internal interface IPriorApplicationInstance
     {
         #region Public Methods
 
-        /// <summary>
-        ///   Signals the startup of the next application instance.
-        /// </summary>
+        /// <summary>Signals the startup of the next application instance.</summary>
         /// <param name="args">The parameters used to run the next instance of the application.</param>
         [OperationContract]
         void SignalStartupNextInstance(string[] args);

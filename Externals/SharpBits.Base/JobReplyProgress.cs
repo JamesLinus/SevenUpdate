@@ -9,28 +9,20 @@
 
 namespace SharpBits.Base
 {
-    /// <summary>
-    ///   The <c>BitsJob</c> Progress.
-    /// </summary>
+    /// <summary>The <c>BitsJob</c> Progress.</summary>
     public class JobReplyProgress
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   The current project.
-        /// </summary>
+        /// <summary>The current project.</summary>
         private BGJobReplyProgress jobReplyProgress;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>
-        ///   Initializes a new instance of the <c>JobReplyProgress</c> class.
-        /// </summary>
-        /// <param name="jobReplyProgress">
-        ///   The job reply progress.
-        /// </param>
+        /// <summary>Initializes a new instance of the <c>JobReplyProgress</c> class.</summary>
+        /// <param name="jobReplyProgress">  The job reply progress.</param>
         internal JobReplyProgress(BGJobReplyProgress jobReplyProgress)
         {
             this.jobReplyProgress = jobReplyProgress;
@@ -40,9 +32,7 @@ namespace SharpBits.Base
 
         #region Properties
 
-        /// <summary>
-        ///   Gets the total number of bytes downloaded.
-        /// </summary>
+        /// <summary>Gets the total number of bytes downloaded.</summary>
         public ulong BytesTotal
         {
             get
@@ -51,9 +41,7 @@ namespace SharpBits.Base
             }
         }
 
-        /// <summary>
-        ///   Gets the total number of bytes transferred.
-        /// </summary>
+        /// <summary>Gets the total number of bytes transferred.</summary>
         /// <value>The bytes transferred.</value>
         public ulong BytesTransferred
         {

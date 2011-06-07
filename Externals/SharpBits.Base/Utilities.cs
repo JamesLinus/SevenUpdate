@@ -12,22 +12,14 @@ namespace SharpBits.Base
     using System;
     using System.Text;
 
-    /// <summary>
-    ///   Various utility methods.
-    /// </summary>
+    /// <summary>Various utility methods.</summary>
     internal static class Utilities
     {
         #region Methods
 
-        /// <summary>
-        ///   Converts the <c>FileTime</c> to <c>DateTime</c>.
-        /// </summary>
-        /// <param name="fileTime">
-        ///   The file time.
-        /// </param>
-        /// <returns>
-        ///   The converted <c>FileTime</c> to <c>DateTime</c>.
-        /// </returns>
+        /// <summary>Converts the <c>FileTime</c> to <c>DateTime</c>.</summary>
+        /// <param name="fileTime">  The file time.</param>
+        /// <returns>The converted <c>FileTime</c> to <c>DateTime</c>.</returns>
         internal static DateTime FileTimeToDateTime(FileTime fileTime)
         {
             if (fileTime.DWHighDateTime == 0 && fileTime.DWLowDateTime == 0)
@@ -40,15 +32,9 @@ namespace SharpBits.Base
             return DateTime.FromFileTime(dateTime);
         }
 
-        /// <summary>
-        ///   Gets the name from a SID.
-        /// </summary>
-        /// <param name="sid">
-        ///   The SID as a string.
-        /// </param>
-        /// <returns>
-        ///   The name from the SID.
-        /// </returns>
+        /// <summary>Gets the name from a SID.</summary>
+        /// <param name="sid">  The SID as a string.</param>
+        /// <returns>The name from the SID.</returns>
         internal static string GetName(string sid)
         {
             long userNameSize = 255;

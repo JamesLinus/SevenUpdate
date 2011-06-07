@@ -21,9 +21,7 @@ namespace WPFLocalizeExtension.Extensions
 
     using Engine;
 
-    /// <summary>
-    ///   Represents a OddsFormatExtension which provides a formated decimal odds value.
-    /// </summary>
+    /// <summary>Represents a OddsFormatExtension which provides a formated decimal odds value.</summary>
     /// <remarks>
     ///   If a content between two tags in Xaml is set, this has the higher priority and will overwrite the settled
     ///   properties
@@ -34,19 +32,13 @@ namespace WPFLocalizeExtension.Extensions
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   Holds the collection of assigned dependency objects as WeakReferences.
-        /// </summary>
+        /// <summary>Holds the collection of assigned dependency objects as WeakReferences.</summary>
         private readonly Collection<WeakReference> targetObjects;
 
-        /// <summary>
-        ///   Holds the Dictionary of the Lookup Table.
-        /// </summary>
+        /// <summary>Holds the Dictionary of the Lookup Table.</summary>
         private static Dictionary<decimal, string> oddsFormatLookupTableUk;
 
-        /// <summary>
-        ///   Holds the value to display.
-        /// </summary>
+        /// <summary>Holds the value to display.</summary>
         private decimal displayValue;
 
         #endregion
@@ -57,9 +49,7 @@ namespace WPFLocalizeExtension.Extensions
         ///   Initializes a new instance of the <c>OddsFormatExtension</c> class.Initialize the
         ///   <c>BaseLocalizeExtension"</c>.
         /// </summary>
-        /// <param name="displayValue">
-        ///   The display Value.
-        /// </param>
+        /// <param name="displayValue">  The display Value.</param>
         /// <remarks>
         ///   This constructor register the <c>EventHandler</c><c>OnCultureChanged</c> on <c>LocalizeDictionary</c>to
         ///   get an acknowledge of changing the culture.
@@ -83,9 +73,7 @@ namespace WPFLocalizeExtension.Extensions
 
         #region Properties
 
-        /// <summary>
-        ///   Gets the UK odds format lookup table.
-        /// </summary>
+        /// <summary>Gets the UK odds format lookup table.</summary>
         /// <value>The UK odds format lookup table.</value>
         public static Dictionary<decimal, string> OddsFormatLookupTableUK
         {
@@ -95,9 +83,7 @@ namespace WPFLocalizeExtension.Extensions
             }
         }
 
-        /// <summary>
-        ///   Gets or sets the display value.
-        /// </summary>
+        /// <summary>Gets or sets the display value.</summary>
         /// <value>The display value.</value>
         public decimal DisplayValue
         {
@@ -113,22 +99,16 @@ namespace WPFLocalizeExtension.Extensions
             }
         }
 
-        /// <summary>
-        ///   Gets or sets the <c>OddsFormatType</c> to force a fixed output.
-        /// </summary>
+        /// <summary>Gets or sets the <c>OddsFormatType</c> to force a fixed output.</summary>
         public OddsFormatType? ForceOddsFormatType { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the initialize value.This is ONLY used to support the localize extension in blend!.
-        /// </summary>
+        /// <summary>Gets or sets the initialize value.This is ONLY used to support the localize extension in blend!.</summary>
         /// <value>The initialize value.</value>
         [EditorBrowsable(EditorBrowsableState.Never)]
         [ConstructorArgument("displayValue")]
         public decimal InitializeValue { get; set; }
 
-        /// <summary>
-        ///   Gets the collection of <c>DependencyObject</c> as WeakReferences which contains the <c>TargetProperty</c>.
-        /// </summary>
+        /// <summary>Gets the collection of <c>DependencyObject</c> as WeakReferences which contains the <c>TargetProperty</c>.</summary>
         public ReadOnlyCollection<WeakReference> TargetObjects
         {
             get
@@ -137,56 +117,34 @@ namespace WPFLocalizeExtension.Extensions
             }
         }
 
-        /// <summary>
-        ///   Gets the <c>DependencyProperty</c> which should get the localized content.
-        /// </summary>
+        /// <summary>Gets the <c>DependencyProperty</c> which should get the localized content.</summary>
         public DependencyProperty TargetProperty { get; private set; }
 
         #endregion
 
         #region Public Methods
 
-        /// <summary>
-        ///   Converts a decimal odds into a localized odds string in the current <c>OddsFormatType</c>.
-        /// </summary>
-        /// <param name="sourceOdds">
-        ///   The source odds.
-        /// </param>
-        /// <returns>
-        ///   The ready to use odds string.
-        /// </returns>
+        /// <summary>Converts a decimal odds into a localized odds string in the current <c>OddsFormatType</c>.</summary>
+        /// <param name="sourceOdds">  The source odds.</param>
+        /// <returns>The ready to use odds string.</returns>
         public static string GetLocalizedOddsString(decimal sourceOdds)
         {
             return GetLocalizedOddsString(
                 sourceOdds, OddsFormatManager.Instance.OddsFormatType, Localize.Instance.SpecificCulture);
         }
 
-        /// <summary>
-        ///   Converts a decimal odds into a localized odds string in the defined <c>OddsFormatType</c>.
-        /// </summary>
-        /// <param name="sourceOdds">
-        ///   The source odds.
-        /// </param>
-        /// <param name="oddsType">
-        ///   Type of the odds.
-        /// </param>
-        /// <returns>
-        ///   The ready to use odds string.
-        /// </returns>
+        /// <summary>Converts a decimal odds into a localized odds string in the defined <c>OddsFormatType</c>.</summary>
+        /// <param name="sourceOdds">  The source odds.</param>
+        /// <param name="oddsType">  Type of the odds.</param>
+        /// <returns>The ready to use odds string.</returns>
         public static string GetLocalizedOddsString(decimal sourceOdds, OddsFormatType oddsType)
         {
             return GetLocalizedOddsString(sourceOdds, oddsType, Localize.Instance.SpecificCulture);
         }
 
-        /// <summary>
-        ///   Provides the Value for the first Binding.
-        /// </summary>
-        /// <param name="serviceProvider">
-        ///   The <c>IProvideValueTarget</c> provided from the <c>MarkupExtension</c>.
-        /// </param>
-        /// <returns>
-        ///   The found item from the .resx directory or <c>null</c> if not found.
-        /// </returns>
+        /// <summary>Provides the Value for the first Binding.</summary>
+        /// <param name="serviceProvider">  The <c>IProvideValueTarget</c> provided from the <c>MarkupExtension</c>.</param>
+        /// <returns>The found item from the .resx directory or <c>null</c> if not found.</returns>
         /// <remarks>
         ///   This method register the <c>EventHandler</c><c>OnCultureChanged</c> on <c>LocalizeDictionary</c> to get an
         ///   acknowledge of changing the culture, if the passed <c>TargetObjects</c> type of <see
@@ -266,15 +224,9 @@ namespace WPFLocalizeExtension.Extensions
         ///   Sets a binding between a <c>DependencyObject</c> with its<c>DependencyProperty</c> and this
         ///   <c>BaseLocalizeExtension</c>.
         /// </summary>
-        /// <param name="targetObject">
-        ///   The target dependency object.
-        /// </param>
-        /// <param name="targetProperty">
-        ///   The target dependency property.
-        /// </param>
-        /// <returns>
-        ///   <c>True</c> if the binding was setup successfully, otherwise <c>False</c> (Binding already exists).
-        /// </returns>
+        /// <param name="targetObject">  The target dependency object.</param>
+        /// <param name="targetProperty">  The target dependency property.</param>
+        /// <returns><c>True</c> if the binding was setup successfully, otherwise <c>False</c> (Binding already exists).</returns>
         public bool SetBinding(DependencyObject targetObject, DependencyProperty targetProperty)
         {
             // indicates, if the target object was found
@@ -316,12 +268,8 @@ namespace WPFLocalizeExtension.Extensions
             return false;
         }
 
-        /// <summary>
-        ///   Returns the Key that identifies a resource (Assembly:Dictionary:Key).
-        /// </summary>
-        /// <returns>
-        ///   Format: Assembly:Dictionary:Key.
-        /// </returns>
+        /// <summary>Returns the Key that identifies a resource (Assembly:Dictionary:Key).</summary>
+        /// <returns>Format: Assembly:Dictionary:Key.</returns>
         public override string ToString()
         {
             return string.Format(
@@ -338,15 +286,9 @@ namespace WPFLocalizeExtension.Extensions
         ///   This method will be called through the interface, passed to the<see cref="WeakCultureChangedEventManager"
         ///   /> to get notified on culture changed.
         /// </summary>
-        /// <param name="managerType">
-        ///   The manager Type.
-        /// </param>
-        /// <param name="sender">
-        ///   The object that called the event.
-        /// </param>
-        /// <param name="e">
-        ///   The event argument.
-        /// </param>
+        /// <param name="managerType">  The manager Type.</param>
+        /// <param name="sender">  The object that called the event.</param>
+        /// <param name="e">  The event argument.</param>
         /// <returns>
         ///   <c>True</c> if the listener handled the event. It is considered an error by the<see
         ///   cref="T:System.Windows.WeakEventManager" /> handling in WPF�to register a listener for an event that the
@@ -375,24 +317,12 @@ namespace WPFLocalizeExtension.Extensions
 
         #region Methods
 
-        /// <summary>
-        ///   Converts a decimal odds into a localized odds string in the defined <c>OddsFormatType</c>.
-        /// </summary>
-        /// <param name="sourceOdds">
-        ///   The source odds.
-        /// </param>
-        /// <param name="oddsType">
-        ///   Type of the odds.
-        /// </param>
-        /// <param name="specificCulture">
-        ///   The specific culture.
-        /// </param>
-        /// <returns>
-        ///   The ready to use odds string.
-        /// </returns>
-        /// <remarks>
-        ///   The specific Culture has to be a "xx-xx" culture to support the value.<c>ToString</c> method.
-        /// </remarks>
+        /// <summary>Converts a decimal odds into a localized odds string in the defined <c>OddsFormatType</c>.</summary>
+        /// <param name="sourceOdds">  The source odds.</param>
+        /// <param name="oddsType">  Type of the odds.</param>
+        /// <param name="specificCulture">  The specific culture.</param>
+        /// <returns>The ready to use odds string.</returns>
+        /// <remarks>The specific Culture has to be a "xx-xx" culture to support the value.<c>ToString</c> method.</remarks>
         private static string GetLocalizedOddsString(
             decimal sourceOdds, OddsFormatType oddsType, IFormatProvider specificCulture)
         {
@@ -461,12 +391,8 @@ namespace WPFLocalizeExtension.Extensions
             }
         }
 
-        /// <summary>
-        ///   Gets the UK odds format lookup table.
-        /// </summary>
-        /// <returns>
-        ///   Returns a Lookup Table.
-        /// </returns>
+        /// <summary>Gets the UK odds format lookup table.</summary>
+        /// <returns>Returns a Lookup Table.</returns>
         private static Dictionary<decimal, string> GetUKOddsFormatLookupTable()
         {
             var dictionary = new Dictionary<decimal, string>
@@ -547,18 +473,10 @@ namespace WPFLocalizeExtension.Extensions
             return dictionary;
         }
 
-        /// <summary>
-        ///   Tries the get UK odds lookup value.
-        /// </summary>
-        /// <param name="valToCheck">
-        ///   The value to check.
-        /// </param>
-        /// <param name="retVal">
-        ///   The return value. <c>null</c> if nothing was found.
-        /// </param>
-        /// <returns>
-        ///   <c>True</c> if the value was found, otherwise <c>False</c>.
-        /// </returns>
+        /// <summary>Tries the get UK odds lookup value.</summary>
+        /// <param name="valToCheck">  The value to check.</param>
+        /// <param name="retVal">  The return value. <c>null</c> if nothing was found.</param>
+        /// <returns><c>True</c> if the value was found, otherwise <c>False</c>.</returns>
         private static bool TryGetUKOddsLookupValue(decimal valToCheck, out string retVal)
         {
             if (OddsFormatLookupTableUK.ContainsKey(valToCheck))
@@ -576,17 +494,13 @@ namespace WPFLocalizeExtension.Extensions
         ///   If Culture property defines a valid <c>CultureInfo</c>, a <c>CultureInfo</c> instance will get created and
         ///   returned, otherwise LocalizeDictionary.Culture will get returned.
         /// </summary>
-        /// <returns>
-        ///   The <c>CultureInfo</c>.
-        /// </returns>
+        /// <returns>The <c>CultureInfo</c>.</returns>
         private OddsFormatType GetForcedOddsFormatOrDefault()
         {
             return this.ForceOddsFormatType ?? OddsFormatManager.Instance.OddsFormatType;
         }
 
-        /// <summary>
-        ///   This method gets the new value for the target property and call <c>SetNewValue</c>.
-        /// </summary>
+        /// <summary>This method gets the new value for the target property and call <c>SetNewValue</c>.</summary>
         private void HandleNewValue()
         {
             // gets the new value and set it to the dependency property on the dependency object
@@ -595,12 +509,8 @@ namespace WPFLocalizeExtension.Extensions
                     this.displayValue, this.GetForcedOddsFormatOrDefault(), CultureInfo.CurrentCulture));
         }
 
-        /// <summary>
-        ///   Set the Value of the <c>DependencyProperty</c> to the passed Value.
-        /// </summary>
-        /// <param name="newValue">
-        ///   The new Value.
-        /// </param>
+        /// <summary>Set the Value of the <c>DependencyProperty</c> to the passed Value.</summary>
+        /// <param name="newValue">  The new Value.</param>
         private void SetNewValue(object newValue)
         {
             // if the list of dependency objects is empty or the target property is null, return

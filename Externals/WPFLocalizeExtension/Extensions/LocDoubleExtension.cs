@@ -14,27 +14,19 @@ namespace WPFLocalizeExtension.Extensions
 
     using Engine;
 
-    /// <summary>
-    ///   <c>BaseLocalizeExtension</c> for double values.
-    /// </summary>
+    /// <summary><c>BaseLocalizeExtension</c> for double values.</summary>
     [MarkupExtensionReturnType(typeof(double))]
     public class LocDoubleExtension : BaseLocalizeExtension<double>
     {
         #region Constructors and Destructors
 
-        /// <summary>
-        ///   Initializes a new instance of the LocDoubleExtension class.
-        /// </summary>
+        /// <summary>Initializes a new instance of the LocDoubleExtension class.</summary>
         public LocDoubleExtension()
         {
         }
 
-        /// <summary>
-        ///   Initializes a new instance of the <c>LocDoubleExtension</c> class.
-        /// </summary>
-        /// <param name="key">
-        ///   The resource identifier.
-        /// </param>
+        /// <summary>Initializes a new instance of the <c>LocDoubleExtension</c> class.</summary>
+        /// <param name="key">  The resource identifier.</param>
         public LocDoubleExtension(string key) : base(key)
         {
         }
@@ -43,15 +35,9 @@ namespace WPFLocalizeExtension.Extensions
 
         #region Public Methods
 
-        /// <summary>
-        ///   Provides the Value for the first Binding as double.
-        /// </summary>
-        /// <param name="serviceProvider">
-        ///   The <c>System.Windows.Markup.IProvideValueTarget</c> provided from the <c>MarkupExtension</c>.
-        /// </param>
-        /// <returns>
-        ///   The found item from the .resx directory or <c>null</c> if not found.
-        /// </returns>
+        /// <summary>Provides the Value for the first Binding as double.</summary>
+        /// <param name="serviceProvider">  The <c>System.Windows.Markup.IProvideValueTarget</c> provided from the <c>MarkupExtension</c>.</param>
+        /// <returns>The found item from the .resx directory or <c>null</c> if not found.</returns>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             var obj = base.ProvideValue(serviceProvider);
@@ -83,15 +69,9 @@ namespace WPFLocalizeExtension.Extensions
 
         #region Methods
 
-        /// <summary>
-        ///   This method is used to modify the passed object into the target format.
-        /// </summary>
-        /// <param name="input">
-        ///   The object that will be modified.
-        /// </param>
-        /// <returns>
-        ///   Returns the modified object.
-        /// </returns>
+        /// <summary>This method is used to modify the passed object into the target format.</summary>
+        /// <param name="input">  The object that will be modified.</param>
+        /// <returns>Returns the modified object.</returns>
         protected override object FormatOutput(object input)
         {
             if (Localize.Instance.IsInDesignMode && this.DesignValue != null)

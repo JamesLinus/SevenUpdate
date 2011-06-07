@@ -30,65 +30,45 @@ namespace SevenUpdate
 
     using Service;
 
-    /// <summary>
-    ///   Contains methods and events that run a WCF service.
-    /// </summary>
+    /// <summary>Contains methods and events that run a WCF service.</summary>
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant, InstanceContextMode = InstanceContextMode.PerSession)]
     internal class WcfService : IElevatedProcessCallback
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   The service callback context.
-        /// </summary>
+        /// <summary>The service callback context.</summary>
         private static IElevatedProcess context;
 
         #endregion
 
         #region Events
 
-        /// <summary>
-        ///   Occurs when the download completed.
-        /// </summary>
+        /// <summary>Occurs when the download completed.</summary>
         public static event EventHandler<DownloadCompletedEventArgs> DownloadDone;
 
-        /// <summary>
-        ///   Occurs when the download progress changed.
-        /// </summary>
+        /// <summary>Occurs when the download progress changed.</summary>
         public static event EventHandler<DownloadProgressChangedEventArgs> DownloadProgressChanged;
 
-        /// <summary>
-        ///   Occurs when an error has occurred when downloading or installing updates.
-        /// </summary>
+        /// <summary>Occurs when an error has occurred when downloading or installing updates.</summary>
         public static event EventHandler<ErrorOccurredEventArgs> ErrorOccurred;
 
-        /// <summary>
-        ///   Occurs when the installation completed.
-        /// </summary>
+        /// <summary>Occurs when the installation completed.</summary>
         public static event EventHandler<InstallCompletedEventArgs> InstallDone;
 
-        /// <summary>
-        ///   Occurs when the installation progress changed.
-        /// </summary>
+        /// <summary>Occurs when the installation progress changed.</summary>
         public static event EventHandler<InstallProgressChangedEventArgs> InstallProgressChanged;
 
-        /// <summary>
-        ///   Occurs when the <c>SevenUpdate</c>.Admin service faults or encounters a serious error.
-        /// </summary>
+        /// <summary>Occurs when the <c>SevenUpdate</c>.Admin service faults or encounters a serious error.</summary>
         public static event EventHandler<ErrorOccurredEventArgs> ServiceError;
 
-        /// <summary>
-        ///   Occurs when one or more hidden updates have been restored.
-        /// </summary>
+        /// <summary>Occurs when one or more hidden updates have been restored.</summary>
         public static event EventHandler<EventArgs> SettingsChanged;
 
         #endregion
 
         #region Properties
 
-        /// <summary>
-        ///   Gets or sets a value indicating whether Seven Update is connected to the admin process.
-        /// </summary>
+        /// <summary>Gets or sets a value indicating whether Seven Update is connected to the admin process.</summary>
         private static bool IsConnected { get; set; }
 
         #endregion
@@ -97,9 +77,7 @@ namespace SevenUpdate
 
         #region IElevatedProcessCallback
 
-        /// <summary>
-        ///   Occurs when the process starts.
-        /// </summary>
+        /// <summary>Occurs when the process starts.</summary>
         public void ElevatedProcessStarted()
         {
             context = OperationContext.Current.GetCallbackChannel<IElevatedProcess>();
@@ -116,9 +94,7 @@ namespace SevenUpdate
             // Signal Seven Update it can do elevated actions now
         }
 
-        /// <summary>
-        ///   Occurs when the process as exited.
-        /// </summary>
+        /// <summary>Occurs when the process as exited.</summary>
         public void ElevatedProcessStopped()
         {
             Core.Instance.IsAdmin = false;
@@ -129,71 +105,41 @@ namespace SevenUpdate
             // actions now
         }
 
-        /// <summary>
-        ///   Occurs when the download of updates has completed.
-        /// </summary>
-        /// <param name="sender">
-        ///   The sender of the event.
-        /// </param>
-        /// <param name="e">
-        ///   The event data.
-        /// </param>
+        /// <summary>Occurs when the download of updates has completed.</summary>
+        /// <param name="sender">  The sender of the event.</param>
+        /// <param name="e">  The event data.</param>
         public void OnDownloadCompleted(object sender, DownloadCompletedEventArgs e)
         {
             DownloadDone(this, e);
         }
 
-        /// <summary>
-        ///   Occurs when the download progress has changed.
-        /// </summary>
-        /// <param name="sender">
-        ///   The sender of the event.
-        /// </param>
-        /// <param name="e">
-        ///   The event data.
-        /// </param>
+        /// <summary>Occurs when the download progress has changed.</summary>
+        /// <param name="sender">  The sender of the event.</param>
+        /// <param name="e">  The event data.</param>
         public void OnDownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
             DownloadProgressChanged(this, e);
         }
 
-        /// <summary>
-        ///   Occurs when a error occurs when downloading or installing updates.
-        /// </summary>
-        /// <param name="sender">
-        ///   The sender of the event.
-        /// </param>
-        /// <param name="e">
-        ///   The event data.
-        /// </param>
+        /// <summary>Occurs when a error occurs when downloading or installing updates.</summary>
+        /// <param name="sender">  The sender of the event.</param>
+        /// <param name="e">  The event data.</param>
         public void OnErrorOccurred(object sender, ErrorOccurredEventArgs e)
         {
             ErrorOccurred(this, e);
         }
 
-        /// <summary>
-        ///   Occurs when the installation of updates has completed.
-        /// </summary>
-        /// <param name="sender">
-        ///   The sender of the event.
-        /// </param>
-        /// <param name="e">
-        ///   The event data.
-        /// </param>
+        /// <summary>Occurs when the installation of updates has completed.</summary>
+        /// <param name="sender">  The sender of the event.</param>
+        /// <param name="e">  The event data.</param>
         public void OnInstallCompleted(object sender, InstallCompletedEventArgs e)
         {
             InstallDone(this, e);
         }
 
-        /// <summary>
-        ///   Occurs when the install progress has changed.
-        /// </summary>
-        /// <param name="sender">
-        ///   The sender of the event.
-        /// </param>
-        /// <param name="e">
-        ///   The event data.
-        /// </param>
+        /// <summary>Occurs when the install progress has changed.</summary>
+        /// <param name="sender">  The sender of the event.</param>
+        /// <param name="e">  The event data.</param>
         public void OnInstallProgressChanged(object sender, InstallProgressChangedEventArgs e)
         {
             InstallProgressChanged(this, e);
@@ -205,12 +151,8 @@ namespace SevenUpdate
 
         #region Methods
 
-        /// <summary>
-        ///   Aborts the installation of updates.
-        /// </summary>
-        /// <returns>
-        ///   <c>True</c> if the install was aborted, otherwise <c>False</c>.
-        /// </returns>
+        /// <summary>Aborts the installation of updates.</summary>
+        /// <returns><c>True</c> if the install was aborted, otherwise <c>False</c>.</returns>
         internal static bool AbortInstall()
         {
             var abort = Utilities.StartProcess(Path.Combine(Utilities.AppDir, @"SevenUpdate.Admin.exe"), "Abort");
@@ -218,12 +160,8 @@ namespace SevenUpdate
             return abort;
         }
 
-        /// <summary>
-        ///   Adds an application to Seven Update.
-        /// </summary>
-        /// <param name="application">
-        ///   The application to add to Seven Update.
-        /// </param>
+        /// <summary>Adds an application to Seven Update.</summary>
+        /// <param name="application">  The application to add to Seven Update.</param>
         internal static void AddSua(Sua application)
         {
             if (!Connect())
@@ -253,12 +191,8 @@ namespace SevenUpdate
                     });
         }
 
-        /// <summary>
-        ///   Reports an error with the admin process.
-        /// </summary>
-        /// <param name="e">
-        ///   The exception data that caused the error.
-        /// </param>
+        /// <summary>Reports an error with the admin process.</summary>
+        /// <param name="e">  The exception data that caused the error.</param>
         internal static void AdminError(Exception e)
         {
             Core.Instance.IsAdmin = false;
@@ -287,12 +221,8 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        ///   Connects to the <c>SevenUpdate</c>.Admin sub program.
-        /// </summary>
-        /// <returns>
-        ///   <c>True</c> if the connection to <c>WcfService</c> was successful.
-        /// </returns>
+        /// <summary>Connects to the <c>SevenUpdate</c>.Admin sub program.</summary>
+        /// <returns><c>True</c> if the connection to <c>WcfService</c> was successful.</returns>
         internal static bool Connect()
         {
             MyServiceHost.StartService();
@@ -327,9 +257,7 @@ namespace SevenUpdate
             return true;
         }
 
-        /// <summary>
-        ///   Disconnects from <c>SevenUpdate</c>.Admin.
-        /// </summary>
+        /// <summary>Disconnects from <c>SevenUpdate</c>.Admin.</summary>
         internal static void Disconnect()
         {
             Core.Instance.IsAdmin = false;
@@ -356,15 +284,9 @@ namespace SevenUpdate
             MyServiceHost.StopService();
         }
 
-        /// <summary>
-        ///   Hides an update.
-        /// </summary>
-        /// <param name="hiddenUpdate">
-        ///   The update to hide.
-        /// </param>
-        /// <returns>
-        ///   <c>True</c> if the admin process was executed.
-        /// </returns>
+        /// <summary>Hides an update.</summary>
+        /// <param name="hiddenUpdate">  The update to hide.</param>
+        /// <returns><c>True</c> if the admin process was executed.</returns>
         internal static bool HideUpdate(Suh hiddenUpdate)
         {
             if (!Connect())
@@ -403,15 +325,9 @@ namespace SevenUpdate
             return true;
         }
 
-        /// <summary>
-        ///   Hides multiple updates.
-        /// </summary>
-        /// <param name="hiddenUpdates">
-        ///   The list of updates to hide.
-        /// </param>
-        /// <returns>
-        ///   <c>True</c> if the admin process was executed, otherwise <c>False</c>.
-        /// </returns>
+        /// <summary>Hides multiple updates.</summary>
+        /// <param name="hiddenUpdates">  The list of updates to hide.</param>
+        /// <returns><c>True</c> if the admin process was executed, otherwise <c>False</c>.</returns>
         internal static bool HideUpdates(Collection<Suh> hiddenUpdates)
         {
             if (!Connect())
@@ -445,12 +361,8 @@ namespace SevenUpdate
             return true;
         }
 
-        /// <summary>
-        ///   Installs selected updates.
-        /// </summary>
-        /// <returns>
-        ///   <c>True</c> if the admin process was executed, otherwise <c>False</c>.
-        /// </returns>
+        /// <summary>Installs selected updates.</summary>
+        /// <returns><c>True</c> if the admin process was executed, otherwise <c>False</c>.</returns>
         internal static bool Install()
         {
             if (!Connect())
@@ -491,21 +403,11 @@ namespace SevenUpdate
             return true;
         }
 
-        /// <summary>
-        ///   Save the settings and call <c>SevenUpdate</c>.Admin to commit them.
-        /// </summary>
-        /// <param name="autoOn">
-        ///   <c>True</c> if auto updates are enabled, otherwise <c>False</c>.
-        /// </param>
-        /// <param name="options">
-        ///   The options to save.
-        /// </param>
-        /// <param name="sul">
-        ///   The list of application to update to save.
-        /// </param>
-        /// <returns>
-        ///   <c>True</c> if the admin process was executed, otherwise <c>False</c>.
-        /// </returns>
+        /// <summary>Save the settings and call <c>SevenUpdate</c>.Admin to commit them.</summary>
+        /// <param name="autoOn">  <c>True</c> if auto updates are enabled, otherwise <c>False</c>.</param>
+        /// <param name="options">  The options to save.</param>
+        /// <param name="sul">  The list of application to update to save.</param>
+        /// <returns><c>True</c> if the admin process was executed, otherwise <c>False</c>.</returns>
         internal static bool SaveSettings(bool autoOn, Config options, Collection<Sua> sul)
         {
             if (!Connect())
@@ -548,15 +450,9 @@ namespace SevenUpdate
             return true;
         }
 
-        /// <summary>
-        ///   Removes an update from the hidden list.
-        /// </summary>
-        /// <param name="hiddenUpdate">
-        ///   The hidden update to show.
-        /// </param>
-        /// <returns>
-        ///   <c>True</c> if the admin process was executed, otherwise <c>False</c>.
-        /// </returns>
+        /// <summary>Removes an update from the hidden list.</summary>
+        /// <param name="hiddenUpdate">  The hidden update to show.</param>
+        /// <returns><c>True</c> if the admin process was executed, otherwise <c>False</c>.</returns>
         internal static bool ShowUpdate(Suh hiddenUpdate)
         {
             if (!Connect())
@@ -595,9 +491,7 @@ namespace SevenUpdate
             return true;
         }
 
-        /// <summary>
-        ///   Waits for the admin process to connect.
-        /// </summary>
+        /// <summary>Waits for the admin process to connect.</summary>
         private static void WaitForAdmin()
         {
             var task = Task.Factory.StartNew(

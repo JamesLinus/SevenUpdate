@@ -20,12 +20,8 @@ namespace SharpBits.Base
     [ComImportAttribute]
     internal interface IEnumBackgroundCopyJobs
     {
-        /// <summary>
-        ///   Retrieves a specified number of items in the enumeration sequence.
-        /// </summary>
-        /// <param name="celt">
-        ///   Number of elements requested.
-        /// </param>
+        /// <summary>Retrieves a specified number of items in the enumeration sequence.</summary>
+        /// <param name="celt">  Number of elements requested.</param>
         /// <param name="copyJob">
         ///   Array of <c>IBackgroundCopyJob</c> objects. You must release each object in <paramref name = "copyJob" />
         ///   when done.
@@ -37,34 +33,22 @@ namespace SharpBits.Base
         /// </param>
         void Next(uint celt, [MarshalAs(UnmanagedType.Interface)] out IBackgroundCopyJob copyJob, out uint celtFetched);
 
-        /// <summary>
-        ///   Skips a specified number of items in the enumeration sequence.
-        /// </summary>
-        /// <param name="celt">
-        ///   Number of elements to skip. .
-        /// </param>
+        /// <summary>Skips a specified number of items in the enumeration sequence.</summary>
+        /// <param name="celt">  Number of elements to skip. .</param>
         void Skip(uint celt);
 
-        /// <summary>
-        ///   Resets the enumeration sequence to the beginning.
-        /// </summary>
+        /// <summary>Resets the enumeration sequence to the beginning.</summary>
         void Reset();
 
-        /// <summary>
-        ///   Creates another enumerator that contains the same enumeration state as the current one.
-        /// </summary>
+        /// <summary>Creates another enumerator that contains the same enumeration state as the current one.</summary>
         /// <param name="enum">
         ///   Receives the interface pointer to the enumeration object. If the method is unsuccessful, the value of this
         ///   output variable is undefined. You must release enumJobs when done.
         /// </param>
         void Clone([MarshalAs(UnmanagedType.Interface)] out IEnumBackgroundCopyJobs @enum);
 
-        /// <summary>
-        ///   Returns the number of items in the enumeration.
-        /// </summary>
-        /// <param name="count">
-        ///   Number of jobs in the enumeration.
-        /// </param>
+        /// <summary>Returns the number of items in the enumeration.</summary>
+        /// <param name="count">  Number of jobs in the enumeration.</param>
         void GetCount(out uint count);
     }
 }

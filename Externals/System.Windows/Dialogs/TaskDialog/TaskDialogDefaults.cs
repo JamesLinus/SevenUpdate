@@ -7,41 +7,27 @@
 
 namespace System.Windows.Dialogs
 {
-    /// <summary>
-    ///   Task Dialog defaults.
-    /// </summary>
+    /// <summary>Task Dialog defaults.</summary>
     internal static class TaskDialogDefaults
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   The caption.
-        /// </summary>
+        /// <summary>The caption.</summary>
         internal const string Caption = "";
 
-        /// <summary>
-        ///   The content.
-        /// </summary>
+        /// <summary>The content.</summary>
         internal const string Content = "";
 
-        /// <summary>
-        ///   The ideal width.
-        /// </summary>
+        /// <summary>The ideal width.</summary>
         internal const int IdealWidth = 0;
 
-        /// <summary>
-        ///   The main instruction.
-        /// </summary>
+        /// <summary>The main instruction.</summary>
         internal const string MainInstruction = "";
 
-        /// <summary>
-        ///   The progress bar max value.
-        /// </summary>
+        /// <summary>The progress bar max value.</summary>
         internal const int ProgressBarMaximumValue = 100;
 
-        /// <summary>
-        ///   The progress bar min value.
-        /// </summary>
+        /// <summary>The progress bar min value.</summary>
         internal const int ProgressBarMinimumValue = 0;
 
         #endregion

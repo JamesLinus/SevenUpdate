@@ -22,9 +22,7 @@ namespace SevenUpdate
 
     using ProtoBuf;
 
-    /// <summary>
-    ///   Information about a file within an update.
-    /// </summary>
+    /// <summary>Information about a file within an update.</summary>
     [ProtoContract]
     [DataContract(IsReference = true)]
     [KnownType(typeof(FileAction))]
@@ -32,52 +30,36 @@ namespace SevenUpdate
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   The action to perform on the <c>UpdateFile</c>.
-        /// </summary>
+        /// <summary>The action to perform on the <c>UpdateFile</c>.</summary>
         private FileAction action;
 
-        /// <summary>
-        ///   The command line arguments to execute with the file.
-        /// </summary>
+        /// <summary>The command line arguments to execute with the file.</summary>
         private string args;
 
-        /// <summary>
-        ///   The location where the file will be installed.
-        /// </summary>
+        /// <summary>The location where the file will be installed.</summary>
         private string destination;
 
-        /// <summary>
-        ///   The size of the file in bytes.
-        /// </summary>
+        /// <summary>The size of the file in bytes.</summary>
         private ulong fileSize;
 
-        /// <summary>
-        ///   The SHA-2 hash of the file.
-        /// </summary>
+        /// <summary>The SHA-2 hash of the file.</summary>
         private string hash;
 
-        /// <summary>
-        ///   The download location for the file.
-        /// </summary>
+        /// <summary>The download location for the file.</summary>
         private string source;
 
         #endregion
 
         #region Events
 
-        /// <summary>
-        ///   Occurs when a property has changed.
-        /// </summary>
+        /// <summary>Occurs when a property has changed.</summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
 
         #region Properties
 
-        /// <summary>
-        ///   Gets or sets the action to perform on the <c>UpdateFile</c>.
-        /// </summary>
+        /// <summary>Gets or sets the action to perform on the <c>UpdateFile</c>.</summary>
         /// <value>The action.</value>
         [ProtoMember(1)]
         [DataMember]
@@ -97,9 +79,7 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        ///   Gets or sets the command line arguments to execute with the file.
-        /// </summary>
+        /// <summary>Gets or sets the command line arguments to execute with the file.</summary>
         /// <value>The arguments.</value>
         [ProtoMember(6, IsRequired = false)]
         [DataMember]
@@ -119,9 +99,7 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        ///   Gets or sets the location where the file will be installed.
-        /// </summary>
+        /// <summary>Gets or sets the location where the file will be installed.</summary>
         /// <value>The destination.</value>
         [ProtoMember(3)]
         [DataMember]
@@ -141,9 +119,7 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        ///   Gets or sets the size of the file in bytes.
-        /// </summary>
+        /// <summary>Gets or sets the size of the file in bytes.</summary>
         /// <value>The size of the file.</value>
         [ProtoMember(5)]
         [DataMember]
@@ -163,9 +139,7 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        ///   Gets or sets the SHA-2 hash of the file.
-        /// </summary>
+        /// <summary>Gets or sets the SHA-2 hash of the file.</summary>
         /// <value>The SHA-2 hash of the file.</value>
         [ProtoMember(4)]
         [DataMember]
@@ -185,9 +159,7 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        ///   Gets or sets the location for the file within the gzip file.
-        /// </summary>
+        /// <summary>Gets or sets the location for the file within the gzip file.</summary>
         /// <value>The download location of the file.</value>
         [ProtoMember(2)]
         [DataMember]
@@ -211,12 +183,8 @@ namespace SevenUpdate
 
         #region Methods
 
-        /// <summary>
-        ///   When a property has changed, call the <c>OnPropertyChanged</c> Event.
-        /// </summary>
-        /// <param name="name">
-        ///   The name of the property that changed.
-        /// </param>
+        /// <summary>When a property has changed, call the <c>OnPropertyChanged</c> Event.</summary>
+        /// <param name="name">  The name of the property that changed.</param>
         private void OnPropertyChanged(string name)
         {
             var handler = this.PropertyChanged;

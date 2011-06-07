@@ -9,21 +9,15 @@ namespace System.Windows.Dialogs
 {
     using ComponentModel;
 
-    /// <summary>
-    ///   Data associated with <c>TaskDialog.Closing</c> event.
-    /// </summary>
+    /// <summary>Data associated with <c>TaskDialog.Closing</c> event.</summary>
     public class TaskDialogClosingEventArgs : CancelEventArgs
     {
         #region Properties
 
-        /// <summary>
-        ///   Gets or sets the text of the custom button that was clicked.
-        /// </summary>
+        /// <summary>Gets or sets the text of the custom button that was clicked.</summary>
         public string CustomButton { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the standard button that was clicked.
-        /// </summary>
+        /// <summary>Gets or sets the standard button that was clicked.</summary>
         public TaskDialogResults TaskDialogResult { get; set; }
 
         #endregion

@@ -10,9 +10,7 @@ namespace SharpBits.Base
 {
     using System;
 
-    /// <summary>
-    ///   Identifies the owner and ACL information to maintain when transferring a file using SMB.
-    /// </summary>
+    /// <summary>Identifies the owner and ACL information to maintain when transferring a file using SMB.</summary>
     [Flags]
     public enum FileAclOptions
     {
@@ -41,9 +39,7 @@ namespace SharpBits.Base
         /// </summary>
         CopySourceFileAcl = 8,
 
-        /// <summary>
-        ///   If set, BITS copies the owner and ACL information. This is the same as setting all the flags individually.
-        /// </summary>
+        /// <summary>If set, BITS copies the owner and ACL information. This is the same as setting all the flags individually.</summary>
         CopyFileAll = 15,
     }
 }

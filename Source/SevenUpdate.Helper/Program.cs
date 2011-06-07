@@ -28,33 +28,23 @@ namespace SevenUpdate.Helper
 
     using Timer = System.Timers.Timer;
 
-    /// <summary>
-    ///   The main class.
-    /// </summary>
+    /// <summary>The main class.</summary>
     internal static class Program
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   Moves a file on reboot.
-        /// </summary>
+        /// <summary>Moves a file on reboot.</summary>
         private const int MoveOnReboot = 5;
 
-        /// <summary>
-        ///   The current directory the application resides in.
-        /// </summary>
+        /// <summary>The current directory the application resides in.</summary>
         private static readonly string AppDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 
         #endregion
 
         #region Methods
 
-        /// <summary>
-        ///   Stops a running process.
-        /// </summary>
-        /// <param name="name">
-        ///   The name of the process to kill.
-        /// </param>
+        /// <summary>Stops a running process.</summary>
+        /// <param name="name">  The name of the process to kill.</param>
         private static void KillProcess(string name)
         {
             try
@@ -79,12 +69,8 @@ namespace SevenUpdate.Helper
             }
         }
 
-        /// <summary>
-        ///   The main entry point for the application.
-        /// </summary>
-        /// <param name="args">
-        ///   The arguments passed to the program at startup.
-        /// </param>
+        /// <summary>The main entry point for the application.</summary>
+        /// <param name="args">  The arguments passed to the program at startup.</param>
         [STAThread]
         private static void Main(string[] args)
         {
@@ -161,35 +147,19 @@ namespace SevenUpdate.Helper
             }
         }
 
-        /// <summary>
-        ///   Run Seven Update and auto check for updates.
-        /// </summary>
-        /// <param name="sender">
-        ///   The object that called the event.
-        /// </param>
-        /// <param name="e">
-        ///   The <c>System.Timers.ElapsedEventArgs</c> instance containing the event data.
-        /// </param>
+        /// <summary>Run Seven Update and auto check for updates.</summary>
+        /// <param name="sender">  The object that called the event.</param>
+        /// <param name="e">  The <c>System.Timers.ElapsedEventArgs</c> instance containing the event data.</param>
         private static void RunSevenUpdate(object sender, ElapsedEventArgs e)
         {
             Process.Start(Path.Combine(AppDir, "SevenUpdate.Admin.exe"), "Auto");
         }
 
-        /// <summary>
-        ///   Starts a process on the system.
-        /// </summary>
-        /// <param name="fileName">
-        ///   The file to execute.
-        /// </param>
-        /// <param name="arguments">
-        ///   The arguments to execute with the file.
-        /// </param>
-        /// <param name="wait">
-        ///   If set to <c>True</c> the calling thread will be blocked until process has exited.
-        /// </param>
-        /// <param name="hidden">
-        ///   If set to <c>True</c> the process will execute with no UI.
-        /// </param>
+        /// <summary>Starts a process on the system.</summary>
+        /// <param name="fileName">  The file to execute.</param>
+        /// <param name="arguments">  The arguments to execute with the file.</param>
+        /// <param name="wait">  If set to <c>True</c> the calling thread will be blocked until process has exited.</param>
+        /// <param name="hidden">  If set to <c>True</c> the process will execute with no UI.</param>
         private static void StartProcess(string fileName, string arguments, bool wait = false, bool hidden = true)
         {
             using (var process = new Process())

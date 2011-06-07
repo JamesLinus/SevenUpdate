@@ -28,16 +28,12 @@ namespace SevenUpdate.Sdk
 
     using Properties;
 
-    /// <summary>
-    ///   Interaction logic for App.xaml.
-    /// </summary>
+    /// <summary>Interaction logic for App.xaml.</summary>
     public sealed partial class App
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   The user application data location.
-        /// </summary>
+        /// <summary>The user application data location.</summary>
         public static readonly string UserStore =
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Seven Update SDK");
 
@@ -45,21 +41,15 @@ namespace SevenUpdate.Sdk
 
         #region Properties
 
-        /// <summary>
-        ///   Gets the command line arguments passed to this instance.
-        /// </summary>
+        /// <summary>Gets the command line arguments passed to this instance.</summary>
         internal static IList<string> Args { get; private set; }
 
         #endregion
 
         #region Methods
 
-        /// <summary>
-        ///   Process command line args.
-        /// </summary>
-        /// <param name="args">
-        ///   The list of arguments.
-        /// </param>
+        /// <summary>Process command line args.</summary>
+        /// <param name="args">  The list of arguments.</param>
         internal static void ProcessArgs(IList<string> args)
         {
             if (args == null)
@@ -92,27 +82,17 @@ namespace SevenUpdate.Sdk
             }
         }
 
-        /// <summary>
-        ///   Raises the Application.Exit event.
-        /// </summary>
-        /// <param name="e">
-        ///   An ExitEventArgs that contains the event data.
-        /// </param>
+        /// <summary>Raises the Application.Exit event.</summary>
+        /// <param name="e">  An ExitEventArgs that contains the event data.</param>
         protected override void OnExit(ExitEventArgs e)
         {
             UnregisterApplicationRecoveryAndRestart();
             base.OnExit(e);
         }
 
-        /// <summary>
-        ///   Raises the <c>InstanceAwareApplication.Startup</c> event.
-        /// </summary>
-        /// <param name="e">
-        ///   The <c>System.Windows.StartupEventArgs</c> instance containing the event data.
-        /// </param>
-        /// <param name="isFirstInstance">
-        ///   If set to <c>True</c> the current instance is the first application instance.
-        /// </param>
+        /// <summary>Raises the <c>InstanceAwareApplication.Startup</c> event.</summary>
+        /// <param name="e">  The <c>System.Windows.StartupEventArgs</c> instance containing the event data.</param>
+        /// <param name="isFirstInstance">  If set to <c>True</c> the current instance is the first application instance.</param>
         protected override void OnStartup(StartupEventArgs e, bool isFirstInstance)
         {
             Utilities.Locale = Settings.Default.Locale;
@@ -134,27 +114,17 @@ namespace SevenUpdate.Sdk
             }
         }
 
-        /// <summary>
-        ///   Raises the <c>InstanceAwareApplication.StartupNextInstance</c> event.
-        /// </summary>
-        /// <param name="e">
-        ///   The <c>StartupNextInstanceEventArgs</c> instance containing the event data.
-        /// </param>
+        /// <summary>Raises the <c>InstanceAwareApplication.StartupNextInstance</c> event.</summary>
+        /// <param name="e">  The <c>StartupNextInstanceEventArgs</c> instance containing the event data.</param>
         protected override void OnStartupNextInstance(StartupNextInstanceEventArgs e)
         {
             base.OnStartupNextInstance(e);
             ProcessArgs(e.GetArgs());
         }
 
-        /// <summary>
-        ///   Performs recovery by saving the state.
-        /// </summary>
-        /// <param name="parameter">
-        ///   This parameter is not used.
-        /// </param>
-        /// <returns>
-        ///   Return value is not used.
-        /// </returns>
+        /// <summary>Performs recovery by saving the state.</summary>
+        /// <param name="parameter">  This parameter is not used.</param>
+        /// <returns>Return value is not used.</returns>
         private static int PerformRecovery(object parameter)
         {
             try
@@ -173,9 +143,7 @@ namespace SevenUpdate.Sdk
             return 0;
         }
 
-        /// <summary>
-        ///   Registers the application to use the Recovery Manager.
-        /// </summary>
+        /// <summary>Registers the application to use the Recovery Manager.</summary>
         private static void RegisterApplicationRecoveryAndRestart()
         {
             if (Environment.OSVersion.Version.Major < 6)
@@ -192,9 +160,7 @@ namespace SevenUpdate.Sdk
             ApplicationRestartRecoveryManager.RegisterForApplicationRecovery(recoverySettings);
         }
 
-        /// <summary>
-        ///   Sets the Windows 7 <c>JumpList</c>.
-        /// </summary>
+        /// <summary>Sets the Windows 7 <c>JumpList</c>.</summary>
         private static void SetJumpList()
         {
             // Create JumpTask
@@ -214,9 +180,7 @@ namespace SevenUpdate.Sdk
             JumpList.SetJumpList(Current, jumpList);
         }
 
-        /// <summary>
-        ///   The unregister application recovery and restart.
-        /// </summary>
+        /// <summary>The unregister application recovery and restart.</summary>
         private static void UnregisterApplicationRecoveryAndRestart()
         {
             if (Environment.OSVersion.Version.Major < 6)

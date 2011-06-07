@@ -19,30 +19,20 @@ namespace System.Windows.Internal
 {
     using Runtime.InteropServices;
 
-    /// <summary>
-    ///   Defines the coordinates of the upper-left and lower-right corners of a rectangle.
-    /// </summary>
+    /// <summary>Defines the coordinates of the upper-left and lower-right corners of a rectangle.</summary>
     [StructLayout(LayoutKind.Sequential)]
     internal struct Rect
     {
-        /// <summary>
-        ///   The x-coordinate of the upper-left corner of the rectangle.
-        /// </summary>
+        /// <summary>The x-coordinate of the upper-left corner of the rectangle.</summary>
         public readonly int Left;
 
-        /// <summary>
-        ///   The y-coordinate of the upper-left corner of the rectangle.
-        /// </summary>
+        /// <summary>The y-coordinate of the upper-left corner of the rectangle.</summary>
         public readonly int Top;
 
-        /// <summary>
-        ///   The x-coordinate of the lower-right corner of the rectangle.
-        /// </summary>
+        /// <summary>The x-coordinate of the lower-right corner of the rectangle.</summary>
         public readonly int Right;
 
-        /// <summary>
-        ///   The y-coordinate of the lower-right corner of the rectangle.
-        /// </summary>
+        /// <summary>The y-coordinate of the lower-right corner of the rectangle.</summary>
         public readonly int Bottom;
     }
 }

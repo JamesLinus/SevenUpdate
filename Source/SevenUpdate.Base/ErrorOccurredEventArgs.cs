@@ -22,24 +22,16 @@ namespace SevenUpdate
 
     using ProtoBuf;
 
-    /// <summary>
-    ///   Provides event data for the ErrorOccurred event.
-    /// </summary>
+    /// <summary>Provides event data for the ErrorOccurred event.</summary>
     [ProtoContract]
     [DataContract]
     public sealed class ErrorOccurredEventArgs : EventArgs
     {
         #region Constructors and Destructors
 
-        /// <summary>
-        ///   Initializes a new instance of the <c>ErrorOccurredEventArgs</c> class.
-        /// </summary>
-        /// <param name="exception">
-        ///   The exception that occurred.
-        /// </param>
-        /// <param name="type">
-        ///   The type of error that occurred.
-        /// </param>
+        /// <summary>Initializes a new instance of the <c>ErrorOccurredEventArgs</c> class.</summary>
+        /// <param name="exception">  The exception that occurred.</param>
+        /// <param name="type">  The type of error that occurred.</param>
         public ErrorOccurredEventArgs(string exception, ErrorType type)
         {
             this.Exception = exception;
@@ -50,15 +42,11 @@ namespace SevenUpdate
 
         #region Properties
 
-        /// <summary>
-        ///   Gets the <c>ErrorType</c> of the error that occurred.
-        /// </summary>
+        /// <summary>Gets the <c>ErrorType</c> of the error that occurred.</summary>
         /// <value>The type of error that occurred.</value>
         public ErrorType ErrorType { get; private set; }
 
-        /// <summary>
-        ///   Gets the Exception information of the error that occurred.
-        /// </summary>
+        /// <summary>Gets the Exception information of the error that occurred.</summary>
         /// <value>The exception.</value>
         public string Exception { get; private set; }
 

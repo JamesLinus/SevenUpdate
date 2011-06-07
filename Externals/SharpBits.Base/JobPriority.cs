@@ -9,29 +9,19 @@
 
 namespace SharpBits.Base
 {
-    /// <summary>
-    ///   The <c>BitsJob</c> priority.
-    /// </summary>
+    /// <summary>The <c>BitsJob</c> priority.</summary>
     public enum JobPriority
     {
-        /// <summary>
-        ///   Downloads without bandwidth restriction.
-        /// </summary>
+        /// <summary>Downloads without bandwidth restriction.</summary>
         Foreground = 0,
 
-        /// <summary>
-        ///   Downloads with a 80% bandwidth use.
-        /// </summary>
+        /// <summary>Downloads with a 80% bandwidth use.</summary>
         High = 1,
 
-        /// <summary>
-        ///   Downloads using bandwidth available.
-        /// </summary>
+        /// <summary>Downloads using bandwidth available.</summary>
         Normal = 2,
 
-        /// <summary>
-        ///   Download slow, giving other net use priority.
-        /// </summary>
+        /// <summary>Download slow, giving other net use priority.</summary>
         Low = 3,
     }
 }

@@ -23,30 +23,18 @@ namespace SevenUpdate
 
     using ProtoBuf;
 
-    /// <summary>
-    ///   Provides event data for the SearchCompleted event.
-    /// </summary>
+    /// <summary>Provides event data for the SearchCompleted event.</summary>
     [ProtoContract]
     [DataContract]
     public sealed class SearchCompletedEventArgs : EventArgs
     {
         #region Constructors and Destructors
 
-        /// <summary>
-        ///   Initializes a new instance of the <c>SearchCompletedEventArgs</c> class.
-        /// </summary>
-        /// <param name="applications">
-        ///   The collection of applications to update.
-        /// </param>
-        /// <param name="importantCount">
-        ///   The number of important updates.
-        /// </param>
-        /// <param name="recommendedCount">
-        ///   The number of recommended updates.
-        /// </param>
-        /// <param name="optionalCount">
-        ///   The number of optional updates.
-        /// </param>
+        /// <summary>Initializes a new instance of the <c>SearchCompletedEventArgs</c> class.</summary>
+        /// <param name="applications">  The collection of applications to update.</param>
+        /// <param name="importantCount">  The number of important updates.</param>
+        /// <param name="recommendedCount">  The number of recommended updates.</param>
+        /// <param name="optionalCount">  The number of optional updates.</param>
         public SearchCompletedEventArgs(
             IEnumerable<Sui> applications, int importantCount, int recommendedCount, int optionalCount)
         {
@@ -56,9 +44,7 @@ namespace SevenUpdate
             this.RecommendedCount = recommendedCount;
         }
 
-        /// <summary>
-        ///   Initializes a new instance of the SearchCompletedEventArgs class.
-        /// </summary>
+        /// <summary>Initializes a new instance of the SearchCompletedEventArgs class.</summary>
         public SearchCompletedEventArgs()
         {
         }
@@ -67,33 +53,25 @@ namespace SevenUpdate
 
         #region Properties
 
-        /// <summary>
-        ///   Gets a collection of applications that contain updates to install.
-        /// </summary>
+        /// <summary>Gets a collection of applications that contain updates to install.</summary>
         /// <value>The applications.</value>
         [ProtoMember(1)]
         [DataMember]
         public IEnumerable<Sui> Applications { get; private set; }
 
-        /// <summary>
-        ///   Gets or sets the important updates count.
-        /// </summary>
+        /// <summary>Gets or sets the important updates count.</summary>
         /// <value>The important count.</value>
         [ProtoMember(2)]
         [DataMember]
         public int ImportantCount { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the optional updates count.
-        /// </summary>
+        /// <summary>Gets or sets the optional updates count.</summary>
         /// <value>The optional count.</value>
         [ProtoMember(3)]
         [DataMember]
         public int OptionalCount { get; set; }
 
-        /// <summary>
-        ///   Gets the recommended updates count.
-        /// </summary>
+        /// <summary>Gets the recommended updates count.</summary>
         /// <value>The recommended count.</value>
         [ProtoMember(4)]
         [DataMember]

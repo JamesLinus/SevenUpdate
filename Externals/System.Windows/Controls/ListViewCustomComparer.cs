@@ -22,16 +22,12 @@ namespace System.Windows.Controls
 
     using ComponentModel;
 
-    /// <summary>
-    ///   Enables the listView sorter to compare classes.
-    /// </summary>
+    /// <summary>Enables the listView sorter to compare classes.</summary>
     public abstract class ListViewCustomComparer : IComparer
     {
         #region Properties
 
-        /// <summary>
-        ///   Gets a List of strings from a column that needs to be sorted.
-        /// </summary>
+        /// <summary>Gets a List of strings from a column that needs to be sorted.</summary>
         /// <returns>A collection of columns that are sorted.</returns>
         protected IEnumerable<string> SortColumnList
         {
@@ -54,24 +50,16 @@ namespace System.Windows.Controls
             }
         }
 
-        /// <summary>
-        ///   Gets a dictionary of SortColumns.
-        /// </summary>
+        /// <summary>Gets a dictionary of SortColumns.</summary>
         protected Dictionary<string, ListSortDirection> SortColumns { get; private set; }
 
         #endregion
 
         #region Public Methods
 
-        /// <summary>
-        ///   Adds a column to the <c>SortColumns</c>.
-        /// </summary>
-        /// <param name="sortColumn">
-        ///   A string representing a column to be sorted.
-        /// </param>
-        /// <param name="direction">
-        ///   The direction to sort.
-        /// </param>
+        /// <summary>Adds a column to the <c>SortColumns</c>.</summary>
+        /// <param name="sortColumn">  A string representing a column to be sorted.</param>
+        /// <param name="direction">  The direction to sort.</param>
         public void AddSort(string sortColumn, ListSortDirection direction)
         {
             if (string.IsNullOrEmpty(sortColumn))
@@ -98,12 +86,8 @@ namespace System.Windows.Controls
         ///   Compares two objects and returns a value indicating whether one is less than, equal to, or greater than
         ///   the other.
         /// </summary>
-        /// <param name="x">
-        ///   The first object to compare.
-        /// </param>
-        /// <param name="y">
-        ///   The second object to compare.
-        /// </param>
+        /// <param name="x">  The first object to compare.</param>
+        /// <param name="y">  The second object to compare.</param>
         /// <returns>
         ///   A signed integer that indicates the relative values of <paramref name="x" /> and <paramref name="y" />, as
         ///   shown in the following table.Value Meaning Less than zero <paramref
@@ -118,9 +102,7 @@ namespace System.Windows.Controls
 
         #region Methods
 
-        /// <summary>
-        ///   Clears the sort columns.
-        /// </summary>
+        /// <summary>Clears the sort columns.</summary>
         private void ClearSort()
         {
             if (this.SortColumns != null)

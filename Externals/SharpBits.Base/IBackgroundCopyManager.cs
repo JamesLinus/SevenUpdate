@@ -21,9 +21,7 @@ namespace SharpBits.Base
     [ComImportAttribute]
     internal interface IBackgroundCopyManager
     {
-        /// <summary>
-        ///   Creates a new transfer job.
-        /// </summary>
+        /// <summary>Creates a new transfer job.</summary>
         /// <param name="displayName">
         ///   A string that contains a display name for the job. Typically, the display name is used to identify the job
         ///   in a user interface. Note that more than one job may have the same display name. Must not be <c>null</c>.
@@ -48,21 +46,15 @@ namespace SharpBits.Base
             out Guid jobId,
             [MarshalAs(UnmanagedType.Interface)] out IBackgroundCopyJob job);
 
-        /// <summary>
-        ///   Retrieves a given job from the queue.
-        /// </summary>
+        /// <summary>Retrieves a given job from the queue.</summary>
         /// <param name="jobId">
         ///   Identifies the job to retrieve from the transfer queue. The <c>CreateJob</c> method returns the job
         ///   identifier.
         /// </param>
-        /// <param name="job">
-        ///   An <c>IBackgroundCopyJob</c> interface pointer to the job specified by JobID. When done, release job.
-        /// </param>
+        /// <param name="job">  An <c>IBackgroundCopyJob</c> interface pointer to the job specified by JobID. When done, release job.</param>
         void GetJob(ref Guid jobId, [MarshalAs(UnmanagedType.Interface)] out IBackgroundCopyJob job);
 
-        /// <summary>
-        ///   Retrieves an enumerator object that you use to enumerate jobs in the queue.
-        /// </summary>
+        /// <summary>Retrieves an enumerator object that you use to enumerate jobs in the queue.</summary>
         /// <param name="flags">
         ///   Specifies whose jobs to include in the enumeration. If <paramref name="flags" /> is set to 0, the user
         ///   receives all jobs that they own in the transfer queue. The following table lists the enumeration options.
@@ -74,12 +66,8 @@ namespace SharpBits.Base
         /// </param>
         void EnumJobs(uint flags, [MarshalAs(UnmanagedType.Interface)] out IEnumBackgroundCopyJobs @enum);
 
-        /// <summary>
-        ///   Retrieves a description for the given error code.
-        /// </summary>
-        /// <param name="result">
-        ///   Error code from a previous call to a BITS method.
-        /// </param>
+        /// <summary>Retrieves a description for the given error code.</summary>
+        /// <param name="result">  Error code from a previous call to a BITS method.</param>
         /// <param name="languageId">
         ///   Identifies the language identifier to use to generate the description. To create the language identifier,
         ///   use the MAKELANGID macro.

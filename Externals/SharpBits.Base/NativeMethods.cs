@@ -13,9 +13,7 @@ namespace SharpBits.Base
     using System.Runtime.InteropServices;
     using System.Text;
 
-    /// <summary>
-    ///   Win32 native methods.
-    /// </summary>
+    /// <summary>Win32 native methods.</summary>
     internal static class NativeMethods
     {
         /// <summary>
@@ -31,9 +29,7 @@ namespace SharpBits.Base
         ///   A pointer to a variable that receives a pointer to the converted SID. To free the returned buffer, call
         ///   the LocalFree function.
         /// </param>
-        /// <returns>
-        ///   <c>True</c> if function succeeded.
-        /// </returns>
+        /// <returns><c>True</c> if function succeeded.</returns>
         [DllImport(@"advapi32.dll", CharSet = CharSet.Unicode)]
         [return: MarshalAsAttribute(UnmanagedType.Bool)]
         internal static extern bool ConvertStringSidToSidW(string sid, ref IntPtr sidPointer);
@@ -49,9 +45,7 @@ namespace SharpBits.Base
         ///   the name using domain controllers trusted by the local system. Generally, specify a value only when the
         ///   account is in an untrusted domain and the name of a computer in that domain is known.
         /// </param>
-        /// <param name="sid">
-        ///   A pointer to the SID to look up.
-        /// </param>
+        /// <param name="sid">  A pointer to the SID to look up.</param>
         /// <param name="name">
         ///   A pointer to a buffer that receives a <c>null</c>-terminated string that contains the account name that
         ///   corresponds to the sid parameter.
@@ -70,12 +64,8 @@ namespace SharpBits.Base
         ///   name="referencedDomainName" /> receives the required buffer size, including the terminating <c>null</c>
         ///   character.
         /// </param>
-        /// <param name="use">
-        ///   A pointer to a variable that receives a <c>SidNameUse</c> value that indicates the type of the account.
-        /// </param>
-        /// <returns>
-        ///   <c>True</c> if function succeeded.
-        /// </returns>
+        /// <param name="use">  A pointer to a variable that receives a <c>SidNameUse</c> value that indicates the type of the account.</param>
+        /// <returns><c>True</c> if function succeeded.</returns>
         [DllImport(@"advapi32.dll", CharSet = CharSet.Unicode)]
         [return: MarshalAsAttribute(UnmanagedType.Bool)]
         internal static extern bool LookupAccountSidW(

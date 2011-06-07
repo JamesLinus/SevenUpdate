@@ -19,15 +19,11 @@ namespace System.Windows.Internal
 {
     using Runtime.InteropServices;
 
-    /// <summary>
-    ///   Specifies Desktop Window Manager (DWM) blur behind properties.
-    /// </summary>
+    /// <summary>Specifies Desktop Window Manager (DWM) blur behind properties.</summary>
     [StructLayout(LayoutKind.Sequential)]
     internal struct DwmBlurBehind
     {
-        /// <summary>
-        ///   A bitwise combination of DWM Blur Behind Constants values indicating which members are set.
-        /// </summary>
+        /// <summary>A bitwise combination of DWM Blur Behind Constants values indicating which members are set.</summary>
         public BlurBehindOptions Flags;
 
         /// <summary>
@@ -42,9 +38,7 @@ namespace System.Windows.Internal
         /// </summary>
         public IntPtr RegionBlur;
 
-        /// <summary>
-        ///   Window's colorization should transition to match the maximized windows; otherwise, <c>False</c>.
-        /// </summary>
+        /// <summary>Window's colorization should transition to match the maximized windows; otherwise, <c>False</c>.</summary>
         public bool TransitionOnMaximized;
     }
 }

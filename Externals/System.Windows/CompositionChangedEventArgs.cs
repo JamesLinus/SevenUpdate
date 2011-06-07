@@ -17,19 +17,13 @@
 
 namespace System.Windows
 {
-    /// <summary>
-    ///   Event argument for The CompositionChanged event.
-    /// </summary>
+    /// <summary>Event argument for The CompositionChanged event.</summary>
     public class CompositionChangedEventArgs : EventArgs
     {
         #region Constructors and Destructors
 
-        /// <summary>
-        ///   Initializes a new instance of the <c>CompositionChangedEventArgs</c> class.
-        /// </summary>
-        /// <param name="isGlassEnabled">
-        ///   If set to <c>True</c> aero glass is enabled.
-        /// </param>
+        /// <summary>Initializes a new instance of the <c>CompositionChangedEventArgs</c> class.</summary>
+        /// <param name="isGlassEnabled">  If set to <c>True</c> aero glass is enabled.</param>
         internal CompositionChangedEventArgs(bool isGlassEnabled)
         {
             this.IsGlassEnabled = isGlassEnabled;
@@ -39,9 +33,7 @@ namespace System.Windows
 
         #region Properties
 
-        /// <summary>
-        ///   Gets a value indicating whether DWM/Glass is currently enabled.
-        /// </summary>
+        /// <summary>Gets a value indicating whether DWM/Glass is currently enabled.</summary>
         /// <value><c>True</c> if this instance is glass enabled; otherwise, <c>False</c>.</value>
         public bool IsGlassEnabled { get; private set; }
 

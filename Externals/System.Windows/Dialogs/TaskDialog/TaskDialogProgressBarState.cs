@@ -7,34 +7,22 @@
 
 namespace System.Windows.Dialogs
 {
-    /// <summary>
-    ///   Sets the state of a task dialog progress bar.
-    /// </summary>
+    /// <summary>Sets the state of a task dialog progress bar.</summary>
     public enum TaskDialogProgressBarState
     {
-        /// <summary>
-        ///   No status.
-        /// </summary>
+        /// <summary>No status.</summary>
         None = 0x0000,
 
-        /// <summary>
-        ///   Normal status.
-        /// </summary>
+        /// <summary>Normal status.</summary>
         Normal = 0x0001,
 
-        /// <summary>
-        ///   Red progress.
-        /// </summary>
+        /// <summary>Red progress.</summary>
         Error = 0x0002,
 
-        /// <summary>
-        ///   Yellow progress.
-        /// </summary>
+        /// <summary>Yellow progress.</summary>
         Paused = 0x0003,
 
-        /// <summary>
-        ///   Displays marquee (indeterminate) style progress.
-        /// </summary>
+        /// <summary>Displays marquee (indeterminate) style progress.</summary>
         Indeterminate,
     }
 }

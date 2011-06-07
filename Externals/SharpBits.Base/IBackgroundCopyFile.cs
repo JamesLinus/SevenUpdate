@@ -21,26 +21,18 @@ namespace SharpBits.Base
     [ComImportAttribute]
     internal interface IBackgroundCopyFile
     {
-        /// <summary>
-        ///   Retrieves the remote name of the file.
-        /// </summary>
+        /// <summary>Retrieves the remote name of the file.</summary>
         /// <param name="val">
         ///   A string that contains the remote name of the file to transfer. The name is fully qualified. Call the
         ///   CoTaskMemFree function to free ppName when done. .
         /// </param>
         void GetRemoteName([MarshalAs(UnmanagedType.LPWStr)] out string val);
 
-        /// <summary>
-        ///   Retrieves the local name of the file.
-        /// </summary>
-        /// <param name="val">
-        ///   A string that contains the name of the file on the client.
-        /// </param>
+        /// <summary>Retrieves the local name of the file.</summary>
+        /// <param name="val">  A string that contains the name of the file on the client.</param>
         void GetLocalName([MarshalAs(UnmanagedType.LPWStr)] out string val);
 
-        /// <summary>
-        ///   Retrieves the progress of the file transfer.
-        /// </summary>
+        /// <summary>Retrieves the progress of the file transfer.</summary>
         /// <param name="val">
         ///   Structure whose members indicate the progress of the file transfer. For details on the type of progress
         ///   information available, see the BG_FILEProgress structure.

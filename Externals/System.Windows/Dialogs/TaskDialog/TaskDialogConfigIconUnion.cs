@@ -8,36 +8,24 @@ namespace System.Windows.Dialogs
 {
     using Runtime.InteropServices;
 
-    /// <summary>
-    ///   Contains the data for a <c>TaskDialogIcon</c>.
-    /// </summary>
+    /// <summary>Contains the data for a <c>TaskDialogIcon</c>.</summary>
     [StructLayout(LayoutKind.Explicit, CharSet = CharSet.Auto)]
     internal struct TaskDialogConfigIconUnion
     {
-        /// <summary>
-        ///   The main icon Id to display.
-        /// </summary>
+        /// <summary>The main icon Id to display.</summary>
         [FieldOffset(0)]
         private readonly int MainIcon;
 
-        /// <summary>
-        ///   The footer icon id to display.
-        /// </summary>
+        /// <summary>The footer icon id to display.</summary>
         [FieldOffset(0)]
         private readonly int Icon;
 
-        /// <summary>
-        ///   The pointer to the space.
-        /// </summary>
+        /// <summary>The pointer to the space.</summary>
         [FieldOffset(0)]
         private readonly IntPtr Spacer;
 
-        /// <summary>
-        ///   Initializes a new instance of the <c>TaskDialogConfigIconUnion</c> struct.
-        /// </summary>
-        /// <param name="i">
-        ///   The icon identifier.
-        /// </param>
+        /// <summary>Initializes a new instance of the <c>TaskDialogConfigIconUnion</c> struct.</summary>
+        /// <param name="i">  The icon identifier.</param>
         internal TaskDialogConfigIconUnion(int i)
         {
             this.Spacer = IntPtr.Zero;

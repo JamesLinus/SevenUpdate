@@ -17,37 +17,25 @@ namespace WPFLocalizeExtension.Engine
     using System.Resources;
     using System.Windows;
 
-    /// <summary>
-    ///   Represents the culture interface for localization.
-    /// </summary>
+    /// <summary>Represents the culture interface for localization.</summary>
     public sealed class Localize : DependencyObject
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   Holds the default <c>ResourceDictionary</c> name.
-        /// </summary>
+        /// <summary>Holds the default <c>ResourceDictionary</c> name.</summary>
         public const string ResourcesName="Resources";
 
-        /// <summary>
-        ///   Holds the binding flags for the reflection to find the resource files.
-        /// </summary>
+        /// <summary>Holds the binding flags for the reflection to find the resource files.</summary>
         private const BindingFlags ResourceBindingFlags =
             BindingFlags.NonPublic | BindingFlags.Public | BindingFlags.Static;
 
-        /// <summary>
-        ///   Holds the extension of the resource files.
-        /// </summary>
+        /// <summary>Holds the extension of the resource files.</summary>
         private const string ResourceFileExtension = ".resources";
 
-        /// <summary>
-        ///   Holds the name of the Resource Manager.
-        /// </summary>
+        /// <summary>Holds the name of the Resource Manager.</summary>
         private const string ResourceManagerName="ResourceManager";
 
-        /// <summary>
-        ///   <c>DependencyProperty</c> DesignCulture to set the Culture.Only supported at DesignTime.
-        /// </summary>
+        /// <summary><c>DependencyProperty</c> DesignCulture to set the Culture.Only supported at DesignTime.</summary>
         [DesignOnly(true)]
         private static readonly DependencyProperty DesignCultureProperty =
             DependencyProperty.RegisterAttached(
@@ -56,28 +44,20 @@ namespace WPFLocalizeExtension.Engine
                 typeof(Localize),
                 new PropertyMetadata(SetCultureFromDependencyProperty));
 
-        /// <summary>
-        ///   Holds a SyncRoot to be thread safe.
-        /// </summary>
+        /// <summary>Holds a SyncRoot to be thread safe.</summary>
         private static readonly object SyncRoot = new object();
 
-        /// <summary>
-        ///   Holds the instance of singleton.
-        /// </summary>
+        /// <summary>Holds the instance of singleton.</summary>
         private static Localize instance;
 
-        /// <summary>
-        ///   Holds the current chosen <c>CultureInfo</c>.
-        /// </summary>
+        /// <summary>Holds the current chosen <c>CultureInfo</c>.</summary>
         private CultureInfo culture;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>
-        ///   Prevents a default instance of the Localize class from being created.
-        /// </summary>
+        /// <summary>Prevents a default instance of the Localize class from being created.</summary>
         private Localize()
         {
             this.ResourceManagerList = new Dictionary<string, ResourceManager>();
@@ -87,9 +67,7 @@ namespace WPFLocalizeExtension.Engine
 
         #region Events
 
-        /// <summary>
-        ///   Get raised if the LocalizeDictionary.Culture is changed.
-        /// </summary>
+        /// <summary>Get raised if the LocalizeDictionary.Culture is changed.</summary>
         internal event Action OnCultureChanged;
 
         #endregion
@@ -126,9 +104,7 @@ namespace WPFLocalizeExtension.Engine
             }
         }
 
-        /// <summary>
-        ///   Gets or sets the <c>CultureInfo</c> for localization.On set, <c>OnCultureChanged</c> is raised.
-        /// </summary>
+        /// <summary>Gets or sets the <c>CultureInfo</c> for localization.On set, <c>OnCultureChanged</c> is raised.</summary>
         /// <exception cref="System.InvalidOperationException">
         ///   You have to set LocalizeDictionary.Culture first or wait until
         ///   System.Windows.Application.Current.MainWindow is created. Otherwise you will get an Exception.</exception>
@@ -159,9 +135,7 @@ namespace WPFLocalizeExtension.Engine
             }
         }
 
-        /// <summary>
-        ///   Gets a value indicating whether the status of the design mode.
-        /// </summary>
+        /// <summary>Gets a value indicating whether the status of the design mode.</summary>
         /// <returns><c>True</c> if in design mode, else <c>False</c>.</returns>
         public bool IsInDesignMode
         {
@@ -171,9 +145,7 @@ namespace WPFLocalizeExtension.Engine
             }
         }
 
-        /// <summary>
-        ///   Gets the used ResourceManagers with their corresponding <c>namespaces</c>.
-        /// </summary>
+        /// <summary>Gets the used ResourceManagers with their corresponding <c>namespaces</c>.</summary>
         public Dictionary<string, ResourceManager> ResourceManagerList { get; private set; }
 
         /// <summary>
@@ -189,9 +161,7 @@ namespace WPFLocalizeExtension.Engine
             }
         }
 
-        /// <summary>
-        ///   Gets the default <c>CultureInfo</c> to initialize the LocalizeDictionary. <c>CultureInfo</c>.
-        /// </summary>
+        /// <summary>Gets the default <c>CultureInfo</c> to initialize the LocalizeDictionary. <c>CultureInfo</c>.</summary>
         private static CultureInfo DefaultCultureInfo
         {
             get
@@ -204,9 +174,7 @@ namespace WPFLocalizeExtension.Engine
 
         #region Public Methods
 
-        /// <summary>
-        ///   Attach an WeakEventListener to the LocalizeDictionary.
-        /// </summary>
+        /// <summary>Attach an WeakEventListener to the LocalizeDictionary.</summary>
         /// <param name="listener">The listener to attach.</param>
         public static void AddEventListener(IWeakEventListener listener)
         {
@@ -214,9 +182,7 @@ namespace WPFLocalizeExtension.Engine
             WeakCultureChangedEventManager.AddListener(listener);
         }
 
-        /// <summary>
-        ///   Returns the <c>AssemblyName</c> of the passed assembly instance.
-        /// </summary>
+        /// <summary>Returns the <c>AssemblyName</c> of the passed assembly instance.</summary>
         /// <param name="assembly">The Assembly where to get the name from.</param>
         /// <returns>The Assembly name.</returns>
         public static string GetAssemblyName(Assembly assembly)
@@ -246,9 +212,7 @@ namespace WPFLocalizeExtension.Engine
             return Instance.IsInDesignMode ? (string)obj.GetValue(DesignCultureProperty) : Instance.Culture.ToString();
         }
 
-        /// <summary>
-        ///   Parses a key and return the parts of it.
-        /// </summary>
+        /// <summary>Parses a key and return the parts of it.</summary>
         /// <param name="inKey">The key to parse.</param>
         /// <param name="outAssembly">The found or default assembly.</param>
         /// <param name="outDictionary">The found or default dictionary.</param>
@@ -296,9 +260,7 @@ namespace WPFLocalizeExtension.Engine
             }
         }
 
-        /// <summary>
-        ///   Detach an WeakEventListener to the LocalizeDictionary.
-        /// </summary>
+        /// <summary>Detach an WeakEventListener to the LocalizeDictionary.</summary>
         /// <param name="listener">The listener to detach.</param>
         public static void RemoveEventListener(IWeakEventListener listener)
         {
@@ -306,9 +268,7 @@ namespace WPFLocalizeExtension.Engine
             WeakCultureChangedEventManager.RemoveListener(listener);
         }
 
-        /// <summary>
-        ///   Setter of <c>DependencyProperty</c> Culture.Only supported at DesignTime.
-        /// </summary>
+        /// <summary>Setter of <c>DependencyProperty</c> Culture.Only supported at DesignTime.</summary>
         /// <param name="obj">The dependency object to set the culture to.</param>
         /// <param name="value">The odds format.</param>
         [DesignOnly(true)]
@@ -435,9 +395,7 @@ namespace WPFLocalizeExtension.Engine
 
         #region Methods
 
-        /// <summary>
-        ///   Callback function. Used to set the LocalizeDictionary.Culture if set in Xaml.Only supported at DesignTime.
-        /// </summary>
+        /// <summary>Callback function. Used to set the LocalizeDictionary.Culture if set in Xaml.Only supported at DesignTime.</summary>
         /// <param name="obj">The dependency object.</param>
         /// <param name="args">The event argument.</param>
         [DesignOnly(true)]
@@ -473,9 +431,7 @@ namespace WPFLocalizeExtension.Engine
             }
         }
 
-        /// <summary>
-        ///   Looks up in the cached <c>ResourceManager</c> list for the searched <c>ResourceManager</c>.
-        /// </summary>
+        /// <summary>Looks up in the cached <c>ResourceManager</c> list for the searched <c>ResourceManager</c>.</summary>
         /// <param name="resourceAssembly">The resource assembly (e.g.: <c>BaseLocalizeExtension</c>). <c>null</c> = Name of the executing assembly.</param>
         /// <param name="resourceDictionary">The dictionary to look up (e.g.: ResHelp, Resources, ...). <c>null</c> = Name of the default resource file (Resources).</param>
         /// <param name="resourceKey">The key of the searched entry (e.g.: <c>btnHelp</c>, Cancel, ...). <c>null</c> = Exception.</param>

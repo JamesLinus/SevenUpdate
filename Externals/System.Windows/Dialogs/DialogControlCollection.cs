@@ -12,20 +12,14 @@ namespace System.Windows.Dialogs
 
     using Linq;
 
-    /// <summary>
-    ///   Strongly typed collection for dialog controls.
-    /// </summary>
-    /// <typeparam name="T">
-    ///   The <c>DialogControl</c>.
-    /// </typeparam>
+    /// <summary>Strongly typed collection for dialog controls.</summary>
+    /// <typeparam name="T">The <c>DialogControl</c>.</typeparam>
     /// <typeparameter name="T">The <c>DialogControl</c></typeparameter>
     public sealed class DialogControlCollection<T> : Collection<T> where T : DialogControl
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   The host dialog.
-        /// </summary>
+        /// <summary>The host dialog.</summary>
         private readonly IDialogControlHost hostingDialog;
 
         #endregion
@@ -37,9 +31,7 @@ namespace System.Windows.Dialogs
         ///   instance of the <see
         ///    cref="DialogControlCollection&lt;T&gt;" /> class.
         /// </summary>
-        /// <param name="host">
-        ///   The dialog control host.
-        /// </param>
+        /// <param name="host">  The dialog control host.</param>
         internal DialogControlCollection(IDialogControlHost host)
         {
             this.hostingDialog = host;
@@ -53,15 +45,9 @@ namespace System.Windows.Dialogs
         ///   Recursively searches for a given control id in the collection passed via the <paramref name="subControl"
         ///   /> parameter.
         /// </summary>
-        /// <param name="subControl">
-        ///   A Collection of CommonFileDialogControls.
-        /// </param>
-        /// <param name="id">
-        ///   An int containing the identifier of the control being searched for.
-        /// </param>
-        /// <returns>
-        ///   A <c>DialogControl</c> who's Id matches the value of the <paramref name="id" /> parameter.
-        /// </returns>
+        /// <param name="subControl">  A Collection of CommonFileDialogControls.</param>
+        /// <param name="id">  An int containing the identifier of the control being searched for.</param>
+        /// <returns>A <c>DialogControl</c> who's Id matches the value of the <paramref name="id" /> parameter.</returns>
         internal static DialogControl GetSubControlById(IEnumerable<T> subControl, int id)
         {
             // if subControl is null, it will throw in the foreach.
@@ -76,26 +62,16 @@ namespace System.Windows.Dialogs
         ///   Recursively searches for the control who's id matches the value passed in the <paramref name="id" />
         ///   parameter.
         /// </summary>
-        /// <param name="id">
-        ///   An integer containing the identifier of the control being searched for.
-        /// </param>
-        /// <returns>
-        ///   A <c>DialogControl</c> who's id matches the value of the<paramref name="id" /> parameter.
-        /// </returns>
+        /// <param name="id">  An integer containing the identifier of the control being searched for.</param>
+        /// <returns>A <c>DialogControl</c> who's id matches the value of the<paramref name="id" /> parameter.</returns>
         internal DialogControl GetControlById(int id)
         {
             return GetSubControlById(this.Items, id);
         }
 
-        /// <summary>
-        ///   Inserts an dialog control at the specified index.
-        /// </summary>
-        /// <param name="index">
-        ///   The location to insert the control.
-        /// </param>
-        /// <param name="control">
-        ///   The item to insert.
-        /// </param>
+        /// <summary>Inserts an dialog control at the specified index.</summary>
+        /// <param name="index">  The location to insert the control.</param>
+        /// <param name="control">  The item to insert.</param>
         /// <permission cref="System.InvalidOperationException">
         ///   A control with the same name already exists in this collection -or- the control is being hosted by another
         ///   dialog -or- the associated dialog is showing and cannot be modified.
@@ -127,15 +103,9 @@ namespace System.Windows.Dialogs
             this.hostingDialog.ApplyCollectionChanged();
         }
 
-        /// <summary>
-        ///   Removes the control at the specified index.
-        /// </summary>
-        /// <param name="index">
-        ///   The location of the control to remove.
-        /// </param>
-        /// <permission cref="System.InvalidOperationException">
-        ///   The associated dialog is showing and cannot be modified.
-        /// </permission>
+        /// <summary>Removes the control at the specified index.</summary>
+        /// <param name="index">  The location of the control to remove.</param>
+        /// <permission cref="System.InvalidOperationException">The associated dialog is showing and cannot be modified.</permission>
         protected override void RemoveItem(int index)
         {
             // Notify that we're about to remove a control. Throw if dialog showing.

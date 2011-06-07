@@ -11,28 +11,20 @@ namespace SharpBits.Base
 {
     using System;
 
-    /// <summary>
-    ///   Data containing various <c>DateTime</c>'s about the <c>BitsJob</c>.
-    /// </summary>
+    /// <summary>Data containing various <c>DateTime</c>'s about the <c>BitsJob</c>.</summary>
     public class JobTimes
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   The current <c>JobTimes</c> for the <c>BitsJob</c>.
-        /// </summary>
+        /// <summary>The current <c>JobTimes</c> for the <c>BitsJob</c>.</summary>
         private BGJobTimes jobTimes;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>
-        ///   Initializes a new instance of the <c>JobTimes</c> class.
-        /// </summary>
-        /// <param name="jobTimes">
-        ///   The job times.
-        /// </param>
+        /// <summary>Initializes a new instance of the <c>JobTimes</c> class.</summary>
+        /// <param name="jobTimes">  The job times.</param>
         internal JobTimes(BGJobTimes jobTimes)
         {
             this.jobTimes = jobTimes;
@@ -42,9 +34,7 @@ namespace SharpBits.Base
 
         #region Properties
 
-        /// <summary>
-        ///   Gets the creation time.
-        /// </summary>
+        /// <summary>Gets the creation time.</summary>
         /// <value>The creation time.</value>
         public DateTime CreationTime
         {
@@ -54,9 +44,7 @@ namespace SharpBits.Base
             }
         }
 
-        /// <summary>
-        ///   Gets the modification time.
-        /// </summary>
+        /// <summary>Gets the modification time.</summary>
         /// <value>The modification time.</value>
         public DateTime ModificationTime
         {
@@ -66,9 +54,7 @@ namespace SharpBits.Base
             }
         }
 
-        /// <summary>
-        ///   Gets the transfer completion time.
-        /// </summary>
+        /// <summary>Gets the transfer completion time.</summary>
         /// <value>The transfer completion time.</value>
         public DateTime TransferCompletionTime
         {

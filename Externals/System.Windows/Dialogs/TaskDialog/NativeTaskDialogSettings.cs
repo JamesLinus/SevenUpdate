@@ -19,23 +19,17 @@ namespace System.Windows.Dialogs
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   A collection of <c>TaskDialogButton</c>.
-        /// </summary>
+        /// <summary>A collection of <c>TaskDialogButton</c>.</summary>
         private TaskDialogButtonData[] buttons;
 
-        /// <summary>
-        ///   A collection of <c>TaskDialogRadioButton</c>.
-        /// </summary>
+        /// <summary>A collection of <c>TaskDialogRadioButton</c>.</summary>
         private TaskDialogButtonData[] radioButtons;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>
-        ///   Initializes a new instance of the NativeTaskDialogSettings class.
-        /// </summary>
+        /// <summary>Initializes a new instance of the NativeTaskDialogSettings class.</summary>
         internal NativeTaskDialogSettings()
         {
             this.NativeConfiguration = new TaskDialogConfig();
@@ -73,39 +67,27 @@ namespace System.Windows.Dialogs
 
         #region Properties
 
-        /// <summary>
-        ///   Gets or sets the elevated buttons.
-        /// </summary>
+        /// <summary>Gets or sets the elevated buttons.</summary>
         /// <value>The elevated buttons.</value>
         public List<int> ElevatedButtons { get; set; }
 
-        /// <summary>
-        ///   Gets the native configuration.
-        /// </summary>
+        /// <summary>Gets the native configuration.</summary>
         /// <value>The native configuration.</value>
         public TaskDialogConfig NativeConfiguration { get; private set; }
 
-        /// <summary>
-        ///   Gets or sets the progress bar maximum.
-        /// </summary>
+        /// <summary>Gets or sets the progress bar maximum.</summary>
         /// <value>The progress bar maximum.</value>
         public int ProgressBarMaximum { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the progress bar minimum.
-        /// </summary>
+        /// <summary>Gets or sets the progress bar minimum.</summary>
         /// <value>The progress bar minimum.</value>
         public int ProgressBarMinimum { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the state of the progress bar.
-        /// </summary>
+        /// <summary>Gets or sets the state of the progress bar.</summary>
         /// <value>The state of the progress bar.</value>
         public TaskDialogProgressBarState ProgressBarState { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the progress bar value.
-        /// </summary>
+        /// <summary>Gets or sets the progress bar value.</summary>
         /// <value>The progress bar value.</value>
         public int ProgressBarValue { get; set; }
 
@@ -113,45 +95,29 @@ namespace System.Windows.Dialogs
 
         #region Public Methods
 
-        /// <summary>
-        ///   Gets the buttons.
-        /// </summary>
-        /// <returns>
-        ///   The collection of <c>TaskDialogButton</c>'s of the dialog dialog.
-        /// </returns>
+        /// <summary>Gets the buttons.</summary>
+        /// <returns>The collection of <c>TaskDialogButton</c>'s of the dialog dialog.</returns>
         public TaskDialogButtonData[] GetButtons()
         {
             return this.buttons;
         }
 
-        /// <summary>
-        ///   Gets the radio buttons.
-        /// </summary>
-        /// <returns>
-        ///   The collection of <c>TaskDialogRadioButton</c>'s of the dialog dialog.
-        /// </returns>
+        /// <summary>Gets the radio buttons.</summary>
+        /// <returns>The collection of <c>TaskDialogRadioButton</c>'s of the dialog dialog.</returns>
         public TaskDialogButtonData[] GetRadioButtons()
         {
             return this.radioButtons;
         }
 
-        /// <summary>
-        ///   Sets the buttons.
-        /// </summary>
-        /// <param name="value">
-        ///   The value.
-        /// </param>
+        /// <summary>Sets the buttons.</summary>
+        /// <param name="value">  The value.</param>
         public void SetButtons(TaskDialogButtonData[] value)
         {
             this.buttons = value;
         }
 
-        /// <summary>
-        ///   Sets the radio buttons.
-        /// </summary>
-        /// <param name="value">
-        ///   The value.
-        /// </param>
+        /// <summary>Sets the radio buttons.</summary>
+        /// <param name="value">  The value.</param>
         public void SetRadioButtons(TaskDialogButtonData[] value)
         {
             this.radioButtons = value;

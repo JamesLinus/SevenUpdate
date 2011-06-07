@@ -19,24 +19,12 @@ namespace System.Windows.Dialogs
     /// </summary>
     internal static class TaskDialogNativeMethods
     {
-        /// <summary>
-        ///   The <c>TaskDialog</c> callback.
-        /// </summary>
-        /// <param name="handle">
-        ///   The handle for the dialog.
-        /// </param>
-        /// <param name="msg">
-        ///   The message id.
-        /// </param>
-        /// <param name="parameter">
-        ///   The parameter.
-        /// </param>
-        /// <param name="parameterLength">
-        ///   The length of the parameter.
-        /// </param>
-        /// <returns>
-        ///   The result of the <c>TaskDialog</c>.
-        /// </returns>
+        /// <summary>The <c>TaskDialog</c> callback.</summary>
+        /// <param name="handle">  The handle for the dialog.</param>
+        /// <param name="msg">  The message id.</param>
+        /// <param name="parameter">  The parameter.</param>
+        /// <param name="parameterLength">  The length of the parameter.</param>
+        /// <returns>The result of the <c>TaskDialog</c>.</returns>
         internal delegate int TaskDialogCallBack(IntPtr handle, uint msg, IntPtr parameter, IntPtr parameterLength);
 
         /// <summary>
@@ -62,9 +50,7 @@ namespace System.Windows.Dialogs
         ///   <c>True</c> if the verification <c>CheckBox</c> was checked when the dialog was dismissed; otherwise,
         ///   <c>False</c>.
         /// </param>
-        /// <returns>
-        ///   The result.
-        /// </returns>
+        /// <returns>The result.</returns>
         [DllImport(@"comctl32.dll", CharSet = CharSet.Unicode, PreserveSig = false)]
         internal static extern Result TaskDialogIndirect(
             [In] TaskDialogConfig taskConfig,

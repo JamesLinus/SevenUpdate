@@ -11,20 +11,14 @@ namespace SharpBits.Base
 {
     using System.Runtime.InteropServices;
 
-    /// <summary>
-    ///   The BG_FILE_RANGE structure identifies a range of bytes to download from a file.
-    /// </summary>
+    /// <summary>The BG_FILE_RANGE structure identifies a range of bytes to download from a file.</summary>
     [StructLayout(LayoutKind.Sequential, Pack = 8, Size = 0)]
     internal struct BGFileRange
     {
-        /// <summary>
-        ///   The length to the end of the file.
-        /// </summary>
+        /// <summary>The length to the end of the file.</summary>
         public const ulong BGLengthToEof = unchecked((ulong)-1);
 
-        /// <summary>
-        ///   Zero-based offset to the beginning of the range of bytes to download from a file.
-        /// </summary>
+        /// <summary>Zero-based offset to the beginning of the range of bytes to download from a file.</summary>
         public ulong InitialOffset;
 
         /// <summary>

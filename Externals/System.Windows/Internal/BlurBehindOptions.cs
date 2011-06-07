@@ -17,25 +17,17 @@
 
 namespace System.Windows.Internal
 {
-    /// <summary>
-    ///   The blur behind flags/options.
-    /// </summary>
+    /// <summary>The blur behind flags/options.</summary>
     [Flags]
     public enum BlurBehindOptions : uint
     {
-        /// <summary>
-        ///   Enables blur behind.
-        /// </summary>
+        /// <summary>Enables blur behind.</summary>
         BlurBehindEnable = 0x00000001,
 
-        /// <summary>
-        ///   The blur behind region.
-        /// </summary>
+        /// <summary>The blur behind region.</summary>
         BlurBehindRegion = 0x00000002,
 
-        /// <summary>
-        ///   True to show effects with maximizing.
-        /// </summary>
+        /// <summary>True to show effects with maximizing.</summary>
         TransitionOnMaximized = 0x00000004
     }
 }

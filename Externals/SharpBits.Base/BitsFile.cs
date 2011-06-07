@@ -13,49 +13,31 @@ namespace SharpBits.Base
     using System.Collections.ObjectModel;
     using System.Runtime.InteropServices;
 
-    /// <summary>
-    ///   A file that can be added to a <c>BitsJob</c>.
-    /// </summary>
+    /// <summary>A file that can be added to a <c>BitsJob</c>.</summary>
     public sealed partial class BitsFile : IDisposable
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   The current job.
-        /// </summary>
+        /// <summary>The current job.</summary>
         private readonly BitsJob job;
 
-        /// <summary>
-        ///   Indicates if the file has been disposed.
-        /// </summary>
+        /// <summary>Indicates if the file has been disposed.</summary>
         private bool disposed;
 
-        /// <summary>
-        ///   The current <c>BitsFile</c>.
-        /// </summary>
+        /// <summary>The current <c>BitsFile</c>.</summary>
         private IBackgroundCopyFile file;
 
-        /// <summary>
-        ///   The current <c>BitsFile</c> progress.
-        /// </summary>
+        /// <summary>The current <c>BitsFile</c> progress.</summary>
         private FileProgress progress;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>
-        ///   Initializes a new instance of the <c>BitsFile</c> class.
-        /// </summary>
-        /// <exception cref="ArgumentNullException">
-        ///   Thrown when one or more required arguments are <c>null</c>.
-        /// </exception>
-        /// <param name="job">
-        ///   The current job.
-        /// </param>
-        /// <param name="file">
-        ///   The current file within the job.
-        /// </param>
+        /// <summary>Initializes a new instance of the <c>BitsFile</c> class.</summary>
+        /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are <c>null</c>.</exception>
+        /// <param name="job">  The current job.</param>
+        /// <param name="file">  The current file within the job.</param>
         internal BitsFile(BitsJob job, IBackgroundCopyFile file)
         {
             if (null == file)
@@ -72,9 +54,7 @@ namespace SharpBits.Base
 
         #region Properties
 
-        /// <summary>
-        ///   Gets the local name of the file.
-        /// </summary>
+        /// <summary>Gets the local name of the file.</summary>
         /// <value>The filename of the local file.</value>
         public string LocalName
         {
@@ -94,9 +74,7 @@ namespace SharpBits.Base
             }
         }
 
-        /// <summary>
-        ///   Gets the progress.
-        /// </summary>
+        /// <summary>Gets the progress.</summary>
         /// <value>The progress.</value>
         public FileProgress Progress
         {
@@ -120,9 +98,7 @@ namespace SharpBits.Base
             }
         }
 
-        /// <summary>
-        ///   Gets or sets the remote name of the file.
-        /// </summary>
+        /// <summary>Gets or sets the remote name of the file.</summary>
         /// <value>The remote name of the file.</value>
         public string RemoteName
         {
@@ -168,9 +144,7 @@ namespace SharpBits.Base
 
         #region IDisposable
 
-        /// <summary>
-        ///   Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
-        /// </summary>
+        /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
         public void Dispose()
         {
             this.Dispose(true);
@@ -183,9 +157,7 @@ namespace SharpBits.Base
 
         #region Methods
 
-        /// <summary>
-        ///   Releases unmanaged and - optionally - managed resources.
-        /// </summary>
+        /// <summary>Releases unmanaged and - optionally - managed resources.</summary>
         /// <param name="disposing">
         ///   <c>True</c> to release both managed and unmanaged resources; otherwise, <c>False</c> to release only
         ///   unmanaged resources.
@@ -211,25 +183,19 @@ namespace SharpBits.Base
         #endregion
     }
 
-    /// <summary>
-    ///   A file that can be added to a <c>BitsJob</c>.
-    /// </summary>
+    /// <summary>A file that can be added to a <c>BitsJob</c>.</summary>
     public sealed partial class BitsFile
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   The file to download.
-        /// </summary>
+        /// <summary>The file to download.</summary>
         private readonly IBackgroundCopyFile2 file2;
 
         #endregion
 
         #region Properties
 
-        /// <summary>
-        ///   Gets the file ranges.
-        /// </summary>
+        /// <summary>Gets the file ranges.</summary>
         /// <value>The file ranges.</value>
         public Collection<FileRange> FileRanges
         {

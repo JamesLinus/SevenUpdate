@@ -15,19 +15,13 @@ namespace SharpBits.Base
     /// </summary>
     public enum AuthenticationScheme
     {
-        /// <summary>
-        ///   Use no authentication scheme.
-        /// </summary>
+        /// <summary>Use no authentication scheme.</summary>
         None = 0,
 
-        /// <summary>
-        ///   Basic is a scheme in which the user name and password are sent in clear-text to the server or proxy.
-        /// </summary>
+        /// <summary>Basic is a scheme in which the user name and password are sent in clear-text to the server or proxy.</summary>
         Basic = 1,
 
-        /// <summary>
-        ///   Digest is a challenge-response scheme that uses a server-specified data string for the challenge.
-        /// </summary>
+        /// <summary>Digest is a challenge-response scheme that uses a server-specified data string for the challenge.</summary>
         Digest,
 
         /// <summary>

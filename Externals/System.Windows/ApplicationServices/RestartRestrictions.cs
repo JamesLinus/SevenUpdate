@@ -14,29 +14,19 @@ namespace System.Windows.ApplicationServices
     [Flags]
     public enum RestartRestrictions
     {
-        /// <summary>
-        ///   Always restart the application.
-        /// </summary>
+        /// <summary>Always restart the application.</summary>
         None = 0,
 
-        /// <summary>
-        ///   Do not restart when the application has crashed.
-        /// </summary>
+        /// <summary>Do not restart when the application has crashed.</summary>
         NotOnCrash = 1,
 
-        /// <summary>
-        ///   Do not restart when the application is hung.
-        /// </summary>
+        /// <summary>Do not restart when the application is hung.</summary>
         NotOnHang = 2,
 
-        /// <summary>
-        ///   Do not restart when the application is terminated due to a system update.
-        /// </summary>
+        /// <summary>Do not restart when the application is terminated due to a system update.</summary>
         NotOnPatch = 4,
 
-        /// <summary>
-        ///   Do not restart when the application is terminated because of a system reboot.
-        /// </summary>
+        /// <summary>Do not restart when the application is terminated because of a system reboot.</summary>
         NotOnReboot = 8
     }
 }

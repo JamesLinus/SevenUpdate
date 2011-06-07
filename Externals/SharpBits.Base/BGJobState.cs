@@ -9,9 +9,7 @@
 
 namespace SharpBits.Base
 {
-    /// <summary>
-    ///   The BG_JOB_STATE enumeration type defines constant values for the different states of a job.
-    /// </summary>
+    /// <summary>The BG_JOB_STATE enumeration type defines constant values for the different states of a job.</summary>
     internal enum BGJobState
     {
         /// <summary>
@@ -26,14 +24,10 @@ namespace SharpBits.Base
         /// </summary>
         Connecting = 1,
 
-        /// <summary>
-        ///   Specifies that BITS is transferring data for the job.
-        /// </summary>
+        /// <summary>Specifies that BITS is transferring data for the job.</summary>
         Transferring = 2,
 
-        /// <summary>
-        ///   Specifies that the job is suspended (paused).
-        /// </summary>
+        /// <summary>Specifies that the job is suspended (paused).</summary>
         Suspended = 3,
 
         /// <summary>
@@ -52,9 +46,7 @@ namespace SharpBits.Base
         /// </summary>
         TransientError = 5,
 
-        /// <summary>
-        ///   Specifies that your job was successfully processed.
-        /// </summary>
+        /// <summary>Specifies that your job was successfully processed.</summary>
         Transferred = 6,
 
         /// <summary>
@@ -69,9 +61,7 @@ namespace SharpBits.Base
         /// </summary>
         Canceled = 8,
 
-        /// <summary>
-        ///   This is custom state not provided by BITS.
-        /// </summary>
+        /// <summary>This is custom state not provided by BITS.</summary>
         Unknown = 1001, // This is not provided by BITS but is Custom
     }
 }

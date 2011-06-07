@@ -34,84 +34,56 @@ namespace SevenUpdate
 
     using Properties;
 
-    /// <summary>
-    ///   Interaction logic for App.xaml.
-    /// </summary>
+    /// <summary>Interaction logic for App.xaml.</summary>
     public sealed partial class App
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   The all users application data location.
-        /// </summary>
+        /// <summary>The all users application data location.</summary>
         public static readonly string AllUserStore =
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Seven Update");
 
-        /// <summary>
-        ///   The location of the list of applications Seven Update can update.
-        /// </summary>
+        /// <summary>The location of the list of applications Seven Update can update.</summary>
         public static readonly string ApplicationsFile = Path.Combine(AllUserStore, @"Apps.sul");
 
-        /// <summary>
-        ///   The location of the application settings file.
-        /// </summary>
+        /// <summary>The location of the application settings file.</summary>
         public static readonly string ConfigFile = Path.Combine(AllUserStore, @"App.config");
 
-        /// <summary>
-        ///   The location of the hidden updates file.
-        /// </summary>
+        /// <summary>The location of the hidden updates file.</summary>
         public static readonly string HiddenFile = Path.Combine(AllUserStore, @"Hidden.suh");
 
-        /// <summary>
-        ///   The location of the update history file.
-        /// </summary>
+        /// <summary>The location of the update history file.</summary>
         public static readonly string HistoryFile = Path.Combine(AllUserStore, @"History.suh");
 
-        /// <summary>
-        ///   The location of the user application data location.
-        /// </summary>
+        /// <summary>The location of the user application data location.</summary>
         public static readonly string UserStore =
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Seven Update");
 
-        /// <summary>
-        ///   The Seven Update list location.
-        /// </summary>
+        /// <summary>The Seven Update list location.</summary>
         internal const string SulLocation = @"http://apps.sevenupdate.com/list.sul";
 
         #endregion
 
         #region Properties
 
-        /// <summary>
-        ///   Gets the command line arguments passed to this instance.
-        /// </summary>
+        /// <summary>Gets the command line arguments passed to this instance.</summary>
         internal static IList<string> Args { get; private set; }
 
-        /// <summary>
-        ///   Gets a value indicating whether Seven Update should be updated to the beta channel.
-        /// </summary>
+        /// <summary>Gets a value indicating whether Seven Update should be updated to the beta channel.</summary>
         internal static bool IsBeta { get; private set; }
 
-        /// <summary>
-        ///   Gets a value indicating whether Seven Update should be updated to the dev channel.
-        /// </summary>
+        /// <summary>Gets a value indicating whether Seven Update should be updated to the dev channel.</summary>
         internal static bool IsDev { get; private set; }
 
-        /// <summary>
-        ///   Gets or sets the application TaskBarItemInfo.
-        /// </summary>
+        /// <summary>Gets or sets the application TaskBarItemInfo.</summary>
         internal static TaskbarItemInfo TaskBar { get; set; }
 
         #endregion
 
         #region Methods
 
-        /// <summary>
-        ///   Process command line args.
-        /// </summary>
-        /// <param name="args">
-        ///   The list of arguments.
-        /// </param>
+        /// <summary>Process command line args.</summary>
+        /// <param name="args">  The list of arguments.</param>
         internal static void ProcessArgs(IList<string> args)
         {
             if (args == null)
@@ -148,27 +120,17 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        ///   Raises the Application.Exit event.
-        /// </summary>
-        /// <param name="e">
-        ///   An ExitEventArgs that contains the event data.
-        /// </param>
+        /// <summary>Raises the Application.Exit event.</summary>
+        /// <param name="e">  An ExitEventArgs that contains the event data.</param>
         protected override void OnExit(ExitEventArgs e)
         {
             UnregisterApplicationRecoveryAndRestart();
             base.OnExit(e);
         }
 
-        /// <summary>
-        ///   Raises the <c>InstanceAwareApplication.Startup</c> event.
-        /// </summary>
-        /// <param name="e">
-        ///   The <c>System.Windows.StartupEventArgs</c> instance containing the event data.
-        /// </param>
-        /// <param name="isFirstInstance">
-        ///   If set to <c>True</c> the current instance is the first application instance.
-        /// </param>
+        /// <summary>Raises the <c>InstanceAwareApplication.Startup</c> event.</summary>
+        /// <param name="e">  The <c>System.Windows.StartupEventArgs</c> instance containing the event data.</param>
+        /// <param name="isFirstInstance">  If set to <c>True</c> the current instance is the first application instance.</param>
         protected override void OnStartup(StartupEventArgs e, bool isFirstInstance)
         {
             Init();
@@ -239,21 +201,15 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        ///   Raises the <c>InstanceAwareApplication.StartupNextInstance</c> event.
-        /// </summary>
-        /// <param name="e">
-        ///   The <c>StartupNextInstanceEventArgs</c> instance containing the event data.
-        /// </param>
+        /// <summary>Raises the <c>InstanceAwareApplication.StartupNextInstance</c> event.</summary>
+        /// <param name="e">  The <c>StartupNextInstanceEventArgs</c> instance containing the event data.</param>
         protected override void OnStartupNextInstance(StartupNextInstanceEventArgs e)
         {
             base.OnStartupNextInstance(e);
             ProcessArgs(e.GetArgs());
         }
 
-        /// <summary>
-        ///   Gets the application ready for startup.
-        /// </summary>
+        /// <summary>Gets the application ready for startup.</summary>
         private static void Init()
         {
             Utilities.Locale = Settings.Default.Locale;
@@ -290,15 +246,9 @@ namespace SevenUpdate
             Core.IsReconnect = true;
         }
 
-        /// <summary>
-        ///   Logs an error.
-        /// </summary>
-        /// <param name="sender">
-        ///   The object that called the event.
-        /// </param>
-        /// <param name="e">
-        ///   The error data to log.
-        /// </param>
+        /// <summary>Logs an error.</summary>
+        /// <param name="sender">  The object that called the event.</param>
+        /// <param name="e">  The error data to log.</param>
         private static void LogError(object sender, ErrorOccurredEventArgs e)
         {
             using (var tw = new StreamWriter(Path.Combine(UserStore, "error.log"), true))
@@ -307,9 +257,7 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        ///   Registers the application to use the Recovery Manager.
-        /// </summary>
+        /// <summary>Registers the application to use the Recovery Manager.</summary>
         private static void RegisterApplicationRecoveryAndRestart()
         {
             if (Environment.OSVersion.Version.Major < 6)
@@ -325,9 +273,7 @@ namespace SevenUpdate
 #endif
         }
 
-        /// <summary>
-        ///   Sets the application jump list.
-        /// </summary>
+        /// <summary>Sets the application jump list.</summary>
         private static void SetJumpList()
         {
             var jumpList = new JumpList();
@@ -375,9 +321,7 @@ namespace SevenUpdate
             JumpList.SetJumpList(Current, jumpList);
         }
 
-        /// <summary>
-        ///   The unregister application recovery and restart.
-        /// </summary>
+        /// <summary>The unregister application recovery and restart.</summary>
         private static void UnregisterApplicationRecoveryAndRestart()
         {
             if (Environment.OSVersion.Version.Major < 6)

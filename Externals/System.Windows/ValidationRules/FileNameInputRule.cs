@@ -27,16 +27,12 @@ namespace System.Windows.ValidationRules
 
     using Text.RegularExpressions;
 
-    /// <summary>
-    ///   Validates if the input is a filename.
-    /// </summary>
+    /// <summary>Validates if the input is a filename.</summary>
     public class FileNameInputRule : ValidationRule
     {
         #region Properties
 
-        /// <summary>
-        ///   Gets or sets a value indicating whether the filename is required to pass validation.
-        /// </summary>
+        /// <summary>Gets or sets a value indicating whether the filename is required to pass validation.</summary>
         /// <value><c>True</c> if the filename is required; otherwise, <c>False</c>.</value>
         public bool IsRequired { get; set; }
 
@@ -44,18 +40,10 @@ namespace System.Windows.ValidationRules
 
         #region Public Methods
 
-        /// <summary>
-        ///   When overridden in a derived class, performs validation checks on a value.
-        /// </summary>
-        /// <param name="value">
-        ///   The value from the binding target to check.
-        /// </param>
-        /// <param name="cultureInfo">
-        ///   The culture to use in this rule.
-        /// </param>
-        /// <returns>
-        ///   A <c>T:System.Windows.Controls.ValidationResult</c> object.
-        /// </returns>
+        /// <summary>When overridden in a derived class, performs validation checks on a value.</summary>
+        /// <param name="value">  The value from the binding target to check.</param>
+        /// <param name="cultureInfo">  The culture to use in this rule.</param>
+        /// <returns>A <c>T:System.Windows.Controls.ValidationResult</c> object.</returns>
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {
             var input = value as string;

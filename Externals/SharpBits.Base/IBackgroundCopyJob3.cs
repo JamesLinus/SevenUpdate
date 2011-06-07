@@ -21,21 +21,15 @@ namespace SharpBits.Base
     [Guid("443C8934-90FF-48ED-BCDE-26F5C7450042")]
     internal interface IBackgroundCopyJob3
     {
-        /// <summary>
-        ///   Adds multiple files to the job.
-        /// </summary>
-        /// <param name="fileCount">
-        ///   Number of elements in paFileSet. .
-        /// </param>
+        /// <summary>Adds multiple files to the job.</summary>
+        /// <param name="fileCount">  Number of elements in paFileSet. .</param>
         /// <param name="fileSet">
         ///   Array of <c>BGFileInfo</c> structures that identify the local and remote file names of the files to
         ///   transfer.
         /// </param>
         void AddFileSet(uint fileCount, [MarshalAs(UnmanagedType.LPArray)] BGFileInfo[] fileSet);
 
-        /// <summary>
-        ///   Adds a single file to the job.
-        /// </summary>
+        /// <summary>Adds a single file to the job.</summary>
         /// <param name="remoteUrl">
         ///   A string that contains the name of the file on the client. For information on specifying the local name,
         ///   see the LocalName member and Remarks section of the <see
@@ -49,49 +43,31 @@ namespace SharpBits.Base
         void AddFile(
             [MarshalAs(UnmanagedType.LPWStr)] string remoteUrl, [MarshalAs(UnmanagedType.LPWStr)] string localName);
 
-        /// <summary>
-        ///   Returns an interface pointer to an enumerator object that you use to enumerate the files in the job.
-        /// </summary>
+        /// <summary>Returns an interface pointer to an enumerator object that you use to enumerate the files in the job.</summary>
         /// <param name="enum">
         ///   <c>IEnumBackgroundCopyFiles</c> interface pointer that you use to enumerate the files in the job. Release
         ///   enumFiles when done. .
         /// </param>
         void EnumFiles([MarshalAs(UnmanagedType.Interface)] out IEnumBackgroundCopyFiles @enum);
 
-        /// <summary>
-        ///   Pauses the job.
-        /// </summary>
+        /// <summary>Pauses the job.</summary>
         void Suspend();
 
-        /// <summary>
-        ///   Restarts a suspended job.
-        /// </summary>
+        /// <summary>Restarts a suspended job.</summary>
         void Resume();
 
-        /// <summary>
-        ///   Cancels the job and removes temporary files from the client.
-        /// </summary>
+        /// <summary>Cancels the job and removes temporary files from the client.</summary>
         void Cancel();
 
-        /// <summary>
-        ///   Ends the job and saves the transferred files on the client.
-        /// </summary>
+        /// <summary>Ends the job and saves the transferred files on the client.</summary>
         void Complete();
 
-        /// <summary>
-        ///   Retrieves the identifier of the job in the queue.
-        /// </summary>
-        /// <param name="val">
-        ///   GUID that identifies the job within the BITS queue.
-        /// </param>
+        /// <summary>Retrieves the identifier of the job in the queue.</summary>
+        /// <param name="val">  GUID that identifies the job within the BITS queue.</param>
         void GetId(out Guid val);
 
-        /// <summary>
-        ///   Retrieves the type of transfer being performed, such as a file download.
-        /// </summary>
-        /// <param name="val">
-        ///   Type of transfer being performed. For a list of transfer types, see the BGJob_TYPE enumeration type. .
-        /// </param>
+        /// <summary>Retrieves the type of transfer being performed, such as a file download.</summary>
+        /// <param name="val">  Type of transfer being performed. For a list of transfer types, see the BGJob_TYPE enumeration type. .</param>
         void GetType(out BGJobType val);
 
         /// <summary>
@@ -105,17 +81,11 @@ namespace SharpBits.Base
         /// </param>
         void GetProgress(out BGJobProgress val);
 
-        /// <summary>
-        ///   Retrieves timestamps for activities related to the job, such as the time the job was created.
-        /// </summary>
-        /// <param name="val">
-        ///   Contains job-related time stamps. For available time stamps, see the BGJob_TIMES structure.
-        /// </param>
+        /// <summary>Retrieves timestamps for activities related to the job, such as the time the job was created.</summary>
+        /// <param name="val">  Contains job-related time stamps. For available time stamps, see the BGJob_TIMES structure.</param>
         void GetTimes(out BGJobTimes val);
 
-        /// <summary>
-        ///   Retrieves the state of the job.
-        /// </summary>
+        /// <summary>Retrieves the state of the job.</summary>
         /// <param name="val">
         ///   Current state of the job. For example, the state reflects whether the job is in error, transferring data,
         ///   or suspended. For a list of job states, see the <see
@@ -123,9 +93,7 @@ namespace SharpBits.Base
         /// </param>
         void GetState(out BGJobState val);
 
-        /// <summary>
-        ///   Retrieves an interface pointer to the error object after an error occurs.
-        /// </summary>
+        /// <summary>Retrieves an interface pointer to the error object after an error occurs.</summary>
         /// <param name="error">
         ///   Error interface that provides the error code, a description of the error, and the context in which the
         ///   error occurred. This parameter also identifies the file being transferred at the time the error occurred.
@@ -133,54 +101,42 @@ namespace SharpBits.Base
         /// </param>
         void GetError([MarshalAs(UnmanagedType.Interface)] out IBackgroundCopyError error);
 
-        /// <summary>
-        ///   Retrieves the job owner's identity.
-        /// </summary>
+        /// <summary>Retrieves the job owner's identity.</summary>
         /// <param name="val">
         ///   A string that contains the string version of the SID that identifies the job's owner. Call the
         ///   CoTaskMemFree function to free ppOwner when done. .
         /// </param>
         void GetOwner([MarshalAs(UnmanagedType.LPWStr)] out string val);
 
-        /// <summary>
-        ///   Specifies a display name that identifies the job in a user interface.
-        /// </summary>
+        /// <summary>Specifies a display name that identifies the job in a user interface.</summary>
         /// <param name="val">
         ///   A string that identifies the job. Must not be <c>null</c>. The length of the string is limited to 256
         ///   characters, not including the <c>null</c> terminator. .
         /// </param>
         void SetDisplayName([MarshalAs(UnmanagedType.LPWStr)] string val);
 
-        /// <summary>
-        ///   Retrieves the display name that identifies the job.
-        /// </summary>
+        /// <summary>Retrieves the display name that identifies the job.</summary>
         /// <param name="val">
         ///   A string that contains the display name that identifies the job. More than one job can have the same
         ///   display name. Call the CoTaskMemFree function to free displayName when done.
         /// </param>
         void GetDisplayName([MarshalAs(UnmanagedType.LPWStr)] out string val);
 
-        /// <summary>
-        ///   Specifies a description of the job.
-        /// </summary>
+        /// <summary>Specifies a description of the job.</summary>
         /// <param name="val">
         ///   A string that provides additional information about the job. The length of the string is limited to 1,024
         ///   characters, not including the <c>null</c> terminator.
         /// </param>
         void SetDescription([MarshalAs(UnmanagedType.LPWStr)] string val);
 
-        /// <summary>
-        ///   Retrieves the description of the job.
-        /// </summary>
+        /// <summary>Retrieves the description of the job.</summary>
         /// <param name="val">
         ///   A string that contains a short description of the job. Call the CoTaskMemFree function to free
         ///   ppDescription when done. .
         /// </param>
         void GetDescription([MarshalAs(UnmanagedType.LPWStr)] out string val);
 
-        /// <summary>
-        ///   Specifies the priority of the job relative to other jobs in the transfer queue.
-        /// </summary>
+        /// <summary>Specifies the priority of the job relative to other jobs in the transfer queue.</summary>
         /// <param name="val">
         ///   Specifies the priority level of your job relative to other jobs in the transfer queue. The default is
         ///   BGJobPriorityNormal. For a list of priority levels, see the <see
@@ -188,25 +144,15 @@ namespace SharpBits.Base
         /// </param>
         void SetPriority(BGJobPriority val);
 
-        /// <summary>
-        ///   Retrieves the priority level you have set for the job.
-        /// </summary>
-        /// <param name="val">
-        ///   Priority of the job relative to other jobs in the transfer queue. .
-        /// </param>
+        /// <summary>Retrieves the priority level you have set for the job.</summary>
+        /// <param name="val">  Priority of the job relative to other jobs in the transfer queue. .</param>
         void GetPriority(out BGJobPriority val);
 
-        /// <summary>
-        ///   Specifies the type of event notification to receive.
-        /// </summary>
-        /// <param name="val">
-        ///   Set one or more of the following flags to identify the events that you want to receive. .
-        /// </param>
+        /// <summary>Specifies the type of event notification to receive.</summary>
+        /// <param name="val">  Set one or more of the following flags to identify the events that you want to receive. .</param>
         void SetNotifyFlags([MarshalAs(UnmanagedType.U4)] BGJobNotificationTypes val);
 
-        /// <summary>
-        ///   Retrieves the event notification (callback) flags you have set for your application.
-        /// </summary>
+        /// <summary>Retrieves the event notification (callback) flags you have set for your application.</summary>
         /// <param name="val">
         ///   Identifies the events that your application receives. The following table lists the event notification
         ///   flag values. .
@@ -223,9 +169,7 @@ namespace SharpBits.Base
         /// </param>
         void SetNotifyInterface([MarshalAs(UnmanagedType.IUnknown)] object val);
 
-        /// <summary>
-        ///   Retrieves a pointer to your implementation of the <c>IBackgroundCopyCallback</c> interface (callbacks).
-        /// </summary>
+        /// <summary>Retrieves a pointer to your implementation of the <c>IBackgroundCopyCallback</c> interface (callbacks).</summary>
         /// <param name="val">
         ///   Interface pointer to your implementation of the <c>IBackgroundCopyCallback</c> interface. When done,
         ///   release ppNotifyInterface.
@@ -273,23 +217,17 @@ namespace SharpBits.Base
         ///   Retrieves the length of time that BITS continues to try to transfer the file after encountering a
         ///   transient error condition.
         /// </summary>
-        /// <param name="seconds">
-        ///   Length of time, in seconds, that the service tries to transfer the file after a transient error occurs. .
-        /// </param>
+        /// <param name="seconds">  Length of time, in seconds, that the service tries to transfer the file after a transient error occurs. .</param>
         void GetNoProgressTimeout(out uint seconds);
 
-        /// <summary>
-        ///   Retrieves the number of times the job was interrupted by network failure or server unavailability.
-        /// </summary>
+        /// <summary>Retrieves the number of times the job was interrupted by network failure or server unavailability.</summary>
         /// <param name="errors">
         ///   Number of errors that occurred while BITS tried to transfer the job. The count increases when the job
         ///   moves from the BGJobStateTransferring state to the BGJobStateTransientError or BGJobStateError state.
         /// </param>
         void GetErrorCount(out ulong errors);
 
-        /// <summary>
-        ///   Specifies which proxy to use to transfer the files.
-        /// </summary>
+        /// <summary>Specifies which proxy to use to transfer the files.</summary>
         /// <param name="proxyUsage">
         ///   Specifies whether to use the user's proxy settings, not to use a proxy, or to use application-specified
         ///   proxy settings. The default is to use the user's proxy settings, BGJobProxyUsagePreConfig. For a list of
@@ -315,9 +253,7 @@ namespace SharpBits.Base
             [MarshalAs(UnmanagedType.LPWStr)] string proxyList,
             [MarshalAs(UnmanagedType.LPWStr)] string proxyBypassList);
 
-        /// <summary>
-        ///   Retrieves the proxy settings the job uses to transfer the files.
-        /// </summary>
+        /// <summary>Retrieves the proxy settings the job uses to transfer the files.</summary>
         /// <param name="proxyUsage">
         ///   Specifies the proxy settings the job uses to transfer the files. For a list of proxy options, see the <see
         ///    cref="BGJobProxyUsage" /> enumeration. .
@@ -340,9 +276,7 @@ namespace SharpBits.Base
             [MarshalAs(UnmanagedType.LPWStr)] out string proxyList,
             [MarshalAs(UnmanagedType.LPWStr)] out string proxyBypassList);
 
-        /// <summary>
-        ///   Changes the ownership of the job to the current user.
-        /// </summary>
+        /// <summary>Changes the ownership of the job to the current user.</summary>
         void TakeOwnership();
 
         /// <summary>
@@ -398,9 +332,7 @@ namespace SharpBits.Base
         ///   Buffer to contain the reply data. The method sets buffer to <c>null</c> if the server application did not
         ///   return a reply. Call the CoTaskMemFree function to free buffer when done.
         /// </param>
-        /// <param name="length">
-        ///   Size, in bytes, of the reply data in buffer.
-        /// </param>
+        /// <param name="length">  Size, in bytes, of the reply data in buffer.</param>
         void GetReplyData(IntPtr buffer, out ulong length);
 
         /// <summary>
@@ -446,9 +378,7 @@ namespace SharpBits.Base
         ///   target and scheme pair that you specified using the IBackgroundCopyJob2::<c>SetCredentials</c>
         ///   method. There is no method to retrieve the credentials you have set.
         /// </summary>
-        /// <param name="target">
-        ///   Identifies whether to use the credentials for proxy or server authentication.
-        /// </param>
+        /// <param name="target">  Identifies whether to use the credentials for proxy or server authentication.</param>
         /// <param name="scheme">
         ///   Identifies the authentication scheme to use (basic or one of several challenge-response schemes). For
         ///   details, see the <see
@@ -456,53 +386,29 @@ namespace SharpBits.Base
         /// </param>
         void RemoveCredentials(BGAuthTarget target, BGAuthScheme scheme);
 
-        /// <summary>
-        ///   Replaces the remote prefix.
-        /// </summary>
-        /// <param name="oldPrefix">
-        ///   The old prefix.
-        /// </param>
-        /// <param name="newPrefix">
-        ///   The new prefix.
-        /// </param>
+        /// <summary>Replaces the remote prefix.</summary>
+        /// <param name="oldPrefix">  The old prefix.</param>
+        /// <param name="newPrefix">  The new prefix.</param>
         void ReplaceRemotePrefix(
             [MarshalAs(UnmanagedType.LPWStr)] string oldPrefix, [MarshalAs(UnmanagedType.LPWStr)] string newPrefix);
 
-        /// <summary>
-        ///   Adds the file with ranges.
-        /// </summary>
-        /// <param name="remoteUrl">
-        ///   The remote URL.
-        /// </param>
-        /// <param name="localName">
-        ///   Name of the local.
-        /// </param>
-        /// <param name="rangeCount">
-        ///   The range count.
-        /// </param>
-        /// <param name="ranges">
-        ///   The ranges.
-        /// </param>
+        /// <summary>Adds the file with ranges.</summary>
+        /// <param name="remoteUrl">  The remote URL.</param>
+        /// <param name="localName">  Name of the local.</param>
+        /// <param name="rangeCount">  The range count.</param>
+        /// <param name="ranges">  The ranges.</param>
         void AddFileWithRanges(
             [MarshalAs(UnmanagedType.LPWStr)] string remoteUrl,
             [MarshalAs(UnmanagedType.LPWStr)] string localName,
             uint rangeCount,
             [MarshalAs(UnmanagedType.LPArray)] BGFileRange[] ranges);
 
-        /// <summary>
-        ///   Sets the file acl flags.
-        /// </summary>
-        /// <param name="flags">
-        ///   The flags.
-        /// </param>
+        /// <summary>Sets the file acl flags.</summary>
+        /// <param name="flags">  The flags.</param>
         void SetFileAclFlags(BGFileAclFlags flags);
 
-        /// <summary>
-        ///   Gets the file acl flags.
-        /// </summary>
-        /// <param name="flags">
-        ///   The flags.
-        /// </param>
+        /// <summary>Gets the file acl flags.</summary>
+        /// <param name="flags">  The flags.</param>
         void GetFileAclFlags([Out] out BGFileAclFlags flags);
     }
 }

@@ -8,32 +8,20 @@ namespace System.Windows.Dialogs
 {
     using Runtime.InteropServices;
 
-    /// <summary>
-    ///   Contains the data for a <c>TaskDialogButton</c>.
-    /// </summary>
+    /// <summary>Contains the data for a <c>TaskDialogButton</c>.</summary>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 4)]
     internal struct TaskDialogButtonData
     {
-        /// <summary>
-        ///   Indicates the value to be returned when this button is selected.
-        /// </summary>
+        /// <summary>Indicates the value to be returned when this button is selected.</summary>
         private readonly int ButtonID;
 
-        /// <summary>
-        ///   The text to display on the button.
-        /// </summary>
+        /// <summary>The text to display on the button.</summary>
         [MarshalAs(UnmanagedType.LPWStr)]
         private readonly string ButtonText;
 
-        /// <summary>
-        ///   Initializes a new instance of the <c>TaskDialogButtonData</c> struct.
-        /// </summary>
-        /// <param name="buttonId">
-        ///   The button ID.
-        /// </param>
-        /// <param name="buttonText">
-        ///   The button text.
-        /// </param>
+        /// <summary>Initializes a new instance of the <c>TaskDialogButtonData</c> struct.</summary>
+        /// <param name="buttonId">  The button ID.</param>
+        /// <param name="buttonText">  The button text.</param>
         public TaskDialogButtonData(int buttonId, string buttonText)
         {
             this.ButtonID = buttonId;

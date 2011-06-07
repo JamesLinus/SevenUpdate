@@ -9,19 +9,13 @@
 
 namespace SharpBits.Base
 {
-    /// <summary>
-    ///   Authentication scheme used for the background job.
-    /// </summary>
+    /// <summary>Authentication scheme used for the background job.</summary>
     internal enum BGAuthScheme
     {
-        /// <summary>
-        ///   Basic is a scheme in which the user name and password are sent in clear-text to the server or proxy.
-        /// </summary>
+        /// <summary>Basic is a scheme in which the user name and password are sent in clear-text to the server or proxy.</summary>
         Basic = 1,
 
-        /// <summary>
-        ///   Digest is a challenge-response scheme that uses a server-specified data string for the challenge.
-        /// </summary>
+        /// <summary>Digest is a challenge-response scheme that uses a server-specified data string for the challenge.</summary>
         Digest = 2,
 
         /// <summary>

@@ -19,25 +19,15 @@ namespace System.Windows.Controls
 {
     using Linq;
 
-    /// <summary>
-    ///   Contains methods that extend the <c>TreeView</c> control.
-    /// </summary>
+    /// <summary>Contains methods that extend the <c>TreeView</c> control.</summary>
     public static class TreeViewExtensions
     {
         #region Public Methods
 
-        /// <summary>
-        ///   Finds the parent TreeViewItem of the current TreeViewItem.
-        /// </summary>
-        /// <param name="treeView">
-        ///   The treeview control.
-        /// </param>
-        /// <param name="predicate">
-        ///   The TreeViewItem to use as a starting point.
-        /// </param>
-        /// <returns>
-        ///   The parent TreeViewItem.
-        /// </returns>
+        /// <summary>Finds the parent TreeViewItem of the current TreeViewItem.</summary>
+        /// <param name="treeView">  The treeview control.</param>
+        /// <param name="predicate">  The TreeViewItem to use as a starting point.</param>
+        /// <returns>The parent TreeViewItem.</returns>
         public static TreeViewItem FindTreeViewItem(this ItemsControl treeView, Predicate<TreeViewItem> predicate)
         {
             if (treeView == null)
@@ -57,21 +47,11 @@ namespace System.Windows.Controls
 
         #region Methods
 
-        /// <summary>
-        ///   Finds the TreeViewItem from the collection.
-        /// </summary>
-        /// <param name="parentItemContainerGenerator">
-        ///   The parent item container.
-        /// </param>
-        /// <param name="itemCollection">
-        ///   The item collection.
-        /// </param>
-        /// <param name="predicate">
-        ///   The TreeViewItem.
-        /// </param>
-        /// <returns>
-        ///   The TreeViewItem found.
-        /// </returns>
+        /// <summary>Finds the TreeViewItem from the collection.</summary>
+        /// <param name="parentItemContainerGenerator">  The parent item container.</param>
+        /// <param name="itemCollection">  The item collection.</param>
+        /// <param name="predicate">  The TreeViewItem.</param>
+        /// <returns>The TreeViewItem found.</returns>
         private static TreeViewItem FindTreeViewItem(
             ItemContainerGenerator parentItemContainerGenerator,
             ItemCollection itemCollection,

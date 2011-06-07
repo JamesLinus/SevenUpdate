@@ -24,138 +24,86 @@ namespace System.Windows.Dialogs
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   The static dialog.
-        /// </summary>
+        /// <summary>The static dialog.</summary>
         private static TaskDialog staticDialog;
 
-        /// <summary>
-        ///   The buttons.
-        /// </summary>
+        /// <summary>The buttons.</summary>
         private List<TaskDialogButtonBase> buttons;
 
-        /// <summary>
-        ///   Indicates if the <c>TaskDialog</c> can be canceled.
-        /// </summary>
+        /// <summary>Indicates if the <c>TaskDialog</c> can be canceled.</summary>
         private bool canCancel;
 
-        /// <summary>
-        ///   The caption.
-        /// </summary>
+        /// <summary>The caption.</summary>
         private string caption;
 
-        /// <summary>
-        ///   The check box text.
-        /// </summary>
+        /// <summary>The check box text.</summary>
         private string checkBoxText;
 
-        /// <summary>
-        ///   The command links.
-        /// </summary>
+        /// <summary>The command links.</summary>
         private List<TaskDialogButtonBase> commandLinks;
 
-        /// <summary>
-        ///   The details collapsed label.
-        /// </summary>
+        /// <summary>The details collapsed label.</summary>
         private string detailsCollapsedLabel;
 
-        /// <summary>
-        ///   Indicates whether the details will be expanded.
-        /// </summary>
+        /// <summary>Indicates whether the details will be expanded.</summary>
         private bool detailsExpanded;
 
-        /// <summary>
-        ///   The details expanded label.
-        /// </summary>
+        /// <summary>The details expanded label.</summary>
         private string detailsExpandedLabel;
 
-        /// <summary>
-        ///   The details expanded text.
-        /// </summary>
+        /// <summary>The details expanded text.</summary>
         private string detailsExpandedText;
 
-        /// <summary>
-        ///   Indicates if the object is disposed.
-        /// </summary>
+        /// <summary>Indicates if the object is disposed.</summary>
         private bool disposed;
 
-        /// <summary>
-        ///   The expansion mode.
-        /// </summary>
+        /// <summary>The expansion mode.</summary>
         private TaskDialogExpandedDetailsLocation expansionMode;
 
-        /// <summary>
-        ///   The footer check box checked.
-        /// </summary>
+        /// <summary>The footer check box checked.</summary>
         private bool? footerCheckBoxChecked;
 
-        /// <summary>
-        ///   The footer icon.
-        /// </summary>
+        /// <summary>The footer icon.</summary>
         private TaskDialogStandardIcon footerIcon;
 
-        /// <summary>
-        ///   The footer text.
-        /// </summary>
+        /// <summary>The footer text.</summary>
         private string footerText;
 
-        /// <summary>
-        ///   Enables converting url strings to hyperlinks.
-        /// </summary>
+        /// <summary>Enables converting url strings to hyperlinks.</summary>
         private bool hyperlinksEnabled;
 
-        /// <summary>
-        ///   The icon to show on the <c>TaskDialog</c>.
-        /// </summary>
+        /// <summary>The icon to show on the <c>TaskDialog</c>.</summary>
         private TaskDialogStandardIcon icon;
 
-        /// <summary>
-        ///   The instruction text.
-        /// </summary>
+        /// <summary>The instruction text.</summary>
         private string instructionText;
 
-        /// <summary>
-        ///   The native dialog.
-        /// </summary>
+        /// <summary>The native dialog.</summary>
         private NativeTaskDialog nativeDialog;
 
-        /// <summary>
-        ///   The window that owns this item.
-        /// </summary>
+        /// <summary>The window that owns this item.</summary>
         private IntPtr ownerWindow;
 
-        /// <summary>
-        ///   The progress bar.
-        /// </summary>
+        /// <summary>The progress bar.</summary>
         private TaskDialogProgressBar progressBar;
 
-        /// <summary>
-        ///   The radio buttons.
-        /// </summary>
+        /// <summary>The radio buttons.</summary>
         private List<TaskDialogButtonBase> radioButtons;
 
-        /// <summary>
-        ///   The standard buttons.
-        /// </summary>
+        /// <summary>The standard buttons.</summary>
         private TaskDialogStandardButtons standardButtons = TaskDialogStandardButtons.None;
 
-        /// <summary>
-        ///   The startup location.
-        /// </summary>
+        /// <summary>The startup location.</summary>
         private TaskDialogStartupLocation startupLocation;
 
-        /// <summary>
-        ///   The text for the <c>TaskDialog</c>.
-        /// </summary>
+        /// <summary>The text for the <c>TaskDialog</c>.</summary>
         private string text;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>
-        ///   Initializes a new instance of the TaskDialog class.
-        /// </summary>
+        /// <summary>Initializes a new instance of the TaskDialog class.</summary>
         public TaskDialog()
         {
             // Throw PlatformNotSupportedException if the user is not running Vista or beyond
@@ -171,9 +119,7 @@ namespace System.Windows.Dialogs
             this.commandLinks = new List<TaskDialogButtonBase>();
         }
 
-        /// <summary>
-        ///   Finalizes an instance of the <c>TaskDialog</c> class.
-        /// </summary>
+        /// <summary>Finalizes an instance of the <c>TaskDialog</c> class.</summary>
         ~TaskDialog()
         {
             this.Dispose(false);
@@ -183,38 +129,26 @@ namespace System.Windows.Dialogs
 
         #region Events
 
-        /// <summary>
-        ///   Occurs when the <c>TaskDialog</c> is closing.
-        /// </summary>
+        /// <summary>Occurs when the <c>TaskDialog</c> is closing.</summary>
         public event EventHandler<TaskDialogClosingEventArgs> Closing;
 
-        /// <summary>
-        ///   Occurs when a user clicks on Help.
-        /// </summary>
+        /// <summary>Occurs when a user clicks on Help.</summary>
         public event EventHandler HelpInvoked;
 
-        /// <summary>
-        ///   Occurs when a user clicks a hyperlink.
-        /// </summary>
+        /// <summary>Occurs when a user clicks a hyperlink.</summary>
         public event EventHandler<HyperlinkClickedEventArgs> HyperlinkClick;
 
-        /// <summary>
-        ///   Occurs when the <c>TaskDialog</c> is opened.
-        /// </summary>
+        /// <summary>Occurs when the <c>TaskDialog</c> is opened.</summary>
         public event EventHandler Opened;
 
-        /// <summary>
-        ///   Occurs when a progress bar changes.
-        /// </summary>
+        /// <summary>Occurs when a progress bar changes.</summary>
         public event EventHandler<TaskDialogTickEventArgs> Tick;
 
         #endregion
 
         #region Properties
 
-        /// <summary>
-        ///   Gets a value indicating whether this feature is supported on the current platform.
-        /// </summary>
+        /// <summary>Gets a value indicating whether this feature is supported on the current platform.</summary>
         public static bool IsPlatformSupported
         {
             get
@@ -224,9 +158,7 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>
-        ///   Gets or sets a value indicating whether if if the dialog can be canceled is set.
-        /// </summary>
+        /// <summary>Gets or sets a value indicating whether if if the dialog can be canceled is set.</summary>
         public bool CanCancel
         {
             get
@@ -241,9 +173,7 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>
-        ///   Gets or sets a value that contains the caption text.
-        /// </summary>
+        /// <summary>Gets or sets a value that contains the caption text.</summary>
         public string Caption
         {
             get
@@ -258,14 +188,10 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>
-        ///   Gets a value that contains the <c>TaskDialog</c> controls.
-        /// </summary>
+        /// <summary>Gets a value that contains the <c>TaskDialog</c> controls.</summary>
         public DialogControlCollection<TaskDialogControl> Controls { get; private set; }
 
-        /// <summary>
-        ///   Gets or sets a value that contains the collapsed control text.
-        /// </summary>
+        /// <summary>Gets or sets a value that contains the collapsed control text.</summary>
         public string DetailsCollapsedLabel
         {
             get
@@ -280,9 +206,7 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>
-        ///   Gets or sets a value indicating whether if the details section is expanded.
-        /// </summary>
+        /// <summary>Gets or sets a value indicating whether if the details section is expanded.</summary>
         public bool DetailsExpanded
         {
             get
@@ -297,9 +221,7 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>
-        ///   Gets or sets a value that contains the expanded control text.
-        /// </summary>
+        /// <summary>Gets or sets a value that contains the expanded control text.</summary>
         public string DetailsExpandedLabel
         {
             get
@@ -314,9 +236,7 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>
-        ///   Gets or sets a value that contains the expanded text in the details section.
-        /// </summary>
+        /// <summary>Gets or sets a value that contains the expanded text in the details section.</summary>
         public string DetailsExpandedText
         {
             get
@@ -335,9 +255,7 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>
-        ///   Gets or sets a value that contains the expansion mode for this dialog.
-        /// </summary>
+        /// <summary>Gets or sets a value that contains the expansion mode for this dialog.</summary>
         public TaskDialogExpandedDetailsLocation ExpansionMode
         {
             get
@@ -352,9 +270,7 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>
-        ///   Gets or sets a value that indicates if the footer <c>CheckBox</c> is checked.
-        /// </summary>
+        /// <summary>Gets or sets a value that indicates if the footer <c>CheckBox</c> is checked.</summary>
         public bool? FooterCheckBoxChecked
         {
             get
@@ -376,9 +292,7 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>
-        ///   Gets or sets a value that contains the footer check box text.
-        /// </summary>
+        /// <summary>Gets or sets a value that contains the footer check box text.</summary>
         /// <value>The footer check box text.</value>
         public string FooterCheckBoxText
         {
@@ -394,9 +308,7 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>
-        ///   Gets or sets a value that contains the footer icon.
-        /// </summary>
+        /// <summary>Gets or sets a value that contains the footer icon.</summary>
         public TaskDialogStandardIcon FooterIcon
         {
             get
@@ -415,9 +327,7 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>
-        ///   Gets or sets a value that contains the footer text.
-        /// </summary>
+        /// <summary>Gets or sets a value that contains the footer text.</summary>
         public string FooterText
         {
             get
@@ -436,9 +346,7 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>
-        ///   Gets or sets a value indicating whether if hyper links are enabled.
-        /// </summary>
+        /// <summary>Gets or sets a value indicating whether if hyper links are enabled.</summary>
         /// <value><c>True</c> if enabled; otherwise, <c>False</c>.</value>
         public bool HyperlinksEnabled
         {
@@ -454,9 +362,7 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>
-        ///   Gets or sets a value that contains the <c>TaskDialog</c> main icon.
-        /// </summary>
+        /// <summary>Gets or sets a value that contains the <c>TaskDialog</c> main icon.</summary>
         public TaskDialogStandardIcon Icon
         {
             get
@@ -475,9 +381,7 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>
-        ///   Gets or sets a value that contains the instruction text.
-        /// </summary>
+        /// <summary>Gets or sets a value that contains the instruction text.</summary>
         public string InstructionText
         {
             get
@@ -496,9 +400,7 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>
-        ///   Gets or sets a value that contains the owner window's handle.
-        /// </summary>
+        /// <summary>Gets or sets a value that contains the owner window's handle.</summary>
         public IntPtr OwnerWindowHandle
         {
             get
@@ -542,9 +444,7 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>
-        ///   Gets or sets a value that contains the standard buttons.
-        /// </summary>
+        /// <summary>Gets or sets a value that contains the standard buttons.</summary>
         public TaskDialogStandardButtons StandardButtons
         {
             get
@@ -559,9 +459,7 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>
-        ///   Gets or sets a value that contains the startup location.
-        /// </summary>
+        /// <summary>Gets or sets a value that contains the startup location.</summary>
         public TaskDialogStartupLocation StartupLocation
         {
             get
@@ -576,9 +474,7 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>
-        ///   Gets or sets a value that contains the message text.
-        /// </summary>
+        /// <summary>Gets or sets a value that contains the message text.</summary>
         public string Text
         {
             get
@@ -597,9 +493,7 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>
-        ///   Gets a value indicating whether a native dialog is showing.
-        /// </summary>
+        /// <summary>Gets a value indicating whether a native dialog is showing.</summary>
         /// <value><c>True</c> if a native dialog is showing; otherwise, <c>False</c>.</value>
         private bool NativeDialogShowing
         {
@@ -615,60 +509,34 @@ namespace System.Windows.Dialogs
 
         #region Public Methods
 
-        /// <summary>
-        ///   Creates and shows a task dialog with the specified message text.
-        /// </summary>
-        /// <param name="text">
-        ///   The text to display.
-        /// </param>
-        /// <returns>
-        ///   The dialog result.
-        /// </returns>
+        /// <summary>Creates and shows a task dialog with the specified message text.</summary>
+        /// <param name="text">  The text to display.</param>
+        /// <returns>The dialog result.</returns>
         public static TaskDialogResults Show(string text)
         {
             return ShowCoreStatic(text, TaskDialogDefaults.MainInstruction, TaskDialogDefaults.Caption);
         }
 
-        /// <summary>
-        ///   Creates and shows a task dialog with the specified supporting text and main instruction.
-        /// </summary>
-        /// <param name="text">
-        ///   The supporting text to display.
-        /// </param>
-        /// <param name="instructionText">
-        ///   The main instruction text to display.
-        /// </param>
-        /// <returns>
-        ///   The dialog result.
-        /// </returns>
+        /// <summary>Creates and shows a task dialog with the specified supporting text and main instruction.</summary>
+        /// <param name="text">  The supporting text to display.</param>
+        /// <param name="instructionText">  The main instruction text to display.</param>
+        /// <returns>The dialog result.</returns>
         public static TaskDialogResults Show(string text, string instructionText)
         {
             return ShowCoreStatic(text, instructionText, TaskDialogDefaults.Caption);
         }
 
-        /// <summary>
-        ///   Creates and shows a task dialog with the specified supporting text, main instruction, and dialog caption.
-        /// </summary>
-        /// <param name="text">
-        ///   The supporting text to display.
-        /// </param>
-        /// <param name="instructionText">
-        ///   The main instruction text to display.
-        /// </param>
-        /// <param name="caption">
-        ///   The caption for the dialog.
-        /// </param>
-        /// <returns>
-        ///   The dialog result.
-        /// </returns>
+        /// <summary>Creates and shows a task dialog with the specified supporting text, main instruction, and dialog caption.</summary>
+        /// <param name="text">  The supporting text to display.</param>
+        /// <param name="instructionText">  The main instruction text to display.</param>
+        /// <param name="caption">  The caption for the dialog.</param>
+        /// <returns>The dialog result.</returns>
         public static TaskDialogResults Show(string text, string instructionText, string caption)
         {
             return ShowCoreStatic(text, instructionText, caption);
         }
 
-        /// <summary>
-        ///   Close <c>TaskDialog</c>.
-        /// </summary>
+        /// <summary>Close <c>TaskDialog</c>.</summary>
         public void Close()
         {
             if (!this.NativeDialogShowing)
@@ -681,12 +549,8 @@ namespace System.Windows.Dialogs
             // TaskDialog's own cleanup code - which runs post show - will handle disposal of native dialog.
         }
 
-        /// <summary>
-        ///   Close <c>TaskDialog</c> with a given <c>TaskDialogResults</c>.
-        /// </summary>
-        /// <param name="closingResult">
-        ///   <c>TaskDialogResults</c> to return from the <c>TaskDialog</c>.Show() method.
-        /// </param>
+        /// <summary>Close <c>TaskDialog</c> with a given <c>TaskDialogResults</c>.</summary>
+        /// <param name="closingResult">  <c>TaskDialogResults</c> to return from the <c>TaskDialog</c>.Show() method.</param>
         public void Close(TaskDialogResults closingResult)
         {
             if (!this.NativeDialogShowing)
@@ -699,26 +563,16 @@ namespace System.Windows.Dialogs
             // TaskDialog's own cleanup code - which runs post show - will handle disposal of native dialog.
         }
 
-        /// <summary>
-        ///   Creates and shows a task dialog.
-        /// </summary>
-        /// <returns>
-        ///   The dialog result.
-        /// </returns>
+        /// <summary>Creates and shows a task dialog.</summary>
+        /// <returns>The dialog result.</returns>
         public TaskDialogResults Show()
         {
             return this.ShowCore();
         }
 
-        /// <summary>
-        ///   Creates and shows a modal task dialog.
-        /// </summary>
-        /// <param name="window">
-        ///   The window.
-        /// </param>
-        /// <returns>
-        ///   The dialog result.
-        /// </returns>
+        /// <summary>Creates and shows a modal task dialog.</summary>
+        /// <param name="window">  The window.</param>
+        /// <returns>The dialog result.</returns>
         public TaskDialogResults ShowDialog(Window window)
         {
             this.OwnerWindowHandle = new WindowInteropHelper(window).Handle;
@@ -731,9 +585,7 @@ namespace System.Windows.Dialogs
 
         #region IDialogControlHost
 
-        /// <summary>
-        ///   Applies changes to the collection.
-        /// </summary>
+        /// <summary>Applies changes to the collection.</summary>
         void IDialogControlHost.ApplyCollectionChanged()
         {
             // If we're showing, we should never get here - the changing notification would have thrown and the property
@@ -747,12 +599,8 @@ namespace System.Windows.Dialogs
         ///   has a property changed - this handles propagating the new property values to the Win32 API. 
         ///   If there isn't a way to change the Win32 value, then we should have already screened out the property set  in NotifyControlPropertyChanging.
         /// </summary>
-        /// <param name="propertyName">
-        ///   The name of the property changed.
-        /// </param>
-        /// <param name="control">
-        ///   The control whose property has changed.
-        /// </param>
+        /// <param name="propertyName">  The name of the property changed.</param>
+        /// <param name="control">  The control whose property has changed.</param>
         void IDialogControlHost.ApplyControlPropertyChange(string propertyName, DialogControl control)
         {
             // We only need to apply changes to the native dialog when it actually exists.
@@ -836,9 +684,7 @@ namespace System.Windows.Dialogs
         ///   if a control cannot be added/removed in the dialog's current state. PostProcess should pass on changes to
         ///   native control, if appropriate.
         /// </summary>
-        /// <returns>
-        ///   <c>True</c> if collection change is allowed.
-        /// </returns>
+        /// <returns><c>True</c> if collection change is allowed.</returns>
         bool IDialogControlHost.IsCollectionChangeAllowed()
         {
             // Only allow additions to collection if dialog is NOT showing.
@@ -850,15 +696,9 @@ namespace System.Windows.Dialogs
         ///   the property cannot be set in the dialog's current state. PostProcess should pass on changes to native
         ///   control, if appropriate.
         /// </summary>
-        /// <param name="propertyName">
-        ///   The name of the property.
-        /// </param>
-        /// <param name="control">
-        ///   The control <paramref name="propertyName" /> applies to.
-        /// </param>
-        /// <returns>
-        ///   <c>True</c> if the property change is allowed.
-        /// </returns>
+        /// <param name="propertyName">  The name of the property.</param>
+        /// <param name="control">  The control <paramref name="propertyName" /> applies to.</param>
+        /// <returns><c>True</c> if the property change is allowed.</returns>
         bool IDialogControlHost.IsControlPropertyChangeAllowed(string propertyName, DialogControl control)
         {
             Debug.Assert(
@@ -911,9 +751,7 @@ namespace System.Windows.Dialogs
 
         #region IDisposable
 
-        /// <summary>
-        ///   Dispose <c>TaskDialog</c> Resources.
-        /// </summary>
+        /// <summary>Dispose <c>TaskDialog</c> Resources.</summary>
         public void Dispose()
         {
             this.Dispose(true);
@@ -926,12 +764,8 @@ namespace System.Windows.Dialogs
 
         #region Methods
 
-        /// <summary>
-        ///   Raises the button click event.
-        /// </summary>
-        /// <param name="id">
-        ///   The button id.
-        /// </param>
+        /// <summary>Raises the button click event.</summary>
+        /// <param name="id">  The button id.</param>
         internal void RaiseButtonClickEvent(int id)
         {
             // First check to see if the ID matches a custom button.
@@ -950,12 +784,8 @@ namespace System.Windows.Dialogs
         ///   current state of the application and the button used to commit. Note that we don't have full access at
         ///   this stage to the full dialog state.
         /// </summary>
-        /// <param name="id">
-        ///   The id for the <c>TaskDialog</c>.
-        /// </param>
-        /// <returns>
-        ///   An integer.
-        /// </returns>
+        /// <param name="id">  The id for the <c>TaskDialog</c>.</param>
+        /// <returns>An integer.</returns>
         internal int RaiseClosingEvent(int id)
         {
             var handler = this.Closing;
@@ -998,9 +828,7 @@ namespace System.Windows.Dialogs
             return (int)Result.Ok;
         }
 
-        /// <summary>
-        ///   Raises the help invoked event.
-        /// </summary>
+        /// <summary>Raises the help invoked event.</summary>
         internal void RaiseHelpInvokedEvent()
         {
             var handler = this.HelpInvoked;
@@ -1010,12 +838,8 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>
-        ///   Raises the hyperlink click event.
-        /// </summary>
-        /// <param name="link">
-        ///   The link from the hyperlink.
-        /// </param>
+        /// <summary>Raises the hyperlink click event.</summary>
+        /// <param name="link">  The link from the hyperlink.</param>
         internal void RaiseHyperlinkClickEvent(string link)
         {
             var handler = this.HyperlinkClick;
@@ -1025,9 +849,7 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>
-        ///   Raises the opened event.
-        /// </summary>
+        /// <summary>Raises the opened event.</summary>
         internal void RaiseOpenedEvent()
         {
             var handler = this.Opened;
@@ -1037,12 +859,8 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>
-        ///   Raises the tick event.
-        /// </summary>
-        /// <param name="ticks">
-        ///   The ticks.
-        /// </param>
+        /// <summary>Raises the tick event.</summary>
+        /// <param name="ticks">  The ticks.</param>
         internal void RaiseTickEvent(int ticks)
         {
             var handler = this.Tick;
@@ -1052,15 +870,9 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>
-        ///   Applies the elevated icons.
-        /// </summary>
-        /// <param name="settings">
-        ///   The settings.
-        /// </param>
-        /// <param name="controls">
-        ///   The controls.
-        /// </param>
+        /// <summary>Applies the elevated icons.</summary>
+        /// <param name="settings">  The settings.</param>
+        /// <param name="controls">  The controls.</param>
         private static void ApplyElevatedIcons(
             NativeTaskDialogSettings settings, IEnumerable<TaskDialogButtonBase> controls)
         {
@@ -1075,15 +887,9 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>
-        ///   Builds the button struct array.
-        /// </summary>
-        /// <param name="controls">
-        ///   The controls.
-        /// </param>
-        /// <returns>
-        ///   An array of TaskDialogButtons.
-        /// </returns>
+        /// <summary>Builds the button struct array.</summary>
+        /// <param name="controls">  The controls.</param>
+        /// <returns>An array of TaskDialogButtons.</returns>
         private static TaskDialogButtonData[] BuildButtonStructArray(IList<TaskDialogButtonBase> controls)
         {
             var totalButtons = controls.Count;
@@ -1097,15 +903,9 @@ namespace System.Windows.Dialogs
             return buttonStructs;
         }
 
-        /// <summary>
-        ///   Constructs the dialog result.
-        /// </summary>
-        /// <param name="native">
-        ///   The native.
-        /// </param>
-        /// <returns>
-        ///   The <c>TaskDialogResults</c>.
-        /// </returns>
+        /// <summary>Constructs the dialog result.</summary>
+        /// <param name="native">  The native.</param>
+        /// <returns>The <c>TaskDialogResults</c>.</returns>
         private static TaskDialogResults ConstructDialogResult(NativeTaskDialog native)
         {
             Debug.Assert(
@@ -1128,29 +928,17 @@ namespace System.Windows.Dialogs
             return result;
         }
 
-        /// <summary>
-        ///   Finds the default button id.
-        /// </summary>
-        /// <param name="controls">
-        ///   The controls.
-        /// </param>
-        /// <returns>
-        ///   The button id.
-        /// </returns>
+        /// <summary>Finds the default button id.</summary>
+        /// <param name="controls">  The controls.</param>
+        /// <returns>The button id.</returns>
         private static int FindDefaultButtonId(IEnumerable<TaskDialogButtonBase> controls)
         {
             return controls.Where(control => control.Default).Select(control => control.Id).FirstOrDefault();
         }
 
-        /// <summary>
-        ///   Maps the button id to standard button.
-        /// </summary>
-        /// <param name="id">
-        ///   The button id.
-        /// </param>
-        /// <returns>
-        ///   The <c>TaskDialogButton</c>.
-        /// </returns>
+        /// <summary>Maps the button id to standard button.</summary>
+        /// <param name="id">  The button id.</param>
+        /// <returns>The <c>TaskDialogButton</c>.</returns>
         private static TaskDialogStandardButtons MapButtonIdToStandardButton(int id)
         {
             switch ((TaskDialogCommonButtonReturnId)id)
@@ -1180,21 +968,11 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>
-        ///   Shows the <c>TaskDialog</c>.
-        /// </summary>
-        /// <param name="text">
-        ///   The text to show.
-        /// </param>
-        /// <param name="instructionText">
-        ///   The instruction text.
-        /// </param>
-        /// <param name="caption">
-        ///   The caption.
-        /// </param>
-        /// <returns>
-        ///   The <c>TaskDialogResults</c>.
-        /// </returns>
+        /// <summary>Shows the <c>TaskDialog</c>.</summary>
+        /// <param name="text">  The text to show.</param>
+        /// <param name="instructionText">  The instruction text.</param>
+        /// <param name="caption">  The caption.</param>
+        /// <returns>The <c>TaskDialogResults</c>.</returns>
         private static TaskDialogResults ShowCoreStatic(string text, string instructionText, string caption)
         {
             // Throw PlatformNotSupportedException if the user is not running Vista or beyond
@@ -1219,12 +997,8 @@ namespace System.Windows.Dialogs
             return staticDialog.Show();
         }
 
-        /// <summary>
-        ///   Applies the control configuration.
-        /// </summary>
-        /// <param name="settings">
-        ///   The settings.
-        /// </param>
+        /// <summary>Applies the control configuration.</summary>
+        /// <param name="settings">  The settings.</param>
         private void ApplyControlConfiguration(NativeTaskDialogSettings settings)
         {
             // Deal with progress bars/marquees.
@@ -1277,12 +1051,8 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>
-        ///   Applies the core settings.
-        /// </summary>
-        /// <param name="settings">
-        ///   The settings.
-        /// </param>
+        /// <summary>Applies the core settings.</summary>
+        /// <param name="settings">  The settings.</param>
         private void ApplyCoreSettings(NativeTaskDialogSettings settings)
         {
             this.ApplyGeneralNativeConfiguration(settings.NativeConfiguration);
@@ -1291,12 +1061,8 @@ namespace System.Windows.Dialogs
             this.ApplyControlConfiguration(settings);
         }
 
-        /// <summary>
-        ///   Applies the general native configuration.
-        /// </summary>
-        /// <param name="dialogConfig">
-        ///   The dialog config.
-        /// </param>
+        /// <summary>Applies the general native configuration.</summary>
+        /// <param name="dialogConfig">  The dialog config.</param>
         private void ApplyGeneralNativeConfiguration(TaskDialogConfig dialogConfig)
         {
             // If an owner wasn't specifically specified, we'll use the program main window.
@@ -1311,12 +1077,8 @@ namespace System.Windows.Dialogs
             dialogConfig.CommonButtons = (TaskDialogCommonButtonFlags)this.standardButtons;
         }
 
-        /// <summary>
-        ///   Applies the option configuration.
-        /// </summary>
-        /// <param name="dialogConfig">
-        ///   The dialog config.
-        /// </param>
+        /// <summary>Applies the option configuration.</summary>
+        /// <param name="dialogConfig">  The dialog config.</param>
         private void ApplyOptionConfiguration(TaskDialogConfig dialogConfig)
         {
             // Handle options - start with no options set.
@@ -1362,12 +1124,8 @@ namespace System.Windows.Dialogs
             dialogConfig.Flags = options;
         }
 
-        /// <summary>
-        ///   Applies the supplemental settings.
-        /// </summary>
-        /// <param name="settings">
-        ///   The settings.
-        /// </param>
+        /// <summary>Applies the supplemental settings.</summary>
+        /// <param name="settings">  The settings.</param>
         private void ApplySupplementalSettings(NativeTaskDialogSettings settings)
         {
             if (this.progressBar == null)
@@ -1386,12 +1144,8 @@ namespace System.Windows.Dialogs
             settings.ProgressBarState = this.progressBar.State;
         }
 
-        /// <summary>
-        ///   Sets important text properties.
-        /// </summary>
-        /// <param name="dialogConfig">
-        ///   An instance of a <c>TaskDialogConfig</c> object.
-        /// </param>
+        /// <summary>Sets important text properties.</summary>
+        /// <param name="dialogConfig">  An instance of a <c>TaskDialogConfig</c> object.</param>
         private void ApplyTextConfiguration(TaskDialogConfig dialogConfig)
         {
             // note that nulls or empty strings are fine here.
@@ -1410,9 +1164,7 @@ namespace System.Windows.Dialogs
         // Dispose pattern - cleans up data and structs for a) any native dialog currently showing, and b) anything else
         // that the outer TaskDialog has.
 
-        /// <summary>
-        ///   Cleans up.
-        /// </summary>
+        /// <summary>Cleans up.</summary>
         private void CleanUp()
         {
             // Reset values that would be considered 'volatile' in a given instance.
@@ -1447,12 +1199,8 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>
-        ///   Dispose <c>TaskDialog</c> Resources.
-        /// </summary>
-        /// <param name="disposing">
-        ///   If <c>True</c>, indicates that this is being called via Dispose rather than via the finalizer.
-        /// </param>
+        /// <summary>Dispose <c>TaskDialog</c> Resources.</summary>
+        /// <param name="disposing">  If <c>True</c>, indicates that this is being called via Dispose rather than via the finalizer.</param>
         private void Dispose(bool disposing)
         {
             if (this.disposed)
@@ -1491,26 +1239,16 @@ namespace System.Windows.Dialogs
             staticDialog = null;
         }
 
-        /// <summary>
-        ///   Gets the button for id.
-        /// </summary>
-        /// <param name="id">
-        ///   The button id.
-        /// </param>
-        /// <returns>
-        ///   The <c>TaskDialogButton</c>.
-        /// </returns>
+        /// <summary>Gets the button for id.</summary>
+        /// <param name="id">  The button id.</param>
+        /// <returns>The <c>TaskDialogButton</c>.</returns>
         private TaskDialogButtonBase GetButtonForId(int id)
         {
             return (TaskDialogButtonBase)this.Controls.GetControlById(id);
         }
 
-        /// <summary>
-        ///   Shows the core.
-        /// </summary>
-        /// <returns>
-        ///   Returns the result of the <c>TaskDialog</c>.
-        /// </returns>
+        /// <summary>Shows the core.</summary>
+        /// <returns>Returns the result of the <c>TaskDialog</c>.</returns>
         private TaskDialogResults ShowCore()
         {
             TaskDialogResults result;
@@ -1548,9 +1286,7 @@ namespace System.Windows.Dialogs
             return result;
         }
 
-        /// <summary>
-        ///   Sorts the dialog controls.
-        /// </summary>
+        /// <summary>Sorts the dialog controls.</summary>
         private void SortDialogControls()
         {
             foreach (var control in this.Controls)
@@ -1614,12 +1350,8 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>
-        ///   Throws if dialog showing.
-        /// </summary>
-        /// <param name="message">
-        ///   The message.
-        /// </param>
+        /// <summary>Throws if dialog showing.</summary>
+        /// <param name="message">  The message.</param>
         private void ThrowIfDialogShowing(string message)
         {
             if (this.NativeDialogShowing)
@@ -1628,9 +1360,7 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>
-        ///   Validates the current dialog settings.
-        /// </summary>
+        /// <summary>Validates the current dialog settings.</summary>
         private void ValidateCurrentDialogSettings()
         {
             if (this.footerCheckBoxChecked.HasValue && this.footerCheckBoxChecked.Value &&

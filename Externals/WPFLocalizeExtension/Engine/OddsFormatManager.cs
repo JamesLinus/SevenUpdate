@@ -13,16 +13,12 @@ namespace WPFLocalizeExtension.Engine
     using System.Globalization;
     using System.Windows;
 
-    /// <summary>
-    ///   Represents the odds format manager.
-    /// </summary>
+    /// <summary>Represents the odds format manager.</summary>
     public sealed class OddsFormatManager : DependencyObject
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   Registers the design odds format property
-        /// </summary>
+        /// <summary>Registers the design odds format property</summary>
         [DesignOnly(true)]
         private static readonly DependencyProperty DesignOddsFormatProperty =
             DependencyProperty.RegisterAttached(
@@ -31,28 +27,20 @@ namespace WPFLocalizeExtension.Engine
                 typeof(OddsFormatManager),
                 new PropertyMetadata(DefaultOddsFormatType, SetOddsFormatFromDependencyProperty));
 
-        /// <summary>
-        ///   Holds a SyncRoot to be thread safe.
-        /// </summary>
+        /// <summary>Holds a SyncRoot to be thread safe.</summary>
         private static readonly object SyncRoot = new object();
 
-        /// <summary>
-        ///   Holds the instance of singleton.
-        /// </summary>
+        /// <summary>Holds the instance of singleton.</summary>
         private static OddsFormatManager instance;
 
-        /// <summary>
-        ///   Holds the current chosen <c>OddsFormatType</c>.
-        /// </summary>
+        /// <summary>Holds the current chosen <c>OddsFormatType</c>.</summary>
         private OddsFormatType oddsFormatType = DefaultOddsFormatType;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>
-        ///   Prevents a default instance of the OddsFormatManager class from being created. Static Constructor.
-        /// </summary>
+        /// <summary>Prevents a default instance of the OddsFormatManager class from being created. Static Constructor.</summary>
         private OddsFormatManager()
         {
         }
@@ -61,9 +49,7 @@ namespace WPFLocalizeExtension.Engine
 
         #region Events
 
-        /// <summary>
-        ///   Action for when the odds format changes
-        /// </summary>
+        /// <summary>Action for when the odds format changes</summary>
         internal event Action OnOddsFormatChanged;
 
         #endregion
@@ -100,9 +86,7 @@ namespace WPFLocalizeExtension.Engine
             }
         }
 
-        /// <summary>
-        ///   Gets or sets the odds format type
-        /// </summary>
+        /// <summary>Gets or sets the odds format type</summary>
         public OddsFormatType OddsFormatType
         {
             get
@@ -129,9 +113,7 @@ namespace WPFLocalizeExtension.Engine
             }
         }
 
-        /// <summary>
-        ///   Gets the default odds format type
-        /// </summary>
+        /// <summary>Gets the default odds format type</summary>
         private static OddsFormatType DefaultOddsFormatType
         {
             get
@@ -140,9 +122,7 @@ namespace WPFLocalizeExtension.Engine
             }
         }
 
-        /// <summary>
-        ///   Gets a value indicating whether the status of the design mode.
-        /// </summary>
+        /// <summary>Gets a value indicating whether the status of the design mode.</summary>
         /// <returns><c>True</c> if in design mode, else <c>False</c>.</returns>
         private bool IsInDesignMode
         {
@@ -156,12 +136,8 @@ namespace WPFLocalizeExtension.Engine
 
         #region Public Methods
 
-        /// <summary>
-        ///   Attach an WeakEventListener to the <c>OddsFormatManager</c>.
-        /// </summary>
-        /// <param name="listener">
-        ///   The listener to attach.
-        /// </param>
+        /// <summary>Attach an WeakEventListener to the <c>OddsFormatManager</c>.</summary>
+        /// <param name="listener">  The listener to attach.</param>
         public static void AddEventListener(IWeakEventListener listener)
         {
             // calls AddListener from the inline WeakOddsFormatChangedEventManager
@@ -172,12 +148,8 @@ namespace WPFLocalizeExtension.Engine
         ///   Getter of <c>DependencyProperty</c> DesignOddsFormat.Only supported at DesignTime.If its in Runtime, the
         ///   current <c>OddsFormatType</c> will be returned.
         /// </summary>
-        /// <param name="obj">
-        ///   The dependency object to get the odds format type from.
-        /// </param>
-        /// <returns>
-        ///   The design odds format at design time or the current odds format at runtime.
-        /// </returns>
+        /// <param name="obj">  The dependency object to get the odds format type from.</param>
+        /// <returns>The design odds format at design time or the current odds format at runtime.</returns>
         [DesignOnly(true)]
         public static OddsFormatType GetDesignOddsFormat(DependencyObject obj)
         {
@@ -191,12 +163,8 @@ namespace WPFLocalizeExtension.Engine
                        : Instance.OddsFormatType;
         }
 
-        /// <summary>
-        ///   Detach an WeakEventListener to the <c>OddsFormatManager</c>.
-        /// </summary>
-        /// <param name="listener">
-        ///   The listener to detach.
-        /// </param>
+        /// <summary>Detach an WeakEventListener to the <c>OddsFormatManager</c>.</summary>
+        /// <param name="listener">  The listener to detach.</param>
         public static void RemoveEventListener(IWeakEventListener listener)
         {
             if (listener == null)
@@ -208,15 +176,9 @@ namespace WPFLocalizeExtension.Engine
             WeakOddsFormatChangedEventManager.RemoveListener(listener);
         }
 
-        /// <summary>
-        ///   Setter of <c>DependencyProperty</c> DesignOddsFormat. Only supported at DesignTime.
-        /// </summary>
-        /// <param name="obj">
-        ///   The dependency object to set the odds format to.
-        /// </param>
-        /// <param name="value">
-        ///   The odds format.
-        /// </param>
+        /// <summary>Setter of <c>DependencyProperty</c> DesignOddsFormat. Only supported at DesignTime.</summary>
+        /// <param name="obj">  The dependency object to set the odds format to.</param>
+        /// <param name="value">  The odds format.</param>
         [DesignOnly(true)]
         public static void SetDesignOddsFormat(DependencyObject obj, OddsFormatType value)
         {
@@ -235,15 +197,9 @@ namespace WPFLocalizeExtension.Engine
 
         #region Methods
 
-        /// <summary>
-        ///   Sets the odds format from the dependency property
-        /// </summary>
-        /// <param name="obj">
-        ///   The dependency object
-        /// </param>
-        /// <param name="args">
-        ///   The event arguments
-        /// </param>
+        /// <summary>Sets the odds format from the dependency property</summary>
+        /// <param name="obj">  The dependency object</param>
+        /// <param name="args">  The event arguments</param>
         [DesignOnly(true)]
         private static void SetOddsFormatFromDependencyProperty(
             DependencyObject obj, DependencyPropertyChangedEventArgs args)

@@ -7,19 +7,13 @@
 
 namespace System.Windows.Dialogs
 {
-    /// <summary>
-    ///   The event data for a TaskDialogTick event.
-    /// </summary>
+    /// <summary>The event data for a TaskDialogTick event.</summary>
     public class TaskDialogTickEventArgs : EventArgs
     {
         #region Constructors and Destructors
 
-        /// <summary>
-        ///   Initializes a new instance of the <c>TaskDialogTickEventArgs</c> class.
-        /// </summary>
-        /// <param name="totalTicks">
-        ///   The total number of ticks since the control was activated.
-        /// </param>
+        /// <summary>Initializes a new instance of the <c>TaskDialogTickEventArgs</c> class.</summary>
+        /// <param name="totalTicks">  The total number of ticks since the control was activated.</param>
         public TaskDialogTickEventArgs(int totalTicks)
         {
             this.Ticks = totalTicks;
@@ -29,9 +23,7 @@ namespace System.Windows.Dialogs
 
         #region Properties
 
-        /// <summary>
-        ///   Gets  a value indicating whether the current number of ticks.
-        /// </summary>
+        /// <summary>Gets  a value indicating whether the current number of ticks.</summary>
         public int Ticks { get; private set; }
 
         #endregion

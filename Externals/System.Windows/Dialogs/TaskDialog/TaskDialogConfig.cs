@@ -10,9 +10,7 @@ namespace System.Windows.Dialogs
 
     using Runtime.InteropServices;
 
-    /// <summary>
-    ///   Contains information used to display a task dialog.
-    /// </summary>
+    /// <summary>Contains information used to display a task dialog.</summary>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 4)]
     internal class TaskDialogConfig : IDisposable
     {
@@ -97,9 +95,7 @@ namespace System.Windows.Dialogs
 
         #region Destructor
 
-        /// <summary>
-        ///   Finalizes an instance of the <c>TaskDialogConfig</c> class.
-        /// </summary>
+        /// <summary>Finalizes an instance of the <c>TaskDialogConfig</c> class.</summary>
         ~TaskDialogConfig()
         {
             this.Dispose(false);
@@ -114,24 +110,16 @@ namespace System.Windows.Dialogs
         /// </summary>
         internal TaskDialogCommonButtonFlags CommonButtons { get; set; }
 
-        /// <summary>
-        ///   Gets or sets a handle to an Icon that is to be displayed in the task dialog.
-        /// </summary>
+        /// <summary>Gets or sets a handle to an Icon that is to be displayed in the task dialog.</summary>
         internal TaskDialogConfigIconUnion MainIcon { get; set; }
 
-        /// <summary>
-        ///   Gets or sets a handle to an Icon that is to be displayed in the footer of the task dialog.
-        /// </summary>
+        /// <summary>Gets or sets a handle to an Icon that is to be displayed in the footer of the task dialog.</summary>
         internal TaskDialogConfigIconUnion FooterIcon { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the structure size, in bytes.
-        /// </summary>
+        /// <summary>Gets or sets the structure size, in bytes.</summary>
         internal uint Size { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the handle to the parent window. This member can be <c>null</c>.
-        /// </summary>
+        /// <summary>Gets or sets the handle to the parent window. This member can be <c>null</c>.</summary>
         internal IntPtr HandleParent { get; set; }
 
         /// <summary>
@@ -141,9 +129,7 @@ namespace System.Windows.Dialogs
         /// </summary>
         internal IntPtr Instance { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the behavior of the task dialog.
-        /// </summary>
+        /// <summary>Gets or sets the behavior of the task dialog.</summary>
         internal TaskDialogFlags Flags { get; set; }
 
         /// <summary>
@@ -186,14 +172,10 @@ namespace System.Windows.Dialogs
         /// </summary>
         internal int DefaultRadioButton { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the application-defined callback function.
-        /// </summary>
+        /// <summary>Gets or sets the application-defined callback function.</summary>
         internal TaskDialogNativeMethods.TaskDialogCallBack Callback { get; set; }
 
-        /// <summary>
-        ///   Gets or sets a pointer to application-defined reference data. This value is defined by the caller.
-        /// </summary>
+        /// <summary>Gets or sets a pointer to application-defined reference data. This value is defined by the caller.</summary>
         internal IntPtr CallbackData { get; set; }
 
         /// <summary>
@@ -202,16 +184,12 @@ namespace System.Windows.Dialogs
         /// </summary>
         internal uint Width { get; set; }
 
-        /// <summary>
-        ///   Gets or sets a value indicating whether if the object is disposed
-        /// </summary>
+        /// <summary>Gets or sets a value indicating whether if the object is disposed</summary>
         protected bool Disposed { get; set; }
 
         #region IDisposable Implementation
 
-        /// <summary>
-        ///   Disposes the objects
-        /// </summary>
+        /// <summary>Disposes the objects</summary>
         public virtual void Dispose()
         {
             this.Dispose(false);
@@ -220,12 +198,8 @@ namespace System.Windows.Dialogs
             GC.SuppressFinalize(this);
         }
 
-        /// <summary>
-        ///   Disposes the objects
-        /// </summary>
-        /// <param name="disposing">
-        ///   true if the object is already disposing
-        /// </param>
+        /// <summary>Disposes the objects</summary>
+        /// <param name="disposing">  true if the object is already disposing</param>
         protected virtual void Dispose(bool disposing)
         {
             lock (this)

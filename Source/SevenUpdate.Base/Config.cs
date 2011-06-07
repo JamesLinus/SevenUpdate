@@ -22,18 +22,14 @@ namespace SevenUpdate
 
     using ProtoBuf;
 
-    /// <summary>
-    ///   Configuration options.
-    /// </summary>
+    /// <summary>Configuration options.</summary>
     [ProtoContract]
     [DataContract(IsReference = true)]
     public sealed class Config : INotifyPropertyChanged
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   The automatic update setting.
-        /// </summary>
+        /// <summary>The automatic update setting.</summary>
         private AutoUpdateOption autoOption;
 
         /// <summary>
@@ -46,18 +42,14 @@ namespace SevenUpdate
 
         #region Events
 
-        /// <summary>
-        ///   Occurs when a property value changes.
-        /// </summary>
+        /// <summary>Occurs when a property value changes.</summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
 
         #region Properties
 
-        /// <summary>
-        ///   Gets or sets which automatic update option Seven Update should use.
-        /// </summary>
+        /// <summary>Gets or sets which automatic update option Seven Update should use.</summary>
         /// <value>The automatic update option.</value>
         [ProtoMember(1)]
         [DataMember]
@@ -104,12 +96,8 @@ namespace SevenUpdate
 
         #region Methods
 
-        /// <summary>
-        ///   When a property has changed, call the <c>OnPropertyChanged</c> Event.
-        /// </summary>
-        /// <param name="name">
-        ///   The name of the property that changed.
-        /// </param>
+        /// <summary>When a property has changed, call the <c>OnPropertyChanged</c> Event.</summary>
+        /// <param name="name">  The name of the property that changed.</param>
         private void OnPropertyChanged(string name)
         {
             var handler = this.PropertyChanged;

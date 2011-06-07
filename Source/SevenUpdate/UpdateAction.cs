@@ -19,69 +19,43 @@
 
 namespace SevenUpdate
 {
-    /// <summary>
-    ///   The layout for the Info Panel.
-    /// </summary>
+    /// <summary>The layout for the Info Panel.</summary>
     public enum UpdateAction
     {
-        /// <summary>
-        ///   Canceled Updates.
-        /// </summary>
+        /// <summary>Canceled Updates.</summary>
         Canceled,
 
-        /// <summary>
-        ///   Check for updates.
-        /// </summary>
+        /// <summary>Check for updates.</summary>
         CheckForUpdates,
 
-        /// <summary>
-        ///   Checking for updates.
-        /// </summary>
+        /// <summary>Checking for updates.</summary>
         CheckingForUpdates,
 
-        /// <summary>
-        ///   When connecting to the admin service.
-        /// </summary>
+        /// <summary>When connecting to the admin service.</summary>
         ConnectingToService,
 
-        /// <summary>
-        ///   When downloading of updates has been completed.
-        /// </summary>
+        /// <summary>When downloading of updates has been completed.</summary>
         DownloadCompleted,
 
-        /// <summary>
-        ///   Downloading updates.
-        /// </summary>
+        /// <summary>Downloading updates.</summary>
         Downloading,
 
-        /// <summary>
-        ///   An Error Occurred when downloading/installing updates.
-        /// </summary>
+        /// <summary>An Error Occurred when downloading/installing updates.</summary>
         ErrorOccurred,
 
-        /// <summary>
-        ///   When installation of updates have completed.
-        /// </summary>
+        /// <summary>When installation of updates have completed.</summary>
         InstallationCompleted,
 
-        /// <summary>
-        ///   Installing Updates.
-        /// </summary>
+        /// <summary>Installing Updates.</summary>
         Installing,
 
-        /// <summary>
-        ///   No updates have been found.
-        /// </summary>
+        /// <summary>No updates have been found.</summary>
         NoUpdates,
 
-        /// <summary>
-        ///   A reboot is needed to finish installing updates.
-        /// </summary>
+        /// <summary>A reboot is needed to finish installing updates.</summary>
         RebootNeeded,
 
-        /// <summary>
-        ///   Updates have been found.
-        /// </summary>
+        /// <summary>Updates have been found.</summary>
         UpdatesFound,
     }
 }

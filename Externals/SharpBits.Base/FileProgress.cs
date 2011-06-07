@@ -11,28 +11,20 @@ namespace SharpBits.Base
 {
     using System;
 
-    /// <summary>
-    ///   The <c>BitsFile</c> progress.
-    /// </summary>
+    /// <summary>The <c>BitsFile</c> progress.</summary>
     public class FileProgress
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   The current file progress.
-        /// </summary>
+        /// <summary>The current file progress.</summary>
         private BGFileProgress fileProgress;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>
-        ///   Initializes a new instance of the <c>FileProgress</c> class.
-        /// </summary>
-        /// <param name="fileProgress">
-        ///   The file progress.
-        /// </param>
+        /// <summary>Initializes a new instance of the <c>FileProgress</c> class.</summary>
+        /// <param name="fileProgress">  The file progress.</param>
         internal FileProgress(BGFileProgress fileProgress)
         {
             this.fileProgress = fileProgress;
@@ -42,9 +34,7 @@ namespace SharpBits.Base
 
         #region Properties
 
-        /// <summary>
-        ///   Gets the total number of bytes downloaded.
-        /// </summary>
+        /// <summary>Gets the total number of bytes downloaded.</summary>
         /// <value>The bytes total.</value>
         public ulong BytesTotal
         {
@@ -54,9 +44,7 @@ namespace SharpBits.Base
             }
         }
 
-        /// <summary>
-        ///   Gets the total number of bytes transferred.
-        /// </summary>
+        /// <summary>Gets the total number of bytes transferred.</summary>
         /// <value>The bytes transferred.</value>
         public ulong BytesTransferred
         {
@@ -66,9 +54,7 @@ namespace SharpBits.Base
             }
         }
 
-        /// <summary>
-        ///   Gets a value indicating whether this <c>FileProgress</c> is completed.
-        /// </summary>
+        /// <summary>Gets a value indicating whether this <c>FileProgress</c> is completed.</summary>
         /// <value><c>True</c> if completed; otherwise, <c>False</c>.</value>
         public bool Completed
         {

@@ -31,18 +31,14 @@ namespace SevenUpdate.Windows
 
     using Properties;
 
-    /// <summary>
-    ///   Interaction logic for MainWindow.xaml.
-    /// </summary>
+    /// <summary>Interaction logic for MainWindow.xaml.</summary>
     [ContentProperty]
     [TemplatePart(Name = @"PART_NavWinCP", Type = typeof(ContentPresenter))]
     public sealed partial class MainWindow
     {
         #region Constructors and Destructors
 
-        /// <summary>
-        ///   Initializes a new instance of the MainWindow class.
-        /// </summary>
+        /// <summary>Initializes a new instance of the MainWindow class.</summary>
         public MainWindow()
         {
             this.InitializeComponent();
@@ -70,9 +66,7 @@ namespace SevenUpdate.Windows
 
         #region Properties
 
-        /// <summary>
-        ///   Gets the <c>NavigationService</c> for the current window.
-        /// </summary>
+        /// <summary>Gets the <c>NavigationService</c> for the current window.</summary>
         /// <value>The nav service.</value>
         internal static NavigationService NavService { get; private set; }
 
@@ -80,12 +74,8 @@ namespace SevenUpdate.Windows
 
         #region Methods
 
-        /// <summary>
-        ///   Enables Aero Glass on the Window.
-        /// </summary>
-        /// <param name="e">
-        ///   The <c>EventArgs</c> instance containing the event data.
-        /// </param>
+        /// <summary>Enables Aero Glass on the Window.</summary>
+        /// <param name="e">  The <c>EventArgs</c> instance containing the event data.</param>
         protected override void OnSourceInitialized(EventArgs e)
         {
             base.OnSourceInitialized(e);
@@ -93,15 +83,9 @@ namespace SevenUpdate.Windows
             this.Background = AeroGlass.IsGlassEnabled ? Brushes.Transparent : Brushes.White;
         }
 
-        /// <summary>
-        ///   Changes the Window Background when Aero Glass is enabled or disabled.
-        /// </summary>
-        /// <param name="sender">
-        ///   The object that called the event.
-        /// </param>
-        /// <param name="e">
-        ///   The <c>CompositionChangedEventArgs</c> instance containing the event data.
-        /// </param>
+        /// <summary>Changes the Window Background when Aero Glass is enabled or disabled.</summary>
+        /// <param name="sender">  The object that called the event.</param>
+        /// <param name="e">  The <c>CompositionChangedEventArgs</c> instance containing the event data.</param>
         private void ChangeWindowChrome(object sender, CompositionChangedEventArgs e)
         {
             this.Background = e.IsGlassEnabled ? Brushes.Transparent : Brushes.White;
@@ -114,15 +98,9 @@ namespace SevenUpdate.Windows
             AeroGlass.EnableGlass(this, new Margins(0, 32, 0, 41));
         }
 
-        /// <summary>
-        ///   Enables the ability to drag the window on glass.
-        /// </summary>
-        /// <param name="sender">
-        ///   The object that called the event.
-        /// </param>
-        /// <param name="e">
-        ///   The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.
-        /// </param>
+        /// <summary>Enables the ability to drag the window on glass.</summary>
+        /// <param name="sender">  The object that called the event.</param>
+        /// <param name="e">  The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.</param>
         private void EnableDragOnGlass(object sender, MouseButtonEventArgs e)
         {
             if (AeroGlass.IsGlassEnabled && e.LeftButton == MouseButtonState.Pressed)
@@ -131,30 +109,18 @@ namespace SevenUpdate.Windows
             }
         }
 
-        /// <summary>
-        ///   Sets the Height and Width of the window from the settings.
-        /// </summary>
-        /// <param name="sender">
-        ///   The object that called the event.
-        /// </param>
-        /// <param name="e">
-        ///   The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.
-        /// </param>
+        /// <summary>Sets the Height and Width of the window from the settings.</summary>
+        /// <param name="sender">  The object that called the event.</param>
+        /// <param name="e">  The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
         private void LoadWindowSize(object sender, RoutedEventArgs e)
         {
             this.Height = Settings.Default.WindowHeight;
             this.Width = Settings.Default.WindowWidth;
         }
 
-        /// <summary>
-        ///   When Seven Update is closing, save the Window Width and Height in the settings.
-        /// </summary>
-        /// <param name="sender">
-        ///   The object that called the event.
-        /// </param>
-        /// <param name="e">
-        ///   The <c>System.ComponentModel.CancelEventArgs</c> instance containing the event data.
-        /// </param>
+        /// <summary>When Seven Update is closing, save the Window Width and Height in the settings.</summary>
+        /// <param name="sender">  The object that called the event.</param>
+        /// <param name="e">  The <c>System.ComponentModel.CancelEventArgs</c> instance containing the event data.</param>
         private void SaveWindowSize(object sender, CancelEventArgs e)
         {
             Settings.Default.WindowHeight = this.Height;

@@ -11,9 +11,7 @@ namespace System.Windows.ApplicationServices
 
     using Globalization;
 
-    /// <summary>
-    ///   Specifies the options for an application to be automatically restarted by Windows Error Reporting.
-    /// </summary>
+    /// <summary>Specifies the options for an application to be automatically restarted by Windows Error Reporting.</summary>
     /// <remarks>
     ///   Regardless of these settings, the application will not be restarted if it executed for less than 60 seconds
     ///   before terminating.
@@ -22,12 +20,8 @@ namespace System.Windows.ApplicationServices
     {
         #region Constructors and Destructors
 
-        /// <summary>
-        ///   Initializes a new instance of the <c>RestartSettings</c> class.
-        /// </summary>
-        /// <param name="commandLine">
-        ///   The command line arguments used to restart the application.
-        /// </param>
+        /// <summary>Initializes a new instance of the <c>RestartSettings</c> class.</summary>
+        /// <param name="commandLine">  The command line arguments used to restart the application.</param>
         /// <param name="restrict">
         ///   A bitwise combination of the <c>RestartRestrictions</c>values that specify when the application should not
         ///   be restarted.
@@ -42,15 +36,11 @@ namespace System.Windows.ApplicationServices
 
         #region Properties
 
-        /// <summary>
-        ///   Gets the command line arguments used to restart the application.
-        /// </summary>
+        /// <summary>Gets the command line arguments used to restart the application.</summary>
         /// <value>A <c>System.String</c> object.</value>
         public string Command { get; private set; }
 
-        /// <summary>
-        ///   Gets the set of conditions when the application should not be restarted.
-        /// </summary>
+        /// <summary>Gets the set of conditions when the application should not be restarted.</summary>
         /// <value>A set of <c>RestartRestrictions</c> values.</value>
         public RestartRestrictions Restrictions { get; private set; }
 
@@ -58,9 +48,7 @@ namespace System.Windows.ApplicationServices
 
         #region Public Methods
 
-        /// <summary>
-        ///   Returns a string representation of the current state of this object.
-        /// </summary>
+        /// <summary>Returns a string representation of the current state of this object.</summary>
         /// <returns>
         ///   A <c>System.String</c> that displays the command line arguments and restrictions for restarting
         ///   the application.

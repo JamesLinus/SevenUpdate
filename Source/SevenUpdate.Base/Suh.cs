@@ -23,9 +23,7 @@ namespace SevenUpdate
 
     using ProtoBuf;
 
-    /// <summary>
-    ///   Information about an update, used by History and Hidden Updates. Not used by the SDK.
-    /// </summary>
+    /// <summary>Information about an update, used by History and Hidden Updates. Not used by the SDK.</summary>
     [ProtoContract]
     [DataContract(IsReference = true)]
     [KnownType(typeof(UpdateStatus))]
@@ -35,62 +33,38 @@ namespace SevenUpdate
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   The <c>Uri</c> for the application's website.
-        /// </summary>
+        /// <summary>The <c>Uri</c> for the application's website.</summary>
         private string appUrl;
 
-        /// <summary>
-        ///   The help website <c>Uri</c> of the application.
-        /// </summary>
+        /// <summary>The help website <c>Uri</c> of the application.</summary>
         private string helpUrl;
 
-        /// <summary>
-        ///   The importance of the update.
-        /// </summary>
+        /// <summary>The importance of the update.</summary>
         private Importance importance;
 
-        /// <summary>
-        ///   The url pointing to a resource to find more information about the update.
-        /// </summary>
+        /// <summary>The url pointing to a resource to find more information about the update.</summary>
         private string infoUrl;
 
-        /// <summary>
-        ///   The formatted date string when the update was installed.
-        /// </summary>
+        /// <summary>The formatted date string when the update was installed.</summary>
         private string installDate;
 
-        /// <summary>
-        ///   The formatted date string depicting the release date of the update.
-        /// </summary>
+        /// <summary>The formatted date string depicting the release date of the update.</summary>
         private string releaseDate;
 
-        /// <summary>
-        ///   The current status of the update.
-        /// </summary>
+        /// <summary>The current status of the update.</summary>
         private UpdateStatus status;
 
-        /// <summary>
-        ///   The total download size in bytes of the update.
-        /// </summary>
+        /// <summary>The total download size in bytes of the update.</summary>
         private ulong updateSize;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>
-        ///   Initializes a new instance of the <c>Suh</c> class.
-        /// </summary>
-        /// <param name="name">
-        ///   The collection of localized update names.
-        /// </param>
-        /// <param name="publisher">
-        ///   The collection of localized publisher names.
-        /// </param>
-        /// <param name="description">
-        ///   The collection of localized update descriptions.
-        /// </param>
+        /// <summary>Initializes a new instance of the <c>Suh</c> class.</summary>
+        /// <param name="name">  The collection of localized update names.</param>
+        /// <param name="publisher">  The collection of localized publisher names.</param>
+        /// <param name="description">  The collection of localized update descriptions.</param>
         public Suh(
             ObservableCollection<LocaleString> name,
             ObservableCollection<LocaleString> publisher,
@@ -116,9 +90,7 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        ///   Initializes a new instance of the Suh class.
-        /// </summary>
+        /// <summary>Initializes a new instance of the Suh class.</summary>
         public Suh()
         {
             this.Name = new ObservableCollection<LocaleString>();
@@ -130,18 +102,14 @@ namespace SevenUpdate
 
         #region Events
 
-        /// <summary>
-        ///   Occurs when a property has changed.
-        /// </summary>
+        /// <summary>Occurs when a property has changed.</summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
 
         #region Properties
 
-        /// <summary>
-        ///   Gets or sets the <c>Uri</c> for the application's website.
-        /// </summary>
+        /// <summary>Gets or sets the <c>Uri</c> for the application's website.</summary>
         /// <value>The application website.</value>
         [ProtoMember(8)]
         [DataMember]
@@ -161,17 +129,13 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        ///   Gets the collection localized update descriptions.
-        /// </summary>
+        /// <summary>Gets the collection localized update descriptions.</summary>
         /// <value>The localized description for the update.</value>
         [ProtoMember(2)]
         [DataMember]
         public ObservableCollection<LocaleString> Description { get; private set; }
 
-        /// <summary>
-        ///   Gets or sets the help website <c>Uri</c> of the application.
-        /// </summary>
+        /// <summary>Gets or sets the help website <c>Uri</c> of the application.</summary>
         /// <value>The help and support website for the application.</value>
         [ProtoMember(9, IsRequired = false)]
         [DataMember]
@@ -191,9 +155,7 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        ///   Gets or sets the importance of the update.
-        /// </summary>
+        /// <summary>Gets or sets the importance of the update.</summary>
         /// <value>The importance.</value>
         [ProtoMember(3)]
         [DataMember]
@@ -213,9 +175,7 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        ///   Gets or sets the url pointing to a resource to find more information about the update.
-        /// </summary>
+        /// <summary>Gets or sets the url pointing to a resource to find more information about the update.</summary>
         /// <value>The info URL.</value>
         [ProtoMember(10, IsRequired = false)]
         [DataMember]
@@ -235,9 +195,7 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        ///   Gets or sets the formatted date string when the update was installed.
-        /// </summary>
+        /// <summary>Gets or sets the formatted date string when the update was installed.</summary>
         /// <value>The formatted install date string (MM/DD/YYYY).</value>
         [ProtoMember(11)]
         [DataMember]
@@ -257,25 +215,19 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        ///   Gets the collection of localized update names.
-        /// </summary>
+        /// <summary>Gets the collection of localized update names.</summary>
         /// <value>The localized update names.</value>
         [ProtoMember(1)]
         [DataMember]
         public ObservableCollection<LocaleString> Name { get; private set; }
 
-        /// <summary>
-        ///   Gets the collection of localized publisher names.
-        /// </summary>
+        /// <summary>Gets the collection of localized publisher names.</summary>
         /// <value>The publisher.</value>
         [ProtoMember(7)]
         [DataMember]
         public ObservableCollection<LocaleString> Publisher { get; private set; }
 
-        /// <summary>
-        ///   Gets or sets the formatted date string depicting the release date of the update.
-        /// </summary>
+        /// <summary>Gets or sets the formatted date string depicting the release date of the update.</summary>
         /// <value>The release date in a formatted string MM/DD/YYYY.</value>
         [ProtoMember(5)]
         [DataMember]
@@ -295,9 +247,7 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        ///   Gets or sets the current status of the update.
-        /// </summary>
+        /// <summary>Gets or sets the current status of the update.</summary>
         /// <value>The status.</value>
         [ProtoMember(4)]
         [DataMember]
@@ -317,9 +267,7 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        ///   Gets or sets the total download size in bytes of the update.
-        /// </summary>
+        /// <summary>Gets or sets the total download size in bytes of the update.</summary>
         /// <value>The total download size of the update.</value>
         [ProtoMember(6)]
         [DataMember]
@@ -343,12 +291,8 @@ namespace SevenUpdate
 
         #region Methods
 
-        /// <summary>
-        ///   When a property has changed, call the <c>OnPropertyChanged</c> Event.
-        /// </summary>
-        /// <param name="propertyName">
-        ///   The name of the property that changed.
-        /// </param>
+        /// <summary>When a property has changed, call the <c>OnPropertyChanged</c> Event.</summary>
+        /// <param name="propertyName">  The name of the property that changed.</param>
         private void OnPropertyChanged(string propertyName)
         {
             var handler = this.PropertyChanged;

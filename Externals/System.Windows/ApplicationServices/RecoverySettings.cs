@@ -23,9 +23,7 @@ namespace System.Windows.ApplicationServices
     {
         #region Constructors and Destructors
 
-        /// <summary>
-        ///   Initializes a new instance of the <c>RecoverySettings</c> class.
-        /// </summary>
+        /// <summary>Initializes a new instance of the <c>RecoverySettings</c> class.</summary>
         /// <param name="data">
         ///   A recovery data object that contains the callback method (invoked by the system before Windows Error
         ///   Reporting terminates the application) and an optional state object.
@@ -46,9 +44,7 @@ namespace System.Windows.ApplicationServices
 
         #region Properties
 
-        /// <summary>
-        ///   Gets the time interval for notifying Windows Error Reporting.  The <c>RecoveryCallback</c> method must invoke <c>ApplicationRestartRecoveryManager.ApplicationRecoveryInProgress</c> within this interval to prevent WER from terminating the application.
-        /// </summary>
+        /// <summary>Gets the time interval for notifying Windows Error Reporting.  The <c>RecoveryCallback</c> method must invoke <c>ApplicationRestartRecoveryManager.ApplicationRecoveryInProgress</c> within this interval to prevent WER from terminating the application.</summary>
         /// <remarks>
         ///   The recovery ping interval is specified in milliseconds. By default, the interval is 5 seconds. If you
         ///   specify zero, the default interval is used.
@@ -66,12 +62,8 @@ namespace System.Windows.ApplicationServices
 
         #region Public Methods
 
-        /// <summary>
-        ///   Returns a string representation of the current state of this object.
-        /// </summary>
-        /// <returns>
-        ///   A <c>System.String</c> object.
-        /// </returns>
+        /// <summary>Returns a string representation of the current state of this object.</summary>
+        /// <returns>A <c>System.String</c> object.</returns>
         [SuppressMessage("Microsoft.Globalization", "CA1305:SpecifyIFormatProvider",
             MessageId = "System.string.Format(System.String,System.Object,System.Object,System.Object)",
             Justification = "We are not currently handling globalization or localization")]

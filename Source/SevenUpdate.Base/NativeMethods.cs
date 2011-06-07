@@ -20,23 +20,13 @@ namespace SevenUpdate
     using System.Runtime.InteropServices;
     using System.Text;
 
-    /// <summary>
-    ///   Contains Win32 native methods.
-    /// </summary>
+    /// <summary>Contains Win32 native methods.</summary>
     internal static class NativeMethods
     {
-        /// <summary>
-        ///   Moves the file using the windows command.
-        /// </summary>
-        /// <param name="sourceFileName">
-        ///   The current name of the file or directory on the local computer.
-        /// </param>
-        /// <param name="newFileName">
-        ///   The new name of the file or directory on the local computer.
-        /// </param>
-        /// <param name="flags">
-        ///   The flags that determine how to move the file.
-        /// </param>
+        /// <summary>Moves the file using the windows command.</summary>
+        /// <param name="sourceFileName">  The current name of the file or directory on the local computer.</param>
+        /// <param name="newFileName">  The new name of the file or directory on the local computer.</param>
+        /// <param name="flags">  The flags that determine how to move the file.</param>
         /// <returns>
         ///   If the function succeeds, the return value is nonzero. If the function fails, the return value is zero
         ///   (0). To get extended error information, call GetLastError.
@@ -49,12 +39,8 @@ namespace SevenUpdate
         ///   The MsiGetComponentPath function returns the full path to an installed component. If the key path for the
         ///   component is a registry key then the registry key is returned.
         /// </summary>
-        /// <param name="productCode">
-        ///   The product code.
-        /// </param>
-        /// <param name="componentCode">
-        ///   The component code.
-        /// </param>
+        /// <param name="productCode">  The product code.</param>
+        /// <param name="componentCode">  The component code.</param>
         /// <param name="componentPath">
         ///   A pointer to a variable that receives the path to the component. This parameter can be <c>null</c>. If the
         ///   component is a registry key, the registry roots are represented numerically. If this is a registry subkey
@@ -69,19 +55,13 @@ namespace SevenUpdate
         ///    terminating <c>null</c> character. If the buffer passed in is too small, the count returned does not
         ///    include the terminating <c>null</c> character.
         /// </param>
-        /// <returns>
-        ///   The install state of the component.
-        /// </returns>
+        /// <returns>The install state of the component.</returns>
         [DllImport(@"msi.dll", CharSet = CharSet.Unicode)]
         internal static extern int MsiGetComponentPath(
             string productCode, string componentCode, StringBuilder componentPath, ref int componentPathBufferSize);
 
-        /// <summary>
-        ///   Gets the target for the msi shortcut.
-        /// </summary>
-        /// <param name="targetFile">
-        ///   A <c>null</c>-terminated string specifying the full path to a shortcut.
-        /// </param>
+        /// <summary>Gets the target for the msi shortcut.</summary>
+        /// <param name="targetFile">  A <c>null</c>-terminated string specifying the full path to a shortcut.</param>
         /// <param name="productCode">
         ///   A GUID for the product code of the shortcut. This string buffer must be 39 characters long. The first 38
         ///   characters are for the GUID, and the last character is for the terminating <c>null</c> character. This
@@ -96,9 +76,7 @@ namespace SevenUpdate
         ///   for the GUID, and the last character is for the terminating <c>null</c> character. This parameter can be
         ///   <c>null</c>.
         /// </param>
-        /// <returns>
-        ///   The return code.
-        /// </returns>
+        /// <returns>The return code.</returns>
         [DllImport(@"msi.dll", CharSet = CharSet.Unicode)]
         internal static extern int MsiGetShortcutTarget(
             string targetFile, StringBuilder productCode, StringBuilder featureId, StringBuilder componentCode);

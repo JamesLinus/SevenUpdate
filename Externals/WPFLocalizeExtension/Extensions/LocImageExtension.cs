@@ -18,27 +18,19 @@ namespace WPFLocalizeExtension.Extensions
 
     using Engine;
 
-    /// <summary>
-    ///   <c>BaseLocalizeExtension</c> for image objects.
-    /// </summary>
+    /// <summary><c>BaseLocalizeExtension</c> for image objects.</summary>
     [MarkupExtensionReturnType(typeof(BitmapSource))]
     public class LocImageExtension : BaseLocalizeExtension<BitmapSource>
     {
         #region Constructors and Destructors
 
-        /// <summary>
-        ///   Initializes a new instance of the LocImageExtension class.
-        /// </summary>
+        /// <summary>Initializes a new instance of the LocImageExtension class.</summary>
         public LocImageExtension()
         {
         }
 
-        /// <summary>
-        ///   Initializes a new instance of the <c>LocImageExtension</c> class.
-        /// </summary>
-        /// <param name="key">
-        ///   The resource identifier.
-        /// </param>
+        /// <summary>Initializes a new instance of the <c>LocImageExtension</c> class.</summary>
+        /// <param name="key">  The resource identifier.</param>
         public LocImageExtension(string key) : base(key)
         {
         }
@@ -47,15 +39,9 @@ namespace WPFLocalizeExtension.Extensions
 
         #region Public Methods
 
-        /// <summary>
-        ///   Provides the Value for the first Binding as <c>System.Windows.Media.Imaging.BitmapSource</c>.
-        /// </summary>
-        /// <param name="serviceProvider">
-        ///   The <c>System.Windows.Markup.IProvideValueTarget</c> provided from the <c>MarkupExtension</c>.
-        /// </param>
-        /// <returns>
-        ///   The found item from the .resx directory or <c>null</c> if not found.
-        /// </returns>
+        /// <summary>Provides the Value for the first Binding as <c>System.Windows.Media.Imaging.BitmapSource</c>.</summary>
+        /// <param name="serviceProvider">  The <c>System.Windows.Markup.IProvideValueTarget</c> provided from the <c>MarkupExtension</c>.</param>
+        /// <returns>The found item from the .resx directory or <c>null</c> if not found.</returns>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
             var obj = base.ProvideValue(serviceProvider);
@@ -91,12 +77,8 @@ namespace WPFLocalizeExtension.Extensions
         ///   Creates a <c>System.Windows.Media.Imaging.BitmapSource</c> from a <see cref="System.Drawing.Bitmap"
         ///   />.This extension does NOT support a DesignValue.
         /// </summary>
-        /// <param name="input">
-        ///   The <c>System.Drawing.Bitmap</c> to convert.
-        /// </param>
-        /// <returns>
-        ///   The converted <c>System.Windows.Media.Imaging.BitmapSource</c>.
-        /// </returns>
+        /// <param name="input">  The <c>System.Drawing.Bitmap</c> to convert.</param>
+        /// <returns>The converted <c>System.Windows.Media.Imaging.BitmapSource</c>.</returns>
         protected override object FormatOutput(object input)
         {
             // allocate the memory for the bitmap

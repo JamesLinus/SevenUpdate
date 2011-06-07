@@ -22,29 +22,21 @@ namespace SevenUpdate
 
     using ProtoBuf;
 
-    /// <summary>
-    ///   Provides event data for the DownloadCompleted event.
-    /// </summary>
+    /// <summary>Provides event data for the DownloadCompleted event.</summary>
     [ProtoContract]
     [DataContract]
     public sealed class DownloadCompletedEventArgs : EventArgs
     {
         #region Constructors and Destructors
 
-        /// <summary>
-        ///   Initializes a new instance of the <c>DownloadCompletedEventArgs</c> class.
-        /// </summary>
-        /// <param name="errorOccurred">
-        ///   <c>True</c> if an error occurred, otherwise <c>False</c>.
-        /// </param>
+        /// <summary>Initializes a new instance of the <c>DownloadCompletedEventArgs</c> class.</summary>
+        /// <param name="errorOccurred">  <c>True</c> if an error occurred, otherwise <c>False</c>.</param>
         public DownloadCompletedEventArgs(bool errorOccurred)
         {
             this.ErrorOccurred = errorOccurred;
         }
 
-        /// <summary>
-        ///   Initializes a new instance of the DownloadCompletedEventArgs class.
-        /// </summary>
+        /// <summary>Initializes a new instance of the DownloadCompletedEventArgs class.</summary>
         public DownloadCompletedEventArgs()
         {
         }
@@ -53,9 +45,7 @@ namespace SevenUpdate
 
         #region Properties
 
-        /// <summary>
-        ///   Gets a value indicating whether an error occurred.
-        /// </summary>
+        /// <summary>Gets a value indicating whether an error occurred.</summary>
         /// <value><c>True</c> if an error occurred otherwise, <c>False</c>.</value>
         [ProtoMember(1, IsRequired = false)]
         [DataMember]

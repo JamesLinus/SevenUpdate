@@ -18,14 +18,10 @@ namespace SharpBits.Base
     [StructLayout(LayoutKind.Sequential, Pack = 8, Size = 0)]
     internal struct BGFileProgress
     {
-        /// <summary>
-        ///   Size of the file in bytes.
-        /// </summary>
+        /// <summary>Size of the file in bytes.</summary>
         public readonly ulong BytesTotal;
 
-        /// <summary>
-        ///   Number of bytes transferred.
-        /// </summary>
+        /// <summary>Number of bytes transferred.</summary>
         public readonly ulong BytesTransferred;
 
         /// <summary>

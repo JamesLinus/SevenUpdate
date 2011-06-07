@@ -23,9 +23,7 @@ namespace SevenUpdate.Sdk
 
     using ProtoBuf;
 
-    /// <summary>
-    ///   Contains data specifying the application name and it's updates.
-    /// </summary>
+    /// <summary>Contains data specifying the application name and it's updates.</summary>
     [ProtoContract]
     [DataContract(IsReference = true)]
     [KnownType(typeof(Sua))]
@@ -34,32 +32,24 @@ namespace SevenUpdate.Sdk
     {
         #region Constants and Fields
 
-        /// <summary>
-        ///   The collection of localized update names.
-        /// </summary>
+        /// <summary>The collection of localized update names.</summary>
         private readonly ObservableCollection<string> updateNames = new ObservableCollection<string>();
 
-        /// <summary>
-        ///   The localized name of the application.
-        /// </summary>
+        /// <summary>The localized name of the application.</summary>
         private string applicationName;
 
         #endregion
 
         #region Events
 
-        /// <summary>
-        ///   Occurs when a property has changed.
-        /// </summary>
+        /// <summary>Occurs when a property has changed.</summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
 
         #region Properties
 
-        /// <summary>
-        ///   Gets or sets the localized application name.
-        /// </summary>
+        /// <summary>Gets or sets the localized application name.</summary>
         /// <value>The name of the application.</value>
         [ProtoMember(1)]
         [DataMember]
@@ -77,23 +67,17 @@ namespace SevenUpdate.Sdk
             }
         }
 
-        /// <summary>
-        ///   Gets or sets the last used sua filename when the project was exported.
-        /// </summary>
+        /// <summary>Gets or sets the last used sua filename when the project was exported.</summary>
         [ProtoMember(3)]
         [DataMember]
         public string ExportedSuaFileName { get; set; }
 
-        /// <summary>
-        ///   Gets or sets the last used sui filename when the project was exported.
-        /// </summary>
+        /// <summary>Gets or sets the last used sui filename when the project was exported.</summary>
         [ProtoMember(4)]
         [DataMember]
         public string ExportedSuiFileName { get; set; }
 
-        /// <summary>
-        ///   Gets the update names.
-        /// </summary>
+        /// <summary>Gets the update names.</summary>
         /// <value>The update names.</value>
         [ProtoMember(2)]
         [DataMember]
@@ -109,12 +93,8 @@ namespace SevenUpdate.Sdk
 
         #region Methods
 
-        /// <summary>
-        ///   When a property has changed, call the <c>OnPropertyChanged</c> Event.
-        /// </summary>
-        /// <param name="name">
-        ///   The name of the property changed.
-        /// </param>
+        /// <summary>When a property has changed, call the <c>OnPropertyChanged</c> Event.</summary>
+        /// <param name="name">  The name of the property changed.</param>
         private void OnPropertyChanged(string name)
         {
             var handler = this.PropertyChanged;

@@ -11,9 +11,7 @@ namespace SharpBits.Base
 {
     using System.Runtime.InteropServices;
 
-    /// <summary>
-    ///   The BG_BASIC_CREDENTIALS structure identifies the user name and password to authenticate.
-    /// </summary>
+    /// <summary>The BG_BASIC_CREDENTIALS structure identifies the user name and password to authenticate.</summary>
     internal struct BGBasicCredentials
     {
         #region Constants and Fields

@@ -20,22 +20,14 @@ namespace SevenUpdate
     using System;
     using System.Windows.Threading;
 
-    /// <summary>
-    ///   Extension Methods for Dispatcher.BeginInvoke.
-    /// </summary>
+    /// <summary>Extension Methods for Dispatcher.BeginInvoke.</summary>
     public static class DispatcherObjectDelegates
     {
         #region Public Methods
 
-        /// <summary>
-        ///   Invokes a Method to run on the UI thread.
-        /// </summary>
-        /// <param name="dispatcher">
-        ///   The dispatcher object.
-        /// </param>
-        /// <param name="method">
-        ///   The method to invoke.
-        /// </param>
+        /// <summary>Invokes a Method to run on the UI thread.</summary>
+        /// <param name="dispatcher">  The dispatcher object.</param>
+        /// <param name="method">  The method to invoke.</param>
         public static void BeginInvoke(this Dispatcher dispatcher, Action method)
         {
             if (method == null)
@@ -49,21 +41,11 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>
-        ///   Invokes a Method to run on the UI thread.
-        /// </summary>
-        /// <param name="dispatcher">
-        ///   The dispatcher object.
-        /// </param>
-        /// <param name="method">
-        ///   The method to invoke.
-        /// </param>
-        /// <param name="parameter">
-        ///   The parameter to pass to the method.
-        /// </param>
-        /// <typeparam name="T">
-        ///   The method to invoke under the UI thread.
-        /// </typeparam>
+        /// <summary>Invokes a Method to run on the UI thread.</summary>
+        /// <param name="dispatcher">  The dispatcher object.</param>
+        /// <param name="method">  The method to invoke.</param>
+        /// <param name="parameter">  The parameter to pass to the method.</param>
+        /// <typeparam name="T">The method to invoke under the UI thread.</typeparam>
         public static void BeginInvoke<T>(this Dispatcher dispatcher, Action<T> method, T parameter)
         {
             if (dispatcher != null)

@@ -7,19 +7,13 @@
 
 namespace System.Windows.Dialogs
 {
-    /// <summary>
-    ///   Defines event data associated with a HyperlinkClicked event.
-    /// </summary>
+    /// <summary>Defines event data associated with a HyperlinkClicked event.</summary>
     public class HyperlinkClickedEventArgs : EventArgs
     {
         #region Constructors and Destructors
 
-        /// <summary>
-        ///   Initializes a new instance of the <c>HyperlinkClickedEventArgs</c> class.
-        /// </summary>
-        /// <param name="link">
-        ///   The text of the hyperlink that was clicked.
-        /// </param>
+        /// <summary>Initializes a new instance of the <c>HyperlinkClickedEventArgs</c> class.</summary>
+        /// <param name="link">  The text of the hyperlink that was clicked.</param>
         public HyperlinkClickedEventArgs(string link)
         {
             this.LinkText = link;
@@ -29,9 +23,7 @@ namespace System.Windows.Dialogs
 
         #region Properties
 
-        /// <summary>
-        ///   Gets or sets the text of the hyperlink that was clicked.
-        /// </summary>
+        /// <summary>Gets or sets the text of the hyperlink that was clicked.</summary>
         public string LinkText { get; set; }
 
         #endregion

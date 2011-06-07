@@ -7,15 +7,11 @@
 
 namespace System.Windows.Dialogs
 {
-    /// <summary>
-    ///   Specifies the behavior of the task dialog.
-    /// </summary>
+    /// <summary>Specifies the behavior of the task dialog.</summary>
     [Flags]
     internal enum TaskDialogFlags
     {
-        /// <summary>
-        ///   Empty dialog.
-        /// </summary>
+        /// <summary>Empty dialog.</summary>
         None = 0,
 
         /// <summary>
@@ -78,19 +74,13 @@ namespace System.Windows.Dialogs
         /// </summary>
         VerificationFlagChecked = 0x0100,
 
-        /// <summary>
-        ///   Indicates that a Progress Bar is to be displayed.
-        /// </summary>
+        /// <summary>Indicates that a Progress Bar is to be displayed.</summary>
         ShowProgressBar = 0x0200,
 
-        /// <summary>
-        ///   Indicates that an Marquee Progress Bar is to be displayed.
-        /// </summary>
+        /// <summary>Indicates that an Marquee Progress Bar is to be displayed.</summary>
         ShowMarqueeProgressBar = 0x0400,
 
-        /// <summary>
-        ///   Indicates that the task dialog's callback is to be called approximately every 200 milliseconds.
-        /// </summary>
+        /// <summary>Indicates that the task dialog's callback is to be called approximately every 200 milliseconds.</summary>
         CallbackTimer = 0x0800,
 
         /// <summary>
@@ -100,14 +90,10 @@ namespace System.Windows.Dialogs
         /// </summary>
         PositionRelativeToWindow = 0x1000,
 
-        /// <summary>
-        ///   Indicates that text is displayed reading right to left.
-        /// </summary>
+        /// <summary>Indicates that text is displayed reading right to left.</summary>
         RtlLayout = 0x2000,
 
-        /// <summary>
-        ///   Indicates that no default item will be selected.
-        /// </summary>
+        /// <summary>Indicates that no default item will be selected.</summary>
         NoDefaultRadioButton = 0x4000
     }
 }

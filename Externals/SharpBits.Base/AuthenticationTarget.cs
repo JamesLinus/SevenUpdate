@@ -15,19 +15,13 @@ namespace SharpBits.Base
     /// </summary>
     public enum AuthenticationTarget
     {
-        /// <summary>
-        ///   Use no credentials.
-        /// </summary>
+        /// <summary>Use no credentials.</summary>
         None = 0,
 
-        /// <summary>
-        ///   Use credentials for server requests.
-        /// </summary>
+        /// <summary>Use credentials for server requests.</summary>
         Server = 1,
 
-        /// <summary>
-        ///   Use credentials for proxy requests.
-        /// </summary>
+        /// <summary>Use credentials for proxy requests.</summary>
         Proxy = 2,
     }
 }
