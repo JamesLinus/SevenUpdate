@@ -391,7 +391,7 @@ namespace SevenUpdate.Admin
             }
             else
             {
-                if (args[0] == "Abort")
+                if (string.Compare(args[0], "Abort", true) == 0)
                 {
                     try
                     {
@@ -418,7 +418,7 @@ namespace SevenUpdate.Admin
                     ShutdownApp();
                 }
 
-                if (args[0] == "Auto")
+                if (string.Compare(args[0], "Auto", true) == 0)
                 {
                     if (File.Exists(Path.Combine(AllUserStore, "abort.lock")))
                     {
@@ -449,11 +449,57 @@ namespace SevenUpdate.Admin
                     notifyIcon.Visible = true;
                     Search.ErrorOccurred += ErrorOccurred;
 
-                    Collection<Sua> apps = null;
+                    var apps = new Collection<Sua>();
                     if (File.Exists(ApplicationsFile))
                     {
                         apps = Utilities.Deserialize<Collection<Sua>>(ApplicationsFile);
                     }
+
+                    var publisher = new ObservableCollection<LocaleString>();
+                    var ls = new LocaleString { Value = "Seven Software", Lang = "en" };
+                    publisher.Add(ls);
+
+                    var name = new ObservableCollection<LocaleString>();
+                    ls = new LocaleString { Value = "Seven Update", Lang = "en" };
+                    name.Add(ls);
+
+                    var app = new Sua(name, publisher)
+                        {
+                            AppUrl = @"http://sevenupdate.com/",
+                            Directory = @"HKLM\Software\Microsoft\Windows\CurrentVersion\App Paths\SevenUpdate.exe",
+                            ValueName = "Path",
+                            HelpUrl = @"http://sevenupdate.com/support/",
+                            Platform = Platform.AnyCpu,
+                            IsEnabled = true,
+                            SuiUrl = @"http://apps.sevenupdate.com/list.sul"
+                        };
+
+                    string channel = null;
+                    try
+                    {
+                        channel = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Seven Update", "channel", null).ToString();
+                    }
+                    catch (NullReferenceException)
+                    {
+                    }
+                    catch (AccessViolationException)
+                    {
+                    }
+                    
+                    switch (channel)
+                        {
+                            case "dev":
+                                app.SuiUrl += @"-dev.sui";
+                                break;
+                            case "beta":
+                                app.SuiUrl += @"-beta.sui";
+                                break;
+                            default:
+                                app.SuiUrl += @".sui";
+                                break;
+                        }
+
+                    apps.Insert(0, app);
 
                     Search.SearchForUpdates(apps, Path.Combine(AllUserStore, "downloads"));
                 }
