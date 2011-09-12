@@ -30,7 +30,7 @@ namespace SevenUpdate
         #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <c>UpdateInstalledEventArgs</c> class.</summary>
-        /// <param name="update">  The update information that was installed.</param>
+        /// <param name="update">The update information that was installed.</param>
         public UpdateInstalledEventArgs(Suh update)
         {
             this.Update = update;

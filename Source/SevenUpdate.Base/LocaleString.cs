@@ -45,8 +45,8 @@ namespace SevenUpdate
         }
 
         /// <summary>Initializes a new instance of the <c>LocaleString</c> class.</summary>
-        /// <param name="value">  The string value.</param>
-        /// <param name="lang">  The an ISO language code for the value.</param>
+        /// <param name="value">The string value.</param>
+        /// <param name="lang">The an ISO language code for the value.</param>
         public LocaleString(string value, string lang)
         {
             this.Lang = lang;
@@ -109,7 +109,7 @@ namespace SevenUpdate
         #region Methods
 
         /// <summary>When a property has changed, call the <c>OnPropertyChanged</c> Event.</summary>
-        /// <param name="name">  The name of the property that changed.</param>
+        /// <param name="name">The name of the property that changed.</param>
         private void OnPropertyChanged(string name)
         {
             var handler = this.PropertyChanged;

@@ -30,8 +30,8 @@ namespace SevenUpdate
         #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <c>InstallCompletedEventArgs</c> class.</summary>
-        /// <param name="updatesInstalled">  The number of updates installed.</param>
-        /// <param name="updatesFailed">  The number of updates that failed.</param>
+        /// <param name="updatesInstalled">The number of updates installed.</param>
+        /// <param name="updatesFailed">The number of updates that failed.</param>
         public InstallCompletedEventArgs(int updatesInstalled, int updatesFailed)
         {
             this.UpdatesInstalled = updatesInstalled;

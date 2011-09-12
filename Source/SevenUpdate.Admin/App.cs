@@ -147,42 +147,42 @@ namespace SevenUpdate.Admin
         {
             Task.Factory.StartNew(
                 () =>
+                {
+                    if (File.Exists(Path.Combine(AllUserStore, "abort.lock")))
                     {
-                        if (File.Exists(Path.Combine(AllUserStore, "abort.lock")))
+                        Download.CancelDownload();
+                        Install.CancelInstall();
+                        try
                         {
-                            Download.CancelDownload();
-                            Install.CancelInstall();
-                            try
-                            {
-                                File.Delete(Path.Combine(AllUserStore, "abort.lock"));
-                            }
-                            catch (IOException)
-                            {
-                            }
+                            File.Delete(Path.Combine(AllUserStore, "abort.lock"));
                         }
+                        catch (IOException)
+                        {
+                        }
+                    }
 
 #if (!DEBUG)
-                        if (client == null)
-                        {
-                            StartWcfHost();
-                        }
+                    if (client == null)
+                    {
+                        StartWcfHost();
+                    }
 
 #endif
 
-                        if (IsInstalling)
-                        {
-                            return;
-                        }
+                    if (IsInstalling)
+                    {
+                        return;
+                    }
 
-                        if (Process.GetProcessesByName("SevenUpdate").Length > 0 || waiting)
-                        {
-                            return;
-                        }
+                    if (Process.GetProcessesByName("SevenUpdate").Length > 0 || waiting)
+                    {
+                        return;
+                    }
 
 #if (!DEBUG)
-                        ShutdownApp();
+                    ShutdownApp();
 #endif
-                    });
+                });
         }
 
         /// <summary>Reports that the download has completed and starts update installation if necessary.</summary>
@@ -471,7 +471,7 @@ namespace SevenUpdate.Admin
                             HelpUrl = @"http://sevenupdate.com/support/",
                             Platform = Platform.AnyCpu,
                             IsEnabled = true,
-                            SuiUrl = @"http://apps.sevenupdate.com/list.sul"
+                            SuiUrl = @"http://apps.sevenupdate.com/SevenUpdate"
                         };
 
                     string channel = null;
@@ -485,19 +485,19 @@ namespace SevenUpdate.Admin
                     catch (AccessViolationException)
                     {
                     }
-                    
+
                     switch (channel)
-                        {
-                            case "dev":
-                                app.SuiUrl += @"-dev.sui";
-                                break;
-                            case "beta":
-                                app.SuiUrl += @"-beta.sui";
-                                break;
-                            default:
-                                app.SuiUrl += @".sui";
-                                break;
-                        }
+                    {
+                        case "dev":
+                            app.SuiUrl += @"-dev.sui";
+                            break;
+                        case "beta":
+                            app.SuiUrl += @"-beta.sui";
+                            break;
+                        default:
+                            app.SuiUrl += @".sui";
+                            break;
+                    }
 
                     apps.Insert(0, app);
 
@@ -640,8 +640,7 @@ namespace SevenUpdate.Admin
         /// <summary>Starts the WCF service.</summary>
         private static void StartWcfHost()
         {
-            var binding = new NetNamedPipeBinding
-                { Name = "sevenupdatebinding", Security = { Mode = NetNamedPipeSecurityMode.Transport } };
+            var binding = new NetNamedPipeBinding { Name = "sevenupdatebinding", Security = { Mode = NetNamedPipeSecurityMode.Transport } };
             var address = new EndpointAddress(@"net.pipe://localhost/sevenupdate/");
 
             try

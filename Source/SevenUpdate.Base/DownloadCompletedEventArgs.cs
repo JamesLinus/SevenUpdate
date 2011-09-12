@@ -30,7 +30,7 @@ namespace SevenUpdate
         #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <c>DownloadCompletedEventArgs</c> class.</summary>
-        /// <param name="errorOccurred">  <c>True</c> if an error occurred, otherwise <c>False</c>.</param>
+        /// <param name="errorOccurred"><c>True</c> if an error occurred, otherwise <c>False</c>.</param>
         public DownloadCompletedEventArgs(bool errorOccurred)
         {
             this.ErrorOccurred = errorOccurred;
