@@ -26,11 +26,11 @@ namespace SevenUpdate.Sdk.ValidationRules
     using System.Windows.Properties;
 
     /// <summary>Validates if the input is a url.</summary>
-    [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass",
+    [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", 
         Justification = "Validation Rule")]
     public class DownloadUrlRule : ValidationRule
     {
-        #region Properties
+        #region Public Properties
 
         /// <summary>Gets or sets a value indicating whether this instance is required.</summary>
         /// <value><c>True</c> if this instance is required; otherwise, <c>False</c>.</value>
@@ -41,8 +41,8 @@ namespace SevenUpdate.Sdk.ValidationRules
         #region Public Methods
 
         /// <summary>When overridden in a derived class, performs validation checks on a value.</summary>
-        /// <param name="value">  The value from the binding target to check.</param>
-        /// <param name="cultureInfo">  The culture to use in this rule.</param>
+        /// <param name = "value">The value from the binding target to check.</param>
+        /// <param name = "cultureInfo">The culture to use in this rule.</param>
         /// <returns>A <c>T:System.Windows.Controls.ValidationResult</c> object.</returns>
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {

@@ -1,4 +1,4 @@
-﻿// ***********************************************************************
+// ***********************************************************************
 // <copyright file="NativeMethods.cs" project="WPFLocalizeExtension" assembly="WPFLocalizeExtension" solution="SevenUpdate" company="Bernhard Millauer">
 //     Copyright (c) Bernhard Millauer. All rights reserved.
 // </copyright>
@@ -15,7 +15,7 @@ namespace WPFLocalizeExtension.Extensions
     internal static class NativeMethods
     {
         /// <summary>Frees memory of a pointer.</summary>
-        /// <param name="o">  Object to remove from memory.</param>
+        /// <param name = "o">Object to remove from memory.</param>
         /// <returns>0 if the removing was success, otherwise another number.</returns>
         [DllImport(@"gdi32.dll")]
         internal static extern int DeleteObject(IntPtr o);

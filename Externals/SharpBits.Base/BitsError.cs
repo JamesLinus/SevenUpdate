@@ -28,9 +28,9 @@ namespace SharpBits.Base
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <c>BitsError</c> class.</summary>
-        /// <param name="job">  The job the error occurred on.</param>
-        /// <param name="error">  The error that occurred.</param>
+        /// <summary>Initializes a new instance of the <see cref = "BitsError" /> class.</summary>
+        /// <param name = "job">The job the error occurred on.</param>
+        /// <param name = "error">The error that occurred.</param>
         internal BitsError(BitsJob job, IBackgroundCopyError error)
         {
             if (null == error)
@@ -44,7 +44,7 @@ namespace SharpBits.Base
 
         #endregion
 
-        #region Properties
+        #region Public Properties
 
         /// <summary>Gets the context description.</summary>
         /// <value>The context description.</value>

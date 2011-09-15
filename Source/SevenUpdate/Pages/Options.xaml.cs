@@ -49,7 +49,7 @@ namespace SevenUpdate.Pages
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the Options class.</summary>
+        /// <summary>Initializes a new instance of the <see cref = "Options" /> class.</summary>
         public Options()
         {
             this.InitializeComponent();
@@ -98,8 +98,8 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Navigates to the Seven Update privacy policy.</summary>
-        /// <param name="sender">  The object that called the event.</param>
-        /// <param name="e">  The event data.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The event data.</param>
         private void GoToPrivacyPolicy(object sender, RequestNavigateEventArgs e)
         {
             Utilities.StartProcess("http://sevenupdate.com/privacy");
@@ -107,8 +107,8 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Loads the settings and <c>Sua</c> list when the page is loaded.</summary>
-        /// <param name="sender">  The object that called the event.</param>
-        /// <param name="e">  The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
         private void Init(object sender, RoutedEventArgs e)
         {
             this.lvApps.Cursor = Cursors.Wait;
@@ -125,7 +125,7 @@ namespace SevenUpdate.Pages
         ///   Loads the list of Seven Update applications and sets the UI, if no application list was downloaded, load
         ///   the stored list on the system.
         /// </summary>
-        /// <param name="officialApplicationList">  The official application list from the server.</param>
+        /// <param name = "officialApplicationList">The official application list from the server.</param>
         private void LoadSul(ObservableCollection<Sua> officialApplicationList = null)
         {
             try
@@ -163,12 +163,12 @@ namespace SevenUpdate.Pages
                             Directory.Exists(
                                 Utilities.IsRegistryKey(machineAppList[x].Directory)
                                     ? Utilities.GetRegistryValue(
-                                        machineAppList[x].Directory,
-                                        machineAppList[x].ValueName,
+                                        machineAppList[x].Directory, 
+                                        machineAppList[x].ValueName, 
                                         machineAppList[x].Platform)
                                     : Utilities.ConvertPath(
-                                        machineAppList[x].Directory, true, machineAppList[x].Platform)) &&
-                            machineAppList[x].IsEnabled)
+                                        machineAppList[x].Directory, true, machineAppList[x].Platform))
+                            && machineAppList[x].IsEnabled)
                         {
                             continue;
                         }
@@ -196,8 +196,8 @@ namespace SevenUpdate.Pages
                         !Directory.Exists(
                             Utilities.IsRegistryKey(officialApplicationList[x].Directory)
                                 ? Utilities.GetRegistryValue(
-                                    officialApplicationList[x].Directory,
-                                    officialApplicationList[x].ValueName,
+                                    officialApplicationList[x].Directory, 
+                                    officialApplicationList[x].ValueName, 
                                     officialApplicationList[x].Platform)
                                 : Utilities.ConvertPath(
                                     officialApplicationList[x].Directory, true, officialApplicationList[x].Platform)))
@@ -216,8 +216,8 @@ namespace SevenUpdate.Pages
                     for (var y = 0; y < machineAppList.Count; y++)
                     {
                         // Check if the app in both lists are the same
-                        if (officialApplicationList[x].Directory == machineAppList[y].Directory &&
-                            officialApplicationList[x].Platform == machineAppList[y].Platform)
+                        if (officialApplicationList[x].Directory == machineAppList[y].Directory
+                            && officialApplicationList[x].Platform == machineAppList[y].Platform)
                         {
                             // if (officialAppList[x].Source != machineAppList[y].Source) continue;
                             officialApplicationList[x].IsEnabled = machineAppList[y].IsEnabled;
@@ -247,16 +247,16 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Goes back to the Main page.</summary>
-        /// <param name="sender">  The object that called the event.</param>
-        /// <param name="e">  The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
         private void NavigateToMainPage(object sender, RoutedEventArgs e)
         {
             Core.NavigateToMainPage();
         }
 
         /// <summary>Navigates to a Uri.</summary>
-        /// <param name="sender">  The object that called the event.</param>
-        /// <param name="e">  The <c>System.Windows.Navigation.RequestNavigateEventArgs</c> instance containing the event data.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <c>System.Windows.Navigation.RequestNavigateEventArgs</c> instance containing the event data.</param>
         private void NavigateToUri(object sender, RequestNavigateEventArgs e)
         {
             Utilities.StartProcess(e.Uri.AbsoluteUri);
@@ -265,16 +265,16 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Limit the size of the <c>GridViewColumn</c> when it's being resized.</summary>
-        /// <param name="sender">  The object that called the event.</param>
-        /// <param name="e">  The <c>System.Windows.Controls.Primitives.DragDeltaEventArgs</c> instance containing the event data.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <c>System.Windows.Controls.Primitives.DragDeltaEventArgs</c> instance containing the event data.</param>
         private void RestrictColumn(object sender, DragDeltaEventArgs e)
         {
             ListViewExtensions.LimitColumnSize((Thumb)e.OriginalSource);
         }
 
         /// <summary>Saves the settings and goes back to the Main page.</summary>
-        /// <param name="sender">  The object that called the event.</param>
-        /// <param name="e">  The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
         private void SaveSettings(object sender, RoutedEventArgs e)
         {
             if (WcfService.SaveSettings(this.config.AutoOption != AutoUpdateOption.Never, this.config, machineAppList))
@@ -296,8 +296,8 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Changes the UI depending on whether Aero Glass is enabled.</summary>
-        /// <param name="sender">  The object that called the event.</param>
-        /// <param name="e">  The <c>CompositionChangedEventArgs</c> instance containing the event data.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <c>CompositionChangedEventArgs</c> instance containing the event data.</param>
         private void UpdateUI(object sender, CompositionChangedEventArgs e)
         {
             if (e.IsGlassEnabled)

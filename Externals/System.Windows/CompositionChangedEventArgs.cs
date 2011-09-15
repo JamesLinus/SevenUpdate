@@ -1,4 +1,4 @@
-﻿// ***********************************************************************
+// ***********************************************************************
 // <copyright file="CompositionChangedEventArgs.cs" project="System.Windows" assembly="System.Windows" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
@@ -22,8 +22,8 @@ namespace System.Windows
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <c>CompositionChangedEventArgs</c> class.</summary>
-        /// <param name="isGlassEnabled">  If set to <c>True</c> aero glass is enabled.</param>
+        /// <summary>Initializes a new instance of the <see cref = "CompositionChangedEventArgs" /> class.</summary>
+        /// <param name = "isGlassEnabled">If set to <c>True</c> aero glass is enabled.</param>
         internal CompositionChangedEventArgs(bool isGlassEnabled)
         {
             this.IsGlassEnabled = isGlassEnabled;
@@ -31,7 +31,7 @@ namespace System.Windows
 
         #endregion
 
-        #region Properties
+        #region Public Properties
 
         /// <summary>Gets a value indicating whether DWM/Glass is currently enabled.</summary>
         /// <value><c>True</c> if this instance is glass enabled; otherwise, <c>False</c>.</value>

@@ -1,4 +1,4 @@
-﻿// ***********************************************************************
+// ***********************************************************************
 // <copyright file="ElevatedProcessCallback.cs" project="SevenUpdate.Admin" assembly="SevenUpdate.Admin" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
@@ -20,17 +20,17 @@ namespace SevenUpdate.Admin
     using System.ServiceModel;
     using System.ServiceModel.Channels;
 
-    using Service;
+    using SevenUpdate.Service;
 
     /// <summary>The WCF client callback.</summary>
     public class ElevatedProcessCallback : DuplexClientBase<IElevatedProcessCallback>, IElevatedProcessCallback
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <c>ElevatedProcessCallback</c> class.</summary>
-        /// <param name="callbackInstance">  The callback instance context.</param>
-        /// <param name="binding">  The service binding configuration.</param>
-        /// <param name="remoteAddress">  The url for the service.</param>
+        /// <summary>Initializes a new instance of the <see cref = "ElevatedProcessCallback" /> class.</summary>
+        /// <param name = "callbackInstance">The callback instance context.</param>
+        /// <param name = "binding">The service binding configuration.</param>
+        /// <param name = "remoteAddress">The url for the service.</param>
         public ElevatedProcessCallback(InstanceContext callbackInstance, Binding binding, EndpointAddress remoteAddress)
             : base(callbackInstance, binding, remoteAddress)
         {
@@ -38,9 +38,7 @@ namespace SevenUpdate.Admin
 
         #endregion
 
-        #region Implemented Interfaces
-
-        #region IElevatedProcessCallback
+        #region Public Methods
 
         /// <summary>Occurs when the process starts.</summary>
         public void ElevatedProcessStarted()
@@ -55,46 +53,44 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Occurs when the download has completed.</summary>
-        /// <param name="sender">  The sender of the event.</param>
-        /// <param name="e">  The event data.</param>
+        /// <param name = "sender">The sender of the event.</param>
+        /// <param name = "e">The event data.</param>
         public void OnDownloadCompleted(object sender, DownloadCompletedEventArgs e)
         {
             this.Channel.OnDownloadCompleted(sender, e);
         }
 
         /// <summary>Occurs when the download progress has changed.</summary>
-        /// <param name="sender">  The sender of the event.</param>
-        /// <param name="e">  The event data.</param>
+        /// <param name = "sender">The sender of the event.</param>
+        /// <param name = "e">The event data.</param>
         public void OnDownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
             this.Channel.OnDownloadProgressChanged(sender, e);
         }
 
         /// <summary>Occurs when an error occurs.</summary>
-        /// <param name="sender">  The sender of the event.</param>
-        /// <param name="e">  The event data.</param>
+        /// <param name = "sender">The sender of the event.</param>
+        /// <param name = "e">The event data.</param>
         public void OnErrorOccurred(object sender, ErrorOccurredEventArgs e)
         {
             this.Channel.OnErrorOccurred(sender, e);
         }
 
         /// <summary>Occurs when the installation of updates has completed.</summary>
-        /// <param name="sender">  The sender of the event.</param>
-        /// <param name="e">  The event data.</param>
+        /// <param name = "sender">The sender of the event.</param>
+        /// <param name = "e">The event data.</param>
         public void OnInstallCompleted(object sender, InstallCompletedEventArgs e)
         {
             this.Channel.OnInstallCompleted(sender, e);
         }
 
         /// <summary>Occurs when the installation progress has changed.</summary>
-        /// <param name="sender">  The sender of the event.</param>
-        /// <param name="e">  The event data.</param>
+        /// <param name = "sender">The sender of the event.</param>
+        /// <param name = "e">The event data.</param>
         public void OnInstallProgressChanged(object sender, InstallProgressChangedEventArgs e)
         {
             this.Channel.OnInstallProgressChanged(sender, e);
         }
-
-        #endregion
 
         #endregion
     }

@@ -1,4 +1,4 @@
-﻿// ***********************************************************************
+// ***********************************************************************
 // <copyright file="WcfServiceCallback.cs" project="SevenUpdate.Admin" assembly="SevenUpdate.Admin" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
@@ -26,18 +26,16 @@ namespace SevenUpdate.Admin
 
     using Microsoft.Win32;
 
-    using Service;
+    using SevenUpdate.Service;
 
     /// <summary>Contains methods to execute for the service callback.</summary>
     [CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant)]
     public class WcfServiceCallback : IElevatedProcess
     {
-        #region Implemented Interfaces
-
-        #region IElevatedProcess
+        #region Public Methods
 
         /// <summary>Adds an application to Seven Update, so it can manage updates for it.</summary>
-        /// <param name="application">  The application to add to Seven Update.</param>
+        /// <param name = "application">The application to add to Seven Update.</param>
         public void AddApp(Sua application)
         {
             if (application == null)
@@ -75,9 +73,9 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Changes the program settings.</summary>
-        /// <param name="applications">  The applications Seven Update will check and manage updates for.</param>
-        /// <param name="options">  The Seven Update settings.</param>
-        /// <param name="autoCheck">  If set to <c>True</c> automatic updates will be enabled.</param>
+        /// <param name = "applications">The applications Seven Update will check and manage updates for.</param>
+        /// <param name = "options">The Seven Update settings.</param>
+        /// <param name = "autoCheck">If set to <c>True</c> automatic updates will be enabled.</param>
         public void ChangeSettings(Collection<Sua> applications, Config options, bool autoCheck)
         {
             if (!autoCheck)
@@ -85,8 +83,8 @@ namespace SevenUpdate.Admin
                 if (Environment.OSVersion.Version.Major < 6)
                 {
                     // ReSharper disable PossibleNullReferenceException
-                    Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true).DeleteValue(
-                        "Seven Update Automatic Checking", false);
+                    Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true).DeleteValue
+                        ("Seven Update Automatic Checking", false);
 
                     // ReSharper restore PossibleNullReferenceException
                 }
@@ -100,8 +98,8 @@ namespace SevenUpdate.Admin
                 if (Environment.OSVersion.Version.Major < 6)
                 {
                     Registry.SetValue(
-                        @"HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run",
-                        "Seven Update Automatic Checking",
+                        @"HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run", 
+                        "Seven Update Automatic Checking", 
                         Path.Combine(Utilities.AppDir, "SevenUpdate.Helper.exe"));
                 }
                 else
@@ -115,7 +113,7 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Hides a single update.</summary>
-        /// <param name="hiddenUpdate">  The update to hide.</param>
+        /// <param name = "hiddenUpdate">The update to hide.</param>
         public void HideUpdate(Suh hiddenUpdate)
         {
             var hidden = (File.Exists(App.HiddenFile)
@@ -128,7 +126,7 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Hides a collection of <c>Suh</c> to hide.</summary>
-        /// <param name="hiddenUpdates">  The collection of updates to hide.</param>
+        /// <param name = "hiddenUpdates">The collection of updates to hide.</param>
         public void HideUpdates(Collection<Suh> hiddenUpdates)
         {
             if (hiddenUpdates == null)
@@ -147,7 +145,7 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Gets a collection of <c>Sui</c>.</summary>
-        /// <param name="applicationUpdates">  The collection of applications and updates to install.</param>
+        /// <param name = "applicationUpdates">The collection of applications and updates to install.</param>
         public void InstallUpdates(Collection<Sui> applicationUpdates)
         {
             try
@@ -176,7 +174,7 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>The update to show and remove from hidden updates.</summary>
-        /// <param name="hiddenUpdate">  The hidden update to show.</param>
+        /// <param name = "hiddenUpdate">The hidden update to show.</param>
         public void ShowUpdate(Suh hiddenUpdate)
         {
             if (hiddenUpdate == null)
@@ -196,11 +194,11 @@ namespace SevenUpdate.Admin
 
             for (var x = 0; x < show.Count; x++)
             {
-                if (show[x].Importance == hiddenUpdate.Importance && show[x].Status == hiddenUpdate.Status &&
-                    show[x].UpdateSize == hiddenUpdate.UpdateSize && show[x].HelpUrl == hiddenUpdate.HelpUrl &&
-                    show[x].InfoUrl == hiddenUpdate.InfoUrl && show[x].AppUrl == hiddenUpdate.AppUrl &&
-                    show[x].Description[0].Value == hiddenUpdate.Description[0].Value &&
-                    show[x].Name[0].Value == hiddenUpdate.Name[0].Value)
+                if (show[x].Importance == hiddenUpdate.Importance && show[x].Status == hiddenUpdate.Status
+                    && show[x].UpdateSize == hiddenUpdate.UpdateSize && show[x].HelpUrl == hiddenUpdate.HelpUrl
+                    && show[x].InfoUrl == hiddenUpdate.InfoUrl && show[x].AppUrl == hiddenUpdate.AppUrl
+                    && show[x].Description[0].Value == hiddenUpdate.Description[0].Value
+                    && show[x].Name[0].Value == hiddenUpdate.Name[0].Value)
                 {
                     show.RemoveAt(x);
                 }
@@ -229,8 +227,6 @@ namespace SevenUpdate.Admin
                         }
                     });
         }
-
-        #endregion
 
         #endregion
     }

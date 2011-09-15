@@ -51,9 +51,10 @@
         </GridView>
       </ListView.View>
     </ListView>
-    <Button Content="{LocText SevenUpdate:Resources:OK}" HorizontalAlignment="Right" HorizontalContentAlignment="Center"
-            IsDefault="True" Padding="5,1" VerticalAlignment="Bottom" VerticalContentAlignment="Center" Margin="0,0,11,10"
-            Grid.Row="2" MinWidth="75" MinHeight="23" TabIndex="1" Click="NavigateToMainPage" />
+    <Button Content="{LocText SevenUpdate:Resources:OK}" HorizontalAlignment="Right"
+            HorizontalContentAlignment="Center" IsDefault="True" Padding="5,1" VerticalAlignment="Bottom"
+            VerticalContentAlignment="Center" Margin="0,0,11,10" Grid.Row="2" MinWidth="75" MinHeight="23" TabIndex="1"
+            Click="NavigateToMainPage" />
     <Separator Grid.ColumnSpan="3" Name="line" Background="#FFDFDFDF" Margin="0" Grid.Row="2" VerticalAlignment="Top"
                x:FieldModifier="private" />
   </Grid>

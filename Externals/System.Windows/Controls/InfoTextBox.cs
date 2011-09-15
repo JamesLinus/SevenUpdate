@@ -1,4 +1,4 @@
-﻿// ***********************************************************************
+// ***********************************************************************
 // <copyright file="InfoTextBox.cs" project="System.Windows" assembly="System.Windows" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Ben Dewey. All rights reserved.
 // </copyright>
@@ -18,9 +18,8 @@
 
 namespace System.Windows.Controls
 {
-    using ComponentModel;
-
-    using Documents;
+    using System.ComponentModel;
+    using System.Windows.Documents;
 
     /// <summary>A <c>TextBox</c> that includes help text and error indicators.</summary>
     public sealed class InfoTextBox : TextBox
@@ -57,7 +56,7 @@ namespace System.Windows.Controls
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the InfoTextBox class.</summary>
+        /// <summary>Initializes a new instance of the <see cref = "InfoTextBox" /> class.</summary>
         public InfoTextBox()
         {
             if (this.Resources.Count != 0)
@@ -66,13 +65,15 @@ namespace System.Windows.Controls
             }
 
             var resourceDictionary = new ResourceDictionary
-                { Source = new Uri("/System.Windows;component/Resources/Dictionary.xaml", UriKind.Relative) };
+                {
+                   Source = new Uri("/System.Windows;component/Resources/Dictionary.xaml", UriKind.Relative) 
+                };
             this.Resources.MergedDictionaries.Add(resourceDictionary);
         }
 
         #endregion
 
-        #region Properties
+        #region Public Properties
 
         /// <summary>Gets or sets a value indicating whether the input has a validation error.</summary>
         public bool HasError
@@ -132,6 +133,10 @@ namespace System.Windows.Controls
             }
         }
 
+        #endregion
+
+        #region Properties
+
         /// <summary>Gets or sets a value indicating whether this instance has text.</summary>
         /// <value><c>True</c> if this instance has text; otherwise, <c>False</c>.</value>
         private bool HasText
@@ -186,7 +191,7 @@ namespace System.Windows.Controls
         ///   Invoked whenever an unhandled <c>DragDrop</c>.DragEnter attached routed event reaches an element derived
         ///   from this class in its route. Implement this method to add class handling for this event.
         /// </summary>
-        /// <param name="e">  Provides data about the event.</param>
+        /// <param name = "e">Provides data about the event.</param>
         protected override void OnDragEnter(DragEventArgs e)
         {
             RemoveAdorners<AdornerLabel>(this.myAdornerLayer, this);
@@ -198,7 +203,7 @@ namespace System.Windows.Controls
         ///   Invoked whenever an unhandled <c>DragDrop</c>.DragLeave attached routed event reaches an element derived
         ///   from this class in its route. Implement this method to add class handling for this event.
         /// </summary>
-        /// <param name="e">  Provides data about the event.</param>
+        /// <param name = "e">Provides data about the event.</param>
         protected override void OnDragLeave(DragEventArgs e)
         {
             this.UpdateAdorner(this);
@@ -207,10 +212,8 @@ namespace System.Windows.Controls
         }
 
         /// <summary>Is called when content in this editing control changes.</summary>
-        /// <param name="e">
-        ///   The arguments that are associated with the <see
-        ///   cref="E:System.Windows.Controls.Primitives.TextBoxBase.TextChanged" /> event.
-        /// </param>
+        /// <param name = "e">The arguments that are associated with the <see
+        ///    cref = "E:System.Windows.Controls.Primitives.TextBoxBase.TextChanged" /> event.</param>
         protected override void OnTextChanged(TextChangedEventArgs e)
         {
             this.HasText = !(this.Text != null && string.IsNullOrEmpty(this.Text));
@@ -224,8 +227,8 @@ namespace System.Windows.Controls
         }
 
         /// <summary>Determines whether the <c>InfoTextBox</c> is Visible.</summary>
-        /// <param name="sender">  The object that called the event.</param>
-        /// <param name="e">  The <c>System.EventArgs</c> instance containing the event data.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <c>System.EventArgs</c> instance containing the event data.</param>
         private static new void IsVisibleChanged(object sender, EventArgs e)
         {
             var infoTextBox = sender as InfoTextBox;
@@ -238,8 +241,8 @@ namespace System.Windows.Controls
         }
 
         /// <summary>Updates the adorner when the label changes.</summary>
-        /// <param name="d">  The dependency object.</param>
-        /// <param name="e">  The <c>System.Windows.DependencyPropertyChangedEventArgs</c> instance containing the event data.</param>
+        /// <param name = "d">The dependency object.</param>
+        /// <param name = "e">The <c>System.Windows.DependencyPropertyChangedEventArgs</c> instance containing the event data.</param>
         private static void NotePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var infoTextBox = d as InfoTextBox;
@@ -255,10 +258,10 @@ namespace System.Windows.Controls
         }
 
         /// <summary>Removes the adorners.</summary>
-        /// <param name="adorner">  The adorner.</param>
-        /// <param name="element">  The element.</param>
-        /// <typeparameter name="T">The type of element</typeparameter>
-        /// <typeparam name="T">The type of element.</typeparam>
+        /// <param name = "adorner">The adorner.</param>
+        /// <param name = "element">The element.</param>
+        /// <typeparameter name = "T">The type of element</typeparameter>
+        /// <typeparam name = "T">The type of element.</typeparam>
         private static void RemoveAdorners<T>(AdornerLayer adorner, UIElement element)
         {
             if (adorner == null)
@@ -288,8 +291,8 @@ namespace System.Windows.Controls
         }
 
         /// <summary>Updates the adorner.</summary>
-        /// <param name="element">  The element.</param>
-        /// <param name="hide">  If set to <c>True</c> hide the adorner.</param>
+        /// <param name = "element">The element.</param>
+        /// <param name = "hide">If set to <c>True</c> hide the adorner.</param>
         private void UpdateAdorner(FrameworkElement element, bool hide = false)
         {
             if (element == null || this.myAdornerLayer == null)

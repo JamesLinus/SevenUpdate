@@ -124,10 +124,6 @@
       <Name>SharpBits.Base</Name>
       <Private>False</Private>
     </ProjectReference>
-    <ProjectReference Include="..\..\Externals\Tar\Tar.csproj">
-      <Project>{DAC1329E-7EEC-43B4-B3BD-E16053C3A664}</Project>
-      <Name>Tar</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

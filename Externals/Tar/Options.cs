@@ -28,13 +28,7 @@ namespace Tar
         public bool Overwrite { get; set; }
 
         /// <summary>Gets or sets a TextWriter to which verbose status messages will be  written during operation.</summary>
-        /// <remarks><para>Use this to see messages emitted by the Tar logic. You can use this whether Extracting or creating an archive.</para></remarks>
-        /// <example>
-        ///   <code lang = "C#">
-        ///     var options = new Tar.Options(); options.StatusWriter = Console.Out; Tar.Extract("Archive2.tgz",
-        ///     options);
-        ///   </code>
-        /// </example>
+        /// <remarks><para>Use this to see messages emitted by the Tar logic. You can use this whether Extracting or creating an archive.</para></remarks><example><code lang = "C#"> var options = new Tar.Options(); options.StatusWriter = Console.Out; Tar.Extract("Archive2.tgz", options);</code></example>
         public TextWriter StatusWriter { get; set; }
 
         #endregion

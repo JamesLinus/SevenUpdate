@@ -147,16 +147,7 @@ namespace Zlib
 
         #region Methods
 
-        /// <param name="bl">
-        /// </param>
-        /// <param name="bd">
-        /// </param>
-        /// <param name="tl">
-        /// </param>
-        /// <param name="td">
-        /// </param>
-        /// <returns>
-        /// </returns>
+        /// <param name="bl"></param><param name="bd"></param> <param name="tl"></param><param name="td"></param><returns></returns>
         internal static int InflateTreesFixed(int[] bl, int[] bd, int[][] tl, int[][] td)
         {
             bl[0] = FixedBl;
@@ -166,18 +157,7 @@ namespace Zlib
             return Zok;
         }
 
-        /// <param name="c">
-        /// </param>
-        /// <param name="bb">
-        /// </param>
-        /// <param name="tb">
-        /// </param>
-        /// <param name="hp">
-        /// </param>
-        /// <param name="z">
-        /// </param>
-        /// <returns>
-        /// </returns>
+        /// <param name="c"></param><param name="bb"></param> <param name="tb"></param><param name="hp"></param><param name="z"></param><returns></returns>
         internal int InflateTreesBits(int[] c, int[] bb, int[] tb, int[] hp, ZlibCodec z)
         {
             this.InitWorkArea(19);
@@ -197,26 +177,8 @@ namespace Zlib
             return result;
         }
 
-        /// <param name="nl">
-        /// </param>
-        /// <param name="nd">
-        /// </param>
-        /// <param name="c">
-        /// </param>
-        /// <param name="bl">
-        /// </param>
-        /// <param name="bd">
-        /// </param>
-        /// <param name="tl">
-        /// </param>
-        /// <param name="td">
-        /// </param>
-        /// <param name="hp">
-        /// </param>
-        /// <param name="z">
-        /// </param>
-        /// <returns>
-        /// </returns>
+        /// <param name="nl"></param><param name="nd"></param> <param name="c"></param><param name="bl"></param>
+        /// <param name="bd"></param><param name="tl"></param> <param name="td"></param><param name="hp"></param><param name="z"></param><returns></returns>
         internal int InflateTreesDynamic(
             int nl, int nd, int[] c, int[] bl, int[] bd, int[] tl, int[] td, int[] hp, ZlibCodec z)
         {
@@ -266,30 +228,9 @@ namespace Zlib
             return Zok;
         }
 
-        /// <param name="b">
-        /// </param>
-        /// <param name="bindex">
-        /// </param>
-        /// <param name="n">
-        /// </param>
-        /// <param name="s">
-        /// </param>
-        /// <param name="d">
-        /// </param>
-        /// <param name="e">
-        /// </param>
-        /// <param name="t">
-        /// </param>
-        /// <param name="m">
-        /// </param>
-        /// <param name="hp">
-        /// </param>
-        /// <param name="hn">
-        /// </param>
-        /// <param name="v">
-        /// </param>
-        /// <returns>
-        /// </returns>
+        /// <param name="b"></param><param name="bindex"></param> <param name="n"></param><param name="s"></param>
+        /// <param name="d"></param><param name="e"></param> <param name="t"></param><param name="m"></param>
+        /// <param name="hp"></param><param name="hn"></param> <param name="v"></param><returns></returns>
         private int HuftBuild(
             int[] b, int bindex, int n, int s, int[] d, int[] e, int[] t, int[] m, int[] hp, int[] hn, int[] v)
         {

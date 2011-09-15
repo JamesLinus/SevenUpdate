@@ -19,7 +19,7 @@ namespace System.Windows
         ///   The awareness is global, meaning that the first application instance is aware of any other instances
         ///   running on the host.
         /// </summary>
-        Host = 0x00,
+        Host = 0x00, 
 
         /// <summary>
         ///   The awareness is local, meaning that the first application instance is aware only of other instances

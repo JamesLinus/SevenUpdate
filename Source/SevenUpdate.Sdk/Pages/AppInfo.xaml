@@ -52,9 +52,9 @@
       <Button HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Padding="5,1"
               VerticalContentAlignment="Center" Content="{LocText SevenUpdate.Sdk:Resources:Next}" Click="MoveOn" TabIndex="10"
               Name="btnNext" x:FieldModifier="private" />
-      <Button Content="{LocText SevenUpdate.Sdk:Resources:Cancel}" HorizontalContentAlignment="Center" IsDefault="False"
-              MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Margin="8,0,0,0" IsCancel="True"
-              Click="SaveSua" TabIndex="11" Name="btnCancel" x:FieldModifier="private" />
+      <Button Content="{LocText SevenUpdate.Sdk:Resources:Cancel}" HorizontalContentAlignment="Center"
+              IsDefault="False" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Margin="8,0,0,0"
+              IsCancel="True" Click="SaveSua" TabIndex="11" Name="btnCancel" x:FieldModifier="private" />
     </StackPanel>
 
     <ComboBox Grid.Column="3" HorizontalAlignment="Right" Name="cbxLocale" VerticalAlignment="Center" MinWidth="80"
@@ -77,10 +77,10 @@
                ToolTip="{LocText SevenUpdate.Sdk:Resources:ApplicationNameToolTip}" Grid.Column="1" Grid.Row="1" Margin="0,10,0,0"
                Grid.ColumnSpan="2" Cursor="Help" />
 
-    <InfoTextBox Text="{Binding Path=Name, Converter={StaticResource stringToLocaleString}, Mode=OneWay}" MaxLength="100"
-                 Note="{LocText SevenUpdate.Sdk:Resources:ApplicationNameNote}" TabIndex="0" Name="tbxAppName" Grid.Column="1"
-                 Grid.Row="2" Grid.ColumnSpan="2" LostFocus="ChangeName" TextChanged="ValidateRequiredInput" Margin="0,0,100,0"
-                 x:FieldModifier="private" />
+    <InfoTextBox Text="{Binding Path=Name, Converter={StaticResource stringToLocaleString}, Mode=OneWay}"
+                 MaxLength="100" Note="{LocText SevenUpdate.Sdk:Resources:ApplicationNameNote}" TabIndex="0" Name="tbxAppName"
+                 Grid.Column="1" Grid.Row="2" Grid.ColumnSpan="2" LostFocus="ChangeName" TextChanged="ValidateRequiredInput"
+                 Margin="0,0,100,0" x:FieldModifier="private" />
     <StackPanel Orientation="Horizontal" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left" Margin="0,10,0,0"
                 Grid.ColumnSpan="2">
       <TextBlock Padding="2" Text="{LocText SevenUpdate.Sdk:Resources:ApplicationInstallLocation}"
@@ -88,8 +88,8 @@
       <RadioButton Content="{LocText SevenUpdate.Sdk:Resources:FileSystem}" Name="rbtnFileSystem"
                    HorizontalAlignment="Left" VerticalAlignment="Center" IsChecked="True" Margin="10,0,0,0" TabIndex="2"
                    Checked="ChangeToFileSystemLocation" x:FieldModifier="private" />
-      <RadioButton Content="{LocText SevenUpdate.Sdk:Resources:Registry}" Name="rbtnRegistry" HorizontalAlignment="Left"
-                   VerticalAlignment="Center" Margin="10,0,0,0" TabIndex="3" Checked="ChangeToRegistryLocation"
+      <RadioButton Content="{LocText SevenUpdate.Sdk:Resources:Registry}" Name="rbtnRegistry"
+                   HorizontalAlignment="Left" VerticalAlignment="Center" Margin="10,0,0,0" TabIndex="3" Checked="ChangeToRegistryLocation"
                    IsChecked="{Binding Path=ValueName, Converter={StaticResource stringToBool}, Mode=OneTime, ConverterParameter=True}" />
     </StackPanel>
 
@@ -143,7 +143,8 @@
                Text="{LocText SevenUpdate.Sdk:Resources:ApplicationDescription}" Grid.Column="1" Grid.Row="8" Grid.ColumnSpan="2" />
 
     <Expander Grid.Column="1" Grid.Row="17" Grid.ColumnSpan="3"
-              Header="{LocText SevenUpdate.Sdk:Resources:PublisherInformation}" Foreground="#FF003399" Margin="0,10,0,0">
+              Header="{LocText SevenUpdate.Sdk:Resources:PublisherInformation}" Foreground="#FF003399" Margin="0,10,0,0"
+              IsExpanded="True">
       <ScrollViewer VerticalScrollBarVisibility="Auto" Foreground="Black">
         <Grid>
           <Grid.ColumnDefinitions>
@@ -186,8 +187,8 @@
                      ToolTip="{LocText SevenUpdate.Sdk:Resources:HelpWebsiteToolTip}" Grid.Column="1" Grid.Row="4" Margin="0,10,0,0"
                      Cursor="Help" />
 
-          <InfoTextBox Note="http://sevenupdate.com/support" Name="tbxHelpUrl" TabIndex="10" Grid.Row="5" Grid.Column="1"
-                       Margin="0,0,10,0" TextChanged="ValidateUrlInput" x:FieldModifier="private">
+          <InfoTextBox Note="http://sevenupdate.com/support" Name="tbxHelpUrl" TabIndex="10" Grid.Row="5"
+                       Grid.Column="1" Margin="0,0,10,0" TextChanged="ValidateUrlInput" x:FieldModifier="private">
             <Binding Path="HelpUrl" UpdateSourceTrigger="PropertyChanged">
               <!--<Binding.ValidationRules>
                                 <ValidationRules:UrlInputRule IsRequired="True" />

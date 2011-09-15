@@ -130,9 +130,7 @@ namespace Zlib
         #region Methods
 
         /// <param name="r">
-        /// </param>
-        /// <returns>
-        /// </returns>
+        /// </param><returns></returns>
         internal int Flush(int r)
         {
             for (var pass = 0; pass < 2; pass++)
@@ -213,9 +211,7 @@ namespace Zlib
         }
 
         /// <param name="r">
-        /// </param>
-        /// <returns>
-        /// </returns>
+        /// </param><returns></returns>
         internal int Process(int r)
         {
             // copy input/output information to locals (UPDATE macro restores)

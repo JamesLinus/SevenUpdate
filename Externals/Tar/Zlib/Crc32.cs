@@ -10,11 +10,7 @@ namespace Zlib
 {
     using System.Runtime.InteropServices;
 
-    /// <summary>
-    ///   Calculates a 32bit Cyclic Redundancy Checksum (CRC) using the same polynomial used by Zip. This type is used
-    ///   internally by DotNetZip; it is generally not used directly by applications wishing to create, read, or
-    ///   manipulate zip archive files.
-    /// </summary>
+    /// <summary>Calculates a 32bit Cyclic Redundancy Checksum (CRC) using the same polynomial used by Zip. This type is used internally by DotNetZip; it is generally not used directly by applications wishing to create, read, or manipulate zip archive files.</summary>
     [Guid("ebc25cf6-9120-4283-b972-0e5520d0000C")]
     [ComVisible(true)]
     [ClassInterface(ClassInterfaceType.AutoDispatch)]
@@ -77,23 +73,17 @@ namespace Zlib
             }
         }
 
-        /// <summary>
-        ///   indicates the total number of bytes read on the CRC stream. This is used when writing the ZipDirEntry when
-        ///   compressing files.
-        /// </summary>
+        /// <summary>indicates the total number of bytes read on the CRC stream. This is used when writing the ZipDirEntry when compressing files.</summary>
         internal long TotalBytesRead { get; private set; }
 
         #endregion
 
         #region Methods
 
-        /// <summary>
-        ///   Update the value for the running CRC32 using the given block of bytes. This is useful when using the
-        ///   CRC32() class in a Stream.
-        /// </summary>
-        /// <param name="block">  block of bytes to slurp</param>
-        /// <param name="offset">  starting point in the block</param>
-        /// <param name="count">  how many bytes within the block to slurp</param>
+        /// <summary>Update the value for the running CRC32 using the given block of bytes. This is useful when using the CRC32() class in a Stream.</summary>
+        /// <param name="block">block of bytes to slurp</param>
+        /// <param name="offset">starting point in the block</param>
+        /// <param name="count">how many bytes within the block to slurp</param>
         internal void SlurpBlock(byte[] block, int offset, int count)
         {
             if (block == null)
@@ -119,9 +109,7 @@ namespace Zlib
 
         /*
         /// <summary>Combines the given CRC32 value with the current running total.</summary>
-        /// <remarks>This is useful when using a divide-and-conquer approach to calculating a CRC. Multiple threads can
-        /// each calculate a CRC32 on a segment of the data, and then combine the individual CRC32 values at the
-        /// end.</remarks>
+        /// <remarks>This is useful when using a divide-and-conquer approach to calculating a CRC. Multiple threads caneach calculate a CRC32 on a segment of the data, and then combine the individual CRC32 values at theend.</remarks>
         /// <param name="crc">the crc value to be combined with this one</param>
         /// <param name="length">the length of data the CRC value was calculated on</param>
         public void Combine(int crc, int length)
@@ -193,8 +181,7 @@ namespace Zlib
 */
 
         /*
-        /// <summary>Get the CRC32 for the given (word,byte) combo.  This is a computation
-        /// defined by PKzip.</summary>
+        /// <summary>Get the CRC32 for the given (word,byte) combo.  This is a computationdefined by PKzip.</summary>
         /// <param name="w">The word to start with.</param>
         /// <param name="b">The byte to combine it with.</param>
         /// <returns>The CRC-ized result.</returns>

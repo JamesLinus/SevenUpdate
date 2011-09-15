@@ -24,8 +24,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WPFLocalizeExtension", "..\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "System.Windows", "..\Externals\System.Windows\System.Windows.csproj", "{B6A3B046-B13E-4BF5-A141-077E5A12B8C3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tar", "..\Externals\Tar\Tar.csproj", "{DAC1329E-7EEC-43B4-B3BD-E16053C3A664}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -106,12 +104,6 @@ Global
 		{B6A3B046-B13E-4BF5-A141-077E5A12B8C3}.Release|Any CPU.Build.0 = Release|Any CPU
 		{B6A3B046-B13E-4BF5-A141-077E5A12B8C3}.Release|x86.ActiveCfg = Release|x86
 		{B6A3B046-B13E-4BF5-A141-077E5A12B8C3}.Release|x86.Build.0 = Release|x86
-		{DAC1329E-7EEC-43B4-B3BD-E16053C3A664}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DAC1329E-7EEC-43B4-B3BD-E16053C3A664}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DAC1329E-7EEC-43B4-B3BD-E16053C3A664}.Debug|x86.ActiveCfg = Debug|Any CPU
-		{DAC1329E-7EEC-43B4-B3BD-E16053C3A664}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DAC1329E-7EEC-43B4-B3BD-E16053C3A664}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DAC1329E-7EEC-43B4-B3BD-E16053C3A664}.Release|x86.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -120,6 +112,5 @@ Global
 		{B39FDB92-7420-487E-8B44-D9BC0B88D857} = {41B4CBD3-E794-45D1-BE6F-F8B9D76A067D}
 		{E8C5B094-2CB4-4C26-87F0-351B03612179} = {41B4CBD3-E794-45D1-BE6F-F8B9D76A067D}
 		{B6A3B046-B13E-4BF5-A141-077E5A12B8C3} = {41B4CBD3-E794-45D1-BE6F-F8B9D76A067D}
-		{DAC1329E-7EEC-43B4-B3BD-E16053C3A664} = {41B4CBD3-E794-45D1-BE6F-F8B9D76A067D}
 	EndGlobalSection
 EndGlobal

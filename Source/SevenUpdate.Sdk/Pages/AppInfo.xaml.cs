@@ -23,15 +23,14 @@ namespace SevenUpdate.Sdk.Pages
     using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
-    using System.Windows.Dialogs;
+    using System.Windows.Dialogs.TaskDialog;
     using System.Windows.Forms;
     using System.Windows.Input;
     using System.Windows.Media;
     using System.Windows.ValidationRules;
 
-    using ValidationRules;
-
-    using Windows;
+    using SevenUpdate.Sdk.ValidationRules;
+    using SevenUpdate.Sdk.Windows;
 
     using Application = System.Windows.Application;
 
@@ -47,7 +46,7 @@ namespace SevenUpdate.Sdk.Pages
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the AppInfo class.</summary>
+        /// <summary>Initializes a new instance of the <see cref = "AppInfo" /> class.</summary>
         public AppInfo()
         {
             this.InitializeComponent();
@@ -88,8 +87,8 @@ namespace SevenUpdate.Sdk.Pages
         #region Methods
 
         /// <summary>Opens a <c>OpenFileDialog</c> to browse for the application install location.</summary>
-        /// <param name="sender">  The object that called the event.</param>
-        /// <param name="e">  The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.</param>
         private void BrowseForAppLocation(object sender, MouseButtonEventArgs e)
         {
             using (var folderBrowserDialog = new FolderBrowserDialog())
@@ -103,8 +102,8 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Fires the OnPropertyChanged Event with the collection changes.</summary>
-        /// <param name="sender">  The object that called the event.</param>
-        /// <param name="e">  The event data.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The event data.</param>
         private void ChangeDescription(object sender, RoutedEventArgs e)
         {
             var textBox = (InfoTextBox)sender;
@@ -112,8 +111,8 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Fires the OnPropertyChanged Event with the collection changes.</summary>
-        /// <param name="sender">  The object that called the event.</param>
-        /// <param name="e">  The event data.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The event data.</param>
         private void ChangeName(object sender, RoutedEventArgs e)
         {
             var textBox = (InfoTextBox)sender;
@@ -121,8 +120,8 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Fires the OnPropertyChanged Event with the collection changes.</summary>
-        /// <param name="sender">  The object that called the event.</param>
-        /// <param name="e">  The event data.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The event data.</param>
         private void ChangePublisher(object sender, RoutedEventArgs e)
         {
             var textBox = (InfoTextBox)sender;
@@ -130,8 +129,8 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Changes the UI to show the file system application location.</summary>
-        /// <param name="sender">  The object that called the event.</param>
-        /// <param name="e">  The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
         private void ChangeToFileSystemLocation(object sender, RoutedEventArgs e)
         {
             if (this.tbxAppLocation == null)
@@ -145,8 +144,8 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Changes the UI to show the registry application location.</summary>
-        /// <param name="sender">  The object that called the event.</param>
-        /// <param name="e">  The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
         private void ChangeToRegistryLocation(object sender, RoutedEventArgs e)
         {
             if (this.tbxAppLocation == null)
@@ -160,8 +159,8 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Converts the application location path to system variables.</summary>
-        /// <param name="sender">  The object that called the event.</param>
-        /// <param name="e">  The <c>System.Windows.Input.KeyboardFocusChangedEventArgs</c> instance containing the event data.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <c>System.Windows.Input.KeyboardFocusChangedEventArgs</c> instance containing the event data.</param>
         private void ConvertPath(object sender, KeyboardFocusChangedEventArgs e)
         {
             if (this.rbtnFileSystem.IsChecked.GetValueOrDefault())
@@ -179,14 +178,14 @@ namespace SevenUpdate.Sdk.Pages
                 return true;
             }
 
-            return this.tbxAppName.HasError || this.tbxPublisher.HasError || this.tbxAppUrl.HasError ||
-                   this.tbxHelpUrl.HasError || this.tbxAppLocation.HasError || this.tbxAppDescription.HasError ||
-                   this.tbxSuiUrl.HasError;
+            return this.tbxAppName.HasError || this.tbxPublisher.HasError || this.tbxAppUrl.HasError
+                   || this.tbxHelpUrl.HasError || this.tbxAppLocation.HasError || this.tbxAppDescription.HasError
+                   || this.tbxSuiUrl.HasError;
         }
 
         /// <summary>Loads the application info into the UI.</summary>
-        /// <param name="sender">  The object that called the event.</param>
-        /// <param name="e">  The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
         private void LoadAppInfo(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(this.tbxAppName.Text))
@@ -265,8 +264,8 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Loads the <c>LocaleString</c>'s for the <c>Sua</c> into the UI.</summary>
-        /// <param name="sender">  The object that called the event.</param>
-        /// <param name="e">  The <c>System.Windows.Controls.SelectionChangedEventArgs</c> instance containing the event data.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <c>System.Windows.Controls.SelectionChangedEventArgs</c> instance containing the event data.</param>
         private void LoadLocaleStrings(object sender, SelectionChangedEventArgs e)
         {
             if (this.tbxAppName == null || this.cbxLocale.SelectedIndex < 0)
@@ -320,8 +319,8 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Moves on to the next pages if no errors are present.</summary>
-        /// <param name="sender">  The object that called the event.</param>
-        /// <param name="e">  The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
         private void MoveOn(object sender, RoutedEventArgs e)
         {
             if (!this.HasErrors())
@@ -335,8 +334,8 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Saves the project and goes back to the main page.</summary>
-        /// <param name="sender">  The object that called the event.</param>
-        /// <param name="e">  The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
         private void SaveSua(object sender, RoutedEventArgs e)
         {
             if (this.btnNext.Visibility != Visibility.Visible)
@@ -368,12 +367,12 @@ namespace SevenUpdate.Sdk.Pages
 
                     File.Delete(Path.Combine(App.UserStore, oldAppName + ".sua"));
 
-                    if (Core.AppInfo.Platform != oldPlatform &&
-                        string.Compare(oldAppName, appName, StringComparison.OrdinalIgnoreCase) != 0)
+                    if (Core.AppInfo.Platform != oldPlatform
+                        && string.Compare(oldAppName, appName, StringComparison.OrdinalIgnoreCase) != 0)
                     {
                         File.Copy(
-                            Path.Combine(App.UserStore, oldAppName + ".sui"),
-                            Path.Combine(App.UserStore, appName + ".sui"),
+                            Path.Combine(App.UserStore, oldAppName + ".sui"), 
+                            Path.Combine(App.UserStore, appName + ".sui"), 
                             true);
                         File.Delete(Path.Combine(App.UserStore, oldAppName + ".sui"));
                         File.Delete(Path.Combine(App.UserStore, oldAppName + ".sua"));
@@ -413,8 +412,8 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Changes the UI depending on whether Aero Glass is enabled.</summary>
-        /// <param name="sender">  The object that called the event.</param>
-        /// <param name="e">  The <c>CompositionChangedEventArgs</c> instance containing the event data.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <c>CompositionChangedEventArgs</c> instance containing the event data.</param>
         private void UpdateUI(object sender, CompositionChangedEventArgs e)
         {
             if (e.IsGlassEnabled)
@@ -432,8 +431,8 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Validates the textbox against the AppDirectory Validation Rule.</summary>
-        /// <param name="sender">  The object that called the event.</param>
-        /// <param name="e">  The data for the event.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The data for the event.</param>
         private void ValidateAppDirectory(object sender, TextChangedEventArgs e)
         {
             var textBox = sender as InfoTextBox;
@@ -456,8 +455,8 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Validates the textbox content.</summary>
-        /// <param name="sender">  The object that called the event.</param>
-        /// <param name="e">  The data for the event.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The data for the event.</param>
         private void ValidateRequiredInput(object sender, TextChangedEventArgs e)
         {
             var textBox = (InfoTextBox)sender;
@@ -475,8 +474,8 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Validates the textbox against the Sui Validation Rule.</summary>
-        /// <param name="sender">  The object that called the event.</param>
-        /// <param name="e">  The data for the event.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The data for the event.</param>
         private void ValidateSuiLocation(object sender, TextChangedEventArgs e)
         {
             var textBox = sender as InfoTextBox;
@@ -491,8 +490,8 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Validates the textbox against the AppDirectory Validation Rule.</summary>
-        /// <param name="sender">  The object that called the event.</param>
-        /// <param name="e">  The data for the event.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The data for the event.</param>
         private void ValidateUrlInput(object sender, TextChangedEventArgs e)
         {
             var textBox = sender as InfoTextBox;

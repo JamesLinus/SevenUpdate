@@ -146,8 +146,8 @@ Value="http://apps.sevenupdate.com/SevenUpdate">
     <TextBlock
 Text="{Binding ElementName=lvUpdates, Path=SelectedItem.Description, Converter={StaticResource localeStringToString}}"
 TextWrapping="Wrap" Grid.Column="1" Grid.Row="3" Margin="5,5,0,0" Padding="2" />
-    <StackPanel Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Top" Orientation="Horizontal"
-                Margin="0,10,0,0">
+    <StackPanel Grid.Column="1" Grid.Row="4" HorizontalAlignment="Left" VerticalAlignment="Top"
+                Orientation="Horizontal" Margin="0,10,0,0">
       <TextBlock FontWeight="Bold" Padding="2" Text="{LocText SevenUpdate:Resources:Published}" MaxWidth="120"
                  Margin="5,0,0,0"
                  Visibility="{Binding ElementName=lvUpdates, Path=SelectedIndex, Converter={StaticResource indexToVisibility}}" />

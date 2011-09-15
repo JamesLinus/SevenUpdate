@@ -1,4 +1,4 @@
-﻿// ***********************************************************************
+// ***********************************************************************
 // <copyright file="Win32Window.cs" project="SevenUpdate.Sdk" assembly="System.Windows" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
@@ -35,14 +35,14 @@ namespace SevenUpdate.Sdk
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <c>Win32Window</c> class.</summary>
-        /// <param name="handle">  The handle.</param>
+        /// <summary>Initializes a new instance of the <see cref = "Win32Window" /> class.</summary>
+        /// <param name = "handle">The handle.</param>
         public Win32Window(IntPtr handle)
         {
             this.windowHandle = handle;
         }
 
-        /// <summary>Finalizes an instance of the <c>Win32Window</c> class.</summary>
+        /// <summary>Finalizes an instance of the <see cref = "Win32Window" /> class.</summary>
         ~Win32Window()
         {
             this.Dispose(false);
@@ -50,7 +50,7 @@ namespace SevenUpdate.Sdk
 
         #endregion
 
-        #region Properties
+        #region Explicit Interface Properties
 
         /// <summary>Gets the handle to the window represented by the implementer.</summary>
         /// <returns>A handle to the window represented by the implementer.</returns>
@@ -64,9 +64,7 @@ namespace SevenUpdate.Sdk
 
         #endregion
 
-        #region Implemented Interfaces
-
-        #region IDisposable
+        #region Public Methods
 
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
         public void Dispose()
@@ -79,12 +77,10 @@ namespace SevenUpdate.Sdk
 
         #endregion
 
-        #endregion
-
         #region Methods
 
         /// <summary>Releases unmanaged and - optionally - managed resources.</summary>
-        /// <param name="disposing">  Release both managed and unmanaged resources; <c>False</c> to release only unmanaged resources.</param>
+        /// <param name = "disposing">Release both managed and unmanaged resources; <c>False</c> to release only unmanaged resources.</param>
         private void Dispose(bool disposing)
         {
             lock (this)

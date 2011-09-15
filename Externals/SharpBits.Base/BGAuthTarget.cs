@@ -13,9 +13,9 @@ namespace SharpBits.Base
     internal enum BGAuthTarget
     {
         /// <summary>Use credentials for server requests.</summary>
-        Server = 1,
+        Server = 1, 
 
         /// <summary>Use credentials for proxy requests.</summary>
-        Proxy = 2,
+        Proxy = 2, 
     }
 }

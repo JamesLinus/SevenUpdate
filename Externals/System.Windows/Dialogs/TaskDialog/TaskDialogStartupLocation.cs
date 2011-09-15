@@ -5,13 +5,13 @@
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
 // ***********************************************************************
 
-namespace System.Windows.Dialogs
+namespace System.Windows.Dialogs.TaskDialog
 {
     /// <summary>Specifies the initial display location for a task dialog.</summary>
     public enum TaskDialogStartupLocation
     {
         /// <summary>The window placed in the center of the screen.</summary>
-        CenterScreen,
+        CenterScreen, 
 
         /// <summary>The window centered relative to the window that launched the dialog.</summary>
         CenterOwner

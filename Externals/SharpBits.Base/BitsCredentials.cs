@@ -12,7 +12,7 @@ namespace SharpBits.Base
     /// <summary>The credentials for the job.</summary>
     public class BitsCredentials
     {
-        #region Properties
+        #region Public Properties
 
         /// <summary>Gets or sets the authentication scheme.</summary>
         /// <value>The authentication scheme.</value>

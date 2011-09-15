@@ -5,44 +5,57 @@
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
 // ***********************************************************************
 
-namespace System.Windows.Dialogs
+namespace System.Windows.Dialogs.TaskDialog
 {
+    using System.Globalization;
+
     /// <summary>Represents a command-link.</summary>
     public class TaskDialogCommandLink : TaskDialogButton
     {
         #region Constants and Fields
 
-        /// <summary>The instruction for the task dialog.</summary>
+        /// <summary>The instruction text for the commandlink.</summary>
         private string instruction;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the TaskDialogCommandLink class.</summary>
-        protected TaskDialogCommandLink()
+        /// <summary>
+        ///   Initializes a new instance of the <see cref = "TaskDialogCommandLink" /> class. Creates a new instance of
+        ///   this class.
+        /// </summary>
+        public TaskDialogCommandLink()
         {
         }
 
-        /// <summary>Initializes a new instance of the <c>TaskDialogCommandLink</c> class.</summary>
-        /// <param name="name">  The name for this button.</param>
-        /// <param name="text">  The label for this button.</param>
-        protected TaskDialogCommandLink(string name, string text) : base(name, text)
+        /// <summary>
+        ///   Initializes a new instance of the <see cref = "TaskDialogCommandLink" /> class. Creates a new instance of
+        ///   this class with the specified name and label.
+        /// </summary>
+        /// <param name = "name">The name for this button.</param>
+        /// <param name = "text">The label for this button.</param>
+        public TaskDialogCommandLink(string name, string text)
+            : base(name, text)
         {
         }
 
-        /// <summary>Initializes a new instance of the <c>TaskDialogCommandLink</c> class.</summary>
-        /// <param name="name">  The name for this button.</param>
-        /// <param name="text">  The label for this button.</param>
-        /// <param name="instruction">  The instruction for this command link.</param>
-        protected TaskDialogCommandLink(string name, string text, string instruction) : base(name, text)
+        /// <summary>
+        ///   Initializes a new instance of the <see cref = "TaskDialogCommandLink" /> class. Creates a new instance of
+        ///   this class with the specified name,label, and instruction.
+        /// </summary>
+        /// <param name = "name">The name for this button.</param>
+        /// <param name = "text">The label for this button.</param>
+        /// <param name = "instruction">The instruction for this command link.</param>
+        public TaskDialogCommandLink(string name, string text, string instruction)
+            : base(name, text)
         {
             this.instruction = instruction;
         }
 
         #endregion
 
-        #region Properties
+        #region Public Properties
 
         /// <summary>Gets or sets the instruction associated with this command link button.</summary>
         public string Instruction
@@ -63,11 +76,17 @@ namespace System.Windows.Dialogs
         #region Public Methods
 
         /// <summary>Returns a string representation of this object.</summary>
-        /// <returns>A <c>System.String</c> .</returns>
+        /// <returns>A <see cref = "System.String" /></returns>
         public override string ToString()
         {
-            var instructionString = this.instruction ?? string.Empty;
-            return this.Text + "\n" + instructionString;
+            return string.Format(
+                CultureInfo.CurrentCulture, 
+                "{0}{1}{2}", 
+                this.Text ?? string.Empty, 
+                (string.IsNullOrEmpty(this.Text) || string.IsNullOrEmpty(this.instruction))
+                    ? Environment.NewLine
+                    : string.Empty, 
+                this.instruction ?? string.Empty);
         }
 
         #endregion

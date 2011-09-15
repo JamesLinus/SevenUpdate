@@ -14,16 +14,16 @@ namespace SharpBits.Base
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <c>FileRange</c> class.</summary>
-        /// <param name="initialOffset">  The initial offset.</param>
-        /// <param name="length">  The length.</param>
+        /// <summary>Initializes a new instance of the <see cref = "FileRange" /> class.</summary>
+        /// <param name = "initialOffset">The initial offset.</param>
+        /// <param name = "length">The length.</param>
         public FileRange(ulong initialOffset, ulong length)
         {
             this.BGFileRange = new BGFileRange { InitialOffset = initialOffset, Length = length };
         }
 
-        /// <summary>Initializes a new instance of the <c>FileRange</c> class.</summary>
-        /// <param name="fileRange">  The file range.</param>
+        /// <summary>Initializes a new instance of the <see cref = "FileRange" /> class.</summary>
+        /// <param name = "fileRange">The file range.</param>
         internal FileRange(BGFileRange fileRange)
         {
             this.BGFileRange = fileRange;
@@ -31,7 +31,7 @@ namespace SharpBits.Base
 
         #endregion
 
-        #region Properties
+        #region Public Properties
 
         /// <summary>Gets the initial offset.</summary>
         /// <value>The initial offset.</value>
@@ -52,6 +52,10 @@ namespace SharpBits.Base
                 return this.BGFileRange.Length;
             }
         }
+
+        #endregion
+
+        #region Properties
 
         /// <summary>Gets the BG file range.</summary>
         /// <value>The BG file range.</value>

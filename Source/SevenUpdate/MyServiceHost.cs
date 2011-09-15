@@ -1,4 +1,4 @@
-﻿// ***********************************************************************
+// ***********************************************************************
 // <copyright file="MyServiceHost.cs" project="SevenUpdate" assembly="SevenUpdate" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
@@ -21,10 +21,11 @@ namespace SevenUpdate
 {
     using System;
     using System.ServiceModel;
+    using System.ServiceModel.Description;
 
     using ProtoBuf.ServiceModel;
 
-    using Service;
+    using SevenUpdate.Service;
 
     /// <summary>Contains methods to start the WCF service host.</summary>
     internal static class MyServiceHost
@@ -47,19 +48,23 @@ namespace SevenUpdate
             }
 
             var binding = new NetNamedPipeBinding
-                { Name="sevenupdatebinding", Security = { Mode = NetNamedPipeSecurityMode.Transport } };
+                {
+                   Name = "sevenupdatebinding", Security = {
+                                                                Mode = NetNamedPipeSecurityMode.Transport 
+                                                            } 
+                };
 
             var baseAddress = new Uri("net.pipe://localhost/sevenupdate/");
 
             Instance = new ServiceHost(typeof(WcfService), baseAddress);
 
 #if (DEBUG)
-            var debug = Instance.Description.Behaviors.Find<System.ServiceModel.Description.ServiceDebugBehavior>();
+            var debug = Instance.Description.Behaviors.Find<ServiceDebugBehavior>();
 
             // if not found - add behavior with setting turned on 
             if (debug == null)
             {
-                Instance.Description.Behaviors.Add(new System.ServiceModel.Description.ServiceDebugBehavior { IncludeExceptionDetailInFaults = true });
+                Instance.Description.Behaviors.Add(new ServiceDebugBehavior { IncludeExceptionDetailInFaults = true });
             }
             else
             {
@@ -98,8 +103,8 @@ namespace SevenUpdate
                 catch (Exception ex)
                 {
                     if (
-                        !(ex is CommunicationObjectAbortedException || ex is CommunicationObjectFaultedException ||
-                          ex is ObjectDisposedException))
+                        !(ex is CommunicationObjectAbortedException || ex is CommunicationObjectFaultedException
+                          || ex is ObjectDisposedException))
                     {
                         Utilities.ReportError(ex, ErrorType.FatalError);
                         throw;

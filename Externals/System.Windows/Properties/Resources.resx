@@ -45,17 +45,17 @@
     read any of the formats listed below.
     
     mimetype: application/x-microsoft.net.object.binary.base64
-    value   : The object must be serialized with 
+    value : The object must be serialized with 
             : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
             : and then encoded with base64 encoding.
     
     mimetype: application/x-microsoft.net.object.soap.base64
-    value   : The object must be serialized with 
+    value : The object must be serialized with 
             : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
             : and then encoded with base64 encoding.
 
     mimetype: application/x-microsoft.net.object.bytearray.base64
-    value   : The object must be serialized into a byte array 
+    value : The object must be serialized into a byte array 
             : using a System.ComponentModel.TypeConverter
             : and then encoded with base64 encoding.
     -->
@@ -132,19 +132,160 @@
   <data name="UrilInvalid" xml:space="preserve">
     <value>The url entered is not valid.</value>
   </data>
-  <data name="MaximumValueGreater">
-    <value xml:space="preserve">Maximum value provided must be greater than the minimum value</value>
+  <data name="MaximumValueGreater" xml:space="preserve">
+    <value>Maximum value provided must be greater than the minimum value</value>
   </data>
-  <data name="MinimumValuePositive">
-    <value xml:space="preserve">Minimum value provided must be a positive number</value>
+  <data name="MinimumValuePositive" xml:space="preserve">
+    <value>Minimum value provided must be a positive number</value>
   </data>
-  <data name="MinimumLessValue">
-    <value xml:space="preserve">Minimum value provided must less than the maximum value</value>
+  <data name="MinimumLessValue" xml:space="preserve">
+    <value>Minimum value provided must less than the maximum value</value>
   </data>
-  <data name="ValueGreater">
-    <value xml:space="preserve">Value provided must be greater than or equal to minimum value</value>
+  <data name="ValueGreater" xml:space="preserve">
+    <value>Value provided must be greater than or equal to minimum value</value>
   </data>
-  <data name="ValueLess">
-    <value xml:space="preserve">Value provided must be less than or equal to the maximum value</value>
+  <data name="ValueLess" xml:space="preserve">
+    <value>Value provided must be less than or equal to the maximum value</value>
+  </data>
+  <data name="ApplicationRecoveryBadParameters" xml:space="preserve">
+    <value>Application was not registered for recovery due to bad parameters.</value>
+  </data>
+  <data name="ApplicationRecoveryFailedToRegister" xml:space="preserve">
+    <value>Application failed to register for recovery.</value>
+  </data>
+  <data name="ApplicationRecoveryFailedToRegisterForRestart" xml:space="preserve">
+    <value>Application failed to registered for restart.</value>
+  </data>
+  <data name="ApplicationRecoveryFailedToUnregister" xml:space="preserve">
+    <value>Unregister for recovery failed.</value>
+  </data>
+  <data name="ApplicationRecoveryFailedToUnregisterForRestart" xml:space="preserve">
+    <value>Unregister for restart failed.</value>
+  </data>
+  <data name="ApplicationRecoveryMustBeCalledFromCallback" xml:space="preserve">
+    <value>This method must be called from the registered callback method.</value>
+  </data>
+  <data name="RecoverySettingsFormatString" xml:space="preserve">
+    <value>delegate: {0}, state: {1}, ping: {2}</value>
+  </data>
+  <data name="RestartSettingsFormatString" xml:space="preserve">
+    <value>command: {0} restrictions: {1}</value>
+  </data>
+  <data name="TaskDialogBadButtonId" xml:space="preserve">
+    <value>Bad button ID in closing event.</value>
+  </data>
+  <data name="TaskDialogButtonTextEmpty" xml:space="preserve">
+    <value>Button text must be non-empty.</value>
+  </data>
+  <data name="TaskDialogCheckBoxTextRequiredToEnableCheckBox" xml:space="preserve">
+    <value>Check box text must be provided to enable the dialog check box.</value>
+  </data>
+  <data name="TaskDialogCloseNonShowing" xml:space="preserve">
+    <value>Attempting to close a non-showing dialog.</value>
+  </data>
+  <data name="TaskDialogDefaultCaption" xml:space="preserve">
+    <value>Application</value>
+  </data>
+  <data name="TaskDialogOnlyOneDefaultControl" xml:space="preserve">
+    <value>Cannot have more than one default button of a given type.</value>
+  </data>
+  <data name="TaskDialogProgressBarMaxValueGreaterThanMin" xml:space="preserve">
+    <value>Maximum value provided must be greater than the minimum value.</value>
+  </data>
+  <data name="TaskDialogProgressBarMinValueGreaterThanZero" xml:space="preserve">
+    <value>Minimum value provided must be a positive number.</value>
+  </data>
+  <data name="TaskDialogProgressBarMinValueLessThanMax" xml:space="preserve">
+    <value>Minimum value provided must less than the maximum value.</value>
+  </data>
+  <data name="TaskDialogProgressBarValueInRange" xml:space="preserve">
+    <value>Value provided must be greater than equal to the minimum value and less than the maximum value.</value>
+  </data>
+  <data name="TaskDialogSupportedButtonsAndButtons" xml:space="preserve">
+    <value>Dialog cannot display both non-standard buttons and standard buttons.</value>
+  </data>
+  <data name="TaskDialogSupportedButtonsAndLinks" xml:space="preserve">
+    <value>Dialog cannot display both non-standard buttons and command links.</value>
+  </data>
+  <data name="TaskDialogUnkownControl" xml:space="preserve">
+    <value>Unknown dialog control type.</value>
+  </data>
+  <data name="ApplicationRecoverFailedToRegisterForRestartBadParameters" xml:space="preserve">
+    <value>Failed to register application for restart due to bad parameters.</value>
+  </data>
+  <data name="CancelableCannotBeChanged" xml:space="preserve">
+    <value>Cancelable cannot be changed while dialog is showing.</value>
+  </data>
+  <data name="CaptionCannotBeChanged" xml:space="preserve">
+    <value>Dialog caption cannot be changed while dialog is showing.</value>
+  </data>
+  <data name="CheckBoxCannotBeChanged" xml:space="preserve">
+    <value>CheckBox text cannot be changed while dialog is showing.</value>
+  </data>
+  <data name="CollapsedTextCannotBeChanged" xml:space="preserve">
+    <value>Collapsed control text cannot be changed while dialog is showing.</value>
+  </data>
+  <data name="DialogCollectionCannotHaveDuplicateNames" xml:space="preserve">
+    <value>Dialog cannot have more than one control with the same name.</value>
+  </data>
+  <data name="DialogCollectionControlAlreadyHosted" xml:space="preserve">
+    <value>Dialog control must be removed from current collections first.</value>
+  </data>
+  <data name="DialogCollectionControlNameNull" xml:space="preserve">
+    <value>Control name cannot be null or zero length.</value>
+  </data>
+  <data name="DialogCollectionModifyShowingDialog" xml:space="preserve">
+    <value>Modifying controls collection while dialog is showing is not supported.</value>
+  </data>
+  <data name="DialogControlNameCannotBeEmpty" xml:space="preserve">
+    <value>Dialog control name cannot be empty or null.</value>
+  </data>
+  <data name="DialogControlsCannotBeRenamed" xml:space="preserve">
+    <value>Dialog controls cannot be renamed.</value>
+  </data>
+  <data name="DialogDefaultCaption" xml:space="preserve">
+    <value>Application</value>
+  </data>
+  <data name="ExpandedDetailsCannotBeChanged" xml:space="preserve">
+    <value>Expanded information mode cannot be changed while dialog is showing.</value>
+  </data>
+  <data name="ExpandedLabelCannotBeChanged" xml:space="preserve">
+    <value>Expanded control label cannot be changed while dialog is showing.</value>
+  </data>
+  <data name="ExpandingStateCannotBeChanged" xml:space="preserve">
+    <value>Expanding state of the dialog cannot be changed while dialog is showing.</value>
+  </data>
+  <data name="HyperlinksCannotBetSet" xml:space="preserve">
+    <value>Hyperlinks cannot be enabled/disabled while dialog is showing.</value>
+  </data>
+  <data name="NativeTaskDialogConfigurationError" xml:space="preserve">
+    <value>An error has occurred in dialog configuration.</value>
+  </data>
+  <data name="NativeTaskDialogInternalErrorArgs" xml:space="preserve">
+    <value>Invalid arguments to Win32 call.</value>
+  </data>
+  <data name="NativeTaskDialogInternalErrorComplex" xml:space="preserve">
+    <value>Dialog contents too complex.</value>
+  </data>
+  <data name="NativeTaskDialogInternalErrorUnexpected" xml:space="preserve">
+    <value>An unexpected internal error occurred in the Win32 call: {0:x}</value>
+  </data>
+  <data name="NativeTaskDialogVersionError" xml:space="preserve">
+    <value>TaskDialog feature needs to load version 6 of comctl32.dll but a different version is current loaded in memory.</value>
+  </data>
+  <data name="OwnerCannotBeChanged" xml:space="preserve">
+    <value>Dialog owner cannot be changed while dialog is showing.</value>
+  </data>
+  <data name="ProgressBarCannotBeChanged" xml:space="preserve">
+    <value>Progress bar cannot be changed while dialog is showing.</value>
+  </data>
+  <data name="ProgressBarCannotBeHostedInMultipleDialogs" xml:space="preserve">
+    <value>Progress bar cannot be hosted in multiple dialogs.</value>
+  </data>
+  <data name="StandardButtonsCannotBeChanged" xml:space="preserve">
+    <value>StandardButtons cannot be changed while dialog is showing.</value>
+  </data>
+  <data name="StartupLocationCannotBeChanged" xml:space="preserve">
+    <value>Startup location cannot be changed while dialog is showing.</value>
   </data>
 </root>

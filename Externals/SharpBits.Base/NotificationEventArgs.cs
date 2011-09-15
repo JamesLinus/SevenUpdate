@@ -1,4 +1,4 @@
-﻿// ***********************************************************************
+// ***********************************************************************
 // <copyright file="NotificationEventArgs.cs" project="SharpBits.Base" assembly="SharpBits.Base" solution="SevenUpdate" company="Xidar Solutions">
 //     Copyright (c) xidar solutions. All rights reserved.
 // </copyright>
@@ -14,8 +14,8 @@ namespace SharpBits.Base
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <c>NotificationEventArgs</c> class.</summary>
-        /// <param name="job">  The job the event occurred for.</param>
+        /// <summary>Initializes a new instance of the <see cref = "NotificationEventArgs" /> class.</summary>
+        /// <param name = "job">The job the event occurred for.</param>
         internal NotificationEventArgs(BitsJob job)
         {
             this.Job = job;
@@ -23,7 +23,7 @@ namespace SharpBits.Base
 
         #endregion
 
-        #region Properties
+        #region Public Properties
 
         /// <summary>Gets the job.</summary>
         /// <value>The <c>BitsJob</c> the notification occurred for.</value>

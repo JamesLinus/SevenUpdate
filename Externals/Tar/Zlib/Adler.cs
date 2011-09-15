@@ -10,12 +10,7 @@ namespace Zlib
     using Interop = System.Runtime.InteropServices;
 
     /// <summary>Computes an Adler-32 checksum.</summary>
-    /// <remarks>
-    ///   The Adler checksum is similar to a CRC checksum, but faster to compute, though less
-    ///   reliable.  It is used in producing RFC1950 compressed streams.  The Adler checksum
-    ///   is a required part of the "ZLIB" standard.  Applications will almost never need to
-    ///   use this class directly.
-    /// </remarks>
+    /// <remarks>The Adler checksum is similar to a CRC checksum, but faster to compute, though less reliable.  It is used in producing RFC1950 compressed streams.  The Adler checksum is a required part of the "ZLIB" standard.  Applications will almost never need to use this class directly.</remarks>
     internal static class Adler
     {
         #region Constants and Fields
@@ -30,16 +25,7 @@ namespace Zlib
 
         #region Methods
 
-        /// <param name="adler">
-        /// </param>
-        /// <param name="buf">
-        /// </param>
-        /// <param name="index">
-        /// </param>
-        /// <param name="len">
-        /// </param>
-        /// <returns>
-        /// </returns>
+        /// <param name="adler"></param><param name="buf"></param> <param name="index"></param><param name="len"></param><returns></returns>
         internal static uint Adler32(uint adler, byte[] buf, int index, int len)
         {
             if (buf == null)

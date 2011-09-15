@@ -5,9 +5,9 @@
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
 // ***********************************************************************
 
-namespace System.Windows.Dialogs
+namespace System.Windows.Dialogs.TaskDialog
 {
-    using Properties;
+    using System.Windows.Properties;
 
     /// <summary>Provides a visual representation of the progress of a long running operation.</summary>
     public class TaskDialogProgressBar : TaskDialogBar
@@ -18,31 +18,41 @@ namespace System.Windows.Dialogs
         private int maximum = TaskDialogDefaults.ProgressBarMaximumValue;
 
         /// <summary>The minimum value.</summary>
-        private int minimum = TaskDialogDefaults.ProgressBarMinimumValue;
+        private int minimum;
 
-        /// <summary>The progress bar value.</summary>
-        private int value = TaskDialogDefaults.ProgressBarMinimumValue;
+        /// <summary>The current progress bar value.</summary>
+        private int value;
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the TaskDialogProgressBar class.</summary>
-        protected TaskDialogProgressBar()
+        /// <summary>
+        ///   Initializes a new instance of the <see cref = "TaskDialogProgressBar" /> class. Creates a new instance of
+        ///   this class.
+        /// </summary>
+        public TaskDialogProgressBar()
         {
         }
 
-        /// <summary>Initializes a new instance of the <c>TaskDialogProgressBar</c> class.</summary>
-        /// <param name="name">  The name of the control.</param>
-        protected TaskDialogProgressBar(string name) : base(name)
+        /// <summary>
+        ///   Initializes a new instance of the <see cref = "TaskDialogProgressBar" /> class. Creates a new instance of
+        ///   this class with the specified name. And using the default values: Min = 0, Max = 100, Current = 0
+        /// </summary>
+        /// <param name = "name">The name of the control.</param>
+        public TaskDialogProgressBar(string name)
+            : base(name)
         {
         }
 
-        /// <summary>Initializes a new instance of the <c>TaskDialogProgressBar</c> class.</summary>
-        /// <param name="minimum">  The minimum value for this control.</param>
-        /// <param name="maximum">  The maximum value for this control.</param>
-        /// <param name="value">  The current value for this control.</param>
-        protected TaskDialogProgressBar(int minimum, int maximum, int value)
+        /// <summary>
+        ///   Initializes a new instance of the <see cref = "TaskDialogProgressBar" /> class. Creates a new instance of
+        ///   this class with the specified minimum, maximum and current values.
+        /// </summary>
+        /// <param name = "minimum">The minimum value for this control.</param>
+        /// <param name = "maximum">The maximum value for this control.</param>
+        /// <param name = "value">The current value for this control.</param>
+        public TaskDialogProgressBar(int minimum, int maximum, int value)
         {
             this.Minimum = minimum;
             this.Maximum = maximum;
@@ -51,7 +61,7 @@ namespace System.Windows.Dialogs
 
         #endregion
 
-        #region Properties
+        #region Public Properties
 
         /// <summary>Gets or sets the maximum value for the control.</summary>
         public int Maximum
@@ -68,7 +78,7 @@ namespace System.Windows.Dialogs
                 // Check if min / max differ
                 if (value < this.Minimum)
                 {
-                    throw new ArgumentException(Resources.MaximumValueGreater, "value");
+                    throw new ArgumentException(Resources.TaskDialogProgressBarMaxValueGreaterThanMin, "value");
                 }
 
                 this.maximum = value;
@@ -91,13 +101,13 @@ namespace System.Windows.Dialogs
                 // Check for positive numbers
                 if (value < 0)
                 {
-                    throw new ArgumentException(Resources.MinimumValuePositive, "value");
+                    throw new ArgumentException(Resources.TaskDialogProgressBarMinValueGreaterThanZero, "value");
                 }
 
                 // Check if min / max differ
                 if (value >= this.Maximum)
                 {
-                    throw new ArgumentException(Resources.MinimumLessValue, "value");
+                    throw new ArgumentException(Resources.TaskDialogProgressBarMinValueLessThanMax, "value");
                 }
 
                 this.minimum = value;
@@ -118,14 +128,9 @@ namespace System.Windows.Dialogs
                 this.CheckPropertyChangeAllowed("Value");
 
                 // Check for positive numbers
-                if (value < this.Minimum)
+                if (value < this.Minimum || value > this.Maximum)
                 {
-                    throw new ArgumentException(Resources.ValueGreater, "value");
-                }
-
-                if (value > this.Maximum)
-                {
-                    throw new ArgumentException(Resources.ValueLess, "value");
+                    throw new ArgumentException(Resources.TaskDialogProgressBarValueInRange, "value");
                 }
 
                 this.value = value;
@@ -133,8 +138,11 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>Gets a value indicating whether this instance has valid values.</summary>
-        /// <value><c>True</c> if this instance has valid values; otherwise, <c>False</c>.</value>
+        #endregion
+
+        #region Properties
+
+        /// <summary>Gets a value indicating whether the progress bar's value is between its minimum and maximum.</summary>
         internal bool HasValidValues
         {
             get

@@ -17,14 +17,7 @@ namespace Tar
 
     using GZipStream = Zlib.GZipStream;
 
-    /// <summary>A class to create, list, or extract TAR archives. This is the primary, central class for the Tar library.</summary>
-    /// <remarks>
-    ///   Bugs:
-    ///   <list type = "bullet">
-    ///     <item>does not read or write bzip2 compressed tarballs  (.tar.bz2)</item>
-    ///     <item>uses Marshal.StructureToPtr and thus requires a LinkDemand, full trust.d </item>
-    ///   </list>
-    /// </remarks>
+    /// <summary>A class to create, list, or extract TAR archives. This is the primary, central class for the Tar library.</summary><remarks>Bugs: <list type = "bullet"> <item>does not read or write bzip2 compressed tarballs  (.tar.bz2)</item> <item>uses Marshal.StructureToPtr and thus requires a LinkDemand, full trust.d </item></list></remarks>
     public class Tar
     {
         #region Constants and Fields
@@ -51,13 +44,10 @@ namespace Tar
 
         #region Public Methods
 
-        /// <summary>
-        ///   Create a tar archive with the given name, and containing the given set of files or directories, and using
-        ///   GZIP compression by default.
-        /// </summary>
-        /// <param name="outputFile">  The name of the tar archive to create. The file must not exist at the time of the call.</param>
-        /// <param name="filesOrDirectories">  A list of filenames and/or directory names to be added to the archive.</param>
-        /// <param name="options">  The options to use during Tar operation.</param>
+        /// <summary>Create a tar archive with the given name, and containing the given set of files or directories, and using GZIP compression by default.</summary>
+        /// <param name="outputFile">The name of the tar archive to create. The file must not exist at the time of the call.</param>
+        /// <param name="filesOrDirectories">A list of filenames and/or directory names to be added to the archive.</param>
+        /// <param name="options">The options to use during Tar operation.</param>
         public static void CreateArchive(
             string outputFile, IEnumerable<string> filesOrDirectories, Options options = null)
         {
@@ -71,16 +61,10 @@ namespace Tar
         }
 
         /// <summary>Extract the named tar archive to a specified directory</summary>
-        /// <param name="archive">  The name of the tar archive to extract.</param>
-        /// <param name="extractDirectory">  The directory to extract the archive</param>
-        /// <param name="options">  A set of options for extracting.</param>
-        /// <returns>A <c>ReadOnlyCollection</c> of TarEntry instances contained within the archive.</returns>
-        /// <example>
-        ///   <code lang = "C#">
-        ///     // extract a regular tar archive, placing files in the current dir: Tar.Extract("MyArchive.tar"); //
-        ///     extract a compressed tar archive, placing files in the current dir: Tar.Extract("Archive2.tgz")
-        ///   </code>
-        /// </example>
+        /// <param name="archive">The name of the tar archive to extract.</param>
+        /// <param name="extractDirectory">The directory to extract the archive</param>
+        /// <param name="options">A set of options for extracting.</param>
+        /// <returns>A <c>ReadOnlyCollection</c> of TarEntry instances contained within the archive.</returns><example><code lang = "C#"> // extract a regular tar archive, placing files in the current dir: Tar.Extract("MyArchive.tar"); // extract a compressed tar archive, placing files in the current dir: Tar.Extract("Archive2.tgz")</code></example>
         public static ReadOnlyCollection<TarEntry> Extract(
             string archive, string extractDirectory, Options options = null)
         {
@@ -88,26 +72,15 @@ namespace Tar
         }
 
         /// <summary>Get a list of the TarEntry items contained within the named archive.</summary>
-        /// <param name="archive">  The name of the tar archive.</param>
-        /// <returns>A <c>ReadOnlyCollection</c> of TarEntry instances contained within the archive.</returns>
-        /// <example>
-        ///   <code lang = "C#">
-        ///     private void ListContents(string archiveName) { var list = Tar.List(archiveName); foreach (var item in
-        ///     list) {
-        ///     Console.WriteLine("{0,-20}  {1,9}  {2}",
-        ///     item.Mtime.ToString("u"), item.Size, item.Name); } Console.WriteLine(new String('-', 66));
-        ///     Console.WriteLine("                                 {0} entries", list.Count); }
-        ///   </code>
-        /// </example>
+        /// <param name="archive">The name of the tar archive.</param>
+        /// <returns>A <c>ReadOnlyCollection</c> of TarEntry instances contained within the archive.</returns><example><code lang = "C#"> private void ListContents(string archiveName) { var list = Tar.List(archiveName); foreach (var item in list) { Console.WriteLine("{0,-20}  {1,9}  {2}", item.Mtime.ToString("u"), item.Size, item.Name); } Console.WriteLine(new String('-', 66)); Console.WriteLine("                                 {0} entries", list.Count); }</code></example>
         public static ReadOnlyCollection<TarEntry> List(string archive)
         {
             return ListOrExtract(archive, null, false, null).AsReadOnly();
         }
 
         /// <summary>Adds a directory to the tar archive</summary>
-        /// <param name="dirName">  The path to the directory</param>
-        /// <param name="parent">
-        /// </param>
+        /// <param name="dirName">The path to the directory</param><param name="parent"></param>
         public void AddDirectory(string dirName, string parent = null)
         {
             if (parent == null)
@@ -171,9 +144,7 @@ namespace Tar
         }
 
         /// <summary>Adds a file to the tar Archive</summary>
-        /// <param name="fullName">  The file to add to the archive</param>
-        /// <param name="directory">
-        /// </param>
+        /// <param name="fullName">The file to add to the archive</param><param name="directory"></param>
         public void AddFile(string fullName, string directory = null)
         {
             if (string.IsNullOrEmpty(directory))
@@ -226,16 +197,7 @@ namespace Tar
 
         #region Methods
 
-        /// <param name="archive">
-        /// </param>
-        /// <param name="extractDirectory">
-        /// </param>
-        /// <param name="wantExtract">
-        /// </param>
-        /// <param name="options">
-        /// </param>
-        /// <returns>
-        /// </returns>
+        /// <param name="archive"></param><param name="extractDirectory"></param> <param name="wantExtract"></param><param name="options"></param><returns></returns>
         private static List<TarEntry> ListOrExtract(
             string archive, string extractDirectory, bool wantExtract, Options options)
         {
@@ -244,7 +206,7 @@ namespace Tar
         }
 
         /// <summary>Adds a symbolic link to a Tar archive</summary>
-        /// <param name="name">  The filename of the symbolic link</param>
+        /// <param name="name">The filename of the symbolic link</param>
         private void AddSymlink(string name)
         {
             if (this.TarOptions.StatusWriter != null)
@@ -263,20 +225,8 @@ namespace Tar
             this.outFS.Write(block, 0, block.Length);
         }
 
-        /// <param name="outputFile">
-        /// </param>
-        /// <param name="files">
-        /// </param>
-        /// <exception cref = "InvalidOperationException">
-        /// </exception>
-        /// <exception cref = "InvalidOperationException">
-        /// </exception>
-        /// <exception cref = "InvalidOperationException">
-        /// </exception>
-        /// <exception cref = "InvalidOperationException">
-        /// </exception>
-        /// <exception cref = "InvalidOperationException">
-        /// </exception>
+        /// <param name="outputFile"></param><param name="files"></param> <exception cref = "InvalidOperationException"></exception><exception cref = "InvalidOperationException"></exception>
+        /// <exception cref = "InvalidOperationException"></exception><exception cref = "InvalidOperationException"></exception> <exception cref = "InvalidOperationException"></exception>
         private void InternalCreateArchive(string outputFile, IEnumerable<string> files)
         {
             if (string.IsNullOrEmpty(outputFile))
@@ -345,12 +295,7 @@ namespace Tar
             }
         }
 
-        /// <param name="name">
-        /// </param>
-        /// <param name="extractDirectory">
-        /// </param>
-        /// <returns>
-        /// </returns>
+        /// <param name="name"></param><param name="extractDirectory"></param> <returns></returns>
         private Stream InternalGetExtractOutputStream(string name, string extractDirectory)
         {
             if (this.TarOptions.Overwrite || !File.Exists(name))
@@ -379,9 +324,7 @@ namespace Tar
         }
 
         /// <param name="archive">
-        /// </param>
-        /// <returns>
-        /// </returns>
+        /// </param><returns></returns>
         private Stream InternalGetInputStream(string archive)
         {
             if (archive.EndsWith(".tgz") || archive.EndsWith(".tar.gz") ||
@@ -396,10 +339,7 @@ namespace Tar
 
         /// <param name="filename">
         /// </param>
-        /// <returns>
-        /// </returns>
-        /// <exception cref = "Exception">
-        /// </exception>
+        /// <returns></returns> <exception cref = "Exception"></exception>
         private Stream InternalGetOutputArchiveStream(string filename)
         {
             switch (this.TarOptions.Compression)
@@ -418,22 +358,8 @@ namespace Tar
             }
         }
 
-        /// <param name="archive">
-        /// </param>
-        /// <param name="extractDirectory">
-        /// </param>
-        /// <param name="wantExtract">
-        /// </param>
-        /// <returns>
-        /// </returns>
-        /// <exception cref = "FileNotFoundException">
-        /// </exception>
-        /// <exception cref = "Exception">
-        /// </exception>
-        /// <exception cref = "Exception">
-        /// </exception>
-        /// <exception cref = "Exception">
-        /// </exception>
+        /// <param name="archive"></param><param name="extractDirectory"></param> <param name="wantExtract"></param>
+        /// <returns></returns>
         private List<TarEntry> InternalListOrExtract(string archive, string extractDirectory, bool wantExtract)
         {
             var entryList = new List<TarEntry>();
@@ -520,7 +446,10 @@ namespace Tar
 
                     entry = new TarEntry
                         {
-                            Name = name, Mtime = mtime, Size = remainingBytes, @Type = (TarEntryType)hb.TypeFlag
+                            Name = name,
+                            Mtime = mtime,
+                            Size = remainingBytes,
+                            @Type = (TarEntryType)hb.TypeFlag
                         };
 
                     if (entry.Type != TarEntryType.GnuLongName)

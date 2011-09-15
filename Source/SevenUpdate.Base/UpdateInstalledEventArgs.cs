@@ -1,4 +1,4 @@
-﻿// ***********************************************************************
+// ***********************************************************************
 // <copyright file="UpdateInstalledEventArgs.cs" project="SevenUpdate.Base" assembly="SevenUpdate.Base" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
@@ -29,21 +29,21 @@ namespace SevenUpdate
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <c>UpdateInstalledEventArgs</c> class.</summary>
-        /// <param name="update">The update information that was installed.</param>
+        /// <summary>Initializes a new instance of the <see cref = "UpdateInstalledEventArgs" /> class.</summary>
+        /// <param name = "update">The update information that was installed.</param>
         public UpdateInstalledEventArgs(Suh update)
         {
             this.Update = update;
         }
 
-        /// <summary>Initializes a new instance of the UpdateInstalledEventArgs class.</summary>
+        /// <summary>Initializes a new instance of the <see cref = "UpdateInstalledEventArgs" /> class.</summary>
         public UpdateInstalledEventArgs()
         {
         }
 
         #endregion
 
-        #region Properties
+        #region Public Properties
 
         /// <summary>Gets the update information that was installed.</summary>
         [ProtoMember(1)]

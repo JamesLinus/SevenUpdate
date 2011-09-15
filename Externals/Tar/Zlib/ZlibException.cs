@@ -23,9 +23,7 @@ namespace Zlib
         {
         }
 
-        /// <summary>This ctor collects a message attached to the exception.</summary>
-        /// <param name="s">
-        /// </param>
+        /// <summary>This ctor collects a message attached to the exception.</summary><param name="s"></param>
         public ZlibException(string s) : base(s)
         {
         }

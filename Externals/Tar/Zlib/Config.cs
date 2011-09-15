@@ -42,16 +42,7 @@ namespace Zlib
 
         #region Constructors and Destructors
 
-        /// <param name="goodLength">
-        /// </param>
-        /// <param name="maxLazy">
-        /// </param>
-        /// <param name="niceLength">
-        /// </param>
-        /// <param name="maxChainLength">
-        /// </param>
-        /// <param name="flavor">
-        /// </param>
+        /// <param name="goodLength"></param><param name="maxLazy"></param> <param name="niceLength"></param><param name="maxChainLength"></param><param name="flavor"></param>
         private Config(int goodLength, int maxLazy, int niceLength, int maxChainLength, DeflateFlavor flavor)
         {
             this.GoodLength = goodLength;
@@ -66,9 +57,7 @@ namespace Zlib
         #region Public Methods
 
         /// <param name="level">
-        /// </param>
-        /// <returns>
-        /// </returns>
+        /// </param><returns></returns>
         public static Config Lookup(CompressionLevel level)
         {
             return Table[(int)level];

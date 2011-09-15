@@ -19,7 +19,6 @@
 
 namespace SevenUpdate.Windows
 {
-    using System;
     using System.Globalization;
     using System.Windows.Input;
 
@@ -38,7 +37,7 @@ namespace SevenUpdate.Windows
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the UpdateDetails class.</summary>
+        /// <summary>Initializes a new instance of the <see cref = "UpdateDetails" /> class.</summary>
         public UpdateDetails()
         {
             this.InitializeComponent();
@@ -59,7 +58,7 @@ namespace SevenUpdate.Windows
         #region Methods
 
         /// <summary>Shows the window and displays the update information.</summary>
-        /// <param name="updateInfo">  The update information to display.</param>
+        /// <param name = "updateInfo">The update information to display.</param>
         internal void ShowDialog(Suh updateInfo)
         {
             this.DataContext = updateInfo;
@@ -70,13 +69,13 @@ namespace SevenUpdate.Windows
                                    : Properties.Resources.Successful.ToLower(CultureInfo.CurrentCulture);
             this.tbStatus.Text = updateInfo.Status == UpdateStatus.Hidden
                                      ? string.Format(
-                                         CultureInfo.CurrentCulture,
-                                         Properties.Resources.DownloadSize,
+                                         CultureInfo.CurrentCulture, 
+                                         Properties.Resources.DownloadSize, 
                                          Utilities.ConvertFileSize(updateInfo.UpdateSize))
                                      : string.Format(
-                                         CultureInfo.CurrentCulture,
-                                         Properties.Resources.InstallationStatus,
-                                         updateStatus,
+                                         CultureInfo.CurrentCulture, 
+                                         Properties.Resources.InstallationStatus, 
+                                         updateStatus, 
                                          updateInfo.InstallDate);
 
             this.ShowDialog();
@@ -84,16 +83,16 @@ namespace SevenUpdate.Windows
         }
 
         /// <summary>Launches the Help <c>Uri</c>.</summary>
-        /// <param name="sender">  The object that called the event.</param>
-        /// <param name="e">  The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.</param>
         private void NavigateToHelpUrl(object sender, MouseButtonEventArgs e)
         {
             Utilities.StartProcess(this.helpUrl);
         }
 
         /// <summary>Launches the More Information <c>Uri</c>.</summary>
-        /// <param name="sender">  The object that called the event.</param>
-        /// <param name="e">  The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.</param>
         private void NavigateToInfoUrl(object sender, MouseButtonEventArgs e)
         {
             Utilities.StartProcess(this.infoUrl);

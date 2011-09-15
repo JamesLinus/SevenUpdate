@@ -17,7 +17,7 @@
 
 namespace System.Windows.Internal
 {
-    using Runtime.InteropServices;
+    using System.Runtime.InteropServices;
 
     /// <summary>Specifies Desktop Window Manager (DWM) blur behind properties.</summary>
     [StructLayout(LayoutKind.Sequential)]

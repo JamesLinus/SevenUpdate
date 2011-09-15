@@ -1,4 +1,4 @@
-﻿// ***********************************************************************
+// ***********************************************************************
 // <copyright file="BaseLocalizeExtension.cs" project="WPFLocalizeExtension" assembly="WPFLocalizeExtension" solution="SevenUpdate" company="Bernhard Millauer">
 //     Copyright (c) Bernhard Millauer. All rights reserved.
 // </copyright>
@@ -18,13 +18,13 @@ namespace WPFLocalizeExtension.Extensions
     using System.Windows.Data;
     using System.Windows.Markup;
 
-    using Engine;
+    using WPFLocalizeExtension.Engine;
 
     /// <summary>
     ///   Implements the BaseLocalizeExtension.Represents a LocalizationExtension which provides a localized object of a
     ///   .resx dictionary.
     /// </summary>
-    /// <typeparam name="TValue">The Markup extension to use.</typeparam>
+    /// <typeparam name = "TValue">The Markup extension to use.</typeparam>
     /// <remarks>
     ///   If a content between two tags in xaml is set, this has the higher priority and will overwrite the settled
     ///   properties
@@ -54,27 +54,21 @@ namespace WPFLocalizeExtension.Extensions
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the BaseLocalizeExtension class.</summary>
+        /// <summary>Initializes a new instance of the <see cref = "BaseLocalizeExtension{TValue}" /> class.</summary>
         protected BaseLocalizeExtension()
         {
             // initialize the collection of the assigned dependency objects
             this.targetObjects = new Dictionary<WeakReference, object>();
         }
 
-        /// <summary>
-        ///   Initializes a new instance of the <c>BaseLocalizeExtension{TValue}</c> class. Initializes a new instance
-        ///   of the BaseLocalizeExtension class.
-        /// </summary>
-        /// <param name="key">
-        ///   Three types are supported:Direct: passed key = key;Dictionary/Key pair: this have to be separated like
-        ///   ResXDictionaryName:<c>ResourceKey</c>Assembly/Dictionary/Key pair: this have to be separated like
-        ///   ResXDictionaryName:<c>ResourceKey</c>.
-        /// </param>
+        /// <summary>Initializes a new instance of the <see cref = "BaseLocalizeExtension{TValue}" /> class.  of the BaseLocalizeExtension class.</summary>
+        /// <param name = "key">Three types are supported:Direct: passed key = key;Dictionary/Key pair: this have to be separated like ResXDictionaryName:<c>ResourceKey</c>Assembly/Dictionary/Key pair: this have to be separated like ResXDictionaryName:<c>ResourceKey</c>.</param>
         /// <remarks>
         ///   This constructor register the <c>EventHandler</c><c>OnCultureChanged</c> on <c>LocalizeDictionary</c> to
         ///   get an acknowledge of changing the culture
         /// </remarks>
-        protected BaseLocalizeExtension(string key) : this()
+        protected BaseLocalizeExtension(string key)
+            : this()
         {
             // parse the key value and split it up if necessary
             Localize.ParseKey(key, out this.assembly, out this.dict, out this.key);
@@ -82,14 +76,14 @@ namespace WPFLocalizeExtension.Extensions
 
         #endregion
 
-        #region Events
+        #region Public Events
 
         /// <summary>Occurs when a property value changes.</summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
 
-        #region Properties
+        #region Public Properties
 
         /// <summary>
         ///   Gets the current value.This property has only a value, if the <c>BaseLocalizeExtension</c> is binded to a
@@ -144,6 +138,10 @@ namespace WPFLocalizeExtension.Extensions
             }
         }
 
+        #endregion
+
+        #region Properties
+
         /// <summary>
         ///   Gets or sets the name of the Assembly where the .resx is located.If it's <c>null</c>, the executing
         ///   assembly (where this LocalizeEngine is located at) will get returned.
@@ -163,7 +161,7 @@ namespace WPFLocalizeExtension.Extensions
 
         /// <summary>Gets the current <c>CultureInfo</c>, otherwise LocalizeDictionary.Culture will get returned.</summary>
         /// <returns>The <c>CultureInfo</c>.</returns>
-        /// <exception cref="System.ArgumentException">thrown if the parameter Culture don't defines a valid <c>CultureInfo</c></exception>
+        /// <exception cref = "System.ArgumentException">thrown if the parameter Culture don't defines a valid <c>CultureInfo</c></exception>
         protected CultureInfo Culture
         {
             get
@@ -239,7 +237,7 @@ namespace WPFLocalizeExtension.Extensions
         #region Public Methods
 
         /// <summary>Provides the Value for the first Binding.</summary>
-        /// <param name="serviceProvider">  The <c>System.Windows.Markup.IProvideValueTarget</c> provided from the <c>MarkupExtension</c>.</param>
+        /// <param name = "serviceProvider">The <c>System.Windows.Markup.IProvideValueTarget</c> provided from the <c>MarkupExtension</c>.</param>
         /// <returns>The found item from the .resx directory or <c>null</c> if not found.</returns>
         /// <remarks>
         ///   This method register the <c>EventHandler</c><c>OnCultureChanged</c> on <c>LocalizeDictionary</c> to get an
@@ -322,7 +320,7 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>Resolves the localized value of the current Assembly, Dictionary, Key pair.</summary>
-        /// <param name="resolvedValue">  The resolved value.</param>
+        /// <param name = "resolvedValue">The resolved value.</param>
         /// <returns>True if the resolve was success, otherwise <c>False</c>.</returns>
         /// <exception>If the Assembly, Dictionary, Key pair was not found.</exception>
         public bool ResolveLocalizedValue(out TValue resolvedValue)
@@ -332,13 +330,13 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>
-        ///   Sets a binding between a <c>DependencyObject</c> with its <c>DependencyProperty</c>or <see
-        ///    cref="PropertyInfo" /> and the <c>BaseLocalizeExtension</c>.
+        ///   Sets a binding between a <c>DependencyObject</c> with its <c>DependencyProperty</c>or <see cref =
+        ///   "PropertyInfo" /> and the <c>BaseLocalizeExtension</c>.
         /// </summary>
-        /// <param name="targetObject">  The target dependency object.</param>
-        /// <param name="targetProperty">  The target dependency property.</param>
+        /// <param name = "targetObject">The target dependency object.</param>
+        /// <param name = "targetProperty">The target dependency property.</param>
         /// <returns><c>True</c> if the binding was setup successfully, otherwise <c>False</c> (Binding already exists).</returns>
-        /// <exception cref="ArgumentException">If the <paramref name="targetProperty" /> is not a <c>DependencyProperty</c> or <c>PropertyInfo</c>.</exception>
+        /// <exception cref = "ArgumentException">If the <paramref name = "targetProperty" /> is not a <c>DependencyProperty</c> or <c>PropertyInfo</c>.</exception>
         public bool SetBinding(DependencyObject targetObject, object targetProperty)
         {
             if (!(targetProperty is DependencyProperty || targetProperty is PropertyInfo))
@@ -396,20 +394,16 @@ namespace WPFLocalizeExtension.Extensions
 
         #endregion
 
-        #region Implemented Interfaces
-
-        #region IWeakEventListener
+        #region Explicit Interface Methods
 
         /// <summary>Receives events from the centralized event manager.</summary>
-        /// <param name="managerType">  The type of the <c>T:System.Windows.WeakEventManager</c> calling this method.</param>
-        /// <param name="sender">  Object that originated the event.</param>
-        /// <param name="e">  Event data.</param>
-        /// <returns>
-        ///   <c>True</c> if the listener handled the event. It is considered an error by the <see
-        ///    cref="T:System.Windows.WeakEventManager" /> handling in WPF to register a listener for an event that the
-        ///    listener does not handle. Regardless, the method should return <c>false</c> if it receives an event that
-        ///    it does not recognize or handle.
-        /// </returns>
+        /// <param name = "managerType">The type of the <c>T:System.Windows.WeakEventManager</c> calling this method.</param>
+        /// <param name = "sender">Object that originated the event.</param>
+        /// <param name = "e">Event data.</param>
+        /// <returns><c>True</c> if the listener handled the event. It is considered an error by the <see
+        ///    cref = "T:System.Windows.WeakEventManager" /> handling in WPF to register a listener for an event that
+        ///    the listener does not handle. Regardless, the method should return <c>false</c> if it receives an event
+        ///    that it does not recognize or handle.</returns>
         bool IWeakEventListener.ReceiveWeakEvent(Type managerType, object sender, EventArgs e)
         {
             // if the passed handler is type of LocalizeDictionary.WeakCultureChangedEventManager, handle it
@@ -428,17 +422,12 @@ namespace WPFLocalizeExtension.Extensions
 
         #endregion
 
-        #endregion
-
         #region Methods
 
-        /// <summary>Determines whether if the <paramref name="checkType" /> is the <paramref name="targetType" />.</summary>
-        /// <param name="checkType">  Type of the check.</param>
-        /// <param name="targetType">  Type of the target.</param>
-        /// <returns>
-        ///   <c>True</c> if the <paramref name="checkType" /> is type of the <paramref name="targetType" />; otherwise,
-        ///   <c>false</c>.
-        /// </returns>
+        /// <summary>Determines whether if the <paramref name = "checkType" /> is the <paramref name = "targetType" />.</summary>
+        /// <param name = "checkType">Type of the check.</param>
+        /// <param name = "targetType">Type of the target.</param>
+        /// <returns><c>True</c> if the <paramref name = "checkType" /> is type of the <paramref name = "targetType" />; otherwise, <c>false</c>.</returns>
         internal bool IsTypeOf(Type checkType, Type targetType)
         {
             // if the checkType is null (possible base type), return false
@@ -478,7 +467,7 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>This method is used to modify the passed object into the target format.</summary>
-        /// <param name="input">  The object that will be modified.</param>
+        /// <param name = "input">The object that will be modified.</param>
         /// <returns>Returns the modified object.</returns>
         protected abstract object FormatOutput(object input);
 
@@ -494,22 +483,20 @@ namespace WPFLocalizeExtension.Extensions
         ///   This method will be called through the interface, passed to theLocalizeDictionary. LocalizeDictionary.
         ///   <c>Localize.WeakCultureChangedEventManager</c> to get notified on culture changed.
         /// </summary>
-        /// <param name="managerType">  The manager Type.</param>
-        /// <param name="sender">  The object that called the event.</param>
-        /// <param name="e">  The event argument.</param>
-        /// <returns>
-        ///   <c>True</c> if the listener handled the event. It is considered an error by the <see
-        ///    cref="T:System.Windows.WeakEventManager" /> handling in WPF to register a listener for an event that
-        ///   the listener does not handle. Regardless, the method should return <c>false</c> if it receives an event
-        ///   that it does not recognize or handle.
-        /// </returns>
+        /// <param name = "managerType">The manager Type.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The event argument.</param>
+        /// <returns><c>True</c> if the listener handled the event. It is considered an error by the <see
+        ///    cref = "T:System.Windows.WeakEventManager" /> handling in WPF to register a listener for an event that
+        ///    the listener does not handle. Regardless, the method should return <c>false</c> if it receives an event
+        ///    that it does not recognize or handle.</returns>
         protected bool ReceiveWeakEvent(Type managerType, object sender, EventArgs e)
         {
             return ((IWeakEventListener)this).ReceiveWeakEvent(managerType, sender, e);
         }
 
         /// <summary>Set the Value of the <c>DependencyProperty</c> to the passed Value.</summary>
-        /// <param name="newValue">  The new Value.</param>
+        /// <param name = "newValue">The new Value.</param>
         protected void SetNewValue(object newValue)
         {
             // set the new value to the current value, if its the type of TValue
@@ -532,9 +519,9 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>Sets the target value.</summary>
-        /// <param name="targetObject">  The target object.</param>
-        /// <param name="targetProperty">  The target property.</param>
-        /// <param name="value">  The value.</param>
+        /// <param name = "targetObject">The target object.</param>
+        /// <param name = "targetProperty">The target property.</param>
+        /// <param name = "value">The value.</param>
         private static void SetTargetValue(DependencyObject targetObject, object targetProperty, object value)
         {
             // check if the target property is a DependencyProperty
@@ -551,9 +538,9 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>Sets the target value.</summary>
-        /// <param name="targetObject">  The target object.</param>
-        /// <param name="targetProperty">  The target property.</param>
-        /// <param name="value">  The value.</param>
+        /// <param name = "targetObject">The target object.</param>
+        /// <param name = "targetProperty">The target property.</param>
+        /// <param name = "value">The value.</param>
         private static void SetTargetValue(
             DependencyObject targetObject, DependencyProperty targetProperty, object value)
         {
@@ -561,16 +548,16 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>Sets the target value.</summary>
-        /// <param name="targetObject">  The target object.</param>
-        /// <param name="targetProperty">  The target property.</param>
-        /// <param name="value">  The value.</param>
+        /// <param name = "targetObject">The target object.</param>
+        /// <param name = "targetProperty">The target property.</param>
+        /// <param name = "value">The value.</param>
         private static void SetTargetValue(DependencyObject targetObject, PropertyInfo targetProperty, object value)
         {
             targetProperty.SetValue(targetObject, value, null);
         }
 
         /// <summary>Raises the notify property changed.</summary>
-        /// <param name="propertyName">  Name of the property.</param>
+        /// <param name = "propertyName">Name of the property.</param>
         private void RaiseNotifyPropertyChanged(string propertyName)
         {
             if (this.PropertyChanged != null)
@@ -580,8 +567,8 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>Resolves the localized value of the current Assembly, Dictionary, Key pair.</summary>
-        /// <param name="resolvedValue">  The resolved value.</param>
-        /// <param name="targetCulture">  The target culture.</param>
+        /// <param name = "resolvedValue">The resolved value.</param>
+        /// <param name = "targetCulture">The target culture.</param>
         /// <returns>True if the resolve was success, otherwise <c>False</c>.</returns>
         /// <exception>If the Assembly, Dictionary, Key pair was not found.</exception>
         private bool ResolveLocalizedValue(out TValue resolvedValue, CultureInfo targetCulture)

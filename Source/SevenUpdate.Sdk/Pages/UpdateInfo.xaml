@@ -49,9 +49,9 @@
                 Orientation="Horizontal" Margin="0,0,11,10" Grid.ColumnSpan="2">
       <Button HorizontalContentAlignment="Center" IsDefault="True" MinHeight="23" MinWidth="75" Padding="5,1"
               VerticalContentAlignment="Center" Content="{LocText SevenUpdate.Sdk:Resources:Next}" Click="MoveOn" TabIndex="7" />
-      <Button Content="{LocText SevenUpdate.Sdk:Resources:Cancel}" HorizontalContentAlignment="Center" IsDefault="False"
-              MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Margin="8,0,0,0" IsCancel="True"
-              Click="NavigateToMainPage" TabIndex="8" />
+      <Button Content="{LocText SevenUpdate.Sdk:Resources:Cancel}" HorizontalContentAlignment="Center"
+              IsDefault="False" MinHeight="23" MinWidth="75" Padding="5,1" VerticalContentAlignment="Center" Margin="8,0,0,0"
+              IsCancel="True" Click="NavigateToMainPage" TabIndex="8" />
     </StackPanel>
 
     <ComboBox Grid.Column="1" HorizontalAlignment="Right" VerticalAlignment="Center" MinWidth="80"
@@ -75,9 +75,9 @@
                ToolTip="{LocText SevenUpdate.Sdk:Resources:UpdateNameToolTip}" Margin="0,10,0,0" Grid.Column="1" Grid.Row="1"
                Cursor="Help" />
 
-    <InfoTextBox Text="{Binding Path=Name, Converter={StaticResource stringToLocaleString}, Mode=OneWay}" MaxLength="100"
-                 Note="{LocText SevenUpdate.Sdk:Resources:UpdateNameNote}" TabIndex="0" Name="tbxUpdateName" Grid.Column="1"
-                 Grid.Row="2" LostFocus="ChangeName" TextChanged="ValidateInputRequired" x:FieldModifier="private" />
+    <InfoTextBox Text="{Binding Path=Name, Converter={StaticResource stringToLocaleString}, Mode=OneWay}"
+                 MaxLength="100" Note="{LocText SevenUpdate.Sdk:Resources:UpdateNameNote}" TabIndex="0" Name="tbxUpdateName"
+                 Grid.Column="1" Grid.Row="2" LostFocus="ChangeName" TextChanged="ValidateInputRequired" x:FieldModifier="private" />
 
     <TextBlock Text="{LocText SevenUpdate.Sdk:Resources:UpdateDetails}" Padding="2" Grid.Column="1" Grid.Row="3"
                Margin="0,10,0,0" HorizontalAlignment="Left" />
@@ -150,8 +150,8 @@
                  VerticalAlignment="Center" HorizontalAlignment="Left"
                  ToolTip="{LocText SevenUpdate.Sdk:Resources:UpdateImportanceToolTip}" Cursor="Help" />
 
-      <ComboBox TabIndex="6" MinWidth="65" SelectedValue="{Binding Path=Importance, Mode=TwoWay}" SelectedValuePath="Tag"
-                VerticalAlignment="Center" MinHeight="23">
+      <ComboBox TabIndex="6" MinWidth="65" SelectedValue="{Binding Path=Importance, Mode=TwoWay}"
+                SelectedValuePath="Tag" VerticalAlignment="Center" MinHeight="23">
         <ComboBoxItem Content="{LocText SevenUpdate.Sdk:Resources:Important}" Tag="Important" />
         <ComboBoxItem Content="{LocText SevenUpdate.Sdk:Resources:Recommended}" Tag="Recommended" />
         <ComboBoxItem Content="{LocText SevenUpdate.Sdk:Resources:Optional}" Tag="Optional" />

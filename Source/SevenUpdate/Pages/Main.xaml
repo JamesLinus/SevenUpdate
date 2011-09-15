@@ -33,16 +33,18 @@
       </Rectangle.Fill>
     </Rectangle>
     <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="12,4,0,0" Grid.Row="1">
-      <TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5"
-                 Text="{LocText SevenUpdate:Resources:CheckForUpdates}" Padding="2" Foreground="White" MouseDown="CheckForUpdates" />
-      <TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5"
-                 Text="{LocText SevenUpdate:Resources:ChangeSettings}" Padding="2" Foreground="White" MouseDown="NavigateToOptions" />
+      <TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top"
+                 Margin="5" Text="{LocText SevenUpdate:Resources:CheckForUpdates}" Padding="2" Foreground="White"
+                 MouseDown="CheckForUpdates" />
+      <TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top"
+                 Margin="5" Text="{LocText SevenUpdate:Resources:ChangeSettings}" Padding="2" Foreground="White"
+                 MouseDown="NavigateToOptions" />
 
-      <TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5"
-                 Text="{LocText SevenUpdate:Resources:ViewUpdateHistory}" Padding="2" Foreground="White"
+      <TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top"
+                 Margin="5" Text="{LocText SevenUpdate:Resources:ViewUpdateHistory}" Padding="2" Foreground="White"
                  MouseDown="NavigateToUpdateHistory" />
-      <TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="5"
-                 Text="{LocText SevenUpdate:Resources:RestoreHiddenUpdates}" Padding="2" Foreground="White"
+      <TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top"
+                 Margin="5" Text="{LocText SevenUpdate:Resources:RestoreHiddenUpdates}" Padding="2" Foreground="White"
                  MouseDown="NavigateToRestoreUpdates" />
     </StackPanel>
     <!-- Update Info-->
@@ -60,16 +62,18 @@
       </Grid.RowDefinitions>
       <Border Grid.ColumnSpan="3" Grid.RowSpan="3" BorderThickness="1" BorderBrush="LightGray" />
       <StackPanel Grid.Column="2" Grid.Row="1">
-        <ProgressBar IsIndeterminate="True" VerticalAlignment="Top" HorizontalAlignment="Left" Width="250" MinHeight="16"
-                     Margin="0,5,0,0">
+        <ProgressBar IsIndeterminate="True" VerticalAlignment="Top" HorizontalAlignment="Left" Width="250"
+                     MinHeight="16" Margin="0,5,0,0">
           <ProgressBar.Style>
             <Style TargetType="ProgressBar">
               <Setter Property="Visibility" Value="Collapsed" />
               <Style.Triggers>
-                <DataTrigger Binding="{Binding UpdateAction}" Value="{x:Static SevenUpdate:UpdateAction.CheckingForUpdates}">
+                <DataTrigger Binding="{Binding UpdateAction}"
+                             Value="{x:Static SevenUpdate:UpdateAction.CheckingForUpdates}">
                   <Setter Property="Visibility" Value="Visible" />
                 </DataTrigger>
-                <DataTrigger Binding="{Binding UpdateAction}" Value="{x:Static SevenUpdate:UpdateAction.ConnectingToService}">
+                <DataTrigger Binding="{Binding UpdateAction}"
+                             Value="{x:Static SevenUpdate:UpdateAction.ConnectingToService}">
                   <Setter Property="Visibility" Value="Visible" />
                 </DataTrigger>
                 <DataTrigger Binding="{Binding UpdateAction}" Value="{x:Static SevenUpdate:UpdateAction.Downloading}">
@@ -101,13 +105,15 @@
               <DataTrigger Binding="{Binding UpdateAction}" Value="{x:Static SevenUpdate:UpdateAction.CheckForUpdates}">
                 <Setter Property="Fill" Value="{StaticResource yellowGradient}" />
               </DataTrigger>
-              <DataTrigger Binding="{Binding UpdateAction}" Value="{x:Static SevenUpdate:UpdateAction.ConnectingToService}">
+              <DataTrigger Binding="{Binding UpdateAction}"
+                           Value="{x:Static SevenUpdate:UpdateAction.ConnectingToService}">
                 <Setter Property="Fill" Value="{StaticResource yellowGradient}" />
               </DataTrigger>
               <DataTrigger Binding="{Binding UpdateAction}" Value="{x:Static SevenUpdate:UpdateAction.Downloading}">
                 <Setter Property="Fill" Value="{StaticResource yellowGradient}" />
               </DataTrigger>
-              <DataTrigger Binding="{Binding UpdateAction}" Value="{x:Static SevenUpdate:UpdateAction.DownloadCompleted}">
+              <DataTrigger Binding="{Binding UpdateAction}"
+                           Value="{x:Static SevenUpdate:UpdateAction.DownloadCompleted}">
                 <Setter Property="Fill" Value="{StaticResource yellowGradient}" />
               </DataTrigger>
               <DataTrigger Binding="{Binding UpdateAction}" Value="{x:Static SevenUpdate:UpdateAction.UpdatesFound}">
@@ -116,7 +122,8 @@
               <DataTrigger Binding="{Binding UpdateAction}" Value="{x:Static SevenUpdate:UpdateAction.RebootNeeded}">
                 <Setter Property="Fill" Value="{StaticResource yellowGradient}" />
               </DataTrigger>
-              <DataTrigger Binding="{Binding UpdateAction}" Value="{x:Static SevenUpdate:UpdateAction.CheckingForUpdates}">
+              <DataTrigger Binding="{Binding UpdateAction}"
+                           Value="{x:Static SevenUpdate:UpdateAction.CheckingForUpdates}">
                 <Setter Property="Visibility" Value="Collapsed" />
               </DataTrigger>
               <DataTrigger Binding="{Binding UpdateAction}" Value="{x:Static SevenUpdate:UpdateAction.Installing}">
@@ -129,8 +136,8 @@
       <TextBlock FontSize="16" Foreground="#FF003399" Grid.Column="2" Name="tbHeading"
                  Text="{LocText SevenUpdate:Resources:ProgramsUpToDate}" VerticalAlignment="Center" Margin="0,5,4,0"
                  x:FieldModifier="private" />
-      <Rectangle Height="48" HorizontalAlignment="Left" Margin="15,10" Stretch="Fill" VerticalAlignment="Top" Width="48"
-                 Grid.Column="1" Grid.RowSpan="2">
+      <Rectangle Height="48" HorizontalAlignment="Left" Margin="15,10" Stretch="Fill" VerticalAlignment="Top"
+                 Width="48" Grid.Column="1" Grid.RowSpan="2">
         <Rectangle.Style>
           <Style TargetType="Rectangle">
             <Setter Property="Fill" Value="{StaticResource GreenShield}" />
@@ -144,13 +151,15 @@
               <DataTrigger Binding="{Binding UpdateAction}" Value="{x:Static SevenUpdate:UpdateAction.CheckForUpdates}">
                 <Setter Property="Fill" Value="{StaticResource OrangeShield}" />
               </DataTrigger>
-              <DataTrigger Binding="{Binding UpdateAction}" Value="{x:Static SevenUpdate:UpdateAction.ConnectingToService}">
+              <DataTrigger Binding="{Binding UpdateAction}"
+                           Value="{x:Static SevenUpdate:UpdateAction.ConnectingToService}">
                 <Setter Property="Fill" Value="{StaticResource OrangeShield}" />
               </DataTrigger>
               <DataTrigger Binding="{Binding UpdateAction}" Value="{x:Static SevenUpdate:UpdateAction.Downloading}">
                 <Setter Property="Fill" Value="{StaticResource OrangeShield}" />
               </DataTrigger>
-              <DataTrigger Binding="{Binding UpdateAction}" Value="{x:Static SevenUpdate:UpdateAction.DownloadCompleted}">
+              <DataTrigger Binding="{Binding UpdateAction}"
+                           Value="{x:Static SevenUpdate:UpdateAction.DownloadCompleted}">
                 <Setter Property="Fill" Value="{StaticResource OrangeShield}" />
               </DataTrigger>
               <DataTrigger Binding="{Binding UpdateAction}" Value="{x:Static SevenUpdate:UpdateAction.UpdatesFound}">
@@ -159,7 +168,8 @@
               <DataTrigger Binding="{Binding UpdateAction}" Value="{x:Static SevenUpdate:UpdateAction.RebootNeeded}">
                 <Setter Property="Fill" Value="{StaticResource OrangeShield}" />
               </DataTrigger>
-              <DataTrigger Binding="{Binding UpdateAction}" Value="{x:Static SevenUpdate:UpdateAction.CheckingForUpdates}">
+              <DataTrigger Binding="{Binding UpdateAction}"
+                           Value="{x:Static SevenUpdate:UpdateAction.CheckingForUpdates}">
                 <Setter Property="Fill" Value="{StaticResource SevenUpdateIcon}" />
               </DataTrigger>
               <DataTrigger Binding="{Binding UpdateAction}" Value="{x:Static SevenUpdate:UpdateAction.Installing}">

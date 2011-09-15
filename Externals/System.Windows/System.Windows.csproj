@@ -70,6 +70,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ApplicationInstanceAwareness.cs" />
+    <Compile Include="ApplicationServices\ApplicationRecoveryException.cs" />
     <Compile Include="ApplicationServices\ApplicationRestartRecoveryManager.cs" />
     <Compile Include="ApplicationServices\RecoveryData.cs" />
     <Compile Include="ApplicationServices\RecoverySettings.cs" />
@@ -79,37 +80,45 @@
     <Compile Include="Controls\ListViewCustomComparer.cs" />
     <Compile Include="Controls\TreeViewExtensions.cs" />
     <Compile Include="Converters\InverseBooleanConverter.cs" />
-    <Compile Include="Dialogs\DialogControl.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Dialogs\DialogControlCollection.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Dialogs\IDialogControlHost.cs">
-      <SubType>Code</SubType>
-    </Compile>
     <Compile Include="Converters\EnumToBooleanConverter.cs" />
     <Compile Include="Converters\IndexToVisibilityConverter.cs" />
-    <Compile Include="Dialogs\TaskDialog\HyperlinkClickedEventArgs.cs" />
+    <Compile Include="CompositionChangedEventArgs.cs" />
+    <Compile Include="Dialogs\DialogControlCollection.cs" />
+    <Compile Include="Dialogs\DialogControl.cs" />
+    <Compile Include="Dialogs\DialogShowState.cs" />
+    <Compile Include="Dialogs\IDialogControlHost.cs" />
+    <Compile Include="Dialogs\TaskDialog\IconUnion.cs" />
+    <Compile Include="Dialogs\TaskDialog\NativeTaskDialog.cs" />
+    <Compile Include="Dialogs\TaskDialog\NativeTaskDialogSettings.cs" />
+    <Compile Include="Dialogs\TaskDialog\ProgressBarState.cs" />
+    <Compile Include="Dialogs\TaskDialog\TaskDialog.cs" />
+    <Compile Include="Dialogs\TaskDialog\TaskDialogBar.cs" />
+    <Compile Include="Dialogs\TaskDialog\TaskDialogButton.cs" />
+    <Compile Include="Dialogs\TaskDialog\TaskDialogButtonBase.cs" />
     <Compile Include="Dialogs\TaskDialog\TaskDialogButtonData.cs" />
     <Compile Include="Dialogs\TaskDialog\TaskDialogClosingEventArgs.cs" />
-    <Compile Include="Dialogs\TaskDialog\TaskDialogCommonButtonFlags.cs" />
-    <Compile Include="Dialogs\TaskDialog\TaskDialogCommonButtonReturnId.cs" />
-    <Compile Include="Dialogs\TaskDialog\TaskDialogConfig.cs" />
-    <Compile Include="Dialogs\TaskDialog\TaskDialogConfigIconUnion.cs" />
-    <Compile Include="Dialogs\TaskDialog\TaskDialogElement.cs" />
+    <Compile Include="Dialogs\TaskDialog\TaskDialogCommandLink.cs" />
+    <Compile Include="Dialogs\TaskDialog\TaskDialogCommonButtonReturnIds.cs" />
+    <Compile Include="Dialogs\TaskDialog\TaskDialogCommonButtons.cs" />
+    <Compile Include="Dialogs\TaskDialog\TaskDialogConfiguration.cs" />
+    <Compile Include="Dialogs\TaskDialog\TaskDialogControl.cs" />
+    <Compile Include="Dialogs\TaskDialog\TaskDialogDefaults.cs" />
+    <Compile Include="Dialogs\TaskDialog\TaskDialogElements.cs" />
     <Compile Include="Dialogs\TaskDialog\TaskDialogExpandedDetailsLocation.cs" />
-    <Compile Include="Dialogs\TaskDialog\TaskDialogFlags.cs" />
-    <Compile Include="Dialogs\TaskDialog\TaskDialogIcon.cs" />
+    <Compile Include="Dialogs\TaskDialog\TaskDialogHyperlinkClickedEventArgs.cs" />
     <Compile Include="Dialogs\TaskDialog\TaskDialogIconElement.cs" />
-    <Compile Include="Dialogs\TaskDialog\TaskDialogMessage.cs" />
-    <Compile Include="Dialogs\TaskDialog\TaskDialogNotification.cs" />
+    <Compile Include="Dialogs\TaskDialog\TaskDialogIcons.cs" />
+    <Compile Include="Dialogs\TaskDialog\TaskDialogMessages.cs" />
+    <Compile Include="Dialogs\TaskDialog\TaskDialogNotifications.cs" />
+    <Compile Include="Dialogs\TaskDialog\TaskDialogOptions.cs" />
+    <Compile Include="Dialogs\TaskDialog\TaskDialogProgressBar.cs" />
     <Compile Include="Dialogs\TaskDialog\TaskDialogProgressBarState.cs" />
-    <Compile Include="Dialogs\TaskDialog\TaskDialogResults.cs" />
+    <Compile Include="Dialogs\TaskDialog\TaskDialogRadioButton.cs" />
+    <Compile Include="Dialogs\TaskDialog\TaskDialogResult.cs" />
     <Compile Include="Dialogs\TaskDialog\TaskDialogStandardButtons.cs" />
+    <Compile Include="Dialogs\TaskDialog\TaskDialogStandardIcon.cs" />
     <Compile Include="Dialogs\TaskDialog\TaskDialogStartupLocation.cs" />
     <Compile Include="Dialogs\TaskDialog\TaskDialogTickEventArgs.cs" />
-    <Compile Include="CompositionChangedEventArgs.cs" />
     <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="InstanceAwareApplication.cs" />
     <Compile Include="Controls\CommandLink.cs" />
@@ -131,16 +140,6 @@
     <Compile Include="ValidationRules\UrlInputRule.cs" />
     <Compile Include="ValidationRules\DirectoryInputRule.cs" />
     <Compile Include="AeroGlass.cs" />
-    <Compile Include="Dialogs\TaskDialog\TaskDialog.cs" />
-    <Compile Include="Dialogs\TaskDialog\TaskDialogBar.cs" />
-    <Compile Include="Dialogs\TaskDialog\TaskDialogButton.cs" />
-    <Compile Include="Dialogs\TaskDialog\TaskDialogButtonBase.cs" />
-    <Compile Include="Dialogs\TaskDialog\TaskDialogCommandLink.cs" />
-    <Compile Include="Dialogs\TaskDialog\TaskDialogControl.cs" />
-    <Compile Include="Dialogs\TaskDialog\TaskDialogDefaults.cs" />
-    <Compile Include="Dialogs\TaskDialog\TaskDialogProgressBar.cs" />
-    <Compile Include="Dialogs\TaskDialog\TaskDialogRadioButton.cs" />
-    <Compile Include="Dialogs\TaskDialog\TaskDialogStandardIcon.cs" />
     <Compile Include="ApplicationServices\AppRestartRecoveryNativeMethods.cs">
       <SubType>Code</SubType>
     </Compile>
@@ -151,15 +150,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Internal\NativeMethods.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Dialogs\TaskDialog\NativeTaskDialog.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Dialogs\TaskDialog\NativeTaskDialogSettings.cs">
-      <SubType>Code</SubType>
-    </Compile>
-    <Compile Include="Dialogs\TaskDialog\TaskDialogNativeMethods.cs">
       <SubType>Code</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs">

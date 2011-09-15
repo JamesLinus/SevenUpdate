@@ -1,4 +1,4 @@
-﻿// ***********************************************************************
+// ***********************************************************************
 // <copyright file="LocTextUpperExtension.cs" project="WPFLocalizeExtension" assembly="WPFLocalizeExtension" solution="SevenUpdate" company="Bernhard Millauer">
 //     Copyright (c) Bernhard Millauer. All rights reserved.
 // </copyright>
@@ -12,7 +12,7 @@ namespace WPFLocalizeExtension.Extensions
     using System.Globalization;
     using System.Windows.Markup;
 
-    using Engine;
+    using WPFLocalizeExtension.Engine;
 
     /// <summary><c>BaseLocalizeExtension</c> for string objects.This strings will be converted to upper case.</summary>
     [MarkupExtensionReturnType(typeof(string))]
@@ -20,14 +20,15 @@ namespace WPFLocalizeExtension.Extensions
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the LocTextUpperExtension class.</summary>
+        /// <summary>Initializes a new instance of the <see cref = "LocTextUpperExtension" /> class.</summary>
         public LocTextUpperExtension()
         {
         }
 
-        /// <summary>Initializes a new instance of the <c>LocTextUpperExtension</c> class.</summary>
-        /// <param name="key">  The resource identifier.</param>
-        public LocTextUpperExtension(string key) : base(key)
+        /// <summary>Initializes a new instance of the <see cref = "LocTextUpperExtension" /> class.</summary>
+        /// <param name = "key">The resource identifier.</param>
+        public LocTextUpperExtension(string key)
+            : base(key)
         {
         }
 
@@ -36,7 +37,7 @@ namespace WPFLocalizeExtension.Extensions
         #region Public Methods
 
         /// <summary>Provides the Value for the first Binding as <c>System.String</c>.</summary>
-        /// <param name="serviceProvider">  The <c>System.Windows.Markup.IProvideValueTarget</c> provided from the <c>MarkupExtension</c>.</param>
+        /// <param name = "serviceProvider">The <c>System.Windows.Markup.IProvideValueTarget</c> provided from the <c>MarkupExtension</c>.</param>
         /// <returns>The found item from the .resx directory or <c>null</c> if not found.</returns>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
@@ -60,9 +61,9 @@ namespace WPFLocalizeExtension.Extensions
 
             throw new NotSupportedException(
                 string.Format(
-                    CultureInfo.CurrentCulture,
-                    "ResourceKey '{0}' returns '{1}' which is not type of System.String",
-                    this.Key,
+                    CultureInfo.CurrentCulture, 
+                    "ResourceKey '{0}' returns '{1}' which is not type of System.String", 
+                    this.Key, 
                     obj.GetType().FullName));
         }
 
@@ -74,7 +75,7 @@ namespace WPFLocalizeExtension.Extensions
         ///   This method formats the localized text.If the passed target text is <c>null</c>, string.empty will be
         ///   returned.
         /// </summary>
-        /// <param name="target">  The text to format.</param>
+        /// <param name = "target">The text to format.</param>
         /// <returns>Returns the formated text or string.empty, if the target text was <c>null</c>.</returns>
         protected override string FormatText(string target)
         {
@@ -82,8 +83,8 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>
-        ///   This method gets the new value for the target property and call <see
-        ///   cref="BaseLocalizeExtension{TValue}.SetNewValue" />.
+        ///   This method gets the new value for the target property and call <see cref =
+        ///   "BaseLocalizeExtension{TValue}.SetNewValue" />.
         /// </summary>
         protected override void HandleNewValue()
         {

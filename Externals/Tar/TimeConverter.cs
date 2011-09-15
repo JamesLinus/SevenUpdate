@@ -22,9 +22,7 @@ namespace Tar
         #region Public Methods
 
         /// <param name="dateTime">
-        /// </param>
-        /// <returns>
-        /// </returns>
+        /// </param><returns></returns>
         public static int DateTime2TimeT(DateTime dateTime)
         {
             var delta = dateTime - unixEpoch;
@@ -40,9 +38,7 @@ namespace Tar
 */
 
         /// <param name="time">
-        /// </param>
-        /// <returns>
-        /// </returns>
+        /// </param><returns></returns>
         public static DateTime TimeT2DateTime(int time)
         {
             return unixEpoch.AddSeconds(time);

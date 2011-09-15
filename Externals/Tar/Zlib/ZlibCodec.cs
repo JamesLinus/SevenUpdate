@@ -13,11 +13,7 @@ namespace Zlib
     using System.Runtime.InteropServices;
 
     /// <summary>Encoder and Decoder for ZLIB and DEFLATE (IETF RFC1950 and RFC1951).</summary>
-    /// <remarks>
-    ///   This class compresses and decompresses data according to the Deflate algorithm and optionally, the ZLIB
-    ///   format, as documented in <see href = "http://www.ietf.org/rfc/rfc1950.txt">RFC 1950 - ZLIB</see> and <see
-    ///    href = "http://www.ietf.org/rfc/rfc1951.txt">RFC 1951 - DEFLATE</see>.
-    /// </remarks>
+    /// <remarks>This class compresses and decompresses data according to the Deflate algorithm and optionally, the ZLIB format, as documented in <see href = "http://www.ietf.org/rfc/rfc1950.txt">RFC 1950 - ZLIB</see> and <see href = "http://www.ietf.org/rfc/rfc1951.txt">RFC 1951 - DEFLATE</see>.</remarks>
     [Guid("ebc25cf6-9120-4283-b972-0e5520d0000D")]
     [ComVisible(true)]
     [ClassInterface(ClassInterfaceType.AutoDispatch)]
@@ -35,25 +31,11 @@ namespace Zlib
         private CompressionLevel compressLevel = CompressionLevel.Default; // ENCAPSULATE FIELD BY CODEIT.RIGHT
 
         /// <summary>The compression strategy to use.</summary>
-        /// <remarks>
-        ///   This is only effective in compression.  The theory offered by ZLIB is that different
-        ///   strategies could potentially produce significant differences in compression behavior
-        ///   for different data sets.  Unfortunately I don't have any good recommendations for how
-        ///   to set it differently.  When I tested changing the strategy I got minimally different
-        ///   compression performance. It's best to leave this property alone if you don't have a
-        ///   good feel for it.  Or, you may want to produce a test harness that runs through the
-        ///   different strategy options and evaluates them on different file types. If you do that, let me know your
-        ///   results.
-        /// </remarks>
+        /// <remarks>This is only effective in compression.  The theory offered by ZLIB is that different strategies could potentially produce significant differences in compression behavior for different data sets.  Unfortunately I don't have any good recommendations for how to set it differently.  When I tested changing the strategy I got minimally differen compression performance. It's best to leave this property alone if you don't have a good feel for it.  Or, you may want to produce a test harness that runs through the different strategy options and evaluates them on different file types. If you do that, let me know your results.</remarks>
         private CompressionStrategy strategy = CompressionStrategy.Default; // ENCAPSULATE FIELD BY CODEIT.RIGHT
 
         /// <summary>The number of Window Bits to use.</summary>
-        /// <remarks>
-        ///   This gauges the size of the sliding window, and hence the compression effectiveness as well as memory
-        ///   consumption. It's best to just leave this 
-        ///   setting alone if you don't know what it is.  The maximum value is 15 bits, which implies
-        ///   a 32k window.
-        /// </remarks>
+        /// <remarks>This gauges the size of the sliding window, and hence the compression effectiveness as well as memory consumption. It's best to just leave this  setting alone if you don't know what it is.  The maximum value is 15 bits, which implies a 32k window.</remarks>
         private int windowBits = ZlibConstants.WindowBitsDefault; // ENCAPSULATE FIELD BY CODEIT.RIGHT
 
         #endregion
@@ -61,16 +43,13 @@ namespace Zlib
         #region Constructors and Destructors
 
         /// <summary>Create a ZlibCodec.</summary>
-        /// <remarks>
-        ///   If you use this default constructor, you will later have to explicitly call InitializeInflate() or
-        ///   InitializeDeflate() before using the ZlibCodec to compress or decompress.
-        /// </remarks>
+        /// <remarks>If you use this default constructor, you will later have to explicitly call InitializeInflate() or InitializeDeflate() before using the ZlibCodec to compress or decompress.</remarks>
         public ZlibCodec()
         {
         }
 
         /// <summary>Create a ZlibCodec that either compresses or decompresses.</summary>
-        /// <param name="mode">  Indicates whether the codec should compress (deflate) or decompress (inflate).</param>
+        /// <param name="mode">Indicates whether the codec should compress (deflate) or decompress (inflate).</param>
         public ZlibCodec(CompressionMode mode)
         {
             if (mode == CompressionMode.Compress)
@@ -143,21 +122,15 @@ namespace Zlib
         }
 
         /// <summary>Gets or sets the total bytes in.</summary>
-        /// <value>The total bytes in.</value>
-        /// <remarks>
-        /// </remarks>
+        /// <value>The total bytes in.</value><remarks></remarks>
         internal long TotalBytesIn { get; set; }
 
         /// <summary>Gets or sets the total bytes out.</summary>
-        /// <value>The total bytes out.</value>
-        /// <remarks>
-        /// </remarks>
+        /// <value>The total bytes out.</value><remarks></remarks>
         internal long TotalBytesOut { get; set; }
 
         /// <summary>Gets or sets the compress level.</summary>
-        /// <value>The compress level.</value>
-        /// <remarks>
-        /// </remarks>
+        /// <value>The compress level.</value><remarks></remarks>
         private CompressionLevel CompressLevel
         {
             get
@@ -172,9 +145,7 @@ namespace Zlib
         }
 
         /// <summary>Gets or sets the window bits.</summary>
-        /// <value>The window bits.</value>
-        /// <remarks>
-        /// </remarks>
+        /// <value>The window bits.</value><remarks></remarks>
         private int WindowBits
         {
             get
@@ -234,10 +205,7 @@ namespace Zlib
         ///     ms.Read(CompressedBytes, 0, CompressedBytes.Length); }
         ///   </code>
         /// </example>
-        /// <param name="flush">
-        ///   whether to flush all data as you deflate. Generally you will want to use Z_NO_FLUSH here, in a series of
-        ///   calls to Deflate(), and then call EndDeflate() to flush everything.
-        /// </param>
+        /// <param name="flush">whether to flush all data as you deflate. Generally you will want to use Z_NO_FLUSH here, in a series of calls to Deflate(), and then call EndDeflate() to flush everything.</param>
         /// <returns>Z_OK if all goes well.</returns>
         internal int Deflate(FlushType flush)
         {
@@ -266,11 +234,7 @@ namespace Zlib
         }
 
         /// <summary>Ends an inflation session.</summary>
-        /// <remarks>
-        ///   Call this after successively calling Inflate().  This will cause all buffers to be flushed. 
-        ///   After calling this you cannot call Inflate() without a intervening call to one of the InitializeInflate()
-        ///   overloads.
-        /// </remarks>
+        /// <remarks>Call this after successively calling Inflate().  This will cause all buffers to be flushed.  After calling this you cannot call Inflate() without a intervening call to one of the InitializeInflate() overloads.</remarks>
         /// <returns>Z_OK if everything goes well.</returns>
         internal int EndInflate()
         {
@@ -326,10 +290,7 @@ namespace Zlib
         }
 
         /// <summary>Inflate the data in the InputBuffer, placing the result in the OutputBuffer.</summary>
-        /// <remarks>
-        ///   You must have set InputBuffer and OutputBuffer, NextIn and NextOut, and AvailableBytesIn and 
-        ///   AvailableBytesOut  before calling this method.
-        /// </remarks>
+        /// <remarks>You must have set InputBuffer and OutputBuffer, NextIn and NextOut, and AvailableBytesIn and  AvailableBytesOut  before calling this method.</remarks>
         /// <example>
         ///   <code>
         ///     private void InflateBuffer() { int bufferSize = 1024; byte[] buffer = new byte[bufferSize]; ZlibCodec
@@ -412,8 +373,7 @@ namespace Zlib
 
         /*
         /// <summary>Initialize the ZlibCodec for deflation operation, using the specified CompressionLevel.</summary>
-        /// <remarks>The codec will use the maximum window bits (15) and the specified
-        /// CompressionLevel.  It will emit a ZLIB stream as it compresses.</remarks>
+        /// <remarks>The codec will use the maximum window bits (15) and the specifiedCompressionLevel.  It will emit a ZLIB stream as it compresses.</remarks>
         /// <param name="level">The compression level for the codec.</param>
         /// <returns>Z_OK if all goes well.</returns>
         public int InitializeDeflate(CompressionLevel level)
@@ -423,18 +383,10 @@ namespace Zlib
         }
 */
 
-        /// <summary>
-        ///   Initialize the ZlibCodec for deflation operation, using the specified CompressionLevel, and the explicit
-        ///   flag governing whether to emit an RFC1950 header byte pair.
-        /// </summary>
-        /// <remarks>
-        ///   The codec will use the maximum window bits (15) and the specified CompressionLevel. If you want to
-        ///   generate a zlib stream, you should specify true for wantRfc1950Header. In this case, the library will emit
-        ///   a ZLIB header, as defined in <see href = "http://www.ietf.org/rfc/rfc1950.txt">RFC
-        ///                           1950</see>, in the compressed stream.
-        /// </remarks>
-        /// <param name="level">  The compression level for the codec.</param>
-        /// <param name="wantRfc1950Header">  whether to emit an initial RFC1950 byte pair in the compressed stream.</param>
+        /// <summary>Initialize the ZlibCodec for deflation operation, using the specified CompressionLevel, and the explicit flag governing whether to emit an RFC1950 header byte pair.</summary>
+        /// <remarks>The codec will use the maximum window bits (15) and the specified CompressionLevel. If you want to generate a zlib stream, you should specify true for wantRfc1950Header. In this case, the library will emit a ZLIB header, as defined in <see href = "http://www.ietf.org/rfc/rfc1950.txt">RFC 1950</see>, in the compressed stream.</remarks>
+        /// <param name="level">The compression level for the codec.</param>
+        /// <param name="wantRfc1950Header">whether to emit an initial RFC1950 byte pair in the compressed stream.</param>
         /// <returns>Z_OK if all goes well.</returns>
         internal int InitializeDeflate(CompressionLevel level, bool wantRfc1950Header)
         {
@@ -443,8 +395,7 @@ namespace Zlib
         }
 
         /*
-        /// <summary>Initialize the ZlibCodec for deflation operation, using the specified CompressionLevel, and the
-        /// specified number of window bits. </summary>
+        /// <summary>Initialize the ZlibCodec for deflation operation, using the specified CompressionLevel, and the specified number of window bits. </summary>
         /// <remarks>The codec will use the specified number of window bits and the specified CompressionLevel.</remarks>
         /// <param name="level">The compression level for the codec.</param>
         /// <param name="bits">the number of window bits to use.  If you don't know what this means, don't use this method.</param>
@@ -458,9 +409,7 @@ namespace Zlib
 */
 
         /*
-        /// <summary>Initialize the ZlibCodec for deflation operation, using the specified CompressionLevel, the
-        /// specified number of window bits, and the explicit flag governing whether to emit an RFC1950 header byte
-        /// pair.</summary>
+        /// <summary>Initialize the ZlibCodec for deflation operation, using the specified CompressionLevel, thespecified number of window bits, and the explicit flag governing whether to emit an RFC1950 header bytepair.</summary>
         /// <param name="level">The compression level for the codec.</param>
         /// <param name="bits">the number of window bits to use.  If you don't know what this means, don't use this method.</param>
         /// <param name="wantRfc1950Header">whether to emit an initial RFC1950 byte pair in the compressed stream.</param>
@@ -474,10 +423,7 @@ namespace Zlib
 */
 
         /// <summary>Initialize the inflation state.</summary>
-        /// <remarks>
-        ///   It is not necessary to call this before using the ZlibCodec to inflate data; It is implicitly called when
-        ///   you call the constructor.
-        /// </remarks>
+        /// <remarks>It is not necessary to call this before using the ZlibCodec to inflate data; It is implicitly called when you call the constructor.</remarks>
         /// <returns>Z_OK if everything goes well.</returns>
         internal int InitializeInflate()
         {
@@ -485,13 +431,8 @@ namespace Zlib
         }
 
         /// <summary>Initialize the inflation state with an explicit flag to govern the handling of RFC1950 header bytes.</summary>
-        /// <remarks>
-        ///   By default, the ZLIB header defined in <see href = "http://www.ietf.org/rfc/rfc1950.txt">RFC 1950</see> is expected.  If
-        ///   you want to read a zlib stream you should specify true for
-        ///   expectRfc1950Header.  If you have a deflate stream, you will want to specify
-        ///   false. It is only necessary to invoke this initializer explicitly if you want to specify false.
-        /// </remarks>
-        /// <param name="expectRfc1950Header">  whether to expect an RFC1950 header byte pair when reading the stream of data to be inflated.</param>
+        /// <remarks>By default, the ZLIB header defined in <see href = "http://www.ietf.org/rfc/rfc1950.txt">RFC 1950</see> is expected.  If you want to read a zlib stream you should specify true for expectRfc1950Header.  If you have a deflate stream, you will want to specify false. It is only necessary to invoke this initializer explicitly if you want to specify false.</remarks>
+        /// <param name="expectRfc1950Header">whether to expect an RFC1950 header byte pair when reading the stream of data to be inflated.</param>
         /// <returns>Z_OK if everything goes well.</returns>
         internal int InitializeInflate(bool expectRfc1950Header)
         {
@@ -499,10 +440,7 @@ namespace Zlib
         }
 
         /// <summary>Initialize the ZlibCodec for inflation, with the specified number of window bits.</summary>
-        /// <param name="windowBits">
-        ///   The number of window bits to use. If you need to ask what that is, then you shouldn't be calling this
-        ///   initializer.
-        /// </param>
+        /// <param name="windowBits">The number of window bits to use. If you need to ask what that is, then you shouldn't be calling this initializer.</param>
         /// <returns>Z_OK if all goes well.</returns>
         internal int InitializeInflate(int windowBits)
         {
@@ -511,18 +449,9 @@ namespace Zlib
         }
 
         /// <summary>Initialize the inflation state with an explicit flag to govern the handling of RFC1950 header bytes.</summary>
-        /// <remarks>
-        ///   If you want to read a zlib stream you should specify true for expectRfc1950Header. In this case, the
-        ///   library will expect to find a ZLIB header, as defined in <see href =
-        ///   "http://www.ietf.org/rfc/rfc1950.txt">RFC
-        ///                           1950</see>, in the compressed stream.  If you will be reading a DEFLATE or
-        ///   GZIP stream, which does not have such a header, you will want to specify false.
-        /// </remarks>
-        /// <param name="windowBits">
-        ///   The number of window bits to use. If you need to ask what that is, then you shouldn't be calling this
-        ///   initializer.
-        /// </param>
-        /// <param name="expectRfc1950Header">  whether to expect an RFC1950 header byte pair when reading the stream of data to be inflated.</param>
+        /// <remarks>If you want to read a zlib stream you should specify true for expectRfc1950Header. In this case, the library will expect to find a ZLIB header, as defined in <see href = "http://www.ietf.org/rfc/rfc1950.txt">RFC 1950</see>, in the compressed stream.  If you will be reading a DEFLATE or GZIP stream, which does not have such a header, you will want to specify false.</remarks>
+        /// <param name="windowBits">The number of window bits to use. If you need to ask what that is, then you shouldn't be calling this initializer.</param>
+        /// <param name="expectRfc1950Header">whether to expect an RFC1950 header byte pair when reading the stream of data to be inflated.</param>
         /// <returns>Z_OK if everything goes well.</returns>
         internal int InitializeInflate(int windowBits, bool expectRfc1950Header)
         {
@@ -538,9 +467,7 @@ namespace Zlib
 
         /*
         /// <summary>Reset a codec for another deflation session.</summary>
-        /// <remarks>Call this to reset the deflation state.  For example if a thread is deflating
-        /// non-consecutive blocks, you can call Reset() after the Deflate(Sync) of the first block and before the next
-        /// Deflate(None) of the second block.</remarks>
+        /// <remarks>Call this to reset the deflation state.  For example if a thread is deflatingnon-consecutive blocks, you can call Reset() after the Deflate(Sync) of the first block and before the nextDeflate(None) of the second block.</remarks>
         public void ResetDeflate()
         {
             if (this.Dstate == null)
@@ -593,14 +520,7 @@ namespace Zlib
         // this function so some applications may wish to modify it to avoid allocating a large strm->next_in buffer and
         // copying from it. (See also flush_pending()).
 
-        /// <param name="buf">
-        /// </param>
-        /// <param name="start">
-        /// </param>
-        /// <param name="size">
-        /// </param>
-        /// <returns>
-        /// </returns>
+        /// <param name="buf"></param><param name="start"></param> <param name="size"></param><returns></returns>
         internal int ReadBuf(byte[] buf, int start, int size)
         {
             var len = this.AvailableBytesIn;
@@ -630,10 +550,7 @@ namespace Zlib
 
         /// <param name="wantRfc1950Header">
         /// </param>
-        /// <returns>
-        /// </returns>
-        /// <exception cref = "ZlibException">
-        /// </exception>
+        /// <returns></returns> <exception cref = "ZlibException"></exception>
         private int InternalInitializeDeflate(bool wantRfc1950Header)
         {
             if (this.Istate != null)
@@ -649,10 +566,7 @@ namespace Zlib
         #endregion
 
         /*
-        /// <summary>
-        /// The Adler32 checksum on the data transferred through the codec so far. You probably don't need to look at
-        /// this.
-        /// </summary>
+        /// <summary>The Adler32 checksum on the data transferred through the codec so far. You probably don't need to look at this.</summary>
         public int Adler32
         {
             get

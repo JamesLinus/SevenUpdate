@@ -31,17 +31,17 @@ namespace SevenUpdate
         /// <summary>Download and Installs updates automatically.</summary>
         [ProtoEnum]
         [EnumMember]
-        Install = 0,
+        Install = 0, 
 
         /// <summary>Downloads Updates automatically.</summary>
         [ProtoEnum]
         [EnumMember]
-        Download = 1,
+        Download = 1, 
 
         /// <summary>Only checks and notifies the user of updates.</summary>
         [ProtoEnum]
         [EnumMember]
-        Notify = 2,
+        Notify = 2, 
 
         /// <summary>No automatic checking.</summary>
         [ProtoEnum]

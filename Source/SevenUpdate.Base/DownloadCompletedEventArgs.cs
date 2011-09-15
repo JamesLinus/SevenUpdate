@@ -29,21 +29,21 @@ namespace SevenUpdate
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <c>DownloadCompletedEventArgs</c> class.</summary>
-        /// <param name="errorOccurred"><c>True</c> if an error occurred, otherwise <c>False</c>.</param>
+        /// <summary>Initializes a new instance of the <see cref = "DownloadCompletedEventArgs" /> class.</summary>
+        /// <param name = "errorOccurred"><c>True</c> if an error occurred, otherwise <c>False</c>.</param>
         public DownloadCompletedEventArgs(bool errorOccurred)
         {
             this.ErrorOccurred = errorOccurred;
         }
 
-        /// <summary>Initializes a new instance of the DownloadCompletedEventArgs class.</summary>
+        /// <summary>Initializes a new instance of the <see cref = "DownloadCompletedEventArgs" /> class.</summary>
         public DownloadCompletedEventArgs()
         {
         }
 
         #endregion
 
-        #region Properties
+        #region Public Properties
 
         /// <summary>Gets a value indicating whether an error occurred.</summary>
         /// <value><c>True</c> if an error occurred otherwise, <c>False</c>.</value>

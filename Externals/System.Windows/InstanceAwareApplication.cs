@@ -9,24 +9,17 @@
 
 namespace System.Windows
 {
+    using System.Diagnostics;
+    using System.Linq;
+    using System.Reflection;
+    using System.Runtime.InteropServices;
+    using System.Security;
+    using System.Security.AccessControl;
+    using System.Security.Permissions;
+    using System.Security.Principal;
+    using System.ServiceModel;
     using System.Threading;
-
-    using Diagnostics;
-
-    using Linq;
-
-    using Reflection;
-
-    using Runtime.InteropServices;
-
-    using Security;
-    using Security.AccessControl;
-    using Security.Permissions;
-    using Security.Principal;
-
-    using ServiceModel;
-
-    using Threading;
+    using System.Windows.Threading;
 
     /// <summary>
     ///   Class used to define a WPF application which is aware of subsequent application instances running, either
@@ -87,17 +80,16 @@ namespace System.Windows
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the InstanceAwareApplication class.</summary>
-        /// <exception cref="System.InvalidOperationException">More than one instance of the
-        /// <c>System.Windows.Application</c> class is created per <c>System.AppDomain</c>.</exception>
-        public InstanceAwareApplication() : this(ApplicationInstanceAwareness.Host)
+        /// <summary>Initializes a new instance of the <see cref = "InstanceAwareApplication" /> class.</summary>
+        /// <exception cref = "System.InvalidOperationException">More than one instance of the <c>System.Windows.Application</c> class is created per <c>System.AppDomain</c>.</exception>
+        public InstanceAwareApplication()
+            : this(ApplicationInstanceAwareness.Host)
         {
         }
 
-        /// <summary>Initializes a new instance of the InstanceAwareApplication class.</summary>
-        /// <param name="awareness">The instance awareness of the application.</param>
-        /// <exception cref="System.InvalidOperationException">More than one instance of the
-        /// <c>System.Windows.Application</c> class is created per <c>System.AppDomain</c>.</exception>
+        /// <summary>Initializes a new instance of the <see cref = "InstanceAwareApplication" /> class.</summary>
+        /// <param name = "awareness">The instance awareness of the application.</param>
+        /// <exception cref = "System.InvalidOperationException">More than one instance of the <c>System.Windows.Application</c> class is created per <c>System.AppDomain</c>.</exception>
         public InstanceAwareApplication(ApplicationInstanceAwareness awareness)
         {
             this.awareness = awareness;
@@ -111,7 +103,7 @@ namespace System.Windows
 
         #endregion
 
-        #region Events
+        #region Public Events
 
         /// <summary>
         ///   Occurs when the <c>System.Windows.Application.Run()</c> or <c>System.Windows.Application.Run(Window)</c>
@@ -121,7 +113,7 @@ namespace System.Windows
 
         #endregion
 
-        #region Properties
+        #region Public Properties
 
         /// <summary>Gets a value indicating whether the current application instance is the first one.</summary>
         /// <value><c>True</c> if the current application instance is the first one, otherwise <c>false</c>.</value>
@@ -130,9 +122,7 @@ namespace System.Windows
 
         #endregion
 
-        #region Implemented Interfaces
-
-        #region IDisposable
+        #region Explicit Interface Methods
 
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
         void IDisposable.Dispose()
@@ -141,12 +131,8 @@ namespace System.Windows
             GC.SuppressFinalize(this);
         }
 
-        #endregion
-
-        #region IPriorApplicationInstance
-
         /// <summary>Signals the startup of the next application instance.</summary>
-        /// <param name="args">The parameters used to run the next instance of the application.</param>
+        /// <param name = "args">The parameters used to run the next instance of the application.</param>
         void IPriorApplicationInstance.SignalStartupNextInstance(string[] args)
         {
             this.signaledToFirstInstanceSemaphore.Set();
@@ -160,12 +146,10 @@ namespace System.Windows
 
         #endregion
 
-        #endregion
-
         #region Methods
 
         /// <summary>Raises the <c>System.Windows.Application.Exit</c> event.</summary>
-        /// <param name="e">An <c>System.Windows.ExitEventArgs</c> that contains the event data.</param>
+        /// <param name = "e">An <c>System.Windows.ExitEventArgs</c> that contains the event data.</param>
         protected override void OnExit(ExitEventArgs e)
         {
             // On exit, try to dispose everything related to the synchronization context and the inter-process
@@ -175,7 +159,7 @@ namespace System.Windows
         }
 
         /// <summary>Raises the <c>System.Windows.Application.Startup</c> event.</summary>
-        /// <param name="e">A <c>System.Windows.StartupEventArgs</c> that contains the event data.</param>
+        /// <param name = "e">A <c>System.Windows.StartupEventArgs</c> that contains the event data.</param>
         protected override sealed void OnStartup(StartupEventArgs e)
         {
             this.IsFirstInstance = this.InitializeInstance(e);
@@ -183,15 +167,15 @@ namespace System.Windows
         }
 
         /// <summary>Raises the <c>System.Windows.Application.Startup</c> event.</summary>
-        /// <param name="e">The <c>System.Windows.StartupEventArgs</c> instance containing the event data.</param>
-        /// <param name="isFirstInstance">If set to <c>true</c> the current instance is the first application instance.</param>
+        /// <param name = "e">The <c>System.Windows.StartupEventArgs</c> instance containing the event data.</param>
+        /// <param name = "isFirstInstance">If set to <c>true</c> the current instance is the first application instance.</param>
         protected virtual void OnStartup(StartupEventArgs e, bool isFirstInstance)
         {
             base.OnStartup(e);
         }
 
         /// <summary>Raises the <c>InstanceAwareApplication.StartupNextInstance</c> event.</summary>
-        /// <param name="e">The <c>StartupNextInstanceEventArgs</c> instance containing the event data.</param>
+        /// <param name = "e">The <c>StartupNextInstanceEventArgs</c> instance containing the event data.</param>
         protected virtual void OnStartupNextInstance(StartupNextInstanceEventArgs e)
         {
             var startupNextInstanceEvent = this.StartupNextInstance;
@@ -218,9 +202,9 @@ namespace System.Windows
         }
 
         /// <summary>Extracts some parameters from the specified <c>ApplicationInstanceAwareness</c> value.</summary>
-        /// <param name="awareness">The <c>ApplicationInstanceAwareness</c> value to extract parameters from.</param>
-        /// <param name="prefix">The synchronization object prefix.</param>
-        /// <param name="identity">The identity used to handle the synchronization object.</param>
+        /// <param name = "awareness">The <c>ApplicationInstanceAwareness</c> value to extract parameters from.</param>
+        /// <param name = "prefix">The synchronization object prefix.</param>
+        /// <param name = "identity">The identity used to handle the synchronization object.</param>
         private static void ExtractParameters(
             ApplicationInstanceAwareness awareness, out string prefix, out IdentityReference identity)
         {
@@ -255,7 +239,7 @@ namespace System.Windows
         }
 
         /// <summary>Gets the <c>Uri</c> of the pipe used for inter-process communication.</summary>
-        /// <param name="applicationPath">The application unique path, used to define the <c>Uri</c> pipe.</param>
+        /// <param name = "applicationPath">The application unique path, used to define the <c>Uri</c> pipe.</param>
         /// <returns>The <c>Uri</c> of the pipe used for inter-process communication.</returns>
         private static Uri GetPipeUri(string applicationPath)
         {
@@ -263,7 +247,7 @@ namespace System.Windows
         }
 
         /// <summary>Releases unmanaged and - optionally - managed resources</summary>
-        /// <param name="disposing"><c>True</c> to release both managed and unmanaged resources, <c>false</c> to release only unmanaged resources.</param>
+        /// <param name = "disposing"><c>True</c> to release both managed and unmanaged resources, <c>false</c> to release only unmanaged resources.</param>
         private void Dispose(bool disposing)
         {
             // Try to dispose the synchronization objects, just in case the application did not exit...
@@ -287,11 +271,11 @@ namespace System.Windows
                 assembly.GetCustomAttributes(typeof(GuidAttribute), false).FirstOrDefault(obj => (obj is GuidAttribute))
                 as GuidAttribute;
 
-            return guidAttribute.Value;
+            return guidAttribute != null ? guidAttribute.Value : null;
         }
 
         /// <summary>Initializes the first application instance.</summary>
-        /// <param name="uri">The <c>Uri</c> used by the service that allows for inter-process communication.</param>
+        /// <param name = "uri">The <c>Uri</c> used by the service that allows for inter-process communication.</param>
         private void InitializeFirstInstance(Uri uri)
         {
             try
@@ -318,11 +302,11 @@ namespace System.Windows
         }
 
         /// <summary>Initializes the application instance.</summary>
-        /// <param name="e">The <c>System.Windows.StartupEventArgs</c> instance containing the event data.</param>
+        /// <param name = "e">The <c>System.Windows.StartupEventArgs</c> instance containing the event data.</param>
         /// <returns><c>True</c> if the current instance is the first application instance, otherwise <c>false</c>.</returns>
         private bool InitializeInstance(StartupEventArgs e)
         {
-            string id = this.GetApplicationId();
+            var id = this.GetApplicationId();
 
             string prefix;
             IdentityReference identity;
@@ -369,8 +353,8 @@ namespace System.Windows
         }
 
         /// <summary>Initializes the next application instance.</summary>
-        /// <param name="uri">The <c>Uri</c> used by the service that allows for inter-process communication.</param>
-        /// <param name="args">The arguments passed to the current instance.</param>
+        /// <param name = "uri">The <c>Uri</c> used by the service that allows for inter-process communication.</param>
+        /// <param name = "args">The arguments passed to the current instance.</param>
         /// <returns><c>True</c> if the prior instance was notified about curernt instance startup, otherwise <c>false</c>.</returns>
         private bool InitializeNextInstance(Uri uri, string[] args)
         {
@@ -382,16 +366,15 @@ namespace System.Windows
 
             try
             {
-                IPriorApplicationInstance instance =
-                    ChannelFactory<IPriorApplicationInstance>.CreateChannel(
-                        new NetNamedPipeBinding(), new EndpointAddress(uri));
+                var instance = ChannelFactory<IPriorApplicationInstance>.CreateChannel(
+                    new NetNamedPipeBinding(), new EndpointAddress(uri));
                 instance.SignalStartupNextInstance(args);
             }
             catch (Exception exc)
             {
                 Debug.WriteLine(
-                    "Exception while signaling first application instance (signal while first application shutdown?)" +
-                    Environment.NewLine + exc,
+                    "Exception while signaling first application instance (signal while first application shutdown?)"
+                    + Environment.NewLine + exc, 
                     this.GetType().ToString());
                 return false;
             }
@@ -403,14 +386,14 @@ namespace System.Windows
         }
 
         /// <summary>Initializes the synchronization objects needed to deal with multiple instances of the same application.</summary>
-        /// <param name="baseName">The base name of the synchronization objects.</param>
-        /// <param name="identity">The identity to be associated to the synchronization objects.</param>
+        /// <param name = "baseName">The base name of the synchronization objects.</param>
+        /// <param name = "identity">The identity to be associated to the synchronization objects.</param>
         private void InitializeSynchronizationObjects(string baseName, IdentityReference identity)
         {
-            string firstInstanceMutexName = baseName + "_FirstInstance";
-            string serviceInitializationMutexName = baseName + "_ServiceInitialization";
-            string serviceReadySemaphoreName = baseName + "_ServiceReady";
-            string signaledToFirstInstanceSemaphoreName = baseName + "_SignaledToFirstInstance";
+            var firstInstanceMutexName = baseName + "_FirstInstance";
+            var serviceInitializationMutexName = baseName + "_ServiceInitialization";
+            var serviceReadySemaphoreName = baseName + "_ServiceReady";
+            var signaledToFirstInstanceSemaphoreName = baseName + "_SignaledToFirstInstance";
 
             bool isNew;
             var eventRule = new EventWaitHandleAccessRule(
@@ -431,7 +414,7 @@ namespace System.Windows
         }
 
         /// <summary>Called on next application instance startup.</summary>
-        /// <param name="args">The parameters used to run the next instance of the application.</param>
+        /// <param name = "args">The parameters used to run the next instance of the application.</param>
         private void OnStartupNextApplicationInstance(string[] args)
         {
             var e = new StartupNextInstanceEventArgs(args);

@@ -21,8 +21,8 @@
     <StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,1,0,0">
       <RadioButton Content="{LocText SevenUpdate:Resources:AcceptTerms}" Name="rbtnAccept" Padding="4,0,0,7"
                    MinHeight="17" IsEnabled="False" />
-      <RadioButton Content="{LocText SevenUpdate:Resources:Decline}" Name="rbtnDecline" MinHeight="17" IsEnabled="False"
-                   x:FieldModifier="private" />
+      <RadioButton Content="{LocText SevenUpdate:Resources:Decline}" Name="rbtnDecline" MinHeight="17"
+                   IsEnabled="False" x:FieldModifier="private" />
     </StackPanel>
     <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Bottom" Grid.Column="1"
                 Grid.Row="2" Margin="0,0,11,10">

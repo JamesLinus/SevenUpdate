@@ -31,16 +31,16 @@ namespace SevenUpdate
         /// <summary>Indicates that the application is native 32 bit.</summary>
         [ProtoEnum]
         [EnumMember]
-        X86 = 0,
+        X86 = 0, 
 
         /// <summary>Indicates that the application can only run on 64 bit platforms.</summary>
         [ProtoEnum]
         [EnumMember]
-        X64 = 1,
+        X64 = 1, 
 
         /// <summary>Indicates that the application can run on 32bit or 64bit natively depending on the OS.</summary>
         [ProtoEnum]
         [EnumMember]
-        AnyCpu = 2,
+        AnyCpu = 2, 
     }
 }

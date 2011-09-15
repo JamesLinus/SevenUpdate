@@ -239,15 +239,7 @@ namespace Zlib
         #region Methods
 
         /// <param name="flush">
-        /// </param>
-        /// <returns>
-        /// </returns>
-        /// <exception cref = "ZlibException">
-        /// </exception>
-        /// <exception cref = "ZlibException">
-        /// </exception>
-        /// <exception cref = "ZlibException">
-        /// </exception>
+        /// </param><returns></returns> <exception cref = "ZlibException"></exception><exception cref = "ZlibException"></exception> <exception cref = "ZlibException"></exception>
         internal int Deflate(FlushType flush)
         {
             if (this.codec.OutputBuffer == null || (this.codec.InputBuffer == null && this.codec.AvailableBytesIn != 0) ||
@@ -435,38 +427,15 @@ namespace Zlib
         // perform lazy evaluation of matches and inserts new strings in the dictionary only for unmatched strings or
         // for short matches. It is used only for the fast compression options.
 
-        /// <param name="codec">
-        /// </param>
-        /// <param name="level">
-        /// </param>
-        /// <param name="bits">
-        /// </param>
-        /// <param name="compressionStrategy">
-        /// </param>
-        /// <returns>
-        /// </returns>
+        /// <param name="codec"></param><param name="level"></param> <param name="bits"></param><param name="compressionStrategy"></param><returns></returns>
         internal int Initialize(
             ZlibCodec codec, CompressionLevel level, int bits, CompressionStrategy compressionStrategy)
         {
             return this.Initialize(codec, level, bits, MemLevelDefault, compressionStrategy);
         }
 
-        /// <param name="codec">
-        /// </param>
-        /// <param name="level">
-        /// </param>
-        /// <param name="windowBits">
-        /// </param>
-        /// <param name="memLevel">
-        /// </param>
-        /// <param name="strategy">
-        /// </param>
-        /// <returns>
-        /// </returns>
-        /// <exception cref = "ZlibException">
-        /// </exception>
-        /// <exception cref = "ZlibException">
-        /// </exception>
+        /// <param name="codec"></param><param name="level"></param> <param name="windowBits"></param><param name="memLevel"></param><param name="strategy"></param>
+        /// <returns></returns> <exception cref = "ZlibException"></exception><exception cref = "ZlibException"></exception>
         internal int Initialize(
             ZlibCodec codec,
             CompressionLevel level,
@@ -524,9 +493,7 @@ namespace Zlib
         }
 
         /// <param name="tree">
-        /// </param>
-        /// <param name="k">
-        /// </param>
+        /// </param><param name="k"></param>
         internal void Pqdownheap(short[] tree, int k)
         {
             var v = this.Heap[k];
@@ -558,16 +525,7 @@ namespace Zlib
 
         // lm_init
 
-        /// <param name="tree">
-        /// </param>
-        /// <param name="n">
-        /// </param>
-        /// <param name="m">
-        /// </param>
-        /// <param name="depth">
-        /// </param>
-        /// <returns>
-        /// </returns>
+        /// <param name="tree"></param><param name="n"></param> <param name="m"></param><param name="depth"></param><returns></returns>
         private static bool IsSmaller(short[] tree, int n, int m, sbyte[] depth)
         {
             var tn2 = tree[n * 2];
@@ -650,12 +608,7 @@ namespace Zlib
 
         // Copy a stored block, storing first the length and its one's complement if requested.
 
-        /// <param name="buf">
-        /// </param>
-        /// <param name="len">
-        /// </param>
-        /// <param name="header">
-        /// </param>
+        /// <param name="buf"></param><param name="len"></param> <param name="header"></param>
         private void CopyBlock(int buf, int len, bool header)
         {
             this.BiWindup(); // align on byte boundary
@@ -679,9 +632,7 @@ namespace Zlib
         }
 
         /// <param name="flush">
-        /// </param>
-        /// <returns>
-        /// </returns>
+        /// </param><returns></returns>
         private BlockState DeflateFast(FlushType flush)
         {
             // short hash_head = 0; // head of the hash chain
@@ -807,9 +758,7 @@ namespace Zlib
         }
 
         /// <param name="flush">
-        /// </param>
-        /// <returns>
-        /// </returns>
+        /// </param><returns></returns>
         private BlockState DeflateNone(FlushType flush)
         {
             // Stored blocks are limited to 0xffff bytes, pending is limited to pending_buf_size, and each stored block
@@ -883,9 +832,7 @@ namespace Zlib
         // adopted only if there is no better match at the next window position.
 
         /// <param name="flush">
-        /// </param>
-        /// <returns>
-        /// </returns>
+        /// </param><returns></returns>
         private BlockState DeflateSlow(FlushType flush)
         {
             // short hash_head = 0;    // head of hash chain
@@ -1218,9 +1165,7 @@ namespace Zlib
         }
 
         /// <param name="curMatch">
-        /// </param>
-        /// <returns>
-        /// </returns>
+        /// </param><returns></returns>
         private int LongestMatch(int curMatch)
         {
             var chainLength = this.config.MaxChainLength; // max hash chain length
@@ -1309,12 +1254,7 @@ namespace Zlib
             return this.lookAhead;
         }
 
-        /// <param name="p">
-        /// </param>
-        /// <param name="start">
-        /// </param>
-        /// <param name="len">
-        /// </param>
+        /// <param name="p"></param><param name="start"></param> <param name="len"></param>
         private void PutBytes(byte[] p, int start, int len)
         {
             Array.Copy(p, start, this.Pending, this.PendingCount, len);
@@ -1342,9 +1282,7 @@ namespace Zlib
         }
 
         /// <param name="tree">
-        /// </param>
-        /// <param name="maxCode">
-        /// </param>
+        /// </param><param name="maxCode"></param>
         private void ScanTree(short[] tree, int maxCode)
         {
             int n; // iterates over all tree elements
@@ -1413,12 +1351,7 @@ namespace Zlib
             }
         }
 
-        /// <param name="lcodes">
-        /// </param>
-        /// <param name="dcodes">
-        /// </param>
-        /// <param name="blcodes">
-        /// </param>
+        /// <param name="lcodes"></param><param name="dcodes"></param> <param name="blcodes"></param>
         private void SendAllTrees(int lcodes, int dcodes, int blcodes)
         {
             int rank; // index in bl_order
@@ -1436,9 +1369,7 @@ namespace Zlib
         }
 
         /// <param name="value">
-        /// </param>
-        /// <param name="length">
-        /// </param>
+        /// </param><param name="length"></param>
         private void SendBits(int value, int length)
         {
             var len = length;
@@ -1466,9 +1397,7 @@ namespace Zlib
         }
 
         /// <param name="c">
-        /// </param>
-        /// <param name="tree">
-        /// </param>
+        /// </param><param name="tree"></param>
         private void SendCode(int c, short[] tree)
         {
             var c2 = c * 2;
@@ -1476,9 +1405,7 @@ namespace Zlib
         }
 
         /// <param name="ltree">
-        /// </param>
-        /// <param name="dtree">
-        /// </param>
+        /// </param><param name="dtree"></param>
         private void SendCompressedBlock(short[] ltree, short[] dtree)
         {
             var lx = 0; // running index in l_buf
@@ -1540,9 +1467,7 @@ namespace Zlib
         }
 
         /// <param name="tree">
-        /// </param>
-        /// <param name="maxCode">
-        /// </param>
+        /// </param><param name="maxCode"></param>
         private void SendTree(short[] tree, int maxCode)
         {
             int n; // iterates over all tree elements
@@ -1752,12 +1677,7 @@ namespace Zlib
             this.lastEobLen = 7;
         }
 
-        /// <param name="buf">
-        /// </param>
-        /// <param name="storedLen">
-        /// </param>
-        /// <param name="eof">
-        /// </param>
+        /// <param name="buf"></param><param name="storedLen"></param> <param name="eof"></param>
         private void TrFlushBlock(int buf, int storedLen, bool eof)
         {
             int optLenb, staticLenb; // opt_len and static_len in bytes
@@ -1827,24 +1747,14 @@ namespace Zlib
             }
         }
 
-        /// <param name="buf">
-        /// </param>
-        /// <param name="storedLen">
-        /// </param>
-        /// <param name="eof">
-        /// </param>
+        /// <param name="buf"></param><param name="storedLen"></param> <param name="eof"></param>
         private void TrStoredBlock(int buf, int storedLen, bool eof)
         {
             this.SendBits((StoredBlock << 1) + (eof ? 1 : 0), 3); // send block type
             this.CopyBlock(buf, storedLen, true); // with header
         }
 
-        /// <param name="dist">
-        /// </param>
-        /// <param name="lc">
-        /// </param>
-        /// <returns>
-        /// </returns>
+        /// <param name="dist"></param><param name="lc"></param> <returns></returns>
         private bool TrTally(int dist, int lc)
         {
             this.Pending[this.distanceOffset + this.lastLit * 2] = unchecked((byte)((uint)dist >> 8));

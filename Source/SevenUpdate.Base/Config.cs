@@ -40,14 +40,14 @@ namespace SevenUpdate
 
         #endregion
 
-        #region Events
+        #region Public Events
 
         /// <summary>Occurs when a property value changes.</summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
 
-        #region Properties
+        #region Public Properties
 
         /// <summary>Gets or sets which automatic update option Seven Update should use.</summary>
         /// <value>The automatic update option.</value>
@@ -97,7 +97,7 @@ namespace SevenUpdate
         #region Methods
 
         /// <summary>When a property has changed, call the <c>OnPropertyChanged</c> Event.</summary>
-        /// <param name="name">The name of the property that changed.</param>
+        /// <param name = "name">The name of the property that changed.</param>
         private void OnPropertyChanged(string name)
         {
             var handler = this.PropertyChanged;

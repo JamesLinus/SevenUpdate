@@ -46,7 +46,7 @@ namespace SharpBits.Base
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the BitsManager class.</summary>
+        /// <summary>Initializes a new instance of the <see cref = "BitsManager" /> class.</summary>
         public BitsManager()
         {
             // Set threading apartment
@@ -67,7 +67,7 @@ namespace SharpBits.Base
 
         #endregion
 
-        #region Events
+        #region Public Events
 
         /// <summary>Occurs when an interface error occurs.</summary>
         public event EventHandler<BitsInterfaceNotificationEventArgs> OnInterfaceError
@@ -155,11 +155,15 @@ namespace SharpBits.Base
 
         #endregion
 
-        #region Properties
+        #region Public Properties
 
         /// <summary>Gets the collection of <c>BitsJob</c>.</summary>
         /// <value>The collection of <c>BitsJob</c>.</value>
         public BitsJobsDictionary Jobs { get; private set; }
+
+        #endregion
+
+        #region Properties
 
         /// <summary>Gets or sets current owner of the job.</summary>
         /// <value>The current owner.</value>
@@ -178,15 +182,10 @@ namespace SharpBits.Base
         #region Public Methods
 
         /// <summary>Creates a new transfer job.</summary>
-        /// <param name="displayName">
-        ///   Null-terminated string that contains a display name for the job. Typically, the display name is used to
-        ///   identify the job in a user interface. Note that more than one job may have the same display name. Must not
-        ///   be <c>null</c>.The name is limited to 256 characters, not including the <c>null</c> terminator.
-        /// </param>
-        /// <param name="jobType">
-        ///   Type of transfer job, such as <c>JobType</c>.Download. For a list of transfer types, see the <see
-        ///    cref="JobType" /> enumeration.
-        /// </param>
+        /// <param name = "displayName">Null-terminated string that contains a display name for the job. Typically, the display name is used to identify the job in a user interface. Note that more than one job may have the same display name. Must not be <c>null</c>.The name is limited to 256 characters, not including the <c>null</c> terminator.</param>
+        /// <param name = "jobType">Type of transfer job, such as <c>JobType</c>.Download. For a list of transfer types,
+        /// see the <see
+        ///    cref = "JobType" /> enumeration.</param>
         /// <returns>The <c>BitsJob</c> created.</returns>
         public BitsJob CreateJob(string displayName, JobType jobType)
         {
@@ -208,8 +207,15 @@ namespace SharpBits.Base
             return job;
         }
 
+        /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
+        public void Dispose()
+        {
+            this.Dispose(this.disposed);
+            GC.SuppressFinalize(this);
+        }
+
         /// <summary>Enumerates the collection of <c>BitsJob</c>, it also completes any job that has finished.</summary>
-        /// <param name="jobOwner">  The job owner.</param>
+        /// <param name = "jobOwner">The job owner.</param>
         public void EnumJobs(JobOwner jobOwner = JobOwner.CurrentUser)
         {
             if (this.BackgroundCopyManager == null)
@@ -232,25 +238,10 @@ namespace SharpBits.Base
 
         #endregion
 
-        #region Implemented Interfaces
-
-        #region IDisposable
-
-        /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
-        public void Dispose()
-        {
-            this.Dispose(this.disposed);
-            GC.SuppressFinalize(this);
-        }
-
-        #endregion
-
-        #endregion
-
         #region Methods
 
         /// <summary>Notifies the on job removal.</summary>
-        /// <param name="job">  The job to remove.</param>
+        /// <param name = "job">The job to remove.</param>
         internal void NotifyOnJobRemoval(BitsJob job)
         {
             if (null != this.jobRemoved)
@@ -260,8 +251,8 @@ namespace SharpBits.Base
         }
 
         /// <summary>Publishes the exception.</summary>
-        /// <param name="job">  The job the exception occurred.</param>
-        /// <param name="exception">  The exception.</param>
+        /// <param name = "job">The job the exception occurred.</param>
+        /// <param name = "exception">The exception.</param>
         internal void PublishException(BitsJob job, COMException exception)
         {
             if (this.interfaceError == null)
@@ -274,10 +265,7 @@ namespace SharpBits.Base
         }
 
         /// <summary>Releases unmanaged and - optionally - managed resources.</summary>
-        /// <param name="disposing">
-        ///   <c>True</c> to release both managed and unmanaged resources; otherwise, <c>False</c> to release only
-        ///   unmanaged resources.
-        /// </param>
+        /// <param name = "disposing"><c>True</c> to release both managed and unmanaged resources; otherwise, <c>False</c> to release only unmanaged resources.</param>
         private void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -300,7 +288,7 @@ namespace SharpBits.Base
         }
 
         /// <summary>Gets the error description.</summary>
-        /// <param name="result">  The h result.</param>
+        /// <param name = "result">The h result.</param>
         /// <returns>The error description.</returns>
         private string GetErrorDescription(int result)
         {
@@ -311,8 +299,8 @@ namespace SharpBits.Base
         }
 
         /// <summary>Notifications the handler on job error event.</summary>
-        /// <param name="sender">  The object that called the event.</param>
-        /// <param name="e">  The <c>SharpBits.Base.ErrorNotificationEventArgs</c> instance containing the event data.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <c>SharpBits.Base.ErrorNotificationEventArgs</c> instance containing the event data.</param>
         private void NotificationHandlerOnJobErrorEvent(object sender, ErrorNotificationEventArgs e)
         {
             // route the event to the job
@@ -330,8 +318,8 @@ namespace SharpBits.Base
         }
 
         /// <summary>Notifications the handler on job modified event.</summary>
-        /// <param name="sender">  The object that called the event.</param>
-        /// <param name="e">  The <c>NotificationEventArgs</c> instance containing the event data.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <c>NotificationEventArgs</c> instance containing the event data.</param>
         private void NotificationHandlerOnJobModifiedEvent(object sender, NotificationEventArgs e)
         {
             // route the event to the job
@@ -349,8 +337,8 @@ namespace SharpBits.Base
         }
 
         /// <summary>Notifications the handler on job transferred event.</summary>
-        /// <param name="sender">  The object that called the event.</param>
-        /// <param name="e">  The <c>NotificationEventArgs</c> instance containing the event data.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <c>NotificationEventArgs</c> instance containing the event data.</param>
         private void NotificationHandlerOnJobTransferredEvent(object sender, NotificationEventArgs e)
         {
             // route the event to the job

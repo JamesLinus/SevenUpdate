@@ -16,15 +16,15 @@ namespace SharpBits.Base
     internal enum BGJobProxyUsage
     {
         /// <summary>Use the proxy and proxy bypass list settings defined by each user to transfer files.</summary>
-        PreConfig = 0,
+        PreConfig = 0, 
 
         /// <summary>Do not use a proxy to transfer files.</summary>
-        NoProxy = 1,
+        NoProxy = 1, 
 
         /// <summary>Use the application's proxy and proxy bypass list to transfer files.</summary>
-        Override = 2,
+        Override = 2, 
 
         /// <summary>Automatically detect proxy settings. BITS detects proxy settings for each file in the job.</summary>
-        AutoDetect = 3,
+        AutoDetect = 3, 
     }
 }

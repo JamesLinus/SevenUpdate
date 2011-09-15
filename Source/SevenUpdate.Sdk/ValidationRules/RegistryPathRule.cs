@@ -21,7 +21,7 @@ namespace SevenUpdate.Sdk.ValidationRules
     using System.Text.RegularExpressions;
     using System.Windows.Controls;
 
-    using Properties;
+    using SevenUpdate.Sdk.Properties;
 
     /// <summary>Validates a value and determines if the value is a registry path.</summary>
     public class RegistryPathRule : ValidationRule
@@ -37,8 +37,8 @@ namespace SevenUpdate.Sdk.ValidationRules
         #region Public Methods
 
         /// <summary>When overridden in a derived class, performs validation checks on a value.</summary>
-        /// <param name="value">  The value from the binding target to check.</param>
-        /// <param name="cultureInfo">  The culture to use in this rule.</param>
+        /// <param name = "value">The value from the binding target to check.</param>
+        /// <param name = "cultureInfo">The culture to use in this rule.</param>
         /// <returns>A <c>T:System.Windows.Controls.ValidationResult</c> object.</returns>
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {

@@ -45,11 +45,7 @@ namespace Tar
         private byte[] modifiedTime;
 
         /// <summary>checksum for header (use all blanks for chksum itself, when calculating)</summary>
-        /// <remarks>
-        ///   The checksum is calculated by taking the sum of the unsigned byte values of the header block with the
-        ///   eight checksum bytes taken to be ascii spaces (decimal value 32). It is stored as a six digit octal number
-        ///   with leading zeroes followed by a null and then a space.
-        /// </remarks>
+        /// <remarks>The checksum is calculated by taking the sum of the unsigned byte values of the header block with the eight checksum bytes taken to be ascii spaces (decimal value 32). It is stored as a six digit octal number with leading zeroes followed by a null and then a space.</remarks>
         [MarshalAs(UnmanagedType.ByValArray, SizeConst = 8)]
         private byte[] checkSum;
 
@@ -125,16 +121,8 @@ namespace Tar
             return stored == calculated;
         }
 
-        /// <summary>
-        ///   The tar spec says that the Checksum must be stored as a six digit octal number with leading zeroes
-        ///   followed by a null and then a space.
-        /// </summary>
-        /// <remarks>
-        ///   Various implementations do not adhere to this, so reader programs should be flexible. A more compatible
-        ///   approach may be to use the first white-space-trimmed six digits for checksum. In addition, some older tar
-        ///   implementations treated bytes as signed. Readers must calculate the checksum both ways, and treat it as
-        ///   good if either the signed or unsigned sum matches the included checksum.
-        /// </remarks>
+        /// <summary>The tar spec says that the Checksum must be stored as a six digit octal number with leading zeroes followed by a null and then a space.</summary>
+        /// <remarks>Various implementations do not adhere to this, so reader programs should be flexible. A more compatible approach may be to use the first white-space-trimmed six digits for checksum. In addition, some older tar implementations treated bytes as signed. Readers must calculate the checksum both ways, and treat it as good if either the signed or unsigned sum matches the included checksum.</remarks>
         public int GetChksum()
         {
             // special case

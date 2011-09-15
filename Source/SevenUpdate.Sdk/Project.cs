@@ -40,14 +40,14 @@ namespace SevenUpdate.Sdk
 
         #endregion
 
-        #region Events
+        #region Public Events
 
         /// <summary>Occurs when a property has changed.</summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
 
-        #region Properties
+        #region Public Properties
 
         /// <summary>Gets or sets the localized application name.</summary>
         /// <value>The name of the application.</value>
@@ -94,7 +94,7 @@ namespace SevenUpdate.Sdk
         #region Methods
 
         /// <summary>When a property has changed, call the <c>OnPropertyChanged</c> Event.</summary>
-        /// <param name="name">  The name of the property changed.</param>
+        /// <param name = "name">The name of the property changed.</param>
         private void OnPropertyChanged(string name)
         {
             var handler = this.PropertyChanged;

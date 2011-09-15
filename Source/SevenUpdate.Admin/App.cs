@@ -31,7 +31,7 @@ namespace SevenUpdate.Admin
 
     using Microsoft.Win32;
 
-    using Properties;
+    using SevenUpdate.Admin.Properties;
 
     using Application = System.Windows.Application;
     using Timer = System.Timers.Timer;
@@ -80,16 +80,16 @@ namespace SevenUpdate.Admin
         private enum NotifyType
         {
             /// <summary>Indicates searching is completed.</summary>
-            SearchComplete,
+            SearchComplete, 
 
             /// <summary>Indicates the downloading of updates has started.</summary>
-            DownloadStarted,
+            DownloadStarted, 
 
             /// <summary>Indicates download has completed.</summary>
-            DownloadComplete,
+            DownloadComplete, 
 
             /// <summary>Indicates that the installation of updates has begun.</summary>
-            InstallStarted,
+            InstallStarted, 
 
             /// <summary>Indicates that the installation of updates has completed.</summary>
             InstallCompleted
@@ -121,12 +121,8 @@ namespace SevenUpdate.Admin
         #region Methods
 
         /// <summary>Adds an update to the history.</summary>
-        /// <param name = "sender">
-        ///   The object that called the event.
-        /// </param>
-        /// <param name = "e">
-        ///   The event data.
-        /// </param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The event data.</param>
         private static void AddHistory(object sender, UpdateInstalledEventArgs e)
         {
             var history = File.Exists(HistoryFile)
@@ -137,29 +133,25 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Checks if Seven Update is running.</summary>
-        /// <param name = "sender">
-        ///   The object that called the event.
-        /// </param>
-        /// <param name = "e">
-        ///   The <see cref = "System.Timers.ElapsedEventArgs" /> instance containing the event data.
-        /// </param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <see cref = "System.Timers.ElapsedEventArgs" /> instance containing the event data.</param>
         private static void CheckIfRunning(object sender, ElapsedEventArgs e)
         {
             Task.Factory.StartNew(
                 () =>
-                {
-                    if (File.Exists(Path.Combine(AllUserStore, "abort.lock")))
                     {
-                        Download.CancelDownload();
-                        Install.CancelInstall();
-                        try
+                        if (File.Exists(Path.Combine(AllUserStore, "abort.lock")))
                         {
-                            File.Delete(Path.Combine(AllUserStore, "abort.lock"));
+                            Download.CancelDownload();
+                            Install.CancelInstall();
+                            try
+                            {
+                                File.Delete(Path.Combine(AllUserStore, "abort.lock"));
+                            }
+                            catch (IOException)
+                            {
+                            }
                         }
-                        catch (IOException)
-                        {
-                        }
-                    }
 
 #if (!DEBUG)
                     if (client == null)
@@ -169,29 +161,25 @@ namespace SevenUpdate.Admin
 
 #endif
 
-                    if (IsInstalling)
-                    {
-                        return;
-                    }
+                        if (IsInstalling)
+                        {
+                            return;
+                        }
 
-                    if (Process.GetProcessesByName("SevenUpdate").Length > 0 || waiting)
-                    {
-                        return;
-                    }
+                        if (Process.GetProcessesByName("SevenUpdate").Length > 0 || waiting)
+                        {
+                            return;
+                        }
 
 #if (!DEBUG)
                     ShutdownApp();
 #endif
-                });
+                    });
         }
 
         /// <summary>Reports that the download has completed and starts update installation if necessary.</summary>
-        /// <param name = "sender">
-        ///   The object that called the event.
-        /// </param>
-        /// <param name = "e">
-        ///   The <c>DownloadCompletedEventArgs</c> instance containing the event data.
-        /// </param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <c>DownloadCompletedEventArgs</c> instance containing the event data.</param>
         private static void DownloadCompleted(object sender, DownloadCompletedEventArgs e)
         {
             if ((Settings.AutoOption == AutoUpdateOption.Install && isAutoInstall) || !isAutoInstall)
@@ -215,12 +203,8 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Reports that the download progress has changed.</summary>
-        /// <param name = "sender">
-        ///   The object that called the event.
-        /// </param>
-        /// <param name = "e">
-        ///   The <c>DownloadProgressChangedEventArgs</c> instance containing the event data.
-        /// </param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <c>DownloadProgressChangedEventArgs</c> instance containing the event data.</param>
         private static void DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
             IsInstalling = true;
@@ -230,17 +214,13 @@ namespace SevenUpdate.Admin
             }
 
             Application.Current.Dispatcher.BeginInvoke(
-                UpdateNotifyIcon,
+                UpdateNotifyIcon, 
                 string.Format(CultureInfo.CurrentCulture, Resources.DownloadProgress, e.FilesTransferred, e.FilesTotal));
         }
 
         /// <summary>Runs when there is an error searching for updates.</summary>
-        /// <param name = "sender">
-        ///   The object that called the event.
-        /// </param>
-        /// <param name = "e">
-        ///   The <c>ErrorOccurredEventArgs</c> instance containing the event data.
-        /// </param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <c>ErrorOccurredEventArgs</c> instance containing the event data.</param>
         private static void ErrorOccurred(object sender, ErrorOccurredEventArgs e)
         {
             if (e.ErrorType == ErrorType.FatalNetworkError)
@@ -250,12 +230,8 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Reports the installation has completed.</summary>
-        /// <param name = "sender">
-        ///   The object that called the event.
-        /// </param>
-        /// <param name = "e">
-        ///   The <c>InstallCompletedEventArgs</c> instance containing the event data.
-        /// </param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <c>InstallCompletedEventArgs</c> instance containing the event data.</param>
         private static void InstallCompleted(object sender, InstallCompletedEventArgs e)
         {
             IsInstalling = false;
@@ -271,12 +247,8 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Reports when the installation progress has changed.</summary>
-        /// <param name = "sender">
-        ///   The object that called the event.
-        /// </param>
-        /// <param name = "e">
-        ///   The <c>InstallProgressChangedEventArgs</c> instance containing the event data.
-        /// </param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <c>InstallProgressChangedEventArgs</c> instance containing the event data.</param>
         private static void InstallProgressChanged(object sender, InstallProgressChangedEventArgs e)
         {
             if (isClientConnected)
@@ -285,14 +257,12 @@ namespace SevenUpdate.Admin
             }
 
             Application.Current.Dispatcher.BeginInvoke(
-                UpdateNotifyIcon,
+                UpdateNotifyIcon, 
                 string.Format(CultureInfo.CurrentCulture, Resources.InstallProgress, e.CurrentProgress));
         }
 
         /// <summary>The main execution method.</summary>
-        /// <param name = "args">
-        ///   The command line arguments.
-        /// </param>
+        /// <param name = "args">The command line arguments.</param>
         [STAThread]
         private static void Main(string[] args)
         {
@@ -357,12 +327,8 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Prevents the system from shutting down until the installation is safely stopped.</summary>
-        /// <param name = "sender">
-        ///   The object that called the event.
-        /// </param>
-        /// <param name = "e">
-        ///   The <see cref = "Microsoft.Win32.SessionEndingEventArgs" /> instance containing the event data.
-        /// </param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <see cref = "Microsoft.Win32.SessionEndingEventArgs" /> instance containing the event data.</param>
         private static void PreventClose(object sender, SessionEndingEventArgs e)
         {
             if (notifyIcon != null)
@@ -381,9 +347,7 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Processes the command line arguments.</summary>
-        /// <param name = "args">
-        ///   The arguments to process.
-        /// </param>
+        /// <param name = "args">The arguments to process.</param>
         private static void ProcessArgs(IList<string> args)
         {
             if (args.Count <= 0)
@@ -403,11 +367,11 @@ namespace SevenUpdate.Admin
                     catch (Exception e)
                     {
                         if (
-                            !(e is OperationCanceledException || e is UnauthorizedAccessException ||
-                              e is InvalidOperationException || e is NotSupportedException))
+                            !(e is OperationCanceledException || e is UnauthorizedAccessException
+                              || e is InvalidOperationException || e is NotSupportedException))
                         {
                             ErrorOccurred(
-                                null,
+                                null, 
                                 new ErrorOccurredEventArgs(Utilities.GetExceptionAsString(e), ErrorType.FatalError));
                             throw;
                         }
@@ -429,11 +393,11 @@ namespace SevenUpdate.Admin
                         catch (Exception e)
                         {
                             if (
-                                !(e is OperationCanceledException || e is UnauthorizedAccessException ||
-                                  e is InvalidOperationException || e is NotSupportedException))
+                                !(e is OperationCanceledException || e is UnauthorizedAccessException
+                                  || e is InvalidOperationException || e is NotSupportedException))
                             {
                                 ErrorOccurred(
-                                    null,
+                                    null, 
                                     new ErrorOccurredEventArgs(Utilities.GetExceptionAsString(e), ErrorType.FatalError));
                                 throw;
                             }
@@ -465,19 +429,20 @@ namespace SevenUpdate.Admin
 
                     var app = new Sua(name, publisher)
                         {
-                            AppUrl = @"http://sevenupdate.com/",
-                            Directory = @"HKLM\Software\Microsoft\Windows\CurrentVersion\App Paths\SevenUpdate.exe",
-                            ValueName = "Path",
-                            HelpUrl = @"http://sevenupdate.com/support/",
-                            Platform = Platform.AnyCpu,
-                            IsEnabled = true,
+                            AppUrl = @"http://sevenupdate.com/", 
+                            Directory = @"HKLM\Software\Microsoft\Windows\CurrentVersion\App Paths\SevenUpdate.exe", 
+                            ValueName = "Path", 
+                            HelpUrl = @"http://sevenupdate.com/support/", 
+                            Platform = Platform.AnyCpu, 
+                            IsEnabled = true, 
                             SuiUrl = @"http://apps.sevenupdate.com/SevenUpdate"
                         };
 
                     string channel = null;
                     try
                     {
-                        channel = Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Seven Update", "channel", null).ToString();
+                        channel =
+                            Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Seven Update", "channel", null).ToString();
                     }
                     catch (NullReferenceException)
                     {
@@ -511,19 +476,15 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Starts Seven Update UI.</summary>
-        /// <param name = "sender">
-        ///   The object that called the event.
-        /// </param>
-        /// <param name = "e">
-        ///   The <see cref = "System.EventArgs" /> instance containing the event data.
-        /// </param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <see cref = "System.EventArgs" /> instance containing the event data.</param>
         private static void RunSevenUpdate(object sender, EventArgs e)
         {
             if (Environment.OSVersion.Version.Major < 6)
             {
-                if (notifyIcon.Text == Resources.UpdatesFoundViewThem ||
-                    notifyIcon.Text == Resources.UpdatesDownloadedViewThem ||
-                    notifyIcon.Text == Resources.CheckingForUpdates)
+                if (notifyIcon.Text == Resources.UpdatesFoundViewThem
+                    || notifyIcon.Text == Resources.UpdatesDownloadedViewThem
+                    || notifyIcon.Text == Resources.CheckingForUpdates)
                 {
                     Utilities.StartProcess(Path.Combine(Utilities.AppDir, "SevenUpdate.exe"), @"Auto");
                 }
@@ -537,21 +498,17 @@ namespace SevenUpdate.Admin
                 Utilities.StartProcess(@"schtasks.exe", "/Run /TN \"SevenUpdate\"");
             }
 
-            if (notifyIcon.Text == Resources.UpdatesFoundViewThem ||
-                notifyIcon.Text == Resources.UpdatesDownloadedViewThem ||
-                notifyIcon.Text == Resources.CheckingForUpdates)
+            if (notifyIcon.Text == Resources.UpdatesFoundViewThem
+                || notifyIcon.Text == Resources.UpdatesDownloadedViewThem
+                || notifyIcon.Text == Resources.CheckingForUpdates)
             {
                 ShutdownApp();
             }
         }
 
         /// <summary>Runs when the search for updates has completed for an auto update.</summary>
-        /// <param name = "sender">
-        ///   The object that called the event.
-        /// </param>
-        /// <param name = "e">
-        ///   The <c>SearchCompletedEventArgs</c> instance containing the event data.
-        /// </param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <c>SearchCompletedEventArgs</c> instance containing the event data.</param>
         private static void SearchCompleted(object sender, SearchCompletedEventArgs e)
         {
             IsInstalling = false;
@@ -563,8 +520,8 @@ namespace SevenUpdate.Admin
 
             if (Applications.Count > 0)
             {
-                if (Applications[0].AppInfo.SuiUrl == @"http://apps.sevenupdate.com/SevenUpdate.sui" ||
-                    Applications[0].AppInfo.SuiUrl == @"http://apps.sevenupdate.com/SevenUpdate-dev.sui")
+                if (Applications[0].AppInfo.SuiUrl == @"http://apps.sevenupdate.com/SevenUpdate.sui"
+                    || Applications[0].AppInfo.SuiUrl == @"http://apps.sevenupdate.com/SevenUpdate-dev.sui")
                 {
                     var sevenUpdate = Applications[0];
                     Applications.Clear();
@@ -640,7 +597,12 @@ namespace SevenUpdate.Admin
         /// <summary>Starts the WCF service.</summary>
         private static void StartWcfHost()
         {
-            var binding = new NetNamedPipeBinding { Name = "sevenupdatebinding", Security = { Mode = NetNamedPipeSecurityMode.Transport } };
+            var binding = new NetNamedPipeBinding
+                {
+                   Name = "sevenupdatebinding", Security = {
+                                                                Mode = NetNamedPipeSecurityMode.Transport 
+                                                            } 
+                };
             var address = new EndpointAddress(@"net.pipe://localhost/sevenupdate/");
 
             try
@@ -662,9 +624,7 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Updates the notify icon text.</summary>
-        /// <param name = "text">
-        ///   The string to set the <c>notifyIcon</c> text.
-        /// </param>
+        /// <param name = "text">The string to set the <c>notifyIcon</c> text.</param>
         private static void UpdateNotifyIcon(string text)
         {
             if (notifyIcon != null)
@@ -674,9 +634,7 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Updates the <c>notifyIcon</c> state.</summary>
-        /// <param name = "filter">
-        ///   The <c>NotifyType</c> to set the <c>notifyIcon</c> to.
-        /// </param>
+        /// <param name = "filter">The <c>NotifyType</c> to set the <c>notifyIcon</c> to.</param>
         private static void UpdateNotifyIcon(NotifyType filter)
         {
             if (notifyIcon == null)

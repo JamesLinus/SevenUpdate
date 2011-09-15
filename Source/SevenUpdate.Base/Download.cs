@@ -47,7 +47,7 @@ namespace SevenUpdate
 
         #endregion
 
-        #region Events
+        #region Public Events
 
         /// <summary>Occurs when the download completed.</summary>
         public static event EventHandler<DownloadCompletedEventArgs> DownloadCompleted;
@@ -57,7 +57,7 @@ namespace SevenUpdate
 
         #endregion
 
-        #region Properties
+        #region Public Properties
 
         /// <summary>Gets a value indicating whether Seven update is currently downloading updates.</summary>
         public static bool IsDownloading { get; private set; }
@@ -73,10 +73,10 @@ namespace SevenUpdate
         }
 
         /// <summary>Downloads the updates using BITS.</summary>
-        /// <param name="appUpdates">The application updates to download.</param>
-        /// <param name="downloadName">The name of the job.</param>
-        /// <param name="downloadLocation">The directory where the files are downloaded are stored.</param>
-        /// <param name="isPriority">If set to <c>True</c> the updates will download with priority.</param>
+        /// <param name = "appUpdates">The application updates to download.</param>
+        /// <param name = "downloadName">The name of the job.</param>
+        /// <param name = "downloadLocation">The directory where the files are downloaded are stored.</param>
+        /// <param name = "isPriority">If set to <c>True</c> the updates will download with priority.</param>
         public static void DownloadUpdates(
             Collection<Sui> appUpdates, string downloadName, string downloadLocation, bool isPriority = false)
         {
@@ -158,8 +158,8 @@ namespace SevenUpdate
             var bitsJob = manager.CreateJob(jobName, JobType.Download);
             bitsJob.Priority = isPriority ? JobPriority.Foreground : JobPriority.Normal;
 
-            bitsJob.NotificationOptions = NotificationOptions.JobErrorOccurred | NotificationOptions.JobModified |
-                                          NotificationOptions.JobTransferred;
+            bitsJob.NotificationOptions = NotificationOptions.JobErrorOccurred | NotificationOptions.JobModified
+                                          | NotificationOptions.JobTransferred;
             bitsJob.NoProgressTimeout = 60;
             bitsJob.MinimumRetryDelay = 60;
             foreach (var update in appUpdates)
@@ -188,8 +188,8 @@ namespace SevenUpdate
         #region Methods
 
         /// <summary>Downloads the application updates.</summary>
-        /// <param name="application">The Sui containing the update info.</param>
-        /// <param name="bitsJob">The bits job that will download the update.</param>
+        /// <param name = "application">The Sui containing the update info.</param>
+        /// <param name = "bitsJob">The bits job that will download the update.</param>
         private static void DownloadUpdates(Sui application, ref BitsJob bitsJob)
         {
             if (application == null)
@@ -214,8 +214,8 @@ namespace SevenUpdate
         }
 
         /// <summary>Reports when a download completes.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <c>SharpBits.Base.NotificationEventArgs</c> instance containing the event data.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <c>SharpBits.Base.NotificationEventArgs</c> instance containing the event data.</param>
         private static void ReportDownloadComplete(object sender, NotificationEventArgs e)
         {
             if (e.Job == null)
@@ -260,8 +260,8 @@ namespace SevenUpdate
         }
 
         /// <summary>Reports a download error.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <c>SharpBits.Base.ErrorNotificationEventArgs</c> instance containing the event data.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <c>SharpBits.Base.ErrorNotificationEventArgs</c> instance containing the event data.</param>
         private static void ReportDownloadError(object sender, ErrorNotificationEventArgs e)
         {
             if (e.Job == null)
@@ -283,8 +283,8 @@ namespace SevenUpdate
 
             Utilities.ReportError(
                 new WebException(
-                    e.Job.Error.File + " " + e.Job.Error.Description + " " + e.Job.Error.ErrorCode + " " +
-                    e.Job.Error.ContextDescription),
+                    e.Job.Error.File + " " + e.Job.Error.Description + " " + e.Job.Error.ErrorCode + " "
+                    + e.Job.Error.ContextDescription), 
                 ErrorType.DownloadError);
 
             if (e.Job.State != JobState.Canceled)
@@ -305,8 +305,8 @@ namespace SevenUpdate
         }
 
         /// <summary>Reports the download progress.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <c>SharpBits.Base.NotificationEventArgs</c> instance containing the event data.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <c>SharpBits.Base.NotificationEventArgs</c> instance containing the event data.</param>
         private static void ReportDownloadProgress(object sender, NotificationEventArgs e)
         {
             if (cancelDownload)
@@ -336,9 +336,9 @@ namespace SevenUpdate
             }
 
             var eventArgs = new DownloadProgressChangedEventArgs(
-                e.Job.Progress.BytesTransferred,
-                e.Job.Progress.BytesTotal,
-                e.Job.Progress.FilesTransferred,
+                e.Job.Progress.BytesTransferred, 
+                e.Job.Progress.BytesTotal, 
+                e.Job.Progress.FilesTransferred, 
                 e.Job.Progress.FilesTotal);
             DownloadProgressChanged(null, eventArgs);
         }

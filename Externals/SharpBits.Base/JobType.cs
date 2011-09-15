@@ -13,15 +13,15 @@ namespace SharpBits.Base
     public enum JobType
     {
         /// <summary>Downloads a file.</summary>
-        Download,
+        Download, 
 
         /// <summary>Uploads a file without progress.</summary>
-        Upload,
+        Upload, 
 
         /// <summary>Uploads a file and reply's with progress.</summary>
-        UploadReply,
+        UploadReply, 
 
         /// <summary>Unknown job.</summary>
-        Unknown,
+        Unknown, 
     }
 }

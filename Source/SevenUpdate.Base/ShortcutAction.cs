@@ -31,12 +31,12 @@ namespace SevenUpdate
         /// <summary>Adds a shortcut.</summary>
         [ProtoEnum]
         [EnumMember]
-        Add = 0,
+        Add = 0, 
 
         /// <summary>Updates a shortcut only if it exists.</summary>
         [ProtoEnum]
         [EnumMember]
-        Update = 1,
+        Update = 1, 
 
         /// <summary>Deletes a shortcut.</summary>
         [ProtoEnum]

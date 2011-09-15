@@ -17,10 +17,9 @@
 
 namespace System.Windows.Controls
 {
-    using Collections;
-    using Collections.Generic;
-
-    using ComponentModel;
+    using System.Collections;
+    using System.Collections.Generic;
+    using System.ComponentModel;
 
     /// <summary>Enables the listView sorter to compare classes.</summary>
     public abstract class ListViewCustomComparer : IComparer
@@ -58,8 +57,8 @@ namespace System.Windows.Controls
         #region Public Methods
 
         /// <summary>Adds a column to the <c>SortColumns</c>.</summary>
-        /// <param name="sortColumn">  A string representing a column to be sorted.</param>
-        /// <param name="direction">  The direction to sort.</param>
+        /// <param name = "sortColumn">A string representing a column to be sorted.</param>
+        /// <param name = "direction">The direction to sort.</param>
         public void AddSort(string sortColumn, ListSortDirection direction)
         {
             if (string.IsNullOrEmpty(sortColumn))
@@ -76,27 +75,17 @@ namespace System.Windows.Controls
             this.SortColumns.Add(sortColumn, direction);
         }
 
-        #endregion
-
-        #region Implemented Interfaces
-
-        #region IComparer
-
         /// <summary>
         ///   Compares two objects and returns a value indicating whether one is less than, equal to, or greater than
         ///   the other.
         /// </summary>
-        /// <param name="x">  The first object to compare.</param>
-        /// <param name="y">  The second object to compare.</param>
-        /// <returns>
-        ///   A signed integer that indicates the relative values of <paramref name="x" /> and <paramref name="y" />, as
-        ///   shown in the following table.Value Meaning Less than zero <paramref
-        ///    name="x" /> is less than <paramref name="y" />. Zero <paramref name="x" /> equals <paramref name="y" />.
-        ///    Greater than zero <paramref name="x" /> is greater than <paramref name="y" />.
-        /// </returns>
+        /// <param name = "x">The first object to compare.</param>
+        /// <param name = "y">The second object to compare.</param>
+        /// <returns>A signed integer that indicates the relative values of <paramref name = "x" /> and <paramref name =
+        /// "y" />, as shown in the following table.Value Meaning Less than zero <paramref
+        ///    name = "x" /> is less than <paramref name = "y" />. Zero <paramref name = "x" /> equals <paramref name =
+        ///    "y" />. Greater than zero <paramref name = "x" /> is greater than <paramref name = "y" />.</returns>
         public abstract int Compare(object x, object y);
-
-        #endregion
 
         #endregion
 

@@ -39,14 +39,14 @@ namespace SevenUpdate
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the LocaleString class.</summary>
+        /// <summary>Initializes a new instance of the <see cref = "LocaleString" /> class.</summary>
         public LocaleString()
         {
         }
 
-        /// <summary>Initializes a new instance of the <c>LocaleString</c> class.</summary>
-        /// <param name="value">The string value.</param>
-        /// <param name="lang">The an ISO language code for the value.</param>
+        /// <summary>Initializes a new instance of the <see cref = "LocaleString" /> class.</summary>
+        /// <param name = "value">The string value.</param>
+        /// <param name = "lang">The an ISO language code for the value.</param>
         public LocaleString(string value, string lang)
         {
             this.Lang = lang;
@@ -55,14 +55,14 @@ namespace SevenUpdate
 
         #endregion
 
-        #region Events
+        #region Public Events
 
         /// <summary>Occurs when a property has changed.</summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
         #endregion
 
-        #region Properties
+        #region Public Properties
 
         /// <summary>Gets or sets an ISO language code.</summary>
         /// <value>The iso code.</value>
@@ -109,7 +109,7 @@ namespace SevenUpdate
         #region Methods
 
         /// <summary>When a property has changed, call the <c>OnPropertyChanged</c> Event.</summary>
-        /// <param name="name">The name of the property that changed.</param>
+        /// <param name = "name">The name of the property that changed.</param>
         private void OnPropertyChanged(string name)
         {
             var handler = this.PropertyChanged;

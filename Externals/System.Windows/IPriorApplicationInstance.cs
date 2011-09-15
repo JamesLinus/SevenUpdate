@@ -9,7 +9,7 @@
 
 namespace System.Windows
 {
-    using ServiceModel;
+    using System.ServiceModel;
 
     /// <summary>Interface used to signal a prior instance of the application about the startup another instance.</summary>
     [ServiceContract]
@@ -18,7 +18,7 @@ namespace System.Windows
         #region Public Methods
 
         /// <summary>Signals the startup of the next application instance.</summary>
-        /// <param name="args">The parameters used to run the next instance of the application.</param>
+        /// <param name = "args">The parameters used to run the next instance of the application.</param>
         [OperationContract]
         void SignalStartupNextInstance(string[] args);
 

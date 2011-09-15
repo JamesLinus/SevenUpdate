@@ -7,34 +7,17 @@
 
 namespace System.Windows.Dialogs
 {
-    using Diagnostics;
+    using System.Diagnostics;
+    using System.Windows.Dialogs.TaskDialog;
+    using System.Windows.Properties;
 
-    /// <summary>Dialog Show State.</summary>
-    internal enum DialogShowState
-    {
-        /// <summary>The dialog is about to be shown.</summary>
-        PreShow,
-
-        /// <summary>Currently Showing.</summary>
-        Showing,
-
-        /// <summary>Currently Closing.</summary>
-        Closing,
-
-        /// <summary>Closed dialog.</summary>
-        Closed
-    }
-
-    /// <summary>Abstract base class for all dialog controls.</summary>
+    /// <summary>Abstract base class for all dialog controls</summary>
     public abstract class DialogControl
     {
         #region Constants and Fields
 
         /// <summary>The next ID.</summary>
-        private static int nextId = 9;
-
-        /// <summary>The hosting dialog.</summary>
-        private IDialogControlHost hostingDialog;
+        private static int nextId = (int)TaskDialogCommonButtonReturnIds.Close + 1;
 
         /// <summary>The control name.</summary>
         private string name;
@@ -43,7 +26,10 @@ namespace System.Windows.Dialogs
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the DialogControl class.</summary>
+        /// <summary>
+        ///   Initializes a new instance of the <see cref = "DialogControl" /> class. Creates a new instance of a dialog
+        ///   control
+        /// </summary>
         protected DialogControl()
         {
             this.Id = nextId;
@@ -51,7 +37,7 @@ namespace System.Windows.Dialogs
             // Support wrapping of control IDs in case you create a lot of custom controls
             if (nextId == int.MaxValue)
             {
-                nextId = 9;
+                nextId = (int)TaskDialogCommonButtonReturnIds.Close + 1;
             }
             else
             {
@@ -59,44 +45,33 @@ namespace System.Windows.Dialogs
             }
         }
 
-        /// <summary>Initializes a new instance of the <c>DialogControl</c> class.</summary>
-        /// <param name="name">  The name for this dialog.</param>
-        protected DialogControl(string name) : this()
+        /// <summary>
+        ///   Initializes a new instance of the <see cref = "DialogControl" /> class. Creates a new instance of a dialog
+        ///   control with the specified name.
+        /// </summary>
+        /// <param name = "name">The name for this dialog.</param>
+        protected DialogControl(string name)
+            : this()
         {
             this.Name = name;
         }
 
         #endregion
 
-        #region Properties
+        #region Public Properties
 
         /// <summary>
-        ///   Gets or sets the native dialog that is hosting this control. This property is <c>null</c> is there is not
-        ///   associated dialog.
+        ///   Gets or sets the native dialog that is hosting this control. This property is null is there is not
+        ///   associated dialog
         /// </summary>
-        /// <value>The hosting dialog.</value>
-        public IDialogControlHost HostingDialog
-        {
-            get
-            {
-                return this.hostingDialog;
-            }
-
-            set
-            {
-                this.hostingDialog = value;
-            }
-        }
+        public IDialogControlHost HostingDialog { get; set; }
 
         /// <summary>Gets the identifier for this control.</summary>
-        /// <value>An <c>System.Int32</c> value.</value>
+        /// <value>An <see cref = "System.Int32" /> value.</value>
         public int Id { get; private set; }
 
-        /// <summary>Gets or sets the name for this control.</summary>
-        /// <value>A <c>System.String</c> value.</value>
-        /// <remarks>The name of the control should not be modified once set</remarks>
-        /// <exception cref="System.ArgumentException">The name cannot be <c>null</c> or a zero-length string.</exception>
-        /// <exception cref="System.InvalidOperationException">The name has already been set.</exception>
+        /// <summary>Gets the name for this control.</summary>
+        /// <value>A <see cref = "System.String" /> value.</value>
         public string Name
         {
             get
@@ -104,18 +79,18 @@ namespace System.Windows.Dialogs
                 return this.name;
             }
 
-            set
+            private set
             {
                 // Names for controls need to be quite stable, as we are going to maintain a mapping between the names
                 // and the underlying Win32/COM control IDs.
                 if (string.IsNullOrEmpty(value))
                 {
-                    throw new ArgumentException("Dialog control name cannot be empty or null.");
+                    throw new ArgumentException(Resources.DialogControlNameCannotBeEmpty);
                 }
 
                 if (!string.IsNullOrEmpty(this.name))
                 {
-                    throw new InvalidOperationException("Dialog controls cannot be renamed.");
+                    throw new InvalidOperationException(Resources.DialogControlsCannotBeRenamed);
                 }
 
                 // Note that we don't notify the hosting dialog of the change, as the initial set of name is (must be)
@@ -128,9 +103,9 @@ namespace System.Windows.Dialogs
 
         #region Public Methods
 
-        /// <summary>Compares two objects to determine whether they are equal.</summary>
-        /// <param name="obj">  The object to compare against.</param>
-        /// <returns>A <c>System.Boolean</c> value.</returns>
+        /// <summary>Compares two objects to determine whether they are equal</summary>
+        /// <param name = "obj">The object to compare against.</param>
+        /// <returns>A <see cref = "System.Boolean" /> value.</returns>
         public override bool Equals(object obj)
         {
             var control = obj as DialogControl;
@@ -144,10 +119,15 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>Serves as a hash function for a particular type.</summary>
-        /// <returns>An <c>System.Int32</c> hash code for this control.</returns>
+        /// <returns>An <see cref = "System.Int32" /> hash code for this control.</returns>
         public override int GetHashCode()
         {
-            return this.name == null ? this.ToString().GetHashCode() : this.name.GetHashCode();
+            if (this.Name == null)
+            {
+                return this.ToString().GetHashCode();
+            }
+
+            return this.Name.GetHashCode();
         }
 
         #endregion
@@ -159,14 +139,14 @@ namespace System.Windows.Dialogs
         ///   should do whatever is necessary to propagate the change to the native control. Note that if the dialog
         ///   isn't set yet, there are no restrictions on setting the property.
         /// </summary>
-        /// <param name="propName">  The name of the property that is changing.</param>
+        /// <param name = "propName">The name of the property that is changing.</param>
         protected void ApplyPropertyChange(string propName)
         {
             Debug.Assert(!string.IsNullOrEmpty(propName), "Property changed was not specified");
 
-            if (this.hostingDialog != null)
+            if (this.HostingDialog != null)
             {
-                this.hostingDialog.ApplyControlPropertyChange(propName, this);
+                this.HostingDialog.ApplyControlPropertyChange(propName, this);
             }
         }
 
@@ -175,14 +155,15 @@ namespace System.Windows.Dialogs
         ///   state. The host should throw an exception if the change is not supported. Note that if the dialog isn't
         ///   set yet, there are no restrictions on setting the property.
         /// </summary>
-        /// <param name="propName">  The name of the property that is changing.</param>
+        /// <param name = "propName">The name of the property that is changing</param>
         protected void CheckPropertyChangeAllowed(string propName)
         {
             Debug.Assert(!string.IsNullOrEmpty(propName), "Property to change was not specified");
 
-            if (this.hostingDialog != null)
+            if (this.HostingDialog != null)
             {
-                this.hostingDialog.IsControlPropertyChangeAllowed(propName, this);
+                // This will throw if the property change is not allowed.
+                this.HostingDialog.IsControlPropertyChangeAllowed(propName, this);
             }
         }
 

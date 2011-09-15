@@ -26,14 +26,14 @@ namespace SevenUpdate.Sdk.Pages
     using System.Windows.Input;
     using System.Windows.Media;
 
-    using Windows;
+    using SevenUpdate.Sdk.Windows;
 
     /// <summary>Interaction logic for Main.xaml.</summary>
     public sealed partial class Main
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the Main class.</summary>
+        /// <summary>Initializes a new instance of the <see cref = "Main" /> class.</summary>
         public Main()
         {
             this.InitializeComponent();
@@ -60,8 +60,8 @@ namespace SevenUpdate.Sdk.Pages
         #region Methods
 
         /// <summary>Updates the UI based on the <c>TreeViewItem</c> selected.</summary>
-        /// <param name="sender">  The object that called the event.</param>
-        /// <param name="e">  The <c>EventArgs</c> instance containing the event data.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <c>EventArgs</c> instance containing the event data.</param>
         private void ChangeUI(object sender, RoutedPropertyChangedEventArgs<object> e)
         {
             var parent = this.treeView.FindTreeViewItem(t => t.Items.Contains(e.NewValue));
@@ -115,8 +115,8 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Deletes an item from the <c>TreeView</c> and Project collection.</summary>
-        /// <param name="sender">  The object that called the event.</param>
-        /// <param name="e">  The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
         private void DeleteItem(object sender, RoutedEventArgs e)
         {
             var item = this.treeView.SelectedItem as TreeViewItem;
@@ -157,8 +157,8 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Edits the selected project item.</summary>
-        /// <param name="sender">  The object that called the event.</param>
-        /// <param name="e">  The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
         private void EditSelectedItem(object sender, RoutedEventArgs e)
         {
             Core.EditItem();
@@ -205,44 +205,44 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Loads the collection of <c>Project</c>'s into the UI.</summary>
-        /// <param name="sender">  The object that called the event.</param>
-        /// <param name="e">  The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
         private void LoadUI(object sender, RoutedEventArgs e)
         {
             this.LoadProjects();
         }
 
         /// <summary>Opens a browser and opens the support page.</summary>
-        /// <param name="sender">  The object that called the event.</param>
-        /// <param name="e">  The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.</param>
         private void NavigateToSupport(object sender, MouseButtonEventArgs e)
         {
             Utilities.StartProcess(@"http://sevenupdate.com/support");
         }
 
         /// <summary>Creates a new project.</summary>
-        /// <param name="sender">  The object that called the event.</param>
-        /// <param name="e">  The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
         private void NewProject(object sender, RoutedEventArgs e)
         {
             Core.NewProject();
         }
 
         /// <summary>Creates a new update for the selected <c>Project</c>.</summary>
-        /// <param name="sender">  The object that called the event.</param>
-        /// <param name="e">  The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
         private void NewUpdate(object sender, RoutedEventArgs e)
         {
             Core.NewUpdate();
         }
 
         /// <summary>Opens a dialog and saves the <c>Sua</c> for the selected project.</summary>
-        /// <param name="sender">  The object that called the event.</param>
-        /// <param name="e">  The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
         private void ReleaseSua(object sender, RoutedEventArgs e)
         {
-            var fileName = Core.Projects[Core.AppIndex].ExportedSuaFileName ??
-                           Core.Projects[Core.AppIndex].ApplicationName;
+            var fileName = Core.Projects[Core.AppIndex].ExportedSuaFileName
+                           ?? Core.Projects[Core.AppIndex].ApplicationName;
             fileName = Core.SaveFileDialog(
                 Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), fileName, @"sua");
 
@@ -261,12 +261,12 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Opens a dialog and saves the Sui for the selected project.</summary>
-        /// <param name="sender">  The object that called the event.</param>
-        /// <param name="e">  The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
         private void ReleaseSui(object sender, RoutedEventArgs e)
         {
-            var fileName = Core.Projects[Core.AppIndex].ExportedSuiFileName ??
-                           Core.Projects[Core.AppIndex].ApplicationName;
+            var fileName = Core.Projects[Core.AppIndex].ExportedSuiFileName
+                           ?? Core.Projects[Core.AppIndex].ApplicationName;
 
             fileName = Core.SaveFileDialog(
                 Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), fileName, @"sui");
@@ -286,8 +286,8 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Selects the <c>TreeViewItem</c> when right clicking on the <c>TreeView</c>.</summary>
-        /// <param name="sender">  The object that called the event.</param>
-        /// <param name="e">  The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.</param>
         private void SelectedItemOnRightClick(object sender, MouseButtonEventArgs e)
         {
             var tv = (TreeView)sender;
@@ -318,8 +318,8 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Displays the About Window.</summary>
-        /// <param name="sender">  The object that called the event.</param>
-        /// <param name="e">  The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.</param>
         private void ShowAboutDialog(object sender, MouseButtonEventArgs e)
         {
             var about = new About();
@@ -327,8 +327,8 @@ namespace SevenUpdate.Sdk.Pages
         }
 
         /// <summary>Updates the UI based on whether Aero Glass is enabled.</summary>
-        /// <param name="sender">  The object that called the event.</param>
-        /// <param name="e">  The <c>CompositionChangedEventArgs</c> instance containing the event data.</param>
+        /// <param name = "sender">The object that called the event.</param>
+        /// <param name = "e">The <c>CompositionChangedEventArgs</c> instance containing the event data.</param>
         private void UpdateUI(object sender, CompositionChangedEventArgs e)
         {
             if (e.IsGlassEnabled)

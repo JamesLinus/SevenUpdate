@@ -31,17 +31,17 @@ namespace SevenUpdate
         /// <summary>Important update.</summary>
         [ProtoEnum]
         [EnumMember]
-        Important = 0,
+        Important = 0, 
 
         /// <summary>Locale or language.</summary>
         [ProtoEnum]
         [EnumMember]
-        Locale = 1,
+        Locale = 1, 
 
         /// <summary>Optional update.</summary>
         [ProtoEnum]
         [EnumMember]
-        Optional = 2,
+        Optional = 2, 
 
         /// <summary>Recommended update.</summary>
         [ProtoEnum]

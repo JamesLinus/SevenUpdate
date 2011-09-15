@@ -26,7 +26,7 @@ namespace SevenUpdate.Sdk
     using System.Windows.ApplicationServices;
     using System.Windows.Shell;
 
-    using Properties;
+    using SevenUpdate.Sdk.Properties;
 
     /// <summary>Interaction logic for App.xaml.</summary>
     public sealed partial class App
@@ -49,7 +49,7 @@ namespace SevenUpdate.Sdk
         #region Methods
 
         /// <summary>Process command line args.</summary>
-        /// <param name="args">  The list of arguments.</param>
+        /// <param name = "args">The list of arguments.</param>
         internal static void ProcessArgs(IList<string> args)
         {
             if (args == null)
@@ -83,7 +83,7 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>Raises the Application.Exit event.</summary>
-        /// <param name="e">  An ExitEventArgs that contains the event data.</param>
+        /// <param name = "e">An ExitEventArgs that contains the event data.</param>
         protected override void OnExit(ExitEventArgs e)
         {
             UnregisterApplicationRecoveryAndRestart();
@@ -91,8 +91,8 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>Raises the <c>InstanceAwareApplication.Startup</c> event.</summary>
-        /// <param name="e">  The <c>System.Windows.StartupEventArgs</c> instance containing the event data.</param>
-        /// <param name="isFirstInstance">  If set to <c>True</c> the current instance is the first application instance.</param>
+        /// <param name = "e">The <c>System.Windows.StartupEventArgs</c> instance containing the event data.</param>
+        /// <param name = "isFirstInstance">If set to <c>True</c> the current instance is the first application instance.</param>
         protected override void OnStartup(StartupEventArgs e, bool isFirstInstance)
         {
             Utilities.Locale = Settings.Default.Locale;
@@ -115,7 +115,7 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>Raises the <c>InstanceAwareApplication.StartupNextInstance</c> event.</summary>
-        /// <param name="e">  The <c>StartupNextInstanceEventArgs</c> instance containing the event data.</param>
+        /// <param name = "e">The <c>StartupNextInstanceEventArgs</c> instance containing the event data.</param>
         protected override void OnStartupNextInstance(StartupNextInstanceEventArgs e)
         {
             base.OnStartupNextInstance(e);
@@ -123,7 +123,7 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>Performs recovery by saving the state.</summary>
-        /// <param name="parameter">  This parameter is not used.</param>
+        /// <param name = "parameter">This parameter is not used.</param>
         /// <returns>Return value is not used.</returns>
         private static int PerformRecovery(object parameter)
         {
@@ -170,9 +170,9 @@ namespace SevenUpdate.Sdk
             var jumpTask = new JumpTask
                 {
                     IconResourcePath =
-                        Path.Combine(Directory.GetParent(Utilities.AppDir).FullName, "Shared", @"SevenUpdate.Base.dll"),
-                    IconResourceIndex = 6,
-                    Title = Sdk.Properties.Resources.CreateProject,
+                        Path.Combine(Directory.GetParent(Utilities.AppDir).FullName, "Shared", @"SevenUpdate.Base.dll"), 
+                    IconResourceIndex = 6, 
+                    Title = Sdk.Properties.Resources.CreateProject, 
                     Arguments = @"-newproject"
                 };
 

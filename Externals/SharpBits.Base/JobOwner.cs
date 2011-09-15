@@ -13,9 +13,9 @@ namespace SharpBits.Base
     public enum JobOwner
     {
         /// <summary>The current logged in user.</summary>
-        CurrentUser = 0,
+        CurrentUser = 0, 
 
         /// <summary>The administrators group or system.</summary>
-        AllUsers = 1,
+        AllUsers = 1, 
     }
 }

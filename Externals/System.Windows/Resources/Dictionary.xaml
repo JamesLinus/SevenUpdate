@@ -13,7 +13,8 @@
     <Setter Property="Template">
       <Setter.Value>
         <ControlTemplate TargetType="controls:CommandLink">
-          <Border Name="Border" CornerRadius="2" BorderBrush="Transparent" BorderThickness="1" SnapsToDevicePixels="True">
+          <Border Name="Border" CornerRadius="2" BorderBrush="Transparent" BorderThickness="1"
+                  SnapsToDevicePixels="True">
             <Border Name="InnerBorder" CornerRadius="2" BorderBrush="Transparent" BorderThickness="1"
                     SnapsToDevicePixels="True">
               <Border.Background>
@@ -39,8 +40,8 @@ Binding="{Binding Source={x:Static AeroGlass.IsGlassEnabled}, Mode=OneWay, Updat
 Value="True">
                             <Setter Property="TextBlock.Effect">
                               <Setter.Value>
-                                <DropShadowEffect Color="White" BlurRadius="10" RenderingBias="Performance" ShadowDepth="0"
-                                                  Direction="0" />
+                                <DropShadowEffect Color="White" BlurRadius="10" RenderingBias="Performance"
+                                                  ShadowDepth="0" Direction="0" />
                               </Setter.Value>
                             </Setter>
                           </DataTrigger>
@@ -58,8 +59,8 @@ Binding="{Binding Source={x:Static AeroGlass.IsGlassEnabled}, Mode=OneWay, Updat
 Value="True">
                             <Setter Property="TextBlock.Effect">
                               <Setter.Value>
-                                <DropShadowEffect Color="White" BlurRadius="10" RenderingBias="Performance" ShadowDepth="0"
-                                                  Direction="0" />
+                                <DropShadowEffect Color="White" BlurRadius="10" RenderingBias="Performance"
+                                                  ShadowDepth="0" Direction="0" />
                               </Setter.Value>
                             </Setter>
                           </DataTrigger>
@@ -80,7 +81,8 @@ Value="True">
                 <Condition Property="IsMouseOver" Value="True" />
                 <Condition Property="UseShield" Value="False" />
               </MultiTrigger.Conditions>
-              <Setter TargetName="Icon" Property="Image.Source" Value="/System.Windows;component/Images/GreenArrowHover.png" />
+              <Setter TargetName="Icon" Property="Image.Source"
+                      Value="/System.Windows;component/Images/GreenArrowHover.png" />
             </MultiTrigger>
             <MultiTrigger>
               <MultiTrigger.Conditions>
@@ -402,13 +404,15 @@ Value="True">
       <Setter Property="ElementStoryboard">
         <Setter.Value>
           <Storyboard>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)">
+            <DoubleAnimationUsingKeyFrames
+Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)">
               <SplineDoubleKeyFrame KeyTime="00:00:00" Value="0" />
               <SplineDoubleKeyFrame KeyTime="00:00:00.5" Value="1" />
               <SplineDoubleKeyFrame KeyTime="00:00:01" Value="1" />
               <SplineDoubleKeyFrame KeyTime="00:00:01.5" Value="0" />
             </DoubleAnimationUsingKeyFrames>
-            <DoubleAnimationUsingKeyFrames Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)">
+            <DoubleAnimationUsingKeyFrames
+Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)">
               <SplineDoubleKeyFrame KeyTime="00:00:00" Value="0" />
               <SplineDoubleKeyFrame KeyTime="00:00:00.5" Value="1" />
               <SplineDoubleKeyFrame KeyTime="00:00:01" Value="1" />
@@ -435,8 +439,9 @@ Value="True">
               <TextBlock Name="LoadingTextBlock"
                          Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=IndeterminateText}" HorizontalAlignment="Center"
                          VerticalAlignment="Center" TextWrapping="Wrap" TextAlignment="Center" />
-              <TextBlock Name="ProgressTextBlock" Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Value}"
-                         HorizontalAlignment="Center" VerticalAlignment="Center" />
+              <TextBlock Name="ProgressTextBlock"
+                         Text="{Binding RelativeSource={RelativeSource TemplatedParent}, Path=Value}" HorizontalAlignment="Center"
+                         VerticalAlignment="Center" />
             </Grid>
             <ControlTemplate.Triggers>
               <Trigger Property="IsIndeterminate" Value="True">
@@ -643,7 +648,8 @@ Geometry="F1 M 190.488,19.3214C 182.827,34.1613 74.5574,217.743 19.8253,317.268L
           <GeometryDrawing
 Geometry="F1 M 193.203,23.756C 190.42,29.1707 174.863,56.092 153.349,93.3427L 153.349,93.3427C 115.751,158.407 58.9107,256.775 24.26,320.073L 24.26,320.073C 16.5373,334.191 15.5493,347.523 21.4907,357.613L 21.4907,357.613C 27.9173,368.516 42.108,375.017 59.4307,375.017L 384.819,375.017C 399.96,375.017 411.912,369.481 417.652,359.755L 417.652,359.755C 423.789,349.348 422.433,334.855 413.791,318.897L 413.791,318.897C 317.327,141.019 259.525,36.44 250.989,24.4347L 250.989,24.4347C 245.273,16.3813 234.897,11.78 222.477,11.78L 222.477,11.78C 209.505,11.78 196.641,17.0453 193.203,23.756 Z ">
             <GeometryDrawing.Brush>
-              <RadialGradientBrush RadiusX="1.93013" RadiusY="2.14557" Center="0.5,-0.210701" GradientOrigin="0.5,-0.210701">
+              <RadialGradientBrush RadiusX="1.93013" RadiusY="2.14557" Center="0.5,-0.210701"
+                                   GradientOrigin="0.5,-0.210701">
                 <RadialGradientBrush.GradientStops>
                   <GradientStop Color="#FFFFFFFF" Offset="0" />
                   <GradientStop Color="#FFFCE69E" Offset="0.247253" />

@@ -1,4 +1,4 @@
-﻿//-----------------------------------------------------------------------
+//-----------------------------------------------------------------------
 // <copyright file="AssemblyInfo.cs" project="SevenUpdate.Installer" assembly="SevenUpdate.Installer" solution="SevenUpdate.Installer" company="Dino Chiesa">
 //     Copyright (c) Dino Chiesa. All rights reserved.
 // </copyright>
@@ -9,9 +9,8 @@
 using System.Reflection;
 using System.Runtime.InteropServices;
 
-// General Information about an assembly is controlled through the following 
-// set of attributes. Change these attribute values to modify the information
-// associated with an assembly.
+// General Information about an assembly is controlled through the following set of attributes. Change these attribute
+// values to modify the information associated with an assembly.
 
 [assembly: AssemblyTitle("Tar")]
 [assembly: AssemblyDescription("Tar")]

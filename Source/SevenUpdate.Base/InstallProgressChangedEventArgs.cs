@@ -29,11 +29,11 @@ namespace SevenUpdate
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <c>InstallProgressChangedEventArgs</c> class.</summary>
-        /// <param name="updateName">The name of the update currently being installed.</param>
-        /// <param name="progress">The progress percentage of the installation.</param>
-        /// <param name="updatesComplete">The number of updates that have been installed so far.</param>
-        /// <param name="totalUpdates">The total number of updates to install.</param>
+        /// <summary>Initializes a new instance of the <see cref = "InstallProgressChangedEventArgs" /> class.</summary>
+        /// <param name = "updateName">The name of the update currently being installed.</param>
+        /// <param name = "progress">The progress percentage of the installation.</param>
+        /// <param name = "updatesComplete">The number of updates that have been installed so far.</param>
+        /// <param name = "totalUpdates">The total number of updates to install.</param>
         public InstallProgressChangedEventArgs(string updateName, int progress, int updatesComplete, int totalUpdates)
         {
             this.CurrentProgress = progress;
@@ -42,14 +42,14 @@ namespace SevenUpdate
             this.UpdateName = updateName;
         }
 
-        /// <summary>Initializes a new instance of the InstallProgressChangedEventArgs class.</summary>
+        /// <summary>Initializes a new instance of the <see cref = "InstallProgressChangedEventArgs" /> class.</summary>
         public InstallProgressChangedEventArgs()
         {
         }
 
         #endregion
 
-        #region Properties
+        #region Public Properties
 
         /// <summary>Gets the progress percentage of the installation.</summary>
         /// <value>The current progress.</value>

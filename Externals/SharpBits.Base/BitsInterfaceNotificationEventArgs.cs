@@ -1,4 +1,4 @@
-﻿// ***********************************************************************
+// ***********************************************************************
 // <copyright file="BitsInterfaceNotificationEventArgs.cs" project="SharpBits.Base" assembly="SharpBits.Base" solution="SevenUpdate" company="Xidar Solutions">
 //     Copyright (c) xidar solutions. All rights reserved.
 // </copyright>
@@ -23,11 +23,12 @@ namespace SharpBits.Base
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <c>BitsInterfaceNotificationEventArgs</c> class.</summary>
-        /// <param name="job">  The job the notification is for.</param>
-        /// <param name="exception">  The exception.</param>
-        /// <param name="description">  The description.</param>
-        internal BitsInterfaceNotificationEventArgs(BitsJob job, COMException exception, string description) : base(job)
+        /// <summary>Initializes a new instance of the <see cref = "BitsInterfaceNotificationEventArgs" /> class.</summary>
+        /// <param name = "job">The job the notification is for.</param>
+        /// <param name = "exception">The exception.</param>
+        /// <param name = "description">The description.</param>
+        internal BitsInterfaceNotificationEventArgs(BitsJob job, COMException exception, string description)
+            : base(job)
         {
             this.Description = description;
             this.exception = exception;
@@ -35,7 +36,7 @@ namespace SharpBits.Base
 
         #endregion
 
-        #region Properties
+        #region Public Properties
 
         /// <summary>Gets the description.</summary>
         /// <value>The description.</value>

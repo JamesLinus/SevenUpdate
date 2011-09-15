@@ -1,4 +1,4 @@
-﻿// ***********************************************************************
+// ***********************************************************************
 // <copyright file="StartupNextInstanceEventArgs.cs" project="System.Windows" assembly="System.Windows" solution="SevenUpdate" company="Seven Software">
 //     Copyright (c) BladeWise. All rights reserved.
 // </copyright>
@@ -21,9 +21,9 @@ namespace System.Windows
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <c>StartupNextInstanceEventArgs</c> class.</summary>
-        /// <param name="args">  The arguments passed to the program.</param>
-        /// <param name="bringToFront">  If set to <c>True</c> the application main window will be brought to front.</param>
+        /// <summary>Initializes a new instance of the <see cref = "StartupNextInstanceEventArgs" /> class.</summary>
+        /// <param name = "args">The arguments passed to the program.</param>
+        /// <param name = "bringToFront">If set to <c>True</c> the application main window will be brought to front.</param>
         public StartupNextInstanceEventArgs(string[] args, bool bringToFront = true)
         {
             if (args == null)
@@ -37,11 +37,10 @@ namespace System.Windows
 
         #endregion
 
-        #region Properties
+        #region Public Properties
 
         /// <summary>Gets a value indicating whether the application main window has to be brought to foreground.</summary>
-        /// <value><c>True</c> if the application window has to be brought to foreground, otherwise 
-        /// <c>False</c>.</value>
+        /// <value><c>True</c> if the application window has to be brought to foreground, otherwise <c>False</c>.</value>
         public bool BringToForeground { get; private set; }
 
         #endregion

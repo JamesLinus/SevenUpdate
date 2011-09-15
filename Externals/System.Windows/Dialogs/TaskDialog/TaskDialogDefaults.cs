@@ -5,30 +5,57 @@
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
 // ***********************************************************************
 
-namespace System.Windows.Dialogs
+namespace System.Windows.Dialogs.TaskDialog
 {
-    /// <summary>Task Dialog defaults.</summary>
+    using System.Windows.Properties;
+
+    /// <summary>The task dialog defaults</summary>
     internal static class TaskDialogDefaults
     {
         #region Constants and Fields
 
-        /// <summary>The caption.</summary>
-        internal const string Caption = "";
+        /// <summary>The ideal width for the dialog.</summary>
+        public const int IdealWidth = 0;
 
-        /// <summary>The content.</summary>
-        internal const string Content = "";
-
-        /// <summary>The ideal width.</summary>
-        internal const int IdealWidth = 0;
-
-        /// <summary>The main instruction.</summary>
-        internal const string MainInstruction = "";
+        /// <summary>For generating control ID numbers that won't collide with the standard button return IDs.</summary>
+        public const int MinimumDialogControlId = (int)TaskDialogCommonButtonReturnIds.Close + 1;
 
         /// <summary>The progress bar max value.</summary>
-        internal const int ProgressBarMaximumValue = 100;
+        public const int ProgressBarMaximumValue = 100;
 
         /// <summary>The progress bar min value.</summary>
-        internal const int ProgressBarMinimumValue = 0;
+        public const int ProgressBarMinimumValue = 0;
+
+        #endregion
+
+        #region Public Properties
+
+        /// <summary>Gets the default dialog caption.</summary>
+        public static string Caption
+        {
+            get
+            {
+                return Resources.TaskDialogDefaultCaption;
+            }
+        }
+
+        /// <summary>Gets the default dialog content.</summary>
+        public static string Content
+        {
+            get
+            {
+                return null;
+            }
+        }
+
+        /// <summary>Gets the default dialog main instruction.</summary>
+        public static string MainInstruction
+        {
+            get
+            {
+                return null;
+            }
+        }
 
         #endregion
     }

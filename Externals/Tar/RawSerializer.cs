@@ -10,19 +10,12 @@ namespace Tar
 {
     using System.Runtime.InteropServices;
 
-    /// <summary>This class is intended for internal use only, by the Tar library.</summary>
-    /// <typeparam name="T">
-    /// </typeparam>
+    /// <summary>This class is intended for internal use only, by the Tar library.</summary><typeparam name="T"></typeparam>
     internal sealed class RawSerializer<T>
     {
         #region Public Methods
 
-        /// <param name="rawData">
-        /// </param>
-        /// <param name="position">
-        /// </param>
-        /// <returns>
-        /// </returns>
+        /// <param name="rawData"></param><param name="position"></param> <returns></returns>
         public T RawDeserialize(byte[] rawData, int position = 0)
         {
             var rawSize = Marshal.SizeOf(typeof(T));
@@ -39,9 +32,7 @@ namespace Tar
         }
 
         /// <param name="item">
-        /// </param>
-        /// <returns>
-        /// </returns>
+        /// </param><returns></returns>
         public byte[] RawSerialize(T item)
         {
             var rawSize = Marshal.SizeOf(typeof(T));

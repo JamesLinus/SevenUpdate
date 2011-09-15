@@ -13,7 +13,7 @@ namespace WPFLocalizeExtension.Extensions
     using System.Windows;
     using System.Windows.Markup;
 
-    using Engine;
+    using WPFLocalizeExtension.Engine;
 
     /// <summary><c>BaseLocalizeExtension</c> for <c>FlowDirection</c> values.</summary>
     [MarkupExtensionReturnType(typeof(FlowDirection))]
@@ -21,14 +21,15 @@ namespace WPFLocalizeExtension.Extensions
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the LocFlowDirectionExtension class.</summary>
+        /// <summary>Initializes a new instance of the <see cref = "LocFlowDirectionExtension" /> class.</summary>
         public LocFlowDirectionExtension()
         {
         }
 
-        /// <summary>Initializes a new instance of the <c>LocFlowDirectionExtension</c> class.</summary>
-        /// <param name="key">  The resource identifier.</param>
-        public LocFlowDirectionExtension(string key) : base(key)
+        /// <summary>Initializes a new instance of the <see cref = "LocFlowDirectionExtension" /> class.</summary>
+        /// <param name = "key">The resource identifier.</param>
+        public LocFlowDirectionExtension(string key)
+            : base(key)
         {
         }
 
@@ -37,7 +38,7 @@ namespace WPFLocalizeExtension.Extensions
         #region Public Methods
 
         /// <summary>Provides the Value for the first Binding as <c>LocFlowDirectionExtension</c>.</summary>
-        /// <param name="serviceProvider">  The <c>System.Windows.Markup.IProvideValueTarget</c> provided from the <c>MarkupExtension</c>.</param>
+        /// <param name = "serviceProvider">The <c>System.Windows.Markup.IProvideValueTarget</c> provided from the <c>MarkupExtension</c>.</param>
         /// <returns>The found item from the .resx directory or LeftToRight if not found.</returns>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
@@ -55,9 +56,9 @@ namespace WPFLocalizeExtension.Extensions
 
             throw new NotSupportedException(
                 string.Format(
-                    CultureInfo.CurrentCulture,
-                    "ResourceKey '{0}' returns '{1}' which is not type of FlowDirection",
-                    this.Key,
+                    CultureInfo.CurrentCulture, 
+                    "ResourceKey '{0}' returns '{1}' which is not type of FlowDirection", 
+                    this.Key, 
                     obj.GetType().FullName));
         }
 
@@ -66,7 +67,7 @@ namespace WPFLocalizeExtension.Extensions
         #region Methods
 
         /// <summary>This method is used to modify the passed object into the target format.</summary>
-        /// <param name="input">  The object that will be modified.</param>
+        /// <param name = "input">The object that will be modified.</param>
         /// <returns>Returns the modified object.</returns>
         protected override object FormatOutput(object input)
         {
@@ -79,8 +80,8 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>
-        ///   This method gets the new value for the target property and call <see
-        ///   cref="BaseLocalizeExtension{TValue}.SetNewValue" />.
+        ///   This method gets the new value for the target property and call <see cref =
+        ///   "BaseLocalizeExtension{TValue}.SetNewValue" />.
         /// </summary>
         protected override void HandleNewValue()
         {

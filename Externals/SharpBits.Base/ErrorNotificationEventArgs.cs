@@ -1,4 +1,4 @@
-﻿// ***********************************************************************
+// ***********************************************************************
 // <copyright file="ErrorNotificationEventArgs.cs" project="SharpBits.Base" assembly="SharpBits.Base" solution="SevenUpdate" company="Xidar Solutions">
 //     Copyright (c) xidar solutions. All rights reserved.
 // </copyright>
@@ -14,17 +14,18 @@ namespace SharpBits.Base
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <c>ErrorNotificationEventArgs</c> class.</summary>
-        /// <param name="job">  The job the notification is for.</param>
-        /// <param name="error">  The error that occurred.</param>
-        internal ErrorNotificationEventArgs(BitsJob job, BitsError error) : base(job)
+        /// <summary>Initializes a new instance of the <see cref = "ErrorNotificationEventArgs" /> class.</summary>
+        /// <param name = "job">The job the notification is for.</param>
+        /// <param name = "error">The error that occurred.</param>
+        internal ErrorNotificationEventArgs(BitsJob job, BitsError error)
+            : base(job)
         {
             this.Error = error;
         }
 
         #endregion
 
-        #region Properties
+        #region Public Properties
 
         /// <summary>Gets the error.</summary>
         /// <value>The error that occurred.</value>

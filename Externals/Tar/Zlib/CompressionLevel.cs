@@ -17,10 +17,7 @@ namespace Zlib
         /// <summary>The default compression level, with a good balance of speed and compression efficiency.</summary>
         Default = 6,
 
-        /// <summary>
-        ///   The "best" compression, where best means greatest reduction in size of the input data stream. This is also
-        ///   the slowest compression.
-        /// </summary>
+        /// <summary>The "best" compression, where best means greatest reduction in size of the input data stream. This is also the slowest compression.</summary>
         BestCompression = 9,
     }
 }

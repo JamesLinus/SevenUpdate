@@ -17,25 +17,27 @@
 
 namespace System.Windows.Internal
 {
-    using Runtime.InteropServices;
+    using System.Runtime.InteropServices;
 
     /// <summary>Defines the margins of windows that have visual styles applied.</summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct Margins
     {
-        /// <summary>Initializes a new instance of the <c>Margins</c> struct.</summary>
-        /// <param name="fullWindow">  If set to <c>True</c> the margin is set to the full window.</param>
-        public Margins(bool fullWindow) : this()
+        /// <summary>Initializes a new instance of the <see cref = "Margins" /> struct.</summary>
+        /// <param name = "fullWindow">If set to <c>True</c> the margin is set to the full window.</param>
+        public Margins(bool fullWindow)
+            : this()
         {
             this.LeftWidth = this.RightWidth = this.TopHeight = this.BottomHeight = fullWindow ? -1 : 0;
         }
 
-        /// <summary>Initializes a new instance of the <c>Margins</c> struct.</summary>
-        /// <param name="left">  Width of the left border that retains its size.</param>
-        /// <param name="top">  Height of the top border that retains its size.</param>
-        /// <param name="right">  Width of the right border that retains its size.</param>
-        /// <param name="bottom">  Height of the bottom border that retains its size.</param>
-        public Margins(int left, int top, int right, int bottom) : this()
+        /// <summary>Initializes a new instance of the <see cref = "Margins" /> struct.</summary>
+        /// <param name = "left">Width of the left border that retains its size.</param>
+        /// <param name = "top">Height of the top border that retains its size.</param>
+        /// <param name = "right">Width of the right border that retains its size.</param>
+        /// <param name = "bottom">Height of the bottom border that retains its size.</param>
+        public Margins(int left, int top, int right, int bottom)
+            : this()
         {
             this.LeftWidth = left;
             this.RightWidth = right;

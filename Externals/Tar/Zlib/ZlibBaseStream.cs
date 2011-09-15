@@ -58,16 +58,7 @@ namespace Zlib
 
         #region Constructors and Destructors
 
-        /// <param name="stream">
-        /// </param>
-        /// <param name="compressionMode">
-        /// </param>
-        /// <param name="level">
-        /// </param>
-        /// <param name="flavor">
-        /// </param>
-        /// <param name="leaveOpen">
-        /// </param>
+        /// <param name="stream"></param><param name="compressionMode"></param> <param name="level"></param><param name="flavor"></param><param name="leaveOpen"></param>
         public ZlibBaseStream(
             Stream stream,
             CompressionMode compressionMode,
@@ -147,9 +138,7 @@ namespace Zlib
         }
 
         /// <exception cref = "NotImplementedException">
-        /// </exception>
-        /// <exception cref = "NotImplementedException">
-        /// </exception>
+        /// </exception><exception cref = "NotImplementedException"></exception>
         public override long Position
         {
             get
@@ -242,22 +231,8 @@ namespace Zlib
             this.Stream.Flush();
         }
 
-        /// <param name="buffer">
-        /// </param>
-        /// <param name="offset">
-        /// </param>
-        /// <param name="count">
-        /// </param>
-        /// <exception cref = "ArgumentNullException">
-        /// </exception>
-        /// <exception cref = "ArgumentOutOfRangeException">
-        /// </exception>
-        /// <exception cref = "ArgumentOutOfRangeException">
-        /// </exception>
-        /// <exception cref = "ArgumentOutOfRangeException">
-        /// </exception>
-        /// <returns>
-        /// </returns>
+        /// <param name="buffer"></param><param name="offset"></param> <param name="count"></param><exception cref = "ArgumentNullException"></exception>
+        /// <exception cref = "ArgumentOutOfRangeException"></exception><exception cref = "ArgumentOutOfRangeException"></exception> <exception cref = "ArgumentOutOfRangeException"></exception><returns></returns>
         public override int Read(byte[] buffer, int offset, int count)
         {
             // According to MS documentation, any implementation of the IO.Stream.Read function must: (a) throw an
@@ -417,13 +392,8 @@ namespace Zlib
         }
 
         /// <param name="offset">
-        /// </param>
-        /// <param name="origin">
-        /// </param>
-        /// <returns>
-        /// </returns>
-        /// <exception cref = "NotImplementedException">
-        /// </exception>
+        /// </param><param name="origin"></param>
+        /// <returns></returns> <exception cref = "NotImplementedException"></exception>
         public override long Seek(long offset, SeekOrigin origin)
         {
             throw new NotImplementedException();
@@ -438,16 +408,7 @@ namespace Zlib
             this.Stream.SetLength(value);
         }
 
-        /// <param name="buffer">
-        /// </param>
-        /// <param name="offset">
-        /// </param>
-        /// <param name="count">
-        /// </param>
-        /// <exception cref = "ZlibException">
-        /// </exception>
-        /// <exception cref = "ZlibException">
-        /// </exception>
+        /// <param name="buffer"></param><param name="offset"></param> <param name="count"></param><exception cref = "ZlibException"></exception><exception cref = "ZlibException"></exception>
         public override void Write(byte[] buffer, int offset, int count)
         {
             // workitem 7159
@@ -524,16 +485,7 @@ namespace Zlib
             this.ZlibCodec = null;
         }
 
-        /// <exception cref = "ZlibException">
-        /// </exception>
-        /// <exception cref = "ZlibException">
-        /// </exception>
-        /// <exception cref = "ZlibException">
-        /// </exception>
-        /// <exception cref = "ZlibException">
-        /// </exception>
-        /// <exception cref = "ZlibException">
-        /// </exception>
+        /// <exception cref = "ZlibException"></exception><exception cref = "ZlibException"></exception> <exception cref = "ZlibException"></exception><exception cref = "ZlibException"></exception><exception cref = "ZlibException"></exception>
         private void Finish()
         {
             if (this.ZlibCodec == null)
@@ -667,14 +619,7 @@ namespace Zlib
             }
         }
 
-        /// <returns>
-        /// </returns>
-        /// <exception cref = "ZlibException">
-        /// </exception>
-        /// <exception cref = "ZlibException">
-        /// </exception>
-        /// <exception cref = "ZlibException">
-        /// </exception>
+        /// <returns></returns> <exception cref = "ZlibException"></exception><exception cref = "ZlibException"></exception><exception cref = "ZlibException"></exception>
         private int ReadAndValidateGzipHeader()
         {
             var totalBytesRead = 0;
@@ -736,10 +681,7 @@ namespace Zlib
             return totalBytesRead;
         }
 
-        /// <returns>
-        /// </returns>
-        /// <exception cref = "ZlibException">
-        /// </exception>
+        /// <returns></returns> <exception cref = "ZlibException"></exception>
         private string ReadZeroTerminatedString()
         {
             var list = new List<byte>();

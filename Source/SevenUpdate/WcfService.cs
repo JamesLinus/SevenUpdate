@@ -26,9 +26,8 @@ namespace SevenUpdate
     using System.ServiceModel;
     using System.Threading.Tasks;
 
-    using Properties;
-
-    using Service;
+    using SevenUpdate.Properties;
+    using SevenUpdate.Service;
 
     /// <summary>Contains methods and events that run a WCF service.</summary>
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant, InstanceContextMode = InstanceContextMode.PerSession)]
@@ -41,7 +40,7 @@ namespace SevenUpdate
 
         #endregion
 
-        #region Events
+        #region Public Events
 
         /// <summary>Occurs when the download completed.</summary>
         public static event EventHandler<DownloadCompletedEventArgs> DownloadDone;
@@ -73,9 +72,7 @@ namespace SevenUpdate
 
         #endregion
 
-        #region Implemented Interfaces
-
-        #region IElevatedProcessCallback
+        #region Public Methods
 
         /// <summary>Occurs when the process starts.</summary>
         public void ElevatedProcessStarted()
@@ -106,46 +103,44 @@ namespace SevenUpdate
         }
 
         /// <summary>Occurs when the download of updates has completed.</summary>
-        /// <param name="sender">  The sender of the event.</param>
-        /// <param name="e">  The event data.</param>
+        /// <param name = "sender">The sender of the event.</param>
+        /// <param name = "e">The event data.</param>
         public void OnDownloadCompleted(object sender, DownloadCompletedEventArgs e)
         {
             DownloadDone(this, e);
         }
 
         /// <summary>Occurs when the download progress has changed.</summary>
-        /// <param name="sender">  The sender of the event.</param>
-        /// <param name="e">  The event data.</param>
+        /// <param name = "sender">The sender of the event.</param>
+        /// <param name = "e">The event data.</param>
         public void OnDownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
             DownloadProgressChanged(this, e);
         }
 
         /// <summary>Occurs when a error occurs when downloading or installing updates.</summary>
-        /// <param name="sender">  The sender of the event.</param>
-        /// <param name="e">  The event data.</param>
+        /// <param name = "sender">The sender of the event.</param>
+        /// <param name = "e">The event data.</param>
         public void OnErrorOccurred(object sender, ErrorOccurredEventArgs e)
         {
             ErrorOccurred(this, e);
         }
 
         /// <summary>Occurs when the installation of updates has completed.</summary>
-        /// <param name="sender">  The sender of the event.</param>
-        /// <param name="e">  The event data.</param>
+        /// <param name = "sender">The sender of the event.</param>
+        /// <param name = "e">The event data.</param>
         public void OnInstallCompleted(object sender, InstallCompletedEventArgs e)
         {
             InstallDone(this, e);
         }
 
         /// <summary>Occurs when the install progress has changed.</summary>
-        /// <param name="sender">  The sender of the event.</param>
-        /// <param name="e">  The event data.</param>
+        /// <param name = "sender">The sender of the event.</param>
+        /// <param name = "e">The event data.</param>
         public void OnInstallProgressChanged(object sender, InstallProgressChangedEventArgs e)
         {
             InstallProgressChanged(this, e);
         }
-
-        #endregion
 
         #endregion
 
@@ -161,7 +156,7 @@ namespace SevenUpdate
         }
 
         /// <summary>Adds an application to Seven Update.</summary>
-        /// <param name="application">  The application to add to Seven Update.</param>
+        /// <param name = "application">The application to add to Seven Update.</param>
         internal static void AddSua(Sua application)
         {
             if (!Connect())
@@ -184,7 +179,7 @@ namespace SevenUpdate
                         catch (Exception e)
                         {
                             ErrorOccurred(
-                                null,
+                                null, 
                                 new ErrorOccurredEventArgs(Utilities.GetExceptionAsString(e), ErrorType.FatalError));
                             throw;
                         }
@@ -192,7 +187,7 @@ namespace SevenUpdate
         }
 
         /// <summary>Reports an error with the admin process.</summary>
-        /// <param name="e">  The exception data that caused the error.</param>
+        /// <param name = "e">The exception data that caused the error.</param>
         internal static void AdminError(Exception e)
         {
             Core.Instance.IsAdmin = false;
@@ -241,7 +236,8 @@ namespace SevenUpdate
             }
 
 #else
-            if (Process.GetProcessesByName("SevenUpdate.Admin.vshost").Length < 1 && Process.GetProcessesByName("SevenUpdate.Admin").Length < 1)
+            if (Process.GetProcessesByName("SevenUpdate.Admin.vshost").Length < 1
+                && Process.GetProcessesByName("SevenUpdate.Admin").Length < 1)
             {
                 IsConnected = false;
                 context = null;
@@ -272,8 +268,8 @@ namespace SevenUpdate
             catch (Exception ex)
             {
                 if (
-                    !(ex is CommunicationObjectAbortedException || ex is CommunicationObjectFaultedException ||
-                      ex is ObjectDisposedException || ex is FaultException))
+                    !(ex is CommunicationObjectAbortedException || ex is CommunicationObjectFaultedException
+                      || ex is ObjectDisposedException || ex is FaultException))
                 {
                     ErrorOccurred(
                         null, new ErrorOccurredEventArgs(Utilities.GetExceptionAsString(ex), ErrorType.FatalError));
@@ -285,7 +281,7 @@ namespace SevenUpdate
         }
 
         /// <summary>Hides an update.</summary>
-        /// <param name="hiddenUpdate">  The update to hide.</param>
+        /// <param name = "hiddenUpdate">The update to hide.</param>
         /// <returns><c>True</c> if the admin process was executed.</returns>
         internal static bool HideUpdate(Suh hiddenUpdate)
         {
@@ -316,7 +312,7 @@ namespace SevenUpdate
                         catch (Exception e)
                         {
                             ErrorOccurred(
-                                null,
+                                null, 
                                 new ErrorOccurredEventArgs(Utilities.GetExceptionAsString(e), ErrorType.FatalError));
                             throw;
                         }
@@ -326,7 +322,7 @@ namespace SevenUpdate
         }
 
         /// <summary>Hides multiple updates.</summary>
-        /// <param name="hiddenUpdates">  The list of updates to hide.</param>
+        /// <param name = "hiddenUpdates">The list of updates to hide.</param>
         /// <returns><c>True</c> if the admin process was executed, otherwise <c>False</c>.</returns>
         internal static bool HideUpdates(Collection<Suh> hiddenUpdates)
         {
@@ -353,7 +349,7 @@ namespace SevenUpdate
                         catch (Exception e)
                         {
                             ErrorOccurred(
-                                null,
+                                null, 
                                 new ErrorOccurredEventArgs(Utilities.GetExceptionAsString(e), ErrorType.FatalError));
                             throw;
                         }
@@ -394,7 +390,7 @@ namespace SevenUpdate
                             context = null;
                             IsConnected = false;
                             ErrorOccurred(
-                                null,
+                                null, 
                                 new ErrorOccurredEventArgs(Utilities.GetExceptionAsString(e), ErrorType.FatalError));
                             throw;
                         }
@@ -404,9 +400,9 @@ namespace SevenUpdate
         }
 
         /// <summary>Save the settings and call <c>SevenUpdate</c>.Admin to commit them.</summary>
-        /// <param name="autoOn">  <c>True</c> if auto updates are enabled, otherwise <c>False</c>.</param>
-        /// <param name="options">  The options to save.</param>
-        /// <param name="sul">  The list of application to update to save.</param>
+        /// <param name = "autoOn"><c>True</c> if auto updates are enabled, otherwise <c>False</c>.</param>
+        /// <param name = "options">The options to save.</param>
+        /// <param name = "sul">The list of application to update to save.</param>
         /// <returns><c>True</c> if the admin process was executed, otherwise <c>False</c>.</returns>
         internal static bool SaveSettings(bool autoOn, Config options, Collection<Sua> sul)
         {
@@ -441,7 +437,7 @@ namespace SevenUpdate
                         catch (Exception e)
                         {
                             ErrorOccurred(
-                                null,
+                                null, 
                                 new ErrorOccurredEventArgs(Utilities.GetExceptionAsString(e), ErrorType.FatalError));
                             throw;
                         }
@@ -451,7 +447,7 @@ namespace SevenUpdate
         }
 
         /// <summary>Removes an update from the hidden list.</summary>
-        /// <param name="hiddenUpdate">  The hidden update to show.</param>
+        /// <param name = "hiddenUpdate">The hidden update to show.</param>
         /// <returns><c>True</c> if the admin process was executed, otherwise <c>False</c>.</returns>
         internal static bool ShowUpdate(Suh hiddenUpdate)
         {
@@ -482,7 +478,7 @@ namespace SevenUpdate
                         catch (Exception e)
                         {
                             ErrorOccurred(
-                                null,
+                                null, 
                                 new ErrorOccurredEventArgs(Utilities.GetExceptionAsString(e), ErrorType.FatalError));
                             throw;
                         }

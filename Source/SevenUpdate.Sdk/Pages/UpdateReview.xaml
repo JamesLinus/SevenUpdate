@@ -47,7 +47,8 @@
     </TextBlock>
     <TextBlock HorizontalAlignment="Left" Margin="12,4,0,0" Padding="2" VerticalAlignment="Top" Grid.Row="2">
       <TextBlock.Text>
-        <MultiBinding StringFormat="Number of languages supported: {0}" FallbackValue="Number of languages supported: 0">
+        <MultiBinding StringFormat="Number of languages supported: {0}"
+                      FallbackValue="Number of languages supported: 0">
           <Binding Path="Name.Count" />
         </MultiBinding>
       </TextBlock.Text>

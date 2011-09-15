@@ -21,8 +21,8 @@ namespace SharpBits.Base
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <c>JobProgress</c> class.</summary>
-        /// <param name="jobProgress">  The job progress.</param>
+        /// <summary>Initializes a new instance of the <see cref = "JobProgress" /> class.</summary>
+        /// <param name = "jobProgress">The job progress.</param>
         internal JobProgress(BGJobProgress jobProgress)
         {
             this.jobProgress = jobProgress;
@@ -30,7 +30,7 @@ namespace SharpBits.Base
 
         #endregion
 
-        #region Properties
+        #region Public Properties
 
         /// <summary>Gets the total number bytes downloaded.</summary>
         /// <value>The bytes total.</value>

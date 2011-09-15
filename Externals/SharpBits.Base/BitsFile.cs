@@ -34,10 +34,10 @@ namespace SharpBits.Base
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <c>BitsFile</c> class.</summary>
-        /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are <c>null</c>.</exception>
-        /// <param name="job">  The current job.</param>
-        /// <param name="file">  The current file within the job.</param>
+        /// <summary>Initializes a new instance of the <see cref = "BitsFile" /> class.</summary>
+        /// <exception cref = "ArgumentNullException">Thrown when one or more required arguments are <c>null</c>.</exception>
+        /// <param name = "job">The current job.</param>
+        /// <param name = "file">The current file within the job.</param>
         internal BitsFile(BitsJob job, IBackgroundCopyFile file)
         {
             if (null == file)
@@ -52,7 +52,7 @@ namespace SharpBits.Base
 
         #endregion
 
-        #region Properties
+        #region Public Properties
 
         /// <summary>Gets the local name of the file.</summary>
         /// <value>The filename of the local file.</value>
@@ -140,9 +140,7 @@ namespace SharpBits.Base
 
         #endregion
 
-        #region Implemented Interfaces
-
-        #region IDisposable
+        #region Public Methods
 
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
         public void Dispose()
@@ -153,15 +151,10 @@ namespace SharpBits.Base
 
         #endregion
 
-        #endregion
-
         #region Methods
 
         /// <summary>Releases unmanaged and - optionally - managed resources.</summary>
-        /// <param name="disposing">
-        ///   <c>True</c> to release both managed and unmanaged resources; otherwise, <c>False</c> to release only
-        ///   unmanaged resources.
-        /// </param>
+        /// <param name = "disposing"><c>True</c> to release both managed and unmanaged resources; otherwise, <c>False</c> to release only unmanaged resources.</param>
         private void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -193,7 +186,7 @@ namespace SharpBits.Base
 
         #endregion
 
-        #region Properties
+        #region Public Properties
 
         /// <summary>Gets the file ranges.</summary>
         /// <value>The file ranges.</value>

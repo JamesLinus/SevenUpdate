@@ -23,39 +23,39 @@ namespace SevenUpdate
     public enum UpdateAction
     {
         /// <summary>Canceled Updates.</summary>
-        Canceled,
+        Canceled, 
 
         /// <summary>Check for updates.</summary>
-        CheckForUpdates,
+        CheckForUpdates, 
 
         /// <summary>Checking for updates.</summary>
-        CheckingForUpdates,
+        CheckingForUpdates, 
 
         /// <summary>When connecting to the admin service.</summary>
-        ConnectingToService,
+        ConnectingToService, 
 
         /// <summary>When downloading of updates has been completed.</summary>
-        DownloadCompleted,
+        DownloadCompleted, 
 
         /// <summary>Downloading updates.</summary>
-        Downloading,
+        Downloading, 
 
         /// <summary>An Error Occurred when downloading/installing updates.</summary>
-        ErrorOccurred,
+        ErrorOccurred, 
 
         /// <summary>When installation of updates have completed.</summary>
-        InstallationCompleted,
+        InstallationCompleted, 
 
         /// <summary>Installing Updates.</summary>
-        Installing,
+        Installing, 
 
         /// <summary>No updates have been found.</summary>
-        NoUpdates,
+        NoUpdates, 
 
         /// <summary>A reboot is needed to finish installing updates.</summary>
-        RebootNeeded,
+        RebootNeeded, 
 
         /// <summary>Updates have been found.</summary>
-        UpdatesFound,
+        UpdatesFound, 
     }
 }

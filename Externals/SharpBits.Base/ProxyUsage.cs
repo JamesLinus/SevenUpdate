@@ -13,15 +13,15 @@ namespace SharpBits.Base
     public enum ProxyUsage
     {
         /// <summary>Use the current configuration.</summary>
-        PreConfig,
+        PreConfig, 
 
         /// <summary>Don't use a proxy.</summary>
-        NoProxy,
+        NoProxy, 
 
         /// <summary>Override proxy settings.</summary>
-        Override,
+        Override, 
 
         /// <summary>Auto detect proxy settings.</summary>
-        AutoDetect,
+        AutoDetect, 
     }
 }

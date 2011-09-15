@@ -16,18 +16,14 @@ namespace Tar
         #region Public Methods
 
         /// <param name="t">
-        /// </param>
-        /// <returns>
-        /// </returns>
+        /// </param><returns></returns>
         public static string TrimNull(this string t)
         {
             return t.Trim(new[] { (char)0x20, (char)0x00 });
         }
 
         /// <param name="t">
-        /// </param>
-        /// <returns>
-        /// </returns>
+        /// </param><returns></returns>
         public static string TrimSlash(this string t)
         {
             return t.TrimEnd(new[] { Path.DirectorySeparatorChar }).TrimStart(new[] { Path.DirectorySeparatorChar });

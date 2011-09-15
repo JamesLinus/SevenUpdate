@@ -17,7 +17,7 @@
 
 namespace System.Windows.Internal
 {
-    using Runtime.InteropServices;
+    using System.Runtime.InteropServices;
 
     /// <summary>Defines the coordinates of the upper-left and lower-right corners of a rectangle.</summary>
     [StructLayout(LayoutKind.Sequential)]
