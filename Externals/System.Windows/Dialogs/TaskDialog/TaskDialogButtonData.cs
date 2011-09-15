@@ -20,9 +20,9 @@ namespace System.Windows.Dialogs.TaskDialog
         [MarshalAs(UnmanagedType.LPWStr)]
         internal string ButtonText;
 
-        /// <summary>Initializes a new instance of the <see cref = "TaskDialogButtonData" /> struct.</summary>
-        /// <param name = "buttonId">The button id.</param>
-        /// <param name = "text">The text.</param>
+        /// <summary>Initializes a new instance of the <see cref="TaskDialogButtonData" /> struct.</summary>
+        /// <param name="buttonId">The button id.</param>
+        /// <param name="text">The text.</param>
         public TaskDialogButtonData(int buttonId, string text)
         {
             this.ButtonId = buttonId;

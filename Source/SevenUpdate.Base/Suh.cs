@@ -61,13 +61,13 @@ namespace SevenUpdate
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "Suh" /> class.</summary>
-        /// <param name = "name">The collection of localized update names.</param>
-        /// <param name = "publisher">The collection of localized publisher names.</param>
-        /// <param name = "description">The collection of localized update descriptions.</param>
+        /// <summary>Initializes a new instance of the <see cref="Suh" /> class.</summary>
+        /// <param name="name">The collection of localized update names.</param>
+        /// <param name="publisher">The collection of localized publisher names.</param>
+        /// <param name="description">The collection of localized update descriptions.</param>
         public Suh(
-            ObservableCollection<LocaleString> name, 
-            ObservableCollection<LocaleString> publisher, 
+            ObservableCollection<LocaleString> name,
+            ObservableCollection<LocaleString> publisher,
             ObservableCollection<LocaleString> description)
         {
             this.Name = name;
@@ -90,7 +90,7 @@ namespace SevenUpdate
             }
         }
 
-        /// <summary>Initializes a new instance of the <see cref = "Suh" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="Suh" /> class.</summary>
         public Suh()
         {
             this.Name = new ObservableCollection<LocaleString>();
@@ -292,7 +292,7 @@ namespace SevenUpdate
         #region Methods
 
         /// <summary>When a property has changed, call the <c>OnPropertyChanged</c> Event.</summary>
-        /// <param name = "propertyName">The name of the property that changed.</param>
+        /// <param name="propertyName">The name of the property that changed.</param>
         private void OnPropertyChanged(string propertyName)
         {
             var handler = this.PropertyChanged;

@@ -12,7 +12,7 @@ namespace System.Windows.Dialogs
     using System.Windows.Properties;
 
     /// <summary>Strongly typed collection for dialog controls.</summary>
-    /// <typeparam name = "T">The DialogControl</typeparam>
+    /// <typeparam name="T">The DialogControl</typeparam>
     public sealed class DialogControlCollection<T> : Collection<T>
         where T : DialogControl
     {
@@ -25,8 +25,8 @@ namespace System.Windows.Dialogs
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "DialogControlCollection{T}" /> class.</summary>
-        /// <param name = "host">The host.</param>
+        /// <summary>Initializes a new instance of the <see cref="DialogControlCollection{T}" /> class.</summary>
+        /// <param name="host">The host.</param>
         internal DialogControlCollection(IDialogControlHost host)
         {
             this.hostingDialog = host;
@@ -37,9 +37,9 @@ namespace System.Windows.Dialogs
         #region Public Indexers
 
         /// <summary>Defines the indexer that supports accessing controls by name.</summary>
-        /// <param name = "name">The name of the control.</param>
+        /// <param name="name">The name of the control.</param>
         /// <remarks><para>Control names are case sensitive.</para> <para>This indexer is useful when the dialog is created in XAML rather than constructed in code.</para></remarks>
-        /// <exception cref = "System.ArgumentException">
+        /// <exception cref="System.ArgumentException">
         ///   The name cannot be null or a zero-length string.</exception>
         /// <remarks>If there is more than one control with the same name, only the <B>first control</B> will be returned.</remarks>
         /// <returns>The control.</returns>
@@ -60,18 +60,18 @@ namespace System.Windows.Dialogs
 
         #region Methods
 
-        /// <summary>Searches for the control who's id matches the value passed in the <paramref name = "id" /> parameter.</summary>
-        /// <param name = "id">An integer containing the identifier of the control being searched for.</param>
-        /// <returns>A DialogControl who's id matches the value of the <paramref name = "id" /> parameter.</returns>
+        /// <summary>Searches for the control who's id matches the value passed in the <paramref name="id" /> parameter.</summary>
+        /// <param name="id">An integer containing the identifier of the control being searched for.</param>
+        /// <returns>A DialogControl who's id matches the value of the <paramref name="id" /> parameter.</returns>
         internal DialogControl GetControlbyId(int id)
         {
             return this.Items.FirstOrDefault(x => x.Id == id);
         }
 
         /// <summary>Inserts an dialog control at the specified index.</summary>
-        /// <param name = "index">The location to insert the control.</param>
-        /// <param name = "control">The item to insert.</param>
-        /// <permission cref = "System.InvalidOperationException">A control with the same name already exists in this collection -or- the control is being hosted by another dialog -or- the associated dialog is showing and cannot be modified.</permission>
+        /// <param name="index">The location to insert the control.</param>
+        /// <param name="control">The item to insert.</param>
+        /// <permission cref="System.InvalidOperationException">A control with the same name already exists in this collection -or- the control is being hosted by another dialog -or- the associated dialog is showing and cannot be modified.</permission>
         protected override void InsertItem(int index, T control)
         {
             // Check for duplicates, lack of host, and during-show adds.
@@ -99,8 +99,8 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>Removes the control at the specified index.</summary>
-        /// <param name = "index">The location of the control to remove.</param>
-        /// <permission cref = "System.InvalidOperationException"> The associated dialog is showing and cannot be modified.</permission>
+        /// <param name="index">The location of the control to remove.</param>
+        /// <permission cref="System.InvalidOperationException"> The associated dialog is showing and cannot be modified.</permission>
         protected override void RemoveItem(int index)
         {
             // Notify that we're about to remove a control. Throw if dialog showing.

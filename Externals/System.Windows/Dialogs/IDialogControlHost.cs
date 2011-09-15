@@ -19,8 +19,8 @@ namespace System.Windows.Dialogs
         void ApplyCollectionChanged();
 
         /// <summary>Called when a control currently in the collection has a property changed.</summary>
-        /// <param name = "propertyName">The name of the property changed.</param>
-        /// <param name = "control">The control whose property has changed.</param>
+        /// <param name="propertyName">The name of the property changed.</param>
+        /// <param name="control">The control whose property has changed.</param>
         void ApplyControlPropertyChange(string propertyName, DialogControl control);
 
         /// <summary>Returns if changes to the collection are allowed.</summary>
@@ -32,8 +32,8 @@ namespace System.Windows.Dialogs
         ///   the property cannot be set in the dialog's current state. PostProcess should pass on changes to native
         ///   control, if appropriate.
         /// </summary>
-        /// <param name = "propertyName">The name of the property.</param>
-        /// <param name = "control">The control propertyName applies to.</param>
+        /// <param name="propertyName">The name of the property.</param>
+        /// <param name="control">The control propertyName applies to.</param>
         /// <returns>true if the property change is allowed.</returns>
         bool IsControlPropertyChangeAllowed(string propertyName, DialogControl control);
 

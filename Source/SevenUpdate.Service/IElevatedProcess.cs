@@ -29,39 +29,39 @@ namespace SevenUpdate.Service
         #region Public Methods
 
         /// <summary>Adds an application to Seven Update, so it can manage updates for it.</summary>
-        /// <param name = "application">The application to add.</param>
+        /// <param name="application">The application to add.</param>
         [OperationContract(IsOneWay = false)]
         [ProtoBehavior]
         void AddApp(Sua application);
 
         /// <summary>Changes the program settings.</summary>
-        /// <param name = "applications">The applications to enable update checking.</param>
-        /// <param name = "options">The Seven Update settings.</param>
-        /// <param name = "autoCheck">If set to <c>True</c> automatic updates will be enabled.</param>
+        /// <param name="applications">The applications to enable update checking.</param>
+        /// <param name="options">The Seven Update settings.</param>
+        /// <param name="autoCheck">If set to <c>True</c> automatic updates will be enabled.</param>
         [OperationContract(IsOneWay = false)]
         [ProtoBehavior]
         void ChangeSettings(Collection<Sua> applications, Config options, bool autoCheck);
 
         /// <summary>Hides a single update.</summary>
-        /// <param name = "hiddenUpdate">The update to hide.</param>
+        /// <param name="hiddenUpdate">The update to hide.</param>
         [OperationContract(IsOneWay = false)]
         [ProtoBehavior]
         void HideUpdate(Suh hiddenUpdate);
 
         /// <summary>Hides a collection of <c>Suh</c> to hide.</summary>
-        /// <param name = "hiddenUpdates">The collection of updates to hide.</param>
+        /// <param name="hiddenUpdates">The collection of updates to hide.</param>
         [OperationContract(IsOneWay = false)]
         [ProtoBehavior]
         void HideUpdates(Collection<Suh> hiddenUpdates);
 
         /// <summary>Gets a collection of <c>Sui</c>.</summary>
-        /// <param name = "applicationUpdates">The collection of applications and updates to install.</param>
+        /// <param name="applicationUpdates">The collection of applications and updates to install.</param>
         [OperationContract(IsOneWay = false)]
         [ProtoBehavior]
         void InstallUpdates(Collection<Sui> applicationUpdates);
 
         /// <summary>The update to show and remove from hidden updates.</summary>
-        /// <param name = "hiddenUpdate">The hidden update to show.</param>
+        /// <param name="hiddenUpdate">The hidden update to show.</param>
         [OperationContract(IsOneWay = false)]
         [ProtoBehavior]
         void ShowUpdate(Suh hiddenUpdate);

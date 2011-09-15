@@ -29,9 +29,9 @@ namespace SevenUpdate
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "ErrorOccurredEventArgs" /> class.</summary>
-        /// <param name = "exception">The exception that occurred.</param>
-        /// <param name = "type">The type of error that occurred.</param>
+        /// <summary>Initializes a new instance of the <see cref="ErrorOccurredEventArgs" /> class.</summary>
+        /// <param name="exception">The exception that occurred.</param>
+        /// <param name="type">The type of error that occurred.</param>
         public ErrorOccurredEventArgs(string exception, ErrorType type)
         {
             this.Exception = exception;

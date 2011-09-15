@@ -28,7 +28,7 @@ namespace System.Windows.Dialogs.TaskDialog
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref = "TaskDialogProgressBar" /> class. Creates a new instance of
+        ///   Initializes a new instance of the <see cref="TaskDialogProgressBar" /> class. Creates a new instance of
         ///   this class.
         /// </summary>
         public TaskDialogProgressBar()
@@ -36,22 +36,22 @@ namespace System.Windows.Dialogs.TaskDialog
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref = "TaskDialogProgressBar" /> class. Creates a new instance of
+        ///   Initializes a new instance of the <see cref="TaskDialogProgressBar" /> class. Creates a new instance of
         ///   this class with the specified name. And using the default values: Min = 0, Max = 100, Current = 0
         /// </summary>
-        /// <param name = "name">The name of the control.</param>
+        /// <param name="name">The name of the control.</param>
         public TaskDialogProgressBar(string name)
             : base(name)
         {
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref = "TaskDialogProgressBar" /> class. Creates a new instance of
+        ///   Initializes a new instance of the <see cref="TaskDialogProgressBar" /> class. Creates a new instance of
         ///   this class with the specified minimum, maximum and current values.
         /// </summary>
-        /// <param name = "minimum">The minimum value for this control.</param>
-        /// <param name = "maximum">The maximum value for this control.</param>
-        /// <param name = "value">The current value for this control.</param>
+        /// <param name="minimum">The minimum value for this control.</param>
+        /// <param name="maximum">The maximum value for this control.</param>
+        /// <param name="value">The current value for this control.</param>
         public TaskDialogProgressBar(int minimum, int maximum, int value)
         {
             this.Minimum = minimum;

@@ -35,14 +35,14 @@ namespace SevenUpdate.Sdk
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "Win32Window" /> class.</summary>
-        /// <param name = "handle">The handle.</param>
+        /// <summary>Initializes a new instance of the <see cref="Win32Window" /> class.</summary>
+        /// <param name="handle">The handle.</param>
         public Win32Window(IntPtr handle)
         {
             this.windowHandle = handle;
         }
 
-        /// <summary>Finalizes an instance of the <see cref = "Win32Window" /> class.</summary>
+        /// <summary>Finalizes an instance of the <see cref="Win32Window" /> class.</summary>
         ~Win32Window()
         {
             this.Dispose(false);
@@ -80,7 +80,7 @@ namespace SevenUpdate.Sdk
         #region Methods
 
         /// <summary>Releases unmanaged and - optionally - managed resources.</summary>
-        /// <param name = "disposing">Release both managed and unmanaged resources; <c>False</c> to release only unmanaged resources.</param>
+        /// <param name="disposing">Release both managed and unmanaged resources; <c>False</c> to release only unmanaged resources.</param>
         private void Dispose(bool disposing)
         {
             lock (this)

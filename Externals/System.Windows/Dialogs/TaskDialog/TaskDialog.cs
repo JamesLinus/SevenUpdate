@@ -107,14 +107,14 @@ namespace System.Windows.Dialogs.TaskDialog
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "TaskDialog" /> class. Creates a basic TaskDialog window</summary>
+        /// <summary>Initializes a new instance of the <see cref="TaskDialog" /> class. Creates a basic TaskDialog window</summary>
         public TaskDialog()
         {
             // Initialize various data structs.
             this.controls = new DialogControlCollection<TaskDialogControl>(this);
         }
 
-        /// <summary>Finalizes an instance of the <see cref = "TaskDialog" /> class. TaskDialog Finalizer</summary>
+        /// <summary>Finalizes an instance of the <see cref="TaskDialog" /> class. TaskDialog Finalizer</summary>
         ~TaskDialog()
         {
             this.Dispose(false);
@@ -514,7 +514,7 @@ namespace System.Windows.Dialogs.TaskDialog
         #region Public Methods
 
         /// <summary>Creates and shows a task dialog with the specified message text.</summary>
-        /// <param name = "text">The text to display.</param>
+        /// <param name="text">The text to display.</param>
         /// <returns>The dialog result.</returns>
         public static TaskDialogResult Show(string text)
         {
@@ -522,8 +522,8 @@ namespace System.Windows.Dialogs.TaskDialog
         }
 
         /// <summary>Creates and shows a task dialog with the specified supporting text and main instruction.</summary>
-        /// <param name = "text">The supporting text to display.</param>
-        /// <param name = "instructionText">The main instruction text to display.</param>
+        /// <param name="text">The supporting text to display.</param>
+        /// <param name="instructionText">The main instruction text to display.</param>
         /// <returns>The dialog result.</returns>
         public static TaskDialogResult Show(string text, string instructionText)
         {
@@ -531,9 +531,9 @@ namespace System.Windows.Dialogs.TaskDialog
         }
 
         /// <summary>Creates and shows a task dialog with the specified supporting text, main instruction, and dialog caption.</summary>
-        /// <param name = "text">The supporting text to display.</param>
-        /// <param name = "instructionText">The main instruction text to display.</param>
-        /// <param name = "caption">The caption for the dialog.</param>
+        /// <param name="text">The supporting text to display.</param>
+        /// <param name="instructionText">The main instruction text to display.</param>
+        /// <param name="caption">The caption for the dialog.</param>
         /// <returns>The dialog result.</returns>
         public static TaskDialogResult Show(string text, string instructionText, string caption)
         {
@@ -541,7 +541,7 @@ namespace System.Windows.Dialogs.TaskDialog
         }
 
         /// <summary>Close TaskDialog</summary>
-        /// <exception cref = "InvalidOperationException">if TaskDialog is not showing.</exception>
+        /// <exception cref="InvalidOperationException">if TaskDialog is not showing.</exception>
         public void Close()
         {
             if (!this.NativeDialogShowing)
@@ -555,8 +555,8 @@ namespace System.Windows.Dialogs.TaskDialog
         }
 
         /// <summary>Close TaskDialog with a given TaskDialogResult</summary>
-        /// <param name = "closingResult">TaskDialogResult to return from the TaskDialog.Show() method</param>
-        /// <exception cref = "InvalidOperationException">if TaskDialog is not showing.</exception>
+        /// <param name="closingResult">TaskDialogResult to return from the TaskDialog.Show() method</param>
+        /// <exception cref="InvalidOperationException">if TaskDialog is not showing.</exception>
         public void Close(TaskDialogResult closingResult)
         {
             if (!this.NativeDialogShowing)
@@ -577,7 +577,7 @@ namespace System.Windows.Dialogs.TaskDialog
         }
 
         /// <summary>Dispose TaskDialog Resources</summary>
-        /// <param name = "disposing">If true, indicates that this is being called via Dispose rather than via the finalizer.</param>
+        /// <param name="disposing">If true, indicates that this is being called via Dispose rather than via the finalizer.</param>
         public void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -620,7 +620,7 @@ namespace System.Windows.Dialogs.TaskDialog
         }
 
         /// <summary>Creates and shows a modal task dialog.</summary>
-        /// <param name = "window">The window.</param>
+        /// <param name="window">The window.</param>
         /// <returns>The dialog result.</returns>
         public TaskDialogResult ShowDialog(Window window)
         {
@@ -646,8 +646,8 @@ namespace System.Windows.Dialogs.TaskDialog
         ///   out property changes that cannot occur while the dialog is showing because the Win32 API has no way for us
         ///   to propagate the changes until we re-invoke the Win32 call.
         /// </summary>
-        /// <param name = "propertyName">The name of the property.</param>
-        /// <param name = "control">The dialog control that changed.</param>
+        /// <param name="propertyName">The name of the property.</param>
+        /// <param name="control">The dialog control that changed.</param>
         void IDialogControlHost.ApplyControlPropertyChange(string propertyName, DialogControl control)
         {
             // We only need to apply changes to the native dialog when it actually exists.
@@ -732,16 +732,16 @@ namespace System.Windows.Dialogs.TaskDialog
         ///   the property cannot be set in the dialog's current state. PostProcess should pass on changes to native
         ///   control, if appropriate.
         /// </summary>
-        /// <param name = "propertyName">The name of the property.</param>
-        /// <param name = "control">The control <paramref name = "propertyName" /> applies to.</param>
+        /// <param name="propertyName">The name of the property.</param>
+        /// <param name="control">The control <paramref name="propertyName" /> applies to.</param>
         /// <returns><c>True</c> if the property change is allowed.</returns>
         bool IDialogControlHost.IsControlPropertyChangeAllowed(string propertyName, DialogControl control)
         {
             Debug.Assert(
-                control is TaskDialogControl, 
+                control is TaskDialogControl,
                 "Property changing for a control that is not a TaskDialogControl-derived type");
             Debug.Assert(
-                propertyName != "Name", 
+                propertyName != "Name",
                 "Name changes at any time are not supported - public API should have blocked this");
 
             var canChange = false;
@@ -760,12 +760,12 @@ namespace System.Windows.Dialogs.TaskDialog
                 // If the dialog is showing, we can only allow some properties to change.
                 switch (propertyName)
                 {
-                        // Properties that CAN'T be changed while dialog is showing.
+                    // Properties that CAN'T be changed while dialog is showing.
                     case "Text":
                     case "Default":
                         break;
 
-                        // Properties that CAN be changed while dialog is showing.
+                    // Properties that CAN be changed while dialog is showing.
                     case "ShowElevationIcon":
                     case "Enabled":
                         canChange = true;
@@ -784,7 +784,7 @@ namespace System.Windows.Dialogs.TaskDialog
         #region Methods
 
         /// <summary>Raises the button click event.</summary>
-        /// <param name = "id">The id for the button</param>
+        /// <param name="id">The id for the button</param>
         internal void RaiseButtonClickEvent(int id)
         {
             // First check to see if the ID matches a custom button.
@@ -803,7 +803,7 @@ namespace System.Windows.Dialogs.TaskDialog
         ///   current state of the application and the button used to commit. Note that we don't have full access at
         ///   this stage to the full dialog state.
         /// </summary>
-        /// <param name = "id">The id for the <c>TaskDialog</c>.</param>
+        /// <param name="id">The id for the <c>TaskDialog</c>.</param>
         /// <returns>An integer.</returns>
         internal int RaiseClosingEvent(int id)
         {
@@ -856,7 +856,7 @@ namespace System.Windows.Dialogs.TaskDialog
         }
 
         /// <summary>Raises the hyperlink click event.</summary>
-        /// <param name = "link">The link from the hyperlink.</param>
+        /// <param name="link">The link from the hyperlink.</param>
         internal void RaiseHyperlinkClickEvent(string link)
         {
             var handler = this.HyperlinkClick;
@@ -876,7 +876,7 @@ namespace System.Windows.Dialogs.TaskDialog
         }
 
         /// <summary>Raises the tick event.</summary>
-        /// <param name = "ticks">The ticks.</param>
+        /// <param name="ticks">The ticks.</param>
         internal void RaiseTickEvent(int ticks)
         {
             if (this.Tick != null)
@@ -886,8 +886,8 @@ namespace System.Windows.Dialogs.TaskDialog
         }
 
         /// <summary>Applies the elevated icons.</summary>
-        /// <param name = "settings">The dialog settings.</param>
-        /// <param name = "controls">The dialog controls.</param>
+        /// <param name="settings">The dialog settings.</param>
+        /// <param name="controls">The dialog controls.</param>
         private static void ApplyElevatedIcons(
             NativeTaskDialogSettings settings, IEnumerable<TaskDialogButtonBase> controls)
         {
@@ -906,7 +906,7 @@ namespace System.Windows.Dialogs.TaskDialog
         }
 
         /// <summary>Builds the button struct array.</summary>
-        /// <param name = "controls">The dialog buttons</param>
+        /// <param name="controls">The dialog buttons</param>
         /// <returns>An array of TaskDialogButtons.</returns>
         private static TaskDialogButtonData[] BuildButtonStructArray(List<TaskDialogButtonBase> controls)
         {
@@ -922,7 +922,7 @@ namespace System.Windows.Dialogs.TaskDialog
         }
 
         /// <summary>Constructs the dialog result.</summary>
-        /// <param name = "native">The native task dialog</param>
+        /// <param name="native">The native task dialog</param>
         /// <returns>The <c>TaskDialogResults</c>.</returns>
         private static TaskDialogResult ConstructDialogResult(NativeTaskDialog native)
         {
@@ -947,7 +947,7 @@ namespace System.Windows.Dialogs.TaskDialog
         }
 
         /// <summary>Finds the default button id.</summary>
-        /// <param name = "controls">The collection of button controls.</param>
+        /// <param name="controls">The collection of button controls.</param>
         /// <returns>The button id.</returns>
         private static int FindDefaultButtonId(List<TaskDialogButtonBase> controls)
         {
@@ -967,7 +967,7 @@ namespace System.Windows.Dialogs.TaskDialog
         }
 
         /// <summary>Maps the button id to standard button.</summary>
-        /// <param name = "id">The button id.</param>
+        /// <param name="id">The button id.</param>
         /// <returns>The <c>TaskDialogButton</c>.</returns>
         private static TaskDialogStandardButtons MapButtonIdToStandardButton(int id)
         {
@@ -999,9 +999,9 @@ namespace System.Windows.Dialogs.TaskDialog
         }
 
         /// <summary>Shows the <c>TaskDialog</c>.</summary>
-        /// <param name = "text">The text to show.</param>
-        /// <param name = "instructionText">The instruction text.</param>
-        /// <param name = "caption">The caption for the dialog</param>
+        /// <param name="text">The text to show.</param>
+        /// <param name="instructionText">The instruction text.</param>
+        /// <param name="caption">The caption for the dialog</param>
         /// <returns>The <c>TaskDialogResults</c>.</returns>
         private static TaskDialogResult ShowCoreStatic(string text, string instructionText, string caption)
         {
@@ -1022,7 +1022,7 @@ namespace System.Windows.Dialogs.TaskDialog
         }
 
         /// <summary>Applies the control configuration.</summary>
-        /// <param name = "settings">The task dialog settings.</param>
+        /// <param name="settings">The task dialog settings.</param>
         private void ApplyControlConfiguration(NativeTaskDialogSettings settings)
         {
             // Deal with progress bars/marquees.
@@ -1076,7 +1076,7 @@ namespace System.Windows.Dialogs.TaskDialog
         }
 
         /// <summary>Applies the core dialog settings.</summary>
-        /// <param name = "settings">The dialog settings.</param>
+        /// <param name="settings">The dialog settings.</param>
         private void ApplyCoreSettings(NativeTaskDialogSettings settings)
         {
             this.ApplyGeneralNativeConfiguration(settings.NativeConfiguration);
@@ -1086,7 +1086,7 @@ namespace System.Windows.Dialogs.TaskDialog
         }
 
         /// <summary>Applies the core settings.</summary>
-        /// <param name = "dialogConfig">The settings for the dialog</param>
+        /// <param name="dialogConfig">The settings for the dialog</param>
         private void ApplyGeneralNativeConfiguration(TaskDialogConfiguration dialogConfig)
         {
             // If an owner wasn't specifically specified, we'll use the app's main window.
@@ -1102,7 +1102,7 @@ namespace System.Windows.Dialogs.TaskDialog
         }
 
         /// <summary>Applies the option configuration.</summary>
-        /// <param name = "dialogConfig">The dialog config.</param>
+        /// <param name="dialogConfig">The dialog config.</param>
         private void ApplyOptionConfiguration(TaskDialogConfiguration dialogConfig)
         {
             // Handle options - start with no options set.
@@ -1149,7 +1149,7 @@ namespace System.Windows.Dialogs.TaskDialog
         }
 
         /// <summary>Applies the supplemental settings.</summary>
-        /// <param name = "settings">The dialog settings.</param>
+        /// <param name="settings">The dialog settings.</param>
         private void ApplySupplementalSettings(NativeTaskDialogSettings settings)
         {
             if (this.progressBar != null)
@@ -1170,7 +1170,7 @@ namespace System.Windows.Dialogs.TaskDialog
         }
 
         /// <summary>Sets important text properties.</summary>
-        /// <param name = "dialogConfig">An instance of a <see cref = "TaskDialogConfiguration" /> object.</param>
+        /// <param name="dialogConfig">An instance of a <see cref="TaskDialogConfiguration" /> object.</param>
         private void ApplyTextConfiguration(TaskDialogConfiguration dialogConfig)
         {
             // note that nulls or empty strings are fine here.
@@ -1220,7 +1220,7 @@ namespace System.Windows.Dialogs.TaskDialog
         }
 
         /// <summary>Gets the button for id.</summary>
-        /// <param name = "id">The button id.</param>
+        /// <param name="id">The button id.</param>
         /// <returns>The <c>TaskDialogButton</c>.</returns>
         private TaskDialogButtonBase GetButtonForId(int id)
         {
@@ -1318,7 +1318,7 @@ namespace System.Windows.Dialogs.TaskDialog
         }
 
         /// <summary>Throws if dialog showing.</summary>
-        /// <param name = "message">The message to be shown in the exception.</param>
+        /// <param name="message">The message to be shown in the exception.</param>
         private void ThrowIfDialogShowing(string message)
         {
             if (this.NativeDialogShowing)

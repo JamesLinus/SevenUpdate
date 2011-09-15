@@ -22,7 +22,7 @@ namespace System.Windows.Dialogs.TaskDialog
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref = "TaskDialogCommandLink" /> class. Creates a new instance of
+        ///   Initializes a new instance of the <see cref="TaskDialogCommandLink" /> class. Creates a new instance of
         ///   this class.
         /// </summary>
         public TaskDialogCommandLink()
@@ -30,23 +30,23 @@ namespace System.Windows.Dialogs.TaskDialog
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref = "TaskDialogCommandLink" /> class. Creates a new instance of
+        ///   Initializes a new instance of the <see cref="TaskDialogCommandLink" /> class. Creates a new instance of
         ///   this class with the specified name and label.
         /// </summary>
-        /// <param name = "name">The name for this button.</param>
-        /// <param name = "text">The label for this button.</param>
+        /// <param name="name">The name for this button.</param>
+        /// <param name="text">The label for this button.</param>
         public TaskDialogCommandLink(string name, string text)
             : base(name, text)
         {
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref = "TaskDialogCommandLink" /> class. Creates a new instance of
+        ///   Initializes a new instance of the <see cref="TaskDialogCommandLink" /> class. Creates a new instance of
         ///   this class with the specified name,label, and instruction.
         /// </summary>
-        /// <param name = "name">The name for this button.</param>
-        /// <param name = "text">The label for this button.</param>
-        /// <param name = "instruction">The instruction for this command link.</param>
+        /// <param name="name">The name for this button.</param>
+        /// <param name="text">The label for this button.</param>
+        /// <param name="instruction">The instruction for this command link.</param>
         public TaskDialogCommandLink(string name, string text, string instruction)
             : base(name, text)
         {
@@ -76,16 +76,16 @@ namespace System.Windows.Dialogs.TaskDialog
         #region Public Methods
 
         /// <summary>Returns a string representation of this object.</summary>
-        /// <returns>A <see cref = "System.String" /></returns>
+        /// <returns>A <see cref="System.String" /></returns>
         public override string ToString()
         {
             return string.Format(
-                CultureInfo.CurrentCulture, 
-                "{0}{1}{2}", 
-                this.Text ?? string.Empty, 
+                CultureInfo.CurrentCulture,
+                "{0}{1}{2}",
+                this.Text ?? string.Empty,
                 (string.IsNullOrEmpty(this.Text) || string.IsNullOrEmpty(this.instruction))
                     ? Environment.NewLine
-                    : string.Empty, 
+                    : string.Empty,
                 this.instruction ?? string.Empty);
         }
 

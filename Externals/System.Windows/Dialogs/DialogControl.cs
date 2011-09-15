@@ -27,7 +27,7 @@ namespace System.Windows.Dialogs
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref = "DialogControl" /> class. Creates a new instance of a dialog
+        ///   Initializes a new instance of the <see cref="DialogControl" /> class. Creates a new instance of a dialog
         ///   control
         /// </summary>
         protected DialogControl()
@@ -46,10 +46,10 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref = "DialogControl" /> class. Creates a new instance of a dialog
+        ///   Initializes a new instance of the <see cref="DialogControl" /> class. Creates a new instance of a dialog
         ///   control with the specified name.
         /// </summary>
-        /// <param name = "name">The name for this dialog.</param>
+        /// <param name="name">The name for this dialog.</param>
         protected DialogControl(string name)
             : this()
         {
@@ -67,11 +67,11 @@ namespace System.Windows.Dialogs
         public IDialogControlHost HostingDialog { get; set; }
 
         /// <summary>Gets the identifier for this control.</summary>
-        /// <value>An <see cref = "System.Int32" /> value.</value>
+        /// <value>An <see cref="System.Int32" /> value.</value>
         public int Id { get; private set; }
 
         /// <summary>Gets the name for this control.</summary>
-        /// <value>A <see cref = "System.String" /> value.</value>
+        /// <value>A <see cref="System.String" /> value.</value>
         public string Name
         {
             get
@@ -104,8 +104,8 @@ namespace System.Windows.Dialogs
         #region Public Methods
 
         /// <summary>Compares two objects to determine whether they are equal</summary>
-        /// <param name = "obj">The object to compare against.</param>
-        /// <returns>A <see cref = "System.Boolean" /> value.</returns>
+        /// <param name="obj">The object to compare against.</param>
+        /// <returns>A <see cref="System.Boolean" /> value.</returns>
         public override bool Equals(object obj)
         {
             var control = obj as DialogControl;
@@ -119,7 +119,7 @@ namespace System.Windows.Dialogs
         }
 
         /// <summary>Serves as a hash function for a particular type.</summary>
-        /// <returns>An <see cref = "System.Int32" /> hash code for this control.</returns>
+        /// <returns>An <see cref="System.Int32" /> hash code for this control.</returns>
         public override int GetHashCode()
         {
             if (this.Name == null)
@@ -139,7 +139,7 @@ namespace System.Windows.Dialogs
         ///   should do whatever is necessary to propagate the change to the native control. Note that if the dialog
         ///   isn't set yet, there are no restrictions on setting the property.
         /// </summary>
-        /// <param name = "propName">The name of the property that is changing.</param>
+        /// <param name="propName">The name of the property that is changing.</param>
         protected void ApplyPropertyChange(string propName)
         {
             Debug.Assert(!string.IsNullOrEmpty(propName), "Property changed was not specified");
@@ -155,7 +155,7 @@ namespace System.Windows.Dialogs
         ///   state. The host should throw an exception if the change is not supported. Note that if the dialog isn't
         ///   set yet, there are no restrictions on setting the property.
         /// </summary>
-        /// <param name = "propName">The name of the property that is changing</param>
+        /// <param name="propName">The name of the property that is changing</param>
         protected void CheckPropertyChangeAllowed(string propName)
         {
             Debug.Assert(!string.IsNullOrEmpty(propName), "Property to change was not specified");

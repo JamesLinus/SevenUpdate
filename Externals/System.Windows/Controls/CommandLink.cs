@@ -26,30 +26,30 @@ namespace System.Windows.Controls
 
         /// <summary>The text to display below the main instruction text.</summary>
         private static readonly DependencyProperty NoteProperty = DependencyProperty.Register(
-            "Note", 
-            typeof(string), 
-            typeof(CommandLink), 
+            "Note",
+            typeof(string),
+            typeof(CommandLink),
             new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.AffectsRender, OnNoteChanged));
 
         /// <summary>Indicates if the Uac shield is needed.</summary>
         private static readonly DependencyProperty UseShieldProperty = DependencyProperty.Register(
-            "UseShield", 
-            typeof(bool), 
-            typeof(CommandLink), 
+            "UseShield",
+            typeof(bool),
+            typeof(CommandLink),
             new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender, OnUseShieldChanged));
 
         #endregion
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes static members of the <see cref = "CommandLink" /> class.</summary>
+        /// <summary>Initializes static members of the <see cref="CommandLink" /> class.</summary>
         static CommandLink()
         {
             DefaultStyleKeyProperty.OverrideMetadata(
                 typeof(CommandLink), new FrameworkPropertyMetadata(typeof(CommandLink)));
         }
 
-        /// <summary>Initializes a new instance of the <see cref = "CommandLink" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="CommandLink" /> class.</summary>
         public CommandLink()
         {
             if (this.Resources.Count != 0)
@@ -59,7 +59,7 @@ namespace System.Windows.Controls
 
             var resourceDictionary = new ResourceDictionary
                 {
-                   Source = new Uri("/System.Windows;component/Resources/Dictionary.xaml", UriKind.Relative) 
+                    Source = new Uri("/System.Windows;component/Resources/Dictionary.xaml", UriKind.Relative)
                 };
             this.Resources.MergedDictionaries.Add(resourceDictionary);
         }
@@ -109,8 +109,8 @@ namespace System.Windows.Controls
         #region Methods
 
         /// <summary>Handles a change to the <c>Note</c> property.</summary>
-        /// <param name = "obj">The dependency object.</param>
-        /// <param name = "e">The <c>System.Windows.DependencyPropertyChangedEventArgs</c> instance containing the event data.</param>
+        /// <param name="obj">The dependency object.</param>
+        /// <param name="e">The <c>System.Windows.DependencyPropertyChangedEventArgs</c> instance containing the event data.</param>
         private static void OnNoteChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
             var me = (CommandLink)obj;
@@ -119,8 +119,8 @@ namespace System.Windows.Controls
         }
 
         /// <summary>Handles a change to the <c>UseShield</c> property.</summary>
-        /// <param name = "obj">The dependency object.</param>
-        /// <param name = "e">The <c>System.Windows.DependencyPropertyChangedEventArgs</c> instance containing the event data.</param>
+        /// <param name="obj">The dependency object.</param>
+        /// <param name="e">The <c>System.Windows.DependencyPropertyChangedEventArgs</c> instance containing the event data.</param>
         private static void OnUseShieldChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
             var me = (CommandLink)obj;
@@ -129,7 +129,7 @@ namespace System.Windows.Controls
         }
 
         /// <summary>When a property has changed, call the <c>OnPropertyChanged</c> Event.</summary>
-        /// <param name = "name">The name of the property that has changed.</param>
+        /// <param name="name">The name of the property that has changed.</param>
         private void OnPropertyChanged(string name)
         {
             var handler = this.PropertyChanged;

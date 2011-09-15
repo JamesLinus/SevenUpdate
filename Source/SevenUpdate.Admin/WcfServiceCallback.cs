@@ -35,7 +35,7 @@ namespace SevenUpdate.Admin
         #region Public Methods
 
         /// <summary>Adds an application to Seven Update, so it can manage updates for it.</summary>
-        /// <param name = "application">The application to add to Seven Update.</param>
+        /// <param name="application">The application to add to Seven Update.</param>
         public void AddApp(Sua application)
         {
             if (application == null)
@@ -73,9 +73,9 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Changes the program settings.</summary>
-        /// <param name = "applications">The applications Seven Update will check and manage updates for.</param>
-        /// <param name = "options">The Seven Update settings.</param>
-        /// <param name = "autoCheck">If set to <c>True</c> automatic updates will be enabled.</param>
+        /// <param name="applications">The applications Seven Update will check and manage updates for.</param>
+        /// <param name="options">The Seven Update settings.</param>
+        /// <param name="autoCheck">If set to <c>True</c> automatic updates will be enabled.</param>
         public void ChangeSettings(Collection<Sua> applications, Config options, bool autoCheck)
         {
             if (!autoCheck)
@@ -98,8 +98,8 @@ namespace SevenUpdate.Admin
                 if (Environment.OSVersion.Version.Major < 6)
                 {
                     Registry.SetValue(
-                        @"HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run", 
-                        "Seven Update Automatic Checking", 
+                        @"HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run",
+                        "Seven Update Automatic Checking",
                         Path.Combine(Utilities.AppDir, "SevenUpdate.Helper.exe"));
                 }
                 else
@@ -113,7 +113,7 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Hides a single update.</summary>
-        /// <param name = "hiddenUpdate">The update to hide.</param>
+        /// <param name="hiddenUpdate">The update to hide.</param>
         public void HideUpdate(Suh hiddenUpdate)
         {
             var hidden = (File.Exists(App.HiddenFile)
@@ -126,7 +126,7 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Hides a collection of <c>Suh</c> to hide.</summary>
-        /// <param name = "hiddenUpdates">The collection of updates to hide.</param>
+        /// <param name="hiddenUpdates">The collection of updates to hide.</param>
         public void HideUpdates(Collection<Suh> hiddenUpdates)
         {
             if (hiddenUpdates == null)
@@ -145,7 +145,7 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Gets a collection of <c>Sui</c>.</summary>
-        /// <param name = "applicationUpdates">The collection of applications and updates to install.</param>
+        /// <param name="applicationUpdates">The collection of applications and updates to install.</param>
         public void InstallUpdates(Collection<Sui> applicationUpdates)
         {
             try
@@ -174,7 +174,7 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>The update to show and remove from hidden updates.</summary>
-        /// <param name = "hiddenUpdate">The hidden update to show.</param>
+        /// <param name="hiddenUpdate">The hidden update to show.</param>
         public void ShowUpdate(Suh hiddenUpdate)
         {
             if (hiddenUpdate == null)
@@ -219,13 +219,13 @@ namespace SevenUpdate.Admin
         {
             Task.Factory.StartNew(
                 () =>
+                {
+                    Thread.Sleep(500);
+                    if (!App.IsInstalling)
                     {
-                        Thread.Sleep(500);
-                        if (!App.IsInstalling)
-                        {
-                            Environment.Exit(0);
-                        }
-                    });
+                        Environment.Exit(0);
+                    }
+                });
         }
 
         #endregion

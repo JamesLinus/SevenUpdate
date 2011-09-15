@@ -18,7 +18,7 @@ namespace System.Windows.Dialogs.TaskDialog
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "NativeTaskDialogSettings" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="NativeTaskDialogSettings" /> class.</summary>
         internal NativeTaskDialogSettings()
         {
             this.NativeConfiguration = new TaskDialogConfiguration();

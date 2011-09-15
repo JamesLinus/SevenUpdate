@@ -13,10 +13,10 @@ namespace System.Windows.Dialogs.TaskDialog
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref = "TaskDialogHyperlinkClickedEventArgs" /> class. Creates a
-        ///   new instance of this class with the specified link text.
+        ///   Initializes a new instance of the <see cref="TaskDialogHyperlinkClickedEventArgs" /> class. Creates a new
+        ///   instance of this class with the specified link text.
         /// </summary>
-        /// <param name = "linkText">The text of the hyperlink that was clicked.</param>
+        /// <param name="linkText">The text of the hyperlink that was clicked.</param>
         public TaskDialogHyperlinkClickedEventArgs(string linkText)
         {
             this.LinkText = linkText;

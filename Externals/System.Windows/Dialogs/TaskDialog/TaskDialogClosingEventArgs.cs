@@ -9,7 +9,7 @@ namespace System.Windows.Dialogs.TaskDialog
 {
     using System.ComponentModel;
 
-    /// <summary>Data associated with <see cref = "TaskDialog.Closing" /> event.</summary>
+    /// <summary>Data associated with <see cref="TaskDialog.Closing" /> event.</summary>
     public class TaskDialogClosingEventArgs : CancelEventArgs
     {
         #region Public Properties

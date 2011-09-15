@@ -53,9 +53,9 @@ namespace SharpBits.Base
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "BitsJob" /> class.</summary>
-        /// <param name = "manager">The manager for the BITS.</param>
-        /// <param name = "job">The current job.</param>
+        /// <summary>Initializes a new instance of the <see cref="BitsJob" /> class.</summary>
+        /// <param name="manager">The manager for the BITS.</param>
+        /// <param name="job">The current job.</param>
         internal BitsJob(BitsManager manager, IBackgroundCopyJob job)
         {
             this.manager = manager;
@@ -575,8 +575,8 @@ namespace SharpBits.Base
         #region Public Methods
 
         /// <summary>Adds the file.</summary>
-        /// <param name = "remoteName">Name of the remote.</param>
-        /// <param name = "localName">Name of the local.</param>
+        /// <param name="remoteName">Name of the remote.</param>
+        /// <param name="localName">Name of the local.</param>
         public void AddFile(string remoteName, string localName)
         {
             try
@@ -590,7 +590,7 @@ namespace SharpBits.Base
         }
 
         /// <summary>Adds the file.</summary>
-        /// <param name = "fileInfo">The file info.</param>
+        /// <param name="fileInfo">The file info.</param>
         public void AddFile(BitsFileInfo fileInfo)
         {
             if (fileInfo == null)
@@ -602,7 +602,7 @@ namespace SharpBits.Base
         }
 
         /// <summary>Adds the files the current <c>BitsJob</c>.</summary>
-        /// <param name = "files">The files.</param>
+        /// <param name="files">The files.</param>
         public void AddFiles(Collection<BitsFileInfo> files)
         {
             if (files == null)
@@ -713,7 +713,7 @@ namespace SharpBits.Base
         #region Methods
 
         /// <summary>Adds the files to the current job.</summary>
-        /// <param name = "files">The files.</param>
+        /// <param name="files">The files.</param>
         internal void AddFiles(BGFileInfo[] files)
         {
             try
@@ -728,8 +728,8 @@ namespace SharpBits.Base
         }
 
         /// <summary>Fires the event when the job has occurred an error.</summary>
-        /// <param name = "sender">The object that called the event.</param>
-        /// <param name = "e">The <c>SharpBits.Base.ErrorNotificationEventArgs</c> instance containing the event data.</param>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">The <c>SharpBits.Base.ErrorNotificationEventArgs</c> instance containing the event data.</param>
         internal void JobError(object sender, ErrorNotificationEventArgs e)
         {
             if (null != this.jobError)
@@ -739,7 +739,7 @@ namespace SharpBits.Base
         }
 
         /// <summary>Fires the event when the job has been modified.</summary>
-        /// <param name = "sender">The object that called the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         internal void JobModified(object sender)
         {
             if (this.jobModified != null)
@@ -749,7 +749,7 @@ namespace SharpBits.Base
         }
 
         /// <summary>Fires the event when the job has transferred.</summary>
-        /// <param name = "sender">The object that called the event.</param>
+        /// <param name="sender">The object that called the event.</param>
         internal void JobTransferred(object sender)
         {
             if (this.jobTransferred != null)
@@ -759,14 +759,14 @@ namespace SharpBits.Base
         }
 
         /// <summary>Publishes the exception.</summary>
-        /// <param name = "exception">The exception.</param>
+        /// <param name="exception">The exception.</param>
         internal void PublishException(COMException exception)
         {
             this.manager.PublishException(this, exception);
         }
 
         /// <summary>Releases unmanaged and - optionally - managed resources.</summary>
-        /// <param name = "disposing"><c>True</c> to release both managed and unmanaged resources; otherwise, <c>False</c> to release only unmanaged resources.</param>
+        /// <param name="disposing"><c>True</c> to release both managed and unmanaged resources; otherwise, <c>False</c> to release only unmanaged resources.</param>
         private void Dispose(bool disposing)
         {
             if (!this.disposed)
@@ -999,7 +999,7 @@ namespace SharpBits.Base
         #region Public Methods
 
         /// <summary>Adds the credentials.</summary>
-        /// <param name = "credentials">The credentials.</param>
+        /// <param name="credentials">The credentials.</param>
         public void AddCredentials(BitsCredentials credentials)
         {
             try
@@ -1009,7 +1009,7 @@ namespace SharpBits.Base
                     // only supported from IBackgroundCopyJob2 and above
                     var authCredentials = new BGAuthCredentials
                         {
-                            Scheme = (BGAuthScheme)credentials.AuthenticationScheme, 
+                            Scheme = (BGAuthScheme)credentials.AuthenticationScheme,
                             Target = (BGAuthTarget)credentials.AuthenticationTarget
                         };
                     authCredentials.Credentials.Basic.Password = credentials.Password;
@@ -1055,7 +1055,7 @@ namespace SharpBits.Base
         }
 
         /// <summary>Removes the credentials.</summary>
-        /// <param name = "credentials">The credentials.</param>
+        /// <param name="credentials">The credentials.</param>
         public void RemoveCredentials(BitsCredentials credentials)
         {
             try
@@ -1078,8 +1078,8 @@ namespace SharpBits.Base
         }
 
         /// <summary>Removes the credentials.</summary>
-        /// <param name = "target">The target.</param>
-        /// <param name = "scheme">The scheme.</param>
+        /// <param name="target">The target.</param>
+        /// <param name="scheme">The scheme.</param>
         public void RemoveCredentials(AuthenticationTarget target, AuthenticationScheme scheme)
         {
             try
@@ -1168,9 +1168,9 @@ namespace SharpBits.Base
         #region Public Methods
 
         /// <summary>Adds the file with ranges.</summary>
-        /// <param name = "remoteName">Name of the remote.</param>
-        /// <param name = "localName">Name of the local.</param>
-        /// <param name = "fileRanges">The file ranges.</param>
+        /// <param name="remoteName">Name of the remote.</param>
+        /// <param name="localName">Name of the local.</param>
+        /// <param name="fileRanges">The file ranges.</param>
         public void AddFileWithRanges(string remoteName, string localName, Collection<FileRange> fileRanges)
         {
             try
@@ -1198,8 +1198,8 @@ namespace SharpBits.Base
         }
 
         /// <summary>Replaces the remote prefix.</summary>
-        /// <param name = "oldPrefix">The old prefix.</param>
-        /// <param name = "newPrefix">The new prefix.</param>
+        /// <param name="oldPrefix">The old prefix.</param>
+        /// <param name="newPrefix">The new prefix.</param>
         public void ReplaceRemotePrefix(string oldPrefix, string newPrefix)
         {
             try

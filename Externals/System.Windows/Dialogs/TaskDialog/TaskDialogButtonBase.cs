@@ -34,7 +34,7 @@ namespace System.Windows.Dialogs.TaskDialog
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref = "TaskDialogButtonBase" /> class. Creates a new instance on a
+        ///   Initializes a new instance of the <see cref="TaskDialogButtonBase" /> class. Creates a new instance on a
         ///   task dialog button.
         /// </summary>
         protected TaskDialogButtonBase()
@@ -42,11 +42,11 @@ namespace System.Windows.Dialogs.TaskDialog
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref = "TaskDialogButtonBase" /> class. Creates a new instance on a
+        ///   Initializes a new instance of the <see cref="TaskDialogButtonBase" /> class. Creates a new instance on a
         ///   task dialog button with the specified name and text.
         /// </summary>
-        /// <param name = "name">The name for this button.</param>
-        /// <param name = "text">The label for this button.</param>
+        /// <param name="name">The name for this button.</param>
+        /// <param name="text">The label for this button.</param>
         protected TaskDialogButtonBase(string name, string text)
             : base(name)
         {
@@ -123,7 +123,7 @@ namespace System.Windows.Dialogs.TaskDialog
         #region Public Methods
 
         /// <summary>Returns the Text property value for this button.</summary>
-        /// <returns>A <see cref = "System.String" />.</returns>
+        /// <returns>A <see cref="System.String" />.</returns>
         public override string ToString()
         {
             return this.text ?? string.Empty;

@@ -25,7 +25,7 @@ namespace System.Windows.ValidationRules
     using System.Windows.Properties;
 
     /// <summary>Validates if the input is a url.</summary>
-    [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", 
+    [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass",
         Justification = "Validation Rule")]
     public class UrlInputRule : ValidationRule
     {
@@ -40,8 +40,8 @@ namespace System.Windows.ValidationRules
         #region Public Methods
 
         /// <summary>When overridden in a derived class, performs validation checks on a value.</summary>
-        /// <param name = "value">The value from the binding target to check.</param>
-        /// <param name = "cultureInfo">The culture to use in this rule.</param>
+        /// <param name="value">The value from the binding target to check.</param>
+        /// <param name="cultureInfo">The culture to use in this rule.</param>
         /// <returns>A <c>T:System.Windows.Controls.ValidationResult</c> object.</returns>
         public override ValidationResult Validate(object value, CultureInfo cultureInfo)
         {

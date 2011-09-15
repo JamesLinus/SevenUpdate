@@ -25,8 +25,8 @@ namespace System.Windows.Controls
         #region Public Methods
 
         /// <summary>Finds the parent TreeViewItem of the current TreeViewItem.</summary>
-        /// <param name = "treeView">The treeview control.</param>
-        /// <param name = "predicate">The TreeViewItem to use as a starting point.</param>
+        /// <param name="treeView">The treeview control.</param>
+        /// <param name="predicate">The TreeViewItem to use as a starting point.</param>
         /// <returns>The parent TreeViewItem.</returns>
         public static TreeViewItem FindTreeViewItem(this ItemsControl treeView, Predicate<TreeViewItem> predicate)
         {
@@ -48,13 +48,13 @@ namespace System.Windows.Controls
         #region Methods
 
         /// <summary>Finds the TreeViewItem from the collection.</summary>
-        /// <param name = "parentItemContainerGenerator">The parent item container.</param>
-        /// <param name = "itemCollection">The item collection.</param>
-        /// <param name = "predicate">The TreeViewItem.</param>
+        /// <param name="parentItemContainerGenerator">The parent item container.</param>
+        /// <param name="itemCollection">The item collection.</param>
+        /// <param name="predicate">The TreeViewItem.</param>
         /// <returns>The TreeViewItem found.</returns>
         private static TreeViewItem FindTreeViewItem(
-            ItemContainerGenerator parentItemContainerGenerator, 
-            ItemCollection itemCollection, 
+            ItemContainerGenerator parentItemContainerGenerator,
+            ItemCollection itemCollection,
             Predicate<TreeViewItem> predicate)
         {
             foreach (var trvItem in

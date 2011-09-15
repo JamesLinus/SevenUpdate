@@ -26,8 +26,8 @@ namespace WPFLocalizeExtension.Engine
         #region Public Methods
 
         /// <summary>Adds an object dependency</summary>
-        /// <param name = "weakRef">The weak reference</param>
-        /// <param name = "value">The object value</param>
+        /// <param name="weakRef">The weak reference</param>
+        /// <param name="value">The object value</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         public static void AddObjectDependency(WeakReference weakRef, object value)
         {
@@ -84,7 +84,7 @@ namespace WPFLocalizeExtension.Engine
         #region Methods
 
         /// <summary>This method cleans up all independent (!<c>WeakReference</c>.IsAlive) objects or a single object.</summary>
-        /// <param name = "value">If defined, the associated object dependency will be removed instead of a full CleanUp.</param>
+        /// <param name="value">If defined, the associated object dependency will be removed instead of a full CleanUp.</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         private static void CleanUp(object value = null)
         {

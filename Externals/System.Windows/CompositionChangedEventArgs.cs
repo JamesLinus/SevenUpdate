@@ -22,8 +22,8 @@ namespace System.Windows
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "CompositionChangedEventArgs" /> class.</summary>
-        /// <param name = "isGlassEnabled">If set to <c>True</c> aero glass is enabled.</param>
+        /// <summary>Initializes a new instance of the <see cref="CompositionChangedEventArgs" /> class.</summary>
+        /// <param name="isGlassEnabled">If set to <c>True</c> aero glass is enabled.</param>
         internal CompositionChangedEventArgs(bool isGlassEnabled)
         {
             this.IsGlassEnabled = isGlassEnabled;

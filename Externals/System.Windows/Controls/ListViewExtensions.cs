@@ -23,7 +23,7 @@ namespace System.Windows.Controls
         #region Public Methods
 
         /// <summary>Limits resizing of a <c>GridViewColumn</c>.</summary>
-        /// <param name = "control">The Thumb object of the <c>GridViewColumn</c> to limit it's size.</param>
+        /// <param name="control">The Thumb object of the <c>GridViewColumn</c> to limit it's size.</param>
         public static void LimitColumnSize(FrameworkElement control)
         {
             if (control == null)

@@ -47,7 +47,7 @@ namespace System.Windows.Dialogs.TaskDialog
         ///   below the footer text depending on whether the ExpanderFooterArea flag is specified. If the
         ///   EnableHyperlinks flag is specified for the flags member, then this string may contain hyperlinks in the
         ///   form: <a
-        ///    href = "executablestring">Hyperlink Text</a>.
+        /// href = "executablestring">Hyperlink Text</a>.
         /// </summary>
         [MarshalAs(UnmanagedType.LPWStr)]
         internal string ExpandedInformation;
@@ -78,8 +78,7 @@ namespace System.Windows.Dialogs.TaskDialog
         ///   Gets or sets a pointer that references the string to be used for the dialog's primary content. This
         ///   parameter can be either a <c>null</c>-terminated string or an integer resource identifier passed to the
         ///   MAKEINTRESOURCE macro. If the EnableHyperlinks flag is specified for the flags member, then this string
-        ///   may contain hyperlinks in the form: <a
-        ///    href = "executablestring">Hyperlink Text</a>.
+        ///   may contain hyperlinks in the form: <a href = "executablestring">Hyperlink Text</a>.
         /// </summary>
         [MarshalAs(UnmanagedType.LPWStr)]
         internal string Content;

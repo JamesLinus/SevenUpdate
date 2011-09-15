@@ -67,8 +67,8 @@ namespace SevenUpdate
         #region Public Methods
 
         /// <summary>Searches for updates while blocking the calling thread.</summary>
-        /// <param name = "applications">The collection of applications to check for updates.</param>
-        /// <param name = "downloadFolder">The directory where update might be downloaded to.</param>
+        /// <param name="applications">The collection of applications to check for updates.</param>
+        /// <param name="downloadFolder">The directory where update might be downloaded to.</param>
         public static void SearchForUpdates(IEnumerable<Sua> applications, string downloadFolder)
         {
             downloadDirectory = downloadFolder;
@@ -160,21 +160,21 @@ namespace SevenUpdate
             if (SearchCompleted != null)
             {
                 SearchCompleted(
-                    null, 
+                    null,
                     new SearchCompletedEventArgs(applicationsFound, importantCount, recommendedCount, optionalCount));
             }
         }
 
         /// <summary>Searches for files without blocking the calling thread.</summary>
-        /// <param name = "applications">The collection of applications to check for updates.</param>
-        /// <param name = "downloadFolder">The directory where update might be downloaded to.</param>
+        /// <param name="applications">The collection of applications to check for updates.</param>
+        /// <param name="downloadFolder">The directory where update might be downloaded to.</param>
         public static void SearchForUpdatesAsync(IEnumerable<Sua> applications, string downloadFolder)
         {
             Task.Factory.StartNew(() => SearchForUpdates(applications, downloadFolder));
         }
 
         /// <summary>Manually sets an <c>Sui</c> collection has updates found.</summary>
-        /// <param name = "updates">The updates to set as found.</param>
+        /// <param name="updates">The updates to set as found.</param>
         public static void SetUpdatesFound(IEnumerable<Sui> updates)
         {
             if (updates == null)
@@ -215,7 +215,7 @@ namespace SevenUpdate
         #region Methods
 
         /// <summary>Checks for updates.</summary>
-        /// <param name = "app">A collection of applications to check for updates.</param>
+        /// <param name="app">A collection of applications to check for updates.</param>
         /// <returns>Returns <c>True</c> if found updates, otherwise <c>False</c>.</returns>
         private static bool CheckForUpdates(ref Sui app)
         {
@@ -248,9 +248,9 @@ namespace SevenUpdate
                     {
                         app.Updates[y].Files[z].Destination =
                             Utilities.ExpandInstallLocation(
-                                app.Updates[y].Files[z].Destination, 
-                                app.AppInfo.Directory, 
-                                app.AppInfo.Platform, 
+                                app.Updates[y].Files[z].Destination,
+                                app.AppInfo.Directory,
+                                app.AppInfo.Platform,
                                 app.AppInfo.ValueName);
 
                         app.Updates[y].Files[z].Source = Utilities.ExpandDownloadUrl(
@@ -308,10 +308,10 @@ namespace SevenUpdate
         }
 
         /// <summary>Iterates through the update and removes un needed values. Returns the download size for the update.</summary>
-        /// <param name = "update">The update to iterate.</param>
-        /// <param name = "directory">The Uri or registry key to the application directory .</param>
-        /// <param name = "valueName">The name of the registry value, can be <c>null</c>.</param>
-        /// <param name = "platform">A value that indicates what cpu architecture the application supports.</param>
+        /// <param name="update">The update to iterate.</param>
+        /// <param name="directory">The Uri or registry key to the application directory .</param>
+        /// <param name="valueName">The name of the registry value, can be <c>null</c>.</param>
+        /// <param name="platform">A value that indicates what cpu architecture the application supports.</param>
         /// <returns>The current download size of the update.</returns>
         private static ulong IterateUpdate(ref Update update, string directory, string valueName, Platform platform)
         {

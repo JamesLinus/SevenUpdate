@@ -29,14 +29,14 @@ namespace SevenUpdate
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "UpdateInstalledEventArgs" /> class.</summary>
-        /// <param name = "update">The update information that was installed.</param>
+        /// <summary>Initializes a new instance of the <see cref="UpdateInstalledEventArgs" /> class.</summary>
+        /// <param name="update">The update information that was installed.</param>
         public UpdateInstalledEventArgs(Suh update)
         {
             this.Update = update;
         }
 
-        /// <summary>Initializes a new instance of the <see cref = "UpdateInstalledEventArgs" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="UpdateInstalledEventArgs" /> class.</summary>
         public UpdateInstalledEventArgs()
         {
         }

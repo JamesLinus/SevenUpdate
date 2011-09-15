@@ -13,18 +13,18 @@ namespace System.Windows.Dialogs.TaskDialog
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref = "TaskDialogControl" /> class. Creates a new instance of a
-        ///   task dialog control.
+        ///   Initializes a new instance of the <see cref="TaskDialogControl" /> class. Creates a new instance of a task
+        ///   dialog control.
         /// </summary>
         protected TaskDialogControl()
         {
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref = "TaskDialogControl" /> class. Creates a new instance of a
-        ///   task dialog control with the specified name.
+        ///   Initializes a new instance of the <see cref="TaskDialogControl" /> class. Creates a new instance of a task
+        ///   dialog control with the specified name.
         /// </summary>
-        /// <param name = "name">The name for this control.</param>
+        /// <param name="name">The name for this control.</param>
         protected TaskDialogControl(string name)
             : base(name)
         {

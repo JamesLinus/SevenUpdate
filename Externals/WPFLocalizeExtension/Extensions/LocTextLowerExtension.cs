@@ -20,13 +20,13 @@ namespace WPFLocalizeExtension.Extensions
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "LocTextLowerExtension" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="LocTextLowerExtension" /> class.</summary>
         public LocTextLowerExtension()
         {
         }
 
-        /// <summary>Initializes a new instance of the <see cref = "LocTextLowerExtension" /> class.</summary>
-        /// <param name = "key">The resource identifier.</param>
+        /// <summary>Initializes a new instance of the <see cref="LocTextLowerExtension" /> class.</summary>
+        /// <param name="key">The resource identifier.</param>
         public LocTextLowerExtension(string key)
             : base(key)
         {
@@ -37,7 +37,7 @@ namespace WPFLocalizeExtension.Extensions
         #region Public Methods
 
         /// <summary>Provides the Value for the first Binding as <c>System.String</c>.</summary>
-        /// <param name = "serviceProvider">The <c>System.Windows.Markup.IProvideValueTarget</c> provided from the <c>MarkupExtension</c>.</param>
+        /// <param name="serviceProvider">The <c>System.Windows.Markup.IProvideValueTarget</c> provided from the <c>MarkupExtension</c>.</param>
         /// <returns>The found item from the .resx directory or <c>null</c> if not found.</returns>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
@@ -61,9 +61,9 @@ namespace WPFLocalizeExtension.Extensions
 
             throw new NotSupportedException(
                 string.Format(
-                    CultureInfo.CurrentCulture, 
-                    "ResourceKey '{0}' returns '{1}' which is not type of System.String", 
-                    this.Key, 
+                    CultureInfo.CurrentCulture,
+                    "ResourceKey '{0}' returns '{1}' which is not type of System.String",
+                    this.Key,
                     obj.GetType().FullName));
         }
 
@@ -75,7 +75,7 @@ namespace WPFLocalizeExtension.Extensions
         ///   This method formats the localized text.If the passed target text is <c>null</c>, string.empty will be
         ///   returned.
         /// </summary>
-        /// <param name = "target">The text to format.</param>
+        /// <param name="target">The text to format.</param>
         /// <returns>Returns the formated text or string.empty, if the target text was <c>null</c>.</returns>
         protected override string FormatText(string target)
         {

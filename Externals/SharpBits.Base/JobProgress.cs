@@ -21,8 +21,8 @@ namespace SharpBits.Base
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "JobProgress" /> class.</summary>
-        /// <param name = "jobProgress">The job progress.</param>
+        /// <summary>Initializes a new instance of the <see cref="JobProgress" /> class.</summary>
+        /// <param name="jobProgress">The job progress.</param>
         internal JobProgress(BGJobProgress jobProgress)
         {
             this.jobProgress = jobProgress;

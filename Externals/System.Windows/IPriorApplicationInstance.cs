@@ -18,7 +18,7 @@ namespace System.Windows
         #region Public Methods
 
         /// <summary>Signals the startup of the next application instance.</summary>
-        /// <param name = "args">The parameters used to run the next instance of the application.</param>
+        /// <param name="args">The parameters used to run the next instance of the application.</param>
         [OperationContract]
         void SignalStartupNextInstance(string[] args);
 

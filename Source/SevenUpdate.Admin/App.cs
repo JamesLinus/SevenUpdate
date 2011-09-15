@@ -121,8 +121,8 @@ namespace SevenUpdate.Admin
         #region Methods
 
         /// <summary>Adds an update to the history.</summary>
-        /// <param name = "sender">The object that called the event.</param>
-        /// <param name = "e">The event data.</param>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">The event data.</param>
         private static void AddHistory(object sender, UpdateInstalledEventArgs e)
         {
             var history = File.Exists(HistoryFile)
@@ -133,8 +133,8 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Checks if Seven Update is running.</summary>
-        /// <param name = "sender">The object that called the event.</param>
-        /// <param name = "e">The <see cref = "System.Timers.ElapsedEventArgs" /> instance containing the event data.</param>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">The <see cref="System.Timers.ElapsedEventArgs" /> instance containing the event data.</param>
         private static void CheckIfRunning(object sender, ElapsedEventArgs e)
         {
             Task.Factory.StartNew(
@@ -178,8 +178,8 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Reports that the download has completed and starts update installation if necessary.</summary>
-        /// <param name = "sender">The object that called the event.</param>
-        /// <param name = "e">The <c>DownloadCompletedEventArgs</c> instance containing the event data.</param>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">The <c>DownloadCompletedEventArgs</c> instance containing the event data.</param>
         private static void DownloadCompleted(object sender, DownloadCompletedEventArgs e)
         {
             if ((Settings.AutoOption == AutoUpdateOption.Install && isAutoInstall) || !isAutoInstall)
@@ -203,8 +203,8 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Reports that the download progress has changed.</summary>
-        /// <param name = "sender">The object that called the event.</param>
-        /// <param name = "e">The <c>DownloadProgressChangedEventArgs</c> instance containing the event data.</param>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">The <c>DownloadProgressChangedEventArgs</c> instance containing the event data.</param>
         private static void DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
             IsInstalling = true;
@@ -219,8 +219,8 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Runs when there is an error searching for updates.</summary>
-        /// <param name = "sender">The object that called the event.</param>
-        /// <param name = "e">The <c>ErrorOccurredEventArgs</c> instance containing the event data.</param>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">The <c>ErrorOccurredEventArgs</c> instance containing the event data.</param>
         private static void ErrorOccurred(object sender, ErrorOccurredEventArgs e)
         {
             if (e.ErrorType == ErrorType.FatalNetworkError)
@@ -230,8 +230,8 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Reports the installation has completed.</summary>
-        /// <param name = "sender">The object that called the event.</param>
-        /// <param name = "e">The <c>InstallCompletedEventArgs</c> instance containing the event data.</param>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">The <c>InstallCompletedEventArgs</c> instance containing the event data.</param>
         private static void InstallCompleted(object sender, InstallCompletedEventArgs e)
         {
             IsInstalling = false;
@@ -247,8 +247,8 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Reports when the installation progress has changed.</summary>
-        /// <param name = "sender">The object that called the event.</param>
-        /// <param name = "e">The <c>InstallProgressChangedEventArgs</c> instance containing the event data.</param>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">The <c>InstallProgressChangedEventArgs</c> instance containing the event data.</param>
         private static void InstallProgressChanged(object sender, InstallProgressChangedEventArgs e)
         {
             if (isClientConnected)
@@ -262,7 +262,7 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>The main execution method.</summary>
-        /// <param name = "args">The command line arguments.</param>
+        /// <param name="args">The command line arguments.</param>
         [STAThread]
         private static void Main(string[] args)
         {
@@ -327,8 +327,8 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Prevents the system from shutting down until the installation is safely stopped.</summary>
-        /// <param name = "sender">The object that called the event.</param>
-        /// <param name = "e">The <see cref = "Microsoft.Win32.SessionEndingEventArgs" /> instance containing the event data.</param>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">The <see cref="Microsoft.Win32.SessionEndingEventArgs" /> instance containing the event data.</param>
         private static void PreventClose(object sender, SessionEndingEventArgs e)
         {
             if (notifyIcon != null)
@@ -347,7 +347,7 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Processes the command line arguments.</summary>
-        /// <param name = "args">The arguments to process.</param>
+        /// <param name="args">The arguments to process.</param>
         private static void ProcessArgs(IList<string> args)
         {
             if (args.Count <= 0)
@@ -476,8 +476,8 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Starts Seven Update UI.</summary>
-        /// <param name = "sender">The object that called the event.</param>
-        /// <param name = "e">The <see cref = "System.EventArgs" /> instance containing the event data.</param>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">The <see cref="System.EventArgs" /> instance containing the event data.</param>
         private static void RunSevenUpdate(object sender, EventArgs e)
         {
             if (Environment.OSVersion.Version.Major < 6)
@@ -507,8 +507,8 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Runs when the search for updates has completed for an auto update.</summary>
-        /// <param name = "sender">The object that called the event.</param>
-        /// <param name = "e">The <c>SearchCompletedEventArgs</c> instance containing the event data.</param>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">The <c>SearchCompletedEventArgs</c> instance containing the event data.</param>
         private static void SearchCompleted(object sender, SearchCompletedEventArgs e)
         {
             IsInstalling = false;
@@ -626,7 +626,7 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Updates the notify icon text.</summary>
-        /// <param name = "text">The string to set the <c>notifyIcon</c> text.</param>
+        /// <param name="text">The string to set the <c>notifyIcon</c> text.</param>
         private static void UpdateNotifyIcon(string text)
         {
             if (notifyIcon != null)
@@ -636,7 +636,7 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Updates the <c>notifyIcon</c> state.</summary>
-        /// <param name = "filter">The <c>NotifyType</c> to set the <c>notifyIcon</c> to.</param>
+        /// <param name="filter">The <c>NotifyType</c> to set the <c>notifyIcon</c> to.</param>
         private static void UpdateNotifyIcon(NotifyType filter)
         {
             if (notifyIcon == null)

@@ -64,17 +64,17 @@ namespace SevenUpdate
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "Update" /> class.</summary>
-        /// <param name = "name">The collection of localized update names.</param>
-        /// <param name = "description">The collection localized update descriptions.</param>
-        /// <param name = "files">The collection of localized update files.</param>
-        /// <param name = "registryItems">The collection of registry keys and values to perform actions on in the update.</param>
-        /// <param name = "shortcuts">The collection of shortcuts to perform actions on in the update.</param>
+        /// <summary>Initializes a new instance of the <see cref="Update" /> class.</summary>
+        /// <param name="name">The collection of localized update names.</param>
+        /// <param name="description">The collection localized update descriptions.</param>
+        /// <param name="files">The collection of localized update files.</param>
+        /// <param name="registryItems">The collection of registry keys and values to perform actions on in the update.</param>
+        /// <param name="shortcuts">The collection of shortcuts to perform actions on in the update.</param>
         public Update(
-            ObservableCollection<LocaleString> name, 
-            ObservableCollection<LocaleString> description, 
-            ObservableCollection<UpdateFile> files, 
-            ObservableCollection<RegistryItem> registryItems, 
+            ObservableCollection<LocaleString> name,
+            ObservableCollection<LocaleString> description,
+            ObservableCollection<UpdateFile> files,
+            ObservableCollection<RegistryItem> registryItems,
             ObservableCollection<Shortcut> shortcuts)
         {
             this.Name = name;
@@ -115,7 +115,7 @@ namespace SevenUpdate
             this.Description.CollectionChanged += this.DescriptionCollectionChanged;
         }
 
-        /// <summary>Initializes a new instance of the <see cref = "Update" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="Update" /> class.</summary>
         public Update()
         {
             this.Name = new ObservableCollection<LocaleString>();
@@ -336,23 +336,23 @@ namespace SevenUpdate
         #region Methods
 
         /// <summary>Fires the OnPropertyChanged Event with the collection changes.</summary>
-        /// <param name = "sender">The object that called the event.</param>
-        /// <param name = "e">The event data.</param>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">The event data.</param>
         private void DescriptionCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             this.OnPropertyChanged("Description");
         }
 
         /// <summary>Fires the OnPropertyChanged Event with the collection changes.</summary>
-        /// <param name = "sender">The object that called the event.</param>
-        /// <param name = "e">The event data.</param>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">The event data.</param>
         private void NameCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             this.OnPropertyChanged("Name");
         }
 
         /// <summary>When a property has changed, call the <c>OnPropertyChanged</c> Event.</summary>
-        /// <param name = "propertyName">The name of the property.</param>
+        /// <param name="propertyName">The name of the property.</param>
         private void OnPropertyChanged(string propertyName)
         {
             var handler = this.PropertyChanged;

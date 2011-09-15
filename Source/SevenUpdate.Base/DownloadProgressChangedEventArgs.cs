@@ -29,11 +29,11 @@ namespace SevenUpdate
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "DownloadProgressChangedEventArgs" /> class.</summary>
-        /// <param name = "bytesTransferred">The number of bytes transferred.</param>
-        /// <param name = "bytesTotal">The total number of bytes to download.</param>
-        /// <param name = "filesTransferred">The number of files transfered.</param>
-        /// <param name = "filesTotal">The total number of files transfered.</param>
+        /// <summary>Initializes a new instance of the <see cref="DownloadProgressChangedEventArgs" /> class.</summary>
+        /// <param name="bytesTransferred">The number of bytes transferred.</param>
+        /// <param name="bytesTotal">The total number of bytes to download.</param>
+        /// <param name="filesTransferred">The number of files transfered.</param>
+        /// <param name="filesTotal">The total number of files transfered.</param>
         public DownloadProgressChangedEventArgs(
             ulong bytesTransferred, ulong bytesTotal, uint filesTransferred, uint filesTotal)
         {
@@ -43,7 +43,7 @@ namespace SevenUpdate
             this.FilesTransferred = filesTransferred;
         }
 
-        /// <summary>Initializes a new instance of the <see cref = "DownloadProgressChangedEventArgs" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="DownloadProgressChangedEventArgs" /> class.</summary>
         public DownloadProgressChangedEventArgs()
         {
         }

@@ -18,21 +18,21 @@ namespace WPFLocalizeExtension.Engine
         #region Public Methods
 
         /// <summary>Gets the error message.</summary>
-        /// <param name = "errorNo">The error no.</param>
+        /// <param name="errorNo">The error no.</param>
         /// <returns>The resolved string or a default error string.</returns>
         public static string GetErrorMessage(int errorNo)
         {
             return
                 (string)
                 Localize.Instance.GetLocalizedObject<object>(
-                    Localize.GetAssemblyName(Assembly.GetExecutingAssembly()), 
-                    "ResError", 
-                    "ERR_" + errorNo, 
+                    Localize.GetAssemblyName(Assembly.GetExecutingAssembly()),
+                    "ResError",
+                    "ERR_" + errorNo,
                     Localize.Instance.Culture);
         }
 
         /// <summary>Gets the GUI string.</summary>
-        /// <param name = "key">The resource identifier.</param>
+        /// <param name="key">The resource identifier.</param>
         /// <returns>The resolved string or a default error string.</returns>
         public static string GetGuiString(string key)
         {
@@ -40,7 +40,7 @@ namespace WPFLocalizeExtension.Engine
         }
 
         /// <summary>Gets the help string.</summary>
-        /// <param name = "key">The resource identifier.</param>
+        /// <param name="key">The resource identifier.</param>
         /// <returns>The resolved string or a default error string.</returns>
         public static string GetHelpString(string key)
         {
@@ -61,7 +61,7 @@ namespace WPFLocalizeExtension.Engine
         }
 
         /// <summary>Gets the maintenance string.</summary>
-        /// <param name = "key">The resource identifier.</param>
+        /// <param name="key">The resource identifier.</param>
         /// <returns>The resolved string or a default error string.</returns>
         public static string GetMaintenanceString(string key)
         {
@@ -78,14 +78,14 @@ namespace WPFLocalizeExtension.Engine
             return
                 (string)
                 Localize.Instance.GetLocalizedObject<object>(
-                    Localize.GetAssemblyName(Assembly.GetExecutingAssembly()), 
-                    "ResMaintenance", 
-                    key, 
+                    Localize.GetAssemblyName(Assembly.GetExecutingAssembly()),
+                    "ResMaintenance",
+                    key,
                     Localize.Instance.Culture);
         }
 
         /// <summary>Gets the update agent string.</summary>
-        /// <param name = "key">The resource identifier.</param>
+        /// <param name="key">The resource identifier.</param>
         /// <returns>The resolved string or a default error string.</returns>
         public static string GetUpdateAgentString(string key)
         {
@@ -102,9 +102,9 @@ namespace WPFLocalizeExtension.Engine
             return
                 (string)
                 Localize.Instance.GetLocalizedObject<object>(
-                    Localize.GetAssemblyName(Assembly.GetExecutingAssembly()), 
-                    "ResUpdateAgent", 
-                    key, 
+                    Localize.GetAssemblyName(Assembly.GetExecutingAssembly()),
+                    "ResUpdateAgent",
+                    key,
                     Localize.Instance.Culture);
         }
 
@@ -113,8 +113,8 @@ namespace WPFLocalizeExtension.Engine
         #region Methods
 
         /// <summary>Gets the GUI string.</summary>
-        /// <param name = "key">The resource identifier.</param>
-        /// <param name = "language">The language.</param>
+        /// <param name="key">The resource identifier.</param>
+        /// <param name="language">The language.</param>
         /// <returns>The resolved string or a default error string.</returns>
         private static string GetGuiString(string key, CultureInfo language)
         {

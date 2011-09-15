@@ -83,7 +83,7 @@ namespace SevenUpdate
         #region Methods
 
         /// <summary>Process command line args.</summary>
-        /// <param name = "args">The list of arguments.</param>
+        /// <param name="args">The list of arguments.</param>
         internal static void ProcessArgs(IList<string> args)
         {
             if (args == null)
@@ -121,7 +121,7 @@ namespace SevenUpdate
         }
 
         /// <summary>Raises the Application.Exit event.</summary>
-        /// <param name = "e">An ExitEventArgs that contains the event data.</param>
+        /// <param name="e">An ExitEventArgs that contains the event data.</param>
         protected override void OnExit(ExitEventArgs e)
         {
             UnregisterApplicationRecoveryAndRestart();
@@ -129,8 +129,8 @@ namespace SevenUpdate
         }
 
         /// <summary>Raises the <c>InstanceAwareApplication.Startup</c> event.</summary>
-        /// <param name = "e">The <c>System.Windows.StartupEventArgs</c> instance containing the event data.</param>
-        /// <param name = "isFirstInstance">If set to <c>True</c> the current instance is the first application instance.</param>
+        /// <param name="e">The <c>System.Windows.StartupEventArgs</c> instance containing the event data.</param>
+        /// <param name="isFirstInstance">If set to <c>True</c> the current instance is the first application instance.</param>
         protected override void OnStartup(StartupEventArgs e, bool isFirstInstance)
         {
             Init();
@@ -205,7 +205,7 @@ namespace SevenUpdate
         }
 
         /// <summary>Raises the <c>InstanceAwareApplication.StartupNextInstance</c> event.</summary>
-        /// <param name = "e">The <c>StartupNextInstanceEventArgs</c> instance containing the event data.</param>
+        /// <param name="e">The <c>StartupNextInstanceEventArgs</c> instance containing the event data.</param>
         protected override void OnStartupNextInstance(StartupNextInstanceEventArgs e)
         {
             base.OnStartupNextInstance(e);
@@ -250,8 +250,8 @@ namespace SevenUpdate
         }
 
         /// <summary>Logs an error.</summary>
-        /// <param name = "sender">The object that called the event.</param>
-        /// <param name = "e">The error data to log.</param>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">The error data to log.</param>
         private static void LogError(object sender, ErrorOccurredEventArgs e)
         {
             using (var tw = new StreamWriter(Path.Combine(UserStore, "error.log"), true))

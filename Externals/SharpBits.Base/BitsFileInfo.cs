@@ -14,9 +14,9 @@ namespace SharpBits.Base
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "BitsFileInfo" /> class.</summary>
-        /// <param name = "remoteName">Name of the remote.</param>
-        /// <param name = "localName">Name of the local.</param>
+        /// <summary>Initializes a new instance of the <see cref="BitsFileInfo" /> class.</summary>
+        /// <param name="remoteName">Name of the remote.</param>
+        /// <param name="localName">Name of the local.</param>
         protected BitsFileInfo(string remoteName, string localName)
         {
             this.BGFileInfo = new BGFileInfo { RemoteName = remoteName, LocalName = localName };

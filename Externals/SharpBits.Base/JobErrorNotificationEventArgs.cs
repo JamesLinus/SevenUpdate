@@ -14,8 +14,8 @@ namespace SharpBits.Base
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "JobErrorNotificationEventArgs" /> class.</summary>
-        /// <param name = "error">The error.</param>
+        /// <summary>Initializes a new instance of the <see cref="JobErrorNotificationEventArgs" /> class.</summary>
+        /// <param name="error">The error.</param>
         internal JobErrorNotificationEventArgs(BitsError error)
         {
             this.Error = error;

@@ -34,10 +34,10 @@ namespace SharpBits.Base
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "BitsFile" /> class.</summary>
-        /// <exception cref = "ArgumentNullException">Thrown when one or more required arguments are <c>null</c>.</exception>
-        /// <param name = "job">The current job.</param>
-        /// <param name = "file">The current file within the job.</param>
+        /// <summary>Initializes a new instance of the <see cref="BitsFile" /> class.</summary>
+        /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are <c>null</c>.</exception>
+        /// <param name="job">The current job.</param>
+        /// <param name="file">The current file within the job.</param>
         internal BitsFile(BitsJob job, IBackgroundCopyFile file)
         {
             if (null == file)
@@ -154,7 +154,7 @@ namespace SharpBits.Base
         #region Methods
 
         /// <summary>Releases unmanaged and - optionally - managed resources.</summary>
-        /// <param name = "disposing"><c>True</c> to release both managed and unmanaged resources; otherwise, <c>False</c> to release only unmanaged resources.</param>
+        /// <param name="disposing"><c>True</c> to release both managed and unmanaged resources; otherwise, <c>False</c> to release only unmanaged resources.</param>
         private void Dispose(bool disposing)
         {
             if (!this.disposed)

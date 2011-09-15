@@ -24,8 +24,8 @@ namespace System.Windows.Dialogs.TaskDialog
         [FieldOffset(0)]
         private IntPtr spacer;
 
-        /// <summary>Initializes a new instance of the <see cref = "IconUnion" /> struct.</summary>
-        /// <param name = "i">The index for the icon.</param>
+        /// <summary>Initializes a new instance of the <see cref="IconUnion" /> struct.</summary>
+        /// <param name="i">The index for the icon.</param>
         internal IconUnion(int i)
         {
             this.mainIcon = i;

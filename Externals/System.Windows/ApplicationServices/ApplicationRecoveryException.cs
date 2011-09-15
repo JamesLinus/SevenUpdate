@@ -19,38 +19,38 @@ namespace System.Windows.ApplicationServices
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "ApplicationRecoveryException" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="ApplicationRecoveryException" /> class.</summary>
         public ApplicationRecoveryException()
         {
         }
 
-        /// <summary>Initializes a new instance of the <see cref = "ApplicationRecoveryException" /> class.</summary>
-        /// <param name = "message">A custom message for the exception.</param>
+        /// <summary>Initializes a new instance of the <see cref="ApplicationRecoveryException" /> class.</summary>
+        /// <param name="message">A custom message for the exception.</param>
         public ApplicationRecoveryException(string message)
             : base(message)
         {
         }
 
-        /// <summary>Initializes a new instance of the <see cref = "ApplicationRecoveryException" /> class.</summary>
-        /// <param name = "message">A custom message for the exception.</param>
-        /// <param name = "innerException">The inner exception.</param>
+        /// <summary>Initializes a new instance of the <see cref="ApplicationRecoveryException" /> class.</summary>
+        /// <param name="message">A custom message for the exception.</param>
+        /// <param name="innerException">The inner exception.</param>
         public ApplicationRecoveryException(string message, Exception innerException)
             : base(message, innerException)
         {
             // Empty
         }
 
-        /// <summary>Initializes a new instance of the <see cref = "ApplicationRecoveryException" /> class.</summary>
-        /// <param name = "message">A custom message for the exception.</param>
-        /// <param name = "errorCode">An error code (hresult) from which to generate the exception.</param>
+        /// <summary>Initializes a new instance of the <see cref="ApplicationRecoveryException" /> class.</summary>
+        /// <param name="message">A custom message for the exception.</param>
+        /// <param name="errorCode">An error code (hresult) from which to generate the exception.</param>
         public ApplicationRecoveryException(string message, int errorCode)
             : base(message, errorCode)
         {
         }
 
-        /// <summary>Initializes a new instance of the <see cref = "ApplicationRecoveryException" /> class.</summary>
-        /// <param name = "info">Serialization info from which to create exception.</param>
-        /// <param name = "context">Streaming context from which to create exception.</param>
+        /// <summary>Initializes a new instance of the <see cref="ApplicationRecoveryException" /> class.</summary>
+        /// <param name="info">Serialization info from which to create exception.</param>
+        /// <param name="context">Streaming context from which to create exception.</param>
         protected ApplicationRecoveryException(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {

@@ -20,7 +20,7 @@ namespace System.Windows.Internal
         #region Public Methods
 
         /// <summary>This is intended for Library Internal use only.</summary>
-        /// <param name = "result">The error code.</param>
+        /// <param name="result">The error code.</param>
         /// <returns>True if the error code indicates failure.</returns>
         public static bool Failed(Result result)
         {
@@ -28,7 +28,7 @@ namespace System.Windows.Internal
         }
 
         /// <summary>This is intended for Library Internal use only.</summary>
-        /// <param name = "result">The error code.</param>
+        /// <param name="result">The error code.</param>
         /// <returns>True if the error code indicates failure.</returns>
         public static bool Failed(int result)
         {
@@ -36,7 +36,7 @@ namespace System.Windows.Internal
         }
 
         /// <summary>This is intended for Library Internal use only.</summary>
-        /// <param name = "win32ErrorCode">The Windows API error code.</param>
+        /// <param name="win32ErrorCode">The Windows API error code.</param>
         /// <returns>The equivalent HRESULT.</returns>
         public static int HResultFromWin32(int win32ErrorCode)
         {
@@ -49,8 +49,8 @@ namespace System.Windows.Internal
         }
 
         /// <summary>This is intended for Library Internal use only.</summary>
-        /// <param name = "result">The COM error code.</param>
-        /// <param name = "win32ErrorCode">The Win32 error code.</param>
+        /// <param name="result">The COM error code.</param>
+        /// <param name="win32ErrorCode">The Win32 error code.</param>
         /// <returns>Inticates that the Win32 error code corresponds to the COM error code.</returns>
         public static bool Matches(int result, int win32ErrorCode)
         {
@@ -58,7 +58,7 @@ namespace System.Windows.Internal
         }
 
         /// <summary>This is intended for Library Internal use only.</summary>
-        /// <param name = "result">The error code.</param>
+        /// <param name="result">The error code.</param>
         /// <returns>True if the error code indicates success.</returns>
         public static bool Succeeded(int result)
         {
@@ -66,7 +66,7 @@ namespace System.Windows.Internal
         }
 
         /// <summary>This is intended for Library Internal use only.</summary>
-        /// <param name = "result">The error code.</param>
+        /// <param name="result">The error code.</param>
         /// <returns>True if the error code indicates success.</returns>
         public static bool Succeeded(Result result)
         {

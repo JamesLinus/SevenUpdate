@@ -20,7 +20,7 @@ namespace System.Windows.Dialogs.TaskDialog
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref = "TaskDialogBar" /> class. Creates a new instance of this
+        ///   Initializes a new instance of the <see cref="TaskDialogBar" /> class. Creates a new instance of this
         ///   class.
         /// </summary>
         public TaskDialogBar()
@@ -28,10 +28,10 @@ namespace System.Windows.Dialogs.TaskDialog
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref = "TaskDialogBar" /> class. Creates a new instance of this
-        ///   class with the specified name.
+        ///   Initializes a new instance of the <see cref="TaskDialogBar" /> class. Creates a new instance of this class
+        ///   with the specified name.
         /// </summary>
-        /// <param name = "name">The name for this control.</param>
+        /// <param name="name">The name for this control.</param>
         protected TaskDialogBar(string name)
             : base(name)
         {

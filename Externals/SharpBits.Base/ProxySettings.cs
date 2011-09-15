@@ -30,8 +30,8 @@ namespace SharpBits.Base
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "ProxySettings" /> class.</summary>
-        /// <param name = "job">The job to set the proxy settings for.</param>
+        /// <summary>Initializes a new instance of the <see cref="ProxySettings" /> class.</summary>
+        /// <param name="job">The job to set the proxy settings for.</param>
         internal ProxySettings(IBackgroundCopyJob job)
         {
             this.job = job;

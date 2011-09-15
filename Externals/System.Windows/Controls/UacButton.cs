@@ -74,7 +74,7 @@ namespace System.Windows.Controls
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "UacButton" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="UacButton" /> class.</summary>
         public UacButton()
         {
             this.Loaded -= this.OnLoaded;
@@ -175,8 +175,8 @@ namespace System.Windows.Controls
         #region Methods
 
         /// <summary>Handles a change to the <c>ButtonText</c> property.</summary>
-        /// <param name = "obj">The dependency object.</param>
-        /// <param name = "e">The <c>System.Windows.DependencyPropertyChangedEventArgs</c> instance containing the event data.</param>
+        /// <param name="obj">The dependency object.</param>
+        /// <param name="e">The <c>System.Windows.DependencyPropertyChangedEventArgs</c> instance containing the event data.</param>
         private static void OnButtonTextChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
             var me = (UacButton)obj;
@@ -195,8 +195,8 @@ namespace System.Windows.Controls
         }
 
         /// <summary>Handles a change to the <c>IsShieldNeeded</c> property.</summary>
-        /// <param name = "obj">The dependency object.</param>
-        /// <param name = "e">The <c>System.Windows.DependencyPropertyChangedEventArgs</c> instance containing the event data.</param>
+        /// <param name="obj">The dependency object.</param>
+        /// <param name="e">The <c>System.Windows.DependencyPropertyChangedEventArgs</c> instance containing the event data.</param>
         /// <remarks>Adds or removes the UACShieldAdorner as appropriate</remarks>
         private static void OnIsShieldNeededChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
@@ -214,8 +214,8 @@ namespace System.Windows.Controls
         }
 
         /// <summary>Handles a change to the <c>ShieldIcon</c> property.</summary>
-        /// <param name = "obj">The dependency object.</param>
-        /// <param name = "e">The <c>System.Windows.DependencyPropertyChangedEventArgs</c> instance containing the event data.</param>
+        /// <param name="obj">The dependency object.</param>
+        /// <param name="e">The <c>System.Windows.DependencyPropertyChangedEventArgs</c> instance containing the event data.</param>
         private static void OnShieldIconChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
             var me = (UacButton)obj;
@@ -231,8 +231,8 @@ namespace System.Windows.Controls
         }
 
         /// <summary>Changes the UAC icon.</summary>
-        /// <param name = "sender">The object that raised the event.</param>
-        /// <param name = "e">The <c>System.Windows.DependencyPropertyChangedEventArgs</c> instance containing the event data.</param>
+        /// <param name="sender">The object that raised the event.</param>
+        /// <param name="e">The <c>System.Windows.DependencyPropertyChangedEventArgs</c> instance containing the event data.</param>
         private void ChangeUacIcon(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (!this.IsShieldDisplayed)
@@ -252,7 +252,8 @@ namespace System.Windows.Controls
 
         /// <summary>Returns current "actual" <c>ToolTip</c>.</summary>
         /// <returns>If both <c>ToolTipElevated</c> and <c>ToolTipNotElevated</c> are <c>null</c>,<c>Button.ToolTip</c>
-        /// is returned.Otherwise <c>ToolTipElevated</c> or <c>ToolTipNotElevated</c> is returned based on <see cref="IsShieldNeeded" />.</returns>
+        /// is returned.Otherwise <c>ToolTipElevated</c> or <c>ToolTipNotElevated</c> is returned based on <see
+        /// cref="IsShieldNeeded" />.</returns>
         private object GetToolTip()
         {
             if (this.ToolTipElevated == null && this.ToolTipNotElevated == null)
@@ -264,15 +265,15 @@ namespace System.Windows.Controls
         }
 
         /// <summary>Called when the control is loaded.</summary>
-        /// <param name = "sender">The object that called the event.</param>
-        /// <param name = "e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
         private void OnLoaded(object sender, RoutedEventArgs e)
         {
             this.ToolTip = this.GetToolTip();
         }
 
         /// <summary>When a property has changed, call the <c>OnPropertyChanged</c> Event.</summary>
-        /// <param name = "name">The property name that has changed.</param>
+        /// <param name="name">The property name that has changed.</param>
         private void OnPropertyChanged(string name)
         {
             var handler = this.PropertyChanged;

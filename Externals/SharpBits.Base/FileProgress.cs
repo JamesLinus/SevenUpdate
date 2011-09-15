@@ -23,8 +23,8 @@ namespace SharpBits.Base
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "FileProgress" /> class.</summary>
-        /// <param name = "fileProgress">The file progress.</param>
+        /// <summary>Initializes a new instance of the <see cref="FileProgress" /> class.</summary>
+        /// <param name="fileProgress">The file progress.</param>
         internal FileProgress(BGFileProgress fileProgress)
         {
             this.fileProgress = fileProgress;

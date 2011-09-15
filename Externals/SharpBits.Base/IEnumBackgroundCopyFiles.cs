@@ -21,29 +21,27 @@ namespace SharpBits.Base
     internal interface IEnumBackgroundCopyFiles
     {
         /// <summary>Retrieves a specified number of items in the enumeration sequence.</summary>
-        /// <param name = "celt">Number of elements requested.</param>
-        /// <param name = "copyFile">Array of <c>IBackgroundCopyFile</c> objects. You must release each object in
-        /// <paramref
-        ///    name = "copyFile" /> when done.</param>
-        /// <param name = "fetched">Number of elements returned in <paramref name = "copyFile" />. You can set fetched
-        /// to <c>null</c> if <paramref
-        ///    name = "celt" /> is one. Otherwise, initialize the value of fetched to 0 before calling this
-        ///    method.</param>
+        /// <param name="celt">Number of elements requested.</param>
+        /// <param name="copyFile">Array of <c>IBackgroundCopyFile</c> objects. You must release each object in
+        /// <paramref name="copyFile" /> when done.</param>
+        /// <param name="fetched">Number of elements returned in <paramref name="copyFile" />. You can set fetched to
+        /// <c>null</c> if <paramref name="celt" /> is one. Otherwise, initialize the value of fetched to 0 before
+        /// calling this method.</param>
         void Next(uint celt, [MarshalAs(UnmanagedType.Interface)] out IBackgroundCopyFile copyFile, out uint fetched);
 
         /// <summary>Skips a specified number of items in the enumeration sequence.</summary>
-        /// <param name = "celt">Number of elements to skip.</param>
+        /// <param name="celt">Number of elements to skip.</param>
         void Skip(uint celt);
 
         /// <summary>Resets the enumeration sequence to the beginning.</summary>
         void Reset();
 
         /// <summary>Creates another enumerator that contains the same enumeration state as the current enumerator.</summary>
-        /// <param name = "enum">Receives the interface pointer to the enumeration object. If the method is unsuccessful, the value of this output variable is undefined. You must release enumFiles when done.</param>
+        /// <param name="enum">Receives the interface pointer to the enumeration object. If the method is unsuccessful, the value of this output variable is undefined. You must release enumFiles when done.</param>
         void Clone([MarshalAs(UnmanagedType.Interface)] out IEnumBackgroundCopyFiles @enum);
 
         /// <summary>Retrieves the number of items in the enumeration.</summary>
-        /// <param name = "count">Number of files in the enumeration.</param>
+        /// <param name="count">Number of files in the enumeration.</param>
         void GetCount(out uint count);
     }
 }

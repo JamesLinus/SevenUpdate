@@ -38,7 +38,7 @@ namespace SevenUpdate.Windows
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "MainWindow" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="MainWindow" /> class.</summary>
         public MainWindow()
         {
             this.InitializeComponent();
@@ -75,7 +75,7 @@ namespace SevenUpdate.Windows
         #region Methods
 
         /// <summary>Enables Aero Glass on the Window.</summary>
-        /// <param name = "e">The <c>EventArgs</c> instance containing the event data.</param>
+        /// <param name="e">The <c>EventArgs</c> instance containing the event data.</param>
         protected override void OnSourceInitialized(EventArgs e)
         {
             base.OnSourceInitialized(e);
@@ -84,8 +84,8 @@ namespace SevenUpdate.Windows
         }
 
         /// <summary>Changes the Window Background when Aero Glass is enabled or disabled.</summary>
-        /// <param name = "sender">The object that called the event.</param>
-        /// <param name = "e">The <c>CompositionChangedEventArgs</c> instance containing the event data.</param>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">The <c>CompositionChangedEventArgs</c> instance containing the event data.</param>
         private void ChangeWindowChrome(object sender, CompositionChangedEventArgs e)
         {
             this.Background = e.IsGlassEnabled ? Brushes.Transparent : Brushes.White;
@@ -99,8 +99,8 @@ namespace SevenUpdate.Windows
         }
 
         /// <summary>Enables the ability to drag the window on glass.</summary>
-        /// <param name = "sender">The object that called the event.</param>
-        /// <param name = "e">The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.</param>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.</param>
         private void EnableDragOnGlass(object sender, MouseButtonEventArgs e)
         {
             if (AeroGlass.IsGlassEnabled && e.LeftButton == MouseButtonState.Pressed)
@@ -110,8 +110,8 @@ namespace SevenUpdate.Windows
         }
 
         /// <summary>Sets the Height and Width of the window from the settings.</summary>
-        /// <param name = "sender">The object that called the event.</param>
-        /// <param name = "e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
         private void LoadWindowSize(object sender, RoutedEventArgs e)
         {
             this.Height = Settings.Default.WindowHeight;
@@ -119,8 +119,8 @@ namespace SevenUpdate.Windows
         }
 
         /// <summary>When Seven Update is closing, save the Window Width and Height in the settings.</summary>
-        /// <param name = "sender">The object that called the event.</param>
-        /// <param name = "e">The <c>System.ComponentModel.CancelEventArgs</c> instance containing the event data.</param>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">The <c>System.ComponentModel.CancelEventArgs</c> instance containing the event data.</param>
         private void SaveWindowSize(object sender, CancelEventArgs e)
         {
             Settings.Default.WindowHeight = this.Height;

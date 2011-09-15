@@ -23,7 +23,7 @@ namespace System.Windows.Dialogs.TaskDialog
         #region Constructors and Destructors
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref = "TaskDialogButton" /> class. Creates a new instance of this
+        ///   Initializes a new instance of the <see cref="TaskDialogButton" /> class. Creates a new instance of this
         ///   class.
         /// </summary>
         public TaskDialogButton()
@@ -31,11 +31,11 @@ namespace System.Windows.Dialogs.TaskDialog
         }
 
         /// <summary>
-        ///   Initializes a new instance of the <see cref = "TaskDialogButton" /> class. Creates a new instance of this
+        ///   Initializes a new instance of the <see cref="TaskDialogButton" /> class. Creates a new instance of this
         ///   class with the specified property settings.
         /// </summary>
-        /// <param name = "name">The name of the button.</param>
-        /// <param name = "text">The button label.</param>
+        /// <param name="name">The name of the button.</param>
+        /// <param name="text">The button label.</param>
         public TaskDialogButton(string name, string text)
             : base(name, text)
         {

@@ -69,7 +69,7 @@ namespace WPFLocalizeExtension.Engine
         #region Methods
 
         /// <summary>Adds an listener to the inner list of listeners.</summary>
-        /// <param name = "listener">The listener to add.</param>
+        /// <param name="listener">The listener to add.</param>
         internal static void AddListener(IWeakEventListener listener)
         {
             // add the listener to the inner list of listeners
@@ -80,7 +80,7 @@ namespace WPFLocalizeExtension.Engine
         }
 
         /// <summary>Removes an listener from the inner list of listeners.</summary>
-        /// <param name = "listener">The listener to remove.</param>
+        /// <param name="listener">The listener to remove.</param>
         internal static void RemoveListener(IWeakEventListener listener)
         {
             // removes the listener from the inner list of listeners
@@ -91,7 +91,7 @@ namespace WPFLocalizeExtension.Engine
         }
 
         /// <summary>This method starts the listening process by attaching on the source event.</summary>
-        /// <param name = "source">The source.</param>
+        /// <param name="source">The source.</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         protected override void StartListening(object source)
         {
@@ -106,7 +106,7 @@ namespace WPFLocalizeExtension.Engine
         }
 
         /// <summary>This method stops the listening process by detaching on the source event.</summary>
-        /// <param name = "source">The source to stop listening on.</param>
+        /// <param name="source">The source to stop listening on.</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
         protected override void StopListening(object source)
         {

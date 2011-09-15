@@ -17,7 +17,7 @@ namespace System.Windows.ApplicationServices
         private static InternalRecoveryCallback internalCallback = InternalRecoveryHandler;
 
         /// <summary>The application recovery callback.</summary>
-        /// <param name = "state">The state of the application.</param>
+        /// <param name="state">The state of the application.</param>
         /// <returns>The error result.</returns>
         internal delegate uint InternalRecoveryCallback(IntPtr state);
 
@@ -58,7 +58,7 @@ namespace System.Windows.ApplicationServices
         internal static extern Result UnregisterApplicationRestart();
 
         /// <summary>Handles and invokes the internal recovery callback.</summary>
-        /// <param name = "parameter">The parameter.</param>
+        /// <param name="parameter">The parameter.</param>
         /// <returns>Returns an error free result.</returns>
         private static uint InternalRecoveryHandler(IntPtr parameter)
         {

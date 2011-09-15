@@ -23,8 +23,8 @@ namespace SharpBits.Base
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "JobTimes" /> class.</summary>
-        /// <param name = "jobTimes">The job times.</param>
+        /// <summary>Initializes a new instance of the <see cref="JobTimes" /> class.</summary>
+        /// <param name="jobTimes">The job times.</param>
         internal JobTimes(BGJobTimes jobTimes)
         {
             this.jobTimes = jobTimes;

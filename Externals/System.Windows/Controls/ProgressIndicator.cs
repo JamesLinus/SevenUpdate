@@ -50,9 +50,9 @@ namespace System.Windows.Controls
 
         /// <summary>Indicates if the progress is running.</summary>
         private readonly DependencyProperty isRunningProperty = DependencyProperty.Register(
-            "IsRunning", 
-            typeof(bool), 
-            typeof(ProgressIndicator), 
+            "IsRunning",
+            typeof(bool),
+            typeof(ProgressIndicator),
             new FrameworkPropertyMetadata(IsRunningPropertyChanged));
 
         /// <summary>The canvas.</summary>
@@ -71,7 +71,7 @@ namespace System.Windows.Controls
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes static members of the <see cref = "ProgressIndicator" /> class.</summary>
+        /// <summary>Initializes static members of the <see cref="ProgressIndicator" /> class.</summary>
         static ProgressIndicator()
         {
             DefaultStyleKeyProperty.OverrideMetadata(
@@ -79,7 +79,7 @@ namespace System.Windows.Controls
             MaximumProperty.OverrideMetadata(typeof(ProgressIndicator), new FrameworkPropertyMetadata(100.0));
         }
 
-        /// <summary>Initializes a new instance of the <see cref = "ProgressIndicator" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="ProgressIndicator" /> class.</summary>
         public ProgressIndicator()
         {
             if (this.Resources.Count != 0)
@@ -89,13 +89,13 @@ namespace System.Windows.Controls
 
             var resourceDictionary = new ResourceDictionary
                 {
-                   Source = new Uri("/System.Windows;component/Resources/Dictionary.xaml", UriKind.Relative) 
+                    Source = new Uri("/System.Windows;component/Resources/Dictionary.xaml", UriKind.Relative)
                 };
 
             this.Resources.MergedDictionaries.Add(resourceDictionary);
             this.dispatcherTimer = new DispatcherTimer(DispatcherPriority.Background, this.Dispatcher)
                 {
-                   Interval = new TimeSpan(0, 0, 0, 0, 300) 
+                    Interval = new TimeSpan(0, 0, 0, 0, 300)
                 };
         }
 
@@ -169,7 +169,7 @@ namespace System.Windows.Controls
 
         /// <summary>
         ///   When overridden in a derived class, is invoked whenever application code or internal processes call <see
-        ///    cref = "M:System.Windows.FrameworkElement.ApplyTemplate" />.
+        ///   cref="M:System.Windows.FrameworkElement.ApplyTemplate" />.
         /// </summary>
         public override void OnApplyTemplate()
         {
@@ -210,8 +210,8 @@ namespace System.Windows.Controls
         #region Methods
 
         /// <summary>Stops or starts the progress indicator based on the <c>IsRunning</c> property.</summary>
-        /// <param name = "d">The dependency object.</param>
-        /// <param name = "e">The <c>System.Windows.DependencyPropertyChangedEventArgs</c> instance containing the event data.</param>
+        /// <param name="d">The dependency object.</param>
+        /// <param name="e">The <c>System.Windows.DependencyPropertyChangedEventArgs</c> instance containing the event data.</param>
         private static void IsRunningPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var progressIndicator = (ProgressIndicator)d;
@@ -227,8 +227,8 @@ namespace System.Windows.Controls
         }
 
         /// <summary>Animates the progress wheel.</summary>
-        /// <param name = "sender">The object that called the event.</param>
-        /// <param name = "e">The <c>System.EventArgs</c> instance containing the event data.</param>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">The <c>System.EventArgs</c> instance containing the event data.</param>
         private void Animate(object sender, EventArgs e)
         {
             if (this.canvasElements == null || this.ElementStoryboard == null)
@@ -254,7 +254,7 @@ namespace System.Windows.Controls
         }
 
         /// <summary>Starts the storyboard.</summary>
-        /// <param name = "element">The element.</param>
+        /// <param name="element">The element.</param>
         private void StartStoryboard(FrameworkElement element)
         {
             NameScope.SetNameScope(this, new NameScope());

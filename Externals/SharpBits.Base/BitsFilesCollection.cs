@@ -30,9 +30,9 @@ namespace SharpBits.Base
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "BitsFilesCollection" /> class.</summary>
-        /// <param name = "job">The current job.</param>
-        /// <param name = "fileList">The file list.</param>
+        /// <summary>Initializes a new instance of the <see cref="BitsFilesCollection" /> class.</summary>
+        /// <param name="job">The current job.</param>
+        /// <param name="fileList">The file list.</param>
         internal BitsFilesCollection(BitsJob job, IEnumBackgroundCopyFiles fileList)
         {
             this.fileList = fileList;
@@ -75,7 +75,7 @@ namespace SharpBits.Base
         }
 
         /// <summary>Releases unmanaged and - optionally - managed resources.</summary>
-        /// <param name = "disposing"><c>True</c> to release both managed and unmanaged resources; otherwise, <c>False</c> to release only unmanaged resources.</param>
+        /// <param name="disposing"><c>True</c> to release both managed and unmanaged resources; otherwise, <c>False</c> to release only unmanaged resources.</param>
         private void Dispose(bool disposing)
         {
             if (!this.disposed)

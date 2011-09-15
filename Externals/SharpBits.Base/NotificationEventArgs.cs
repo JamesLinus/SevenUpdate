@@ -14,8 +14,8 @@ namespace SharpBits.Base
     {
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "NotificationEventArgs" /> class.</summary>
-        /// <param name = "job">The job the event occurred for.</param>
+        /// <summary>Initializes a new instance of the <see cref="NotificationEventArgs" /> class.</summary>
+        /// <param name="job">The job the event occurred for.</param>
         internal NotificationEventArgs(BitsJob job)
         {
             this.Job = job;

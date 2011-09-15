@@ -21,9 +21,9 @@ namespace System.Windows
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "StartupNextInstanceEventArgs" /> class.</summary>
-        /// <param name = "args">The arguments passed to the program.</param>
-        /// <param name = "bringToFront">If set to <c>True</c> the application main window will be brought to front.</param>
+        /// <summary>Initializes a new instance of the <see cref="StartupNextInstanceEventArgs" /> class.</summary>
+        /// <param name="args">The arguments passed to the program.</param>
+        /// <param name="bringToFront">If set to <c>True</c> the application main window will be brought to front.</param>
         public StartupNextInstanceEventArgs(string[] args, bool bringToFront = true)
         {
             if (args == null)

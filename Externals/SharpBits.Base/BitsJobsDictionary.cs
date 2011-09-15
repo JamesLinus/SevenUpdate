@@ -31,23 +31,23 @@ namespace SharpBits.Base
 
         #region Constructors and Destructors
 
-        /// <summary>Initializes a new instance of the <see cref = "BitsJobsDictionary" /> class.</summary>
+        /// <summary>Initializes a new instance of the <see cref="BitsJobsDictionary" /> class.</summary>
         public BitsJobsDictionary()
         {
         }
 
         // only required for initialization
 
-        /// <summary>Initializes a new instance of the <see cref = "BitsJobsDictionary" /> class.</summary>
-        /// <param name = "manager">The manager.</param>
+        /// <summary>Initializes a new instance of the <see cref="BitsJobsDictionary" /> class.</summary>
+        /// <param name="manager">The manager.</param>
         internal BitsJobsDictionary(BitsManager manager)
         {
             this.manager = manager;
         }
 
-        /// <summary>Initializes a new instance of the <see cref = "BitsJobsDictionary" /> class.</summary>
-        /// <param name = "manager">The manager.</param>
-        /// <param name = "jobList">The job list.</param>
+        /// <summary>Initializes a new instance of the <see cref="BitsJobsDictionary" /> class.</summary>
+        /// <param name="manager">The manager.</param>
+        /// <param name="jobList">The job list.</param>
         internal BitsJobsDictionary(BitsManager manager, IEnumBackgroundCopyJobs jobList)
         {
             this.manager = manager;
@@ -55,9 +55,9 @@ namespace SharpBits.Base
             this.Update();
         }
 
-        /// <summary>Initializes a new instance of the <see cref = "BitsJobsDictionary" /> class.</summary>
-        /// <param name = "info">The serialization info.</param>
-        /// <param name = "context">The context.</param>
+        /// <summary>Initializes a new instance of the <see cref="BitsJobsDictionary" /> class.</summary>
+        /// <param name="info">The serialization info.</param>
+        /// <param name="context">The context.</param>
         private BitsJobsDictionary(SerializationInfo info, StreamingContext context)
             : base(info, context)
         {
@@ -89,8 +89,8 @@ namespace SharpBits.Base
         }
 
         /// <summary>Gets the object data.</summary>
-        /// <param name = "info">The serialization info.</param>
-        /// <param name = "context">The context.</param>
+        /// <param name="info">The serialization info.</param>
+        /// <param name="context">The context.</param>
         [SecurityPermission(SecurityAction.Demand, SerializationFormatter = true)]
         public override void GetObjectData(SerializationInfo info, StreamingContext context)
         {
@@ -108,7 +108,7 @@ namespace SharpBits.Base
         #region Methods
 
         /// <summary>Updates the specified job list.</summary>
-        /// <param name = "jobList">The job list.</param>
+        /// <param name="jobList">The job list.</param>
         internal void Update(IEnumBackgroundCopyJobs jobList)
         {
             lock (this)
@@ -120,7 +120,7 @@ namespace SharpBits.Base
         }
 
         /// <summary>Releases unmanaged and - optionally - managed resources.</summary>
-        /// <param name = "disposing"><c>True</c> to release both managed and unmanaged resources; otherwise, <c>False</c> to release only unmanaged resources.</param>
+        /// <param name="disposing"><c>True</c> to release both managed and unmanaged resources; otherwise, <c>False</c> to release only unmanaged resources.</param>
         private void Dispose(bool disposing)
         {
             if (!this.disposed)
