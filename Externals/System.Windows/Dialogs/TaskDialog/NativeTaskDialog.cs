@@ -137,7 +137,7 @@ namespace System.Windows.Dialogs.TaskDialog
                     id = (int)TaskDialogCommonButtonReturnIds.Close;
                     break;
                 case TaskDialogResult.CustomButtonClicked:
-                    id = (int)TaskDialogCommonButtonReturnIds.Close + 1; // custom buttons
+                    id = TaskDialogDefaults.MinimumDialogControlId; // custom buttons
                     break;
                 case TaskDialogResult.No:
                     id = (int)TaskDialogCommonButtonReturnIds.No;
@@ -426,7 +426,7 @@ namespace System.Windows.Dialogs.TaskDialog
                 case TaskDialogNotifications.RadioButtonClicked:
                     return this.HandleRadioButtonClick((int)parameter);
                 case TaskDialogNotifications.HyperlinkClicked:
-                    return this.HandleHyperlinkClick(parameter);
+                    return this.HandleHyperlinkClick(parameterLength);
                 case TaskDialogNotifications.Help:
                     return this.HandleHelpInvocation();
                 case TaskDialogNotifications.Timer:
@@ -465,7 +465,7 @@ namespace System.Windows.Dialogs.TaskDialog
             // Once that returns, we raise a Closing event for the dialog The Win32 API handles button
             // clicking-and-closing as an atomic action, but it is more .NET friendly to split them up. Unfortunately,
             // we do NOT have the return values at this stage.
-            if (id < (int)TaskDialogCommonButtonReturnIds.Close + 1)
+            if (id < TaskDialogDefaults.MinimumDialogControlId)
             {
                 return this.outerDialog.RaiseClosingEvent(id);
             }

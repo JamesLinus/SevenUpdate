@@ -13,13 +13,6 @@ namespace System.Windows.Dialogs.TaskDialog
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 4)]
     internal struct TaskDialogButtonData
     {
-        /// <summary>Gets or sets the id for the button.</summary>
-        internal int ButtonId;
-
-        /// <summary>Gets or sets the button text.</summary>
-        [MarshalAs(UnmanagedType.LPWStr)]
-        internal string ButtonText;
-
         /// <summary>Initializes a new instance of the <see cref="TaskDialogButtonData" /> struct.</summary>
         /// <param name="buttonId">The button id.</param>
         /// <param name="text">The text.</param>
@@ -28,5 +21,12 @@ namespace System.Windows.Dialogs.TaskDialog
             this.ButtonId = buttonId;
             this.ButtonText = text;
         }
+
+        /// <summary>Gets or sets the id for the button.</summary>
+        internal int ButtonId;
+
+        /// <summary>Gets or sets the button text.</summary>
+        [MarshalAs(UnmanagedType.LPWStr)]
+        internal string ButtonText;
     }
 }

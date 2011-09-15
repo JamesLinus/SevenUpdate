@@ -622,39 +622,12 @@ namespace SevenUpdate.Sdk
                     td.FooterText = footerText;
                     td.FooterIcon = TaskDialogStandardIcon.Information;
                     td.CanCancel = true;
+                    td.StandardButtons = standardButtons;
 
                     if (defaultButtonText != null)
                     {
-                        var button = new TaskDialogButton(@"btnCustom", defaultButtonText)
-                            {
-                                Default = true,
-                                ShowElevationIcon = displayShieldOnButton
-                            };
+                        var button = new TaskDialogButton(@"btnCustom", defaultButtonText) { Default = true, ShowElevationIcon = displayShieldOnButton };
                         td.Controls.Add(button);
-
-                        switch (standardButtons)
-                        {
-                            case TaskDialogStandardButtons.Ok:
-                                button = new TaskDialogButton(@"btnOK", Resources.OK) { Default = false };
-                                td.Controls.Add(button);
-                                break;
-                            case TaskDialogStandardButtons.Cancel:
-                                button = new TaskDialogButton(@"btnCancel", Resources.Cancel) { Default = false };
-                                td.Controls.Add(button);
-                                break;
-                            case TaskDialogStandardButtons.Retry:
-                                button = new TaskDialogButton(@"btnRetry", Resources.Retry) { Default = false };
-                                td.Controls.Add(button);
-                                break;
-                            case TaskDialogStandardButtons.Close:
-                                button = new TaskDialogButton(@"btnClose", Resources.Close) { Default = false };
-                                td.Controls.Add(button);
-                                break;
-                        }
-                    }
-                    else
-                    {
-                        td.StandardButtons = standardButtons;
                     }
 
                     td.ShowDialog(Application.Current.MainWindow);

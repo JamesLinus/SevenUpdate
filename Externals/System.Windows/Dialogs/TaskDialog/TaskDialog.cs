@@ -1350,8 +1350,12 @@ namespace System.Windows.Dialogs.TaskDialog
                 throw new NotSupportedException(Resources.TaskDialogSupportedButtonsAndLinks);
             }
 
-            // if (buttons.Count > 0 && standardButtons != TaskDialogStandardButtons.None) { throw new
-            // NotSupportedException(Properties.Resources.TaskDialogSupportedButtonsAndButtons); }
+            // Funny, it works just fine - even MSDN shows examples you can use standard and custom buttons together. So let's remove this artifical limitation.
+            // if (buttons.Count > 0 && standardButtons != TaskDialogStandardButtons.None)
+            // {
+            //    throw new
+            //        NotSupportedException(Properties.Resources.TaskDialogSupportedButtonsAndButtons);
+            // }
         }
 
         #endregion

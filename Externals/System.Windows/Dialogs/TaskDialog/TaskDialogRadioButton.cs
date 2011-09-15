@@ -25,7 +25,7 @@ namespace System.Windows.Dialogs.TaskDialog
         ///   this class with the specified name and text.
         /// </summary>
         /// <param name="name">The name for this control.</param>
-        /// <param name="text">The value for this controls <see cref="P:System.Windows.Dialogs.TaskDialogButtonBase.Text" /> property.</param>
+        /// <param name="text">The value for this controls <see cref="TaskDialogButtonBase.Text" /> property.</param>
         public TaskDialogRadioButton(string name, string text)
             : base(name, text)
         {

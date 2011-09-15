@@ -107,7 +107,6 @@
     <Compile Include="Dialogs\TaskDialog\TaskDialogExpandedDetailsLocation.cs" />
     <Compile Include="Dialogs\TaskDialog\TaskDialogHyperlinkClickedEventArgs.cs" />
     <Compile Include="Dialogs\TaskDialog\TaskDialogIconElement.cs" />
-    <Compile Include="Dialogs\TaskDialog\TaskDialogIcons.cs" />
     <Compile Include="Dialogs\TaskDialog\TaskDialogMessages.cs" />
     <Compile Include="Dialogs\TaskDialog\TaskDialogNotifications.cs" />
     <Compile Include="Dialogs\TaskDialog\TaskDialogOptions.cs" />

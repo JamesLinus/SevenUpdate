@@ -17,7 +17,7 @@ namespace System.Windows.Dialogs
         #region Constants and Fields
 
         /// <summary>The next ID.</summary>
-        private static int nextId = (int)TaskDialogCommonButtonReturnIds.Close + 1;
+        private static int nextId = TaskDialogDefaults.MinimumDialogControlId;
 
         /// <summary>The control name.</summary>
         private string name;
@@ -37,7 +37,7 @@ namespace System.Windows.Dialogs
             // Support wrapping of control IDs in case you create a lot of custom controls
             if (nextId == int.MaxValue)
             {
-                nextId = (int)TaskDialogCommonButtonReturnIds.Close + 1;
+                nextId = TaskDialogDefaults.MinimumDialogControlId;
             }
             else
             {
