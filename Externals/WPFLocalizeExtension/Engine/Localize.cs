@@ -39,9 +39,9 @@ namespace WPFLocalizeExtension.Engine
         [DesignOnly(true)]
         private static readonly DependencyProperty DesignCultureProperty =
             DependencyProperty.RegisterAttached(
-                "DesignCulture", 
-                typeof(string), 
-                typeof(Localize), 
+                "DesignCulture",
+                typeof(string),
+                typeof(Localize),
                 new PropertyMetadata(SetCultureFromDependencyProperty));
 
         /// <summary>Holds a SyncRoot to be thread safe.</summary>
@@ -370,10 +370,10 @@ namespace WPFLocalizeExtension.Engine
             {
                 throw new ArgumentException(
                     string.Format(
-                        CultureInfo.CurrentCulture, 
-                        "No resource key with name '{0}' in dictionary '{1}' in assembly '{2}' found! ({2}.{1}.{0})", 
-                        resourceKey, 
-                        resourceDictionary, 
+                        CultureInfo.CurrentCulture,
+                        "No resource key with name '{0}' in dictionary '{1}' in assembly '{2}' found! ({2}.{1}.{0})",
+                        resourceKey,
+                        resourceDictionary,
                         resourceAssembly));
             }
 
@@ -511,10 +511,10 @@ namespace WPFLocalizeExtension.Engine
                 {
                     throw new ArgumentException(
                         string.Format(
-                            CultureInfo.CurrentCulture, 
-                            "No resource key with name '{0}' in dictionary '{1}' in assembly '{2}' found! ({2}.{1}.{0})", 
-                            resourceKey, 
-                            resourceDictionary, 
+                            CultureInfo.CurrentCulture,
+                            "No resource key with name '{0}' in dictionary '{1}' in assembly '{2}' found! ({2}.{1}.{0})",
+                            resourceKey,
+                            resourceDictionary,
                             resourceAssembly));
                 }
 
@@ -535,6 +535,7 @@ namespace WPFLocalizeExtension.Engine
 
                     // get the static ResourceManager property
                     var resManObject = methodInfo.Invoke(null, null);
+
                     // cast it to a Resource Manager for better working with
                     resManager = (ResourceManager)resManObject;
                 }

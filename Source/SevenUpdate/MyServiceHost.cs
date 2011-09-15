@@ -21,7 +21,6 @@ namespace SevenUpdate
 {
     using System;
     using System.ServiceModel;
-    using System.ServiceModel.Description;
 
     using ProtoBuf.ServiceModel;
 
@@ -49,9 +48,11 @@ namespace SevenUpdate
 
             var binding = new NetNamedPipeBinding
                 {
-                   Name = "sevenupdatebinding", Security = {
-                                                                Mode = NetNamedPipeSecurityMode.Transport 
-                                                            } 
+                    Name = "sevenupdatebinding",
+                    Security =
+                        {
+                            Mode = NetNamedPipeSecurityMode.Transport
+                        }
                 };
 
             var baseAddress = new Uri("net.pipe://localhost/sevenupdate/");

@@ -286,7 +286,7 @@ namespace WPFLocalizeExtension.Extensions
         /// <returns><c>True</c> if the listener handled the event. It is considered an error by the<see
         ///   cref = "T:System.Windows.WeakEventManager" /> handling in WPF�to register a listener for an event that the
         ///   listener does not handle. Regardless,the method should return <c>False</c> if it receives an event that it
-        ///   does not recognize or handle.</returns>
+        /// does not recognize or handle.</returns>
         bool IWeakEventListener.ReceiveWeakEvent(Type managerType, object sender, EventArgs e)
         {
             // if the passed handler is type of LocalizeDictionary.WeakCultureChangedEventManager, handle it
@@ -385,7 +385,8 @@ namespace WPFLocalizeExtension.Extensions
         /// <returns>Returns a Lookup Table.</returns>
         private static Dictionary<decimal, string> GetUKOddsFormatLookupTable()
         {
-            var dictionary = new Dictionary<decimal, string> {
+            var dictionary = new Dictionary<decimal, string>
+            {
                     { 11.00m, "10/1" }, 
                     { 10.00m, "9/1" }, 
                     { 9.50m, "17/2" }, 

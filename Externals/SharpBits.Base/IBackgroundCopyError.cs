@@ -32,8 +32,7 @@ namespace SharpBits.Base
         /// <summary>Retrieves the error text associated with the error.</summary>
         /// <param name = "languageId">Identifies the locale to use to generate the description. To create the language identifier, use the MAKELANGID macro.</param>
         /// <param name = "errorDescription">A string that contains the error text associated with the error. Call the
-        /// CoTaskMemFree function to free <paramref
-        ///    name = "errorDescription" /> when done.</param>
+        /// CoTaskMemFree function to free <paramref name = "errorDescription" /> when done.</param>
         void GetErrorDescription(uint languageId, [MarshalAs(UnmanagedType.LPWStr)] out string errorDescription);
 
         /// <summary>Retrieves a description of the context in which the error occurred.</summary>

@@ -26,12 +26,12 @@ namespace SharpBits.Base
         /// <param name = "type">Type of transfer job, such as BGJob_TYPE_DOWNLOAD. For a list of transfer types, see the BGJob_TYPE enumeration.</param>
         /// <param name = "jobId">Uniquely identifies your job in the queue. Use this identifier when you call the <c>IBackgroundCopyManager</c>::<c>GetJob</c> method to get a job from the queue.</param>
         /// <param name = "job">An <c>IBackgroundCopyJob</c> interface pointer that you use to modify the job's
-        /// properties and specify the files to be transferred. To activate the job in the queue, call the <see
-        ///    cref = "IBackgroundCopyJob" />::Resume method. Release <paramref name = "job" /> when done.</param>
+        /// properties and specify the files to be transferred. To activate the job in the queue, call the <see cref = "IBackgroundCopyJob" />::Resume method.
+        /// Release <paramref name = "job" /> when done.</param>
         void CreateJob(
-            [MarshalAs(UnmanagedType.LPWStr)] string displayName, 
-            BGJobType type, 
-            out Guid jobId, 
+            [MarshalAs(UnmanagedType.LPWStr)] string displayName,
+            BGJobType type,
+            out Guid jobId,
             [MarshalAs(UnmanagedType.Interface)] out IBackgroundCopyJob job);
 
         /// <summary>Retrieves a given job from the queue.</summary>
@@ -53,8 +53,8 @@ namespace SharpBits.Base
         /// function to free <paramref
         ///    name = "errorDescription" /> when done.</param>
         void GetErrorDescription(
-            [MarshalAs(UnmanagedType.Error)] int result, 
-            uint languageId, 
+            [MarshalAs(UnmanagedType.Error)] int result,
+            uint languageId,
             [MarshalAs(UnmanagedType.LPWStr)] out string errorDescription);
     }
 }

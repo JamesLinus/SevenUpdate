@@ -28,8 +28,8 @@ namespace SharpBits.Base
         /// specifying the local name, see the LocalName member and Remarks section of the <see
         ///    cref = "BGFileInfo" /> structure.</param>
         /// <param name = "localName">A string that contains the name of the file on the server. For information on
-        /// specifying the remote name, see the RemoteName member and Remarks section of the <see
-        ///    cref = "BGFileInfo" /> structure.</param>
+        /// specifying the remote name, see the RemoteName member and Remarks section of the 
+        /// <see cref = "BGFileInfo" /> structure.</param>
         void AddFile(
             [MarshalAs(UnmanagedType.LPWStr)] string remoteUrl, [MarshalAs(UnmanagedType.LPWStr)] string localName);
 
@@ -184,8 +184,8 @@ namespace SharpBits.Base
         ///    BGJobProxyUsageNoAutoDetect. The length of the proxy bypass list is limited to 4,000 characters, not
         ///    including the <c>null</c> terminator. .</param>
         void SetProxySettings(
-            BGJobProxyUsage proxyUsage, 
-            [MarshalAs(UnmanagedType.LPWStr)] string proxyList, 
+            BGJobProxyUsage proxyUsage,
+            [MarshalAs(UnmanagedType.LPWStr)] string proxyList,
             [MarshalAs(UnmanagedType.LPWStr)] string proxyBypassList);
 
         /// <summary>Retrieves the proxy settings the job uses to transfer the files.</summary>
@@ -202,8 +202,8 @@ namespace SharpBits.Base
         /// function to free <paramref
         ///    name = "proxyBypassList" /> when done.</param>
         void GetProxySettings(
-            out BGJobProxyUsage proxyUsage, 
-            [MarshalAs(UnmanagedType.LPWStr)] out string proxyList, 
+            out BGJobProxyUsage proxyUsage,
+            [MarshalAs(UnmanagedType.LPWStr)] out string proxyList,
             [MarshalAs(UnmanagedType.LPWStr)] out string proxyBypassList);
 
         /// <summary>Changes the ownership of the job to the current user.</summary>
@@ -225,7 +225,7 @@ namespace SharpBits.Base
         /// <param name = "program">A string that contains the program to execute when the job enters the error or transferred state. Call the CoTaskMemFree function to free program when done. .</param>
         /// <param name = "parameters">A string that contains the arguments of the program in program. Call the CoTaskMemFree function to free parameters when done. .</param>
         void GetNotifyCmdLine(
-            [MarshalAs(UnmanagedType.LPWStr)] out string program, 
+            [MarshalAs(UnmanagedType.LPWStr)] out string program,
             [MarshalAs(UnmanagedType.LPWStr)] out string parameters);
 
         /// <summary>
@@ -296,9 +296,9 @@ namespace SharpBits.Base
         /// <param name = "rangeCount">The range count.</param>
         /// <param name = "ranges">The ranges.</param>
         void AddFileWithRanges(
-            [MarshalAs(UnmanagedType.LPWStr)] string remoteUrl, 
-            [MarshalAs(UnmanagedType.LPWStr)] string localName, 
-            uint rangeCount, 
+            [MarshalAs(UnmanagedType.LPWStr)] string remoteUrl,
+            [MarshalAs(UnmanagedType.LPWStr)] string localName,
+            uint rangeCount,
             [MarshalAs(UnmanagedType.LPArray)] BGFileRange[] ranges);
 
         /// <summary>Sets the file acl flags.</summary>

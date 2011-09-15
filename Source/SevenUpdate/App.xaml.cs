@@ -148,8 +148,8 @@ namespace SevenUpdate
                     {
                         Core.ShowMessage(
                             string.Format(
-                                CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.ErrorDownloading, e.Args[0]), 
-                            TaskDialogStandardIcon.Error, 
+                                CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.ErrorDownloading, e.Args[0]),
+                            TaskDialogStandardIcon.Error,
                             TaskDialogStandardButtons.Ok);
                         Environment.Exit(0);
                     }
@@ -159,8 +159,8 @@ namespace SevenUpdate
                     {
                         Core.ShowMessage(
                             string.Format(
-                                CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.Not64BitCompat, appName), 
-                            TaskDialogStandardIcon.Error, 
+                                CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.Not64BitCompat, appName),
+                            TaskDialogStandardIcon.Error,
                             TaskDialogStandardButtons.Ok);
                         Environment.Exit(0);
                     }
@@ -168,13 +168,12 @@ namespace SevenUpdate
                     var result =
                         Core.ShowMessage(
                             string.Format(
-                                CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.AddToSevenUpdate, appName), 
-                            TaskDialogStandardIcon.ShieldBlue, 
-                            TaskDialogStandardButtons.Cancel, 
-                            string.Format(
-                                CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.AllowUpdates, appName), 
-                            null, 
-                            SevenUpdate.Properties.Resources.Add, 
+                                CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.AddToSevenUpdate, appName),
+                            TaskDialogStandardIcon.ShieldBlue,
+                            TaskDialogStandardButtons.Cancel,
+                            string.Format(CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.AllowUpdates, appName),
+                            null,
+                            SevenUpdate.Properties.Resources.Add,
                             true);
 
                     if (result != TaskDialogResult.Cancel)
@@ -281,19 +280,19 @@ namespace SevenUpdate
 
             var jumpTask = new JumpTask
                 {
-                    IconResourcePath = Path.Combine(Utilities.AppDir, "Shared", @"SevenUpdate.Base.dll"), 
-                    IconResourceIndex = 2, 
-                    Title = SevenUpdate.Properties.Resources.CheckForUpdates, 
-                    Arguments = "-check", 
+                    IconResourcePath = Path.Combine(Utilities.AppDir, "Shared", @"SevenUpdate.Base.dll"),
+                    IconResourceIndex = 2,
+                    Title = SevenUpdate.Properties.Resources.CheckForUpdates,
+                    Arguments = "-check",
                 };
 
             jumpList.JumpItems.Add(jumpTask);
 
             jumpTask = new JumpTask
                 {
-                    IconResourcePath = Path.Combine(Utilities.AppDir, "Shared", @"SevenUpdate.Base.dll"), 
-                    IconResourceIndex = 5, 
-                    Title = SevenUpdate.Properties.Resources.RestoreHiddenUpdates, 
+                    IconResourcePath = Path.Combine(Utilities.AppDir, "Shared", @"SevenUpdate.Base.dll"),
+                    IconResourceIndex = 5,
+                    Title = SevenUpdate.Properties.Resources.RestoreHiddenUpdates,
                     Arguments = "-hidden"
                 };
 
@@ -301,20 +300,20 @@ namespace SevenUpdate
 
             jumpTask = new JumpTask
                 {
-                    IconResourcePath = Path.Combine(Utilities.AppDir, "Shared", @"SevenUpdate.Base.dll"), 
-                    IconResourceIndex = 4, 
-                    Title = SevenUpdate.Properties.Resources.ViewUpdateHistory, 
-                    Arguments = "-history", 
+                    IconResourcePath = Path.Combine(Utilities.AppDir, "Shared", @"SevenUpdate.Base.dll"),
+                    IconResourceIndex = 4,
+                    Title = SevenUpdate.Properties.Resources.ViewUpdateHistory,
+                    Arguments = "-history",
                 };
 
             jumpList.JumpItems.Add(jumpTask);
 
             jumpTask = new JumpTask
                 {
-                    IconResourcePath = Path.Combine(Utilities.AppDir, "Shared", @"SevenUpdate.Base.dll"), 
-                    IconResourceIndex = 3, 
-                    Title = SevenUpdate.Properties.Resources.ChangeSettings, 
-                    Arguments = "-settings", 
+                    IconResourcePath = Path.Combine(Utilities.AppDir, "Shared", @"SevenUpdate.Base.dll"),
+                    IconResourceIndex = 3,
+                    Title = SevenUpdate.Properties.Resources.ChangeSettings,
+                    Arguments = "-settings",
                 };
 
             jumpList.JumpItems.Add(jumpTask);

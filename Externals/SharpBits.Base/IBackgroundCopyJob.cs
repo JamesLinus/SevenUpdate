@@ -28,11 +28,9 @@ namespace SharpBits.Base
 
         /// <summary>Adds a single file to the job.</summary>
         /// <param name = "remoteUrl">A string that contains the name of the file on the client. For information on
-        /// specifying the local name, see the LocalName member and Remarks section of the <see
-        ///    cref = "BGFileInfo" /> structure.</param>
+        /// specifying the local name, see the LocalName member and Remarks section of the <see cref = "BGFileInfo" /> structure.</param>
         /// <param name = "localName">A string that contains the name of the file on the server. For information on
-        /// specifying the remote name, see the RemoteName member and Remarks section of the <see
-        ///    cref = "BGFileInfo" /> structure.</param>
+        /// specifying the remote name, see the RemoteName member and Remarks section of the <see cref = "BGFileInfo" /> structure.</param>
         void AddFile(
             [MarshalAs(UnmanagedType.LPWStr)] string remoteUrl, [MarshalAs(UnmanagedType.LPWStr)] string localName);
 
@@ -65,8 +63,7 @@ namespace SharpBits.Base
         ///   client.
         /// </summary>
         /// <param name = "val">Contains data that you can use to calculate the percentage of the job that is complete.
-        /// For more information, see <see
-        ///    cref = "BGJobProgress" />.</param>
+        /// For more information, see <see cref = "BGJobProgress" />.</param>
         void GetProgress(out BGJobProgress val);
 
         /// <summary>Retrieves timestamps for activities related to the job, such as the time the job was created.</summary>
@@ -75,8 +72,7 @@ namespace SharpBits.Base
 
         /// <summary>Retrieves the state of the job.</summary>
         /// <param name = "val">Current state of the job. For example, the state reflects whether the job is in error,
-        /// transferring data, or suspended. For a list of job states, see the <see
-        ///    cref = "BGJobState" /> enumeration type. .</param>
+        /// transferring data, or suspended. For a list of job states, see the <see cref = "BGJobState" /> enumeration type.</param>
         void GetState(out BGJobState val);
 
         /// <summary>Retrieves an interface pointer to the error object after an error occurs.</summary>
@@ -105,9 +101,7 @@ namespace SharpBits.Base
 
         /// <summary>Specifies the priority of the job relative to other jobs in the transfer queue.</summary>
         /// <param name = "val">Specifies the priority level of your job relative to other jobs in the transfer queue.
-        /// The default is <see
-        ///    cref = "BGJobPriority" />.Normal. For a list of priority levels, see the <c>BGJobPriority</c>
-        ///    enumeration.</param>
+        /// The default is <see cref="BGJobPriority" />.Normal. For a list of priority levels, see the <c>BGJobPriority</c> enumeration.</param>
         void SetPriority(BGJobPriority val);
 
         /// <summary>Retrieves the priority level you have set for the job.</summary>
@@ -140,9 +134,8 @@ namespace SharpBits.Base
         /// <param name = "seconds">Minimum length of time, in seconds, that BITS waits after encountering a transient
         /// error before trying to transfer the file. The default retry delay is 600 seconds (10 minutes). The minimum
         /// retry delay that you can specify is 60 seconds. If you specify a value less than 60 seconds, BITS changes
-        /// the value to 60 seconds. If the value exceeds the no-progress-timeout value retrieved from the <see
-        ///    cref = "GetNoProgressTimeout" /> method, BITS will not retry the transfer and moves the job to the
-        ///    BGJobStateError state.</param>
+        /// the value to 60 seconds. If the value exceeds the no-progress-timeout value retrieved from the <see cref = "GetNoProgressTimeout" /> method,
+        /// BITS will not retry the transfer and moves the job to the BGJobStateError state.</param>
         void SetMinimumRetryDelay(uint seconds);
 
         /// <summary>
@@ -183,13 +176,12 @@ namespace SharpBits.Base
         ///    the <c>null</c> terminator.</param>
         /// <param name = "proxyBypassList">A string that contains an optional list of host names, IP addresses, or
         /// both, that can bypass the proxy. The list is space-delimited. For details on specifying a bypass proxy, see
-        /// Remarks. This parameter must be <c>null</c> if the value of <see
-        ///    cref = "ProxyUsage" /> is BGJobProxyUsagePreConfig, BGJobProxyUsageNoProxy, or
-        ///    BGJobProxyUsageNoAutoDetect. The length of the proxy bypass list is limited to 4,000 characters, not
-        ///    including the <c>null</c> terminator.</param>
+        /// Remarks. This parameter must be <c>null</c> if the value of <see cref="ProxyUsage" /> is BGJobProxyUsagePreConfig,
+        /// BGJobProxyUsageNoProxy, or BGJobProxyUsageNoAutoDetect. The length of the proxy bypass list is limited to 4,000 characters,
+        /// not including the <c>null</c> terminator.</param>
         void SetProxySettings(
-            BGJobProxyUsage proxyUsage, 
-            [MarshalAs(UnmanagedType.LPWStr)] string proxyList, 
+            BGJobProxyUsage proxyUsage,
+            [MarshalAs(UnmanagedType.LPWStr)] string proxyList,
             [MarshalAs(UnmanagedType.LPWStr)] string proxyBypassList);
 
         /// <summary>Retrieves the proxy settings the job uses to transfer the files.</summary>
@@ -203,11 +195,10 @@ namespace SharpBits.Base
         /// <param name = "proxyBypassList">A string that contains an optional list of host names or IP addresses, or
         /// both, that were not routed through the proxy. The list is space-delimited. For details on the format of the
         /// string, see the Listing the Proxy Bypass section of Enabling Internet Functionality. Call the CoTaskMemFree
-        /// function to free <paramref
-        ///    name = "proxyBypassList" /> when done.</param>
+        /// function to free <paramref name="proxyBypassList" /> when done.</param>
         void GetProxySettings(
-            out BGJobProxyUsage proxyUsage, 
-            [MarshalAs(UnmanagedType.LPWStr)] out string proxyList, 
+            out BGJobProxyUsage proxyUsage,
+            [MarshalAs(UnmanagedType.LPWStr)] out string proxyList,
             [MarshalAs(UnmanagedType.LPWStr)] out string proxyBypassList);
 
         /// <summary>Changes the ownership of the job to the current user.</summary>

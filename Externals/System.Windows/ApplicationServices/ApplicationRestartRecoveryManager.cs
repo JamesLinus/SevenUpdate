@@ -118,7 +118,7 @@ namespace System.Windows.ApplicationServices
 
         /// <summary>Removes an application's recovery registration.</summary>
         /// <exception cref = "System.Windows.ApplicationServices.ApplicationRecoveryException">
-        ///   The attempt to unregister for recovery failed.</exception>
+        /// The attempt to unregister for recovery failed.</exception>
         public static void UnregisterApplicationRecovery()
         {
             var hr = AppRestartRecoveryNativeMethods.UnregisterApplicationRecoveryCallback();
@@ -130,8 +130,8 @@ namespace System.Windows.ApplicationServices
         }
 
         /// <summary>Removes an application's restart registration.</summary>
-        /// <exception cref = "System.Windows.ApplicationServices.ApplicationRecoveryException">
-        ///   The attempt to unregister for restart failed.</exception>
+        /// <exception cref = "System.Windows.ApplicationServices.ApplicationRecoveryException">The attempt to unregister
+        /// for restart failed.</exception>
         public static void UnregisterApplicationRestart()
         {
             var hr = AppRestartRecoveryNativeMethods.UnregisterApplicationRestart();

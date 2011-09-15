@@ -100,8 +100,7 @@ namespace System.Windows.Dialogs
 
         /// <summary>Removes the control at the specified index.</summary>
         /// <param name = "index">The location of the control to remove.</param>
-        /// <permission cref = "System.InvalidOperationException">
-        ///   The associated dialog is showing and cannot be modified.</permission>
+        /// <permission cref = "System.InvalidOperationException"> The associated dialog is showing and cannot be modified.</permission>
         protected override void RemoveItem(int index)
         {
             // Notify that we're about to remove a control. Throw if dialog showing.

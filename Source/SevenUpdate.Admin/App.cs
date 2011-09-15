@@ -80,16 +80,16 @@ namespace SevenUpdate.Admin
         private enum NotifyType
         {
             /// <summary>Indicates searching is completed.</summary>
-            SearchComplete, 
+            SearchComplete,
 
             /// <summary>Indicates the downloading of updates has started.</summary>
-            DownloadStarted, 
+            DownloadStarted,
 
             /// <summary>Indicates download has completed.</summary>
-            DownloadComplete, 
+            DownloadComplete,
 
             /// <summary>Indicates that the installation of updates has begun.</summary>
-            InstallStarted, 
+            InstallStarted,
 
             /// <summary>Indicates that the installation of updates has completed.</summary>
             InstallCompleted
@@ -139,19 +139,19 @@ namespace SevenUpdate.Admin
         {
             Task.Factory.StartNew(
                 () =>
+                {
+                    if (File.Exists(Path.Combine(AllUserStore, "abort.lock")))
                     {
-                        if (File.Exists(Path.Combine(AllUserStore, "abort.lock")))
+                        Download.CancelDownload();
+                        Install.CancelInstall();
+                        try
                         {
-                            Download.CancelDownload();
-                            Install.CancelInstall();
-                            try
-                            {
-                                File.Delete(Path.Combine(AllUserStore, "abort.lock"));
-                            }
-                            catch (IOException)
-                            {
-                            }
+                            File.Delete(Path.Combine(AllUserStore, "abort.lock"));
                         }
+                        catch (IOException)
+                        {
+                        }
+                    }
 
 #if (!DEBUG)
                     if (client == null)
@@ -161,20 +161,20 @@ namespace SevenUpdate.Admin
 
 #endif
 
-                        if (IsInstalling)
-                        {
-                            return;
-                        }
+                    if (IsInstalling)
+                    {
+                        return;
+                    }
 
-                        if (Process.GetProcessesByName("SevenUpdate").Length > 0 || waiting)
-                        {
-                            return;
-                        }
+                    if (Process.GetProcessesByName("SevenUpdate").Length > 0 || waiting)
+                    {
+                        return;
+                    }
 
 #if (!DEBUG)
                     ShutdownApp();
 #endif
-                    });
+                });
         }
 
         /// <summary>Reports that the download has completed and starts update installation if necessary.</summary>
@@ -214,7 +214,7 @@ namespace SevenUpdate.Admin
             }
 
             Application.Current.Dispatcher.BeginInvoke(
-                UpdateNotifyIcon, 
+                UpdateNotifyIcon,
                 string.Format(CultureInfo.CurrentCulture, Resources.DownloadProgress, e.FilesTransferred, e.FilesTotal));
         }
 
@@ -257,7 +257,7 @@ namespace SevenUpdate.Admin
             }
 
             Application.Current.Dispatcher.BeginInvoke(
-                UpdateNotifyIcon, 
+                UpdateNotifyIcon,
                 string.Format(CultureInfo.CurrentCulture, Resources.InstallProgress, e.CurrentProgress));
         }
 
@@ -371,7 +371,7 @@ namespace SevenUpdate.Admin
                               || e is InvalidOperationException || e is NotSupportedException))
                         {
                             ErrorOccurred(
-                                null, 
+                                null,
                                 new ErrorOccurredEventArgs(Utilities.GetExceptionAsString(e), ErrorType.FatalError));
                             throw;
                         }
@@ -397,7 +397,7 @@ namespace SevenUpdate.Admin
                                   || e is InvalidOperationException || e is NotSupportedException))
                             {
                                 ErrorOccurred(
-                                    null, 
+                                    null,
                                     new ErrorOccurredEventArgs(Utilities.GetExceptionAsString(e), ErrorType.FatalError));
                                 throw;
                             }
@@ -429,12 +429,12 @@ namespace SevenUpdate.Admin
 
                     var app = new Sua(name, publisher)
                         {
-                            AppUrl = @"http://sevenupdate.com/", 
-                            Directory = @"HKLM\Software\Microsoft\Windows\CurrentVersion\App Paths\SevenUpdate.exe", 
-                            ValueName = "Path", 
-                            HelpUrl = @"http://sevenupdate.com/support/", 
-                            Platform = Platform.AnyCpu, 
-                            IsEnabled = true, 
+                            AppUrl = @"http://sevenupdate.com/",
+                            Directory = @"HKLM\Software\Microsoft\Windows\CurrentVersion\App Paths\SevenUpdate.exe",
+                            ValueName = "Path",
+                            HelpUrl = @"http://sevenupdate.com/support/",
+                            Platform = Platform.AnyCpu,
+                            IsEnabled = true,
                             SuiUrl = @"http://apps.sevenupdate.com/SevenUpdate"
                         };
 
@@ -599,9 +599,11 @@ namespace SevenUpdate.Admin
         {
             var binding = new NetNamedPipeBinding
                 {
-                   Name = "sevenupdatebinding", Security = {
-                                                                Mode = NetNamedPipeSecurityMode.Transport 
-                                                            } 
+                    Name = "sevenupdatebinding",
+                    Security =
+                        {
+                            Mode = NetNamedPipeSecurityMode.Transport
+                        }
                 };
             var address = new EndpointAddress(@"net.pipe://localhost/sevenupdate/");
 

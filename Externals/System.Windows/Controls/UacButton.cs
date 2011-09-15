@@ -29,22 +29,22 @@ namespace System.Windows.Controls
 
         /// <summary>Dependency Property - Specifies the text to display on the button.</summary>
         private static readonly DependencyProperty ButtonTextProperty = DependencyProperty.Register(
-            "ButtonText", 
-            typeof(string), 
-            typeof(UacButton), 
+            "ButtonText",
+            typeof(string),
+            typeof(UacButton),
             new FrameworkPropertyMetadata(
-                null, 
-                FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsRender, 
+                null,
+                FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsRender,
                 OnButtonTextChanged));
 
         /// <summary>Dependency Property - Indicates if the UAC Shield is desired on the button.</summary>
         private static readonly DependencyProperty IsShieldNeededProperty = DependencyProperty.Register(
-            "IsShieldNeeded", 
-            typeof(bool), 
-            typeof(UacButton), 
+            "IsShieldNeeded",
+            typeof(bool),
+            typeof(UacButton),
             new FrameworkPropertyMetadata(
-                true, 
-                FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsRender, 
+                true,
+                FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsRender,
                 OnIsShieldNeededChanged));
 
         /// <summary>The UAC shield.</summary>
@@ -59,9 +59,9 @@ namespace System.Windows.Controls
 
         /// <summary>Dependency Property - The shield icon to display.</summary>
         private static readonly DependencyProperty ShieldIconProperty = DependencyProperty.Register(
-            "ShieldIcon", 
-            typeof(ImageSource), 
-            typeof(Button), 
+            "ShieldIcon",
+            typeof(ImageSource),
+            typeof(Button),
             new FrameworkPropertyMetadata(Shield, FrameworkPropertyMetadataOptions.AffectsRender, OnShieldIconChanged));
 
         /// <summary>Indicates if the Uac shield is needed.</summary>
@@ -86,8 +86,8 @@ namespace System.Windows.Controls
 
             var imgShield = new Image
                 {
-                    Source = this.IsEnabled ? Shield : ShieldDisabled, 
-                    Stretch = Stretch.None, 
+                    Source = this.IsEnabled ? Shield : ShieldDisabled,
+                    Stretch = Stretch.None,
                     Margin = new Thickness(0, 0, 5, 0)
                 };
             stackPanel.Children.Add(imgShield);
@@ -252,8 +252,7 @@ namespace System.Windows.Controls
 
         /// <summary>Returns current "actual" <c>ToolTip</c>.</summary>
         /// <returns>If both <c>ToolTipElevated</c> and <c>ToolTipNotElevated</c> are <c>null</c>,<c>Button.ToolTip</c>
-        /// is returned.Otherwise <c>ToolTipElevated</c> or <c>ToolTipNotElevated</c> is returned based on <see
-        ///    cref = "IsShieldNeeded" />.</returns>
+        /// is returned.Otherwise <c>ToolTipElevated</c> or <c>ToolTipNotElevated</c> is returned based on <see cref="IsShieldNeeded" />.</returns>
         private object GetToolTip()
         {
             if (this.ToolTipElevated == null && this.ToolTipNotElevated == null)
