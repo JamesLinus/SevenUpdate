@@ -140,26 +140,23 @@ namespace SevenUpdate.Admin
             Task.Factory.StartNew(
                 () =>
                 {
-                    if (File.Exists(Path.Combine(AllUserStore, "abort.lock")))
+                    if (File.Exists(Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "abort.lock")))
                     {
                         Download.CancelDownload();
                         Install.CancelInstall();
                         try
                         {
-                            File.Delete(Path.Combine(AllUserStore, "abort.lock"));
+                            File.Delete(Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "abort.lock"));
                         }
                         catch (IOException)
                         {
                         }
                     }
 
-#if (!DEBUG)
                     if (client == null)
                     {
                         StartWcfHost();
                     }
-
-#endif
 
                     if (IsInstalling)
                     {
@@ -312,7 +309,7 @@ namespace SevenUpdate.Admin
 
                 try
                 {
-                    File.Delete(Path.Combine(AllUserStore, "abort.lock"));
+                    File.Delete(Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "abort.lock"));
                 }
                 catch (IOException e)
                 {
@@ -338,7 +335,7 @@ namespace SevenUpdate.Admin
                 notifyIcon = null;
             }
 
-            using (var fs = File.Create(Path.Combine(AllUserStore, "abort.lock")))
+            using (var fs = File.Create(Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "abort.lock")))
             {
                 fs.WriteByte(0);
             }
@@ -359,7 +356,7 @@ namespace SevenUpdate.Admin
                 {
                     try
                     {
-                        using (var fs = File.Create(Path.Combine(AllUserStore, "abort.lock")))
+                        using (var fs = File.Create(Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "abort.lock")))
                         {
                             fs.WriteByte(0);
                         }
@@ -384,11 +381,11 @@ namespace SevenUpdate.Admin
 
                 if (string.Compare(args[0], "Auto", true) == 0)
                 {
-                    if (File.Exists(Path.Combine(AllUserStore, "abort.lock")))
+                    if (File.Exists(Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "abort.lock")))
                     {
                         try
                         {
-                            File.Delete(Path.Combine(AllUserStore, "abort.lock"));
+                            File.Delete(Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "abort.lock"));
                         }
                         catch (Exception e)
                         {
@@ -585,7 +582,7 @@ namespace SevenUpdate.Admin
 
             try
             {
-                File.Delete(Path.Combine(AllUserStore, @"abort.lock"));
+                File.Delete(Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", @"abort.lock"));
             }
             catch (IOException)
             {

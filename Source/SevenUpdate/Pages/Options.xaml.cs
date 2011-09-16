@@ -89,7 +89,7 @@ namespace SevenUpdate.Pages
             }
             catch (Exception ex)
             {
-                Utilities.ReportError(ex, ErrorType.FatalError);
+                Utilities.ReportError(ex, ErrorType.FatalError, App.SulLocation);
                 if (!(ex is NullReferenceException || ex is WebException))
                 {
                     throw;

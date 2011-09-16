@@ -379,10 +379,14 @@ namespace SevenUpdate
 
         /// <summary>Gets data from the exception as a string.</summary>
         /// <param name="exception">The exception to write in the log.</param>
+        /// <param name="extraInfo">Any extra information to include in the log</param>
         /// <returns>The exception as a string.</returns>
-        public static string GetExceptionAsString(Exception exception)
+        public static string GetExceptionAsString(Exception exception, string extraInfo = null)
         {
-            return "<--- " + DateTime.Now + ": " + exception + " --->" + Environment.NewLine;
+            return string.IsNullOrWhiteSpace(extraInfo)
+                       ? "<--- " + DateTime.Now + ": " + exception + " --->" + Environment.NewLine + Environment.NewLine
+                       : "<--- " + DateTime.Now + ": " + exception + Environment.NewLine + "extraInfo: "
+                         + extraInfo + " --->" + Environment.NewLine + Environment.NewLine;
         }
 
         /// <summary>Gets the file size of a file.</summary>
@@ -593,7 +597,8 @@ namespace SevenUpdate
         /// <summary>Reports the error that occurred to a log file.</summary>
         /// <param name="exception">The exception to write in the log.</param>
         /// <param name="errorType">The type of error that occurred.</param>
-        public static void ReportError(Exception exception, ErrorType errorType)
+        /// <param name="extraInfo">Any additonal information for the exception.</param>
+        public static void ReportError(Exception exception, ErrorType errorType, string extraInfo = null)
         {
             if (exception == null)
             {
@@ -602,7 +607,7 @@ namespace SevenUpdate
 
             if (ErrorOccurred != null)
             {
-                ErrorOccurred(null, new ErrorOccurredEventArgs(GetExceptionAsString(exception), errorType));
+                ErrorOccurred(null, new ErrorOccurredEventArgs(GetExceptionAsString(exception, extraInfo), errorType));
             }
         }
 

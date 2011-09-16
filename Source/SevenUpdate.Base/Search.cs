@@ -119,11 +119,11 @@ namespace SevenUpdate
                     }
                     catch (WebException ex)
                     {
-                        Utilities.ReportError(ex, ErrorType.SearchError);
+                        Utilities.ReportError(ex, ErrorType.SearchError, t.SuiUrl);
                     }
                     catch (Exception ex)
                     {
-                        Utilities.ReportError(ex, ErrorType.SearchError);
+                        Utilities.ReportError(ex, ErrorType.SearchError, t.SuiUrl);
                         throw;
                     }
 
@@ -321,6 +321,9 @@ namespace SevenUpdate
                 update.Files[z].Destination = Utilities.ExpandInstallLocation(
                     update.Files[z].Destination, directory, platform, valueName);
 
+                var downloadFile = Path.Combine(
+                    downloadDirectory, update.Name[0].Value, Path.GetFileName(update.Files[z].Destination));
+
                 // Checks to see if the file needs updated, if it doesn't it removes it from the list.
                 if (File.Exists(update.Files[z].Destination))
                 {
@@ -341,10 +344,14 @@ namespace SevenUpdate
 
                                 z--;
                             }
+                            else if (Utilities.GetHash(downloadFile) != update.Files[z].Hash)
+                            {
+                                if (update.Files[z].Action != FileAction.CompareOnly)
+                                {
+                                    size += update.Files[z].FileSize;
+                                }
+                            }
 
-                            // else if (Utilities.GetHash(downloadFile) != update.Files[z].Hash) { if
-                            // (update.Files[z].Action != FileAction.CompareOnly) { size += update.Files[z].FileSize; }
-                            // }
                             break;
                     }
                 }
@@ -388,9 +395,11 @@ namespace SevenUpdate
 
                                 z--;
                             }
+                            else if (Utilities.GetHash(downloadFile) != update.Files[z].Hash)
+                            {
+                                size += update.Files[z].FileSize;
+                            }
 
-                            // else if (Utilities.GetHash(downloadFile) != update.Files[z].Hash) { size +=
-                            // update.Files[z].FileSize; }
                             break;
                     }
                 }

@@ -208,8 +208,40 @@ namespace SevenUpdate
                 var downloadDir = Path.Combine(downloadDirectory, application.Updates[y].Name[0].Value);
 
                 Directory.CreateDirectory(downloadDir);
-                bitsJob.AddFile(
-                    new Uri(application.Updates[y].DownloadUrl).AbsoluteUri, Path.Combine(downloadDir, "update.7u"));
+
+                for (var z = 0; z < application.Updates[y].Files.Count; z++)
+                {
+                    if (application.Updates[y].Files[z].Action == FileAction.Delete
+                        || application.Updates[y].Files[z].Action == FileAction.UnregisterThenDelete
+                        || application.Updates[y].Files[z].Action == FileAction.CompareOnly)
+                    {
+                        continue;
+                    }
+
+                    var destination = Path.GetFileName(application.Updates[y].Files[z].Destination);
+                    if (string.IsNullOrWhiteSpace(destination))
+                    {
+                        throw new InvalidOperationException();
+                    }
+
+                    if (Utilities.GetHash(Path.Combine(downloadDir, destination))
+                        == application.Updates[y].Files[z].Hash)
+                    {
+                        continue;
+                    }
+
+                    try
+                    {
+                        File.Delete(Path.Combine(downloadDir, destination));
+                    }
+                    catch (IOException)
+                    {
+                    }
+
+                    bitsJob.AddFile(
+                        new Uri(application.Updates[y].Files[z].Source).AbsoluteUri,
+                        Path.Combine(downloadDir, destination));
+                }
             }
         }
 

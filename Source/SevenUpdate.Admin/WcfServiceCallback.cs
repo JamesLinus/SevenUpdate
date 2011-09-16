@@ -150,9 +150,9 @@ namespace SevenUpdate.Admin
         {
             try
             {
-                if (File.Exists(Path.Combine(App.AllUserStore, "abort.lock")))
+                if (File.Exists(Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "abort.lock")))
                 {
-                    File.Delete(Path.Combine(App.AllUserStore, "abort.lock"));
+                    File.Delete(Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "abort.lock"));
                 }
             }
             catch (Exception e)

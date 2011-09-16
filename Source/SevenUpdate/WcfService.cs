@@ -497,7 +497,7 @@ namespace SevenUpdate
                     {
                     }
                 });
-            task.Wait(30000);
+            task.Wait(15000);
         }
 
         #endregion
