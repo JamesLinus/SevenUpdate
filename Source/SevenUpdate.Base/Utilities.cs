@@ -383,10 +383,7 @@ namespace SevenUpdate
         /// <returns>The exception as a string.</returns>
         public static string GetExceptionAsString(Exception exception, string extraInfo = null)
         {
-            return string.IsNullOrWhiteSpace(extraInfo)
-                       ? "<--- " + DateTime.Now + ": " + exception + " --->" + Environment.NewLine + Environment.NewLine
-                       : "<--- " + DateTime.Now + ": " + exception + Environment.NewLine + "extraInfo: "
-                         + extraInfo + " --->" + Environment.NewLine + Environment.NewLine;
+            return exception + " " + extraInfo;
         }
 
         /// <summary>Gets the file size of a file.</summary>

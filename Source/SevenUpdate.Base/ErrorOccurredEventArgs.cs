@@ -38,16 +38,25 @@ namespace SevenUpdate
             this.ErrorType = type;
         }
 
+        /// <summary>Initializes a new instance of the <see cref="ErrorOccurredEventArgs" /> class.</summary>
+        public ErrorOccurredEventArgs()
+        {
+        }
+
         #endregion
 
         #region Public Properties
 
         /// <summary>Gets the <c>ErrorType</c> of the error that occurred.</summary>
         /// <value>The type of error that occurred.</value>
+        [ProtoMember(1)]
+        [DataMember]
         public ErrorType ErrorType { get; private set; }
 
         /// <summary>Gets the Exception information of the error that occurred.</summary>
         /// <value>The exception.</value>
+        [ProtoMember(2)]
+        [DataMember]
         public string Exception { get; private set; }
 
         #endregion

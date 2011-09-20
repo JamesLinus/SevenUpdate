@@ -313,12 +313,6 @@ namespace SevenUpdate
 
             errorOccurred = true;
 
-            Utilities.ReportError(
-                new WebException(
-                    e.Job.Error.File + " " + e.Job.Error.Description + " " + e.Job.Error.ErrorCode + " "
-                    + e.Job.Error.ContextDescription),
-                ErrorType.DownloadError);
-
             if (e.Job.State != JobState.Canceled)
             {
                 e.Job.Cancel();
@@ -333,6 +327,18 @@ namespace SevenUpdate
             {
             }
 
+            string error = null;
+            if (e.Error != null)
+            {
+                error = " " + e.Error.Description + " " + e.Error.ContextDescription;
+
+                if (e.Error.File != null)
+                {
+                    error += " " + e.Error.File.RemoteName;
+                }
+            }
+
+            Utilities.ReportError(new WebException(error), ErrorType.DownloadError);
             return;
         }
 

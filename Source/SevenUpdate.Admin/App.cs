@@ -215,7 +215,7 @@ namespace SevenUpdate.Admin
                 string.Format(CultureInfo.CurrentCulture, Resources.DownloadProgress, e.FilesTransferred, e.FilesTotal));
         }
 
-        /// <summary>Runs when there is an error searching for updates.</summary>
+        /// <summary>Runs when there is an error occurs</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>ErrorOccurredEventArgs</c> instance containing the event data.</param>
         private static void ErrorOccurred(object sender, ErrorOccurredEventArgs e)
@@ -223,6 +223,11 @@ namespace SevenUpdate.Admin
             if (e.ErrorType == ErrorType.FatalNetworkError)
             {
                 ShutdownApp();
+            }
+
+            if (isClientConnected)
+            {
+                client.OnErrorOccurred(sender, e);
             }
         }
 
@@ -274,6 +279,7 @@ namespace SevenUpdate.Admin
                     Search.ErrorOccurred += ErrorOccurred;
                     Download.DownloadCompleted += DownloadCompleted;
                     Download.DownloadProgressChanged += DownloadProgressChanged;
+                    Utilities.ErrorOccurred += ErrorOccurred;
                     Install.InstallCompleted += InstallCompleted;
                     Install.InstallProgressChanged += InstallProgressChanged;
                     Install.UpdateInstalled += AddHistory;

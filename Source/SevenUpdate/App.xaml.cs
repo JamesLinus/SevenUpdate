@@ -82,6 +82,21 @@ namespace SevenUpdate
 
         #region Methods
 
+        /// <summary>Logs an error.</summary>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">The error data to log.</param>
+        internal static void LogError(object sender, ErrorOccurredEventArgs e)
+        {
+            using (var tw = new StreamWriter(Path.Combine(UserStore, "error.log"), true))
+            {
+                tw.WriteLine("<--Begin-->");
+                tw.WriteLine(DateTime.Now + ":");
+                tw.WriteLine(e.Exception);
+                tw.WriteLine("<--End-->");
+                tw.WriteLine();
+            }
+        }
+
         /// <summary>Process command line args.</summary>
         /// <param name="args">The list of arguments.</param>
         internal static void ProcessArgs(IList<string> args)
@@ -247,17 +262,6 @@ namespace SevenUpdate
             }
 
             Core.IsReconnect = true;
-        }
-
-        /// <summary>Logs an error.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The error data to log.</param>
-        private static void LogError(object sender, ErrorOccurredEventArgs e)
-        {
-            using (var tw = new StreamWriter(Path.Combine(UserStore, "error.log"), true))
-            {
-                tw.Write(e.Exception);
-            }
         }
 
         /// <summary>Registers the application to use the Recovery Manager.</summary>

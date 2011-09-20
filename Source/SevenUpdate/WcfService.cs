@@ -124,6 +124,7 @@ namespace SevenUpdate
         public void OnErrorOccurred(object sender, ErrorOccurredEventArgs e)
         {
             ErrorOccurred(this, e);
+            App.LogError(sender, e);
         }
 
         /// <summary>Occurs when the installation of updates has completed.</summary>
@@ -365,13 +366,13 @@ namespace SevenUpdate
             {
                 return false;
             }
-
             Task.Factory.StartNew(WaitForAdmin).ContinueWith(
                 delegate
                 {
                     try
                     {
                         context.InstallUpdates(Core.Applications);
+                        IsConnected = true;
                     }
                     catch (CommunicationObjectAbortedException)
                     {
@@ -384,6 +385,7 @@ namespace SevenUpdate
                     {
                         ErrorOccurred(
                             null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
+                        IsConnected = false;
                     }
                     catch (Exception e)
                     {
@@ -392,11 +394,10 @@ namespace SevenUpdate
                         ErrorOccurred(
                             null,
                             new ErrorOccurredEventArgs(Utilities.GetExceptionAsString(e), ErrorType.FatalError));
-                        throw;
                     }
                 });
 
-            return true;
+            return IsConnected;
         }
 
         /// <summary>Save the settings and call <c>SevenUpdate</c>.Admin to commit them.</summary>
