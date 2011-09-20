@@ -134,7 +134,6 @@ namespace SevenUpdate.Pages
                         if (!(e is UnauthorizedAccessException || e is IOException))
                         {
                             Utilities.ReportError(e, ErrorType.GeneralError);
-                            throw;
                         }
                     }
 

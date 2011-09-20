@@ -385,7 +385,7 @@ namespace SevenUpdate
                     {
                         ErrorOccurred(
                             null, new ErrorOccurredEventArgs(Resources.CouldNotConnectService, ErrorType.FatalError));
-                        IsConnected = false;
+                         IsConnected = false;
                     }
                     catch (Exception e)
                     {
@@ -397,7 +397,7 @@ namespace SevenUpdate
                     }
                 });
 
-            return IsConnected;
+            return true;
         }
 
         /// <summary>Save the settings and call <c>SevenUpdate</c>.Admin to commit them.</summary>

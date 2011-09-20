@@ -225,9 +225,17 @@ namespace SevenUpdate.Admin
                 ShutdownApp();
             }
 
-            if (isClientConnected)
+            if (!isClientConnected)
             {
-                client.OnErrorOccurred(sender, e);
+                ShutdownApp();
+                return;
+            }
+
+            client.OnErrorOccurred(sender, e);
+
+            if (e.ErrorType == ErrorType.FatalError || e.ErrorType == ErrorType.DownloadError)
+            {
+                IsInstalling = false;
             }
         }
 
