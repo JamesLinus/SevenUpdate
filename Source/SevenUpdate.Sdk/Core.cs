@@ -23,12 +23,13 @@ namespace SevenUpdate.Sdk
     using System.IO;
     using System.Linq;
     using System.Windows;
-    using System.Windows.Dialogs.TaskDialog;
     using System.Windows.Forms;
     using System.Windows.Input;
     using System.Windows.Interop;
     using System.Windows.Media;
     using System.Windows.Shell;
+
+    using SevenSoftware.Windows.Dialogs.TaskDialog;
 
     using SevenUpdate.Sdk.Pages;
     using SevenUpdate.Sdk.Properties;

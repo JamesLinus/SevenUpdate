@@ -29,6 +29,8 @@ namespace SevenUpdate.Pages
     using System.Windows.Input;
     using System.Windows.Media;
 
+    using SevenSoftware.Windows;
+
     using SevenUpdate.Converters;
 
     /// <summary>Interaction logic for Update_Info.xaml.</summary>

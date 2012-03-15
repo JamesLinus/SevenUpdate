@@ -27,9 +27,10 @@ namespace SevenUpdate
     using System.IO;
     using System.Linq;
     using System.Windows;
-    using System.Windows.Dialogs.TaskDialog;
     using System.Windows.Input;
-    using System.Windows.Internal;
+
+    using SevenSoftware.Windows.Dialogs.TaskDialog;
+    using SevenSoftware.Windows.Internal;
 
     using SevenUpdate.Pages;
     using SevenUpdate.Properties;

@@ -1,15 +1,17 @@
 ﻿<!-- Copyright (c) Robert Baker, Seven Software -->
-<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:Converters="clr-namespace:SevenUpdate.Sdk.Converters">
+<ResourceDictionary xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:Converters="clr-namespace:SevenUpdate.Sdk.Converters"
+                    xmlns:Converters1="clr-namespace:SevenSoftware.Windows.Converters;assembly=SevenSoftware.Windows">
   <Converters:StringToLocaleStringConverter x:Key="stringToLocaleString" />
   <BooleanToVisibilityConverter x:Key="boolToVisibility" />
-  <StringToBooleanConverter x:Key="stringToBool" />
-  <StringToVisibilityConverter x:Key="stringToVisibility" />
-  <IntToVisibilityConverter x:Key="intToVisibility" />
-  <IntToBooleanConverter x:Key="intToBool" />
+  <Converters1:StringToBooleanConverter x:Key="stringToBool" />
+  <Converters1:StringToVisibilityConverter x:Key="stringToVisibility" />
+  <Converters1:IntToVisibilityConverter x:Key="intToVisibility" />
+  <Converters1:IntToBooleanConverter x:Key="intToBool" />
   <Converters:DateConverter x:Key="dateConverter" />
-  <EnumToBooleanConverter x:Key="enumToBool" />
-  <InverseEnumToBooleanConverter x:Key="inverseEnumToBool" />
+  <Converters1:EnumToBooleanConverter x:Key="enumToBool" />
+  <Converters1:InverseEnumToBooleanConverter x:Key="inverseEnumToBool" />
 
   <Style TargetType="ListBoxItem">
     <Style.Triggers>

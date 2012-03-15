@@ -25,10 +25,12 @@ namespace SevenUpdate.Pages
     using System.IO;
     using System.Linq;
     using System.Windows;
-    using System.Windows.Controls;
     using System.Windows.Controls.Primitives;
     using System.Windows.Input;
     using System.Windows.Media;
+
+    using SevenSoftware.Windows;
+    using SevenSoftware.Windows.Controls;
 
     using SevenUpdate.Windows;
 

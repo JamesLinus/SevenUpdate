@@ -43,28 +43,28 @@
       <Hyperlink NavigateUri="http://sevenupdate.com/license" RequestNavigate="NavigateToUri" Foreground="#FF0066CC">
         <Run Text="{LocText SevenUpdate.Sdk:Resources:GPL}" />
       </Hyperlink>
-      <Run Text="© 2007-2011" />
+      <Run Text="&#169; 2007-2011" />
       <LineBreak />
       <Run Text="{LocText SevenUpdate.Sdk:Resources:SharpBitsLicense}" />
       <Hyperlink NavigateUri="http://sharpbits.codeplex.com/license" RequestNavigate="NavigateToUri"
                  Foreground="#FF0066CC">
         <Run Text="{LocText SevenUpdate.Sdk:Resources:BSDLicense}" />
       </Hyperlink>
-      <Run Text="© 2007, 2008" />
+      <Run Text="&#169; 2007, 2008" />
       <LineBreak />
       <Run Text="{LocText SevenUpdate.Sdk:Resources:ProtobufLicense}" />
       <Hyperlink NavigateUri="http://www.apache.org/licenses/LICENSE-2.0" RequestNavigate="NavigateToUri"
                  Foreground="#FF0066CC">
         <Run Text="{LocText SevenUpdate.Sdk:Resources:ApacheLicense}" />
       </Hyperlink>
-      <Run Text="© 2008" />
+      <Run Text="&#169; 2008" />
       <LineBreak />
       <Run Text="{LocText SevenUpdate.Sdk:Resources:WPFLocalizeExtensionLicense}" />
       <Hyperlink NavigateUri="http://wpflocalizeextension.codeplex.com/license" RequestNavigate="NavigateToUri"
                  Foreground="#FF0066CC">
         <Run Text="{LocText SevenUpdate.Sdk:Resources:MicrosoftPublicLicense}" />
       </Hyperlink>
-      <Run Text="© 2008" />
+      <Run Text="&#169; 2008" />
     </TextBlock>
     <TextBlock HorizontalAlignment="Left" Padding="2" Text="{LocText SevenUpdate.Sdk:Resources:Copyright}" Grid.Row="2"
                Grid.Column="1" VerticalAlignment="Top" Margin="0,0,5,0" />

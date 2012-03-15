@@ -23,7 +23,8 @@ namespace SevenUpdate.Sdk.ValidationRules
     using System.IO;
     using System.Text.RegularExpressions;
     using System.Windows.Controls;
-    using System.Windows.Properties;
+
+    using SevenSoftware.Windows.Properties;
 
     /// <summary>Validates if the input is a url.</summary>
     [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass",

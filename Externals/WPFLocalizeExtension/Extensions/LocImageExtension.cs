@@ -22,8 +22,6 @@ namespace WPFLocalizeExtension.Extensions
     [MarkupExtensionReturnType(typeof(BitmapSource))]
     public class LocImageExtension : BaseLocalizeExtension<BitmapSource>
     {
-        #region Constructors and Destructors
-
         /// <summary>Initializes a new instance of the <see cref="LocImageExtension" /> class.</summary>
         public LocImageExtension()
         {
@@ -31,21 +29,16 @@ namespace WPFLocalizeExtension.Extensions
 
         /// <summary>Initializes a new instance of the <see cref="LocImageExtension" /> class.</summary>
         /// <param name="key">The resource identifier.</param>
-        public LocImageExtension(string key)
-            : base(key)
+        public LocImageExtension(string key) : base(key)
         {
         }
-
-        #endregion
-
-        #region Public Methods
 
         /// <summary>Provides the Value for the first Binding as <c>System.Windows.Media.Imaging.BitmapSource</c>.</summary>
         /// <param name="serviceProvider">The <c>System.Windows.Markup.IProvideValueTarget</c> provided from the <c>MarkupExtension</c>.</param>
         /// <returns>The found item from the .resx directory or <c>null</c> if not found.</returns>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            var obj = base.ProvideValue(serviceProvider);
+            object obj = base.ProvideValue(serviceProvider);
 
             if (obj == null)
             {
@@ -63,16 +56,12 @@ namespace WPFLocalizeExtension.Extensions
             }
 
             throw new NotSupportedException(
-                string.Format(
-                    CultureInfo.CurrentCulture,
-                    "ResourceKey '{0}' returns '{1}' which is not type of System.Drawing.Bitmap",
-                    this.Key,
-                    obj.GetType().FullName));
+                    string.Format(
+                            CultureInfo.CurrentCulture, 
+                            "ResourceKey '{0}' returns '{1}' which is not type of System.Drawing.Bitmap", 
+                            this.Key, 
+                            obj.GetType().FullName));
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>
         ///   Creates a <c>System.Windows.Media.Imaging.BitmapSource</c> from a <see cref="System.Drawing.Bitmap"
@@ -83,11 +72,11 @@ namespace WPFLocalizeExtension.Extensions
         protected override object FormatOutput(object input)
         {
             // allocate the memory for the bitmap
-            var bmpPt = ((Bitmap)input).GetHbitmap();
+            IntPtr bmpPt = ((Bitmap)input).GetHbitmap();
 
             // create the bitmapSource
-            var bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(
-                bmpPt, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+            BitmapSource bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(
+                    bmpPt, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
 
             // freeze the bitmap to avoid hooking events to the bitmap
             bitmapSource.Freeze();
@@ -106,10 +95,8 @@ namespace WPFLocalizeExtension.Extensions
         protected override void HandleNewValue()
         {
             var obj = Localize.Instance.GetLocalizedObject<object>(
-                this.Assembly, this.Dictionary, this.Key, this.Culture);
+                    this.Assembly, this.Dictionary, this.Key, this.Culture);
             this.SetNewValue(this.FormatOutput(obj));
         }
-
-        #endregion
     }
 }

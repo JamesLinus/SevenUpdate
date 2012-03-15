@@ -25,11 +25,13 @@ namespace SevenUpdate.Pages
     using System.Net;
     using System.Threading.Tasks;
     using System.Windows;
-    using System.Windows.Controls;
     using System.Windows.Controls.Primitives;
     using System.Windows.Input;
     using System.Windows.Media;
     using System.Windows.Navigation;
+
+    using SevenSoftware.Windows;
+    using SevenSoftware.Windows.Controls;
 
     /// <summary>Interaction logic for Options.xaml.</summary>
     public partial class Options

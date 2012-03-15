@@ -20,6 +20,8 @@ namespace SevenUpdate.Sdk.Pages
     using System.Windows;
     using System.Windows.Media;
 
+    using SevenSoftware.Windows;
+
     /// <summary>Interaction logic for UpdateRegistry.xaml.</summary>
     public sealed partial class UpdateReview
     {

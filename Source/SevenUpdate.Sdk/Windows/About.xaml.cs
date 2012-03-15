@@ -21,9 +21,11 @@ namespace SevenUpdate.Sdk.Windows
     using System.Reflection;
     using System.Windows;
     using System.Windows.Input;
-    using System.Windows.Internal;
     using System.Windows.Media;
     using System.Windows.Navigation;
+
+    using SevenSoftware.Windows;
+    using SevenSoftware.Windows.Internal;
 
     /// <summary>Interaction logic for About.xaml.</summary>
     public sealed partial class About

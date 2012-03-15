@@ -22,10 +22,12 @@ namespace SevenUpdate.Sdk.Windows
     using System.Windows;
     using System.Windows.Controls;
     using System.Windows.Input;
-    using System.Windows.Internal;
     using System.Windows.Markup;
     using System.Windows.Media;
     using System.Windows.Navigation;
+
+    using SevenSoftware.Windows;
+    using SevenSoftware.Windows.Internal;
 
     using SevenUpdate.Sdk.Properties;
 

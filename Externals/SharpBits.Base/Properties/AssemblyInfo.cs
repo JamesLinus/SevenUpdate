@@ -17,7 +17,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Xidar Solutions")]
 [assembly: AssemblyProduct("SharpBits.Net")]
-[assembly: AssemblyCopyright("Copyright Â© Xidar Solutions 2007")]
+[assembly: AssemblyCopyright("Copyright © Xidar Solutions 2007")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyVersion("1.1")]

@@ -21,9 +21,13 @@ namespace SevenUpdate.Sdk.Pages
     using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
-    using System.Windows.Dialogs.TaskDialog;
     using System.Windows.Media;
-    using System.Windows.ValidationRules;
+
+
+    using SevenSoftware.Windows;
+    using SevenSoftware.Windows.Controls;
+    using SevenSoftware.Windows.Dialogs.TaskDialog;
+    using SevenSoftware.Windows.ValidationRules;
 
     using SevenUpdate.Sdk.Windows;
 

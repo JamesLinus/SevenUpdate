@@ -95,9 +95,7 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
-    <Reference Include="System.Drawing" />
     <Reference Include="System.Runtime.Serialization" />
-    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xaml" />
     <Reference Include="WindowsBase" />
@@ -228,10 +226,9 @@
     <Resource Include="icon.ico" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\Externals\System.Windows\System.Windows.csproj">
-      <Project>{B6A3B046-B13E-4BF5-A141-077E5A12B8C3}</Project>
-      <Name>System.Windows</Name>
-      <Private>False</Private>
+    <ProjectReference Include="..\..\Externals\SevenSoftware.Windows\SevenSoftware.Windows.csproj">
+      <Project>{b6a3b046-b13e-4bf5-a141-077e5a12b8c3}</Project>
+      <Name>SevenSoftware.Windows</Name>
     </ProjectReference>
     <ProjectReference Include="..\..\Externals\WPFLocalizeExtension\WPFLocalizeExtension.csproj">
       <Project>{E8C5B094-2CB4-4C26-87F0-351B03612179}</Project>

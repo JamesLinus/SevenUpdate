@@ -16,7 +16,7 @@ using System.Windows.Markup;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Bernhard Millauer")]
 [assembly: AssemblyProduct("WPFLocalizeExtension")]
-[assembly: AssemblyCopyright("Copyright Â© Bernhard Millauer 2008-10")]
+[assembly: AssemblyCopyright("Copyright © Bernhard Millauer 2008-10")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyVersion("1.1")]
@@ -26,4 +26,4 @@ using System.Windows.Markup;
 [assembly: Guid("59ffa091-2f23-45bc-8212-125250bf213d")]
 [assembly: XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml/presentation", "WPFLocalizeExtension.Engine")]
 [assembly:
-    XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml/presentation", "WPFLocalizeExtension.Extensions")]
+        XmlnsDefinition("http://schemas.microsoft.com/winfx/2006/xaml/presentation", "WPFLocalizeExtension.Extensions")]

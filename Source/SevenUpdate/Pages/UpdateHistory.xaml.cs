@@ -27,6 +27,8 @@ namespace SevenUpdate.Pages
     using System.Windows.Input;
     using System.Windows.Media;
 
+    using SevenSoftware.Windows;
+
     using SevenUpdate.Windows;
 
     /// <summary>Interaction logic for UpdateHistory.xaml.</summary>

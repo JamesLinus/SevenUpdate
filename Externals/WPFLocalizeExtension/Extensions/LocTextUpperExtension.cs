@@ -1,4 +1,4 @@
-// ***********************************************************************
+﻿// ***********************************************************************
 // <copyright file="LocTextUpperExtension.cs" project="WPFLocalizeExtension" assembly="WPFLocalizeExtension" solution="SevenUpdate" company="Bernhard Millauer">
 //     Copyright (c) Bernhard Millauer. All rights reserved.
 // </copyright>
@@ -18,8 +18,6 @@ namespace WPFLocalizeExtension.Extensions
     [MarkupExtensionReturnType(typeof(string))]
     public class LocTextUpperExtension : LocTextExtension
     {
-        #region Constructors and Destructors
-
         /// <summary>Initializes a new instance of the <see cref="LocTextUpperExtension" /> class.</summary>
         public LocTextUpperExtension()
         {
@@ -27,21 +25,16 @@ namespace WPFLocalizeExtension.Extensions
 
         /// <summary>Initializes a new instance of the <see cref="LocTextUpperExtension" /> class.</summary>
         /// <param name="key">The resource identifier.</param>
-        public LocTextUpperExtension(string key)
-            : base(key)
+        public LocTextUpperExtension(string key) : base(key)
         {
         }
-
-        #endregion
-
-        #region Public Methods
 
         /// <summary>Provides the Value for the first Binding as <c>System.String</c>.</summary>
         /// <param name="serviceProvider">The <c>System.Windows.Markup.IProvideValueTarget</c> provided from the <c>MarkupExtension</c>.</param>
         /// <returns>The found item from the .resx directory or <c>null</c> if not found.</returns>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            var obj = base.ProvideValue(serviceProvider);
+            object obj = base.ProvideValue(serviceProvider);
 
             if (obj == null)
             {
@@ -60,16 +53,12 @@ namespace WPFLocalizeExtension.Extensions
             }
 
             throw new NotSupportedException(
-                string.Format(
-                    CultureInfo.CurrentCulture,
-                    "ResourceKey '{0}' returns '{1}' which is not type of System.String",
-                    this.Key,
-                    obj.GetType().FullName));
+                    string.Format(
+                            CultureInfo.CurrentCulture, 
+                            "ResourceKey '{0}' returns '{1}' which is not type of System.String", 
+                            this.Key, 
+                            obj.GetType().FullName));
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>
         ///   This method formats the localized text.If the passed target text is <c>null</c>, string.empty will be
@@ -89,10 +78,8 @@ namespace WPFLocalizeExtension.Extensions
         protected override void HandleNewValue()
         {
             var obj = Localize.Instance.GetLocalizedObject<object>(
-                this.Assembly, this.Dictionary, this.Key, this.Culture);
+                    this.Assembly, this.Dictionary, this.Key, this.Culture);
             this.SetNewValue(this.FormatOutput(obj));
         }
-
-        #endregion
     }
 }

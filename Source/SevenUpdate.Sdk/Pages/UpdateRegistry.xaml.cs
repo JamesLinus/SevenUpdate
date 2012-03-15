@@ -20,11 +20,14 @@ namespace SevenUpdate.Sdk.Pages
     using System;
     using System.Windows;
     using System.Windows.Controls;
-    using System.Windows.Dialogs.TaskDialog;
     using System.Windows.Input;
     using System.Windows.Media;
 
     using Microsoft.Win32;
+
+    using SevenSoftware.Windows;
+    using SevenSoftware.Windows.Controls;
+    using SevenSoftware.Windows.Dialogs.TaskDialog;
 
     using SevenUpdate.Sdk.ValidationRules;
     using SevenUpdate.Sdk.Windows;

@@ -1,4 +1,4 @@
-// ***********************************************************************
+﻿// ***********************************************************************
 // <copyright file="OddsFormatExtension.cs" project="WPFLocalizeExtension" assembly="WPFLocalizeExtension" solution="SevenUpdate" company="Bernhard Millauer">
 //     Copyright (c) Bernhard Millauer. All rights reserved.
 // </copyright>
@@ -29,8 +29,6 @@ namespace WPFLocalizeExtension.Extensions
     [ContentProperty("ResourceIdentifierKey")]
     public sealed class OddsFormatExtension : MarkupExtension, IWeakEventListener
     {
-        #region Constants and Fields
-
         /// <summary>Holds the collection of assigned dependency objects as WeakReferences.</summary>
         private readonly Collection<WeakReference> targetObjects;
 
@@ -40,18 +38,13 @@ namespace WPFLocalizeExtension.Extensions
         /// <summary>Holds the value to display.</summary>
         private decimal displayValue;
 
-        #endregion
-
-        #region Constructors and Destructors
-
         /// <summary>Initializes a new instance of the <see cref="OddsFormatExtension" /> class.  <c>BaseLocalizeExtension"</c>.</summary>
         /// <param name="displayValue">The display Value.</param>
         /// <remarks>
         ///   This constructor register the <c>EventHandler</c><c>OnCultureChanged</c> on <c>LocalizeDictionary</c>to
         ///   get an acknowledge of changing the culture.
         /// </remarks>
-        public OddsFormatExtension(decimal displayValue)
-            : this()
+        public OddsFormatExtension(decimal displayValue) : this()
         {
             this.displayValue = displayValue;
         }
@@ -65,10 +58,6 @@ namespace WPFLocalizeExtension.Extensions
             // initialize the collection of the assigned dependency objects
             this.targetObjects = new Collection<WeakReference>();
         }
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>Gets the UK odds format lookup table.</summary>
         /// <value>The UK odds format lookup table.</value>
@@ -117,17 +106,13 @@ namespace WPFLocalizeExtension.Extensions
         /// <summary>Gets the <c>DependencyProperty</c> which should get the localized content.</summary>
         public DependencyProperty TargetProperty { get; private set; }
 
-        #endregion
-
-        #region Public Methods
-
         /// <summary>Converts a decimal odds into a localized odds string in the current <c>OddsFormatType</c>.</summary>
         /// <param name="sourceOdds">The source odds.</param>
         /// <returns>The ready to use odds string.</returns>
         public static string GetLocalizedOddsString(decimal sourceOdds)
         {
             return GetLocalizedOddsString(
-                sourceOdds, OddsFormatManager.Instance.OddsFormatType, Localize.Instance.SpecificCulture);
+                    sourceOdds, OddsFormatManager.Instance.OddsFormatType, Localize.Instance.SpecificCulture);
         }
 
         /// <summary>Converts a decimal odds into a localized odds string in the defined <c>OddsFormatType</c>.</summary>
@@ -181,7 +166,7 @@ namespace WPFLocalizeExtension.Extensions
             }
 
             // indicates, if the target object was found
-            var foundInWeakReferences = this.targetObjects.Any(wr => wr.Target == service.TargetObject);
+            bool foundInWeakReferences = this.targetObjects.Any(wr => wr.Target == service.TargetObject);
 
             // search for the target in the target object list
 
@@ -213,7 +198,7 @@ namespace WPFLocalizeExtension.Extensions
 
             // return the new value for the DependencyProperty
             return GetLocalizedOddsString(
-                this.displayValue, this.GetForcedOddsFormatOrDefault(), CultureInfo.CurrentCulture);
+                    this.displayValue, this.GetForcedOddsFormatOrDefault(), CultureInfo.CurrentCulture);
         }
 
         /// <summary>
@@ -226,7 +211,7 @@ namespace WPFLocalizeExtension.Extensions
         public bool SetBinding(DependencyObject targetObject, DependencyProperty targetProperty)
         {
             // indicates, if the target object was found
-            var foundInWeakReferences = this.targetObjects.Any(wr => wr.Target == targetObject);
+            bool foundInWeakReferences = this.targetObjects.Any(wr => wr.Target == targetObject);
 
             // search for the target in the target object list
 
@@ -250,8 +235,8 @@ namespace WPFLocalizeExtension.Extensions
                 // target object
                 ObjectDependencyManager.AddObjectDependency(new WeakReference(targetObject), this);
 
-                var oddsString = GetLocalizedOddsString(
-                    this.displayValue, this.GetForcedOddsFormatOrDefault(), CultureInfo.CurrentCulture);
+                string oddsString = GetLocalizedOddsString(
+                        this.displayValue, this.GetForcedOddsFormatOrDefault(), CultureInfo.CurrentCulture);
 
                 // set the initial value of the dependency property
                 targetObject.SetValue(this.TargetProperty, oddsString);
@@ -269,12 +254,8 @@ namespace WPFLocalizeExtension.Extensions
         public override string ToString()
         {
             return string.Format(
-                CultureInfo.CurrentCulture, "{0} -> {1}", this.DisplayValue, this.GetForcedOddsFormatOrDefault());
+                    CultureInfo.CurrentCulture, "{0} -> {1}", this.DisplayValue, this.GetForcedOddsFormatOrDefault());
         }
-
-        #endregion
-
-        #region Explicit Interface Methods
 
         /// <summary>
         ///   This method will be called through the interface, passed to the<see cref =
@@ -303,10 +284,6 @@ namespace WPFLocalizeExtension.Extensions
             return false;
         }
 
-        #endregion
-
-        #region Methods
-
         /// <summary>Converts a decimal odds into a localized odds string in the defined <c>OddsFormatType</c>.</summary>
         /// <param name="sourceOdds">The source odds.</param>
         /// <param name="oddsType">Type of the odds.</param>
@@ -314,7 +291,7 @@ namespace WPFLocalizeExtension.Extensions
         /// <returns>The ready to use odds string.</returns>
         /// <remarks>The specific Culture has to be a "xx-xx" culture to support the value.<c>ToString</c> method.</remarks>
         private static string GetLocalizedOddsString(
-            decimal sourceOdds, OddsFormatType oddsType, IFormatProvider specificCulture)
+                decimal sourceOdds, OddsFormatType oddsType, IFormatProvider specificCulture)
         {
             switch (oddsType)
             {
@@ -330,14 +307,14 @@ namespace WPFLocalizeExtension.Extensions
                         return lookupValue;
                     }
 
-                    var localeString = (sourceOdds % 1.0m) * 100;
+                    decimal localeString = (sourceOdds % 1.0m) * 100;
                     if (localeString == 0)
                     {
                         return string.Format(specificCulture, "{0:N0}/1", sourceOdds - 1);
                     }
 
-                    var two = 0;
-                    var one = 0;
+                    int two = 0;
+                    int one = 0;
                     decimal dec = 1;
                     while ((localeString > 1 && two < 2 && one < 2) && (localeString % 2 == 0 || localeString % 5 == 0))
                     {
@@ -358,8 +335,8 @@ namespace WPFLocalizeExtension.Extensions
                         dec = dec * 5;
                     }
 
-                    var divisor = 100 / dec;
-                    var result = (sourceOdds - 1) * divisor;
+                    decimal divisor = 100 / dec;
+                    decimal result = (sourceOdds - 1) * divisor;
 
                     return string.Format(specificCulture, "{0:N0}/{1:N0}", result, divisor);
 
@@ -371,8 +348,8 @@ namespace WPFLocalizeExtension.Extensions
                     }
 
                     return sourceOdds < 2
-                               ? (-100 / (sourceOdds - 1)).ToString("N0", specificCulture)
-                               : string.Format(specificCulture, "+{0:N0}", (sourceOdds - 1) * 100);
+                                   ? (-100 / (sourceOdds - 1)).ToString("N0", specificCulture)
+                                   : string.Format(specificCulture, "+{0:N0}", (sourceOdds - 1) * 100);
 
                 case OddsFormatType.EU:
                     return sourceOdds.ToString("N2", specificCulture);
@@ -385,79 +362,79 @@ namespace WPFLocalizeExtension.Extensions
         /// <returns>Returns a Lookup Table.</returns>
         private static Dictionary<decimal, string> GetUKOddsFormatLookupTable()
         {
-            var dictionary = new Dictionary<decimal, string>
+            var dictionary = new Dictionary<decimal, string> 
             {
-                    { 11.00m, "10/1" }, 
-                    { 10.00m, "9/1" }, 
-                    { 9.50m, "17/2" }, 
-                    { 9.00m, "8/1" }, 
-                    { 8.50m, "15/2" }, 
-                    { 8.00m, "7/1" }, 
-                    { 7.50m, "13/2" }, 
-                    { 7.00m, "6/1" }, 
-                    { 6.50m, "11/2" }, 
-                    { 6.00m, "5/1" }, 
-                    { 5.50m, "9/2" }, 
-                    { 5.00m, "4/1" }, 
-                    { 4.60m, "18/5" }, 
-                    { 4.50m, "7/2" }, 
-                    { 4.333m, "10/3" }, 
-                    { 4.20m, "16/5" }, 
-                    { 4.00m, "3/1" }, 
-                    { 3.80m, "15/5" }, 
-                    { 3.75m, "11/4" }, 
-                    { 3.60m, "13/5" }, 
-                    { 3.50m, "5/2" }, 
-                    { 3.40m, "12/5" }, 
-                    { 3.375m, "19/8" }, 
-                    { 3.30m, "23/10" }, 
-                    { 3.25m, "9/4" }, 
-                    { 3.20m, "11/5" }, 
-                    { 3.125m, "17/8" }, 
-                    { 3.10m, "21/10" }, 
-                    { 3.00m, "2/1" }, 
-                    { 2.90m, "19/10" }, 
-                    { 2.875m, "15/8" }, 
-                    { 2.80m, "9/5" }, 
-                    { 2.75m, "7/4" }, 
-                    { 2.70m, "17/10" }, 
-                    { 2.625m, "13/8" }, 
-                    { 2.60m, "8/5" }, 
-                    { 2.50m, "6/4" }, 
-                    { 2.40m, "7/5" }, 
-                    { 2.375m, "11/8" }, 
-                    { 2.30m, "13/10" }, 
-                    { 2.25m, "5/4" }, 
-                    { 2.20m, "6/5" }, 
-                    { 2.10m, "11/10" }, 
-                    { 2.05m, "21/20" }, 
-                    { 2.00m, "1/1" }, 
-                    { 1.952m, "20/21" }, 
-                    { 1.909m, "10/11" }, 
-                    { 1.90m, "9/10" }, 
-                    { 1.833m, "5/6" }, 
-                    { 1.80m, "4/5" }, 
-                    { 1.727m, "8/11" }, 
-                    { 1.70m, "7/10" }, 
-                    { 1.667m, "4/6" }, 
-                    { 1.625m, "5/8" }, 
-                    { 1.615m, "8/13" }, 
-                    { 1.60m, "3/5" }, 
-                    { 1.571m, "4/7" }, 
-                    { 1.533m, "8/15" }, 
-                    { 1.50m, "1/2" }, 
-                    { 1.471m, "8/17" }, 
-                    { 1.45m, "9/20" }, 
-                    { 1.444m, "4/9" }, 
-                    { 1.40m, "2/5" }, 
-                    { 1.364m, "4/11" }, 
-                    { 1.35m, "7/20" }, 
-                    { 1.333m, "1/3" }, 
-                    { 1.30m, "3/10" }, 
-                    { 1.286m, "2/7" }, 
-                    { 1.25m, "1/4" }, 
-                    { 1.222m, "2/9" }, 
-                    { 1.2m, "1/5" }
+                        { 11.00m, "10/1" }, 
+                        { 10.00m, "9/1" }, 
+                        { 9.50m, "17/2" }, 
+                        { 9.00m, "8/1" }, 
+                        { 8.50m, "15/2" }, 
+                        { 8.00m, "7/1" }, 
+                        { 7.50m, "13/2" }, 
+                        { 7.00m, "6/1" }, 
+                        { 6.50m, "11/2" }, 
+                        { 6.00m, "5/1" }, 
+                        { 5.50m, "9/2" }, 
+                        { 5.00m, "4/1" }, 
+                        { 4.60m, "18/5" }, 
+                        { 4.50m, "7/2" }, 
+                        { 4.333m, "10/3" }, 
+                        { 4.20m, "16/5" }, 
+                        { 4.00m, "3/1" }, 
+                        { 3.80m, "15/5" }, 
+                        { 3.75m, "11/4" }, 
+                        { 3.60m, "13/5" }, 
+                        { 3.50m, "5/2" }, 
+                        { 3.40m, "12/5" }, 
+                        { 3.375m, "19/8" }, 
+                        { 3.30m, "23/10" }, 
+                        { 3.25m, "9/4" }, 
+                        { 3.20m, "11/5" }, 
+                        { 3.125m, "17/8" }, 
+                        { 3.10m, "21/10" }, 
+                        { 3.00m, "2/1" }, 
+                        { 2.90m, "19/10" }, 
+                        { 2.875m, "15/8" }, 
+                        { 2.80m, "9/5" }, 
+                        { 2.75m, "7/4" }, 
+                        { 2.70m, "17/10" }, 
+                        { 2.625m, "13/8" }, 
+                        { 2.60m, "8/5" }, 
+                        { 2.50m, "6/4" }, 
+                        { 2.40m, "7/5" }, 
+                        { 2.375m, "11/8" }, 
+                        { 2.30m, "13/10" }, 
+                        { 2.25m, "5/4" }, 
+                        { 2.20m, "6/5" }, 
+                        { 2.10m, "11/10" }, 
+                        { 2.05m, "21/20" }, 
+                        { 2.00m, "1/1" }, 
+                        { 1.952m, "20/21" }, 
+                        { 1.909m, "10/11" }, 
+                        { 1.90m, "9/10" }, 
+                        { 1.833m, "5/6" }, 
+                        { 1.80m, "4/5" }, 
+                        { 1.727m, "8/11" }, 
+                        { 1.70m, "7/10" }, 
+                        { 1.667m, "4/6" }, 
+                        { 1.625m, "5/8" }, 
+                        { 1.615m, "8/13" }, 
+                        { 1.60m, "3/5" }, 
+                        { 1.571m, "4/7" }, 
+                        { 1.533m, "8/15" }, 
+                        { 1.50m, "1/2" }, 
+                        { 1.471m, "8/17" }, 
+                        { 1.45m, "9/20" }, 
+                        { 1.444m, "4/9" }, 
+                        { 1.40m, "2/5" }, 
+                        { 1.364m, "4/11" }, 
+                        { 1.35m, "7/20" }, 
+                        { 1.333m, "1/3" }, 
+                        { 1.30m, "3/10" }, 
+                        { 1.286m, "2/7" }, 
+                        { 1.25m, "1/4" }, 
+                        { 1.222m, "2/9" }, 
+                        { 1.2m, "1/5" }
                 };
 
             return dictionary;
@@ -495,8 +472,8 @@ namespace WPFLocalizeExtension.Extensions
         {
             // gets the new value and set it to the dependency property on the dependency object
             this.SetNewValue(
-                GetLocalizedOddsString(
-                    this.displayValue, this.GetForcedOddsFormatOrDefault(), CultureInfo.CurrentCulture));
+                    GetLocalizedOddsString(
+                            this.displayValue, this.GetForcedOddsFormatOrDefault(), CultureInfo.CurrentCulture));
         }
 
         /// <summary>Set the Value of the <c>DependencyProperty</c> to the passed Value.</summary>
@@ -510,12 +487,10 @@ namespace WPFLocalizeExtension.Extensions
             }
 
             // step through all dependency objects as WeakReference and refresh the value of the dependency property
-            foreach (var dpo in this.targetObjects.Where(dpo => dpo.IsAlive))
+            foreach (WeakReference dpo in this.targetObjects.Where(dpo => dpo.IsAlive))
             {
                 ((DependencyObject)dpo.Target).SetValue(this.TargetProperty, newValue);
             }
         }
-
-        #endregion
     }
 }

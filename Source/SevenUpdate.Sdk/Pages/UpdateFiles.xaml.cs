@@ -24,10 +24,13 @@ namespace SevenUpdate.Sdk.Pages
     using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Controls;
-    using System.Windows.Dialogs.TaskDialog;
     using System.Windows.Forms;
     using System.Windows.Input;
     using System.Windows.Media;
+
+    using SevenSoftware.Windows;
+    using SevenSoftware.Windows.Controls;
+    using SevenSoftware.Windows.Dialogs.TaskDialog;
 
     using SevenUpdate.Sdk.ValidationRules;
     using SevenUpdate.Sdk.Windows;

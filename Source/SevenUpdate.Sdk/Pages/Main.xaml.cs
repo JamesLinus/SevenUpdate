@@ -26,6 +26,9 @@ namespace SevenUpdate.Sdk.Pages
     using System.Windows.Input;
     using System.Windows.Media;
 
+    using SevenSoftware.Windows;
+    using SevenSoftware.Windows.Controls;
+
     using SevenUpdate.Sdk.Windows;
 
     /// <summary>Interaction logic for Main.xaml.</summary>
@@ -162,6 +165,15 @@ namespace SevenUpdate.Sdk.Pages
         private void EditSelectedItem(object sender, RoutedEventArgs e)
         {
             Core.EditItem();
+        }
+
+        /// <summary>Shows the About Dialog window.</summary>
+        /// <param name="sender">The object that called the event.</param>
+        /// <param name="e">The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.</param>
+        private void ShowAboutDialog(object sender, MouseButtonEventArgs e)
+        {
+            var about = new About();
+            about.ShowDialog();
         }
 
         /// <summary>Loads the projects.</summary>
@@ -315,15 +327,6 @@ namespace SevenUpdate.Sdk.Pages
 
             element.Focus();
             e.Handled = true;
-        }
-
-        /// <summary>Displays the About Window.</summary>
-        /// <param name="sender">The object that called the event.</param>
-        /// <param name="e">The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.</param>
-        private void ShowAboutDialog(object sender, MouseButtonEventArgs e)
-        {
-            var about = new About();
-            about.ShowDialog();
         }
 
         /// <summary>Updates the UI based on whether Aero Glass is enabled.</summary>

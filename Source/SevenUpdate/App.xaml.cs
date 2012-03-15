@@ -26,11 +26,13 @@ namespace SevenUpdate
     using System.IO;
     using System.Net;
     using System.Windows;
-    using System.Windows.ApplicationServices;
-    using System.Windows.Dialogs.TaskDialog;
     using System.Windows.Shell;
 
     using Microsoft.Win32;
+
+    using SevenSoftware.Windows;
+    using SevenSoftware.Windows.ApplicationServices;
+    using SevenSoftware.Windows.Dialogs.TaskDialog;
 
     using SevenUpdate.Properties;
 

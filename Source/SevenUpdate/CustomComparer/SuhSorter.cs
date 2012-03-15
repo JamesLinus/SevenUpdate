@@ -21,7 +21,8 @@ namespace SevenUpdate.CustomComparer
 {
     using System;
     using System.ComponentModel;
-    using System.Windows.Controls;
+
+    using SevenSoftware.Windows.Controls;
 
     /// <summary>Sorts the SUH Class.</summary>
     internal sealed class SuhSorter : ListViewCustomComparer

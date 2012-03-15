@@ -23,11 +23,14 @@ namespace SevenUpdate.Sdk.Pages
     using System.Linq;
     using System.Windows;
     using System.Windows.Controls;
-    using System.Windows.Dialogs.TaskDialog;
     using System.Windows.Forms;
     using System.Windows.Input;
     using System.Windows.Media;
-    using System.Windows.ValidationRules;
+
+    using SevenSoftware.Windows;
+    using SevenSoftware.Windows.Controls;
+    using SevenSoftware.Windows.Dialogs.TaskDialog;
+    using SevenSoftware.Windows.ValidationRules;
 
     using SevenUpdate.Sdk.ValidationRules;
     using SevenUpdate.Sdk.Windows;
@@ -266,7 +269,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <summary>Loads the <c>LocaleString</c>'s for the <c>Sua</c> into the UI.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.Controls.SelectionChangedEventArgs</c> instance containing the event data.</param>
-        private void LoadLocaleStrings(object sender, SelectionChangedEventArgs e)
+        private void LoadLocaleStrings(object sender, SelectionChangedEventArgs selectionChangedEventArgs)
         {
             if (this.tbxAppName == null || this.cbxLocale.SelectedIndex < 0)
             {

@@ -18,8 +18,6 @@ namespace WPFLocalizeExtension.Extensions
     [MarkupExtensionReturnType(typeof(string))]
     public class LocTextExtension : BaseLocalizeExtension<string>
     {
-        #region Constants and Fields
-
         /// <summary>Holds the local format segment array.</summary>
         private string[] formatSegments;
 
@@ -29,14 +27,9 @@ namespace WPFLocalizeExtension.Extensions
         /// <summary>Holds the local suffix value.</summary>
         private string suffix;
 
-        #endregion
-
-        #region Constructors and Destructors
-
         /// <summary>Initializes a new instance of the <see cref="LocTextExtension" /> class.</summary>
         /// <param name="key">The resource identifier.</param>
-        public LocTextExtension(string key)
-            : base(key)
+        public LocTextExtension(string key) : base(key)
         {
             this.InitializeLocText();
         }
@@ -47,23 +40,15 @@ namespace WPFLocalizeExtension.Extensions
             this.InitializeLocText();
         }
 
-        #endregion
-
-        #region Enums
-
         /// <summary>This enumeration is used to determine the type of the return value of <c>GetAppendText</c>.</summary>
         private enum TextAppendType
         {
             /// <summary>The return value is used as prefix.</summary>
-            Prefix,
+            Prefix, 
 
             /// <summary>The return value is used as suffix.</summary>
             Suffix
         }
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>
         ///   Gets or sets the format segment 1.This will be used to replace format place holders from the localized
@@ -194,16 +179,12 @@ namespace WPFLocalizeExtension.Extensions
             }
         }
 
-        #endregion
-
-        #region Public Methods
-
         /// <summary>Provides the Value for the first Binding as <c>System.String</c>.</summary>
         /// <param name="serviceProvider">The <c>System.Windows.Markup.IProvideValueTarget</c> provided from the <c>MarkupExtension</c>.</param>
         /// <returns>The found item from the .resx directory or <c>null</c> if not found.</returns>
         public override object ProvideValue(IServiceProvider serviceProvider)
         {
-            var obj = base.ProvideValue(serviceProvider);
+            object obj = base.ProvideValue(serviceProvider);
 
             if (obj == null)
             {
@@ -221,16 +202,12 @@ namespace WPFLocalizeExtension.Extensions
             }
 
             throw new NotSupportedException(
-                string.Format(
-                    CultureInfo.CurrentCulture,
-                    "ResourceKey '{0}' returns '{1}' which is not type of System.String",
-                    this.Key,
-                    obj.GetType().FullName));
+                    string.Format(
+                            CultureInfo.CurrentCulture, 
+                            "ResourceKey '{0}' returns '{1}' which is not type of System.String", 
+                            this.Key, 
+                            obj.GetType().FullName));
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>This method returns the finished formatted text.</summary>
         /// <param name="input">If the passed string not <c>null</c>, it will be used, otherwise a fresh localized text will be loaded.</param>
@@ -247,23 +224,23 @@ namespace WPFLocalizeExtension.Extensions
                 input = input
                         ??
                         Localize.Instance.GetLocalizedObject<object>(
-                            this.Assembly, this.Dictionary, this.Key, this.Culture);
+                                this.Assembly, this.Dictionary, this.Key, this.Culture);
             }
 
             // get the main text as string xor string.empty
-            var textMain = input as string ?? string.Empty;
+            string textMain = input as string ?? string.Empty;
 
             try
             {
                 // add some format segments, in case that the main text contains format place holders like {0}
                 textMain = string.Format(
-                    Localize.Instance.SpecificCulture,
-                    textMain,
-                    this.formatSegments[0] ?? string.Empty,
-                    this.formatSegments[1] ?? string.Empty,
-                    this.formatSegments[2] ?? string.Empty,
-                    this.formatSegments[3] ?? string.Empty,
-                    this.formatSegments[4] ?? string.Empty);
+                        Localize.Instance.SpecificCulture, 
+                        textMain, 
+                        this.formatSegments[0] ?? string.Empty, 
+                        this.formatSegments[1] ?? string.Empty, 
+                        this.formatSegments[2] ?? string.Empty, 
+                        this.formatSegments[3] ?? string.Empty, 
+                        this.formatSegments[4] ?? string.Empty);
             }
             catch (FormatException)
             {
@@ -272,10 +249,10 @@ namespace WPFLocalizeExtension.Extensions
             }
 
             // get the prefix
-            var textPrefix = this.GetAppendText(TextAppendType.Prefix);
+            string textPrefix = this.GetAppendText(TextAppendType.Prefix);
 
             // get the suffix
-            var textSuffix = this.GetAppendText(TextAppendType.Suffix);
+            string textSuffix = this.GetAppendText(TextAppendType.Suffix);
 
             // format the text with prefix and suffix to [PREFIX]LocalizedText[SUFFIX]
             input = this.FormatText(textPrefix + textMain + textSuffix);
@@ -313,7 +290,7 @@ namespace WPFLocalizeExtension.Extensions
         private string GetAppendText(TextAppendType at)
         {
             // define a return value
-            var retVal = string.Empty;
+            string retVal = string.Empty;
 
             // check if it should be a prefix, the format will be [PREFIX], or check if it should be a suffix, the
             // format will be [SUFFIX]
@@ -342,7 +319,5 @@ namespace WPFLocalizeExtension.Extensions
 
             ////SetNewValue(FormatOutput(null));
         }
-
-        #endregion
     }
 }

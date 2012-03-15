@@ -144,7 +144,7 @@
     <value>The url you have entered is valid.</value>
     <comment>Validation error message</comment>
   </data>
-  <data name="SevenSoftware" xml:space="preserve">
+  <data name="SevenSoftware.Windows" xml:space="preserve">
     <value>Seven Software</value>
   </data>
   <data name="SevenUpdateSDK" xml:space="preserve">

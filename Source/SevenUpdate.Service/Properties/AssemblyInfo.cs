@@ -25,7 +25,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Seven Software")]
 [assembly: AssemblyProduct("Seven Update")]
-[assembly: AssemblyCopyright("Copyright Â© Seven Software")]
+[assembly: AssemblyCopyright("Copyright © Seven Software")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyVersion("1.3")]

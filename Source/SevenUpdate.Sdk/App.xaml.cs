@@ -23,8 +23,10 @@ namespace SevenUpdate.Sdk
     using System.Globalization;
     using System.IO;
     using System.Windows;
-    using System.Windows.ApplicationServices;
     using System.Windows.Shell;
+
+    using SevenSoftware.Windows;
+    using SevenSoftware.Windows.ApplicationServices;
 
     using SevenUpdate.Sdk.Properties;
 

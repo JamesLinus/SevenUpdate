@@ -1,7 +1,10 @@
-// This file is used by Code Analysis to maintain SuppressMessage attributes that are applied to this project.
-// Project-level suppressions either have no target or are given a specific target and scoped to a namespace, type,
-// member, etc. To add a suppression to this file, right-click the message in the Error List, point to "Suppress
-// Message(s)", and click "In Project Suppression File". You do not need to add suppressions to this file manually.
+// --------------------------------------------------------------------------------------------------------------------
+// <copyright file="GlobalSuppressions.cs" project="WPFLocalizeExtension" assembly="WPFLocalizeExtension" solution="SevenUpdate" company="Bernhard Millauer">
+//   Copyright (c) Bernhard Millauer. All rights reserved.
+// </copyright>
+// <author username="SeriousM">Bernhard Millauer</author>
+// <license href="http://wpflocalizeextension.codeplex.com/license">Microsoft Public License</license>
+// --------------------------------------------------------------------------------------------------------------------
 
 using System.Diagnostics.CodeAnalysis;
 

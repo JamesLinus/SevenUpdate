@@ -15,15 +15,9 @@ namespace WPFLocalizeExtension.Engine
     /// <summary>This class ensures, that a specific object lives as long a associated object is alive.</summary>
     public static class ObjectDependencyManager
     {
-        #region Constants and Fields
-
         /// <summary>This member holds the list of all <c>WeakReference</c>s and their appropriate objects.</summary>
         private static readonly Dictionary<object, List<WeakReference>> InternalList =
-            new Dictionary<object, List<WeakReference>>();
-
-        #endregion
-
-        #region Public Methods
+                new Dictionary<object, List<WeakReference>>();
 
         /// <summary>Adds an object dependency</summary>
         /// <param name="weakRef">The weak reference</param>
@@ -68,7 +62,7 @@ namespace WPFLocalizeExtension.Engine
             else
             {
                 // otherwise, check if the weakRefDp exists and add it if necessary
-                var lst = InternalList[value];
+                List<WeakReference> lst = InternalList[value];
                 if (!lst.Contains(weakRef))
                 {
                     lst.Add(weakRef);
@@ -78,10 +72,6 @@ namespace WPFLocalizeExtension.Engine
             // return the status of the registration
             return;
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>This method cleans up all independent (!<c>WeakReference</c>.IsAlive) objects or a single object.</summary>
         /// <param name="value">If defined, the associated object dependency will be removed instead of a full CleanUp.</param>
@@ -107,10 +97,10 @@ namespace WPFLocalizeExtension.Engine
             var keysToRemove = new List<object>();
 
             // step through all object dependencies
-            foreach (var kvp in InternalList)
+            foreach (KeyValuePair<object, List<WeakReference>> kvp in InternalList)
             {
                 // step recursive through all weak references
-                for (var i = kvp.Value.Count - 1; i >= 0; i--)
+                for (int i = kvp.Value.Count - 1; i >= 0; i--)
                 {
                     // if this weak reference is no more alive, remove it
                     if (!kvp.Value[i].IsAlive)
@@ -127,7 +117,7 @@ namespace WPFLocalizeExtension.Engine
             }
 
             // step recursive through all keys that have to be remove
-            for (var i = keysToRemove.Count - 1; i >= 0; i--)
+            for (int i = keysToRemove.Count - 1; i >= 0; i--)
             {
                 // remove the key from the internalList
                 InternalList.Remove(keysToRemove[i]);
@@ -136,7 +126,5 @@ namespace WPFLocalizeExtension.Engine
             // clear up the keysToRemove
             keysToRemove.Clear();
         }
-
-        #endregion
     }
 }
