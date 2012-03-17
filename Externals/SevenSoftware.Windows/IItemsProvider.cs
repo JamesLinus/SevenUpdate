@@ -14,7 +14,7 @@
 // </license>
 // ***********************************************************************
 
-namespace SevenSoftware.Windows.Controls
+namespace SevenSoftware.Windows
 {
     using System.Collections.Generic;
 
@@ -25,10 +25,10 @@ namespace SevenSoftware.Windows.Controls
     public interface IItemsProvider<T>
     {
         /// <summary>
-        /// Fetches the total number of items available.
+        /// Gets the total number of items available.
         /// </summary>
         /// <returns>The total number of items to fetch.</returns>
-        int FetchCount();
+        int Count { get; }
 
         /// <summary>
         /// Fetches a range of items.

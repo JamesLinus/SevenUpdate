@@ -76,9 +76,10 @@
     <Compile Include="ApplicationServices\RecoverySettings.cs" />
     <Compile Include="ApplicationServices\RestartRestrictions.cs" />
     <Compile Include="ApplicationServices\RestartSettings.cs" />
+    <Compile Include="AsyncVirtualizingCollection.cs" />
     <Compile Include="Controls\AdornerLabel.cs" />
     <Compile Include="Controls\BackButton.cs" />
-    <Compile Include="Controls\IItemsProvider.cs" />
+    <Compile Include="IItemsProvider.cs" />
     <Compile Include="Controls\ListViewCustomComparer.cs" />
     <Compile Include="Controls\ProgressRing.cs" />
     <Compile Include="Controls\TreeViewExtensions.cs" />
@@ -162,6 +163,7 @@
     </Compile>
     <Compile Include="Converters\StringToBooleanConverter.cs" />
     <Compile Include="Converters\StringToVisibilityConverter.cs" />
+    <Compile Include="VirtualizingCollection.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

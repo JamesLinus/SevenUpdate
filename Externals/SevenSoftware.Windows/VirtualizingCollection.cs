@@ -21,8 +21,6 @@ namespace SevenSoftware.Windows
     using System.Collections.Generic;
     using System.Diagnostics;
 
-    using SevenSoftware.Windows.Controls;
-
     /// <summary>
     /// Specialized list implementation that provides data virtualization. The collection is divided up into pages,
     /// and pages are dynamically fetched from the IItemsProvider when required. Stale pages are removed after a
