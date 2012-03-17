@@ -16,8 +16,6 @@ namespace SharpBits.Base
     /// </summary>
     internal struct BGAuthCredentials
     {
-        #region Constants and Fields
-
         /// <summary>
         ///   Identifies the credentials to use for the specified authentication scheme. For details, see the
         ///   BG_AUTH_CREDENTIALS_UNION union.
@@ -35,7 +33,5 @@ namespace SharpBits.Base
         ///   values, see the BG_AUTH_TARGET enumeration.
         /// </summary>
         public BGAuthTarget Target;
-
-        #endregion
     }
 }

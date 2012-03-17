@@ -27,8 +27,6 @@ namespace SevenUpdate
     [DataContract]
     public sealed class InstallProgressChangedEventArgs : EventArgs
     {
-        #region Constructors and Destructors
-
         /// <summary>Initializes a new instance of the <see cref="InstallProgressChangedEventArgs" /> class.</summary>
         /// <param name="updateName">The name of the update currently being installed.</param>
         /// <param name="progress">The progress percentage of the installation.</param>
@@ -46,10 +44,6 @@ namespace SevenUpdate
         public InstallProgressChangedEventArgs()
         {
         }
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>Gets the progress percentage of the installation.</summary>
         /// <value>The current progress.</value>
@@ -74,7 +68,5 @@ namespace SevenUpdate
         [ProtoMember(4)]
         [DataMember]
         public int UpdatesComplete { get; private set; }
-
-        #endregion
     }
 }

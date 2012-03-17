@@ -38,8 +38,6 @@ namespace SevenUpdate.Windows
     [TemplatePart(Name = @"PART_NavWinCP", Type = typeof(ContentPresenter))]
     public sealed partial class MainWindow
     {
-        #region Constructors and Destructors
-
         /// <summary>Initializes a new instance of the <see cref="MainWindow" /> class.</summary>
         public MainWindow()
         {
@@ -64,17 +62,9 @@ namespace SevenUpdate.Windows
             App.ProcessArgs(App.Args);
         }
 
-        #endregion
-
-        #region Properties
-
         /// <summary>Gets the <c>NavigationService</c> for the current window.</summary>
         /// <value>The nav service.</value>
         internal static NavigationService NavService { get; private set; }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>Enables Aero Glass on the Window.</summary>
         /// <param name="e">The <c>EventArgs</c> instance containing the event data.</param>
@@ -131,7 +121,5 @@ namespace SevenUpdate.Windows
             WcfService.Disconnect();
             Application.Current.Shutdown(0);
         }
-
-        #endregion
     }
 }

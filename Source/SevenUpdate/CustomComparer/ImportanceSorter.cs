@@ -22,8 +22,6 @@ namespace SevenUpdate.CustomComparer
     /// <summary>Sorts the update importance class.</summary>
     internal static class ImportanceSorter
     {
-        #region Methods
-
         /// <summary>Compares two <c>Importance</c> objects.</summary>
         /// <param name="x">The first object to compare.</param>
         /// <param name="y">The second object to compare.</param>
@@ -32,7 +30,7 @@ namespace SevenUpdate.CustomComparer
         /// than <paramref name="y" />.</returns>
         internal static int CompareImportance(Importance x, Importance y)
         {
-            var firstRank = 0;
+            int firstRank = 0;
 
             switch (x)
             {
@@ -50,7 +48,7 @@ namespace SevenUpdate.CustomComparer
                     break;
             }
 
-            var secondRank = 0;
+            int secondRank = 0;
             switch (y)
             {
                 case Importance.Important:
@@ -69,7 +67,5 @@ namespace SevenUpdate.CustomComparer
 
             return firstRank > secondRank ? 1 : (firstRank == secondRank ? 0 : -1);
         }
-
-        #endregion
     }
 }

@@ -21,7 +21,6 @@ namespace SevenUpdate
 {
     using System;
     using System.ServiceModel;
-    using System.ServiceModel.Description;
 
     using ProtoBuf.ServiceModel;
 
@@ -30,14 +29,8 @@ namespace SevenUpdate
     /// <summary>Contains methods to start the WCF service host.</summary>
     internal static class MyServiceHost
     {
-        #region Properties
-
         /// <summary>Gets or sets the <c>ServiceHost</c> instance.</summary>
         private static ServiceHost Instance { get; set; }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>Starts the service.</summary>
         internal static void StartService()
@@ -49,11 +42,9 @@ namespace SevenUpdate
 
             var binding = new NetNamedPipeBinding
                 {
-                    Name = "sevenupdatebinding",
-                    Security =
-                        {
-                            Mode = NetNamedPipeSecurityMode.Transport
-                        }
+                   Name = "sevenupdatebinding", Security = {
+                                                                Mode = NetNamedPipeSecurityMode.Transport 
+                                                            } 
                 };
 
             var baseAddress = new Uri("net.pipe://localhost/sevenupdate/");
@@ -76,7 +67,7 @@ namespace SevenUpdate
 
 #endif
             Instance.AddServiceEndpoint(typeof(IElevatedProcessCallback), binding, baseAddress).Behaviors.Add(
-                new ProtoEndpointBehavior());
+                    new ProtoEndpointBehavior());
             try
             {
                 Instance.Open();
@@ -105,8 +96,8 @@ namespace SevenUpdate
                 catch (Exception ex)
                 {
                     if (
-                        !(ex is CommunicationObjectAbortedException || ex is CommunicationObjectFaultedException
-                          || ex is ObjectDisposedException))
+                            !(ex is CommunicationObjectAbortedException || ex is CommunicationObjectFaultedException
+                              || ex is ObjectDisposedException))
                     {
                         Utilities.ReportError(ex, ErrorType.FatalError);
                         throw;
@@ -116,7 +107,5 @@ namespace SevenUpdate
 
             Instance = null;
         }
-
-        #endregion
     }
 }

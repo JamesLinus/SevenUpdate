@@ -37,14 +37,8 @@ namespace SevenUpdate.Pages
     /// <summary>Interaction logic for Update_History.xaml.</summary>
     public sealed partial class RestoreUpdates
     {
-        #region Constants and Fields
-
         /// <summary>Gets or sets a collection of SUH items.</summary>
         private ObservableCollection<Suh> hiddenUpdates;
-
-        #endregion
-
-        #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="RestoreUpdates" /> class.</summary>
         public RestoreUpdates()
@@ -73,16 +67,8 @@ namespace SevenUpdate.Pages
             }
         }
 
-        #endregion
-
-        #region Public Events
-
         /// <summary>Occurs when one or more hidden updates have been restored.</summary>
         public static event EventHandler<EventArgs> RestoredHiddenUpdate;
-
-        #endregion
-
-        #region Methods
 
         /// <summary>Gets the hidden updates and loads them in the <c>ListView</c>.</summary>
         /// <param name="sender">The object that called the event.</param>
@@ -116,7 +102,7 @@ namespace SevenUpdate.Pages
         /// <param name="e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
         private void RestoreUpdate(object sender, RoutedEventArgs e)
         {
-            for (var x = 0; x < this.hiddenUpdates.Count; x++)
+            for (int x = 0; x < this.hiddenUpdates.Count; x++)
             {
                 if (this.hiddenUpdates[x].Status != UpdateStatus.Visible)
                 {
@@ -193,13 +179,11 @@ namespace SevenUpdate.Pages
         /// <param name="e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
         private void UpdateUIOnUpdateSelection(object sender, RoutedEventArgs e)
         {
-            var checkedCount = this.hiddenUpdates.Count(t => t.Status == UpdateStatus.Visible);
+            int checkedCount = this.hiddenUpdates.Count(t => t.Status == UpdateStatus.Visible);
 
             this.tbSelectedUpdates.Text = string.Format(
-                CultureInfo.CurrentCulture, Properties.Resources.TotalSelectedUpdates, checkedCount);
+                    CultureInfo.CurrentCulture, Properties.Resources.TotalSelectedUpdates, checkedCount);
             this.btnRestore.IsEnabled = checkedCount > 0;
         }
-
-        #endregion
     }
 }

@@ -21,6 +21,7 @@ namespace SevenUpdate.Pages
 {
     using System.Collections.ObjectModel;
     using System.Collections.Specialized;
+    using System.ComponentModel;
     using System.IO;
     using System.Windows;
     using System.Windows.Data;
@@ -34,14 +35,8 @@ namespace SevenUpdate.Pages
     /// <summary>Interaction logic for UpdateHistory.xaml.</summary>
     public partial class UpdateHistory
     {
-        #region Constants and Fields
-
         /// <summary>Gets or sets a collection of SUH items.</summary>
         private ObservableCollection<Suh> updateHistory;
-
-        #endregion
-
-        #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="UpdateHistory" /> class.</summary>
         public UpdateHistory()
@@ -66,10 +61,6 @@ namespace SevenUpdate.Pages
                 this.rectangle.Visibility = Visibility.Visible;
             }
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>Gets the update history and loads it to the listView.</summary>
         /// <param name="sender">The object that called the event.</param>
@@ -111,7 +102,7 @@ namespace SevenUpdate.Pages
                 return;
             }
 
-            var dataView = CollectionViewSource.GetDefaultView(this.lvUpdateHistory.ItemsSource);
+            ICollectionView dataView = CollectionViewSource.GetDefaultView(this.lvUpdateHistory.ItemsSource);
             dataView.Refresh();
         }
 
@@ -156,7 +147,5 @@ namespace SevenUpdate.Pages
                 this.rectangle.Visibility = Visibility.Visible;
             }
         }
-
-        #endregion
     }
 }

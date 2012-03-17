@@ -25,13 +25,11 @@ namespace SevenSoftware.Windows.Controls
     /// <summary>Implements BackButton that can be used in WPF user interfaces.</summary>
     public sealed class BackButton : Button
     {
-        #region Constructors and Destructors
-
         /// <summary>Initializes static members of the <see cref="BackButton" /> class.</summary>
         static BackButton()
         {
             DefaultStyleKeyProperty.OverrideMetadata(
-                typeof(BackButton), new FrameworkPropertyMetadata(typeof(BackButton)));
+                    typeof(BackButton), new FrameworkPropertyMetadata(typeof(BackButton)));
         }
 
         /// <summary>Initializes a new instance of the <see cref="BackButton" /> class.</summary>
@@ -43,13 +41,11 @@ namespace SevenSoftware.Windows.Controls
             }
 
             var resourceDictionary = new ResourceDictionary
-            {
-                Source = new Uri("/SevenSoftware.Windows;component/Resources/Dictionary.xaml", UriKind.Relative)
-            };
+                {
+                   Source = new Uri("/SevenSoftware.Windows;component/Resources/Dictionary.xaml", UriKind.Relative) 
+                };
             this.Resources.MergedDictionaries.Add(resourceDictionary);
             this.Command = NavigationCommands.BrowseBack;
         }
-
-        #endregion
     }
 }

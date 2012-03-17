@@ -17,8 +17,8 @@ namespace SharpBits.Base
     /// method.
     /// </summary>
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    [GuidAttribute("1AF4F612-3B71-466F-8F58-7B6F73AC57AD")]
-    [ComImportAttribute]
+    [Guid("1AF4F612-3B71-466F-8F58-7B6F73AC57AD")]
+    [ComImport]
     internal interface IEnumBackgroundCopyJobs
     {
         /// <summary>Retrieves a specified number of items in the enumeration sequence.</summary>

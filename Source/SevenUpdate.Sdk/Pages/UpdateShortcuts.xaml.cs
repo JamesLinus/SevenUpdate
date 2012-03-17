@@ -26,7 +26,6 @@ namespace SevenUpdate.Sdk.Pages
     using System.Windows.Input;
     using System.Windows.Media;
 
-
     using SevenSoftware.Windows;
     using SevenSoftware.Windows.Controls;
     using SevenSoftware.Windows.Dialogs.TaskDialog;
@@ -37,8 +36,6 @@ namespace SevenUpdate.Sdk.Pages
     /// <summary>Interaction logic for UpdateShortcuts.xaml.</summary>
     public sealed partial class UpdateShortcuts
     {
-        #region Constructors and Destructors
-
         /// <summary>Initializes a new instance of the <see cref="UpdateShortcuts" /> class.</summary>
         public UpdateShortcuts()
         {
@@ -64,10 +61,6 @@ namespace SevenUpdate.Sdk.Pages
                 this.rectangle.Visibility = Visibility.Visible;
             }
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>Fires the OnPropertyChanged Event with the collection changes.</summary>
         /// <param name="sender">The object that called the event.</param>
@@ -120,15 +113,17 @@ namespace SevenUpdate.Sdk.Pages
                 return;
             }
 
-            var fileLocation = Utilities.ConvertPath(source.Text, true, Core.AppInfo.Platform);
-            var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
-                                       ? Utilities.GetRegistryValue(
-                                           Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Platform)
-                                       : Core.AppInfo.Directory;
+            string fileLocation = Utilities.ConvertPath(source.Text, true, Core.AppInfo.Platform);
+            string installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
+                                              ? Utilities.GetRegistryValue(
+                                                      Core.AppInfo.Directory, 
+                                                      Core.AppInfo.ValueName, 
+                                                      Core.AppInfo.Platform)
+                                              : Core.AppInfo.Directory;
 
             installDirectory = Utilities.ConvertPath(installDirectory, true, Core.AppInfo.Platform);
 
-            var installUrl = fileLocation.Replace(installDirectory, @"%INSTALLDIR%\", true);
+            string installUrl = fileLocation.Replace(installDirectory, @"%INSTALLDIR%\", true);
             installUrl = installUrl.Replace(@"\\", @"\");
 
             source.Text = Utilities.ConvertPath(installUrl, false, Core.AppInfo.Platform);
@@ -139,7 +134,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The <c>System.Windows.Input.KeyEventArgs</c> instance containing the event data.</param>
         private void DeleteShortcut(object sender, KeyEventArgs e)
         {
-            var index = this.listBox.SelectedIndex;
+            int index = this.listBox.SelectedIndex;
             if (index < 0)
             {
                 return;
@@ -176,29 +171,29 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
         private void ImportShortcut(object sender, RoutedEventArgs e)
         {
-            var file = Core.OpenFileDialog(
-                Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu), null, false, "lnk", true);
+            string[] file = Core.OpenFileDialog(
+                    Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu), null, false, "lnk", true);
 
             if (file == null)
             {
                 return;
             }
 
-            var importedShortcut = Shortcut.GetShortcutData(file[0]);
+            Shortcut importedShortcut = Shortcut.GetShortcutData(file[0]);
 
-            var path = Utilities.ConvertPath(
-                Path.GetDirectoryName(importedShortcut.Location), false, Core.AppInfo.Platform);
+            string path = Utilities.ConvertPath(
+                    Path.GetDirectoryName(importedShortcut.Location), false, Core.AppInfo.Platform);
             path = path.Replace(Core.AppInfo.Directory, "%INSTALLDIR%");
 
-            var icon = Utilities.ConvertPath(importedShortcut.Icon, false, Core.AppInfo.Platform);
+            string icon = Utilities.ConvertPath(importedShortcut.Icon, false, Core.AppInfo.Platform);
             icon = icon.Replace(Core.AppInfo.Directory, "%INSTALLDIR%");
             var shortcut = new Shortcut
                 {
-                    Arguments = importedShortcut.Arguments,
-                    Icon = icon,
-                    Location = path,
-                    Action = ShortcutAction.Update,
-                    Target = Utilities.ConvertPath(importedShortcut.Target, false, Core.AppInfo.Platform),
+                        Arguments = importedShortcut.Arguments, 
+                        Icon = icon, 
+                        Location = path, 
+                        Action = ShortcutAction.Update, 
+                        Target = Utilities.ConvertPath(importedShortcut.Target, false, Core.AppInfo.Platform), 
                 };
 
             shortcut.Name.Add(new LocaleString(Path.GetFileNameWithoutExtension(file[0]), Utilities.Locale));
@@ -219,9 +214,10 @@ namespace SevenUpdate.Sdk.Pages
 
             Utilities.Locale = ((ComboBoxItem)this.cbxLocale.SelectedItem).Tag.ToString();
 
-            var found = false;
-            var shortcutDescriptions = Core.UpdateInfo.Shortcuts[this.listBox.SelectedIndex].Description
-                                       ?? new ObservableCollection<LocaleString>();
+            bool found = false;
+            ObservableCollection<LocaleString> shortcutDescriptions =
+                    Core.UpdateInfo.Shortcuts[this.listBox.SelectedIndex].Description
+                    ?? new ObservableCollection<LocaleString>();
 
             // Load Values
             foreach (var t in shortcutDescriptions.Where(t => t.Lang == Utilities.Locale))
@@ -236,8 +232,9 @@ namespace SevenUpdate.Sdk.Pages
             }
 
             found = false;
-            var shortcutNames = Core.UpdateInfo.Shortcuts[this.listBox.SelectedIndex].Name
-                                ?? new ObservableCollection<LocaleString>();
+            ObservableCollection<LocaleString> shortcutNames =
+                    Core.UpdateInfo.Shortcuts[this.listBox.SelectedIndex].Name
+                    ?? new ObservableCollection<LocaleString>();
 
             // Load Values
             foreach (var t in shortcutNames.Where(t => t.Lang == Utilities.Locale))
@@ -257,21 +254,23 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.</param>
         private void LocateIcon(object sender, MouseButtonEventArgs e)
         {
-            var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
-                                       ? Utilities.GetRegistryValue(
-                                           Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Platform)
-                                       : Core.AppInfo.Directory;
+            string installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
+                                              ? Utilities.GetRegistryValue(
+                                                      Core.AppInfo.Directory, 
+                                                      Core.AppInfo.ValueName, 
+                                                      Core.AppInfo.Platform)
+                                              : Core.AppInfo.Directory;
 
             installDirectory = Utilities.ConvertPath(installDirectory, true, Core.AppInfo.Platform);
 
-            var shortcut = Core.OpenFileDialog(installDirectory);
+            string[] shortcut = Core.OpenFileDialog(installDirectory);
 
             if (shortcut == null)
             {
                 return;
             }
 
-            var fileUrl = shortcut[0].Replace(installDirectory, @"%INSTALLDIR%\", true);
+            string fileUrl = shortcut[0].Replace(installDirectory, @"%INSTALLDIR%\", true);
             fileUrl = fileUrl.Replace(@"\\", @"\");
             Core.UpdateInfo.Shortcuts[this.listBox.SelectedIndex].Icon = fileUrl;
         }
@@ -281,22 +280,24 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.</param>
         private void LocateShortcutLocation(object sender, MouseButtonEventArgs e)
         {
-            var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
-                                       ? Utilities.GetRegistryValue(
-                                           Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Platform)
-                                       : Core.AppInfo.Directory;
+            string installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
+                                              ? Utilities.GetRegistryValue(
+                                                      Core.AppInfo.Directory, 
+                                                      Core.AppInfo.ValueName, 
+                                                      Core.AppInfo.Platform)
+                                              : Core.AppInfo.Directory;
 
             installDirectory = Utilities.ConvertPath(installDirectory, true, Core.AppInfo.Platform);
-            var shortcut = Core.OpenFileDialog(installDirectory, null, false, "lnk", true);
+            string[] shortcut = Core.OpenFileDialog(installDirectory, null, false, "lnk", true);
 
             if (shortcut == null)
             {
                 return;
             }
 
-            var saveLoc = Path.GetDirectoryName(shortcut[0]);
+            string saveLoc = Path.GetDirectoryName(shortcut[0]);
 
-            var fileUrl = saveLoc.Replace(installDirectory, @"%INSTALLDIR%\", true);
+            string fileUrl = saveLoc.Replace(installDirectory, @"%INSTALLDIR%\", true);
             fileUrl = fileUrl.Replace(@"\\", @"\");
             Core.UpdateInfo.Shortcuts[this.listBox.SelectedIndex].Location = fileUrl;
         }
@@ -306,14 +307,16 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.</param>
         private void LocateShortcutTarget(object sender, MouseButtonEventArgs e)
         {
-            var installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
-                                       ? Utilities.GetRegistryValue(
-                                           Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Platform)
-                                       : Core.AppInfo.Directory;
+            string installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
+                                              ? Utilities.GetRegistryValue(
+                                                      Core.AppInfo.Directory, 
+                                                      Core.AppInfo.ValueName, 
+                                                      Core.AppInfo.Platform)
+                                              : Core.AppInfo.Directory;
 
             installDirectory = Utilities.ConvertPath(installDirectory, true, Core.AppInfo.Platform);
-            var files = Core.OpenFileDialog(installDirectory);
-            var fileUrl = files[0].Replace(installDirectory, @"%INSTALLDIR%\", true);
+            string[] files = Core.OpenFileDialog(installDirectory);
+            string fileUrl = files[0].Replace(installDirectory, @"%INSTALLDIR%\", true);
             fileUrl = fileUrl.Replace(@"\\", @"\");
             Core.UpdateInfo.Shortcuts[this.listBox.SelectedIndex].Target = fileUrl;
         }
@@ -397,10 +400,10 @@ namespace SevenUpdate.Sdk.Pages
             }
 
             textBox.HasError =
-                !new DirectoryInputRule { IsRequired = true }.Validate(
-                    Utilities.ExpandInstallLocation(
-                        textBox.Text, Core.AppInfo.Directory, Core.AppInfo.Platform, Core.AppInfo.ValueName),
-                    null).IsValid;
+                    !new DirectoryInputRule { IsRequired = true }.Validate(
+                            Utilities.ExpandInstallLocation(
+                                    textBox.Text, Core.AppInfo.Directory, Core.AppInfo.Platform, Core.AppInfo.ValueName), 
+                            null).IsValid;
 
             textBox.ToolTip = textBox.HasError ? Properties.Resources.FilePathInvalid : null;
         }
@@ -425,15 +428,16 @@ namespace SevenUpdate.Sdk.Pages
             else
             {
                 textBox.HasError =
-                    !new FileNameInputRule { IsRequired = true }.Validate(
-                        Utilities.ExpandInstallLocation(
-                            textBox.Text, Core.AppInfo.Directory, Core.AppInfo.Platform, Core.AppInfo.ValueName),
-                        null).IsValid;
+                        !new FileNameInputRule { IsRequired = true }.Validate(
+                                Utilities.ExpandInstallLocation(
+                                        textBox.Text, 
+                                        Core.AppInfo.Directory, 
+                                        Core.AppInfo.Platform, 
+                                        Core.AppInfo.ValueName), 
+                                null).IsValid;
             }
 
             textBox.ToolTip = textBox.HasError ? Properties.Resources.FilePathInvalid : null;
         }
-
-        #endregion
     }
 }

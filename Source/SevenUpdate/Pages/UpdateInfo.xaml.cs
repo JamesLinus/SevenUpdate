@@ -36,14 +36,8 @@ namespace SevenUpdate.Pages
     /// <summary>Interaction logic for Update_Info.xaml.</summary>
     public sealed partial class UpdateInfo
     {
-        #region Constants and Fields
-
         /// <summary>Gets or sets a list of indices relating to the current Update Collection.</summary>
         private List<int> appIndices;
-
-        #endregion
-
-        #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="UpdateInfo" /> class.</summary>
         public UpdateInfo()
@@ -70,37 +64,25 @@ namespace SevenUpdate.Pages
             }
         }
 
-        #endregion
-
-        #region Events
-
         /// <summary>Occurs when the update selection has changed.</summary>
         internal static event EventHandler<UpdateSelectionChangedEventArgs> UpdateSelectionChanged;
-
-        #endregion
-
-        #region Properties
 
         /// <summary>Gets or sets a value indicating whether to expand the Optional Updates Group by default.</summary>
         /// <value><c>True</c> to expand the optional updates; otherwise, <c>False</c>.</value>
         internal static bool DisplayOptionalUpdates { private get; set; }
 
-        #endregion
-
-        #region Methods
-
         /// <summary>Loops through the <c>ListView</c> and updates the source when the update selection has been saved.</summary>
         /// <param name="element">The <c>DependencyObject</c>.</param>
         private static void IterateVisualChild(DependencyObject element)
         {
-            for (var i = 0; i < VisualTreeHelper.GetChildrenCount(element); i++)
+            for (int i = 0; i < VisualTreeHelper.GetChildrenCount(element); i++)
             {
                 if (VisualTreeHelper.GetChild(element, i) is CheckBox)
                 {
                     var cb = VisualTreeHelper.GetChild(element, i) as CheckBox;
                     if (cb != null)
                     {
-                        var bindingExpression = cb.GetBindingExpression(ToggleButton.IsCheckedProperty);
+                        BindingExpression bindingExpression = cb.GetBindingExpression(ToggleButton.IsCheckedProperty);
                         if (bindingExpression != null)
                         {
                             bindingExpression.UpdateSource();
@@ -121,7 +103,7 @@ namespace SevenUpdate.Pages
         {
             var selectedUpdates = new ObservableCollection<Update>();
             this.appIndices = new List<int>();
-            for (var x = 0; x < Core.Applications.Count; x++)
+            for (int x = 0; x < Core.Applications.Count; x++)
             {
                 this.appIndices.Add(x);
                 foreach (var t in Core.Applications[x].Updates)
@@ -173,10 +155,10 @@ namespace SevenUpdate.Pages
             IterateVisualChild(this.lvUpdates);
             var count = new int[2];
             var downloadSize = new ulong[2];
-            var updIndex = -1;
-            for (var x = 0; x < Core.Applications.Count; x++)
+            int updIndex = -1;
+            for (int x = 0; x < Core.Applications.Count; x++)
             {
-                for (var y = 0; y < Core.Applications[x].Updates.Count; y++)
+                for (int y = 0; y < Core.Applications[x].Updates.Count; y++)
                 {
                     updIndex++;
 
@@ -216,7 +198,7 @@ namespace SevenUpdate.Pages
             if (UpdateSelectionChanged != null)
             {
                 UpdateSelectionChanged(
-                    this, new UpdateSelectionChangedEventArgs(count[0], count[1], downloadSize[0], downloadSize[1]));
+                        this, new UpdateSelectionChangedEventArgs(count[0], count[1], downloadSize[0], downloadSize[1]));
             }
 
             Core.NavigateToMainPage();
@@ -258,7 +240,7 @@ namespace SevenUpdate.Pages
         /// <param name="e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
         private void ShowOrHideUpdate(object sender, RoutedEventArgs e)
         {
-            var appIndex = this.appIndices[this.lvUpdates.SelectedIndex];
+            int appIndex = this.appIndices[this.lvUpdates.SelectedIndex];
 
             var update = this.lvUpdates.SelectedItem as Update;
             if (update == null)
@@ -268,13 +250,13 @@ namespace SevenUpdate.Pages
 
             var hnh = new Suh(update.Name, Core.Applications[appIndex].AppInfo.Publisher, update.Description)
                 {
-                    HelpUrl = Core.Applications[appIndex].AppInfo.HelpUrl,
-                    InfoUrl = update.InfoUrl,
-                    AppUrl = Core.Applications[appIndex].AppInfo.AppUrl,
-                    ReleaseDate = update.ReleaseDate,
-                    Status = UpdateStatus.Hidden,
-                    UpdateSize = Core.GetUpdateSize(update.Files),
-                    Importance = update.Importance,
+                        HelpUrl = Core.Applications[appIndex].AppInfo.HelpUrl, 
+                        InfoUrl = update.InfoUrl, 
+                        AppUrl = Core.Applications[appIndex].AppInfo.AppUrl, 
+                        ReleaseDate = update.ReleaseDate, 
+                        Status = UpdateStatus.Hidden, 
+                        UpdateSize = Core.GetUpdateSize(update.Files), 
+                        Importance = update.Importance, 
                 };
 
             if (!update.Hidden)
@@ -313,20 +295,16 @@ namespace SevenUpdate.Pages
             }
         }
 
-        #endregion
-
         /// <summary>Provides event data for the UpdateSelection event.</summary>
         internal sealed class UpdateSelectionChangedEventArgs : EventArgs
         {
-            #region Constructors and Destructors
-
             /// <summary>Initializes a new instance of the <see cref="UpdateSelectionChangedEventArgs" /> class.</summary>
             /// <param name="importantUpdates">The number of Important updates selected.</param>
             /// <param name="optionalUpdates">The number of Optional updates selected.</param>
             /// <param name="importantDownloadSize">A value indicating the download size of the Important updates.</param>
             /// <param name="optionalDownloadSize">A value indicating the download size of the Optional updates.</param>
             public UpdateSelectionChangedEventArgs(
-                int importantUpdates, int optionalUpdates, ulong importantDownloadSize, ulong optionalDownloadSize)
+                    int importantUpdates, int optionalUpdates, ulong importantDownloadSize, ulong optionalDownloadSize)
             {
                 this.ImportantUpdates = importantUpdates;
 
@@ -336,10 +314,6 @@ namespace SevenUpdate.Pages
 
                 this.OptionalDownloadSize = optionalDownloadSize;
             }
-
-            #endregion
-
-            #region Properties
 
             /// <summary>Gets the total download size in bytes of the important updates.</summary>
             internal ulong ImportantDownloadSize { get; private set; }
@@ -352,8 +326,6 @@ namespace SevenUpdate.Pages
 
             /// <summary>Gets the number of Optional Updates selected.</summary>
             internal int OptionalUpdates { get; private set; }
-
-            #endregion
         }
     }
 }

@@ -13,15 +13,15 @@
         <ControlTemplate TargetType="controls:BackButton">
           <Canvas MinWidth="28" MinHeight="28">
             <Image Name="Normal" Source="/SevenSoftware.Windows;component/Resources/Images/BackArrow.png"
-                RenderOptions.BitmapScalingMode="HighQuality" Stretch="None" Opacity="1" />
+                   RenderOptions.BitmapScalingMode="HighQuality" Stretch="None" Opacity="1" />
             <Image Name="Hover" Source="/SevenSoftware.Windows;component/Resources/Images/BackArrowHover.png"
-                RenderOptions.BitmapScalingMode="HighQuality" Stretch="None" Opacity="0" />
+                   RenderOptions.BitmapScalingMode="HighQuality" Stretch="None" Opacity="0" />
             <Image Name="Pressed" Source="/SevenSoftware.Windows;component/Resources/Images/BackArrowPressed.png"
-                RenderOptions.BitmapScalingMode="HighQuality" Stretch="None" Opacity="0" />
+                   RenderOptions.BitmapScalingMode="HighQuality" Stretch="None" Opacity="0" />
             <Image Name="Selected" Source="/SevenSoftware.Windows;component/Resources/Images/BackArrowPressed.png"
-                RenderOptions.BitmapScalingMode="HighQuality" Stretch="None" Opacity="0" />
+                   RenderOptions.BitmapScalingMode="HighQuality" Stretch="None" Opacity="0" />
             <Image Name="Disabled" Source="/SevenSoftware.Windows;component/Resources/Images/BackArrowDisabled.png"
-                RenderOptions.BitmapScalingMode="HighQuality" Stretch="None" Opacity="0" />
+                   RenderOptions.BitmapScalingMode="HighQuality" Stretch="None" Opacity="0" />
           </Canvas>
           <ControlTemplate.Triggers>
             <DataTrigger Value="False" Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}}">
@@ -87,7 +87,7 @@
       </Setter.Value>
     </Setter>
   </Style>
-  
+
   <!--CommandLink Style-->
   <Style TargetType="controls:CommandLink">
     <Setter Property="MinWidth" Value="325" />
@@ -158,9 +158,13 @@ Value="True">
             </Border>
           </Border>
           <ControlTemplate.Triggers>
+            <Trigger Property="UseShield" Value="False">
+              <Setter TargetName="Icon" Property="Image.Source"
+                      Value="/SevenSoftware.Windows;component/Resources\Images\GreenArrow.png" />
+            </Trigger>
             <Trigger Property="UseShield" Value="True">
               <Setter TargetName="Icon" Property="Image.Source"
-                  Value="/SevenSoftware.Windows;component/Resources\Images\Shield.png" />
+                      Value="/SevenSoftware.Windows;component/Resources\Images\Shield.png" />
             </Trigger>
             <MultiTrigger>
               <MultiTrigger.Conditions>
@@ -168,15 +172,7 @@ Value="True">
                 <Condition Property="UseShield" Value="False" />
               </MultiTrigger.Conditions>
               <Setter TargetName="Icon" Property="Image.Source"
-                  Value="/SevenSoftware.Windows;component/Resources\Images\GreenArrowHover.png" />
-            </MultiTrigger>
-            <MultiTrigger>
-              <MultiTrigger.Conditions>
-                <Condition Property="IsPressed" Value="True" />
-                <Condition Property="UseShield" Value="False" />
-              </MultiTrigger.Conditions>
-              <Setter TargetName="Icon" Property="Image.Source"
-                  Value="/SevenSoftware.Windows;component/Resources\Images\GreenArrow.png" />
+                      Value="/SevenSoftware.Windows;component/Resources\Images\GreenArrowHover.png" />
             </MultiTrigger>
             <MultiTrigger>
               <MultiTrigger.Conditions>

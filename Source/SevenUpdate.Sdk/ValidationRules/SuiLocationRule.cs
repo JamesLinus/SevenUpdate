@@ -26,12 +26,10 @@ namespace SevenUpdate.Sdk.ValidationRules
     using SevenUpdate.Sdk.Properties;
 
     /// <summary>Validates a value and determines if the value is a Sui location.</summary>
-    [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass",
-        Justification = "ValidationRule")]
+    [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", 
+            Justification = "ValidationRule")]
     public class SuiLocationRule : ValidationRule
     {
-        #region Public Methods
-
         /// <summary>When overridden in a derived class, performs validation checks on a value.</summary>
         /// <param name="value">The value from the binding target to check.</param>
         /// <param name="cultureInfo">The culture to use in this rule.</param>
@@ -45,7 +43,7 @@ namespace SevenUpdate.Sdk.ValidationRules
                 return new ValidationResult(false, Resources.FilePathInvalid);
             }
 
-            var result = Uri.IsWellFormedUriString(input, UriKind.RelativeOrAbsolute);
+            bool result = Uri.IsWellFormedUriString(input, UriKind.RelativeOrAbsolute);
 
             if (!result)
             {
@@ -55,7 +53,7 @@ namespace SevenUpdate.Sdk.ValidationRules
                 }
             }
 
-            var fileName = Path.GetFileName(input);
+            string fileName = Path.GetFileName(input);
 
             if (fileName == null || string.IsNullOrWhiteSpace(input))
             {
@@ -69,7 +67,5 @@ namespace SevenUpdate.Sdk.ValidationRules
 
             return new ValidationResult(true, null);
         }
-
-        #endregion
     }
 }

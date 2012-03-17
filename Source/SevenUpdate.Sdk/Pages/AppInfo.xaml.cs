@@ -40,14 +40,8 @@ namespace SevenUpdate.Sdk.Pages
     /// <summary>Interaction logic for AppInfo.xaml.</summary>
     public sealed partial class AppInfo
     {
-        #region Constants and Fields
-
         /// <summary>Indicates the platform of the application before editing.</summary>
         private static Platform oldPlatform;
-
-        #endregion
-
-        #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="AppInfo" /> class.</summary>
         public AppInfo()
@@ -85,10 +79,6 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        #endregion
-
-        #region Methods
-
         /// <summary>Opens a <c>OpenFileDialog</c> to browse for the application install location.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.</param>
@@ -99,7 +89,7 @@ namespace SevenUpdate.Sdk.Pages
                 if (folderBrowserDialog.ShowDialog(Application.Current.MainWindow.GetIWin32Window()) == DialogResult.OK)
                 {
                     this.tbxAppLocation.Text = Utilities.ConvertPath(
-                        folderBrowserDialog.SelectedPath, false, Core.AppInfo.Platform);
+                            folderBrowserDialog.SelectedPath, false, Core.AppInfo.Platform);
                 }
             }
         }
@@ -278,7 +268,7 @@ namespace SevenUpdate.Sdk.Pages
 
             Utilities.Locale = ((ComboBoxItem)this.cbxLocale.SelectedItem).Tag.ToString();
 
-            var found = false;
+            bool found = false;
 
             // Load Values
             foreach (var t in Core.AppInfo.Description.Where(t => t.Lang == Utilities.Locale))
@@ -349,8 +339,8 @@ namespace SevenUpdate.Sdk.Pages
                 }
                 else
                 {
-                    var appName = Utilities.GetLocaleString(Core.AppInfo.Name);
-                    var oldAppName = appName;
+                    string appName = Utilities.GetLocaleString(Core.AppInfo.Name);
+                    string oldAppName = appName;
 
                     if (Core.AppInfo.Platform == Platform.X64)
                     {
@@ -374,9 +364,9 @@ namespace SevenUpdate.Sdk.Pages
                         && string.Compare(oldAppName, appName, StringComparison.OrdinalIgnoreCase) != 0)
                     {
                         File.Copy(
-                            Path.Combine(App.UserStore, oldAppName + ".sui"),
-                            Path.Combine(App.UserStore, appName + ".sui"),
-                            true);
+                                Path.Combine(App.UserStore, oldAppName + ".sui"), 
+                                Path.Combine(App.UserStore, appName + ".sui"), 
+                                true);
                         File.Delete(Path.Combine(App.UserStore, oldAppName + ".sui"));
                         File.Delete(Path.Combine(App.UserStore, oldAppName + ".sua"));
                     }
@@ -397,7 +387,7 @@ namespace SevenUpdate.Sdk.Pages
 
                     if (updateNames != null)
                     {
-                        foreach (var t in updateNames)
+                        foreach (string t in updateNames)
                         {
                             project.UpdateNames.Add(t);
                         }
@@ -507,7 +497,5 @@ namespace SevenUpdate.Sdk.Pages
             textBox.HasError = !new UrlInputRule { IsRequired = true }.Validate(textBox.Text, null).IsValid;
             textBox.ToolTip = textBox.HasError ? Properties.Resources.UrlNotValid : null;
         }
-
-        #endregion
     }
 }

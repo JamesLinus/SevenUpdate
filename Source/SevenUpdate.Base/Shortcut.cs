@@ -35,8 +35,6 @@ namespace SevenUpdate
     [KnownType(typeof(ShortcutAction))]
     public sealed class Shortcut : INotifyPropertyChanged
     {
-        #region Constants and Fields
-
         /// <summary>The max feature length.</summary>
         private const int MaxFeatureLength = 38;
 
@@ -66,10 +64,6 @@ namespace SevenUpdate
 
         /// <summary>The file or folder that is executed by the shortcut.</summary>
         private string target;
-
-        #endregion
-
-        #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="Shortcut" /> class.</summary>
         /// <param name="name">The collection of localized update names.</param>
@@ -107,16 +101,8 @@ namespace SevenUpdate
             this.Description.CollectionChanged += this.DescriptionCollectionChanged;
         }
 
-        #endregion
-
-        #region Public Events
-
         /// <summary>Occurs when a property has changed.</summary>
         public event PropertyChangedEventHandler PropertyChanged;
-
-        #endregion
-
-        #region Interfaces
 
         /// <summary>The interface for a Persistent file.</summary>
         [ComImport]
@@ -192,7 +178,10 @@ namespace SevenUpdate
             /// <param name="flags">The options to specify the path is retrieved.</param>
             [PreserveSig]
             void GetPath(
-                [MarshalAs(UnmanagedType.LPWStr)] StringBuilder file, int maxPath, ref Win32FindData data, uint flags);
+                    [MarshalAs(UnmanagedType.LPWStr)] StringBuilder file, 
+                    int maxPath, 
+                    ref Win32FindData data, 
+                    uint flags);
 
             /// <summary>Retrieves the list of item identifiers for a Shell link object.</summary>
             /// <param name="identifier">The indentifer list.</param>
@@ -266,9 +255,9 @@ namespace SevenUpdate
             /// <param name="iconIndex">Index of the icon.</param>
             [PreserveSig]
             void GetIconLocation(
-                [MarshalAs(UnmanagedType.LPWStr, SizeParamIndex = 1)] StringBuilder iconPath,
-                int iconPathLength,
-                out int iconIndex);
+                    [MarshalAs(UnmanagedType.LPWStr, SizeParamIndex = 1)] StringBuilder iconPath, 
+                    int iconPathLength, 
+                    out int iconIndex);
 
             /// <summary>Sets the location (path and index) of the icon for a Shell link object.</summary>
             /// <param name="iconPath">The icon path.</param>
@@ -293,10 +282,6 @@ namespace SevenUpdate
             [PreserveSig]
             void SetPath([MarshalAs(UnmanagedType.LPWStr)] string file);
         }
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>Gets or sets the action to perform on the <c>Shortcut</c>.</summary>
         /// <value>The action.</value>
@@ -410,10 +395,6 @@ namespace SevenUpdate
             }
         }
 
-        #endregion
-
-        #region Public Methods
-
         /// <summary>Creates a shortcut on the system.</summary>
         /// <param name="shortcut">The shortcut data used to create the shortcut.</param>
         public static void CreateShortcut(Shortcut shortcut)
@@ -435,7 +416,7 @@ namespace SevenUpdate
 
             if (!string.IsNullOrWhiteSpace(shortcut.Icon))
             {
-                var icon = shortcut.Icon.Split(new[] { ',' });
+                string[] icon = shortcut.Icon.Split(new[] { ',' });
                 link.SetIconLocation(icon[0], Convert.ToInt32(icon[1], CultureInfo.InvariantCulture));
             }
 
@@ -462,8 +443,7 @@ namespace SevenUpdate
             var sb = new StringBuilder(MaxPath);
             var ls = new LocaleString
                 {
-                    Lang = Utilities.Locale,
-                    Value = Path.GetFileNameWithoutExtension(shortcutName)
+                   Lang = Utilities.Locale, Value = Path.GetFileNameWithoutExtension(shortcutName) 
                 };
             var shortcut = new Shortcut { Target = GetMsiTargetPath(shortcutName), };
 
@@ -505,10 +485,6 @@ namespace SevenUpdate
             return shortcut;
         }
 
-        #endregion
-
-        #region Methods
-
         /// <summary>Gets the target path from a Msi shortcut.</summary>
         /// <param name="shortcutPath">The path to the shortcut lnk file.</param>
         /// <returns>The resolved path to the shortcut.</returns>
@@ -518,18 +494,18 @@ namespace SevenUpdate
             var feature = new StringBuilder(MaxFeatureLength + 1);
             var component = new StringBuilder(MaxGuidLength + 1);
 
-            var result = NativeMethods.MsiGetShortcutTarget(shortcutPath, product, feature, component);
+            int result = NativeMethods.MsiGetShortcutTarget(shortcutPath, product, feature, component);
 
             if (result != 0x0000)
             {
                 return null;
             }
 
-            var pathLength = MaxPathLength;
+            int pathLength = MaxPathLength;
             var path = new StringBuilder(pathLength);
 
-            var installState = NativeMethods.MsiGetComponentPath(
-                product.ToString(), component.ToString(), path, ref pathLength);
+            int installState = NativeMethods.MsiGetComponentPath(
+                    product.ToString(), component.ToString(), path, ref pathLength);
             return installState == 4 ? path.ToString() : null;
         }
 
@@ -553,15 +529,13 @@ namespace SevenUpdate
         /// <param name="propertyName">The name of the property.</param>
         private void OnPropertyChanged(string propertyName)
         {
-            var handler = this.PropertyChanged;
+            PropertyChangedEventHandler handler = this.PropertyChanged;
 
             if (handler != null)
             {
                 handler(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-
-        #endregion
 
         /// <summary>The file time.</summary>
         [StructLayout(LayoutKind.Sequential)]
@@ -623,8 +597,8 @@ namespace SevenUpdate
 
         /// <summary>The c shell link.</summary>
         [Guid("00021401-0000-0000-C000-000000000046")]
-        [ClassInterfaceAttribute(ClassInterfaceType.None)]
-        [ComImportAttribute]
+        [ClassInterface(ClassInterfaceType.None)]
+        [ComImport]
         private class ShellLink
         {
         }

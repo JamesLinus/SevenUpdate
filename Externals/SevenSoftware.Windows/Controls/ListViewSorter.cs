@@ -440,7 +440,7 @@ namespace SevenSoftware.Windows.Controls
                 return;
             }
 
-            foreach (SortGlyphAdorner adorner in adorners.OfType<SortGlyphAdorner>())
+            foreach (var adorner in adorners.OfType<SortGlyphAdorner>())
             {
                 adornerLayer.Remove(adorner);
             }

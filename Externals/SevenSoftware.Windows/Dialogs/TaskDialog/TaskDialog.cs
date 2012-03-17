@@ -1242,7 +1242,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Sorts the dialog controls.</summary>
         private void SortDialogControls()
         {
-            foreach (TaskDialogControl control in this.controls)
+            foreach (var control in this.controls)
             {
                 var buttonBase = control as TaskDialogButtonBase;
                 var commandLink = control as TaskDialogCommandLink;

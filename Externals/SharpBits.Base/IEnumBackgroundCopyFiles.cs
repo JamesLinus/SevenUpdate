@@ -16,8 +16,8 @@ namespace SharpBits.Base
     ///   IEnumBackgroundCopyFiles interface pointer, call the <c>IBackgroundCopyJob</c>::EnumFiles method.
     /// </summary>
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    [GuidAttribute("CA51E165-C365-424C-8D41-24AAA4FF3C40")]
-    [ComImportAttribute]
+    [Guid("CA51E165-C365-424C-8D41-24AAA4FF3C40")]
+    [ComImport]
     internal interface IEnumBackgroundCopyFiles
     {
         /// <summary>Retrieves a specified number of items in the enumeration sequence.</summary>

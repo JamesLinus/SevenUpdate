@@ -16,8 +16,8 @@ namespace SharpBits.Base
     ///   transfer process can proceed.
     /// </summary>
     [Guid("19C613A0-FCB8-4F28-81AE-897C3D078F81")]
-    [InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
-    [ComImportAttribute]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+    [ComImport]
     internal interface IBackgroundCopyError
     {
         /// <summary>Retrieves the error code and identify the context in which the error occurred.</summary>
@@ -39,7 +39,7 @@ namespace SharpBits.Base
         /// <param name="languageId">Identifies the locale to use to generate the description. To create the language identifier, use the MAKELANGID macro.</param>
         /// <param name="contextDescription">A string that contains the description of the context in which the error occurred. Call the CoTaskMemFree function to free ppContextDescription when done.</param>
         void GetErrorContextDescription(
-            uint languageId, [MarshalAs(UnmanagedType.LPWStr)] out string contextDescription);
+                uint languageId, [MarshalAs(UnmanagedType.LPWStr)] out string contextDescription);
 
         /// <summary>Retrieves the protocol used to transfer the file.</summary>
         /// <param name="protocol">A string that contains the protocol used to transfer the file. The string contains HTTP for the HTTP protocol and file for the SMB protocol. The ppProtocol parameter is set to <c>null</c> if the error is not related to the transfer protocol. Call the CoTaskMemFree function to free ppProtocol when done.</param>

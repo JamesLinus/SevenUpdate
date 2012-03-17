@@ -246,7 +246,7 @@ namespace SevenSoftware.Windows.Controls
             var storyboard = new Storyboard();
             NameScope.SetNameScope(storyboard, NameScope.GetNameScope(this));
 
-            foreach (Timeline timelineClone in this.ElementStoryboard.Children.Select(timeline => timeline.Clone()))
+            foreach (var timelineClone in this.ElementStoryboard.Children.Select(timeline => timeline.Clone()))
             {
                 storyboard.Children.Add(timelineClone);
                 Storyboard.SetTargetName(timelineClone, element.Name);

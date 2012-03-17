@@ -30,8 +30,6 @@ namespace SevenUpdate.Converters
     [ValueConversion(typeof(DateTime), typeof(string))]
     internal sealed class DateConverter : IValueConverter
     {
-        #region Public Methods
-
         /// <summary>Converts a value.</summary>
         /// <param name="value">The value produced by the binding source.</param>
         /// <param name="targetType">The type of the binding target property.</param>
@@ -40,17 +38,18 @@ namespace SevenUpdate.Converters
         /// <returns>A converted value. If the method returns <c>null</c>, the valid <c>null</c> value is used.</returns>
         public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
         {
-            var dateTime = value is DateTime ? (DateTime)value : new DateTime();
+            DateTime dateTime = value is DateTime ? (DateTime)value : new DateTime();
 
             if (dateTime != DateTime.MinValue)
             {
                 return dateTime.Date.Equals(DateTime.Now.Date)
-                           ? string.Format(CultureInfo.CurrentCulture, Resources.TodayAt, dateTime.ToShortTimeString())
-                           : string.Format(
-                               CultureInfo.CurrentCulture,
-                               Resources.TimeAt,
-                               dateTime.ToShortDateString(),
-                               dateTime.ToShortTimeString());
+                               ? string.Format(
+                                       CultureInfo.CurrentCulture, Resources.TodayAt, dateTime.ToShortTimeString())
+                               : string.Format(
+                                       CultureInfo.CurrentCulture, 
+                                       Resources.TimeAt, 
+                                       dateTime.ToShortDateString(), 
+                                       dateTime.ToShortTimeString());
             }
 
             return Resources.Never;
@@ -66,7 +65,5 @@ namespace SevenUpdate.Converters
         {
             return DependencyProperty.UnsetValue;
         }
-
-        #endregion
     }
 }

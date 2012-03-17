@@ -369,7 +369,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
             IntPtr initialPtr = Marshal.AllocHGlobal(Marshal.SizeOf(typeof(TaskDialogButtonData)) * buttons.Count);
 
             IntPtr currentPtr = initialPtr;
-            foreach (TaskDialogButtonData button in buttons)
+            foreach (var button in buttons)
             {
                 Marshal.StructureToPtr(button, currentPtr, false);
                 currentPtr = (IntPtr)((int)currentPtr + Marshal.SizeOf(button));

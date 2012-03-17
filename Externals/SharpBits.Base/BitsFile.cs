@@ -16,8 +16,6 @@ namespace SharpBits.Base
     /// <summary>A file that can be added to a <c>BitsJob</c>.</summary>
     public sealed partial class BitsFile : IDisposable
     {
-        #region Constants and Fields
-
         /// <summary>The current job.</summary>
         private readonly BitsJob job;
 
@@ -29,10 +27,6 @@ namespace SharpBits.Base
 
         /// <summary>The current <c>BitsFile</c> progress.</summary>
         private FileProgress progress;
-
-        #endregion
-
-        #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="BitsFile" /> class.</summary>
         /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are <c>null</c>.</exception>
@@ -50,17 +44,13 @@ namespace SharpBits.Base
             this.job = job;
         }
 
-        #endregion
-
-        #region Public Properties
-
         /// <summary>Gets the local name of the file.</summary>
         /// <value>The filename of the local file.</value>
         public string LocalName
         {
             get
             {
-                var name = string.Empty;
+                string name = string.Empty;
                 try
                 {
                     this.file.GetLocalName(out name);
@@ -104,7 +94,7 @@ namespace SharpBits.Base
         {
             get
             {
-                var name = string.Empty;
+                string name = string.Empty;
                 try
                 {
                     this.file.GetRemoteName(out name);
@@ -138,20 +128,12 @@ namespace SharpBits.Base
             }
         }
 
-        #endregion
-
-        #region Public Methods
-
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
         public void Dispose()
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>Releases unmanaged and - optionally - managed resources.</summary>
         /// <param name="disposing"><c>True</c> to release both managed and unmanaged resources; otherwise, <c>False</c> to release only unmanaged resources.</param>
@@ -172,21 +154,13 @@ namespace SharpBits.Base
 
             this.disposed = true;
         }
-
-        #endregion
     }
 
     /// <summary>A file that can be added to a <c>BitsJob</c>.</summary>
     public sealed partial class BitsFile
     {
-        #region Constants and Fields
-
         /// <summary>The file to download.</summary>
         private readonly IBackgroundCopyFile2 file2;
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>Gets the file ranges.</summary>
         /// <value>The file ranges.</value>
@@ -202,7 +176,7 @@ namespace SharpBits.Base
                         var fileRanges = new Collection<FileRange>();
                         IntPtr rangePtr;
                         this.file2.GetFileRanges(out count, out rangePtr);
-                        for (var i = 0; i < count; i++)
+                        for (int i = 0; i < count; i++)
                         {
                             var range = (BGFileRange)Marshal.PtrToStructure(rangePtr, typeof(BGFileRange));
                             fileRanges.Add(new FileRange(range));
@@ -221,7 +195,5 @@ namespace SharpBits.Base
                 }
             }
         }
-
-        #endregion
     }
 }

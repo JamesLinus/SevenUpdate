@@ -3,10 +3,9 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:SevenUpdate="clr-namespace:SevenUpdate;assembly=SevenUpdate.Base"
-      
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:Controls="clr-namespace:SevenSoftware.Windows.Controls;assembly=SevenSoftware.Windows" mc:Ignorable="d" MinWidth="850" MinHeight="512"
-      d:DesignHeight="512" d:DesignWidth="850" Loaded="LoadUI">
+      xmlns:Controls="clr-namespace:SevenSoftware.Windows.Controls;assembly=SevenSoftware.Windows" mc:Ignorable="d"
+      MinWidth="850" MinHeight="512" d:DesignHeight="512" d:DesignWidth="850" Loaded="LoadUI">
   <!-- Grid-->
   <Grid>
     <Grid.ColumnDefinitions>
@@ -99,8 +98,8 @@ Content="{LocText SevenUpdate.Sdk:Resources:DeleteValue}" Margin="10" TabIndex="
                Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}"
                Cursor="Help" />
     <Controls:InfoTextBox Note="HKLM\SOFTWARE\MyCompany\MyApp" Grid.Column="1" Grid.Row="3" Grid.ColumnSpan="3"
-                 Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}"
-                 Margin="0,0,40,0" TabIndex="4" Name="tbxKeyPath" TextChanged="ValidateRegistryPath" x:FieldModifier="private">
+                          Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}"
+                          Margin="0,0,40,0" TabIndex="4" Name="tbxKeyPath" TextChanged="ValidateRegistryPath" x:FieldModifier="private">
       <Controls:InfoTextBox.Text>
         <Binding ElementName="listBox" Path="SelectedItem.Key" Mode="TwoWay" UpdateSourceTrigger="Explicit">
           <!--<Binding.ValidationRules>

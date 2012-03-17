@@ -23,8 +23,6 @@ namespace SevenUpdate
     /// <summary>Extension Methods for Dispatcher.BeginInvoke.</summary>
     public static class DispatcherObjectDelegates
     {
-        #region Public Methods
-
         /// <summary>Invokes a Method to run on the UI thread.</summary>
         /// <param name="dispatcher">The dispatcher object.</param>
         /// <param name="method">The method to invoke.</param>
@@ -53,7 +51,5 @@ namespace SevenUpdate
                 dispatcher.BeginInvoke(method, DispatcherPriority.Background, parameter);
             }
         }
-
-        #endregion
     }
 }

@@ -30,8 +30,6 @@ namespace SevenUpdate.Windows
     /// <summary>Interaction logic for License_Agreement.xaml.</summary>
     public sealed partial class LicenseAgreement
     {
-        #region Constants and Fields
-
         /// <summary>Current index.</summary>
         private int index;
 
@@ -40,10 +38,6 @@ namespace SevenUpdate.Windows
 
         /// <summary>An array of the strings that consist of the software licenses.</summary>
         private string[] licenseText;
-
-        #endregion
-
-        #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="LicenseAgreement" /> class.</summary>
         public LicenseAgreement()
@@ -60,10 +54,6 @@ namespace SevenUpdate.Windows
                 this.Title += " - " + Properties.Resources.BetaChannel;
             }
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>Loads the <c>licenseInformation</c> and shows the form.</summary>
         /// <returns>Returns the dialog result.</returns>
@@ -116,7 +106,9 @@ namespace SevenUpdate.Windows
             }
 
             this.tbHeading.Text = string.Format(
-                CultureInfo.CurrentCulture, Properties.Resources.AcceptLicenseTerms, this.licenseInformation[0].Title);
+                    CultureInfo.CurrentCulture, 
+                    Properties.Resources.AcceptLicenseTerms, 
+                    this.licenseInformation[0].Title);
             this.rbtnAccept.IsEnabled = true;
             this.rbtnDecline.IsEnabled = true;
             this.rtbSLA.Cursor = Cursors.IBeam;
@@ -150,7 +142,7 @@ namespace SevenUpdate.Windows
 
             var wc = new WebClient();
 
-            for (var x = 0; x < this.licenseInformation.Count; x++)
+            for (int x = 0; x < this.licenseInformation.Count; x++)
             {
                 try
                 {
@@ -176,9 +168,9 @@ namespace SevenUpdate.Windows
                 return;
             }
 
-            for (var x = 0; x < Core.Applications.Count; x++)
+            for (int x = 0; x < Core.Applications.Count; x++)
             {
-                for (var y = 0; y < Core.Applications[x].Updates.Count; y++)
+                for (int y = 0; y < Core.Applications[x].Updates.Count; y++)
                 {
                     if (Core.Applications[x].Updates[y].LicenseUrl == null)
                     {
@@ -192,10 +184,10 @@ namespace SevenUpdate.Windows
 
                     var sla = new Eula
                         {
-                            LicenseUrl = Core.Applications[x].Updates[y].LicenseUrl,
-                            Title = Utilities.GetLocaleString(Core.Applications[x].Updates[y].Name),
-                            AppIndex = x,
-                            UpdateIndex = y
+                                LicenseUrl = Core.Applications[x].Updates[y].LicenseUrl, 
+                                Title = Utilities.GetLocaleString(Core.Applications[x].Updates[y].Name), 
+                                AppIndex = x, 
+                                UpdateIndex = y
                         };
 
                     this.licenseInformation.Add(sla);
@@ -211,7 +203,7 @@ namespace SevenUpdate.Windows
             if (this.rbtnDecline.IsChecked == true)
             {
                 Core.Applications[this.licenseInformation[this.index].AppIndex].Updates.RemoveAt(
-                    this.licenseInformation[this.index].UpdateIndex);
+                        this.licenseInformation[this.index].UpdateIndex);
                 if (Core.Applications[this.licenseInformation[this.index].AppIndex].Updates.Count == 0)
                 {
                     Core.Applications.RemoveAt(this.licenseInformation[this.index].AppIndex);
@@ -223,9 +215,9 @@ namespace SevenUpdate.Windows
             if (this.btnAction.ButtonText == Properties.Resources.Next)
             {
                 this.tbHeading.Text = string.Format(
-                    CultureInfo.CurrentCulture,
-                    Properties.Resources.AcceptLicenseTerms,
-                    this.licenseInformation[this.index].Title);
+                        CultureInfo.CurrentCulture, 
+                        Properties.Resources.AcceptLicenseTerms, 
+                        this.licenseInformation[this.index].Title);
                 var flowDoc = new FlowDocument();
                 var para = new Paragraph();
                 var r = new Run(this.licenseText[this.index]);
@@ -254,13 +246,9 @@ namespace SevenUpdate.Windows
             }
         }
 
-        #endregion
-
         /// <summary>Data containing the <c>Update</c> license agreement.</summary>
         private struct Eula
         {
-            #region Properties
-
             /// <summary>Gets or sets the index of the application of the update.</summary>
             internal int AppIndex { get; set; }
 
@@ -272,8 +260,6 @@ namespace SevenUpdate.Windows
 
             /// <summary>Gets or sets the index of the update.</summary>
             internal int UpdateIndex { get; set; }
-
-            #endregion
         }
     }
 }

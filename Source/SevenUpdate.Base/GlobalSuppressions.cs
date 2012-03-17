@@ -5,11 +5,33 @@
 
 using System.Diagnostics.CodeAnalysis;
 
-[assembly: SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Suh", Scope = "type", Target = "SevenUpdate.Suh")]
-[assembly: SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Sua", Scope = "type", Target = "SevenUpdate.Sua")]
-[assembly: SuppressMessage("Microsoft.Maintainability", "CA1500:VariableNamesShouldNotMatchFieldNames", MessageId = "value", Scope = "member", Target = "SevenUpdate.LocaleString.#Value")]
-[assembly: SuppressMessage("Microsoft.Maintainability", "CA1500:VariableNamesShouldNotMatchFieldNames", MessageId = "value", Scope = "member", Target = "SevenUpdate.LocaleString.#PropertyChanged")]
-[assembly: SuppressMessage("Microsoft.Maintainability", "CA1500:VariableNamesShouldNotMatchFieldNames", MessageId = "value", Scope = "member", Target = "SevenUpdate.LocaleString.#Lang")]
-[assembly: SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed", Scope = "member", Target = "SevenUpdate.Utilities.#StartProcess(System.String,System.String,System.Boolean,System.Boolean)")]
-[assembly: SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed", Scope = "member", Target = "SevenUpdate.Utilities.#ExpandInstallLocation(System.String,System.String,SevenUpdate.Platform,System.String)")]
-[assembly: SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed", Scope = "member", Target = "SevenUpdate.Download.#DownloadUpdates(System.Collections.ObjectModel.Collection`1<SevenUpdate.Sui>,System.String,System.String,System.Boolean)")]
+[assembly:
+        SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Suh", 
+                Scope = "type", Target = "SevenUpdate.Suh")]
+[assembly:
+        SuppressMessage("Microsoft.Naming", "CA1704:IdentifiersShouldBeSpelledCorrectly", MessageId = "Sua", 
+                Scope = "type", Target = "SevenUpdate.Sua")]
+[assembly:
+        SuppressMessage("Microsoft.Maintainability", "CA1500:VariableNamesShouldNotMatchFieldNames", MessageId = "value"
+                , Scope = "member", Target = "SevenUpdate.LocaleString.#Value")]
+[assembly:
+        SuppressMessage("Microsoft.Maintainability", "CA1500:VariableNamesShouldNotMatchFieldNames", MessageId = "value"
+                , Scope = "member", Target = "SevenUpdate.LocaleString.#PropertyChanged")]
+[assembly:
+        SuppressMessage("Microsoft.Maintainability", "CA1500:VariableNamesShouldNotMatchFieldNames", MessageId = "value"
+                , Scope = "member", Target = "SevenUpdate.LocaleString.#Lang")]
+[assembly:
+        SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed", Scope = "member", 
+                Target =
+                        "SevenUpdate.Utilities.#StartProcess(System.String,System.String,System.Boolean,System.Boolean)"
+                )]
+[assembly:
+        SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed", Scope = "member", 
+                Target =
+                        "SevenUpdate.Utilities.#ExpandInstallLocation(System.String,System.String,SevenUpdate.Platform,System.String)"
+                )]
+[assembly:
+        SuppressMessage("Microsoft.Design", "CA1026:DefaultParametersShouldNotBeUsed", Scope = "member", 
+                Target =
+                        "SevenUpdate.Download.#DownloadUpdates(System.Collections.ObjectModel.Collection`1<SevenUpdate.Sui>,System.String,System.String,System.Boolean)"
+                )]

@@ -34,7 +34,7 @@ namespace SharpBits.Base
         /// information on specifying the remote name, see the RemoteName member and Remarks section of the <see
         /// cref="BGFileInfo" /> structure.</param>
         void AddFile(
-            [MarshalAs(UnmanagedType.LPWStr)] string remoteUrl, [MarshalAs(UnmanagedType.LPWStr)] string localName);
+                [MarshalAs(UnmanagedType.LPWStr)] string remoteUrl, [MarshalAs(UnmanagedType.LPWStr)] string localName);
 
         /// <summary>Returns an interface pointer to an enumerator object that you use to enumerate the files in the job.</summary>
         /// <param name="enum"><c>IEnumBackgroundCopyFiles</c> interface pointer that you use to enumerate the files in the job. Release enumFiles when done.</param>
@@ -183,9 +183,9 @@ namespace SharpBits.Base
         /// The length of the proxy bypass list is limited to 4,000 characters, not including the <c>null</c>
         /// terminator. .</param>
         void SetProxySettings(
-            BGJobProxyUsage proxyUsage,
-            [MarshalAs(UnmanagedType.LPWStr)] string proxyList,
-            [MarshalAs(UnmanagedType.LPWStr)] string proxyBypassList);
+                BGJobProxyUsage proxyUsage, 
+                [MarshalAs(UnmanagedType.LPWStr)] string proxyList, 
+                [MarshalAs(UnmanagedType.LPWStr)] string proxyBypassList);
 
         /// <summary>Retrieves the proxy settings the job uses to transfer the files.</summary>
         /// <param name="proxyUsage">Specifies the proxy settings the job uses to transfer the files. For a list of
@@ -198,9 +198,9 @@ namespace SharpBits.Base
         /// the Listing the Proxy Bypass section of Enabling Internet Functionality. Call the CoTaskMemFree function to
         /// free <paramref name="proxyBypassList" /> when done.</param>
         void GetProxySettings(
-            out BGJobProxyUsage proxyUsage,
-            [MarshalAs(UnmanagedType.LPWStr)] out string proxyList,
-            [MarshalAs(UnmanagedType.LPWStr)] out string proxyBypassList);
+                out BGJobProxyUsage proxyUsage, 
+                [MarshalAs(UnmanagedType.LPWStr)] out string proxyList, 
+                [MarshalAs(UnmanagedType.LPWStr)] out string proxyBypassList);
 
         /// <summary>Changes the ownership of the job to the current user.</summary>
         void TakeOwnership();
@@ -212,7 +212,7 @@ namespace SharpBits.Base
         /// <param name="program">A string that contains the program to execute. The program parameter is limited to MAX_PATH characters, not including the <c>null</c> terminator. You should specify a full path to the program; the method will not use the search path to locate the program. To remove command line notification, set program and parameters to <c>null</c>. The method fails if program is <c>null</c> and parameters is non-<c>null</c>. .</param>
         /// <param name="parameters">A string that contains the parameters of the program in program. The first parameter must be the program in program (use quotes if the path uses long file names). The parameters parameter is limited to 4,000 characters, not including the <c>null</c> terminator. This parameter can be <c>null</c>.</param>
         void SetNotifyCmdLine(
-            [MarshalAs(UnmanagedType.LPWStr)] string program, [MarshalAs(UnmanagedType.LPWStr)] string parameters);
+                [MarshalAs(UnmanagedType.LPWStr)] string program, [MarshalAs(UnmanagedType.LPWStr)] string parameters);
 
         /// <summary>
         ///   Use the GetNotifyCmdLine method to retrieve the program to execute when the job enters the error or
@@ -221,8 +221,8 @@ namespace SharpBits.Base
         /// <param name="program">A string that contains the program to execute when the job enters the error or transferred state. Call the CoTaskMemFree function to free program when done. .</param>
         /// <param name="parameters">A string that contains the arguments of the program in program. Call the CoTaskMemFree function to free parameters when done. .</param>
         void GetNotifyCmdLine(
-            [MarshalAs(UnmanagedType.LPWStr)] out string program,
-            [MarshalAs(UnmanagedType.LPWStr)] out string parameters);
+                [MarshalAs(UnmanagedType.LPWStr)] out string program, 
+                [MarshalAs(UnmanagedType.LPWStr)] out string parameters);
 
         /// <summary>
         ///   Use the GetReplyProgress method to retrieve progress information related to the transfer of the reply data

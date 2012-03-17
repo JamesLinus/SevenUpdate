@@ -18,8 +18,8 @@ namespace SharpBits.Base
     ///   ranges to download.
     /// </summary>
     [Guid("83E81B93-0873-474D-8A8C-F2018B1A939C")]
-    [InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
-    [ComImportAttribute]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+    [ComImport]
     internal interface IBackgroundCopyFile2
     {
         /// <summary>Retrieves the remote name of the file.</summary>

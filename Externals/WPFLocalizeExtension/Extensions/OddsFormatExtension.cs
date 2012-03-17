@@ -362,8 +362,7 @@ namespace WPFLocalizeExtension.Extensions
         /// <returns>Returns a Lookup Table.</returns>
         private static Dictionary<decimal, string> GetUKOddsFormatLookupTable()
         {
-            var dictionary = new Dictionary<decimal, string> 
-            {
+            var dictionary = new Dictionary<decimal, string> {
                         { 11.00m, "10/1" }, 
                         { 10.00m, "9/1" }, 
                         { 9.50m, "17/2" }, 
@@ -487,7 +486,7 @@ namespace WPFLocalizeExtension.Extensions
             }
 
             // step through all dependency objects as WeakReference and refresh the value of the dependency property
-            foreach (WeakReference dpo in this.targetObjects.Where(dpo => dpo.IsAlive))
+            foreach (var dpo in this.targetObjects.Where(dpo => dpo.IsAlive))
             {
                 ((DependencyObject)dpo.Target).SetValue(this.TargetProperty, newValue);
             }

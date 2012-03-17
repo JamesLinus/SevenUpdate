@@ -36,5 +36,5 @@ using System.Windows;
 [assembly: CLSCompliant(false)]
 [assembly: ComVisible(false)]
 [assembly: NeutralResourcesLanguage("en-US")]
-[assembly: GuidAttribute("4BC799CE-7658-48D9-AC98-829F64638E41")]
+[assembly: Guid("4BC799CE-7658-48D9-AC98-829F64638E41")]
 [assembly: ThemeInfo(ResourceDictionaryLocation.None, ResourceDictionaryLocation.SourceAssembly)]

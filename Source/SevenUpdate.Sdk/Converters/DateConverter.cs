@@ -25,8 +25,6 @@ namespace SevenUpdate.Sdk.Converters
     [ValueConversion(typeof(DateTime), typeof(string))]
     internal class DateConverter : IValueConverter
     {
-        #region Public Methods
-
         /// <summary>Converts a value.</summary>
         /// <param name="value">The value produced by the binding source.</param>
         /// <param name="targetType">The type of the binding target property.</param>
@@ -48,7 +46,5 @@ namespace SevenUpdate.Sdk.Converters
         {
             return value == null ? DateTime.Now.ToShortDateString() : ((DateTime)value).ToShortDateString();
         }
-
-        #endregion
     }
 }

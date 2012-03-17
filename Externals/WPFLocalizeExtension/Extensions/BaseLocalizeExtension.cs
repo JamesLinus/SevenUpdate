@@ -481,7 +481,7 @@ namespace WPFLocalizeExtension.Extensions
             }
 
             // step through all dependency objects as WeakReference and refresh the value of the dependency property
-            foreach (KeyValuePair<WeakReference, object> dpo in this.targetObjects.Where(dpo => dpo.Key.IsAlive))
+            foreach (var dpo in this.targetObjects.Where(dpo => dpo.Key.IsAlive))
             {
                 SetTargetValue((DependencyObject)dpo.Key.Target, dpo.Value, newValue);
             }

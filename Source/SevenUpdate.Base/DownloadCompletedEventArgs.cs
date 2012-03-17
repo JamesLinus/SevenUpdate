@@ -27,8 +27,6 @@ namespace SevenUpdate
     [DataContract]
     public sealed class DownloadCompletedEventArgs : EventArgs
     {
-        #region Constructors and Destructors
-
         /// <summary>Initializes a new instance of the <see cref="DownloadCompletedEventArgs" /> class.</summary>
         /// <param name="errorOccurred"><c>True</c> if an error occurred, otherwise <c>False</c>.</param>
         public DownloadCompletedEventArgs(bool errorOccurred)
@@ -41,16 +39,10 @@ namespace SevenUpdate
         {
         }
 
-        #endregion
-
-        #region Public Properties
-
         /// <summary>Gets a value indicating whether an error occurred.</summary>
         /// <value><c>True</c> if an error occurred otherwise, <c>False</c>.</value>
         [ProtoMember(1, IsRequired = false)]
         [DataMember]
         public bool ErrorOccurred { get; private set; }
-
-        #endregion
     }
 }

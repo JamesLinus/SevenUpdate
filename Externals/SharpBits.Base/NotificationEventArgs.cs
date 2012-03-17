@@ -12,8 +12,6 @@ namespace SharpBits.Base
     /// <summary>The event data for the Notification event.</summary>
     public class NotificationEventArgs : JobNotificationEventArgs
     {
-        #region Constructors and Destructors
-
         /// <summary>Initializes a new instance of the <see cref="NotificationEventArgs" /> class.</summary>
         /// <param name="job">The job the event occurred for.</param>
         internal NotificationEventArgs(BitsJob job)
@@ -21,14 +19,8 @@ namespace SharpBits.Base
             this.Job = job;
         }
 
-        #endregion
-
-        #region Public Properties
-
         /// <summary>Gets the job.</summary>
         /// <value>The <c>BitsJob</c> the notification occurred for.</value>
         public BitsJob Job { get; private set; }
-
-        #endregion
     }
 }

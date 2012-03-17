@@ -53,7 +53,7 @@ namespace SevenSoftware.Windows.Controls
                 ItemCollection itemCollection, 
                 Predicate<TreeViewItem> predicate)
         {
-            foreach (TreeViewItem trvItem in
+            foreach (var trvItem in
                     from object item in itemCollection
                     select item as TreeViewItem ?? (TreeViewItem)parentItemContainerGenerator.ContainerFromItem(item))
             {

@@ -21,8 +21,6 @@ namespace SevenSoftware.Windows
     using System.ComponentModel;
     using System.Threading;
 
-    using SevenSoftware.Windows.Controls;
-
     /// <summary>
     /// Derived VirtualizatingCollection, performing loading asychronously.
     /// </summary>

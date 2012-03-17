@@ -27,8 +27,6 @@ namespace SevenUpdate
     [DataContract]
     public sealed class UpdateInstalledEventArgs : EventArgs
     {
-        #region Constructors and Destructors
-
         /// <summary>Initializes a new instance of the <see cref="UpdateInstalledEventArgs" /> class.</summary>
         /// <param name="update">The update information that was installed.</param>
         public UpdateInstalledEventArgs(Suh update)
@@ -41,15 +39,9 @@ namespace SevenUpdate
         {
         }
 
-        #endregion
-
-        #region Public Properties
-
         /// <summary>Gets the update information that was installed.</summary>
         [ProtoMember(1)]
         [DataMember]
         public Suh Update { get; private set; }
-
-        #endregion
     }
 }

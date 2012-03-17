@@ -29,8 +29,6 @@ namespace SevenUpdate.Converters
     [ValueConversion(typeof(UpdateFile), typeof(string))]
     internal sealed class FileSizeConverter : IValueConverter
     {
-        #region Public Methods
-
         /// <summary>Converts a object into another object.</summary>
         /// <param name="value">The value produced by the binding source.</param>
         /// <param name="targetType">The type of the binding target property.</param>
@@ -46,7 +44,7 @@ namespace SevenUpdate.Converters
                 return Utilities.ConvertFileSize(Core.GetUpdateSize(files));
             }
 
-            var size = System.Convert.ToUInt64(value, CultureInfo.CurrentCulture);
+            ulong size = System.Convert.ToUInt64(value, CultureInfo.CurrentCulture);
 
             // Converts the ulong into a readable file size string
             return Utilities.ConvertFileSize(size);
@@ -62,7 +60,5 @@ namespace SevenUpdate.Converters
         {
             return DependencyProperty.UnsetValue;
         }
-
-        #endregion
     }
 }

@@ -2,10 +2,9 @@
 <Page x:Class="SevenUpdate.Sdk.Pages.UpdateFiles" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:Controls="clr-namespace:SevenSoftware.Windows.Controls;assembly=SevenSoftware.Windows" mc:Ignorable="d" MinWidth="850" MinHeight="512"
-      d:DesignHeight="512" d:DesignWidth="850">
+      xmlns:Controls="clr-namespace:SevenSoftware.Windows.Controls;assembly=SevenSoftware.Windows" mc:Ignorable="d"
+      MinWidth="850" MinHeight="512" d:DesignHeight="512" d:DesignWidth="850">
   <!-- Grid-->
   <Grid>
     <Grid.ColumnDefinitions>
@@ -111,10 +110,10 @@
                Grid.Row="2" HorizontalAlignment="Left" Margin="0,10,0,0"
                Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}"
                Cursor="Help" />
-    <Controls:InfoTextBox x:Name="tbxDownloadUrl" Note="{LocText SevenUpdate.Sdk:Resources:DownloadLocationNote}" TabIndex="2"
-                 LostKeyboardFocus="ConvertPath" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="3"
-                 Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}"
-                 TextChanged="ValidateDownloadDirectory" x:FieldModifier="private">
+    <Controls:InfoTextBox x:Name="tbxDownloadUrl" Note="{LocText SevenUpdate.Sdk:Resources:DownloadLocationNote}"
+                          TabIndex="2" LostKeyboardFocus="ConvertPath" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="3"
+                          Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}"
+                          TextChanged="ValidateDownloadDirectory" x:FieldModifier="private">
       <Controls:InfoTextBox.Text>
         <Binding ElementName="listBox" Path="SelectedItem.Source" Mode="TwoWay" UpdateSourceTrigger="Explicit" />
       </Controls:InfoTextBox.Text>
@@ -125,9 +124,9 @@
                Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}"
                Cursor="Help" />
     <Controls:InfoTextBox Note="{LocText SevenUpdate.Sdk:Resources:InstallLocationNote}" TabIndex="3"
-                 LostKeyboardFocus="ConvertPath" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="5" Margin="0,0,5,0"
-                 Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}"
-                 Name="tbxInstallLocation" TextChanged="ValidateInstallDirectory" x:FieldModifier="private">
+                          LostKeyboardFocus="ConvertPath" Grid.Column="1" Grid.ColumnSpan="2" Grid.Row="5" Margin="0,0,5,0"
+                          Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}"
+                          Name="tbxInstallLocation" TextChanged="ValidateInstallDirectory" x:FieldModifier="private">
       <Controls:InfoTextBox.Text>
         <Binding ElementName="listBox" Path="SelectedItem.Destination" Mode="TwoWay" UpdateSourceTrigger="Explicit" />
       </Controls:InfoTextBox.Text>
@@ -142,10 +141,10 @@
                Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}"
                Cursor="Help" />
     <Controls:InfoTextBox Note="{LocText SevenUpdate.Sdk:Resources:ArgumentNote}"
-                 Text="{Binding ElementName=listBox, Path=SelectedItem.Args, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
-                 Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="7"
-                 Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}"
-                 TabIndex="4" Name="tbxArgs" x:FieldModifier="private" />
+                          Text="{Binding ElementName=listBox, Path=SelectedItem.Args, UpdateSourceTrigger=PropertyChanged, Mode=TwoWay}"
+                          Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="7"
+                          Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}"
+                          TabIndex="4" Name="tbxArgs" x:FieldModifier="private" />
     <TextBlock Text="{LocText SevenUpdate.Sdk:Resources:SHA2Hash}" Padding="2" Grid.Column="1" Grid.Row="8"
                Margin="0,10"
                Visibility="{Binding ElementName=listBox, Path=Items.Count, UpdateSourceTrigger=PropertyChanged, Converter={StaticResource intToVisibility}}"

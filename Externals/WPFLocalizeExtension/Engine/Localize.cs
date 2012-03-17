@@ -445,13 +445,12 @@ namespace WPFLocalizeExtension.Engine
             {
                 // if the assembly cannot be loaded, throw an exception go through every assembly loaded in the app
                 // domain
-                foreach (
-                        Assembly assemblyInAppDomain in
-                                from assemblyInAppDomain in AppDomain.CurrentDomain.GetAssemblies()
-                                where true
-                                let assemblyName = new AssemblyName(assemblyInAppDomain.FullName)
-                                where assemblyName.Name == resourceAssembly
-                                select assemblyInAppDomain)
+                foreach (var assemblyInAppDomain in
+                        from assemblyInAppDomain in AppDomain.CurrentDomain.GetAssemblies()
+                        where true
+                        let assemblyName = new AssemblyName(assemblyInAppDomain.FullName)
+                        where assemblyName.Name == resourceAssembly
+                        select assemblyInAppDomain)
                 {
                     // assigned the assembly
                     assembly = assemblyInAppDomain;
@@ -511,7 +510,6 @@ namespace WPFLocalizeExtension.Engine
 
                     // get the static ResourceManager property
                     object resManObject = methodInfo.Invoke(null, null);
-
                     // cast it to a Resource Manager for better working with
                     resManager = (ResourceManager)resManObject;
                 }

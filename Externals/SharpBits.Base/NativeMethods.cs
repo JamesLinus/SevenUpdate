@@ -1,4 +1,4 @@
-// ***********************************************************************
+﻿// ***********************************************************************
 // <copyright file="NativeMethods.cs" project="SharpBits.Base" assembly="SharpBits.Base" solution="SevenUpdate" company="Xidar Solutions">
 //     Copyright (c) xidar solutions. All rights reserved.
 // </copyright>
@@ -24,7 +24,7 @@ namespace SharpBits.Base
         /// <param name="sidPointer">A pointer to a variable that receives a pointer to the converted SID. To free the returned buffer, call the LocalFree function.</param>
         /// <returns><c>True</c> if function succeeded.</returns>
         [DllImport(@"advapi32.dll", CharSet = CharSet.Unicode)]
-        [return: MarshalAsAttribute(UnmanagedType.Bool)]
+        [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool ConvertStringSidToSidW(string sid, ref IntPtr sidPointer);
 
         /// <summary>
@@ -43,14 +43,14 @@ namespace SharpBits.Base
         /// <param name="use">A pointer to a variable that receives a <c>SidNameUse</c> value that indicates the type of the account.</param>
         /// <returns><c>True</c> if function succeeded.</returns>
         [DllImport(@"advapi32.dll", CharSet = CharSet.Unicode)]
-        [return: MarshalAsAttribute(UnmanagedType.Bool)]
+        [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool LookupAccountSidW(
-            string systemName,
-            IntPtr sid,
-            StringBuilder name,
-            ref long nameSize,
-            StringBuilder referencedDomainName,
-            ref long domainNameSize,
-            ref int use);
+                string systemName, 
+                IntPtr sid, 
+                StringBuilder name, 
+                ref long nameSize, 
+                StringBuilder referencedDomainName, 
+                ref long domainNameSize, 
+                ref int use);
     }
 }

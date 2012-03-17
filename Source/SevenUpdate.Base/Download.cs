@@ -28,8 +28,6 @@ namespace SevenUpdate
     /// <summary>A class containing methods to download updates.</summary>
     public static class Download
     {
-        #region Constants and Fields
-
         /// <summary>Gets a value indicating whether to cancel the current download.</summary>
         private static bool cancelDownload;
 
@@ -45,26 +43,14 @@ namespace SevenUpdate
         /// <summary>Manager for Background Intelligent Transfer Service.</summary>
         private static BitsManager manager;
 
-        #endregion
-
-        #region Public Events
-
         /// <summary>Occurs when the download completed.</summary>
         public static event EventHandler<DownloadCompletedEventArgs> DownloadCompleted;
 
         /// <summary>Occurs when the download progress changed.</summary>
         public static event EventHandler<DownloadProgressChangedEventArgs> DownloadProgressChanged;
 
-        #endregion
-
-        #region Public Properties
-
         /// <summary>Gets a value indicating whether Seven update is currently downloading updates.</summary>
         public static bool IsDownloading { get; private set; }
-
-        #endregion
-
-        #region Public Methods
 
         /// <summary>Cancel the downloading of updates.</summary>
         public static void CancelDownload()
@@ -78,7 +64,7 @@ namespace SevenUpdate
         /// <param name="downloadLocation">The directory where the files are downloaded are stored.</param>
         /// <param name="isPriority">If set to <c>True</c> the updates will download with priority.</param>
         public static void DownloadUpdates(
-            Collection<Sui> appUpdates, string downloadName, string downloadLocation, bool isPriority = false)
+                Collection<Sui> appUpdates, string downloadName, string downloadLocation, bool isPriority = false)
         {
             downloadDirectory = downloadLocation;
             jobName = downloadName;
@@ -109,7 +95,7 @@ namespace SevenUpdate
             manager.EnumJobs();
             manager.EnumJobs(JobOwner.AllUsers);
 
-            var jobCount = 0;
+            int jobCount = 0;
 
             // Loops through the jobs, if a Seven Update job is found, try to resume, if not cancel it.
             foreach (var job in manager.Jobs.Values.Where(job => job.DisplayName == jobName).ToList())
@@ -145,7 +131,7 @@ namespace SevenUpdate
                 }
 
                 Utilities.ReportError(
-                    new WebException(job.Error.Description + " " + job.Error.ErrorCode), ErrorType.DownloadError);
+                        new WebException(job.Error.Description + " " + job.Error.ErrorCode), ErrorType.DownloadError);
                 job.Cancel();
                 jobCount--;
             }
@@ -155,7 +141,7 @@ namespace SevenUpdate
                 return;
             }
 
-            var bitsJob = manager.CreateJob(jobName, JobType.Download);
+            BitsJob bitsJob = manager.CreateJob(jobName, JobType.Download);
             bitsJob.Priority = isPriority ? JobPriority.Foreground : JobPriority.Normal;
 
             bitsJob.NotificationOptions = NotificationOptions.JobErrorOccurred | NotificationOptions.JobModified
@@ -183,10 +169,6 @@ namespace SevenUpdate
             }
         }
 
-        #endregion
-
-        #region Methods
-
         /// <summary>Downloads the application updates.</summary>
         /// <param name="application">The Sui containing the update info.</param>
         /// <param name="bitsJob">The bits job that will download the update.</param>
@@ -202,14 +184,14 @@ namespace SevenUpdate
                 throw new ArgumentNullException("bitsJob");
             }
 
-            for (var y = 0; y < application.Updates.Count; y++)
+            for (int y = 0; y < application.Updates.Count; y++)
             {
                 // Create download directory consisting of application name and update title
-                var downloadDir = Path.Combine(downloadDirectory, application.Updates[y].Name[0].Value);
+                string downloadDir = Path.Combine(downloadDirectory, application.Updates[y].Name[0].Value);
 
                 Directory.CreateDirectory(downloadDir);
 
-                for (var z = 0; z < application.Updates[y].Files.Count; z++)
+                for (int z = 0; z < application.Updates[y].Files.Count; z++)
                 {
                     if (application.Updates[y].Files[z].Action == FileAction.Delete
                         || application.Updates[y].Files[z].Action == FileAction.UnregisterThenDelete
@@ -218,7 +200,7 @@ namespace SevenUpdate
                         continue;
                     }
 
-                    var destination = Path.GetFileName(application.Updates[y].Files[z].Destination);
+                    string destination = Path.GetFileName(application.Updates[y].Files[z].Destination);
                     if (string.IsNullOrWhiteSpace(destination))
                     {
                         throw new InvalidOperationException();
@@ -239,8 +221,8 @@ namespace SevenUpdate
                     }
 
                     bitsJob.AddFile(
-                        new Uri(application.Updates[y].Files[z].Source).AbsoluteUri,
-                        Path.Combine(downloadDir, destination));
+                            new Uri(application.Updates[y].Files[z].Source).AbsoluteUri, 
+                            Path.Combine(downloadDir, destination));
                 }
             }
         }
@@ -374,13 +356,11 @@ namespace SevenUpdate
             }
 
             var eventArgs = new DownloadProgressChangedEventArgs(
-                e.Job.Progress.BytesTransferred,
-                e.Job.Progress.BytesTotal,
-                e.Job.Progress.FilesTransferred,
-                e.Job.Progress.FilesTotal);
+                    e.Job.Progress.BytesTransferred, 
+                    e.Job.Progress.BytesTotal, 
+                    e.Job.Progress.FilesTransferred, 
+                    e.Job.Progress.FilesTotal);
             DownloadProgressChanged(null, eventArgs);
         }
-
-        #endregion
     }
 }

@@ -33,6 +33,6 @@ using System.Windows;
 [assembly: AssemblyFileVersion("11.9.19")]
 [assembly: CLSCompliant(false)]
 [assembly: ComVisible(false)]
-[assembly: GuidAttribute("82893A11-B7D9-48D2-87B1-9F6F19B17300")]
+[assembly: Guid("82893A11-B7D9-48D2-87B1-9F6F19B17300")]
 [assembly: NeutralResourcesLanguage("en-US")]
 [assembly: ThemeInfo(ResourceDictionaryLocation.None, ResourceDictionaryLocation.SourceAssembly)]

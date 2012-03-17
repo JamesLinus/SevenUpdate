@@ -12,8 +12,6 @@ namespace SharpBits.Base
     /// <summary>The file info for the <c>BitsFile</c>.</summary>
     public class BitsFileInfo
     {
-        #region Constructors and Destructors
-
         /// <summary>Initializes a new instance of the <see cref="BitsFileInfo" /> class.</summary>
         /// <param name="remoteName">Name of the remote.</param>
         /// <param name="localName">Name of the local.</param>
@@ -21,10 +19,6 @@ namespace SharpBits.Base
         {
             this.BGFileInfo = new BGFileInfo { RemoteName = remoteName, LocalName = localName };
         }
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>Gets the local file name.</summary>
         /// <value>The name of the local.</value>
@@ -46,14 +40,8 @@ namespace SharpBits.Base
             }
         }
 
-        #endregion
-
-        #region Properties
-
         /// <summary>Gets the BG file info.</summary>
         /// <value>The BG file info.</value>
         internal BGFileInfo BGFileInfo { get; private set; }
-
-        #endregion
     }
 }

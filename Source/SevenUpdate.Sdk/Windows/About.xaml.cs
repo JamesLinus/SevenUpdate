@@ -30,14 +30,12 @@ namespace SevenUpdate.Sdk.Windows
     /// <summary>Interaction logic for About.xaml.</summary>
     public sealed partial class About
     {
-        #region Constructors and Destructors
-
         /// <summary>Initializes a new instance of the <see cref="About" /> class.</summary>
         public About()
         {
             this.InitializeComponent();
 
-            var version = Assembly.GetExecutingAssembly().GetName().Version;
+            Version version = Assembly.GetExecutingAssembly().GetName().Version;
 
             this.tbVersion.Text = version.ToString();
 
@@ -57,10 +55,6 @@ namespace SevenUpdate.Sdk.Windows
                 this.rectangle.Visibility = Visibility.Visible;
             }
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>Enables Aero Glass on the Window.</summary>
         /// <param name="e">The <c>EventArgs</c> instance containing the event data.</param>
@@ -118,7 +112,5 @@ namespace SevenUpdate.Sdk.Windows
             Utilities.StartProcess(e.Uri.AbsoluteUri);
             e.Handled = true;
         }
-
-        #endregion
     }
 }

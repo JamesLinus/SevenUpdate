@@ -17,8 +17,8 @@ namespace SharpBits.Base
     ///   state of the job, and to start and stop the job.
     /// </summary>
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    [GuidAttribute("37668D37-507E-4160-9316-26306D150B12")]
-    [ComImportAttribute]
+    [Guid("37668D37-507E-4160-9316-26306D150B12")]
+    [ComImport]
     internal interface IBackgroundCopyJob
     {
         /// <summary>Adds multiple files to the job.</summary>
@@ -33,7 +33,7 @@ namespace SharpBits.Base
         /// information on specifying the remote name, see the RemoteName member and Remarks section of the <see
         /// cref="BGFileInfo" /> structure.</param>
         void AddFile(
-            [MarshalAs(UnmanagedType.LPWStr)] string remoteUrl, [MarshalAs(UnmanagedType.LPWStr)] string localName);
+                [MarshalAs(UnmanagedType.LPWStr)] string remoteUrl, [MarshalAs(UnmanagedType.LPWStr)] string localName);
 
         /// <summary>Returns an interface pointer to an enumerator object that you use to enumerate the files in the job.</summary>
         /// <param name="enum"><c>IEnumBackgroundCopyFiles</c> interface pointer that you use to enumerate the files in the job. Release p@enumFiles when done.</param>
@@ -182,9 +182,9 @@ namespace SharpBits.Base
         /// The length of the proxy bypass list is limited to 4,000 characters, not including the <c>null</c>
         /// terminator.</param>
         void SetProxySettings(
-            BGJobProxyUsage proxyUsage,
-            [MarshalAs(UnmanagedType.LPWStr)] string proxyList,
-            [MarshalAs(UnmanagedType.LPWStr)] string proxyBypassList);
+                BGJobProxyUsage proxyUsage, 
+                [MarshalAs(UnmanagedType.LPWStr)] string proxyList, 
+                [MarshalAs(UnmanagedType.LPWStr)] string proxyBypassList);
 
         /// <summary>Retrieves the proxy settings the job uses to transfer the files.</summary>
         /// <param name="proxyUsage">Specifies the proxy settings the job uses to transfer the files. For a list of
@@ -197,9 +197,9 @@ namespace SharpBits.Base
         /// the Listing the Proxy Bypass section of Enabling Internet Functionality. Call the CoTaskMemFree function to
         /// free <paramref name="proxyBypassList" /> when done.</param>
         void GetProxySettings(
-            out BGJobProxyUsage proxyUsage,
-            [MarshalAs(UnmanagedType.LPWStr)] out string proxyList,
-            [MarshalAs(UnmanagedType.LPWStr)] out string proxyBypassList);
+                out BGJobProxyUsage proxyUsage, 
+                [MarshalAs(UnmanagedType.LPWStr)] out string proxyList, 
+                [MarshalAs(UnmanagedType.LPWStr)] out string proxyBypassList);
 
         /// <summary>Changes the ownership of the job to the current user.</summary>
         void TakeOwnership();

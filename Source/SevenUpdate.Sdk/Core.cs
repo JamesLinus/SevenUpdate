@@ -42,12 +42,12 @@ namespace SevenUpdate.Sdk
     /// <summary>Contains methods that are essential for the program.</summary>
     internal static class Core
     {
-        #region Constants and Fields
-
         /// <summary>The location of the file that contains the collection of Projects for the SDK.</summary>
         public static readonly string ProjectsFile =
-            Path.Combine(
-                Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Seven Update SDK", "Projects.sul");
+                Path.Combine(
+                        Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), 
+                        "Seven Update SDK", 
+                        "Projects.sul");
 
         /// <summary>The application information page.</summary>
         private static AppInfo appInfoPage;
@@ -70,17 +70,9 @@ namespace SevenUpdate.Sdk
         /// <summary>The update shortcuts page.</summary>
         private static UpdateShortcuts updateShortcutsPage;
 
-        #endregion
-
-        #region Public Properties
-
         /// <summary>Gets the application information of the project.</summary>
         /// <value>The application info.</value>
         public static Sua AppInfo { get; private set; }
-
-        #endregion
-
-        #region Properties
 
         /// <summary>Gets or sets the index for the selected project.</summary>
         /// <value>The index of the application.</value>
@@ -199,10 +191,6 @@ namespace SevenUpdate.Sdk
         /// <value><c>True</c> if this instance is new project; otherwise, <c>False</c>.</value>
         private static bool IsNewProject { get; set; }
 
-        #endregion
-
-        #region Methods
-
         /// <summary>Edit the selected project or update.</summary>
         internal static void EditItem()
         {
@@ -212,18 +200,19 @@ namespace SevenUpdate.Sdk
             if (File.Exists(Path.Combine(App.UserStore, Projects[AppIndex].ApplicationName + ".sua")))
             {
                 AppInfo =
-                    Utilities.Deserialize<Sua>(Path.Combine(App.UserStore, Projects[AppIndex].ApplicationName + ".sua"));
+                        Utilities.Deserialize<Sua>(
+                                Path.Combine(App.UserStore, Projects[AppIndex].ApplicationName + ".sua"));
             }
             else
             {
                 AppInfo = null;
                 UpdateInfo = null;
                 ShowMessage(
-                    string.Format(
-                        CultureInfo.CurrentUICulture,
-                        Resources.FileLoadError,
-                        Path.Combine(App.UserStore, Projects[AppIndex].ApplicationName + ".sua")),
-                    TaskDialogStandardIcon.Error);
+                        string.Format(
+                                CultureInfo.CurrentUICulture, 
+                                Resources.FileLoadError, 
+                                Path.Combine(App.UserStore, Projects[AppIndex].ApplicationName + ".sua")), 
+                        TaskDialogStandardIcon.Error);
                 return;
             }
 
@@ -236,29 +225,32 @@ namespace SevenUpdate.Sdk
             if (File.Exists(Path.Combine(App.UserStore, Projects[AppIndex].ApplicationName + @".sui")))
             {
                 UpdateInfo =
-                    Utilities.Deserialize<Collection<Update>>(
-                        Path.Combine(App.UserStore, Projects[AppIndex].ApplicationName + ".sui"))[UpdateIndex];
+                        Utilities.Deserialize<Collection<Update>>(
+                                Path.Combine(App.UserStore, Projects[AppIndex].ApplicationName + ".sui"))[UpdateIndex];
             }
             else
             {
                 AppInfo = null;
                 UpdateInfo = null;
                 ShowMessage(
-                    string.Format(
-                        CultureInfo.CurrentUICulture,
-                        Resources.FileLoadError,
-                        Path.Combine(App.UserStore, Projects[AppIndex].ApplicationName + ".sui")),
-                    TaskDialogStandardIcon.Error);
+                        string.Format(
+                                CultureInfo.CurrentUICulture, 
+                                Resources.FileLoadError, 
+                                Path.Combine(App.UserStore, Projects[AppIndex].ApplicationName + ".sui")), 
+                        TaskDialogStandardIcon.Error);
                 return;
             }
 
             var jumpTask = new JumpTask
                 {
-                    IconResourcePath =
-                        Path.Combine(Directory.GetParent(Utilities.AppDir).FullName, "Shared", @"SevenUpdate.Base.dll"),
-                    IconResourceIndex = 8,
-                    Title = Utilities.GetLocaleString(UpdateInfo.Name),
-                    Arguments = @"-edit " + AppIndex + " " + UpdateIndex
+                        IconResourcePath =
+                                Path.Combine(
+                                        Directory.GetParent(Utilities.AppDir).FullName, 
+                                        "Shared", 
+                                        @"SevenUpdate.Base.dll"), 
+                        IconResourceIndex = 8, 
+                        Title = Utilities.GetLocaleString(UpdateInfo.Name), 
+                        Arguments = @"-edit " + AppIndex + " " + UpdateIndex
                 };
 
             JumpList.AddToRecentCategory(jumpTask);
@@ -283,7 +275,7 @@ namespace SevenUpdate.Sdk
             if (source != null)
             {
                 var win = new Win32Window(source.Handle);
-                var window = win;
+                Win32Window window = win;
                 win.Dispose();
                 return window;
             }
@@ -309,7 +301,7 @@ namespace SevenUpdate.Sdk
             ResetPages();
             IsNewProject = false;
             AppInfo =
-                Utilities.Deserialize<Sua>(Path.Combine(App.UserStore, Projects[AppIndex].ApplicationName + ".sua"));
+                    Utilities.Deserialize<Sua>(Path.Combine(App.UserStore, Projects[AppIndex].ApplicationName + ".sua"));
             UpdateInfo = new Update();
 
             MainWindow.NavService.Navigate(UpdateInfoPage);
@@ -323,11 +315,11 @@ namespace SevenUpdate.Sdk
         /// <param name="navigateToShortcut">Gets or sets a value that controls whether shortcuts should be treated as their target items, allowing an application to open a .lnk file.</param>
         /// <returns>A collection of the selected files.</returns>
         internal static string[] OpenFileDialog(
-            string initialDirectory = null,
-            string initialFileName = null,
-            bool multiSelect = false,
-            string defaultExtension = null,
-            bool navigateToShortcut = false)
+                string initialDirectory = null, 
+                string initialFileName = null, 
+                bool multiSelect = false, 
+                string defaultExtension = null, 
+                bool navigateToShortcut = false)
         {
             string[] result;
             using (var openFileDialog = new OpenFileDialog())
@@ -362,8 +354,8 @@ namespace SevenUpdate.Sdk
                 }
 
                 result = openFileDialog.ShowDialog(GetIWin32Window(Application.Current.MainWindow)) != DialogResult.OK
-                             ? null
-                             : openFileDialog.FileNames;
+                                 ? null
+                                 : openFileDialog.FileNames;
             }
 
             return result;
@@ -375,7 +367,7 @@ namespace SevenUpdate.Sdk
         /// <param name="defaultExtension">Gets or sets the default file extension to be added to the file names. If the value is <c>null</c> or empty, the extension is not added to the file names.</param>
         /// <returns>Gets the selected filename.</returns>
         internal static string SaveFileDialog(
-            string initialDirectory, string defaultFileName, string defaultExtension = null)
+                string initialDirectory, string defaultFileName, string defaultExtension = null)
         {
             string result;
             using (var saveFileDialog = new SaveFileDialog())
@@ -407,8 +399,8 @@ namespace SevenUpdate.Sdk
                 }
 
                 result = saveFileDialog.ShowDialog(GetIWin32Window(Application.Current.MainWindow)) != DialogResult.OK
-                             ? null
-                             : saveFileDialog.FileName;
+                                 ? null
+                                 : saveFileDialog.FileName;
             }
 
             return result;
@@ -419,7 +411,7 @@ namespace SevenUpdate.Sdk
         internal static void SaveProject(bool export = false)
         {
             var appUpdates = new Collection<Update>();
-            var appName = Utilities.GetLocaleString(AppInfo.Name);
+            string appName = Utilities.GetLocaleString(AppInfo.Name);
 
             if (Projects == null)
             {
@@ -434,13 +426,13 @@ namespace SevenUpdate.Sdk
                 }
             }
 
-            var suiFile = Path.Combine(App.UserStore, appName + ".sui");
-            var suaFile = Path.Combine(App.UserStore, appName + ".sua");
+            string suiFile = Path.Combine(App.UserStore, appName + ".sui");
+            string suaFile = Path.Combine(App.UserStore, appName + ".sua");
 
             var updateNames = new ObservableCollection<string>();
 
-            var suiFileName = appName;
-            var suaFileName = appName;
+            string suiFileName = appName;
+            string suaFileName = appName;
 
             // If SUA exists lets remove the old info
             if (AppIndex > -1)
@@ -448,8 +440,8 @@ namespace SevenUpdate.Sdk
                 if (File.Exists(Path.Combine(App.UserStore, Projects[AppIndex].ApplicationName + ".sui")))
                 {
                     appUpdates =
-                        Utilities.Deserialize<Collection<Update>>(
-                            Path.Combine(App.UserStore, Projects[AppIndex].ApplicationName + ".sui"));
+                            Utilities.Deserialize<Collection<Update>>(
+                                    Path.Combine(App.UserStore, Projects[AppIndex].ApplicationName + ".sui"));
                 }
 
                 suiFileName = Projects[AppIndex].ExportedSuiFileName;
@@ -480,7 +472,7 @@ namespace SevenUpdate.Sdk
             // Save project file
             var project = new Project { ApplicationName = appName, };
 
-            foreach (var t in updateNames)
+            foreach (string t in updateNames)
             {
                 project.UpdateNames.Add(t);
             }
@@ -502,10 +494,10 @@ namespace SevenUpdate.Sdk
             }
 
             project.ExportedSuiFileName = suiFileName ?? appName;
-            var fileName = SaveFileDialog(
-                Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
-                project.ExportedSuiFileName,
-                @"sui");
+            string fileName = SaveFileDialog(
+                    Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), 
+                    project.ExportedSuiFileName, 
+                    @"sui");
 
             if (fileName == null)
             {
@@ -520,9 +512,9 @@ namespace SevenUpdate.Sdk
             {
                 project.ExportedSuaFileName = suaFileName ?? appName;
                 fileName = SaveFileDialog(
-                    Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory),
-                    project.ExportedSuaFileName,
-                    @"sua");
+                        Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), 
+                        project.ExportedSuaFileName, 
+                        @"sua");
 
                 if (fileName == null)
                 {
@@ -558,7 +550,7 @@ namespace SevenUpdate.Sdk
         {
             if (!string.IsNullOrWhiteSpace(value))
             {
-                var found = false;
+                bool found = false;
 
                 foreach (var t in localeStrings.Where(t => t.Lang == Utilities.Locale))
                 {
@@ -574,7 +566,7 @@ namespace SevenUpdate.Sdk
             }
             else
             {
-                for (var x = 0; x < localeStrings.Count; x++)
+                for (int x = 0; x < localeStrings.Count; x++)
                 {
                     if (localeStrings[x].Lang == Utilities.Locale)
                     {
@@ -604,13 +596,13 @@ namespace SevenUpdate.Sdk
         /// <param name="defaultButtonText">Text to display on the button.</param>
         /// <param name="displayShieldOnButton">Indicates if a UAC shield is to be displayed on the defaultButton.</param>
         private static void ShowMessage(
-            string instructionText,
-            TaskDialogStandardIcon icon,
-            TaskDialogStandardButtons standardButtons,
-            string description = null,
-            string footerText = null,
-            string defaultButtonText = null,
-            bool displayShieldOnButton = false)
+                string instructionText, 
+                TaskDialogStandardIcon icon, 
+                TaskDialogStandardButtons standardButtons, 
+                string description = null, 
+                string footerText = null, 
+                string defaultButtonText = null, 
+                bool displayShieldOnButton = false)
         {
             if (TaskDialog.IsPlatformSupported)
             {
@@ -627,7 +619,10 @@ namespace SevenUpdate.Sdk
 
                     if (defaultButtonText != null)
                     {
-                        var button = new TaskDialogButton(@"btnCustom", defaultButtonText) { Default = true, ShowElevationIcon = displayShieldOnButton };
+                        var button = new TaskDialogButton(@"btnCustom", defaultButtonText)
+                            {
+                               Default = true, ShowElevationIcon = displayShieldOnButton 
+                            };
                         td.Controls.Add(button);
                     }
 
@@ -636,8 +631,8 @@ namespace SevenUpdate.Sdk
                 }
             }
 
-            var message = instructionText;
-            var msgIcon = MessageBoxImage.None;
+            string message = instructionText;
+            MessageBoxImage msgIcon = MessageBoxImage.None;
 
             if (description != null)
             {
@@ -685,7 +680,5 @@ namespace SevenUpdate.Sdk
                     return;
             }
         }
-
-        #endregion
     }
 }

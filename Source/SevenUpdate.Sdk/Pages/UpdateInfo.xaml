@@ -3,8 +3,8 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:Controls="clr-namespace:SevenSoftware.Windows.Controls;assembly=SevenSoftware.Windows" mc:Ignorable="d" MinWidth="850" MinHeight="512"
-      d:DesignHeight="467" d:DesignWidth="800" Loaded="LoadUI">
+      xmlns:Controls="clr-namespace:SevenSoftware.Windows.Controls;assembly=SevenSoftware.Windows" mc:Ignorable="d"
+      MinWidth="850" MinHeight="512" d:DesignHeight="467" d:DesignWidth="800" Loaded="LoadUI">
   <Page.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>
@@ -77,24 +77,25 @@
                Cursor="Help" />
 
     <Controls:InfoTextBox Text="{Binding Path=Name, Converter={StaticResource stringToLocaleString}, Mode=OneWay}"
-                 MaxLength="100" Note="{LocText SevenUpdate.Sdk:Resources:UpdateNameNote}" TabIndex="0" Name="tbxUpdateName"
-                 Grid.Column="1" Grid.Row="2" LostFocus="ChangeName" TextChanged="ValidateInputRequired" x:FieldModifier="private" />
+                          MaxLength="100" Note="{LocText SevenUpdate.Sdk:Resources:UpdateNameNote}" TabIndex="0" Name="tbxUpdateName"
+                          Grid.Column="1" Grid.Row="2" LostFocus="ChangeName" TextChanged="ValidateInputRequired" x:FieldModifier="private" />
 
     <TextBlock Text="{LocText SevenUpdate.Sdk:Resources:UpdateDetails}" Padding="2" Grid.Column="1" Grid.Row="3"
                Margin="0,10,0,0" HorizontalAlignment="Left" />
 
-    <Controls:InfoTextBox Text="{Binding Path=Description, Converter={StaticResource stringToLocaleString}, Mode=OneWay}"
-                 MaxLength="300" TextWrapping="Wrap" MaxLines="7" Note="{LocText SevenUpdate.Sdk:Resources:UpdateDetailsNote}"
-                 TabIndex="1" Name="tbxUpdateDetails" Grid.Column="1" Grid.Row="4" LostFocus="ChangeDescription"
-                 TextChanged="ValidateInputRequired" x:FieldModifier="private" />
+    <Controls:InfoTextBox
+Text="{Binding Path=Description, Converter={StaticResource stringToLocaleString}, Mode=OneWay}" MaxLength="300"
+TextWrapping="Wrap" MaxLines="7" Note="{LocText SevenUpdate.Sdk:Resources:UpdateDetailsNote}" TabIndex="1"
+Name="tbxUpdateDetails" Grid.Column="1" Grid.Row="4" LostFocus="ChangeDescription" TextChanged="ValidateInputRequired"
+x:FieldModifier="private" />
 
     <TextBlock Text="{LocText SevenUpdate.Sdk:Resources:UpdateInformationURL}" Padding="2" HorizontalAlignment="Left"
                ToolTip="{LocText SevenUpdate.Sdk:Resources:UpdateInformationURLToolTip}" Grid.Column="1" Grid.Row="5"
                Margin="0,10,0,0" Cursor="Help" />
 
-    <Controls:InfoTextBox Note="{LocText SevenUpdate.Sdk:Resources:OptionalNote, FormatSegment1=http://mysite.com/update1}"
-                 TabIndex="2" Grid.Column="1" Grid.Row="6" TextChanged="ValidateUrlInput" Name="tbxUpdateInfoUrl"
-                 x:FieldModifier="private">
+    <Controls:InfoTextBox
+Note="{LocText SevenUpdate.Sdk:Resources:OptionalNote, FormatSegment1=http://mysite.com/update1}" TabIndex="2"
+Grid.Column="1" Grid.Row="6" TextChanged="ValidateUrlInput" Name="tbxUpdateInfoUrl" x:FieldModifier="private">
       <Controls:InfoTextBox.Text>
         <Binding Path="InfoUrl" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
           <!--<Binding.ValidationRules>
@@ -108,8 +109,9 @@
                ToolTip="{LocText SevenUpdate.Sdk:Resources:SoftwareLicenseURLToolTip}" Grid.Column="1" Grid.Row="7" Margin="0,10,0,0"
                Cursor="Help" />
 
-    <Controls:InfoTextBox Note="{LocText SevenUpdate.Sdk:Resources:OptionalNote, FormatSegment1=http://sevenupdate.com/license}"
-                 TabIndex="3" Grid.Column="1" Grid.Row="8" TextChanged="ValidateUrlInput" Name="tbxLicenseUrl" x:FieldModifier="private">
+    <Controls:InfoTextBox
+Note="{LocText SevenUpdate.Sdk:Resources:OptionalNote, FormatSegment1=http://sevenupdate.com/license}" TabIndex="3"
+Grid.Column="1" Grid.Row="8" TextChanged="ValidateUrlInput" Name="tbxLicenseUrl" x:FieldModifier="private">
       <Controls:InfoTextBox.Text>
         <Binding Path="LicenseUrl" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
           <!--<Binding.ValidationRules>
@@ -124,7 +126,7 @@
                Margin="0,10,0,0" Cursor="Help" />
 
     <Controls:InfoTextBox Note="http://myapp.com/updates/testupdate1" TabIndex="4" Grid.Column="1" Grid.Row="10"
-                 Name="tbxSourceLocation" TextChanged="ValidateUrlInput" x:FieldModifier="private">
+                          Name="tbxSourceLocation" TextChanged="ValidateUrlInput" x:FieldModifier="private">
       <Controls:InfoTextBox.Text>
         <Binding Path="DownloadUrl" Mode="TwoWay" UpdateSourceTrigger="PropertyChanged">
           <!--<Binding.ValidationRules>

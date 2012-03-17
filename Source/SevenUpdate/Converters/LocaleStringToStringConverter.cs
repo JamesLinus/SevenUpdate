@@ -32,8 +32,6 @@ namespace SevenUpdate.Converters
     [ValueConversion(typeof(LocaleString), typeof(string))]
     internal sealed class LocaleStringToStringConverter : IValueConverter
     {
-        #region Public Methods
-
         /// <summary>Converts a object into another object.</summary>
         /// <param name="value">The value produced by the binding source.</param>
         /// <param name="targetType">The type of the binding target property.</param>
@@ -46,8 +44,8 @@ namespace SevenUpdate.Converters
 
             // Loops through the collection of LocaleStrings
             return localeStrings != null
-                       ? localeStrings.Where(t => t.Lang == Utilities.Locale).Select(t => t.Value).FirstOrDefault()
-                       : Resources.NotAvailable;
+                           ? localeStrings.Where(t => t.Lang == Utilities.Locale).Select(t => t.Value).FirstOrDefault()
+                           : Resources.NotAvailable;
         }
 
         /// <summary>Converts a converted object back into it's original form.</summary>
@@ -60,7 +58,5 @@ namespace SevenUpdate.Converters
         {
             return DependencyProperty.UnsetValue;
         }
-
-        #endregion
     }
 }

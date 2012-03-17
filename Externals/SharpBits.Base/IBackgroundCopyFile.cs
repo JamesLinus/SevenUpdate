@@ -17,8 +17,8 @@ namespace SharpBits.Base
     ///   information.
     /// </summary>
     [Guid("01B7BD23-FB88-4A77-8490-5891D3E4653A")]
-    [InterfaceTypeAttribute(ComInterfaceType.InterfaceIsIUnknown)]
-    [ComImportAttribute]
+    [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
+    [ComImport]
     internal interface IBackgroundCopyFile
     {
         /// <summary>Retrieves the remote name of the file.</summary>

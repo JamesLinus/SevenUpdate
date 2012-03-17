@@ -16,17 +16,11 @@ namespace SharpBits.Base
     /// <summary>Bits error.</summary>
     public class BitsError
     {
-        #region Constants and Fields
-
         /// <summary>The error that occurred.</summary>
         private readonly IBackgroundCopyError error;
 
         /// <summary>The job the error occurred on.</summary>
         private readonly BitsJob job;
-
-        #endregion
-
-        #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="BitsError" /> class.</summary>
         /// <param name="job">The job the error occurred on.</param>
@@ -42,21 +36,17 @@ namespace SharpBits.Base
             this.job = job;
         }
 
-        #endregion
-
-        #region Public Properties
-
         /// <summary>Gets the context description.</summary>
         /// <value>The context description.</value>
         public string ContextDescription
         {
             get
             {
-                var description = string.Empty;
+                string description = string.Empty;
                 try
                 {
                     this.error.GetErrorContextDescription(
-                        Convert.ToUInt32(Thread.CurrentThread.CurrentUICulture.LCID), out description);
+                            Convert.ToUInt32(Thread.CurrentThread.CurrentUICulture.LCID), out description);
                 }
                 catch (COMException exception)
                 {
@@ -73,11 +63,11 @@ namespace SharpBits.Base
         {
             get
             {
-                var description = string.Empty;
+                string description = string.Empty;
                 try
                 {
                     this.error.GetErrorDescription(
-                        Convert.ToUInt32(Thread.CurrentThread.CurrentUICulture.LCID), out description);
+                            Convert.ToUInt32(Thread.CurrentThread.CurrentUICulture.LCID), out description);
                 }
                 catch (COMException exception)
                 {
@@ -94,7 +84,7 @@ namespace SharpBits.Base
         {
             get
             {
-                var errorCode = 0;
+                int errorCode = 0;
                 try
                 {
                     BGErrorContext context;
@@ -159,7 +149,7 @@ namespace SharpBits.Base
         {
             get
             {
-                var protocol = string.Empty;
+                string protocol = string.Empty;
                 try
                 {
                     this.error.GetProtocol(out protocol);
@@ -172,7 +162,5 @@ namespace SharpBits.Base
                 return protocol;
             }
         }
-
-        #endregion
     }
 }

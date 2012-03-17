@@ -53,7 +53,7 @@ namespace SevenUpdate
         /// <returns>The install state of the component.</returns>
         [DllImport(@"msi.dll", CharSet = CharSet.Unicode)]
         internal static extern int MsiGetComponentPath(
-            string productCode, string componentCode, StringBuilder componentPath, ref int componentPathBufferSize);
+                string productCode, string componentCode, StringBuilder componentPath, ref int componentPathBufferSize);
 
         /// <summary>Gets the target for the msi shortcut.</summary>
         /// <param name="targetFile">A <c>null</c>-terminated string specifying the full path to a shortcut.</param>
@@ -63,6 +63,6 @@ namespace SevenUpdate
         /// <returns>The return code.</returns>
         [DllImport(@"msi.dll", CharSet = CharSet.Unicode)]
         internal static extern int MsiGetShortcutTarget(
-            string targetFile, StringBuilder productCode, StringBuilder featureId, StringBuilder componentCode);
+                string targetFile, StringBuilder productCode, StringBuilder featureId, StringBuilder componentCode);
     }
 }

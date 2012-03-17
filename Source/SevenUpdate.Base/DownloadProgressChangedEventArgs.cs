@@ -27,15 +27,13 @@ namespace SevenUpdate
     [DataContract]
     public sealed class DownloadProgressChangedEventArgs : EventArgs
     {
-        #region Constructors and Destructors
-
         /// <summary>Initializes a new instance of the <see cref="DownloadProgressChangedEventArgs" /> class.</summary>
         /// <param name="bytesTransferred">The number of bytes transferred.</param>
         /// <param name="bytesTotal">The total number of bytes to download.</param>
         /// <param name="filesTransferred">The number of files transfered.</param>
         /// <param name="filesTotal">The total number of files transfered.</param>
         public DownloadProgressChangedEventArgs(
-            ulong bytesTransferred, ulong bytesTotal, uint filesTransferred, uint filesTotal)
+                ulong bytesTransferred, ulong bytesTotal, uint filesTransferred, uint filesTotal)
         {
             this.BytesTotal = bytesTotal;
             this.BytesTransferred = bytesTransferred;
@@ -47,10 +45,6 @@ namespace SevenUpdate
         public DownloadProgressChangedEventArgs()
         {
         }
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>Gets the total number of bytes to download.</summary>
         /// <value>The bytes total.</value>
@@ -75,7 +69,5 @@ namespace SevenUpdate
         [ProtoMember(4)]
         [DataMember]
         public uint FilesTransferred { get; private set; }
-
-        #endregion
     }
 }

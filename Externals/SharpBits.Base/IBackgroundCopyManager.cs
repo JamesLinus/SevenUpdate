@@ -17,8 +17,8 @@ namespace SharpBits.Base
     ///   the jobs in the queue, and to retrieve individual jobs from the queue.
     /// </summary>
     [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-    [GuidAttribute("5CE34C0D-0DC9-4C1F-897C-DAA1B78CEE7C")]
-    [ComImportAttribute]
+    [Guid("5CE34C0D-0DC9-4C1F-897C-DAA1B78CEE7C")]
+    [ComImport]
     internal interface IBackgroundCopyManager
     {
         /// <summary>Creates a new transfer job.</summary>
@@ -29,10 +29,10 @@ namespace SharpBits.Base
         /// and specify the files to be transferred. To activate the job in the queue, call the <see
         /// cref="IBackgroundCopyJob" />::Resume method. Release <paramref name="job" /> when done.</param>
         void CreateJob(
-            [MarshalAs(UnmanagedType.LPWStr)] string displayName,
-            BGJobType type,
-            out Guid jobId,
-            [MarshalAs(UnmanagedType.Interface)] out IBackgroundCopyJob job);
+                [MarshalAs(UnmanagedType.LPWStr)] string displayName, 
+                BGJobType type, 
+                out Guid jobId, 
+                [MarshalAs(UnmanagedType.Interface)] out IBackgroundCopyJob job);
 
         /// <summary>Retrieves a given job from the queue.</summary>
         /// <param name="jobId">Identifies the job to retrieve from the transfer queue. The <c>CreateJob</c> method returns the job identifier.</param>
@@ -52,8 +52,8 @@ namespace SharpBits.Base
         /// <param name="errorDescription">A string that contains a description of the error. Call the CoTaskMemFree
         /// function to free <paramref name="errorDescription" /> when done.</param>
         void GetErrorDescription(
-            [MarshalAs(UnmanagedType.Error)] int result,
-            uint languageId,
-            [MarshalAs(UnmanagedType.LPWStr)] out string errorDescription);
+                [MarshalAs(UnmanagedType.Error)] int result, 
+                uint languageId, 
+                [MarshalAs(UnmanagedType.LPWStr)] out string errorDescription);
     }
 }

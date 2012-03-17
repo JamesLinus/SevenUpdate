@@ -31,8 +31,6 @@ namespace SevenUpdate
     /// <summary>Contains methods to search for updates.</summary>
     public static class Search
     {
-        #region Constants and Fields
-
         /// <summary>The directory containing the app update files.</summary>
         private static string downloadDirectory;
 
@@ -45,26 +43,14 @@ namespace SevenUpdate
         /// <summary>The number of recommended updates found.</summary>
         private static int recommendedCount;
 
-        #endregion
-
-        #region Public Events
-
         /// <summary>Occurs if an error occurred.</summary>
         public static event EventHandler<ErrorOccurredEventArgs> ErrorOccurred;
 
         /// <summary>Occurs when the searching of updates has completed.</summary>
         public static event EventHandler<SearchCompletedEventArgs> SearchCompleted;
 
-        #endregion
-
-        #region Public Properties
-
         /// <summary>Gets a value indicating whether Seven update is currently searching for updates.</summary>
         public static bool IsSearching { get; private set; }
-
-        #endregion
-
-        #region Public Methods
 
         /// <summary>Searches for updates while blocking the calling thread.</summary>
         /// <param name="applications">The collection of applications to check for updates.</param>
@@ -144,8 +130,8 @@ namespace SevenUpdate
                             Utilities.ReportError(ex, ErrorType.SearchError);
 
                             if (
-                                !(ex is FileNotFoundException || ex is FileFormatException || ex is ProtoException
-                                  || ex is NullReferenceException))
+                                    !(ex is FileNotFoundException || ex is FileFormatException || ex is ProtoException
+                                      || ex is NullReferenceException))
                             {
                                 throw;
                             }
@@ -160,8 +146,8 @@ namespace SevenUpdate
             if (SearchCompleted != null)
             {
                 SearchCompleted(
-                    null,
-                    new SearchCompletedEventArgs(applicationsFound, importantCount, recommendedCount, optionalCount));
+                        null, 
+                        new SearchCompletedEventArgs(applicationsFound, importantCount, recommendedCount, optionalCount));
             }
         }
 
@@ -185,7 +171,7 @@ namespace SevenUpdate
             importantCount = 0;
             recommendedCount = 0;
             optionalCount = 0;
-            var updateList = updates.ToList();
+            List<Sui> updateList = updates.ToList();
             foreach (var update in updateList.SelectMany(app => app.Updates))
             {
                 switch (update.Importance)
@@ -206,13 +192,9 @@ namespace SevenUpdate
             if (SearchCompleted != null)
             {
                 SearchCompleted(
-                    null, new SearchCompletedEventArgs(updateList, importantCount, recommendedCount, optionalCount));
+                        null, new SearchCompletedEventArgs(updateList, importantCount, recommendedCount, optionalCount));
             }
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>Checks for updates.</summary>
         /// <param name="app">A collection of applications to check for updates.</param>
@@ -220,41 +202,41 @@ namespace SevenUpdate
         private static bool CheckForUpdates(ref Sui app)
         {
             app.AppInfo.Directory = Utilities.IsRegistryKey(app.AppInfo.Directory)
-                                        ? Utilities.GetRegistryValue(
-                                            app.AppInfo.Directory, app.AppInfo.ValueName, app.AppInfo.Platform)
-                                        : Utilities.ConvertPath(app.AppInfo.Directory, true, app.AppInfo.Platform);
+                                            ? Utilities.GetRegistryValue(
+                                                    app.AppInfo.Directory, app.AppInfo.ValueName, app.AppInfo.Platform)
+                                            : Utilities.ConvertPath(app.AppInfo.Directory, true, app.AppInfo.Platform);
 
             if (!Directory.Exists(app.AppInfo.Directory))
             {
                 return false;
             }
 
-            for (var y = 0; y < app.Updates.Count; y++)
+            for (int y = 0; y < app.Updates.Count; y++)
             {
-                var updates = app.Updates[y];
+                Update updates = app.Updates[y];
 
-                var size = IterateUpdate(
-                    ref updates, app.AppInfo.Directory, app.AppInfo.ValueName, app.AppInfo.Platform);
+                ulong size = IterateUpdate(
+                        ref updates, app.AppInfo.Directory, app.AppInfo.ValueName, app.AppInfo.Platform);
 
                 app.Updates[y] = updates;
 
-                var remove = true;
+                bool remove = true;
 
                 // Checks to see if the update only contains execute and delete actions
                 if (app.Updates[y].Files.Count > 0)
                 {
                     // ReSharper disable ForCanBeConvertedToForeach
-                    for (var z = 0; z < app.Updates[y].Files.Count; z++)
+                    for (int z = 0; z < app.Updates[y].Files.Count; z++)
                     {
                         app.Updates[y].Files[z].Destination =
-                            Utilities.ExpandInstallLocation(
-                                app.Updates[y].Files[z].Destination,
-                                app.AppInfo.Directory,
-                                app.AppInfo.Platform,
-                                app.AppInfo.ValueName);
+                                Utilities.ExpandInstallLocation(
+                                        app.Updates[y].Files[z].Destination, 
+                                        app.AppInfo.Directory, 
+                                        app.AppInfo.Platform, 
+                                        app.AppInfo.ValueName);
 
                         app.Updates[y].Files[z].Source = Utilities.ExpandDownloadUrl(
-                            app.Updates[y].Files[z].Source, app.Updates[y].DownloadUrl, app.AppInfo.Platform);
+                                app.Updates[y].Files[z].Source, app.Updates[y].DownloadUrl, app.AppInfo.Platform);
 
                         if (app.Updates[y].Files[z].Action != FileAction.ExecuteThenDelete)
                         {
@@ -316,13 +298,13 @@ namespace SevenUpdate
         private static ulong IterateUpdate(ref Update update, string directory, string valueName, Platform platform)
         {
             ulong size = 0;
-            for (var z = 0; z < update.Files.Count; z++)
+            for (int z = 0; z < update.Files.Count; z++)
             {
                 update.Files[z].Destination = Utilities.ExpandInstallLocation(
-                    update.Files[z].Destination, directory, platform, valueName);
+                        update.Files[z].Destination, directory, platform, valueName);
 
-                var downloadFile = Path.Combine(
-                    downloadDirectory, update.Name[0].Value, Path.GetFileName(update.Files[z].Destination));
+                string downloadFile = Path.Combine(
+                        downloadDirectory, update.Name[0].Value, Path.GetFileName(update.Files[z].Destination));
 
                 // Checks to see if the file needs updated, if it doesn't it removes it from the list.
                 if (File.Exists(update.Files[z].Destination))
@@ -407,7 +389,5 @@ namespace SevenUpdate
 
             return size;
         }
-
-        #endregion
     }
 }

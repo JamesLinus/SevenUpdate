@@ -27,19 +27,13 @@ namespace SevenUpdate.Sdk.ValidationRules
     using SevenSoftware.Windows.Properties;
 
     /// <summary>Validates if the input is a url.</summary>
-    [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass",
-        Justification = "Validation Rule")]
+    [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", 
+            Justification = "Validation Rule")]
     public class DownloadUrlRule : ValidationRule
     {
-        #region Public Properties
-
         /// <summary>Gets or sets a value indicating whether this instance is required.</summary>
         /// <value><c>True</c> if this instance is required; otherwise, <c>False</c>.</value>
         public bool IsRequired { get; set; }
-
-        #endregion
-
-        #region Public Methods
 
         /// <summary>When overridden in a derived class, performs validation checks on a value.</summary>
         /// <param name="value">The value from the binding target to check.</param>
@@ -52,15 +46,15 @@ namespace SevenUpdate.Sdk.ValidationRules
             if (input == null)
             {
                 return this.IsRequired
-                           ? new ValidationResult(false, Resources.UrilInvalid)
-                           : new ValidationResult(true, null);
+                               ? new ValidationResult(false, Resources.UrilInvalid)
+                               : new ValidationResult(true, null);
             }
 
             if (string.IsNullOrWhiteSpace(input))
             {
                 return this.IsRequired
-                           ? new ValidationResult(false, Resources.UrilInvalid)
-                           : new ValidationResult(true, null);
+                               ? new ValidationResult(false, Resources.UrilInvalid)
+                               : new ValidationResult(true, null);
             }
 
             input = Utilities.ExpandDownloadUrl(input, Core.UpdateInfo.DownloadUrl, Core.AppInfo.Platform);
@@ -77,10 +71,8 @@ namespace SevenUpdate.Sdk.ValidationRules
 
             var r = new Regex(@"^(([a-zA-Z]\:)|(\\))(\\{1}|((\\{1})[^\\]([^/:*?<>""|]*))+)$");
             return r.IsMatch(input)
-                       ? new ValidationResult(true, null)
-                       : new ValidationResult(false, Resources.UrilInvalid);
+                           ? new ValidationResult(true, null)
+                           : new ValidationResult(false, Resources.UrilInvalid);
         }
-
-        #endregion
     }
 }
