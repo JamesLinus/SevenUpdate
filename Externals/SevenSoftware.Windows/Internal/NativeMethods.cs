@@ -126,11 +126,11 @@ namespace SevenSoftware.Windows.Internal
         /// <param name="verificationFlagChecked"><c>True</c> if the verification <c>CheckBox</c> was checked when the dialog was dismissed; otherwise, <c>False</c>.</param>
         /// <returns>The result.</returns>
         [DllImport("Comctl32.dll", SetLastError = true)]
-        internal static extern Result TaskDialogIndirect(
-                [In] TaskDialogConfiguration taskConfig, 
-                [Out] out int button, 
-                [Out] out int radioButton, 
-                [MarshalAs(UnmanagedType.Bool)] [Out] out bool verificationFlagChecked);
+        internal static extern Result TaskDialogIndirect([In] TaskDialogConfiguration taskConfig, 
+                                                         [Out] out int button, 
+                                                         [Out] out int radioButton, 
+                                                         [MarshalAs(UnmanagedType.Bool)] [Out] out bool
+                                                                 verificationFlagChecked);
 
         /// <summary>Gets a value indicating whether the current user is a member of the Administrator's group.</summary>
         /// <returns><c>True</c> if the user is a member of the Administrator's group; otherwise, <c>False</c>.</returns>

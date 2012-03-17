@@ -33,22 +33,12 @@ namespace SevenUpdate.Sdk
     /// <summary>Interaction logic for App.xaml.</summary>
     public sealed partial class App
     {
-        #region Constants and Fields
-
         /// <summary>The user application data location.</summary>
         public static readonly string UserStore =
-            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Seven Update SDK");
-
-        #endregion
-
-        #region Properties
+                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Seven Update SDK");
 
         /// <summary>Gets the command line arguments passed to this instance.</summary>
         internal static IList<string> Args { get; private set; }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>Process command line args.</summary>
         /// <param name="args">The list of arguments.</param>
@@ -110,8 +100,8 @@ namespace SevenUpdate.Sdk
                 Args = e.Args;
                 Directory.CreateDirectory(UserStore);
                 Core.Projects = File.Exists(Core.ProjectsFile)
-                                    ? Utilities.Deserialize<Collection<Project>>(Core.ProjectsFile)
-                                    : null;
+                                        ? Utilities.Deserialize<Collection<Project>>(Core.ProjectsFile)
+                                        : null;
                 SetJumpList();
             }
         }
@@ -155,7 +145,7 @@ namespace SevenUpdate.Sdk
 
             // register for Application Restart
             ApplicationRestartRecoveryManager.RegisterForApplicationRestart(
-                new RestartSettings(string.Empty, RestartRestrictions.NotOnReboot));
+                    new RestartSettings(string.Empty, RestartRestrictions.NotOnReboot));
 
             // register for Application Recovery
             var recoverySettings = new RecoverySettings(new RecoveryData(PerformRecovery, null), 4000);
@@ -171,11 +161,14 @@ namespace SevenUpdate.Sdk
             // Configure a new JumpTask
             var jumpTask = new JumpTask
                 {
-                    IconResourcePath =
-                        Path.Combine(Directory.GetParent(Utilities.AppDir).FullName, "Shared", @"SevenUpdate.Base.dll"),
-                    IconResourceIndex = 6,
-                    Title = Sdk.Properties.Resources.CreateProject,
-                    Arguments = @"-newproject"
+                        IconResourcePath =
+                                Path.Combine(
+                                        Directory.GetParent(Utilities.AppDir).FullName, 
+                                        "Shared", 
+                                        @"SevenUpdate.Base.dll"), 
+                        IconResourceIndex = 6, 
+                        Title = Sdk.Properties.Resources.CreateProject, 
+                        Arguments = @"-newproject"
                 };
 
             jumpList.JumpItems.Add(jumpTask);
@@ -193,7 +186,5 @@ namespace SevenUpdate.Sdk
             ApplicationRestartRecoveryManager.UnregisterApplicationRestart();
             ApplicationRestartRecoveryManager.UnregisterApplicationRecovery();
         }
-
-        #endregion
     }
 }

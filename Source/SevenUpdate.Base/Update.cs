@@ -64,12 +64,11 @@ namespace SevenUpdate
         /// <param name="files">The collection of localized update files.</param>
         /// <param name="registryItems">The collection of registry keys and values to perform actions on in the update.</param>
         /// <param name="shortcuts">The collection of shortcuts to perform actions on in the update.</param>
-        public Update(
-                ObservableCollection<LocaleString> name, 
-                ObservableCollection<LocaleString> description, 
-                ObservableCollection<UpdateFile> files, 
-                ObservableCollection<RegistryItem> registryItems, 
-                ObservableCollection<Shortcut> shortcuts)
+        public Update(ObservableCollection<LocaleString> name, 
+                      ObservableCollection<LocaleString> description, 
+                      ObservableCollection<UpdateFile> files, 
+                      ObservableCollection<RegistryItem> registryItems, 
+                      ObservableCollection<Shortcut> shortcuts)
         {
             this.Name = name;
             this.Description = description;

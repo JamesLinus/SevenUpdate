@@ -55,12 +55,10 @@ namespace WPFLocalizeExtension.Extensions
                 return this.FormatOutput(obj);
             }
 
-            throw new NotSupportedException(
-                    string.Format(
-                            CultureInfo.CurrentCulture, 
-                            "ResourceKey '{0}' returns '{1}' which is not type of System.Drawing.Bitmap", 
-                            this.Key, 
-                            obj.GetType().FullName));
+            throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, 
+                    "ResourceKey '{0}' returns '{1}' which is not type of System.Drawing.Bitmap", 
+                    this.Key, 
+                    obj.GetType().FullName));
         }
 
         /// <summary>
@@ -75,8 +73,10 @@ namespace WPFLocalizeExtension.Extensions
             IntPtr bmpPt = ((Bitmap)input).GetHbitmap();
 
             // create the bitmapSource
-            BitmapSource bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(
-                    bmpPt, IntPtr.Zero, Int32Rect.Empty, BitmapSizeOptions.FromEmptyOptions());
+            BitmapSource bitmapSource = Imaging.CreateBitmapSourceFromHBitmap(bmpPt, 
+                    IntPtr.Zero, 
+                    Int32Rect.Empty, 
+                    BitmapSizeOptions.FromEmptyOptions());
 
             // freeze the bitmap to avoid hooking events to the bitmap
             bitmapSource.Freeze();
@@ -94,8 +94,10 @@ namespace WPFLocalizeExtension.Extensions
         /// </summary>
         protected override void HandleNewValue()
         {
-            var obj = Localize.Instance.GetLocalizedObject<object>(
-                    this.Assembly, this.Dictionary, this.Key, this.Culture);
+            var obj = Localize.Instance.GetLocalizedObject<object>(this.Assembly, 
+                    this.Dictionary, 
+                    this.Key, 
+                    this.Culture);
             this.SetNewValue(this.FormatOutput(obj));
         }
     }

@@ -99,8 +99,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Show debug message when the native dialog is showing.</summary>
         internal void AssertCurrentlyShowing()
         {
-            Debug.Assert(
-                    this.ShowState == DialogShowState.Showing, 
+            Debug.Assert(this.ShowState == DialogShowState.Showing, 
                     "Update*() methods should only be called while native dialog is showing");
         }
 
@@ -167,8 +166,10 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
                 bool checkBoxChecked;
 
                 // Here is the way we use "vanilla" P/Invoke to call TaskDialogIndirect().  
-                Result result = NativeMethods.TaskDialogIndirect(
-                        this.nativeDialogConfig, out selectedButtonId, out selectedRadioButtonId, out checkBoxChecked);
+                Result result = NativeMethods.TaskDialogIndirect(this.nativeDialogConfig, 
+                        out selectedButtonId, 
+                        out selectedRadioButtonId, 
+                        out checkBoxChecked);
 
                 if (ErrorHelper.Failed(result))
                 {
@@ -182,8 +183,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
                             msg = Resources.NativeTaskDialogInternalErrorComplex;
                             break;
                         default:
-                            msg = string.Format(
-                                    CultureInfo.InvariantCulture, 
+                            msg = string.Format(CultureInfo.InvariantCulture, 
                                     Resources.NativeTaskDialogInternalErrorUnexpected, 
                                     result);
                             break;
@@ -230,8 +230,9 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         internal void UpdateElevationIcon(int buttonId, bool showIcon)
         {
             this.AssertCurrentlyShowing();
-            this.SendMessageHelper(
-                    TaskDialogMessages.SetButtonElevationRequiredState, buttonId, Convert.ToInt32(showIcon));
+            this.SendMessageHelper(TaskDialogMessages.SetButtonElevationRequiredState, 
+                    buttonId, 
+                    Convert.ToInt32(showIcon));
         }
 
         /// <summary>Updates the expanded text.</summary>
@@ -394,8 +395,11 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <param name="parameterLength">The hyperlink id.</param>
         /// <param name="referenceData">The reference data</param>
         /// <returns>The result for the dialog.</returns>
-        private int DialogProc(
-                IntPtr windowHandle, uint message, IntPtr parameter, IntPtr parameterLength, IntPtr referenceData)
+        private int DialogProc(IntPtr windowHandle, 
+                               uint message, 
+                               IntPtr parameter, 
+                               IntPtr parameterLength, 
+                               IntPtr referenceData)
         {
             // Fetch the HWND - it may be the first time we're getting it.
             this.dialogHandle = windowHandle;
@@ -613,8 +617,10 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
 
             return
                     (int)
-                    NativeMethods.SendMessage(
-                            this.dialogHandle, (uint)message, (IntPtr)parameter, new IntPtr(parameterLength));
+                    NativeMethods.SendMessage(this.dialogHandle, 
+                            (uint)message, 
+                            (IntPtr)parameter, 
+                            new IntPtr(parameterLength));
         }
 
         /// <summary>Updates the icon.</summary>
@@ -634,8 +640,9 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
             this.AssertCurrentlyShowing();
 
             this.FreeOldString(element);
-            this.SendMessageHelper(
-                    TaskDialogMessages.SetElementText, (int)element, (long)this.MakeNewString(text, element));
+            this.SendMessageHelper(TaskDialogMessages.SetElementText, 
+                    (int)element, 
+                    (long)this.MakeNewString(text, element));
         }
     }
 }

@@ -59,8 +59,7 @@ namespace SevenSoftware.Windows.ApplicationServices
         /// <returns>A <see cref="string" /> that displays the command line arguments and restrictions for restarting the application.</returns>
         public override string ToString()
         {
-            return string.Format(
-                    CultureInfo.InvariantCulture, 
+            return string.Format(CultureInfo.InvariantCulture, 
                     Resources.RestartSettingsFormatString, 
                     this.command, 
                     this.restrictions.ToString());

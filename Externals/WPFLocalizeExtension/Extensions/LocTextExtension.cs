@@ -201,12 +201,10 @@ namespace WPFLocalizeExtension.Extensions
                 return this.FormatOutput(obj);
             }
 
-            throw new NotSupportedException(
-                    string.Format(
-                            CultureInfo.CurrentCulture, 
-                            "ResourceKey '{0}' returns '{1}' which is not type of System.String", 
-                            this.Key, 
-                            obj.GetType().FullName));
+            throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, 
+                    "ResourceKey '{0}' returns '{1}' which is not type of System.String", 
+                    this.Key, 
+                    obj.GetType().FullName));
         }
 
         /// <summary>This method returns the finished formatted text.</summary>
@@ -223,8 +221,10 @@ namespace WPFLocalizeExtension.Extensions
                 // load a fresh localized text, if the passed string is null
                 input = input
                         ??
-                        Localize.Instance.GetLocalizedObject<object>(
-                                this.Assembly, this.Dictionary, this.Key, this.Culture);
+                        Localize.Instance.GetLocalizedObject<object>(this.Assembly, 
+                                this.Dictionary, 
+                                this.Key, 
+                                this.Culture);
             }
 
             // get the main text as string xor string.empty
@@ -233,8 +233,7 @@ namespace WPFLocalizeExtension.Extensions
             try
             {
                 // add some format segments, in case that the main text contains format place holders like {0}
-                textMain = string.Format(
-                        Localize.Instance.SpecificCulture, 
+                textMain = string.Format(Localize.Instance.SpecificCulture, 
                         textMain, 
                         this.formatSegments[0] ?? string.Empty, 
                         this.formatSegments[1] ?? string.Empty, 

@@ -104,8 +104,8 @@ namespace SevenSoftware.Windows.ApplicationServices
                 throw new ArgumentNullException("settings");
             }
 
-            Result hr = AppRestartRecoveryNativeMethods.RegisterApplicationRestart(
-                    settings.Command, settings.Restrictions);
+            Result hr = AppRestartRecoveryNativeMethods.RegisterApplicationRestart(settings.Command, 
+                    settings.Restrictions);
 
             if (hr == Result.Fail)
             {

@@ -219,8 +219,7 @@ namespace SevenUpdate
                 else
                 {
                     Instance.UpdateAction = UpdateAction.RebootNeeded;
-                    if (ShowMessage(
-                            Resources.RebootComputer, 
+                    if (ShowMessage(Resources.RebootComputer, 
                             TaskDialogStandardIcon.Information, 
                             TaskDialogStandardButtons.Cancel, 
                             Resources.RebootNeededFirst, 
@@ -268,14 +267,13 @@ namespace SevenUpdate
         /// <param name="defaultButtonText">Text to display on the button.</param>
         /// <param name="displayShieldOnButton">Indicates if a UAC shield is to be displayed on the defaultButton.</param>
         /// <returns>Returns the result of the message.</returns>
-        internal static TaskDialogResult ShowMessage(
-                string instructionText, 
-                TaskDialogStandardIcon icon, 
-                TaskDialogStandardButtons standardButtons, 
-                string description = null, 
-                string footerText = null, 
-                string defaultButtonText = null, 
-                bool displayShieldOnButton = false)
+        internal static TaskDialogResult ShowMessage(string instructionText, 
+                                                     TaskDialogStandardIcon icon, 
+                                                     TaskDialogStandardButtons standardButtons, 
+                                                     string description = null, 
+                                                     string footerText = null, 
+                                                     string defaultButtonText = null, 
+                                                     bool displayShieldOnButton = false)
         {
             if (TaskDialog.IsPlatformSupported)
             {

@@ -1025,8 +1025,7 @@ namespace SharpBits.Base
                 if (this.job2 != null && credentials != null)
                 {
                     // only supported from IBackgroundCopyJob2 and above
-                    this.job2.RemoveCredentials(
-                            (BGAuthTarget)credentials.AuthenticationTarget, 
+                    this.job2.RemoveCredentials((BGAuthTarget)credentials.AuthenticationTarget, 
                             (BGAuthScheme)credentials.AuthenticationScheme);
                 }
                 else

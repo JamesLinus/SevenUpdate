@@ -43,8 +43,13 @@ namespace SharpBits.Base
             var domainName = new StringBuilder(255);
             if (NativeMethods.ConvertStringSidToSidW(sid, ref pointerSid))
             {
-                if (NativeMethods.LookupAccountSidW(
-                        string.Empty, pointerSid, userName, ref userNameSize, domainName, ref domainNameSize, ref use))
+                if (NativeMethods.LookupAccountSidW(string.Empty, 
+                        pointerSid, 
+                        userName, 
+                        ref userNameSize, 
+                        domainName, 
+                        ref domainNameSize, 
+                        ref use))
                 {
                     return string.Concat(domainName.ToString(), "\\", userName.ToString());
                 }

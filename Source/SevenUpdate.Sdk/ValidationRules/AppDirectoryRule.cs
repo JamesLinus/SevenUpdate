@@ -41,8 +41,10 @@ namespace SevenUpdate.Sdk.ValidationRules
 
             input = Core.AppInfo.Directory == null
                             ? Utilities.ConvertPath(input, true, Core.AppInfo.Platform)
-                            : Utilities.ExpandInstallLocation(
-                                    input, Core.AppInfo.Directory, Core.AppInfo.Platform, Core.AppInfo.ValueName);
+                            : Utilities.ExpandInstallLocation(input, 
+                                    Core.AppInfo.Directory, 
+                                    Core.AppInfo.Platform, 
+                                    Core.AppInfo.ValueName);
 
             if (string.IsNullOrEmpty(input) || input.IndexOfAny(Path.GetInvalidPathChars()) >= 0)
             {

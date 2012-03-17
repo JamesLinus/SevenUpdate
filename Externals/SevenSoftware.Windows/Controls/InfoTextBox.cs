@@ -28,24 +28,34 @@ namespace SevenSoftware.Windows.Controls
     public sealed class InfoTextBox : TextBox
     {
         /// <summary>Indicates if the <c>InfoTextBox</c> has an error.</summary>
-        private static readonly DependencyProperty HasErrorProperty = DependencyProperty.Register(
-                "HasError", typeof(bool), typeof(InfoTextBox), new PropertyMetadata(false));
+        private static readonly DependencyProperty HasErrorProperty = DependencyProperty.Register("HasError", 
+                typeof(bool), 
+                typeof(InfoTextBox), 
+                new PropertyMetadata(false));
 
         /// <summary>Indicates if the <c>InfoTextBox</c> has text.</summary>
-        private static readonly DependencyProperty HasTextProperty = DependencyProperty.Register(
-                "HasText", typeof(bool), typeof(InfoTextBox), new PropertyMetadata(false));
+        private static readonly DependencyProperty HasTextProperty = DependencyProperty.Register("HasText", 
+                typeof(bool), 
+                typeof(InfoTextBox), 
+                new PropertyMetadata(false));
 
         /// <summary>Indicates if the <c>InfoTextBox</c> has a warning.</summary>
-        private static readonly DependencyProperty HasWarningProperty = DependencyProperty.Register(
-                "HasWarning", typeof(bool), typeof(InfoTextBox), new PropertyMetadata(false));
+        private static readonly DependencyProperty HasWarningProperty = DependencyProperty.Register("HasWarning", 
+                typeof(bool), 
+                typeof(InfoTextBox), 
+                new PropertyMetadata(false));
 
         /// <summary>The text to display when there is no text in the <c>InfoTextBox</c>.</summary>
-        private static readonly DependencyProperty NoteProperty = DependencyProperty.Register(
-                "Note", typeof(string), typeof(InfoTextBox), new UIPropertyMetadata(string.Empty, NotePropertyChanged));
+        private static readonly DependencyProperty NoteProperty = DependencyProperty.Register("Note", 
+                typeof(string), 
+                typeof(InfoTextBox), 
+                new UIPropertyMetadata(string.Empty, NotePropertyChanged));
 
         /// <summary>The style of the Note.</summary>
-        private static readonly DependencyProperty NoteStyleProperty = DependencyProperty.Register(
-                "NoteStyle", typeof(Style), typeof(InfoTextBox), new UIPropertyMetadata(null));
+        private static readonly DependencyProperty NoteStyleProperty = DependencyProperty.Register("NoteStyle", 
+                typeof(Style), 
+                typeof(InfoTextBox), 
+                new UIPropertyMetadata(null));
 
         /// <summary>The adorner label.</summary>
         private AdornerLabel myAdornerLabel;
@@ -155,15 +165,15 @@ namespace SevenSoftware.Windows.Controls
             this.myAdornerLabel = new AdornerLabel(this, this.Note, this.NoteStyle);
             this.UpdateAdorner(this);
 
-            DependencyPropertyDescriptor focusProp = DependencyPropertyDescriptor.FromProperty(
-                    IsFocusedProperty, typeof(FrameworkElement));
+            DependencyPropertyDescriptor focusProp = DependencyPropertyDescriptor.FromProperty(IsFocusedProperty, 
+                    typeof(FrameworkElement));
             if (focusProp != null)
             {
                 focusProp.AddValueChanged(this, delegate { this.UpdateAdorner(this); });
             }
 
-            DependencyPropertyDescriptor containsTextProp = DependencyPropertyDescriptor.FromProperty(
-                    HasTextProperty, typeof(InfoTextBox));
+            DependencyPropertyDescriptor containsTextProp = DependencyPropertyDescriptor.FromProperty(HasTextProperty, 
+                    typeof(InfoTextBox));
             if (containsTextProp != null)
             {
                 containsTextProp.AddValueChanged(this, delegate { this.UpdateAdorner(this); });

@@ -19,8 +19,7 @@ namespace WPFLocalizeExtension.Engine
         /// <summary>Registers the design odds format property</summary>
         [DesignOnly(true)]
         private static readonly DependencyProperty DesignOddsFormatProperty =
-                DependencyProperty.RegisterAttached(
-                        "DesignOddsFormat", 
+                DependencyProperty.RegisterAttached("DesignOddsFormat", 
                         typeof(OddsFormatType), 
                         typeof(OddsFormatManager), 
                         new PropertyMetadata(DefaultOddsFormatType, SetOddsFormatFromDependencyProperty));
@@ -179,8 +178,8 @@ namespace WPFLocalizeExtension.Engine
         /// <param name="obj">The dependency object</param>
         /// <param name="args">The event arguments</param>
         [DesignOnly(true)]
-        private static void SetOddsFormatFromDependencyProperty(
-                DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        private static void SetOddsFormatFromDependencyProperty(DependencyObject obj, 
+                                                                DependencyPropertyChangedEventArgs args)
         {
             if (!Instance.IsInDesignMode)
             {
@@ -195,11 +194,9 @@ namespace WPFLocalizeExtension.Engine
                 }
                 else
                 {
-                    throw new InvalidCastException(
-                            string.Format(
-                                    CultureInfo.CurrentCulture, 
-                                    "\"{0}\" not defined in Enum OddsFormatType", 
-                                    args.NewValue));
+                    throw new InvalidCastException(string.Format(CultureInfo.CurrentCulture, 
+                            "\"{0}\" not defined in Enum OddsFormatType", 
+                            args.NewValue));
                 }
             }
             else

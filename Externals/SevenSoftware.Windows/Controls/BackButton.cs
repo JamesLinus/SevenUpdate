@@ -28,8 +28,8 @@ namespace SevenSoftware.Windows.Controls
         /// <summary>Initializes static members of the <see cref="BackButton" /> class.</summary>
         static BackButton()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(
-                    typeof(BackButton), new FrameworkPropertyMetadata(typeof(BackButton)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(BackButton), 
+                    new FrameworkPropertyMetadata(typeof(BackButton)));
         }
 
         /// <summary>Initializes a new instance of the <see cref="BackButton" /> class.</summary>

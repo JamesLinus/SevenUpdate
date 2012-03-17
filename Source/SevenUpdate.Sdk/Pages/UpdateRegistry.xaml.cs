@@ -101,8 +101,10 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
         private void ImportRegistryFile(object sender, RoutedEventArgs e)
         {
-            string[] files = Core.OpenFileDialog(
-                    Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), null, false, "reg");
+            string[] files = Core.OpenFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), 
+                    null, 
+                    false, 
+                    "reg");
             if (files == null)
             {
                 return;

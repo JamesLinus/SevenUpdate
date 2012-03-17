@@ -135,8 +135,7 @@ namespace SevenUpdate
 
             if (Utilities.RebootNeeded)
             {
-                string fileName = Path.Combine(
-                        Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "reboot.lock");
+                string fileName = Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "reboot.lock");
                 if (!File.Exists(fileName))
                 {
                     using (FileStream file = File.Create(fileName))
@@ -213,10 +212,8 @@ namespace SevenUpdate
         {
             if (InstallProgressChanged != null)
             {
-                InstallProgressChanged(
-                        null, 
-                        new InstallProgressChangedEventArgs(
-                                currentUpdateName, installProgress, updateIndex, updateCount));
+                InstallProgressChanged(null, 
+                        new InstallProgressChangedEventArgs(currentUpdateName, installProgress, updateIndex, updateCount));
             }
         }
 
@@ -323,8 +320,10 @@ namespace SevenUpdate
             // Choose the path for the shortcut
             for (int x = 0; x < shortcuts.Count; x++)
             {
-                shortcuts[x].Location = Utilities.ExpandInstallLocation(
-                        shortcuts[x].Location, appInfo.Directory, appInfo.Platform, appInfo.ValueName);
+                shortcuts[x].Location = Utilities.ExpandInstallLocation(shortcuts[x].Location, 
+                        appInfo.Directory, 
+                        appInfo.Platform, 
+                        appInfo.ValueName);
                 string linkName = Utilities.GetLocaleString(shortcuts[x].Name);
 
                 if (shortcuts[x].Action == ShortcutAction.Add
@@ -517,17 +516,16 @@ namespace SevenUpdate
 
                 int x1 = x;
                 int x2 = x;
-                Task task = Task.Factory.StartNew(() => UpdateFile(files[x1])).ContinueWith(
-                        delegate
-                            {
-                                int installProgress = (x2 * 100) / files.Count;
-                                if (installProgress > 70)
-                                {
-                                    installProgress -= 15;
-                                }
+                Task task = Task.Factory.StartNew(() => UpdateFile(files[x1])).ContinueWith(delegate
+                    {
+                        int installProgress = (x2 * 100) / files.Count;
+                        if (installProgress > 70)
+                        {
+                            installProgress -= 15;
+                        }
 
-                                ReportProgress(installProgress);
-                            });
+                        ReportProgress(installProgress);
+                    });
                 task.Wait();
             }
         }

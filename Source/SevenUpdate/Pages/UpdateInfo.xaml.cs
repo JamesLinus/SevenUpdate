@@ -197,8 +197,8 @@ namespace SevenUpdate.Pages
 
             if (UpdateSelectionChanged != null)
             {
-                UpdateSelectionChanged(
-                        this, new UpdateSelectionChangedEventArgs(count[0], count[1], downloadSize[0], downloadSize[1]));
+                UpdateSelectionChanged(this, 
+                        new UpdateSelectionChangedEventArgs(count[0], count[1], downloadSize[0], downloadSize[1]));
             }
 
             Core.NavigateToMainPage();
@@ -303,8 +303,10 @@ namespace SevenUpdate.Pages
             /// <param name="optionalUpdates">The number of Optional updates selected.</param>
             /// <param name="importantDownloadSize">A value indicating the download size of the Important updates.</param>
             /// <param name="optionalDownloadSize">A value indicating the download size of the Optional updates.</param>
-            public UpdateSelectionChangedEventArgs(
-                    int importantUpdates, int optionalUpdates, ulong importantDownloadSize, ulong optionalDownloadSize)
+            public UpdateSelectionChangedEventArgs(int importantUpdates, 
+                                                   int optionalUpdates, 
+                                                   ulong importantDownloadSize, 
+                                                   ulong optionalDownloadSize)
             {
                 this.ImportantUpdates = importantUpdates;
 

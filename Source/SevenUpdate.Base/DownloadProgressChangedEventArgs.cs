@@ -32,8 +32,10 @@ namespace SevenUpdate
         /// <param name="bytesTotal">The total number of bytes to download.</param>
         /// <param name="filesTransferred">The number of files transfered.</param>
         /// <param name="filesTotal">The total number of files transfered.</param>
-        public DownloadProgressChangedEventArgs(
-                ulong bytesTransferred, ulong bytesTotal, uint filesTransferred, uint filesTotal)
+        public DownloadProgressChangedEventArgs(ulong bytesTransferred, 
+                                                ulong bytesTotal, 
+                                                uint filesTransferred, 
+                                                uint filesTotal)
         {
             this.BytesTotal = bytesTotal;
             this.BytesTransferred = bytesTransferred;

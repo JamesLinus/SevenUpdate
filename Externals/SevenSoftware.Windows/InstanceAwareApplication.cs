@@ -184,8 +184,9 @@ namespace SevenSoftware.Windows
         /// <param name="awareness">The <c>ApplicationInstanceAwareness</c> value to extract parameters from.</param>
         /// <param name="prefix">The synchronization object prefix.</param>
         /// <param name="identity">The identity used to handle the synchronization object.</param>
-        private static void ExtractParameters(
-                ApplicationInstanceAwareness awareness, out string prefix, out IdentityReference identity)
+        private static void ExtractParameters(ApplicationInstanceAwareness awareness, 
+                                              out string prefix, 
+                                              out IdentityReference identity)
         {
             new SecurityPermission(SecurityPermissionFlag.ControlPrincipal).Assert();
             WindowsIdentity currentIdentity = WindowsIdentity.GetCurrent();
@@ -346,8 +347,8 @@ namespace SevenSoftware.Windows
             try
             {
                 IPriorApplicationInstance instance =
-                        ChannelFactory<IPriorApplicationInstance>.CreateChannel(
-                                new NetNamedPipeBinding(), new EndpointAddress(uri));
+                        ChannelFactory<IPriorApplicationInstance>.CreateChannel(new NetNamedPipeBinding(), 
+                                new EndpointAddress(uri));
                 instance.SignalStartupNextInstance(args);
             }
             catch (Exception exc)
@@ -376,8 +377,9 @@ namespace SevenSoftware.Windows
             string signaledToFirstInstanceSemaphoreName = baseName + "_SignaledToFirstInstance";
 
             bool isNew;
-            var eventRule = new EventWaitHandleAccessRule(
-                    identity, EventWaitHandleRights.FullControl, AccessControlType.Allow);
+            var eventRule = new EventWaitHandleAccessRule(identity, 
+                    EventWaitHandleRights.FullControl, 
+                    AccessControlType.Allow);
             var eventSecurity = new EventWaitHandleSecurity();
             eventSecurity.AddAccessRule(eventRule);
 
@@ -387,10 +389,16 @@ namespace SevenSoftware.Windows
 
             this.firstInstanceMutex = new Mutex(false, firstInstanceMutexName, out isNew, mutexSecurity);
             this.serviceInitializationMutex = new Mutex(false, serviceInitializationMutexName, out isNew, mutexSecurity);
-            this.serviceReadySemaphore = new EventWaitHandle(
-                    false, EventResetMode.ManualReset, serviceReadySemaphoreName, out isNew, eventSecurity);
-            this.signaledToFirstInstanceSemaphore = new EventWaitHandle(
-                    false, EventResetMode.AutoReset, signaledToFirstInstanceSemaphoreName, out isNew, eventSecurity);
+            this.serviceReadySemaphore = new EventWaitHandle(false, 
+                    EventResetMode.ManualReset, 
+                    serviceReadySemaphoreName, 
+                    out isNew, 
+                    eventSecurity);
+            this.signaledToFirstInstanceSemaphore = new EventWaitHandle(false, 
+                    EventResetMode.AutoReset, 
+                    signaledToFirstInstanceSemaphoreName, 
+                    out isNew, 
+                    eventSecurity);
         }
 
         /// <summary>Called on next application instance startup.</summary>

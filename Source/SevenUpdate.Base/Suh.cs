@@ -59,10 +59,9 @@ namespace SevenUpdate
         /// <param name="name">The collection of localized update names.</param>
         /// <param name="publisher">The collection of localized publisher names.</param>
         /// <param name="description">The collection of localized update descriptions.</param>
-        public Suh(
-                ObservableCollection<LocaleString> name, 
-                ObservableCollection<LocaleString> publisher, 
-                ObservableCollection<LocaleString> description)
+        public Suh(ObservableCollection<LocaleString> name, 
+                   ObservableCollection<LocaleString> publisher, 
+                   ObservableCollection<LocaleString> description)
         {
             this.Name = name;
             this.Description = description;

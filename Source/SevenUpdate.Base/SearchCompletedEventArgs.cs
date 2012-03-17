@@ -33,8 +33,10 @@ namespace SevenUpdate
         /// <param name="importantCount">The number of important updates.</param>
         /// <param name="recommendedCount">The number of recommended updates.</param>
         /// <param name="optionalCount">The number of optional updates.</param>
-        public SearchCompletedEventArgs(
-                IEnumerable<Sui> applications, int importantCount, int recommendedCount, int optionalCount)
+        public SearchCompletedEventArgs(IEnumerable<Sui> applications, 
+                                        int importantCount, 
+                                        int recommendedCount, 
+                                        int optionalCount)
         {
             this.Applications = applications;
             this.ImportantCount = importantCount;

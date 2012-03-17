@@ -47,8 +47,10 @@ namespace SevenSoftware.Windows.Controls
                 DependencyProperty.Register("IsIndeterminate", typeof(bool), typeof(ProgressRing));
 
         /// <summary>Indicates if the progress is running.</summary>
-        private static readonly DependencyProperty isRunningProperty = DependencyProperty.Register(
-                "IsRunning", typeof(bool), typeof(ProgressRing), new FrameworkPropertyMetadata(IsRunningPropertyChanged));
+        private static readonly DependencyProperty isRunningProperty = DependencyProperty.Register("IsRunning", 
+                typeof(bool), 
+                typeof(ProgressRing), 
+                new FrameworkPropertyMetadata(IsRunningPropertyChanged));
 
         /// <summary>The dispatch timer.</summary>
         private readonly DispatcherTimer dispatcherTimer;
@@ -68,8 +70,8 @@ namespace SevenSoftware.Windows.Controls
         /// <summary>Initializes static members of the <see cref="ProgressRing" /> class.</summary>
         static ProgressRing()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(
-                    typeof(ProgressRing), new FrameworkPropertyMetadata(typeof(ProgressRing)));
+            DefaultStyleKeyProperty.OverrideMetadata(typeof(ProgressRing), 
+                    new FrameworkPropertyMetadata(typeof(ProgressRing)));
             MaximumProperty.OverrideMetadata(typeof(ProgressRing), new FrameworkPropertyMetadata(100.0));
         }
 

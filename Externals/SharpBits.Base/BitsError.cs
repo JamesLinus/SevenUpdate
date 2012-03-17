@@ -45,8 +45,8 @@ namespace SharpBits.Base
                 string description = string.Empty;
                 try
                 {
-                    this.error.GetErrorContextDescription(
-                            Convert.ToUInt32(Thread.CurrentThread.CurrentUICulture.LCID), out description);
+                    this.error.GetErrorContextDescription(Convert.ToUInt32(Thread.CurrentThread.CurrentUICulture.LCID), 
+                            out description);
                 }
                 catch (COMException exception)
                 {
@@ -66,8 +66,8 @@ namespace SharpBits.Base
                 string description = string.Empty;
                 try
                 {
-                    this.error.GetErrorDescription(
-                            Convert.ToUInt32(Thread.CurrentThread.CurrentUICulture.LCID), out description);
+                    this.error.GetErrorDescription(Convert.ToUInt32(Thread.CurrentThread.CurrentUICulture.LCID), 
+                            out description);
                 }
                 catch (COMException exception)
                 {

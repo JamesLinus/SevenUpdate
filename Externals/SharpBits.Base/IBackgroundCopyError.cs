@@ -38,8 +38,7 @@ namespace SharpBits.Base
         /// <summary>Retrieves a description of the context in which the error occurred.</summary>
         /// <param name="languageId">Identifies the locale to use to generate the description. To create the language identifier, use the MAKELANGID macro.</param>
         /// <param name="contextDescription">A string that contains the description of the context in which the error occurred. Call the CoTaskMemFree function to free ppContextDescription when done.</param>
-        void GetErrorContextDescription(
-                uint languageId, [MarshalAs(UnmanagedType.LPWStr)] out string contextDescription);
+        void GetErrorContextDescription(uint languageId, [MarshalAs(UnmanagedType.LPWStr)] out string contextDescription);
 
         /// <summary>Retrieves the protocol used to transfer the file.</summary>
         /// <param name="protocol">A string that contains the protocol used to transfer the file. The string contains HTTP for the HTTP protocol and file for the SMB protocol. The ppProtocol parameter is set to <c>null</c> if the error is not related to the transfer protocol. Call the CoTaskMemFree function to free ppProtocol when done.</param>

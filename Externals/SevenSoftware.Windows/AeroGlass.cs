@@ -168,22 +168,18 @@ namespace SevenSoftware.Windows
             }
 
             var nonClientSize =
-                    new Size(
-                            (windowRect.Right - windowRect.Left) - (double)(clientRect.Right - clientRect.Left), 
+                    new Size((windowRect.Right - windowRect.Left) - (double)(clientRect.Right - clientRect.Left), 
                             (windowRect.Bottom - windowRect.Top) - (double)(clientRect.Bottom - clientRect.Top));
 
             // calculate size of element relative to non-client area
             GeneralTransform transform = element.TransformToAncestor(window);
             Point topLeftFrame = transform.Transform(new Point(0, 0));
             Point bottomRightFrame =
-                    transform.Transform(
-                            new Point(
-                                    element.ActualWidth + nonClientSize.Width, 
-                                    element.ActualHeight + nonClientSize.Height));
+                    transform.Transform(new Point(element.ActualWidth + nonClientSize.Width, 
+                            element.ActualHeight + nonClientSize.Height));
 
             // Create a margin structure
-            var margins = new Margins(
-                    (int)topLeftFrame.X, 
+            var margins = new Margins((int)topLeftFrame.X, 
                     (int)topLeftFrame.Y, 
                     (int)(window.ActualWidth - bottomRightFrame.X), 
                     (int)(window.ActualHeight - bottomRightFrame.Y));

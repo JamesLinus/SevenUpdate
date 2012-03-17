@@ -32,36 +32,42 @@ namespace SevenSoftware.Windows.Controls
     public static class ListViewSorter
     {
         /// <summary>Indicates if the <c>ListView</c> will auto sort.</summary>
-        private static readonly DependencyProperty AutoSortProperty = DependencyProperty.RegisterAttached(
-                "AutoSort", typeof(bool), typeof(ListViewSorter), new UIPropertyMetadata(false, AutoSortCallback));
+        private static readonly DependencyProperty AutoSortProperty = DependencyProperty.RegisterAttached("AutoSort", 
+                typeof(bool), 
+                typeof(ListViewSorter), 
+                new UIPropertyMetadata(false, AutoSortCallback));
 
         /// <summary>Indicates a custom sorter that will be used.</summary>
         private static readonly DependencyProperty CustomSorterProperty =
-                DependencyProperty.RegisterAttached(
-                        "CustomSorter", 
+                DependencyProperty.RegisterAttached("CustomSorter", 
                         typeof(string), 
                         typeof(ListViewSorter), 
                         new FrameworkPropertyMetadata(null, CustomSorterCallback));
 
         /// <summary>The property name to sort.</summary>
         private static readonly DependencyProperty PropertyNameProperty =
-                DependencyProperty.RegisterAttached(
-                        "PropertyName", typeof(string), typeof(ListViewSorter), new UIPropertyMetadata(null));
+                DependencyProperty.RegisterAttached("PropertyName", 
+                        typeof(string), 
+                        typeof(ListViewSorter), 
+                        new UIPropertyMetadata(null));
 
         /// <summary>The sort arrow up.</summary>
         private static readonly DependencyProperty SortGlyphAscendingProperty =
-                DependencyProperty.RegisterAttached(
-                        "SortGlyphAscending", typeof(ImageSource), typeof(ListViewSorter), new UIPropertyMetadata(null));
+                DependencyProperty.RegisterAttached("SortGlyphAscending", 
+                        typeof(ImageSource), 
+                        typeof(ListViewSorter), 
+                        new UIPropertyMetadata(null));
 
         /// <summary>The sort arrow down.</summary>
         private static readonly DependencyProperty SortGlyphDescendingProperty =
-                DependencyProperty.RegisterAttached(
-                        "SortGlyphDescending", typeof(ImageSource), typeof(ListViewSorter), new UIPropertyMetadata(null));
+                DependencyProperty.RegisterAttached("SortGlyphDescending", 
+                        typeof(ImageSource), 
+                        typeof(ListViewSorter), 
+                        new UIPropertyMetadata(null));
 
         /// <summary>The column header that was sorted.</summary>
         private static readonly DependencyProperty SortedColumnHeaderProperty =
-                DependencyProperty.RegisterAttached(
-                        "SortedColumnHeader", 
+                DependencyProperty.RegisterAttached("SortedColumnHeader", 
                         typeof(GridViewColumnHeader), 
                         typeof(ListViewSorter), 
                         new UIPropertyMetadata(null));
@@ -187,11 +193,10 @@ namespace SevenSoftware.Windows.Controls
         /// <param name="propertyName">Name of the property.</param>
         /// <param name="listView">The list view to sort.</param>
         /// <param name="sortedColumnHeader">The sorted column header.</param>
-        private static void ApplyCustomSort(
-                ListCollectionView view, 
-                string propertyName, 
-                ItemsControl listView, 
-                GridViewColumnHeader sortedColumnHeader)
+        private static void ApplyCustomSort(ListCollectionView view, 
+                                            string propertyName, 
+                                            ItemsControl listView, 
+                                            GridViewColumnHeader sortedColumnHeader)
         {
             if (view == null)
             {
@@ -263,11 +268,10 @@ namespace SevenSoftware.Windows.Controls
         /// <param name="propertyName">Name of the property.</param>
         /// <param name="listView">The list view.</param>
         /// <param name="sortedColumnHeader">The sorted column header.</param>
-        private static void ApplySort(
-                ICollectionView view, 
-                string propertyName, 
-                DependencyObject listView, 
-                GridViewColumnHeader sortedColumnHeader)
+        private static void ApplySort(ICollectionView view, 
+                                      string propertyName, 
+                                      DependencyObject listView, 
+                                      GridViewColumnHeader sortedColumnHeader)
         {
             ListSortDirection direction = ListSortDirection.Ascending;
 
@@ -540,13 +544,10 @@ namespace SevenSoftware.Windows.Controls
                         return;
                     }
 
-                    drawingContext.PushTransform(
-                            new TranslateTransform(
-                                    this.AdornedElement.RenderSize.Width - 15, 
-                                    (this.AdornedElement.RenderSize.Height - 5) / 2));
+                    drawingContext.PushTransform(new TranslateTransform(this.AdornedElement.RenderSize.Width - 15, 
+                            (this.AdornedElement.RenderSize.Height - 5) / 2));
 
-                    drawingContext.DrawGeometry(
-                            Brushes.LightGray, 
+                    drawingContext.DrawGeometry(Brushes.LightGray, 
                             new Pen(Brushes.Gray, 1.0), 
                             currentSortDirection == ListSortDirection.Ascending ? AscGeometry : DescGeometry);
 

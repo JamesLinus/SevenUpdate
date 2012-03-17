@@ -614,8 +614,8 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         {
             // If we're showing, we should never get here - the changing notification would have thrown and the property
             // would not have been changed.
-            Debug.Assert(
-                    !this.NativeDialogShowing, "Collection changed notification received despite show state of dialog");
+            Debug.Assert(!this.NativeDialogShowing, 
+                    "Collection changed notification received despite show state of dialog");
         }
 
         /// <summary>
@@ -714,11 +714,9 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <returns><c>True</c> if the property change is allowed.</returns>
         bool IDialogControlHost.IsControlPropertyChangeAllowed(string propertyName, DialogControl control)
         {
-            Debug.Assert(
-                    control is TaskDialogControl, 
+            Debug.Assert(control is TaskDialogControl, 
                     "Property changing for a control that is not a TaskDialogControl-derived type");
-            Debug.Assert(
-                    propertyName != "Name", 
+            Debug.Assert(propertyName != "Name", 
                     "Name changes at any time are not supported - public API should have blocked this");
 
             bool canChange = false;
@@ -861,8 +859,8 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Applies the elevated icons.</summary>
         /// <param name="settings">The dialog settings.</param>
         /// <param name="controls">The dialog controls.</param>
-        private static void ApplyElevatedIcons(
-                NativeTaskDialogSettings settings, IEnumerable<TaskDialogButtonBase> controls)
+        private static void ApplyElevatedIcons(NativeTaskDialogSettings settings, 
+                                               IEnumerable<TaskDialogButtonBase> controls)
         {
             foreach (TaskDialogButton control in controls)
             {
@@ -899,8 +897,8 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <returns>The <c>TaskDialogResults</c>.</returns>
         private static TaskDialogResult ConstructDialogResult(NativeTaskDialog native)
         {
-            Debug.Assert(
-                    native.ShowState == DialogShowState.Closed, "dialog result being constructed for unshown dialog.");
+            Debug.Assert(native.ShowState == DialogShowState.Closed, 
+                    "dialog result being constructed for unshown dialog.");
 
             TaskDialogResult result;
 

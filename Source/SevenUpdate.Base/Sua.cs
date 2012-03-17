@@ -55,10 +55,9 @@ namespace SevenUpdate
         /// <param name="name">The collection of localized update names.</param>
         /// <param name="publisher">The collection of localized publisher names.</param>
         /// <param name="description">The collection of localized update descriptions.</param>
-        public Sua(
-                ObservableCollection<LocaleString> name, 
-                ObservableCollection<LocaleString> publisher, 
-                ObservableCollection<LocaleString> description)
+        public Sua(ObservableCollection<LocaleString> name, 
+                   ObservableCollection<LocaleString> publisher, 
+                   ObservableCollection<LocaleString> description)
         {
             this.Name = name;
             this.Publisher = publisher;

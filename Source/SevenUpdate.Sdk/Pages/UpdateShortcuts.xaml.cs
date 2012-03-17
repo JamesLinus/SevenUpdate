@@ -115,8 +115,7 @@ namespace SevenUpdate.Sdk.Pages
 
             string fileLocation = Utilities.ConvertPath(source.Text, true, Core.AppInfo.Platform);
             string installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
-                                              ? Utilities.GetRegistryValue(
-                                                      Core.AppInfo.Directory, 
+                                              ? Utilities.GetRegistryValue(Core.AppInfo.Directory, 
                                                       Core.AppInfo.ValueName, 
                                                       Core.AppInfo.Platform)
                                               : Core.AppInfo.Directory;
@@ -171,8 +170,11 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
         private void ImportShortcut(object sender, RoutedEventArgs e)
         {
-            string[] file = Core.OpenFileDialog(
-                    Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu), null, false, "lnk", true);
+            string[] file = Core.OpenFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.CommonStartMenu), 
+                    null, 
+                    false, 
+                    "lnk", 
+                    true);
 
             if (file == null)
             {
@@ -181,8 +183,9 @@ namespace SevenUpdate.Sdk.Pages
 
             Shortcut importedShortcut = Shortcut.GetShortcutData(file[0]);
 
-            string path = Utilities.ConvertPath(
-                    Path.GetDirectoryName(importedShortcut.Location), false, Core.AppInfo.Platform);
+            string path = Utilities.ConvertPath(Path.GetDirectoryName(importedShortcut.Location), 
+                    false, 
+                    Core.AppInfo.Platform);
             path = path.Replace(Core.AppInfo.Directory, "%INSTALLDIR%");
 
             string icon = Utilities.ConvertPath(importedShortcut.Icon, false, Core.AppInfo.Platform);
@@ -255,8 +258,7 @@ namespace SevenUpdate.Sdk.Pages
         private void LocateIcon(object sender, MouseButtonEventArgs e)
         {
             string installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
-                                              ? Utilities.GetRegistryValue(
-                                                      Core.AppInfo.Directory, 
+                                              ? Utilities.GetRegistryValue(Core.AppInfo.Directory, 
                                                       Core.AppInfo.ValueName, 
                                                       Core.AppInfo.Platform)
                                               : Core.AppInfo.Directory;
@@ -281,8 +283,7 @@ namespace SevenUpdate.Sdk.Pages
         private void LocateShortcutLocation(object sender, MouseButtonEventArgs e)
         {
             string installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
-                                              ? Utilities.GetRegistryValue(
-                                                      Core.AppInfo.Directory, 
+                                              ? Utilities.GetRegistryValue(Core.AppInfo.Directory, 
                                                       Core.AppInfo.ValueName, 
                                                       Core.AppInfo.Platform)
                                               : Core.AppInfo.Directory;
@@ -308,8 +309,7 @@ namespace SevenUpdate.Sdk.Pages
         private void LocateShortcutTarget(object sender, MouseButtonEventArgs e)
         {
             string installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
-                                              ? Utilities.GetRegistryValue(
-                                                      Core.AppInfo.Directory, 
+                                              ? Utilities.GetRegistryValue(Core.AppInfo.Directory, 
                                                       Core.AppInfo.ValueName, 
                                                       Core.AppInfo.Platform)
                                               : Core.AppInfo.Directory;
@@ -401,8 +401,10 @@ namespace SevenUpdate.Sdk.Pages
 
             textBox.HasError =
                     !new DirectoryInputRule { IsRequired = true }.Validate(
-                            Utilities.ExpandInstallLocation(
-                                    textBox.Text, Core.AppInfo.Directory, Core.AppInfo.Platform, Core.AppInfo.ValueName), 
+                            Utilities.ExpandInstallLocation(textBox.Text, 
+                                    Core.AppInfo.Directory, 
+                                    Core.AppInfo.Platform, 
+                                    Core.AppInfo.ValueName), 
                             null).IsValid;
 
             textBox.ToolTip = textBox.HasError ? Properties.Resources.FilePathInvalid : null;
@@ -429,8 +431,7 @@ namespace SevenUpdate.Sdk.Pages
             {
                 textBox.HasError =
                         !new FileNameInputRule { IsRequired = true }.Validate(
-                                Utilities.ExpandInstallLocation(
-                                        textBox.Text, 
+                                Utilities.ExpandInstallLocation(textBox.Text, 
                                         Core.AppInfo.Directory, 
                                         Core.AppInfo.Platform, 
                                         Core.AppInfo.ValueName), 

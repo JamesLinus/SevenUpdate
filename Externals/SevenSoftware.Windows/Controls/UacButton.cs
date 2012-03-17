@@ -30,12 +30,10 @@ namespace SevenSoftware.Windows.Controls
     public sealed class UacButton : Button, INotifyPropertyChanged
     {
         /// <summary>Dependency Property - Specifies the text to display on the button.</summary>
-        private static readonly DependencyProperty ButtonTextProperty = DependencyProperty.Register(
-                "ButtonText", 
+        private static readonly DependencyProperty ButtonTextProperty = DependencyProperty.Register("ButtonText", 
                 typeof(string), 
                 typeof(UacButton), 
-                new FrameworkPropertyMetadata(
-                        null, 
+                new FrameworkPropertyMetadata(null, 
                         FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsRender, 
                         OnButtonTextChanged));
 
@@ -44,16 +42,14 @@ namespace SevenSoftware.Windows.Controls
                 "IsShieldNeeded", 
                 typeof(bool), 
                 typeof(UacButton), 
-                new FrameworkPropertyMetadata(
-                        true, 
+                new FrameworkPropertyMetadata(true, 
                         FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsRender, 
                         OnIsShieldNeededChanged));
 
         /// <summary>The UAC shield.</summary>
         private static readonly BitmapImage Shield =
                 new BitmapImage(
-                        new Uri(
-                                @"pack://application:,,,/SevenSoftware.Windows;component/Resources/Images/Shield.png", 
+                        new Uri(@"pack://application:,,,/SevenSoftware.Windows;component/Resources/Images/Shield.png", 
                                 UriKind.Absolute));
 
         /// <summary>The disabled shield image.</summary>
@@ -64,12 +60,12 @@ namespace SevenSoftware.Windows.Controls
                                 UriKind.Absolute));
 
         /// <summary>Dependency Property - The shield icon to display.</summary>
-        private static readonly DependencyProperty ShieldIconProperty = DependencyProperty.Register(
-                "ShieldIcon", 
+        private static readonly DependencyProperty ShieldIconProperty = DependencyProperty.Register("ShieldIcon", 
                 typeof(ImageSource), 
                 typeof(Button), 
-                new FrameworkPropertyMetadata(
-                        Shield, FrameworkPropertyMetadataOptions.AffectsRender, OnShieldIconChanged));
+                new FrameworkPropertyMetadata(Shield, 
+                        FrameworkPropertyMetadataOptions.AffectsRender, 
+                        OnShieldIconChanged));
 
         /// <summary>Indicates if the Uac shield is needed.</summary>
         private static readonly bool ShieldNeeded = !NativeMethods.IsUserAdmin;

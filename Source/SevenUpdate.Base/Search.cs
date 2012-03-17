@@ -145,8 +145,7 @@ namespace SevenUpdate
 
             if (SearchCompleted != null)
             {
-                SearchCompleted(
-                        null, 
+                SearchCompleted(null, 
                         new SearchCompletedEventArgs(applicationsFound, importantCount, recommendedCount, optionalCount));
             }
         }
@@ -191,8 +190,8 @@ namespace SevenUpdate
 
             if (SearchCompleted != null)
             {
-                SearchCompleted(
-                        null, new SearchCompletedEventArgs(updateList, importantCount, recommendedCount, optionalCount));
+                SearchCompleted(null, 
+                        new SearchCompletedEventArgs(updateList, importantCount, recommendedCount, optionalCount));
             }
         }
 
@@ -202,8 +201,9 @@ namespace SevenUpdate
         private static bool CheckForUpdates(ref Sui app)
         {
             app.AppInfo.Directory = Utilities.IsRegistryKey(app.AppInfo.Directory)
-                                            ? Utilities.GetRegistryValue(
-                                                    app.AppInfo.Directory, app.AppInfo.ValueName, app.AppInfo.Platform)
+                                            ? Utilities.GetRegistryValue(app.AppInfo.Directory, 
+                                                    app.AppInfo.ValueName, 
+                                                    app.AppInfo.Platform)
                                             : Utilities.ConvertPath(app.AppInfo.Directory, true, app.AppInfo.Platform);
 
             if (!Directory.Exists(app.AppInfo.Directory))
@@ -215,8 +215,10 @@ namespace SevenUpdate
             {
                 Update updates = app.Updates[y];
 
-                ulong size = IterateUpdate(
-                        ref updates, app.AppInfo.Directory, app.AppInfo.ValueName, app.AppInfo.Platform);
+                ulong size = IterateUpdate(ref updates, 
+                        app.AppInfo.Directory, 
+                        app.AppInfo.ValueName, 
+                        app.AppInfo.Platform);
 
                 app.Updates[y] = updates;
 
@@ -229,14 +231,14 @@ namespace SevenUpdate
                     for (int z = 0; z < app.Updates[y].Files.Count; z++)
                     {
                         app.Updates[y].Files[z].Destination =
-                                Utilities.ExpandInstallLocation(
-                                        app.Updates[y].Files[z].Destination, 
+                                Utilities.ExpandInstallLocation(app.Updates[y].Files[z].Destination, 
                                         app.AppInfo.Directory, 
                                         app.AppInfo.Platform, 
                                         app.AppInfo.ValueName);
 
-                        app.Updates[y].Files[z].Source = Utilities.ExpandDownloadUrl(
-                                app.Updates[y].Files[z].Source, app.Updates[y].DownloadUrl, app.AppInfo.Platform);
+                        app.Updates[y].Files[z].Source = Utilities.ExpandDownloadUrl(app.Updates[y].Files[z].Source, 
+                                app.Updates[y].DownloadUrl, 
+                                app.AppInfo.Platform);
 
                         if (app.Updates[y].Files[z].Action != FileAction.ExecuteThenDelete)
                         {
@@ -300,11 +302,14 @@ namespace SevenUpdate
             ulong size = 0;
             for (int z = 0; z < update.Files.Count; z++)
             {
-                update.Files[z].Destination = Utilities.ExpandInstallLocation(
-                        update.Files[z].Destination, directory, platform, valueName);
+                update.Files[z].Destination = Utilities.ExpandInstallLocation(update.Files[z].Destination, 
+                        directory, 
+                        platform, 
+                        valueName);
 
-                string downloadFile = Path.Combine(
-                        downloadDirectory, update.Name[0].Value, Path.GetFileName(update.Files[z].Destination));
+                string downloadFile = Path.Combine(downloadDirectory, 
+                        update.Name[0].Value, 
+                        Path.GetFileName(update.Files[z].Destination));
 
                 // Checks to see if the file needs updated, if it doesn't it removes it from the list.
                 if (File.Exists(update.Files[z].Destination))

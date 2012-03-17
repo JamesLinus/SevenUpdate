@@ -266,8 +266,9 @@ namespace SharpBits.Base
         private string GetErrorDescription(int result)
         {
             string description;
-            this.BackgroundCopyManager.GetErrorDescription(
-                    result, Convert.ToUInt32(Thread.CurrentThread.CurrentUICulture.LCID), out description);
+            this.BackgroundCopyManager.GetErrorDescription(result, 
+                    Convert.ToUInt32(Thread.CurrentThread.CurrentUICulture.LCID), 
+                    out description);
             return description;
         }
 

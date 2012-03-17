@@ -1,6 +1,6 @@
 ﻿<!-- Copyright (c) Robert Baker, Seven Software -->
 <ResourceDictionary xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-                        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:Converters="clr-namespace:SevenUpdate.Sdk.Converters"
                     xmlns:Converters1="clr-namespace:SevenSoftware.Windows.Converters;assembly=SevenSoftware.Windows">
   <Converters:StringToLocaleStringConverter x:Key="stringToLocaleString" />

@@ -42,14 +42,16 @@ namespace SevenSoftware.Windows.ApplicationServices
 
         [DllImport("kernel32.dll", CharSet = CharSet.Unicode)]
         [PreserveSig]
-        internal static extern Result RegisterApplicationRecoveryCallback(
-                InternalRecoveryCallback callback, IntPtr param, uint pingInterval, uint flags);
+        internal static extern Result RegisterApplicationRecoveryCallback(InternalRecoveryCallback callback, 
+                                                                          IntPtr param, 
+                                                                          uint pingInterval, 
+                                                                          uint flags);
 
         // Unused.
         [DllImport("kernel32.dll")]
         [PreserveSig]
-        internal static extern Result RegisterApplicationRestart(
-                [MarshalAs(UnmanagedType.BStr)] string commandLineArgs, RestartRestrictions flags);
+        internal static extern Result RegisterApplicationRestart([MarshalAs(UnmanagedType.BStr)] string commandLineArgs, 
+                                                                 RestartRestrictions flags);
 
         [DllImport("kernel32.dll")]
         [PreserveSig]

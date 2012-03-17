@@ -51,12 +51,10 @@ namespace WPFLocalizeExtension.Extensions
                 return this.FormatOutput(obj);
             }
 
-            throw new NotSupportedException(
-                    string.Format(
-                            CultureInfo.CurrentCulture, 
-                            "ResourceKey '{0}' returns '{1}' which is not type of double", 
-                            this.Key, 
-                            obj.GetType().FullName));
+            throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, 
+                    "ResourceKey '{0}' returns '{1}' which is not type of double", 
+                    this.Key, 
+                    obj.GetType().FullName));
         }
 
         /// <summary>This method is used to modify the passed object into the target format.</summary>
@@ -78,8 +76,10 @@ namespace WPFLocalizeExtension.Extensions
         /// </summary>
         protected override void HandleNewValue()
         {
-            var obj = Localize.Instance.GetLocalizedObject<object>(
-                    this.Assembly, this.Dictionary, this.Key, this.Culture);
+            var obj = Localize.Instance.GetLocalizedObject<object>(this.Assembly, 
+                    this.Dictionary, 
+                    this.Key, 
+                    this.Culture);
             this.SetNewValue(this.FormatOutput(obj));
         }
     }

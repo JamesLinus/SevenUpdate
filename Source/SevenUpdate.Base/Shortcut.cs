@@ -177,11 +177,10 @@ namespace SevenUpdate
             /// <param name="data">The data to get.</param>
             /// <param name="flags">The options to specify the path is retrieved.</param>
             [PreserveSig]
-            void GetPath(
-                    [MarshalAs(UnmanagedType.LPWStr)] StringBuilder file, 
-                    int maxPath, 
-                    ref Win32FindData data, 
-                    uint flags);
+            void GetPath([MarshalAs(UnmanagedType.LPWStr)] StringBuilder file, 
+                         int maxPath, 
+                         ref Win32FindData data, 
+                         uint flags);
 
             /// <summary>Retrieves the list of item identifiers for a Shell link object.</summary>
             /// <param name="identifier">The indentifer list.</param>
@@ -254,10 +253,9 @@ namespace SevenUpdate
             /// <param name="iconPathLength">The maximum number of characters to copy to the buffer pointed to by the iconPath parameter.</param>
             /// <param name="iconIndex">Index of the icon.</param>
             [PreserveSig]
-            void GetIconLocation(
-                    [MarshalAs(UnmanagedType.LPWStr, SizeParamIndex = 1)] StringBuilder iconPath, 
-                    int iconPathLength, 
-                    out int iconIndex);
+            void GetIconLocation([MarshalAs(UnmanagedType.LPWStr, SizeParamIndex = 1)] StringBuilder iconPath, 
+                                 int iconPathLength, 
+                                 out int iconIndex);
 
             /// <summary>Sets the location (path and index) of the icon for a Shell link object.</summary>
             /// <param name="iconPath">The icon path.</param>
@@ -504,8 +502,10 @@ namespace SevenUpdate
             int pathLength = MaxPathLength;
             var path = new StringBuilder(pathLength);
 
-            int installState = NativeMethods.MsiGetComponentPath(
-                    product.ToString(), component.ToString(), path, ref pathLength);
+            int installState = NativeMethods.MsiGetComponentPath(product.ToString(), 
+                    component.ToString(), 
+                    path, 
+                    ref pathLength);
             return installState == 4 ? path.ToString() : null;
         }
 

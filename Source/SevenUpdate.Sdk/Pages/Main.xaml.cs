@@ -84,8 +84,9 @@ namespace SevenUpdate.Sdk.Pages
             }
 
             this.clEdit.Content = string.Format(CultureInfo.CurrentCulture, Properties.Resources.Edit, item.Header);
-            this.clNewUpdate.Note = string.Format(
-                    CultureInfo.CurrentCulture, Properties.Resources.AddUpdate, item.Header);
+            this.clNewUpdate.Note = string.Format(CultureInfo.CurrentCulture, 
+                    Properties.Resources.AddUpdate, 
+                    item.Header);
             if (parent == null)
             {
                 Core.AppIndex = item.Tag is int ? (int)item.Tag : -1;
@@ -138,11 +139,11 @@ namespace SevenUpdate.Sdk.Pages
                     if (File.Exists(Path.Combine(App.UserStore, Core.Projects[index[0]].ApplicationName + ".sui")))
                     {
                         var updates =
-                                Utilities.Deserialize<Collection<Update>>(
-                                        Path.Combine(App.UserStore, Core.Projects[index[0]].ApplicationName + ".sui"));
+                                Utilities.Deserialize<Collection<Update>>(Path.Combine(App.UserStore, 
+                                        Core.Projects[index[0]].ApplicationName + ".sui"));
                         updates.RemoveAt(index[1]);
-                        Utilities.Serialize(
-                                updates, Path.Combine(App.UserStore, Core.Projects[index[0]].ApplicationName + ".sui"));
+                        Utilities.Serialize(updates, 
+                                Path.Combine(App.UserStore, Core.Projects[index[0]].ApplicationName + ".sui"));
                     }
 
                     Core.Projects[index[0]].UpdateNames.RemoveAt(index[1]);
@@ -240,8 +241,9 @@ namespace SevenUpdate.Sdk.Pages
         {
             string fileName = Core.Projects[Core.AppIndex].ExportedSuaFileName
                               ?? Core.Projects[Core.AppIndex].ApplicationName;
-            fileName = Core.SaveFileDialog(
-                    Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), fileName, @"sua");
+            fileName = Core.SaveFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), 
+                    fileName, 
+                    @"sua");
 
             if (fileName == null)
             {
@@ -265,8 +267,9 @@ namespace SevenUpdate.Sdk.Pages
             string fileName = Core.Projects[Core.AppIndex].ExportedSuiFileName
                               ?? Core.Projects[Core.AppIndex].ApplicationName;
 
-            fileName = Core.SaveFileDialog(
-                    Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), fileName, @"sui");
+            fileName = Core.SaveFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), 
+                    fileName, 
+                    @"sui");
 
             if (fileName == null)
             {

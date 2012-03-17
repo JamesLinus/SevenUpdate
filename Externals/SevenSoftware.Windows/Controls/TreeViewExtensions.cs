@@ -48,10 +48,9 @@ namespace SevenSoftware.Windows.Controls
         /// <param name="itemCollection">The item collection.</param>
         /// <param name="predicate">The TreeViewItem.</param>
         /// <returns>The TreeViewItem found.</returns>
-        private static TreeViewItem FindTreeViewItem(
-                ItemContainerGenerator parentItemContainerGenerator, 
-                ItemCollection itemCollection, 
-                Predicate<TreeViewItem> predicate)
+        private static TreeViewItem FindTreeViewItem(ItemContainerGenerator parentItemContainerGenerator, 
+                                                     ItemCollection itemCollection, 
+                                                     Predicate<TreeViewItem> predicate)
         {
             foreach (var trvItem in
                     from object item in itemCollection
@@ -62,8 +61,9 @@ namespace SevenSoftware.Windows.Controls
                     return trvItem;
                 }
 
-                TreeViewItem nestedSearchResult = FindTreeViewItem(
-                        trvItem.ItemContainerGenerator, trvItem.Items, predicate);
+                TreeViewItem nestedSearchResult = FindTreeViewItem(trvItem.ItemContainerGenerator, 
+                        trvItem.Items, 
+                        predicate);
                 if (nestedSearchResult != null)
                 {
                     return nestedSearchResult;

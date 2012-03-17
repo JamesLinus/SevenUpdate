@@ -104,8 +104,11 @@ namespace WPFLocalizeExtension.Extensions
         {
             get
             {
-                return string.Format(
-                        CultureInfo.CurrentCulture, "{0}:{1}:{2}", this.Assembly, this.Dictionary, this.Key ?? "(null)");
+                return string.Format(CultureInfo.CurrentCulture, 
+                        "{0}:{1}:{2}", 
+                        this.Assembly, 
+                        this.Dictionary, 
+                        this.Key ?? "(null)");
             }
 
             set
@@ -318,8 +321,8 @@ namespace WPFLocalizeExtension.Extensions
         {
             if (!(targetProperty is DependencyProperty || targetProperty is PropertyInfo))
             {
-                throw new ArgumentException(
-                        "The targetProperty should be a DependencyProperty or PropertyInfo!", "targetProperty");
+                throw new ArgumentException("The targetProperty should be a DependencyProperty or PropertyInfo!", 
+                        "targetProperty");
             }
 
             // indicates, if the target object was found
@@ -347,9 +350,10 @@ namespace WPFLocalizeExtension.Extensions
 
                 // get the initial value of the dependency property
                 object output =
-                        this.FormatOutput(
-                                Localize.Instance.GetLocalizedObject<object>(
-                                        this.Assembly, this.Dictionary, this.Key, this.Culture));
+                        this.FormatOutput(Localize.Instance.GetLocalizedObject<object>(this.Assembly, 
+                                this.Dictionary, 
+                                this.Key, 
+                                this.Culture));
 
                 // set the value to the dependency object
                 SetTargetValue(targetObject, targetProperty, output);
@@ -444,8 +448,10 @@ namespace WPFLocalizeExtension.Extensions
         protected virtual void HandleNewValue()
         {
             // gets the new value and set it to the dependency property on the dependency object
-            this.SetNewValue(
-                    Localize.Instance.GetLocalizedObject<object>(this.Assembly, this.Dictionary, this.Key, this.Culture));
+            this.SetNewValue(Localize.Instance.GetLocalizedObject<object>(this.Assembly, 
+                    this.Dictionary, 
+                    this.Key, 
+                    this.Culture));
         }
 
         /// <summary>
@@ -510,8 +516,9 @@ namespace WPFLocalizeExtension.Extensions
         /// <param name="targetObject">The target object.</param>
         /// <param name="targetProperty">The target property.</param>
         /// <param name="value">The value.</param>
-        private static void SetTargetValue(
-                DependencyObject targetObject, DependencyProperty targetProperty, object value)
+        private static void SetTargetValue(DependencyObject targetObject, 
+                                           DependencyProperty targetProperty, 
+                                           object value)
         {
             targetObject.SetValue(targetProperty, value);
         }
@@ -546,8 +553,10 @@ namespace WPFLocalizeExtension.Extensions
             resolvedValue = default(TValue);
 
             // get the localized object from the dictionary
-            var localizedObject = Localize.Instance.GetLocalizedObject<object>(
-                    this.Assembly, this.Dictionary, this.Key, targetCulture);
+            var localizedObject = Localize.Instance.GetLocalizedObject<object>(this.Assembly, 
+                    this.Dictionary, 
+                    this.Key, 
+                    targetCulture);
 
             // check if the found localized object is type of TValue
             if (localizedObject is TValue)

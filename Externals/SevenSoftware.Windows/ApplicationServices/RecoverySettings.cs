@@ -82,8 +82,7 @@ namespace SevenSoftware.Windows.ApplicationServices
         /// <returns>A <see cref="string" /> object.</returns>
         public override string ToString()
         {
-            return string.Format(
-                    CultureInfo.InvariantCulture, 
+            return string.Format(CultureInfo.InvariantCulture, 
                     Resources.RecoverySettingsFormatString, 
                     this.recoveryData.Callback.Method, 
                     this.recoveryData.State, 
