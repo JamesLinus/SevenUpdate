@@ -27,6 +27,8 @@ namespace SevenSoftware.Windows.ApplicationServices
     /// <summary>Defines a class that contains a callback delegate and properties of the application as defined by the user.</summary>
     public class RecoveryData
     {
+        #region Constructors and Destructors
+
         /// <summary>Initializes a new instance of the <see cref="RecoveryData" /> class.</summary>
         /// <param name="callback">The callback delegate.</param>
         /// <param name="state">The current state of the application.</param>
@@ -36,11 +38,19 @@ namespace SevenSoftware.Windows.ApplicationServices
             this.State = state;
         }
 
+        #endregion
+
+        #region Public Properties
+
         /// <summary>Gets or sets a value that determines the recovery callback function.</summary>
         public RecoveryCallback Callback { get; set; }
 
         /// <summary>Gets or sets a value that determines the application state.</summary>
         public object State { get; set; }
+
+        #endregion
+
+        #region Public Methods and Operators
 
         /// <summary>Invokes the recovery callback function.</summary>
         public void Invoke()
@@ -50,5 +60,7 @@ namespace SevenSoftware.Windows.ApplicationServices
                 this.Callback(this.State);
             }
         }
+
+        #endregion
     }
 }

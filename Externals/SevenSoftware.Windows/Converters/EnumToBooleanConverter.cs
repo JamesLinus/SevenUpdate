@@ -26,6 +26,8 @@ namespace SevenSoftware.Windows.Converters
     [ValueConversion(typeof(Enum), typeof(bool))]
     public class EnumToBooleanConverter : IValueConverter
     {
+        #region Public Methods and Operators
+
         /// <summary>Converts a value.</summary>
         /// <param name="value">The value produced by the binding source.</param>
         /// <param name="targetType">The type of the binding target property.</param>
@@ -52,5 +54,7 @@ namespace SevenSoftware.Windows.Converters
 
             return value.Equals(false) ? DependencyProperty.UnsetValue : parameter;
         }
+
+        #endregion
     }
 }

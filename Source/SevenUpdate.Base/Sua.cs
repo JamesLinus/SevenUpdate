@@ -30,6 +30,8 @@ namespace SevenUpdate
     [KnownType(typeof(ObservableCollection<LocaleString>))]
     public sealed class Sua : INotifyPropertyChanged
     {
+        #region Constants and Fields
+
         /// <summary>The <c>Uri</c> for the application's website.</summary>
         private string appUrl;
 
@@ -51,13 +53,18 @@ namespace SevenUpdate
         /// <summary>The name of the value to the registry key that contains the application directory location.</summary>
         private string valueName;
 
+        #endregion
+
+        #region Constructors and Destructors
+
         /// <summary>Initializes a new instance of the <see cref="Sua" /> class.</summary>
         /// <param name="name">The collection of localized update names.</param>
         /// <param name="publisher">The collection of localized publisher names.</param>
         /// <param name="description">The collection of localized update descriptions.</param>
-        public Sua(ObservableCollection<LocaleString> name, 
-                   ObservableCollection<LocaleString> publisher, 
-                   ObservableCollection<LocaleString> description)
+        public Sua(
+            ObservableCollection<LocaleString> name, 
+            ObservableCollection<LocaleString> publisher, 
+            ObservableCollection<LocaleString> description)
         {
             this.Name = name;
             this.Publisher = publisher;
@@ -116,8 +123,16 @@ namespace SevenUpdate
             this.Publisher = new ObservableCollection<LocaleString>();
         }
 
+        #endregion
+
+        #region Public Events
+
         /// <summary>Occurs when a property has changed.</summary>
         public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
+
+        #region Public Properties
 
         /// <summary>Gets or sets the <c>Uri</c> for the application's website.</summary>
         /// <value>The application website.</value>
@@ -279,6 +294,10 @@ namespace SevenUpdate
             }
         }
 
+        #endregion
+
+        #region Methods
+
         /// <summary>Fires the OnPropertyChanged Event with the collection changes.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The event data.</param>
@@ -314,5 +333,7 @@ namespace SevenUpdate
         {
             this.OnPropertyChanged("Publisher");
         }
+
+        #endregion
     }
 }

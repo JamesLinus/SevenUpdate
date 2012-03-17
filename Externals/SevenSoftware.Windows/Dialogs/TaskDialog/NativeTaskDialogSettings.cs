@@ -17,6 +17,8 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
     /// </summary>
     internal class NativeTaskDialogSettings
     {
+        #region Constructors and Destructors
+
         /// <summary>Initializes a new instance of the <see cref="NativeTaskDialogSettings" /> class.</summary>
         internal NativeTaskDialogSettings()
         {
@@ -51,6 +53,10 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
             this.NativeConfiguration.FooterText = null;
         }
 
+        #endregion
+
+        #region Public Properties
+
         /// <summary>Gets or sets a collection of <c>TaskDialogButton</c>.</summary>
         public TaskDialogButtonData[] Buttons { get; set; }
 
@@ -83,5 +89,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
 
         /// <summary>Gets or sets a collection of <c>TaskDialogRadioButton</c>.</summary>
         public TaskDialogButtonData[] RadioButtons { get; set; }
+
+        #endregion
     }
 }

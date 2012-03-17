@@ -31,49 +31,46 @@ namespace SevenSoftware.Windows.Controls
     /// <summary>Sorts a <c>ListView</c>.</summary>
     public static class ListViewSorter
     {
+        #region Constants and Fields
+
         /// <summary>Indicates if the <c>ListView</c> will auto sort.</summary>
-        private static readonly DependencyProperty AutoSortProperty = DependencyProperty.RegisterAttached("AutoSort", 
-                typeof(bool), 
-                typeof(ListViewSorter), 
-                new UIPropertyMetadata(false, AutoSortCallback));
+        private static readonly DependencyProperty AutoSortProperty = DependencyProperty.RegisterAttached(
+            "AutoSort", typeof(bool), typeof(ListViewSorter), new UIPropertyMetadata(false, AutoSortCallback));
 
         /// <summary>Indicates a custom sorter that will be used.</summary>
         private static readonly DependencyProperty CustomSorterProperty =
-                DependencyProperty.RegisterAttached("CustomSorter", 
-                        typeof(string), 
-                        typeof(ListViewSorter), 
-                        new FrameworkPropertyMetadata(null, CustomSorterCallback));
+            DependencyProperty.RegisterAttached(
+                "CustomSorter", 
+                typeof(string), 
+                typeof(ListViewSorter), 
+                new FrameworkPropertyMetadata(null, CustomSorterCallback));
 
         /// <summary>The property name to sort.</summary>
         private static readonly DependencyProperty PropertyNameProperty =
-                DependencyProperty.RegisterAttached("PropertyName", 
-                        typeof(string), 
-                        typeof(ListViewSorter), 
-                        new UIPropertyMetadata(null));
+            DependencyProperty.RegisterAttached(
+                "PropertyName", typeof(string), typeof(ListViewSorter), new UIPropertyMetadata(null));
 
         /// <summary>The sort arrow up.</summary>
         private static readonly DependencyProperty SortGlyphAscendingProperty =
-                DependencyProperty.RegisterAttached("SortGlyphAscending", 
-                        typeof(ImageSource), 
-                        typeof(ListViewSorter), 
-                        new UIPropertyMetadata(null));
+            DependencyProperty.RegisterAttached(
+                "SortGlyphAscending", typeof(ImageSource), typeof(ListViewSorter), new UIPropertyMetadata(null));
 
         /// <summary>The sort arrow down.</summary>
         private static readonly DependencyProperty SortGlyphDescendingProperty =
-                DependencyProperty.RegisterAttached("SortGlyphDescending", 
-                        typeof(ImageSource), 
-                        typeof(ListViewSorter), 
-                        new UIPropertyMetadata(null));
+            DependencyProperty.RegisterAttached(
+                "SortGlyphDescending", typeof(ImageSource), typeof(ListViewSorter), new UIPropertyMetadata(null));
 
         /// <summary>The column header that was sorted.</summary>
         private static readonly DependencyProperty SortedColumnHeaderProperty =
-                DependencyProperty.RegisterAttached("SortedColumnHeader", 
-                        typeof(GridViewColumnHeader), 
-                        typeof(ListViewSorter), 
-                        new UIPropertyMetadata(null));
+            DependencyProperty.RegisterAttached(
+                "SortedColumnHeader", typeof(GridViewColumnHeader), typeof(ListViewSorter), new UIPropertyMetadata(null));
 
         /// <summary>The current sort direction.</summary>
         private static ListSortDirection currentSortDirection;
+
+        #endregion
+
+        #region Public Methods and Operators
 
         /// <summary>Sets the auto sort.</summary>
         /// <param name="obj">The dependency object.</param>
@@ -178,6 +175,10 @@ namespace SevenSoftware.Windows.Controls
             obj.SetValue(SortedColumnHeaderProperty, header);
         }
 
+        #endregion
+
+        #region Methods
+
         /// <summary>Adds the sort glyph.</summary>
         /// <param name="columnHeader">The column header.</param>
         /// <param name="sortGlyph">The sort glyph.</param>
@@ -193,10 +194,8 @@ namespace SevenSoftware.Windows.Controls
         /// <param name="propertyName">Name of the property.</param>
         /// <param name="listView">The list view to sort.</param>
         /// <param name="sortedColumnHeader">The sorted column header.</param>
-        private static void ApplyCustomSort(ListCollectionView view, 
-                                            string propertyName, 
-                                            ItemsControl listView, 
-                                            GridViewColumnHeader sortedColumnHeader)
+        private static void ApplyCustomSort(
+            ListCollectionView view, string propertyName, ItemsControl listView, GridViewColumnHeader sortedColumnHeader)
         {
             if (view == null)
             {
@@ -224,8 +223,7 @@ namespace SevenSoftware.Windows.Controls
                 if (currentSort.PropertyName == propertyName)
                 {
                     currentSortDirection = currentSort.Direction == ListSortDirection.Ascending
-                                                   ? ListSortDirection.Descending
-                                                   : ListSortDirection.Ascending;
+                                               ? ListSortDirection.Descending : ListSortDirection.Ascending;
                 }
             }
 
@@ -256,8 +254,7 @@ namespace SevenSoftware.Windows.Controls
             }
 
             ImageSource sort = currentSortDirection == ListSortDirection.Ascending
-                                       ? GetSortGlyphAscending(listView)
-                                       : GetSortGlyphDescending(listView);
+                                   ? GetSortGlyphAscending(listView) : GetSortGlyphDescending(listView);
 
             AddSortGlyph(sortedColumnHeader, sort);
             SetSortedColumnHeader(listView, sortedColumnHeader);
@@ -268,10 +265,11 @@ namespace SevenSoftware.Windows.Controls
         /// <param name="propertyName">Name of the property.</param>
         /// <param name="listView">The list view.</param>
         /// <param name="sortedColumnHeader">The sorted column header.</param>
-        private static void ApplySort(ICollectionView view, 
-                                      string propertyName, 
-                                      DependencyObject listView, 
-                                      GridViewColumnHeader sortedColumnHeader)
+        private static void ApplySort(
+            ICollectionView view, 
+            string propertyName, 
+            DependencyObject listView, 
+            GridViewColumnHeader sortedColumnHeader)
         {
             ListSortDirection direction = ListSortDirection.Ascending;
 
@@ -281,8 +279,7 @@ namespace SevenSoftware.Windows.Controls
                 if (currentSort.PropertyName == propertyName)
                 {
                     direction = currentSort.Direction == ListSortDirection.Ascending
-                                        ? ListSortDirection.Descending
-                                        : ListSortDirection.Ascending;
+                                    ? ListSortDirection.Descending : ListSortDirection.Ascending;
                 }
 
                 view.SortDescriptions.Clear();
@@ -301,8 +298,7 @@ namespace SevenSoftware.Windows.Controls
 
             view.SortDescriptions.Add(new SortDescription(propertyName, direction));
             ImageSource sort = direction == ListSortDirection.Ascending
-                                       ? GetSortGlyphAscending(listView)
-                                       : GetSortGlyphDescending(listView);
+                                   ? GetSortGlyphAscending(listView) : GetSortGlyphDescending(listView);
             AddSortGlyph(sortedColumnHeader, sort);
 
             SetSortedColumnHeader(listView, sortedColumnHeader);
@@ -475,8 +471,7 @@ namespace SevenSoftware.Windows.Controls
 
             string sorter = GetCustomSorter(listView);
             currentSortDirection = currentSortDirection == ListSortDirection.Ascending
-                                           ? ListSortDirection.Descending
-                                           : ListSortDirection.Ascending;
+                                       ? ListSortDirection.Descending : ListSortDirection.Ascending;
             if (sorter != null)
             {
                 var view = (ListCollectionView)CollectionViewSource.GetDefaultView(listView.ItemsSource);
@@ -491,9 +486,13 @@ namespace SevenSoftware.Windows.Controls
             }
         }
 
+        #endregion
+
         /// <summary>The sort glyph.</summary>
         private class SortGlyphAdorner : Adorner
         {
+            #region Constants and Fields
+
             /// <summary>The ascending arrow.</summary>
             private static readonly Geometry AscGeometry = Geometry.Parse("M 0,0 L 10,0 L 5,5 Z");
 
@@ -506,6 +505,10 @@ namespace SevenSoftware.Windows.Controls
             /// <summary>The sort glyph image.</summary>
             private readonly ImageSource sortGlyph;
 
+            #endregion
+
+            #region Constructors and Destructors
+
             /// <summary>Initializes a new instance of the <see cref="SortGlyphAdorner" /> class.</summary>
             /// <param name="columnHeader">The column header.</param>
             /// <param name="sortGlyph">The sort glyph.</param>
@@ -514,6 +517,10 @@ namespace SevenSoftware.Windows.Controls
                 this.columnHeader = columnHeader;
                 this.sortGlyph = sortGlyph;
             }
+
+            #endregion
+
+            #region Methods
 
             /// <summary>
             ///   When overridden in a derived class, participates in rendering operations that are directed by the
@@ -544,16 +551,20 @@ namespace SevenSoftware.Windows.Controls
                         return;
                     }
 
-                    drawingContext.PushTransform(new TranslateTransform(this.AdornedElement.RenderSize.Width - 15, 
-                            (this.AdornedElement.RenderSize.Height - 5) / 2));
+                    drawingContext.PushTransform(
+                        new TranslateTransform(
+                            this.AdornedElement.RenderSize.Width - 15, (this.AdornedElement.RenderSize.Height - 5) / 2));
 
-                    drawingContext.DrawGeometry(Brushes.LightGray, 
-                            new Pen(Brushes.Gray, 1.0), 
-                            currentSortDirection == ListSortDirection.Ascending ? AscGeometry : DescGeometry);
+                    drawingContext.DrawGeometry(
+                        Brushes.LightGray, 
+                        new Pen(Brushes.Gray, 1.0), 
+                        currentSortDirection == ListSortDirection.Ascending ? AscGeometry : DescGeometry);
 
                     drawingContext.Pop();
                 }
             }
+
+            #endregion
         }
     }
 }

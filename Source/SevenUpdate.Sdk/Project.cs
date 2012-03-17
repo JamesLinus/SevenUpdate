@@ -30,14 +30,24 @@ namespace SevenUpdate.Sdk
     [KnownType(typeof(ObservableCollection<Update>))]
     public class Project : INotifyPropertyChanged
     {
+        #region Constants and Fields
+
         /// <summary>The collection of localized update names.</summary>
         private readonly ObservableCollection<string> updateNames = new ObservableCollection<string>();
 
         /// <summary>The localized name of the application.</summary>
         private string applicationName;
 
+        #endregion
+
+        #region Public Events
+
         /// <summary>Occurs when a property has changed.</summary>
         public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
+
+        #region Public Properties
 
         /// <summary>Gets or sets the localized application name.</summary>
         /// <value>The name of the application.</value>
@@ -79,6 +89,10 @@ namespace SevenUpdate.Sdk
             }
         }
 
+        #endregion
+
+        #region Methods
+
         /// <summary>When a property has changed, call the <c>OnPropertyChanged</c> Event.</summary>
         /// <param name="name">The name of the property changed.</param>
         private void OnPropertyChanged(string name)
@@ -90,5 +104,7 @@ namespace SevenUpdate.Sdk
                 handler(this, new PropertyChangedEventArgs(name));
             }
         }
+
+        #endregion
     }
 }

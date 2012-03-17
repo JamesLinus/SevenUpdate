@@ -25,26 +25,31 @@ namespace SevenSoftware.Windows.Controls
     /// <summary>Implements a CommandLink button that can be used in WPF user interfaces.</summary>
     public class CommandLink : Button, INotifyPropertyChanged
     {
+        #region Constants and Fields
+
         /// <summary>The text to display below the main instruction text.</summary>
         private static readonly DependencyProperty NoteProperty = DependencyProperty.Register(
-                "Note", 
-                typeof(string), 
-                typeof(CommandLink), 
-                new FrameworkPropertyMetadata(
-                        string.Empty, FrameworkPropertyMetadataOptions.AffectsRender, OnNoteChanged));
+            "Note", 
+            typeof(string), 
+            typeof(CommandLink), 
+            new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.AffectsRender, OnNoteChanged));
 
         /// <summary>Indicates if the Uac shield is needed.</summary>
         private static readonly DependencyProperty UseShieldProperty = DependencyProperty.Register(
-                "UseShield", 
-                typeof(bool), 
-                typeof(CommandLink), 
-                new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender, OnUseShieldChanged));
+            "UseShield", 
+            typeof(bool), 
+            typeof(CommandLink), 
+            new FrameworkPropertyMetadata(false, FrameworkPropertyMetadataOptions.AffectsRender, OnUseShieldChanged));
+
+        #endregion
+
+        #region Constructors and Destructors
 
         /// <summary>Initializes static members of the <see cref="CommandLink" /> class.</summary>
         static CommandLink()
         {
             DefaultStyleKeyProperty.OverrideMetadata(
-                    typeof(CommandLink), new FrameworkPropertyMetadata(typeof(CommandLink)));
+                typeof(CommandLink), new FrameworkPropertyMetadata(typeof(CommandLink)));
         }
 
         /// <summary>Initializes a new instance of the <see cref="CommandLink" /> class.</summary>
@@ -62,8 +67,16 @@ namespace SevenSoftware.Windows.Controls
             this.Resources.MergedDictionaries.Add(resourceDictionary);
         }
 
+        #endregion
+
+        #region Public Events
+
         /// <summary>Occurs when a property has changed.</summary>
         public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
+
+        #region Public Properties
 
         /// <summary>Gets or sets the supporting text to display on the <c>CommandLink</c> below the instruction text.</summary>
         public string Note
@@ -93,6 +106,10 @@ namespace SevenSoftware.Windows.Controls
                 this.SetValue(UseShieldProperty, value);
             }
         }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>Handles a change to the <c>Note</c> property.</summary>
         /// <param name="obj">The dependency object.</param>
@@ -125,5 +142,7 @@ namespace SevenSoftware.Windows.Controls
                 handler(this, new PropertyChangedEventArgs(name));
             }
         }
+
+        #endregion
     }
 }

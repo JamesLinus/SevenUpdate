@@ -26,8 +26,14 @@ namespace SevenSoftware.Windows.Controls
     /// <summary>The label to display on the <c>InfoTextBox</c>.</summary>
     public class AdornerLabel : Adorner
     {
+        #region Constants and Fields
+
         /// <summary>The textBlock.</summary>
         private readonly TextBlock textBlock;
+
+        #endregion
+
+        #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="AdornerLabel" /> class.</summary>
         /// <param name="adornedElement">The adorned element.</param>
@@ -38,6 +44,10 @@ namespace SevenSoftware.Windows.Controls
             this.textBlock = new TextBlock { Style = labelStyle, Text = label };
         }
 
+        #endregion
+
+        #region Properties
+
         /// <summary>Gets the number of visual child elements within this element.</summary>
         /// <returns>The number of visual child elements for this element.</returns>
         protected override int VisualChildrenCount
@@ -47,6 +57,10 @@ namespace SevenSoftware.Windows.Controls
                 return 1;
             }
         }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>
         ///   When overridden in a derived class, positions child elements and determines a size for a <see
@@ -79,5 +93,7 @@ namespace SevenSoftware.Windows.Controls
             this.textBlock.Measure(constraint);
             return constraint;
         }
+
+        #endregion
     }
 }

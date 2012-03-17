@@ -16,11 +16,17 @@ namespace SevenSoftware.Windows.Dialogs
     /// <summary>Abstract base class for all dialog controls</summary>
     public abstract class DialogControl
     {
+        #region Constants and Fields
+
         /// <summary>The next ID.</summary>
         private static int nextId = TaskDialogDefaults.MinimumDialogControlId;
 
         /// <summary>The control name.</summary>
         private string name;
+
+        #endregion
+
+        #region Constructors and Destructors
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="DialogControl" /> class. Creates a new instance of a dialog
@@ -50,6 +56,10 @@ namespace SevenSoftware.Windows.Dialogs
         {
             this.Name = name;
         }
+
+        #endregion
+
+        #region Public Properties
 
         /// <summary>
         ///   Gets or sets the native dialog that is hosting this control. This property is null is there is not
@@ -90,6 +100,10 @@ namespace SevenSoftware.Windows.Dialogs
             }
         }
 
+        #endregion
+
+        #region Public Methods and Operators
+
         /// <summary>Compares two objects to determine whether they are equal</summary>
         /// <param name="obj">The object to compare against.</param>
         /// <returns>A <see cref="bool" /> value.</returns>
@@ -116,6 +130,10 @@ namespace SevenSoftware.Windows.Dialogs
 
             return this.Name.GetHashCode();
         }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>
         ///   Calls the hosting dialog, if it exists, to to indicate that a property has changed, and that the dialog
@@ -149,5 +167,7 @@ namespace SevenSoftware.Windows.Dialogs
                 this.HostingDialog.IsControlPropertyChangeAllowed(propName, this);
             }
         }
+
+        #endregion
     }
 }

@@ -20,6 +20,8 @@ namespace WPFLocalizeExtension.Extensions
     [MarkupExtensionReturnType(typeof(Thickness))]
     public class LocThicknessExtension : BaseLocalizeExtension<Thickness>
     {
+        #region Constructors and Destructors
+
         /// <summary>Initializes a new instance of the <see cref="LocThicknessExtension" /> class.</summary>
         public LocThicknessExtension()
         {
@@ -30,6 +32,10 @@ namespace WPFLocalizeExtension.Extensions
         public LocThicknessExtension(string key) : base(key)
         {
         }
+
+        #endregion
+
+        #region Public Methods and Operators
 
         /// <summary>Provides the Value for the first Binding as Thickness.</summary>
         /// <param name="serviceProvider">The <c>System.Windows.Markup.IProvideValueTarget</c> provided from the <c>MarkupExtension</c>.</param>
@@ -53,19 +59,25 @@ namespace WPFLocalizeExtension.Extensions
                 return this.FormatOutput(obj);
             }
 
-            throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, 
+            throw new NotSupportedException(
+                string.Format(
+                    CultureInfo.CurrentCulture, 
                     "ResourceKey '{0}' returns '{1}' which is not type of double", 
                     this.Key, 
                     obj.GetType().FullName));
         }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>This method is used to modify the passed object into the target format.</summary>
         /// <param name="input">The object that will be modified.</param>
         /// <returns>Returns the modified object.</returns>
         protected override object FormatOutput(object input)
         {
-            MethodInfo method = typeof(ThicknessConverter).GetMethod("FromString", 
-                    BindingFlags.Static | BindingFlags.NonPublic);
+            MethodInfo method = typeof(ThicknessConverter).GetMethod(
+                "FromString", BindingFlags.Static | BindingFlags.NonPublic);
             object[] args;
 
             if (Localize.Instance.IsInDesignMode && this.DesignValue != null)
@@ -86,11 +98,11 @@ namespace WPFLocalizeExtension.Extensions
         /// </summary>
         protected override void HandleNewValue()
         {
-            var obj = Localize.Instance.GetLocalizedObject<object>(this.Assembly, 
-                    this.Dictionary, 
-                    this.Key, 
-                    this.Culture);
+            var obj = Localize.Instance.GetLocalizedObject<object>(
+                this.Assembly, this.Dictionary, this.Key, this.Culture);
             this.SetNewValue(this.FormatOutput(obj));
         }
+
+        #endregion
     }
 }

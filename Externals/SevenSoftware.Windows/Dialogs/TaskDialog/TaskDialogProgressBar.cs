@@ -14,6 +14,8 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
     /// <summary>Provides a visual representation of the progress of a long running operation.</summary>
     public class TaskDialogProgressBar : TaskDialogBar
     {
+        #region Constants and Fields
+
         /// <summary>The maximum value.</summary>
         private int maximum = TaskDialogDefaults.ProgressBarMaximumValue;
 
@@ -22,6 +24,10 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
 
         /// <summary>The current progress bar value.</summary>
         private int value;
+
+        #endregion
+
+        #region Constructors and Destructors
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="TaskDialogProgressBar" /> class. Creates a new instance of
@@ -53,6 +59,10 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
             this.Maximum = maximum;
             this.Value = value;
         }
+
+        #endregion
+
+        #region Public Properties
 
         /// <summary>Gets or sets the maximum value for the control.</summary>
         public int Maximum
@@ -129,6 +139,10 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
             }
         }
 
+        #endregion
+
+        #region Properties
+
         /// <summary>Gets a value indicating whether the progress bar's value is between its minimum and maximum.</summary>
         internal bool HasValidValues
         {
@@ -138,11 +152,17 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
             }
         }
 
+        #endregion
+
+        #region Methods
+
         /// <summary>Resets the control to its minimum value.</summary>
         protected internal override void Reset()
         {
             base.Reset();
             this.value = this.minimum;
         }
+
+        #endregion
     }
 }

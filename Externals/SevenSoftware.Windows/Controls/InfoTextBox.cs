@@ -27,41 +27,37 @@ namespace SevenSoftware.Windows.Controls
     /// <summary>A <c>TextBox</c> that includes help text and error indicators.</summary>
     public sealed class InfoTextBox : TextBox
     {
+        #region Constants and Fields
+
         /// <summary>Indicates if the <c>InfoTextBox</c> has an error.</summary>
-        private static readonly DependencyProperty HasErrorProperty = DependencyProperty.Register("HasError", 
-                typeof(bool), 
-                typeof(InfoTextBox), 
-                new PropertyMetadata(false));
+        private static readonly DependencyProperty HasErrorProperty = DependencyProperty.Register(
+            "HasError", typeof(bool), typeof(InfoTextBox), new PropertyMetadata(false));
 
         /// <summary>Indicates if the <c>InfoTextBox</c> has text.</summary>
-        private static readonly DependencyProperty HasTextProperty = DependencyProperty.Register("HasText", 
-                typeof(bool), 
-                typeof(InfoTextBox), 
-                new PropertyMetadata(false));
+        private static readonly DependencyProperty HasTextProperty = DependencyProperty.Register(
+            "HasText", typeof(bool), typeof(InfoTextBox), new PropertyMetadata(false));
 
         /// <summary>Indicates if the <c>InfoTextBox</c> has a warning.</summary>
-        private static readonly DependencyProperty HasWarningProperty = DependencyProperty.Register("HasWarning", 
-                typeof(bool), 
-                typeof(InfoTextBox), 
-                new PropertyMetadata(false));
+        private static readonly DependencyProperty HasWarningProperty = DependencyProperty.Register(
+            "HasWarning", typeof(bool), typeof(InfoTextBox), new PropertyMetadata(false));
 
         /// <summary>The text to display when there is no text in the <c>InfoTextBox</c>.</summary>
-        private static readonly DependencyProperty NoteProperty = DependencyProperty.Register("Note", 
-                typeof(string), 
-                typeof(InfoTextBox), 
-                new UIPropertyMetadata(string.Empty, NotePropertyChanged));
+        private static readonly DependencyProperty NoteProperty = DependencyProperty.Register(
+            "Note", typeof(string), typeof(InfoTextBox), new UIPropertyMetadata(string.Empty, NotePropertyChanged));
 
         /// <summary>The style of the Note.</summary>
-        private static readonly DependencyProperty NoteStyleProperty = DependencyProperty.Register("NoteStyle", 
-                typeof(Style), 
-                typeof(InfoTextBox), 
-                new UIPropertyMetadata(null));
+        private static readonly DependencyProperty NoteStyleProperty = DependencyProperty.Register(
+            "NoteStyle", typeof(Style), typeof(InfoTextBox), new UIPropertyMetadata(null));
 
         /// <summary>The adorner label.</summary>
         private AdornerLabel myAdornerLabel;
 
         /// <summary>The adorner layer.</summary>
         private AdornerLayer myAdornerLayer;
+
+        #endregion
+
+        #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="InfoTextBox" /> class.</summary>
         public InfoTextBox()
@@ -77,6 +73,10 @@ namespace SevenSoftware.Windows.Controls
                 };
             this.Resources.MergedDictionaries.Add(resourceDictionary);
         }
+
+        #endregion
+
+        #region Public Properties
 
         /// <summary>Gets or sets a value indicating whether the input has a validation error.</summary>
         public bool HasError
@@ -136,6 +136,10 @@ namespace SevenSoftware.Windows.Controls
             }
         }
 
+        #endregion
+
+        #region Properties
+
         /// <summary>Gets or sets a value indicating whether this instance has text.</summary>
         /// <value><c>True</c> if this instance has text; otherwise, <c>False</c>.</value>
         private bool HasText
@@ -156,6 +160,10 @@ namespace SevenSoftware.Windows.Controls
             }
         }
 
+        #endregion
+
+        #region Public Methods and Operators
+
         /// <summary>Is called when a control template is applied.</summary>
         public override void OnApplyTemplate()
         {
@@ -165,20 +173,24 @@ namespace SevenSoftware.Windows.Controls
             this.myAdornerLabel = new AdornerLabel(this, this.Note, this.NoteStyle);
             this.UpdateAdorner(this);
 
-            DependencyPropertyDescriptor focusProp = DependencyPropertyDescriptor.FromProperty(IsFocusedProperty, 
-                    typeof(FrameworkElement));
+            DependencyPropertyDescriptor focusProp = DependencyPropertyDescriptor.FromProperty(
+                IsFocusedProperty, typeof(FrameworkElement));
             if (focusProp != null)
             {
                 focusProp.AddValueChanged(this, delegate { this.UpdateAdorner(this); });
             }
 
-            DependencyPropertyDescriptor containsTextProp = DependencyPropertyDescriptor.FromProperty(HasTextProperty, 
-                    typeof(InfoTextBox));
+            DependencyPropertyDescriptor containsTextProp = DependencyPropertyDescriptor.FromProperty(
+                HasTextProperty, typeof(InfoTextBox));
             if (containsTextProp != null)
             {
                 containsTextProp.AddValueChanged(this, delegate { this.UpdateAdorner(this); });
             }
         }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>
         ///   Invoked whenever an unhandled <c>DragDrop</c>.DragEnter attached routed event reaches an element derived
@@ -245,7 +257,7 @@ namespace SevenSoftware.Windows.Controls
             }
 
             DependencyPropertyDescriptor isVisiblePropertyDescriptor =
-                    DependencyPropertyDescriptor.FromProperty(IsVisibleProperty, typeof(InfoTextBox));
+                DependencyPropertyDescriptor.FromProperty(IsVisibleProperty, typeof(InfoTextBox));
             isVisiblePropertyDescriptor.AddValueChanged(d, IsVisibleChanged);
         }
 
@@ -300,5 +312,7 @@ namespace SevenSoftware.Windows.Controls
                 this.myAdornerLayer.Add(this.myAdornerLabel);
             }
         }
+
+        #endregion
     }
 }

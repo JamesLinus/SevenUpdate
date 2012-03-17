@@ -29,6 +29,8 @@ namespace SevenUpdate
     /// <summary>Class containing methods to install updates.</summary>
     public static class Install
     {
+        #region Constants and Fields
+
         /// <summary>Gets an int that indicates to move a file on reboot.</summary>
         private const int MoveOnReboot = 5;
 
@@ -47,6 +49,10 @@ namespace SevenUpdate
         /// <summary>The index position of the current update being installed.</summary>
         private static int updateIndex;
 
+        #endregion
+
+        #region Public Events
+
         /// <summary>Occurs when the installation completed.</summary>
         public static event EventHandler<InstallCompletedEventArgs> InstallCompleted;
 
@@ -56,8 +62,16 @@ namespace SevenUpdate
         /// <summary>Occurs when the installation progress changed.</summary>
         public static event EventHandler<UpdateInstalledEventArgs> UpdateInstalled;
 
+        #endregion
+
+        #region Public Properties
+
         /// <summary>Gets a value indicating whether Seven Update is installing updates.</summary>
         public static bool IsInstalling { get; private set; }
+
+        #endregion
+
+        #region Public Methods and Operators
 
         /// <summary>Cancel the installation of updates.</summary>
         public static void CancelInstall()
@@ -135,7 +149,8 @@ namespace SevenUpdate
 
             if (Utilities.RebootNeeded)
             {
-                string fileName = Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "reboot.lock");
+                string fileName = Path.Combine(
+                    Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "reboot.lock");
                 if (!File.Exists(fileName))
                 {
                     using (FileStream file = File.Create(fileName))
@@ -145,9 +160,9 @@ namespace SevenUpdate
                 }
 
                 NativeMethods.MoveFileExW(
-                        Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "reboot.lock"), 
-                        null, 
-                        MoveOnReboot);
+                    Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "reboot.lock"), 
+                    null, 
+                    MoveOnReboot);
 
                 if (Directory.Exists(downloadDirectory))
                 {
@@ -183,6 +198,10 @@ namespace SevenUpdate
             return;
         }
 
+        #endregion
+
+        #region Methods
+
         /// <summary>Adds an update to the update history.</summary>
         /// <param name="appInfo">The application information.</param>
         /// <param name="updateInfo">The update information.</param>
@@ -191,13 +210,13 @@ namespace SevenUpdate
         {
             var hist = new Suh(updateInfo.Name, appInfo.AppInfo.Publisher, updateInfo.Description)
                 {
-                        HelpUrl = appInfo.AppInfo.HelpUrl, 
-                        AppUrl = appInfo.AppInfo.AppUrl, 
-                        Status = failed == false ? UpdateStatus.Successful : UpdateStatus.Failed, 
-                        InfoUrl = updateInfo.InfoUrl, 
-                        InstallDate = DateTime.Now.ToShortDateString(), 
-                        ReleaseDate = updateInfo.ReleaseDate, 
-                        Importance = updateInfo.Importance, 
+                    HelpUrl = appInfo.AppInfo.HelpUrl, 
+                    AppUrl = appInfo.AppInfo.AppUrl, 
+                    Status = failed == false ? UpdateStatus.Successful : UpdateStatus.Failed, 
+                    InfoUrl = updateInfo.InfoUrl, 
+                    InstallDate = DateTime.Now.ToShortDateString(), 
+                    ReleaseDate = updateInfo.ReleaseDate, 
+                    Importance = updateInfo.Importance, 
                 };
 
             if (UpdateInstalled != null)
@@ -212,8 +231,9 @@ namespace SevenUpdate
         {
             if (InstallProgressChanged != null)
             {
-                InstallProgressChanged(null, 
-                        new InstallProgressChangedEventArgs(currentUpdateName, installProgress, updateIndex, updateCount));
+                InstallProgressChanged(
+                    null, 
+                    new InstallProgressChangedEventArgs(currentUpdateName, installProgress, updateIndex, updateCount));
             }
         }
 
@@ -320,10 +340,8 @@ namespace SevenUpdate
             // Choose the path for the shortcut
             for (int x = 0; x < shortcuts.Count; x++)
             {
-                shortcuts[x].Location = Utilities.ExpandInstallLocation(shortcuts[x].Location, 
-                        appInfo.Directory, 
-                        appInfo.Platform, 
-                        appInfo.ValueName);
+                shortcuts[x].Location = Utilities.ExpandInstallLocation(
+                    shortcuts[x].Location, appInfo.Directory, appInfo.Platform, appInfo.ValueName);
                 string linkName = Utilities.GetLocaleString(shortcuts[x].Name);
 
                 if (shortcuts[x].Action == ShortcutAction.Add
@@ -516,18 +534,21 @@ namespace SevenUpdate
 
                 int x1 = x;
                 int x2 = x;
-                Task task = Task.Factory.StartNew(() => UpdateFile(files[x1])).ContinueWith(delegate
-                    {
-                        int installProgress = (x2 * 100) / files.Count;
-                        if (installProgress > 70)
+                Task task = Task.Factory.StartNew(() => UpdateFile(files[x1])).ContinueWith(
+                    delegate
                         {
-                            installProgress -= 15;
-                        }
+                            int installProgress = (x2 * 100) / files.Count;
+                            if (installProgress > 70)
+                            {
+                                installProgress -= 15;
+                            }
 
-                        ReportProgress(installProgress);
-                    });
+                            ReportProgress(installProgress);
+                        });
                 task.Wait();
             }
         }
+
+        #endregion
     }
 }

@@ -14,8 +14,14 @@ namespace SevenSoftware.Windows
     /// <summary>Class used to define the arguments of another application instance startup.</summary>
     public sealed class StartupNextInstanceEventArgs : EventArgs
     {
+        #region Constants and Fields
+
         /// <summary>The application arguments.</summary>
         private readonly string[] args;
+
+        #endregion
+
+        #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="StartupNextInstanceEventArgs" /> class.</summary>
         /// <param name="args">The arguments passed to the program.</param>
@@ -31,9 +37,17 @@ namespace SevenSoftware.Windows
             this.BringToForeground = bringToFront;
         }
 
+        #endregion
+
+        #region Public Properties
+
         /// <summary>Gets a value indicating whether the application main window has to be brought to foreground.</summary>
         /// <value><c>True</c> if the application window has to be brought to foreground, otherwise <c>False</c>.</value>
         public bool BringToForeground { get; private set; }
+
+        #endregion
+
+        #region Public Methods and Operators
 
         /// <summary>Gets the arguments passed to the other application.</summary>
         /// <returns>Returns the arguments passed to the application.</returns>
@@ -42,5 +56,7 @@ namespace SevenSoftware.Windows
         {
             return this.args;
         }
+
+        #endregion
     }
 }

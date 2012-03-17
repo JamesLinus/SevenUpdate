@@ -17,8 +17,14 @@ namespace SevenSoftware.Windows.Dialogs
     /// <typeparam name="T">The DialogControl</typeparam>
     public sealed class DialogControlCollection<T> : Collection<T> where T : DialogControl
     {
+        #region Constants and Fields
+
         /// <summary>The host dialog.</summary>
         private IDialogControlHost hostingDialog;
+
+        #endregion
+
+        #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="DialogControlCollection{T}" /> class.</summary>
         /// <param name="host">The host.</param>
@@ -26,6 +32,10 @@ namespace SevenSoftware.Windows.Dialogs
         {
             this.hostingDialog = host;
         }
+
+        #endregion
+
+        #region Public Indexers
 
         /// <summary>Defines the indexer that supports accessing controls by name.</summary>
         /// <param name="name">The name of the control.</param>
@@ -46,6 +56,10 @@ namespace SevenSoftware.Windows.Dialogs
                 return this.Items.FirstOrDefault(x => x.Name == name);
             }
         }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>Searches for the control who's id matches the value passed in the <paramref name="id" /> parameter.</summary>
         /// <param name="id">An integer containing the identifier of the control being searched for.</param>
@@ -104,5 +118,7 @@ namespace SevenSoftware.Windows.Dialogs
 
             this.hostingDialog.ApplyCollectionChanged();
         }
+
+        #endregion
     }
 }

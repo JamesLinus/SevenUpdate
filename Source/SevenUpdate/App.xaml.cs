@@ -39,9 +39,11 @@ namespace SevenUpdate
     /// <summary>Interaction logic for App.xaml.</summary>
     public sealed partial class App
     {
+        #region Constants and Fields
+
         /// <summary>The all users application data location.</summary>
         public static readonly string AllUserStore =
-                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Seven Update");
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Seven Update");
 
         /// <summary>The location of the list of applications Seven Update can update.</summary>
         public static readonly string ApplicationsFile = Path.Combine(AllUserStore, @"Apps.sul");
@@ -57,10 +59,14 @@ namespace SevenUpdate
 
         /// <summary>The location of the user application data location.</summary>
         public static readonly string UserStore =
-                Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Seven Update");
+            Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Seven Update");
 
         /// <summary>The Seven Update list location.</summary>
         internal const string SulLocation = @"http://apps.sevenupdate.com/list.sul";
+
+        #endregion
+
+        #region Properties
 
         /// <summary>Gets the command line arguments passed to this instance.</summary>
         internal static IList<string> Args { get; private set; }
@@ -73,6 +79,10 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the application TaskBarItemInfo.</summary>
         internal static TaskbarItemInfo TaskBar { get; set; }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>Logs an error.</summary>
         /// <param name="sender">The object that called the event.</param>
@@ -112,17 +122,17 @@ namespace SevenUpdate
 
                 case "-history":
                     SevenUpdate.Windows.MainWindow.NavService.Navigate(
-                            new Uri(@"/SevenUpdate;Component/Pages/UpdateHistory.xaml", UriKind.Relative));
+                        new Uri(@"/SevenUpdate;Component/Pages/UpdateHistory.xaml", UriKind.Relative));
                     break;
 
                 case "-hidden":
                     SevenUpdate.Windows.MainWindow.NavService.Navigate(
-                            new Uri(@"/SevenUpdate;Component/Pages/RestoreUpdates.xaml", UriKind.Relative));
+                        new Uri(@"/SevenUpdate;Component/Pages/RestoreUpdates.xaml", UriKind.Relative));
                     break;
 
                 case "-settings":
                     SevenUpdate.Windows.MainWindow.NavService.Navigate(
-                            new Uri(@"/SevenUpdate;Component/Pages/Options.xaml", UriKind.Relative));
+                        new Uri(@"/SevenUpdate;Component/Pages/Options.xaml", UriKind.Relative));
                     break;
             }
         }
@@ -154,12 +164,10 @@ namespace SevenUpdate
                     catch (WebException)
                     {
                         Core.ShowMessage(
-                                string.Format(
-                                        CultureInfo.CurrentCulture, 
-                                        SevenUpdate.Properties.Resources.ErrorDownloading, 
-                                        e.Args[0]), 
-                                TaskDialogStandardIcon.Error, 
-                                TaskDialogStandardButtons.Ok);
+                            string.Format(
+                                CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.ErrorDownloading, e.Args[0]), 
+                            TaskDialogStandardIcon.Error, 
+                            TaskDialogStandardButtons.Ok);
                         Environment.Exit(0);
                     }
 
@@ -167,30 +175,24 @@ namespace SevenUpdate
                     if (Utilities.IsRunning64BitOS == false && app.Platform == Platform.X64)
                     {
                         Core.ShowMessage(
-                                string.Format(
-                                        CultureInfo.CurrentCulture, 
-                                        SevenUpdate.Properties.Resources.Not64BitCompat, 
-                                        appName), 
-                                TaskDialogStandardIcon.Error, 
-                                TaskDialogStandardButtons.Ok);
+                            string.Format(
+                                CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.Not64BitCompat, appName), 
+                            TaskDialogStandardIcon.Error, 
+                            TaskDialogStandardButtons.Ok);
                         Environment.Exit(0);
                     }
 
                     TaskDialogResult result =
-                            Core.ShowMessage(
-                                    string.Format(
-                                            CultureInfo.CurrentCulture, 
-                                            SevenUpdate.Properties.Resources.AddToSevenUpdate, 
-                                            appName), 
-                                    TaskDialogStandardIcon.ShieldBlue, 
-                                    TaskDialogStandardButtons.Cancel, 
-                                    string.Format(
-                                            CultureInfo.CurrentCulture, 
-                                            SevenUpdate.Properties.Resources.AllowUpdates, 
-                                            appName), 
-                                    null, 
-                                    SevenUpdate.Properties.Resources.Add, 
-                                    true);
+                        Core.ShowMessage(
+                            string.Format(
+                                CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.AddToSevenUpdate, appName), 
+                            TaskDialogStandardIcon.ShieldBlue, 
+                            TaskDialogStandardButtons.Cancel, 
+                            string.Format(
+                                CultureInfo.CurrentCulture, SevenUpdate.Properties.Resources.AllowUpdates, appName), 
+                            null, 
+                            SevenUpdate.Properties.Resources.Add, 
+                            true);
 
                     if (result != TaskDialogResult.Cancel)
                     {
@@ -238,7 +240,7 @@ namespace SevenUpdate
             try
             {
                 string channel =
-                        Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Seven Update", "channel", null).ToString();
+                    Registry.GetValue(@"HKEY_LOCAL_MACHINE\SOFTWARE\Seven Update", "channel", null).ToString();
 
                 if (channel == "dev")
                 {
@@ -276,7 +278,7 @@ namespace SevenUpdate
 
             // register for Application Restart
             ApplicationRestartRecoveryManager.RegisterForApplicationRestart(
-                    new RestartSettings(string.Empty, RestartRestrictions.NotOnReboot));
+                new RestartSettings(string.Empty, RestartRestrictions.NotOnReboot));
         }
 
         /// <summary>Sets the application jump list.</summary>
@@ -286,40 +288,40 @@ namespace SevenUpdate
 
             var jumpTask = new JumpTask
                 {
-                        IconResourcePath = Path.Combine(Utilities.AppDir, "Shared", @"SevenUpdate.Base.dll"), 
-                        IconResourceIndex = 2, 
-                        Title = SevenUpdate.Properties.Resources.CheckForUpdates, 
-                        Arguments = "-check", 
+                    IconResourcePath = Path.Combine(Utilities.AppDir, "Shared", @"SevenUpdate.Base.dll"), 
+                    IconResourceIndex = 2, 
+                    Title = SevenUpdate.Properties.Resources.CheckForUpdates, 
+                    Arguments = "-check", 
                 };
 
             jumpList.JumpItems.Add(jumpTask);
 
             jumpTask = new JumpTask
                 {
-                        IconResourcePath = Path.Combine(Utilities.AppDir, "Shared", @"SevenUpdate.Base.dll"), 
-                        IconResourceIndex = 5, 
-                        Title = SevenUpdate.Properties.Resources.RestoreHiddenUpdates, 
-                        Arguments = "-hidden"
+                    IconResourcePath = Path.Combine(Utilities.AppDir, "Shared", @"SevenUpdate.Base.dll"), 
+                    IconResourceIndex = 5, 
+                    Title = SevenUpdate.Properties.Resources.RestoreHiddenUpdates, 
+                    Arguments = "-hidden"
                 };
 
             jumpList.JumpItems.Add(jumpTask);
 
             jumpTask = new JumpTask
                 {
-                        IconResourcePath = Path.Combine(Utilities.AppDir, "Shared", @"SevenUpdate.Base.dll"), 
-                        IconResourceIndex = 4, 
-                        Title = SevenUpdate.Properties.Resources.ViewUpdateHistory, 
-                        Arguments = "-history", 
+                    IconResourcePath = Path.Combine(Utilities.AppDir, "Shared", @"SevenUpdate.Base.dll"), 
+                    IconResourceIndex = 4, 
+                    Title = SevenUpdate.Properties.Resources.ViewUpdateHistory, 
+                    Arguments = "-history", 
                 };
 
             jumpList.JumpItems.Add(jumpTask);
 
             jumpTask = new JumpTask
                 {
-                        IconResourcePath = Path.Combine(Utilities.AppDir, "Shared", @"SevenUpdate.Base.dll"), 
-                        IconResourceIndex = 3, 
-                        Title = SevenUpdate.Properties.Resources.ChangeSettings, 
-                        Arguments = "-settings", 
+                    IconResourcePath = Path.Combine(Utilities.AppDir, "Shared", @"SevenUpdate.Base.dll"), 
+                    IconResourceIndex = 3, 
+                    Title = SevenUpdate.Properties.Resources.ChangeSettings, 
+                    Arguments = "-settings", 
                 };
 
             jumpList.JumpItems.Add(jumpTask);
@@ -337,5 +339,7 @@ namespace SevenUpdate
 
             ApplicationRestartRecoveryManager.UnregisterApplicationRestart();
         }
+
+        #endregion
     }
 }

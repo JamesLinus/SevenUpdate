@@ -32,6 +32,8 @@ namespace SevenUpdate.Admin
     [CallbackBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant)]
     public class WcfServiceCallback : IElevatedProcess
     {
+        #region Public Methods and Operators
+
         /// <summary>Adds an application to Seven Update, so it can manage updates for it.</summary>
         /// <param name="application">The application to add to Seven Update.</param>
         public void AddApp(Sua application)
@@ -81,8 +83,8 @@ namespace SevenUpdate.Admin
                 if (Environment.OSVersion.Version.Major < 6)
                 {
                     // ReSharper disable PossibleNullReferenceException
-                    Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true).DeleteValue
-                            ("Seven Update Automatic Checking", false);
+                    Registry.LocalMachine.OpenSubKey(@"Software\Microsoft\Windows\CurrentVersion\Run", true).DeleteValue(
+                        "Seven Update Automatic Checking", false);
 
                     // ReSharper restore PossibleNullReferenceException
                 }
@@ -96,9 +98,9 @@ namespace SevenUpdate.Admin
                 if (Environment.OSVersion.Version.Major < 6)
                 {
                     Registry.SetValue(
-                            @"HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run", 
-                            "Seven Update Automatic Checking", 
-                            Path.Combine(Utilities.AppDir, "SevenUpdate.Helper.exe"));
+                        @"HKEY_LOCAL_MACHINE\Software\Microsoft\Windows\CurrentVersion\Run", 
+                        "Seven Update Automatic Checking", 
+                        Path.Combine(Utilities.AppDir, "SevenUpdate.Helper.exe"));
                 }
                 else
                 {
@@ -115,8 +117,8 @@ namespace SevenUpdate.Admin
         public void HideUpdate(Suh hiddenUpdate)
         {
             Collection<Suh> hidden = (File.Exists(App.HiddenFile)
-                                              ? Utilities.Deserialize<Collection<Suh>>(App.HiddenFile)
-                                              : new Collection<Suh>()) ?? new Collection<Suh>();
+                                          ? Utilities.Deserialize<Collection<Suh>>(App.HiddenFile)
+                                          : new Collection<Suh>()) ?? new Collection<Suh>();
 
             hidden.Add(hiddenUpdate);
 
@@ -166,9 +168,9 @@ namespace SevenUpdate.Admin
 
             App.Applications = applicationUpdates;
             Task.Factory.StartNew(
-                    () =>
-                    Download.DownloadUpdates(
-                            applicationUpdates, "SevenUpdate", Path.Combine(App.AllUserStore, "downloads"), true));
+                () =>
+                Download.DownloadUpdates(
+                    applicationUpdates, "SevenUpdate", Path.Combine(App.AllUserStore, "downloads"), true));
         }
 
         /// <summary>The update to show and remove from hidden updates.</summary>
@@ -181,8 +183,7 @@ namespace SevenUpdate.Admin
             }
 
             Collection<Suh> show = File.Exists(App.HiddenFile)
-                                           ? Utilities.Deserialize<Collection<Suh>>(App.HiddenFile)
-                                           : new Collection<Suh>();
+                                       ? Utilities.Deserialize<Collection<Suh>>(App.HiddenFile) : new Collection<Suh>();
 
             if (show == null)
             {
@@ -216,14 +217,16 @@ namespace SevenUpdate.Admin
         public void Shutdown()
         {
             Task.Factory.StartNew(
-                    () =>
+                () =>
+                    {
+                        Thread.Sleep(500);
+                        if (!App.IsInstalling)
                         {
-                            Thread.Sleep(500);
-                            if (!App.IsInstalling)
-                            {
-                                Environment.Exit(0);
-                            }
-                        });
+                            Environment.Exit(0);
+                        }
+                    });
         }
+
+        #endregion
     }
 }

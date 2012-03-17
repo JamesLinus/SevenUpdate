@@ -26,6 +26,8 @@ namespace SevenUpdate.Service
     [ServiceContract(Namespace = "http://sevenupdate.com")]
     public interface IElevatedProcess
     {
+        #region Public Methods and Operators
+
         /// <summary>Adds an application to Seven Update, so it can manage updates for it.</summary>
         /// <param name="application">The application to add.</param>
         [OperationContract(IsOneWay = false)]
@@ -71,5 +73,7 @@ namespace SevenUpdate.Service
         [OperationContract(IsOneWay = false)]
         [ProtoBehavior]
         void Shutdown();
+
+        #endregion
     }
 }

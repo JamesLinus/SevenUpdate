@@ -26,9 +26,15 @@ namespace SevenUpdate.Sdk.ValidationRules
     /// <summary>Validates a value and determines if the value is a registry path.</summary>
     public class RegistryPathRule : ValidationRule
     {
+        #region Constants and Fields
+
         /// <summary>A regex to detect a registry root key.</summary>
         private const string RegistryPattern =
-                @"^HKLM\\|^HKEY_CLASSES_ROOT\\|^HKEY_CURRENT_USER\\|^HKEY_LOCAL_MACHINE\\|^HKEY_USERS\\|^HKU\\|^HKCR\\";
+            @"^HKLM\\|^HKEY_CLASSES_ROOT\\|^HKEY_CURRENT_USER\\|^HKEY_LOCAL_MACHINE\\|^HKEY_USERS\\|^HKU\\|^HKCR\\";
+
+        #endregion
+
+        #region Public Methods and Operators
 
         /// <summary>When overridden in a derived class, performs validation checks on a value.</summary>
         /// <param name="value">The value from the binding target to check.</param>
@@ -43,8 +49,9 @@ namespace SevenUpdate.Sdk.ValidationRules
             }
 
             return Regex.IsMatch(input, RegistryPattern, RegexOptions.IgnoreCase)
-                           ? new ValidationResult(true, null)
-                           : new ValidationResult(false, Resources.RegistryKeyInvalid);
+                       ? new ValidationResult(true, null) : new ValidationResult(false, Resources.RegistryKeyInvalid);
         }
+
+        #endregion
     }
 }

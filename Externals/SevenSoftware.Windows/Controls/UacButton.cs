@@ -29,49 +29,58 @@ namespace SevenSoftware.Windows.Controls
     /// <summary>Provides a WPF button that displays a UAC Shield icon when required.</summary>
     public sealed class UacButton : Button, INotifyPropertyChanged
     {
+        #region Constants and Fields
+
         /// <summary>Dependency Property - Specifies the text to display on the button.</summary>
-        private static readonly DependencyProperty ButtonTextProperty = DependencyProperty.Register("ButtonText", 
-                typeof(string), 
-                typeof(UacButton), 
-                new FrameworkPropertyMetadata(null, 
-                        FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsRender, 
-                        OnButtonTextChanged));
+        private static readonly DependencyProperty ButtonTextProperty = DependencyProperty.Register(
+            "ButtonText", 
+            typeof(string), 
+            typeof(UacButton), 
+            new FrameworkPropertyMetadata(
+                null, 
+                FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsRender, 
+                OnButtonTextChanged));
 
         /// <summary>Dependency Property - Indicates if the UAC Shield is desired on the button.</summary>
         private static readonly DependencyProperty IsShieldNeededProperty = DependencyProperty.Register(
-                "IsShieldNeeded", 
-                typeof(bool), 
-                typeof(UacButton), 
-                new FrameworkPropertyMetadata(true, 
-                        FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsRender, 
-                        OnIsShieldNeededChanged));
+            "IsShieldNeeded", 
+            typeof(bool), 
+            typeof(UacButton), 
+            new FrameworkPropertyMetadata(
+                true, 
+                FrameworkPropertyMetadataOptions.Inherits | FrameworkPropertyMetadataOptions.AffectsRender, 
+                OnIsShieldNeededChanged));
 
         /// <summary>The UAC shield.</summary>
         private static readonly BitmapImage Shield =
-                new BitmapImage(
-                        new Uri(@"pack://application:,,,/SevenSoftware.Windows;component/Resources/Images/Shield.png", 
-                                UriKind.Absolute));
+            new BitmapImage(
+                new Uri(
+                    @"pack://application:,,,/SevenSoftware.Windows;component/Resources/Images/Shield.png", 
+                    UriKind.Absolute));
 
         /// <summary>The disabled shield image.</summary>
         private static readonly BitmapImage ShieldDisabled =
-                new BitmapImage(
-                        new Uri(
-                                @"pack://application:,,,/SevenSoftware.Windows;component/Resources/Images/ShieldDisabled.png", 
-                                UriKind.Absolute));
+            new BitmapImage(
+                new Uri(
+                    @"pack://application:,,,/SevenSoftware.Windows;component/Resources/Images/ShieldDisabled.png", 
+                    UriKind.Absolute));
 
         /// <summary>Dependency Property - The shield icon to display.</summary>
-        private static readonly DependencyProperty ShieldIconProperty = DependencyProperty.Register("ShieldIcon", 
-                typeof(ImageSource), 
-                typeof(Button), 
-                new FrameworkPropertyMetadata(Shield, 
-                        FrameworkPropertyMetadataOptions.AffectsRender, 
-                        OnShieldIconChanged));
+        private static readonly DependencyProperty ShieldIconProperty = DependencyProperty.Register(
+            "ShieldIcon", 
+            typeof(ImageSource), 
+            typeof(Button), 
+            new FrameworkPropertyMetadata(Shield, FrameworkPropertyMetadataOptions.AffectsRender, OnShieldIconChanged));
 
         /// <summary>Indicates if the Uac shield is needed.</summary>
         private static readonly bool ShieldNeeded = !NativeMethods.IsUserAdmin;
 
         /// <summary>The text for the button.</summary>
         private static readonly string Text = string.Empty;
+
+        #endregion
+
+        #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="UacButton" /> class.</summary>
         public UacButton()
@@ -85,9 +94,9 @@ namespace SevenSoftware.Windows.Controls
 
             var imgShield = new Image
                 {
-                        Source = this.IsEnabled ? Shield : ShieldDisabled, 
-                        Stretch = Stretch.None, 
-                        Margin = new Thickness(0, 0, 5, 0)
+                    Source = this.IsEnabled ? Shield : ShieldDisabled, 
+                    Stretch = Stretch.None, 
+                    Margin = new Thickness(0, 0, 5, 0)
                 };
             stackPanel.Children.Add(imgShield);
 
@@ -96,8 +105,16 @@ namespace SevenSoftware.Windows.Controls
             this.Content = stackPanel;
         }
 
+        #endregion
+
+        #region Public Events
+
         /// <summary>Occurs when a property has changed.</summary>
         public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
+
+        #region Public Properties
 
         /// <summary>Gets or sets the text to display on the button.</summary>
         public string ButtonText
@@ -160,6 +177,10 @@ namespace SevenSoftware.Windows.Controls
         /// <summary>Gets or sets <c>ToolTip</c> shown when elevation has not been preformed.</summary>
         /// <value>A string that is used as the <c>ToolTip</c> when elevation is required.</value>
         public object ToolTipNotElevated { get; set; }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>Handles a change to the <c>ButtonText</c> property.</summary>
         /// <param name="obj">The dependency object.</param>
@@ -270,5 +291,7 @@ namespace SevenSoftware.Windows.Controls
                 handler(this, new PropertyChangedEventArgs(name));
             }
         }
+
+        #endregion
     }
 }

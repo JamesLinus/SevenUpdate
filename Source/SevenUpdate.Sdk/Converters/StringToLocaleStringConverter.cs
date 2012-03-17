@@ -28,6 +28,8 @@ namespace SevenUpdate.Sdk.Converters
     [ValueConversion(typeof(LocaleString), typeof(string))]
     internal class StringToLocaleStringConverter : IValueConverter
     {
+        #region Public Methods and Operators
+
         /// <summary>Converts a object into another object.</summary>
         /// <param name="value">The value produced by the binding source.</param>
         /// <param name="targetType">The type of the binding target property.</param>
@@ -40,8 +42,8 @@ namespace SevenUpdate.Sdk.Converters
 
             // Loops through the collection of LocaleStrings
             return localeStrings != null
-                           ? localeStrings.Where(t => t.Lang == Utilities.Locale).Select(t => t.Value).FirstOrDefault()
-                           : null;
+                       ? localeStrings.Where(t => t.Lang == Utilities.Locale).Select(t => t.Value).FirstOrDefault()
+                       : null;
         }
 
         /// <summary>Converts a converted object back into it's original form.</summary>
@@ -54,5 +56,7 @@ namespace SevenUpdate.Sdk.Converters
         {
             return DependencyProperty.UnsetValue;
         }
+
+        #endregion
     }
 }

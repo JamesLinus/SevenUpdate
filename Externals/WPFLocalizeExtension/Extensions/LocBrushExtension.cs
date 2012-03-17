@@ -19,6 +19,8 @@ namespace WPFLocalizeExtension.Extensions
     [MarkupExtensionReturnType(typeof(Brush))]
     public class LocBrushExtension : BaseLocalizeExtension<Brush>
     {
+        #region Constructors and Destructors
+
         /// <summary>Initializes a new instance of the <see cref="LocBrushExtension" /> class.</summary>
         public LocBrushExtension()
         {
@@ -29,6 +31,10 @@ namespace WPFLocalizeExtension.Extensions
         public LocBrushExtension(string key) : base(key)
         {
         }
+
+        #endregion
+
+        #region Public Methods and Operators
 
         /// <summary>Provides the Value for the first Binding as <c>System.Windows.Media.Brush</c>.</summary>
         /// <param name="serviceProvider">The <c>System.Windows.Markup.IProvideValueTarget</c> provided from the <c>MarkupExtension</c>.</param>
@@ -52,11 +58,17 @@ namespace WPFLocalizeExtension.Extensions
                 return this.FormatOutput(obj);
             }
 
-            throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, 
+            throw new NotSupportedException(
+                string.Format(
+                    CultureInfo.CurrentCulture, 
                     "ResourceKey '{0}' returns '{1}' which is not type of System.Drawing.Bitmap", 
                     this.Key, 
                     obj.GetType().FullName));
         }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>This method is used to modify the passed object into the target format.</summary>
         /// <param name="input">The object that will be modified.</param>
@@ -77,11 +89,11 @@ namespace WPFLocalizeExtension.Extensions
         /// </summary>
         protected override void HandleNewValue()
         {
-            var obj = Localize.Instance.GetLocalizedObject<object>(this.Assembly, 
-                    this.Dictionary, 
-                    this.Key, 
-                    this.Culture);
+            var obj = Localize.Instance.GetLocalizedObject<object>(
+                this.Assembly, this.Dictionary, this.Key, this.Culture);
             this.SetNewValue(new BrushConverter().ConvertFromString((string)obj));
         }
+
+        #endregion
     }
 }

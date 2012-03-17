@@ -18,6 +18,8 @@ namespace WPFLocalizeExtension.Extensions
     [MarkupExtensionReturnType(typeof(string))]
     public class LocTextUpperExtension : LocTextExtension
     {
+        #region Constructors and Destructors
+
         /// <summary>Initializes a new instance of the <see cref="LocTextUpperExtension" /> class.</summary>
         public LocTextUpperExtension()
         {
@@ -28,6 +30,10 @@ namespace WPFLocalizeExtension.Extensions
         public LocTextUpperExtension(string key) : base(key)
         {
         }
+
+        #endregion
+
+        #region Public Methods and Operators
 
         /// <summary>Provides the Value for the first Binding as <c>System.String</c>.</summary>
         /// <param name="serviceProvider">The <c>System.Windows.Markup.IProvideValueTarget</c> provided from the <c>MarkupExtension</c>.</param>
@@ -52,11 +58,17 @@ namespace WPFLocalizeExtension.Extensions
                 return obj;
             }
 
-            throw new NotSupportedException(string.Format(CultureInfo.CurrentCulture, 
+            throw new NotSupportedException(
+                string.Format(
+                    CultureInfo.CurrentCulture, 
                     "ResourceKey '{0}' returns '{1}' which is not type of System.String", 
                     this.Key, 
                     obj.GetType().FullName));
         }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>
         ///   This method formats the localized text.If the passed target text is <c>null</c>, string.empty will be
@@ -75,11 +87,11 @@ namespace WPFLocalizeExtension.Extensions
         /// </summary>
         protected override void HandleNewValue()
         {
-            var obj = Localize.Instance.GetLocalizedObject<object>(this.Assembly, 
-                    this.Dictionary, 
-                    this.Key, 
-                    this.Culture);
+            var obj = Localize.Instance.GetLocalizedObject<object>(
+                this.Assembly, this.Dictionary, this.Key, this.Culture);
             this.SetNewValue(this.FormatOutput(obj));
         }
+
+        #endregion
     }
 }

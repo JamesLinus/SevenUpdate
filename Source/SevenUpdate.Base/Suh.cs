@@ -31,6 +31,8 @@ namespace SevenUpdate
     [KnownType(typeof(ObservableCollection<LocaleString>))]
     public sealed class Suh : INotifyPropertyChanged
     {
+        #region Constants and Fields
+
         /// <summary>The <c>Uri</c> for the application's website.</summary>
         private string appUrl;
 
@@ -55,13 +57,18 @@ namespace SevenUpdate
         /// <summary>The total download size in bytes of the update.</summary>
         private ulong updateSize;
 
+        #endregion
+
+        #region Constructors and Destructors
+
         /// <summary>Initializes a new instance of the <see cref="Suh" /> class.</summary>
         /// <param name="name">The collection of localized update names.</param>
         /// <param name="publisher">The collection of localized publisher names.</param>
         /// <param name="description">The collection of localized update descriptions.</param>
-        public Suh(ObservableCollection<LocaleString> name, 
-                   ObservableCollection<LocaleString> publisher, 
-                   ObservableCollection<LocaleString> description)
+        public Suh(
+            ObservableCollection<LocaleString> name, 
+            ObservableCollection<LocaleString> publisher, 
+            ObservableCollection<LocaleString> description)
         {
             this.Name = name;
             this.Description = description;
@@ -91,8 +98,16 @@ namespace SevenUpdate
             this.Description = new ObservableCollection<LocaleString>();
         }
 
+        #endregion
+
+        #region Public Events
+
         /// <summary>Occurs when a property has changed.</summary>
         public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
+
+        #region Public Properties
 
         /// <summary>Gets or sets the <c>Uri</c> for the application's website.</summary>
         /// <value>The application website.</value>
@@ -272,6 +287,10 @@ namespace SevenUpdate
             }
         }
 
+        #endregion
+
+        #region Methods
+
         /// <summary>When a property has changed, call the <c>OnPropertyChanged</c> Event.</summary>
         /// <param name="propertyName">The name of the property that changed.</param>
         private void OnPropertyChanged(string propertyName)
@@ -283,5 +302,7 @@ namespace SevenUpdate
                 handler(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
+        #endregion
     }
 }

@@ -30,6 +30,8 @@ namespace SevenUpdate.Windows
     /// <summary>Interaction logic for License_Agreement.xaml.</summary>
     public sealed partial class LicenseAgreement
     {
+        #region Constants and Fields
+
         /// <summary>Current index.</summary>
         private int index;
 
@@ -38,6 +40,10 @@ namespace SevenUpdate.Windows
 
         /// <summary>An array of the strings that consist of the software licenses.</summary>
         private string[] licenseText;
+
+        #endregion
+
+        #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="LicenseAgreement" /> class.</summary>
         public LicenseAgreement()
@@ -54,6 +60,10 @@ namespace SevenUpdate.Windows
                 this.Title += " - " + Properties.Resources.BetaChannel;
             }
         }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>Loads the <c>licenseInformation</c> and shows the form.</summary>
         /// <returns>Returns the dialog result.</returns>
@@ -105,9 +115,8 @@ namespace SevenUpdate.Windows
                 this.btnAction.IsShieldNeeded = this.licenseInformation.Count == 1;
             }
 
-            this.tbHeading.Text = string.Format(CultureInfo.CurrentCulture, 
-                    Properties.Resources.AcceptLicenseTerms, 
-                    this.licenseInformation[0].Title);
+            this.tbHeading.Text = string.Format(
+                CultureInfo.CurrentCulture, Properties.Resources.AcceptLicenseTerms, this.licenseInformation[0].Title);
             this.rbtnAccept.IsEnabled = true;
             this.rbtnDecline.IsEnabled = true;
             this.rtbSLA.Cursor = Cursors.IBeam;
@@ -183,10 +192,10 @@ namespace SevenUpdate.Windows
 
                     var sla = new Eula
                         {
-                                LicenseUrl = Core.Applications[x].Updates[y].LicenseUrl, 
-                                Title = Utilities.GetLocaleString(Core.Applications[x].Updates[y].Name), 
-                                AppIndex = x, 
-                                UpdateIndex = y
+                            LicenseUrl = Core.Applications[x].Updates[y].LicenseUrl, 
+                            Title = Utilities.GetLocaleString(Core.Applications[x].Updates[y].Name), 
+                            AppIndex = x, 
+                            UpdateIndex = y
                         };
 
                     this.licenseInformation.Add(sla);
@@ -202,7 +211,7 @@ namespace SevenUpdate.Windows
             if (this.rbtnDecline.IsChecked == true)
             {
                 Core.Applications[this.licenseInformation[this.index].AppIndex].Updates.RemoveAt(
-                        this.licenseInformation[this.index].UpdateIndex);
+                    this.licenseInformation[this.index].UpdateIndex);
                 if (Core.Applications[this.licenseInformation[this.index].AppIndex].Updates.Count == 0)
                 {
                     Core.Applications.RemoveAt(this.licenseInformation[this.index].AppIndex);
@@ -213,9 +222,10 @@ namespace SevenUpdate.Windows
 
             if (this.btnAction.ButtonText == Properties.Resources.Next)
             {
-                this.tbHeading.Text = string.Format(CultureInfo.CurrentCulture, 
-                        Properties.Resources.AcceptLicenseTerms, 
-                        this.licenseInformation[this.index].Title);
+                this.tbHeading.Text = string.Format(
+                    CultureInfo.CurrentCulture, 
+                    Properties.Resources.AcceptLicenseTerms, 
+                    this.licenseInformation[this.index].Title);
                 var flowDoc = new FlowDocument();
                 var para = new Paragraph();
                 var r = new Run(this.licenseText[this.index]);
@@ -244,9 +254,13 @@ namespace SevenUpdate.Windows
             }
         }
 
+        #endregion
+
         /// <summary>Data containing the <c>Update</c> license agreement.</summary>
         private struct Eula
         {
+            #region Properties
+
             /// <summary>Gets or sets the index of the application of the update.</summary>
             internal int AppIndex { get; set; }
 
@@ -258,6 +272,8 @@ namespace SevenUpdate.Windows
 
             /// <summary>Gets or sets the index of the update.</summary>
             internal int UpdateIndex { get; set; }
+
+            #endregion
         }
     }
 }

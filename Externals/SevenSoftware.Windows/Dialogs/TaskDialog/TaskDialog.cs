@@ -22,6 +22,8 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
     /// </summary>
     public sealed class TaskDialog : IDialogControlHost, IDisposable
     {
+        #region Constants and Fields
+
         /// <summary>
         ///   Global instance of TaskDialog, to be used by static Show() method. As most parameters of a dialog created
         ///   via static Show() will have identical parameters, we'll create one TaskDialog and treat it as a
@@ -104,6 +106,10 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>The main text to display on the dialog.</summary>
         private string text;
 
+        #endregion
+
+        #region Constructors and Destructors
+
         /// <summary>Initializes a new instance of the <see cref="TaskDialog" /> class. Creates a basic TaskDialog window</summary>
         public TaskDialog()
         {
@@ -116,6 +122,10 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         {
             this.Dispose(false);
         }
+
+        #endregion
+
+        #region Public Events
 
         /// <summary>Occurs when the TaskDialog is closing.</summary>
         public event EventHandler<TaskDialogClosingEventArgs> Closing;
@@ -131,6 +141,10 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
 
         /// <summary>Occurs when a progress bar changes.</summary>
         public event EventHandler<TaskDialogTickEventArgs> Tick;
+
+        #endregion
+
+        #region Public Properties
 
         /// <summary>Gets a value indicating whether this feature is supported on the current platform.</summary>
         public static bool IsPlatformSupported
@@ -481,6 +495,10 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
             }
         }
 
+        #endregion
+
+        #region Properties
+
         /// <summary>Gets a value indicating whether a native dialog is showing.</summary>
         /// <value><c>True</c> if a native dialog is showing; otherwise, <c>False</c>.</value>
         private bool NativeDialogShowing
@@ -493,6 +511,10 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
                         || this.nativeDialog.ShowState == DialogShowState.Closing);
             }
         }
+
+        #endregion
+
+        #region Public Methods and Operators
 
         /// <summary>Creates and shows a task dialog with the specified message text.</summary>
         /// <param name="text">The text to display.</param>
@@ -609,13 +631,17 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
             return this.ShowCore();
         }
 
+        #endregion
+
+        #region Explicit Interface Methods
+
         /// <summary>Called whenever controls have been added or removed</summary>
         void IDialogControlHost.ApplyCollectionChanged()
         {
             // If we're showing, we should never get here - the changing notification would have thrown and the property
             // would not have been changed.
-            Debug.Assert(!this.NativeDialogShowing, 
-                    "Collection changed notification received despite show state of dialog");
+            Debug.Assert(
+                !this.NativeDialogShowing, "Collection changed notification received despite show state of dialog");
         }
 
         /// <summary>
@@ -714,10 +740,12 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <returns><c>True</c> if the property change is allowed.</returns>
         bool IDialogControlHost.IsControlPropertyChangeAllowed(string propertyName, DialogControl control)
         {
-            Debug.Assert(control is TaskDialogControl, 
-                    "Property changing for a control that is not a TaskDialogControl-derived type");
-            Debug.Assert(propertyName != "Name", 
-                    "Name changes at any time are not supported - public API should have blocked this");
+            Debug.Assert(
+                control is TaskDialogControl, 
+                "Property changing for a control that is not a TaskDialogControl-derived type");
+            Debug.Assert(
+                propertyName != "Name", 
+                "Name changes at any time are not supported - public API should have blocked this");
 
             bool canChange = false;
 
@@ -753,6 +781,10 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
 
             return canChange;
         }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>Raises the button click event.</summary>
         /// <param name="id">The id for the button</param>
@@ -859,8 +891,8 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Applies the elevated icons.</summary>
         /// <param name="settings">The dialog settings.</param>
         /// <param name="controls">The dialog controls.</param>
-        private static void ApplyElevatedIcons(NativeTaskDialogSettings settings, 
-                                               IEnumerable<TaskDialogButtonBase> controls)
+        private static void ApplyElevatedIcons(
+            NativeTaskDialogSettings settings, IEnumerable<TaskDialogButtonBase> controls)
         {
             foreach (TaskDialogButton control in controls)
             {
@@ -897,8 +929,8 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <returns>The <c>TaskDialogResults</c>.</returns>
         private static TaskDialogResult ConstructDialogResult(NativeTaskDialog native)
         {
-            Debug.Assert(native.ShowState == DialogShowState.Closed, 
-                    "dialog result being constructed for unshown dialog.");
+            Debug.Assert(
+                native.ShowState == DialogShowState.Closed, "dialog result being constructed for unshown dialog.");
 
             TaskDialogResult result;
 
@@ -1328,6 +1360,8 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
             // NotSupportedException(Properties.Resources.TaskDialogSupportedButtonsAndButtons);
             // }
         }
+
+        #endregion
 
         // Dispose pattern - cleans up data and structs for a) any native dialog currently showing, and b) anything else
         // that the outer TaskDialog has.

@@ -14,6 +14,8 @@ namespace SharpBits.Base
     /// <summary>The BG_BASIC_CREDENTIALS structure identifies the user name and password to authenticate.</summary>
     internal struct BGBasicCredentials
     {
+        #region Constants and Fields
+
         /// <summary>
         ///   Null-terminated string that contains the password in clear-text. The password is limited to 300
         ///   characters, not including the <c>null</c> terminator. The password can be blank. Set to <c>null</c> if
@@ -32,5 +34,7 @@ namespace SharpBits.Base
         /// </summary>
         [MarshalAs(UnmanagedType.LPWStr)]
         internal string UserName;
+
+        #endregion
     }
 }

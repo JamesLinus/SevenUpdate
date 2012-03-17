@@ -12,6 +12,8 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
     /// <summary>The task dialog defaults</summary>
     internal static class TaskDialogDefaults
     {
+        #region Constants and Fields
+
         /// <summary>The ideal width for the dialog.</summary>
         public const int IdealWidth = 0;
 
@@ -23,6 +25,10 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
 
         /// <summary>The progress bar min value.</summary>
         public const int ProgressBarMinimumValue = 0;
+
+        #endregion
+
+        #region Public Properties
 
         /// <summary>Gets the default dialog caption.</summary>
         public static string Caption
@@ -50,5 +56,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
                 return null;
             }
         }
+
+        #endregion
     }
 }

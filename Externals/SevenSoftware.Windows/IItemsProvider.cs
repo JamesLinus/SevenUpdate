@@ -24,11 +24,17 @@ namespace SevenSoftware.Windows
     /// <typeparam name="T">The type of items in the collection.</typeparam>
     public interface IItemsProvider<T>
     {
+        #region Public Properties
+
         /// <summary>
         /// Gets the total number of items available.
         /// </summary>
         /// <returns>The total number of items to fetch.</returns>
         int Count { get; }
+
+        #endregion
+
+        #region Public Methods and Operators
 
         /// <summary>
         /// Fetches a range of items.
@@ -37,5 +43,7 @@ namespace SevenSoftware.Windows
         /// <param name="count">The number of items to fetch.</param>
         /// <returns>An IList containing the items in the specified range.</returns>
         IList<T> FetchRange(int startIndex, int count);
+
+        #endregion
     }
 }

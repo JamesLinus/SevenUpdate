@@ -122,7 +122,6 @@
     <Compile Include="Dialogs\TaskDialog\TaskDialogStandardIcon.cs" />
     <Compile Include="Dialogs\TaskDialog\TaskDialogStartupLocation.cs" />
     <Compile Include="Dialogs\TaskDialog\TaskDialogTickEventArgs.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="InstanceAwareApplication.cs" />
     <Compile Include="Controls\CommandLink.cs" />
     <Compile Include="Controls\InfoTextBox.cs" />

@@ -27,9 +27,15 @@ namespace SevenSoftware.Windows.ValidationRules
     /// <summary>Validates if the input is a directory.</summary>
     public class DirectoryInputRule : ValidationRule
     {
+        #region Public Properties
+
         /// <summary>Gets or sets a value indicating whether this instance is required.</summary>
         /// <value><c>True</c> if this instance is required; otherwise, <c>False</c>.</value>
         public bool IsRequired { get; set; }
+
+        #endregion
+
+        #region Public Methods and Operators
 
         /// <summary>When overridden in a derived class, performs validation checks on a value.</summary>
         /// <param name="value">The value from the binding target to check.</param>
@@ -42,8 +48,7 @@ namespace SevenSoftware.Windows.ValidationRules
             if (string.IsNullOrWhiteSpace(input))
             {
                 return this.IsRequired
-                               ? new ValidationResult(false, Resources.FilePathInvalid)
-                               : new ValidationResult(true, null);
+                           ? new ValidationResult(false, Resources.FilePathInvalid) : new ValidationResult(true, null);
             }
 
             var r = new Regex(@"^(([a-zA-Z]\:)|(\\))(\\{1}|((\\{1})[^\\]([^/:*?<>""|]*))+)$");
@@ -56,13 +61,13 @@ namespace SevenSoftware.Windows.ValidationRules
             if (string.IsNullOrEmpty(directoryName))
             {
                 return this.IsRequired
-                               ? new ValidationResult(false, Resources.FilePathInvalid)
-                               : new ValidationResult(true, null);
+                           ? new ValidationResult(false, Resources.FilePathInvalid) : new ValidationResult(true, null);
             }
 
             return directoryName.IndexOfAny(Path.GetInvalidPathChars()) >= 0
-                           ? new ValidationResult(false, Resources.FilePathInvalid)
-                           : new ValidationResult(true, null);
+                       ? new ValidationResult(false, Resources.FilePathInvalid) : new ValidationResult(true, null);
         }
+
+        #endregion
     }
 }

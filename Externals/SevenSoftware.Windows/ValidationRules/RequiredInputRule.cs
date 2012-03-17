@@ -25,9 +25,11 @@ namespace SevenSoftware.Windows.ValidationRules
 
     /// <summary>The required input rule.</summary>
     [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1606:ElementDocumentationMustHaveSummaryText", 
-            Justification = "Validation Rule")]
+        Justification = "Validation Rule")]
     public class RequiredInputRule : ValidationRule
     {
+        #region Public Methods and Operators
+
         /// <summary>When overridden in a derived class, performs validation checks on a value.</summary>
         /// <param name="value">The value from the binding target to check.</param>
         /// <param name="cultureInfo">The culture to use in this rule.</param>
@@ -37,8 +39,9 @@ namespace SevenSoftware.Windows.ValidationRules
             var input = value as string;
 
             return string.IsNullOrWhiteSpace(input)
-                           ? new ValidationResult(false, Resources.InputRequired)
-                           : new ValidationResult(true, null);
+                       ? new ValidationResult(false, Resources.InputRequired) : new ValidationResult(true, null);
         }
+
+        #endregion
     }
 }

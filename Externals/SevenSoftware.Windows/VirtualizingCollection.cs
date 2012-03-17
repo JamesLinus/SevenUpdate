@@ -35,6 +35,8 @@ namespace SevenSoftware.Windows
     /// <typeparam name="T">The IList collection.</typeparam>
     public class VirtualizingCollection<T> : IList<T>, IList
     {
+        #region Constants and Fields
+
         /// <summary>
         /// The items provider.
         /// </summary>
@@ -64,6 +66,10 @@ namespace SevenSoftware.Windows
         /// Gets the number of elements contained in the <see cref="T:System.Collections.Generic.ICollection`1"/>.
         /// </summary>
         private int count = -1;
+
+        #endregion
+
+        #region Constructors and Destructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="VirtualizingCollection&lt;T&gt;"/> class.
@@ -97,6 +103,10 @@ namespace SevenSoftware.Windows
         {
             this.itemsProvider = itemsProvider;
         }
+
+        #endregion
+
+        #region Public Properties
 
         /// <summary>
         /// Gets or sets the number of elements contained in the <see cref="T:System.Collections.Generic.ICollection`1"/>.
@@ -181,6 +191,10 @@ namespace SevenSoftware.Windows
             }
         }
 
+        #endregion
+
+        #region Properties
+
         /// <summary>
         /// Gets the items provider.
         /// </summary>
@@ -216,6 +230,10 @@ namespace SevenSoftware.Windows
                 return this.pageTimeout;
             }
         }
+
+        #endregion
+
+        #region Public Indexers
 
         /// <summary>
         /// Gets the item at the specified index. This property will fetch
@@ -265,6 +283,10 @@ namespace SevenSoftware.Windows
             }
         }
 
+        #endregion
+
+        #region Explicit Interface Indexers
+
         /// <summary>
         /// Gets item in the specified index.
         /// </summary>
@@ -282,6 +304,10 @@ namespace SevenSoftware.Windows
                 throw new NotSupportedException();
             }
         }
+
+        #endregion
+
+        #region Public Methods and Operators
 
         /// <summary>
         /// Not supported.
@@ -418,6 +444,10 @@ namespace SevenSoftware.Windows
             throw new NotSupportedException();
         }
 
+        #endregion
+
+        #region Explicit Interface Methods
+
         /// <summary>
         /// Not supported.
         /// </summary>
@@ -487,6 +517,10 @@ namespace SevenSoftware.Windows
         {
             return this.GetEnumerator();
         }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>
         /// Fetches the count of itmes from the IItemsProvider.
@@ -575,5 +609,7 @@ namespace SevenSoftware.Windows
                 }
             }
         }
+
+        #endregion
     }
 }

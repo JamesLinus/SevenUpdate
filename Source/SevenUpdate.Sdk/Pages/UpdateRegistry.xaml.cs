@@ -36,6 +36,8 @@ namespace SevenUpdate.Sdk.Pages
     /// <summary>Interaction logic for UpdateRegistry.xaml.</summary>
     public sealed partial class UpdateRegistry
     {
+        #region Constructors and Destructors
+
         /// <summary>Initializes a new instance of the <see cref="UpdateRegistry" /> class.</summary>
         public UpdateRegistry()
         {
@@ -60,6 +62,10 @@ namespace SevenUpdate.Sdk.Pages
                 this.rectangle.Visibility = Visibility.Visible;
             }
         }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>Deletes the selected <c>RegistryItem</c> from the <c>ListBox</c>.</summary>
         /// <param name="sender">The object that called the event.</param>
@@ -101,10 +107,8 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
         private void ImportRegistryFile(object sender, RoutedEventArgs e)
         {
-            string[] files = Core.OpenFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), 
-                    null, 
-                    false, 
-                    "reg");
+            string[] files = Core.OpenFileDialog(
+                Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), null, false, "reg");
             if (files == null)
             {
                 return;
@@ -160,10 +164,10 @@ namespace SevenUpdate.Sdk.Pages
         {
             var registryItem = new RegistryItem
                 {
-                        KeyValue = Properties.Resources.NewRegistryItem, 
-                        Key = @"HKLM\Software\MyApp", 
-                        Action = RegistryAction.Add, 
-                        ValueKind = RegistryValueKind.String
+                    KeyValue = Properties.Resources.NewRegistryItem, 
+                    Key = @"HKLM\Software\MyApp", 
+                    Action = RegistryAction.Add, 
+                    ValueKind = RegistryValueKind.String
                 };
             Core.UpdateInfo.RegistryItems.Add(registryItem);
         }
@@ -269,5 +273,7 @@ namespace SevenUpdate.Sdk.Pages
                 ((RegistryItem)this.listBox.SelectedItem).Key = textBox.Text;
             }
         }
+
+        #endregion
     }
 }

@@ -34,6 +34,8 @@ namespace SevenUpdate.Sdk.Pages
     /// <summary>Interaction logic for Main.xaml.</summary>
     public sealed partial class Main
     {
+        #region Constructors and Destructors
+
         /// <summary>Initializes a new instance of the <see cref="Main" /> class.</summary>
         public Main()
         {
@@ -55,6 +57,10 @@ namespace SevenUpdate.Sdk.Pages
                 this.tbAbout.Foreground = new SolidColorBrush(Color.FromRgb(0, 102, 204));
             }
         }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>Updates the UI based on the <c>TreeViewItem</c> selected.</summary>
         /// <param name="sender">The object that called the event.</param>
@@ -84,9 +90,8 @@ namespace SevenUpdate.Sdk.Pages
             }
 
             this.clEdit.Content = string.Format(CultureInfo.CurrentCulture, Properties.Resources.Edit, item.Header);
-            this.clNewUpdate.Note = string.Format(CultureInfo.CurrentCulture, 
-                    Properties.Resources.AddUpdate, 
-                    item.Header);
+            this.clNewUpdate.Note = string.Format(
+                CultureInfo.CurrentCulture, Properties.Resources.AddUpdate, item.Header);
             if (parent == null)
             {
                 Core.AppIndex = item.Tag is int ? (int)item.Tag : -1;
@@ -139,11 +144,11 @@ namespace SevenUpdate.Sdk.Pages
                     if (File.Exists(Path.Combine(App.UserStore, Core.Projects[index[0]].ApplicationName + ".sui")))
                     {
                         var updates =
-                                Utilities.Deserialize<Collection<Update>>(Path.Combine(App.UserStore, 
-                                        Core.Projects[index[0]].ApplicationName + ".sui"));
-                        updates.RemoveAt(index[1]);
-                        Utilities.Serialize(updates, 
+                            Utilities.Deserialize<Collection<Update>>(
                                 Path.Combine(App.UserStore, Core.Projects[index[0]].ApplicationName + ".sui"));
+                        updates.RemoveAt(index[1]);
+                        Utilities.Serialize(
+                            updates, Path.Combine(App.UserStore, Core.Projects[index[0]].ApplicationName + ".sui"));
                     }
 
                     Core.Projects[index[0]].UpdateNames.RemoveAt(index[1]);
@@ -166,8 +171,7 @@ namespace SevenUpdate.Sdk.Pages
         private void LoadProjects()
         {
             Core.Projects = File.Exists(Core.ProjectsFile)
-                                    ? Utilities.Deserialize<Collection<Project>>(Core.ProjectsFile)
-                                    : null;
+                                ? Utilities.Deserialize<Collection<Project>>(Core.ProjectsFile) : null;
 
             this.treeView.Items.Clear();
             if (Core.Projects == null)
@@ -241,9 +245,8 @@ namespace SevenUpdate.Sdk.Pages
         {
             string fileName = Core.Projects[Core.AppIndex].ExportedSuaFileName
                               ?? Core.Projects[Core.AppIndex].ApplicationName;
-            fileName = Core.SaveFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), 
-                    fileName, 
-                    @"sua");
+            fileName = Core.SaveFileDialog(
+                Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), fileName, @"sua");
 
             if (fileName == null)
             {
@@ -267,9 +270,8 @@ namespace SevenUpdate.Sdk.Pages
             string fileName = Core.Projects[Core.AppIndex].ExportedSuiFileName
                               ?? Core.Projects[Core.AppIndex].ApplicationName;
 
-            fileName = Core.SaveFileDialog(Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), 
-                    fileName, 
-                    @"sui");
+            fileName = Core.SaveFileDialog(
+                Environment.GetFolderPath(Environment.SpecialFolder.DesktopDirectory), fileName, @"sui");
 
             if (fileName == null)
             {
@@ -344,5 +346,7 @@ namespace SevenUpdate.Sdk.Pages
                 this.tbAbout.Foreground = new SolidColorBrush(Color.FromRgb(0, 102, 204));
             }
         }
+
+        #endregion
     }
 }

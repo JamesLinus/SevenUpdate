@@ -30,6 +30,8 @@ namespace SevenSoftware.Windows
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class InstanceAwareApplication : Application, IPriorApplicationInstance, IDisposable
     {
+        #region Constants and Fields
+
         /// <summary>The milliseconds to wait to determine if the current instance is the first one.</summary>
         private const double FirstInstanceTimeoutMilliseconds = 500;
 
@@ -76,6 +78,10 @@ namespace SevenSoftware.Windows
         /// </summary>
         private EventWaitHandle signaledToFirstInstanceSemaphore;
 
+        #endregion
+
+        #region Constructors and Destructors
+
         /// <summary>Initializes a new instance of the <see cref="InstanceAwareApplication" /> class.</summary>
         /// <exception cref="InvalidOperationException">More than one instance of the <c>System.Windows.Application</c> class is created per <c>System.AppDomain</c>.</exception>
         public InstanceAwareApplication() : this(ApplicationInstanceAwareness.Host)
@@ -96,16 +102,28 @@ namespace SevenSoftware.Windows
             this.Dispose(false);
         }
 
+        #endregion
+
+        #region Public Events
+
         /// <summary>
         ///   Occurs when the <c>System.Windows.Application.Run()</c> or <c>System.Windows.Application.Run(Window)</c>
         ///   method of the next <c>InstanceAwareApplication</c> having the same <c>Guid</c> is called.
         /// </summary>
         public event EventHandler<StartupNextInstanceEventArgs> StartupNextInstance;
 
+        #endregion
+
+        #region Public Properties
+
         /// <summary>Gets a value indicating whether the current application instance is the first one.</summary>
         /// <value><c>True</c> if the current application instance is the first one, otherwise <c>false</c>.</value>
         /// <remarks>The first application instance gets notified about subsequent application instances startup.</remarks>
         public bool IsFirstInstance { get; private set; }
+
+        #endregion
+
+        #region Explicit Interface Methods
 
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
         void IDisposable.Dispose()
@@ -121,11 +139,15 @@ namespace SevenSoftware.Windows
             this.signaledToFirstInstanceSemaphore.Set();
 
             ParameterizedThreadStart onStartupNextApplication =
-                    obj => this.OnStartupNextApplicationInstance((string[])obj);
+                obj => this.OnStartupNextApplicationInstance((string[])obj);
 
             // Since the method is called asynchronously, invoke the function using the dispatcher!
             this.Dispatcher.BeginInvoke(onStartupNextApplication, DispatcherPriority.Background, (object)args);
         }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>Raises the <c>System.Windows.Application.Exit</c> event.</summary>
         /// <param name="e">An <c>System.Windows.ExitEventArgs</c> that contains the event data.</param>
@@ -184,9 +206,8 @@ namespace SevenSoftware.Windows
         /// <param name="awareness">The <c>ApplicationInstanceAwareness</c> value to extract parameters from.</param>
         /// <param name="prefix">The synchronization object prefix.</param>
         /// <param name="identity">The identity used to handle the synchronization object.</param>
-        private static void ExtractParameters(ApplicationInstanceAwareness awareness, 
-                                              out string prefix, 
-                                              out IdentityReference identity)
+        private static void ExtractParameters(
+            ApplicationInstanceAwareness awareness, out string prefix, out IdentityReference identity)
         {
             new SecurityPermission(SecurityPermissionFlag.ControlPrincipal).Assert();
             WindowsIdentity currentIdentity = WindowsIdentity.GetCurrent();
@@ -200,8 +221,8 @@ namespace SevenSoftware.Windows
             {
                 prefix = GlobalPrefix;
                 identity =
-                        currentIdentity.Groups.FirstOrDefault(
-                                reference => reference.Translate(typeof(SecurityIdentifier)).Value.Equals(UsersSidValue));
+                    currentIdentity.Groups.FirstOrDefault(
+                        reference => reference.Translate(typeof(SecurityIdentifier)).Value.Equals(UsersSidValue));
             }
             else
             {
@@ -214,7 +235,7 @@ namespace SevenSoftware.Windows
             if (identity == null)
             {
                 throw new Exception(
-                        "Could not determine a proper identity to create synchronization objects access rules");
+                    "Could not determine a proper identity to create synchronization objects access rules");
             }
         }
 
@@ -248,8 +269,8 @@ namespace SevenSoftware.Windows
             // By default, the application is marked using the entry assembly Guid!
             Assembly assembly = Assembly.GetEntryAssembly();
             var guidAttribute =
-                    assembly.GetCustomAttributes(typeof(GuidAttribute), false).FirstOrDefault(
-                            obj => (obj is GuidAttribute)) as GuidAttribute;
+                assembly.GetCustomAttributes(typeof(GuidAttribute), false).FirstOrDefault(obj => (obj is GuidAttribute))
+                as GuidAttribute;
 
             return guidAttribute != null ? guidAttribute.Value : null;
         }
@@ -277,7 +298,7 @@ namespace SevenSoftware.Windows
             catch (Exception exc)
             {
                 throw new Exception(
-                        "First instance failed to create service to communicate with other application instances", exc);
+                    "First instance failed to create service to communicate with other application instances", exc);
             }
         }
 
@@ -303,12 +324,12 @@ namespace SevenSoftware.Windows
             try
             {
                 isFirstInstance =
-                        this.firstInstanceMutex.WaitOne(TimeSpan.FromMilliseconds(FirstInstanceTimeoutMilliseconds));
+                    this.firstInstanceMutex.WaitOne(TimeSpan.FromMilliseconds(FirstInstanceTimeoutMilliseconds));
             }
             catch (AbandonedMutexException)
             {
                 Debug.WriteLine(
-                        "The previous application was probably killed, we can just handle the exception since in this case is not fatal!");
+                    "The previous application was probably killed, we can just handle the exception since in this case is not fatal!");
                 isFirstInstance = true;
             }
 
@@ -347,23 +368,23 @@ namespace SevenSoftware.Windows
             try
             {
                 IPriorApplicationInstance instance =
-                        ChannelFactory<IPriorApplicationInstance>.CreateChannel(new NetNamedPipeBinding(), 
-                                new EndpointAddress(uri));
+                    ChannelFactory<IPriorApplicationInstance>.CreateChannel(
+                        new NetNamedPipeBinding(), new EndpointAddress(uri));
                 instance.SignalStartupNextInstance(args);
             }
             catch (Exception exc)
             {
                 Debug.WriteLine(
-                        "Exception while signaling first application instance (signal while first application shutdown?)"
-                        + Environment.NewLine + exc, 
-                        this.GetType().ToString());
+                    "Exception while signaling first application instance (signal while first application shutdown?)"
+                    + Environment.NewLine + exc, 
+                    this.GetType().ToString());
                 return false;
             }
 
             // If the first application does not notify back that the signal has been received, just return false...
             return
-                    this.signaledToFirstInstanceSemaphore.WaitOne(
-                            TimeSpan.FromMilliseconds(PriorInstanceSignaledTimeoutMilliseconds), false);
+                this.signaledToFirstInstanceSemaphore.WaitOne(
+                    TimeSpan.FromMilliseconds(PriorInstanceSignaledTimeoutMilliseconds), false);
         }
 
         /// <summary>Initializes the synchronization objects needed to deal with multiple instances of the same application.</summary>
@@ -377,9 +398,8 @@ namespace SevenSoftware.Windows
             string signaledToFirstInstanceSemaphoreName = baseName + "_SignaledToFirstInstance";
 
             bool isNew;
-            var eventRule = new EventWaitHandleAccessRule(identity, 
-                    EventWaitHandleRights.FullControl, 
-                    AccessControlType.Allow);
+            var eventRule = new EventWaitHandleAccessRule(
+                identity, EventWaitHandleRights.FullControl, AccessControlType.Allow);
             var eventSecurity = new EventWaitHandleSecurity();
             eventSecurity.AddAccessRule(eventRule);
 
@@ -389,16 +409,10 @@ namespace SevenSoftware.Windows
 
             this.firstInstanceMutex = new Mutex(false, firstInstanceMutexName, out isNew, mutexSecurity);
             this.serviceInitializationMutex = new Mutex(false, serviceInitializationMutexName, out isNew, mutexSecurity);
-            this.serviceReadySemaphore = new EventWaitHandle(false, 
-                    EventResetMode.ManualReset, 
-                    serviceReadySemaphoreName, 
-                    out isNew, 
-                    eventSecurity);
-            this.signaledToFirstInstanceSemaphore = new EventWaitHandle(false, 
-                    EventResetMode.AutoReset, 
-                    signaledToFirstInstanceSemaphoreName, 
-                    out isNew, 
-                    eventSecurity);
+            this.serviceReadySemaphore = new EventWaitHandle(
+                false, EventResetMode.ManualReset, serviceReadySemaphoreName, out isNew, eventSecurity);
+            this.signaledToFirstInstanceSemaphore = new EventWaitHandle(
+                false, EventResetMode.AutoReset, signaledToFirstInstanceSemaphoreName, out isNew, eventSecurity);
         }
 
         /// <summary>Called on next application instance startup.</summary>
@@ -467,5 +481,7 @@ namespace SevenSoftware.Windows
             this.signaledToFirstInstanceSemaphore.Close();
             this.signaledToFirstInstanceSemaphore = null;
         }
+
+        #endregion
     }
 }

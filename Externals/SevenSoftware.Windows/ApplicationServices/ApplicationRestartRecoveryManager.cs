@@ -21,6 +21,8 @@ namespace SevenSoftware.Windows.ApplicationServices
     /// </summary>
     public static class ApplicationRestartRecoveryManager
     {
+        #region Public Methods and Operators
+
         /// <summary>
         ///   Called by an application's <see cref="RecoveryCallback" /> method to indicate that the recovery work is
         ///   complete.
@@ -73,8 +75,8 @@ namespace SevenSoftware.Windows.ApplicationServices
             GCHandle handle = GCHandle.Alloc(settings.RecoveryData);
 
             Result hr =
-                    AppRestartRecoveryNativeMethods.RegisterApplicationRecoveryCallback(
-                            AppRestartRecoveryNativeMethods.InternalCallback, (IntPtr)handle, settings.PingInterval, 0);
+                AppRestartRecoveryNativeMethods.RegisterApplicationRecoveryCallback(
+                    AppRestartRecoveryNativeMethods.InternalCallback, (IntPtr)handle, settings.PingInterval, 0);
 
             if (!ErrorHelper.Succeeded(hr))
             {
@@ -104,8 +106,8 @@ namespace SevenSoftware.Windows.ApplicationServices
                 throw new ArgumentNullException("settings");
             }
 
-            Result hr = AppRestartRecoveryNativeMethods.RegisterApplicationRestart(settings.Command, 
-                    settings.Restrictions);
+            Result hr = AppRestartRecoveryNativeMethods.RegisterApplicationRestart(
+                settings.Command, settings.Restrictions);
 
             if (hr == Result.Fail)
             {
@@ -143,5 +145,7 @@ namespace SevenSoftware.Windows.ApplicationServices
                 throw new ApplicationRecoveryException(Resources.ApplicationRecoveryFailedToUnregisterForRestart);
             }
         }
+
+        #endregion
     }
 }

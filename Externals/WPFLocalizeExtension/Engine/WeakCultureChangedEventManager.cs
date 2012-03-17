@@ -15,11 +15,17 @@ namespace WPFLocalizeExtension.Engine
     /// <summary>This in line class is used to handle weak events to avoid memory leaks.</summary>
     internal sealed class WeakCultureChangedEventManager : WeakEventManager
     {
+        #region Constants and Fields
+
         /// <summary>Holds the inner list of listeners.</summary>
         private readonly ListenerList listeners;
 
         /// <summary>Indicates, if the current instance is listening on the source event.</summary>
         private bool isListening;
+
+        #endregion
+
+        #region Constructors and Destructors
 
         /// <summary>Prevents a default instance of the WeakCultureChangedEventManager class from being created.</summary>
         private WeakCultureChangedEventManager()
@@ -27,6 +33,10 @@ namespace WPFLocalizeExtension.Engine
             // creates a new list and assign it to listeners
             this.listeners = new ListenerList();
         }
+
+        #endregion
+
+        #region Properties
 
         /// <summary>Gets the singleton instance of <c>WeakCultureChangedEventManager</c>.</summary>
         private static WeakCultureChangedEventManager CurrentManager
@@ -53,6 +63,10 @@ namespace WPFLocalizeExtension.Engine
                 return manager;
             }
         }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>Adds an listener to the inner list of listeners.</summary>
         /// <param name="listener">The listener to add.</param>
@@ -136,5 +150,7 @@ namespace WPFLocalizeExtension.Engine
                 }
             }
         }
+
+        #endregion
     }
 }

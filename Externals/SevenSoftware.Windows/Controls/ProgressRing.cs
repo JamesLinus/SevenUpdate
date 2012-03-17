@@ -31,26 +31,26 @@ namespace SevenSoftware.Windows.Controls
     [TemplatePart(Name = ElementCanvas, Type = typeof(Canvas))]
     public class ProgressRing : RangeBase
     {
+        #region Constants and Fields
+
         /// <summary>The element name.</summary>
         private const string ElementCanvas = "PART_Canvas";
 
         /// <summary>The storyboard.</summary>
         private static readonly DependencyProperty elementStoryboardProperty =
-                DependencyProperty.Register("ElementStoryboard", typeof(Storyboard), typeof(ProgressRing));
+            DependencyProperty.Register("ElementStoryboard", typeof(Storyboard), typeof(ProgressRing));
 
         /// <summary>The text to display when the progress is indeterminate.</summary>
         private static readonly DependencyProperty indeterminateTextProperty =
-                DependencyProperty.Register("IndeterminateText", typeof(string), typeof(ProgressRing));
+            DependencyProperty.Register("IndeterminateText", typeof(string), typeof(ProgressRing));
 
         /// <summary>Indicates if the progress is indeterminate.</summary>
         private static readonly DependencyProperty isIndeterminateProperty =
-                DependencyProperty.Register("IsIndeterminate", typeof(bool), typeof(ProgressRing));
+            DependencyProperty.Register("IsIndeterminate", typeof(bool), typeof(ProgressRing));
 
         /// <summary>Indicates if the progress is running.</summary>
-        private static readonly DependencyProperty isRunningProperty = DependencyProperty.Register("IsRunning", 
-                typeof(bool), 
-                typeof(ProgressRing), 
-                new FrameworkPropertyMetadata(IsRunningPropertyChanged));
+        private static readonly DependencyProperty isRunningProperty = DependencyProperty.Register(
+            "IsRunning", typeof(bool), typeof(ProgressRing), new FrameworkPropertyMetadata(IsRunningPropertyChanged));
 
         /// <summary>The dispatch timer.</summary>
         private readonly DispatcherTimer dispatcherTimer;
@@ -67,11 +67,15 @@ namespace SevenSoftware.Windows.Controls
         /// <summary>The index for the progress.</summary>
         private int index;
 
+        #endregion
+
+        #region Constructors and Destructors
+
         /// <summary>Initializes static members of the <see cref="ProgressRing" /> class.</summary>
         static ProgressRing()
         {
-            DefaultStyleKeyProperty.OverrideMetadata(typeof(ProgressRing), 
-                    new FrameworkPropertyMetadata(typeof(ProgressRing)));
+            DefaultStyleKeyProperty.OverrideMetadata(
+                typeof(ProgressRing), new FrameworkPropertyMetadata(typeof(ProgressRing)));
             MaximumProperty.OverrideMetadata(typeof(ProgressRing), new FrameworkPropertyMetadata(100.0));
         }
 
@@ -92,6 +96,10 @@ namespace SevenSoftware.Windows.Controls
                    Interval = new TimeSpan(0, 0, 0, 0, 300) 
                 };
         }
+
+        #endregion
+
+        #region Public Properties
 
         /// <summary>Gets or sets the element storyboard.</summary>
         /// <value>The element storyboard.</value>
@@ -153,6 +161,10 @@ namespace SevenSoftware.Windows.Controls
             }
         }
 
+        #endregion
+
+        #region Public Methods and Operators
+
         /// <summary>
         ///   When overridden in a derived class, is invoked whenever application code or internal processes call <see
         ///   cref="M:System.Windows.FrameworkElement.ApplyTemplate" />.
@@ -190,6 +202,10 @@ namespace SevenSoftware.Windows.Controls
                 this.canvas.Children.Add(contentControl);
             }
         }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>Stops or starts the progress indicator based on the <c>IsRunning</c> property.</summary>
         /// <param name="d">The dependency object.</param>
@@ -263,5 +279,7 @@ namespace SevenSoftware.Windows.Controls
             this.dispatcherTimer.Stop();
             this.dispatcherTimer.Tick -= this.Animate;
         }
+
+        #endregion
     }
 }

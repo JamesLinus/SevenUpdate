@@ -26,6 +26,8 @@ namespace SevenSoftware.Windows.Converters
     [ValueConversion(typeof(string), typeof(Visibility))]
     public class StringToVisibilityConverter : IValueConverter
     {
+        #region Public Methods and Operators
+
         /// <summary>Converts a object into another object.</summary>
         /// <param name="value">The value produced by the binding source.</param>
         /// <param name="targetType">The type of the binding target property.</param>
@@ -60,5 +62,7 @@ namespace SevenSoftware.Windows.Converters
         {
             return DependencyProperty.UnsetValue;
         }
+
+        #endregion
     }
 }

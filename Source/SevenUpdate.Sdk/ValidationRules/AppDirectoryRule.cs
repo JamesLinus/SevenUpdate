@@ -27,6 +27,8 @@ namespace SevenUpdate.Sdk.ValidationRules
     /// <summary>Validates a value and determines if the value is a application location.</summary>
     internal sealed class AppDirectoryRule : ValidationRule
     {
+        #region Public Methods and Operators
+
         /// <summary>When overridden in a derived class, performs validation checks on a value.</summary>
         /// <param name="value">The value from the binding target to check.</param>
         /// <param name="cultureInfo">The culture to use in this rule.</param>
@@ -40,11 +42,9 @@ namespace SevenUpdate.Sdk.ValidationRules
             }
 
             input = Core.AppInfo.Directory == null
-                            ? Utilities.ConvertPath(input, true, Core.AppInfo.Platform)
-                            : Utilities.ExpandInstallLocation(input, 
-                                    Core.AppInfo.Directory, 
-                                    Core.AppInfo.Platform, 
-                                    Core.AppInfo.ValueName);
+                        ? Utilities.ConvertPath(input, true, Core.AppInfo.Platform)
+                        : Utilities.ExpandInstallLocation(
+                            input, Core.AppInfo.Directory, Core.AppInfo.Platform, Core.AppInfo.ValueName);
 
             if (string.IsNullOrEmpty(input) || input.IndexOfAny(Path.GetInvalidPathChars()) >= 0)
             {
@@ -63,5 +63,7 @@ namespace SevenUpdate.Sdk.ValidationRules
 
             return new ValidationResult(false, Resources.FilePathInvalid);
         }
+
+        #endregion
     }
 }

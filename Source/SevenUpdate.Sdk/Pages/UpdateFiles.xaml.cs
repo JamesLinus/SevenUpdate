@@ -39,8 +39,14 @@ namespace SevenUpdate.Sdk.Pages
     /// <summary>Interaction logic for UpdateFiles.xaml.</summary>
     public sealed partial class UpdateFiles
     {
+        #region Constants and Fields
+
         /// <summary>The number of SHA-2 hashes generating.</summary>
         private int hashesGenerating;
+
+        #endregion
+
+        #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="UpdateFiles" /> class.</summary>
         public UpdateFiles()
@@ -67,6 +73,10 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
+        #endregion
+
+        #region Methods
+
         /// <summary>Gets the size of the file.</summary>
         /// <param name="file">The <c>UpdateFile</c> to get the file size for.</param>
         /// <param name="fileLocation">The location for the file.</param>
@@ -75,16 +85,16 @@ namespace SevenUpdate.Sdk.Pages
             UpdateFile updateFile = file;
 
             Task.Factory.StartNew(
-                    () =>
-                        {
-                            updateFile.FileSize =
-                                    Utilities.GetFileSize(
-                                            Utilities.ExpandInstallLocation(
-                                                    fileLocation ?? updateFile.Destination, 
-                                                    Core.AppInfo.Directory, 
-                                                    Core.AppInfo.Platform, 
-                                                    Core.AppInfo.ValueName));
-                        });
+                () =>
+                    {
+                        updateFile.FileSize =
+                            Utilities.GetFileSize(
+                                Utilities.ExpandInstallLocation(
+                                    fileLocation ?? updateFile.Destination, 
+                                    Core.AppInfo.Directory, 
+                                    Core.AppInfo.Platform, 
+                                    Core.AppInfo.ValueName));
+                    });
         }
 
         /// <summary>Adds a file to the list.</summary>
@@ -94,15 +104,12 @@ namespace SevenUpdate.Sdk.Pages
         private void AddFile(string fullName, string pathToFiles, bool impersonateAppDirectory)
         {
             string installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
-                                              ? Utilities.GetRegistryValue(
-                                                      Core.AppInfo.Directory, 
-                                                      Core.AppInfo.ValueName, 
-                                                      Core.AppInfo.Platform)
-                                              : Core.AppInfo.Directory;
+                                          ? Utilities.GetRegistryValue(
+                                              Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Platform)
+                                          : Core.AppInfo.Directory;
 
             installDirectory = impersonateAppDirectory
-                                       ? pathToFiles
-                                       : Utilities.ConvertPath(installDirectory, true, Core.AppInfo.Platform);
+                                   ? pathToFiles : Utilities.ConvertPath(installDirectory, true, Core.AppInfo.Platform);
 
             string installUrl = fullName.Replace(installDirectory, @"%INSTALLDIR%\", true);
             installUrl = installUrl.Replace(@"\\", @"\");
@@ -121,10 +128,10 @@ namespace SevenUpdate.Sdk.Pages
 
             var file = new UpdateFile
                 {
-                        Action = FileAction.Update, 
-                        Destination = installUrl, 
-                        Hash = Properties.Resources.CalculatingHash, 
-                        Source = downloadUrl
+                    Action = FileAction.Update, 
+                    Destination = installUrl, 
+                    Hash = Properties.Resources.CalculatingHash, 
+                    Source = downloadUrl
                 };
 
             Core.UpdateInfo.Files.Add(file);
@@ -157,9 +164,9 @@ namespace SevenUpdate.Sdk.Pages
         {
             bool impersonate = Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift);
             string directory = !Utilities.IsRegistryKey(Core.AppInfo.Directory)
-                                       ? Utilities.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Platform)
-                                       : Utilities.GetRegistryValue(
-                                               Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Platform);
+                                   ? Utilities.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Platform)
+                                   : Utilities.GetRegistryValue(
+                                       Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Platform);
             using (var folderBrowserDialog = new FolderBrowserDialog())
             {
                 folderBrowserDialog.SelectedPath = directory;
@@ -167,9 +174,9 @@ namespace SevenUpdate.Sdk.Pages
                 if (folderBrowserDialog.ShowDialog(Application.Current.MainWindow.GetIWin32Window()) == DialogResult.OK)
                 {
                     this.AddFiles(
-                            Directory.GetFiles(folderBrowserDialog.SelectedPath, "*.*", SearchOption.AllDirectories), 
-                            folderBrowserDialog.SelectedPath, 
-                            impersonate);
+                        Directory.GetFiles(folderBrowserDialog.SelectedPath, "*.*", SearchOption.AllDirectories), 
+                        folderBrowserDialog.SelectedPath, 
+                        impersonate);
                 }
             }
         }
@@ -181,9 +188,9 @@ namespace SevenUpdate.Sdk.Pages
         {
             bool impersonate = Keyboard.IsKeyDown(Key.LeftShift) || Keyboard.IsKeyDown(Key.RightShift);
             string directory = !Utilities.IsRegistryKey(Core.AppInfo.Directory)
-                                       ? Utilities.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Platform)
-                                       : Utilities.GetRegistryValue(
-                                               Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Platform);
+                                   ? Utilities.ConvertPath(Core.AppInfo.Directory, true, Core.AppInfo.Platform)
+                                   : Utilities.GetRegistryValue(
+                                       Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Platform);
 
             string[] files = Core.OpenFileDialog(directory, null, true);
             if (files == null)
@@ -204,17 +211,16 @@ namespace SevenUpdate.Sdk.Pages
             this.tbHashCalculating.Visibility = Visibility.Visible;
             this.hashesGenerating++;
             Task.Factory.StartNew(
-                    () =>
-                        {
-                            updateFile.Hash =
-                                    Utilities.GetHash(
-                                            Utilities.ExpandInstallLocation(
-                                                    fileLocation ?? updateFile.Destination, 
-                                                    Core.AppInfo.Directory, 
-                                                    Core.AppInfo.Platform, 
-                                                    Core.AppInfo.ValueName));
-                        }).ContinueWith(
-                                _ => this.CheckHashGenerating(), context);
+                () =>
+                    {
+                        updateFile.Hash =
+                            Utilities.GetHash(
+                                Utilities.ExpandInstallLocation(
+                                    fileLocation ?? updateFile.Destination, 
+                                    Core.AppInfo.Directory, 
+                                    Core.AppInfo.Platform, 
+                                    Core.AppInfo.ValueName));
+                    }).ContinueWith(_ => this.CheckHashGenerating(), context);
         }
 
         /// <summary>Changes the UI based on the selected <c>UpdateFile</c>'s <c>FileAction</c>.</summary>
@@ -241,10 +247,9 @@ namespace SevenUpdate.Sdk.Pages
                     this.tbxDownloadUrl.IsEnabled = false;
                     this.tbxDownloadUrl.HasError = false;
                     this.tbxInstallLocation.HasError =
-                            !new AppDirectoryRule().Validate(this.tbxInstallLocation.Text, null).IsValid;
+                        !new AppDirectoryRule().Validate(this.tbxInstallLocation.Text, null).IsValid;
                     this.tbxInstallLocation.ToolTip = this.tbxInstallLocation.HasError
-                                                              ? Properties.Resources.FilePathInvalid
-                                                              : null;
+                                                          ? Properties.Resources.FilePathInvalid : null;
                     break;
 
                 default:
@@ -252,14 +257,13 @@ namespace SevenUpdate.Sdk.Pages
                     this.tbxDownloadUrl.IsEnabled = true;
 
                     this.tbxDownloadUrl.HasError =
-                            !new DownloadUrlRule { IsRequired = true }.Validate(this.tbxDownloadUrl.Text, null).IsValid;
+                        !new DownloadUrlRule { IsRequired = true }.Validate(this.tbxDownloadUrl.Text, null).IsValid;
                     this.tbxDownloadUrl.ToolTip = this.tbxDownloadUrl.HasError ? Properties.Resources.UrlNotValid : null;
 
                     this.tbxInstallLocation.HasError =
-                            !new AppDirectoryRule().Validate(this.tbxInstallLocation.Text, null).IsValid;
+                        !new AppDirectoryRule().Validate(this.tbxInstallLocation.Text, null).IsValid;
                     this.tbxInstallLocation.ToolTip = this.tbxInstallLocation.HasError
-                                                              ? Properties.Resources.FilePathInvalid
-                                                              : null;
+                                                          ? Properties.Resources.FilePathInvalid : null;
                     break;
             }
 
@@ -290,11 +294,9 @@ namespace SevenUpdate.Sdk.Pages
 
             string fileLocation = Utilities.ConvertPath(source.Text, true, Core.AppInfo.Platform);
             string installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
-                                              ? Utilities.GetRegistryValue(
-                                                      Core.AppInfo.Directory, 
-                                                      Core.AppInfo.ValueName, 
-                                                      Core.AppInfo.Platform)
-                                              : Core.AppInfo.Directory;
+                                          ? Utilities.GetRegistryValue(
+                                              Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Platform)
+                                          : Core.AppInfo.Directory;
 
             installDirectory = Utilities.ConvertPath(installDirectory, true, Core.AppInfo.Platform);
 
@@ -395,11 +397,9 @@ namespace SevenUpdate.Sdk.Pages
             }
 
             string installDirectory = Utilities.IsRegistryKey(Core.AppInfo.Directory)
-                                              ? Utilities.GetRegistryValue(
-                                                      Core.AppInfo.Directory, 
-                                                      Core.AppInfo.ValueName, 
-                                                      Core.AppInfo.Platform)
-                                              : Core.AppInfo.Directory;
+                                          ? Utilities.GetRegistryValue(
+                                              Core.AppInfo.Directory, Core.AppInfo.ValueName, Core.AppInfo.Platform)
+                                          : Core.AppInfo.Directory;
 
             installDirectory = Utilities.ConvertPath(installDirectory, true, Core.AppInfo.Platform);
 
@@ -428,7 +428,7 @@ namespace SevenUpdate.Sdk.Pages
             }
 
             string fileLocation = Utilities.ExpandInstallLocation(
-                    selectedItem.Destination, Core.AppInfo.Directory, Core.AppInfo.Platform, Core.AppInfo.ValueName);
+                selectedItem.Destination, Core.AppInfo.Directory, Core.AppInfo.Platform, Core.AppInfo.ValueName);
 
             string[] files = Core.OpenFileDialog(Path.GetDirectoryName(fileLocation), Path.GetFileName(fileLocation));
 
@@ -511,5 +511,7 @@ namespace SevenUpdate.Sdk.Pages
                 ((UpdateFile)this.listBox.SelectedItem).Destination = textBox.Text;
             }
         }
+
+        #endregion
     }
 }

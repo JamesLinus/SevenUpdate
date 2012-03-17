@@ -33,6 +33,8 @@ namespace SevenUpdate.Sdk.Pages
     /// <summary>Interaction logic for UpdateInfo.xaml.</summary>
     public sealed partial class UpdateInfo
     {
+        #region Constructors and Destructors
+
         /// <summary>Initializes a new instance of the <see cref="UpdateInfo" /> class.</summary>
         public UpdateInfo()
         {
@@ -60,6 +62,10 @@ namespace SevenUpdate.Sdk.Pages
                 this.rectangle.Visibility = Visibility.Visible;
             }
         }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>Fires the OnPropertyChanged Event with the collection changes.</summary>
         /// <param name="sender">The object that called the event.</param>
@@ -250,9 +256,10 @@ namespace SevenUpdate.Sdk.Pages
             }
 
             textBox.HasError =
-                    !new UrlInputRule { IsRequired = textBox.Name == @"tbxSourceLocation" }.Validate(textBox.Text, null)
-                             .IsValid;
+                !new UrlInputRule { IsRequired = textBox.Name == @"tbxSourceLocation" }.Validate(textBox.Text, null).IsValid;
             textBox.ToolTip = textBox.HasError ? Properties.Resources.UrlNotValid : null;
         }
+
+        #endregion
     }
 }

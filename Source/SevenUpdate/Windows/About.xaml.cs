@@ -32,6 +32,8 @@ namespace SevenUpdate.Windows
     /// <summary>Interaction logic for About.xaml.</summary>
     public sealed partial class About
     {
+        #region Constructors and Destructors
+
         /// <summary>Initializes a new instance of the <see cref="About" /> class.</summary>
         public About()
         {
@@ -56,6 +58,10 @@ namespace SevenUpdate.Windows
             AeroGlass.CompositionChanged -= this.ChangeWindowChrome;
             AeroGlass.CompositionChanged += this.ChangeWindowChrome;
         }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>Enables Aero Glass on the Window.</summary>
         /// <param name="e">The <c>EventArgs</c> instance containing the event data.</param>
@@ -125,5 +131,7 @@ namespace SevenUpdate.Windows
             Utilities.StartProcess(e.Uri.AbsoluteUri);
             e.Handled = true;
         }
+
+        #endregion
     }
 }

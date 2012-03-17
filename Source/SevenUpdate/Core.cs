@@ -39,6 +39,8 @@ namespace SevenUpdate
     /// <summary>Contains properties and methods that are essential.</summary>
     internal sealed class Core : INotifyPropertyChanged
     {
+        #region Constants and Fields
+
         /// <summary>Gets the main location where Seven Update files are stored.</summary>
         internal const string SevenUpdateUrl = @"http://apps.sevenupdate.com/SevenUpdate";
 
@@ -54,11 +56,23 @@ namespace SevenUpdate
         /// <summary>The current action Seven Update is performing.</summary>
         private static UpdateAction updateAction;
 
+        #endregion
+
+        #region Public Events
+
         /// <summary>Occurs when a property value changes.</summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
+        #endregion
+
+        #region Events
+
         /// <summary>Occurs when the user cancels their update selection.</summary>
         internal static event EventHandler UpdateActionChanged;
+
+        #endregion
+
+        #region Public Properties
 
         /// <summary>Gets the update configuration settings.</summary>
         public static Config Settings
@@ -66,8 +80,8 @@ namespace SevenUpdate
             get
             {
                 return File.Exists(App.ConfigFile)
-                               ? Utilities.Deserialize<Config>(App.ConfigFile)
-                               : new Config { AutoOption = AutoUpdateOption.Notify, IncludeRecommended = false };
+                           ? Utilities.Deserialize<Config>(App.ConfigFile)
+                           : new Config { AutoOption = AutoUpdateOption.Notify, IncludeRecommended = false };
             }
         }
 
@@ -106,6 +120,10 @@ namespace SevenUpdate
                 }
             }
         }
+
+        #endregion
+
+        #region Properties
 
         /// <summary>Gets or sets a collection of applications to update.</summary>
         internal static Collection<Sui> Applications { get; set; }
@@ -147,13 +165,13 @@ namespace SevenUpdate
 
                 var app = new Sua(name, publisher)
                     {
-                            AppUrl = @"http://sevenupdate.com/", 
-                            Directory = @"HKLM\Software\Microsoft\Windows\CurrentVersion\App Paths\SevenUpdate.exe", 
-                            ValueName = "Path", 
-                            HelpUrl = @"http://sevenupdate.com/support/", 
-                            Platform = Platform.AnyCpu, 
-                            IsEnabled = true, 
-                            SuiUrl = SevenUpdateUrl
+                        AppUrl = @"http://sevenupdate.com/", 
+                        Directory = @"HKLM\Software\Microsoft\Windows\CurrentVersion\App Paths\SevenUpdate.exe", 
+                        ValueName = "Path", 
+                        HelpUrl = @"http://sevenupdate.com/support/", 
+                        Platform = Platform.AnyCpu, 
+                        IsEnabled = true, 
+                        SuiUrl = SevenUpdateUrl
                     };
                 if (App.IsDev)
                 {
@@ -174,6 +192,10 @@ namespace SevenUpdate
                 return apps;
             }
         }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>Checks for updates.</summary>
         /// <param name="auto"><c>True</c> if it's called because of an auto update check, otherwise <c>False</c>.</param>
@@ -219,12 +241,13 @@ namespace SevenUpdate
                 else
                 {
                     Instance.UpdateAction = UpdateAction.RebootNeeded;
-                    if (ShowMessage(Resources.RebootComputer, 
-                            TaskDialogStandardIcon.Information, 
-                            TaskDialogStandardButtons.Cancel, 
-                            Resources.RebootNeededFirst, 
-                            null, 
-                            Resources.RestartNow) != TaskDialogResult.Cancel)
+                    if (ShowMessage(
+                        Resources.RebootComputer, 
+                        TaskDialogStandardIcon.Information, 
+                        TaskDialogStandardButtons.Cancel, 
+                        Resources.RebootNeededFirst, 
+                        null, 
+                        Resources.RestartNow) != TaskDialogResult.Cancel)
                     {
                         Utilities.StartProcess(@"shutdown.exe", "-r -t 00");
                     }
@@ -267,13 +290,14 @@ namespace SevenUpdate
         /// <param name="defaultButtonText">Text to display on the button.</param>
         /// <param name="displayShieldOnButton">Indicates if a UAC shield is to be displayed on the defaultButton.</param>
         /// <returns>Returns the result of the message.</returns>
-        internal static TaskDialogResult ShowMessage(string instructionText, 
-                                                     TaskDialogStandardIcon icon, 
-                                                     TaskDialogStandardButtons standardButtons, 
-                                                     string description = null, 
-                                                     string footerText = null, 
-                                                     string defaultButtonText = null, 
-                                                     bool displayShieldOnButton = false)
+        internal static TaskDialogResult ShowMessage(
+            string instructionText, 
+            TaskDialogStandardIcon icon, 
+            TaskDialogStandardButtons standardButtons, 
+            string description = null, 
+            string footerText = null, 
+            string defaultButtonText = null, 
+            bool displayShieldOnButton = false)
         {
             if (TaskDialog.IsPlatformSupported)
             {
@@ -298,8 +322,7 @@ namespace SevenUpdate
                     }
 
                     return Application.Current.MainWindow == null
-                                   ? td.Show()
-                                   : td.ShowDialog(Application.Current.MainWindow);
+                               ? td.Show() : td.ShowDialog(Application.Current.MainWindow);
                 }
             }
 
@@ -383,5 +406,7 @@ namespace SevenUpdate
                 handler(this, new PropertyChangedEventArgs(name));
             }
         }
+
+        #endregion
     }
 }

@@ -10,6 +10,8 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
     /// <summary>Defines a radio button that can be hosted in by a <see cref="TaskDialog" /> object.</summary>
     public class TaskDialogRadioButton : TaskDialogButtonBase
     {
+        #region Constructors and Destructors
+
         /// <summary>
         ///   Initializes a new instance of the <see cref="TaskDialogRadioButton" /> class. Creates a new instance of
         ///   this class.
@@ -27,5 +29,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         public TaskDialogRadioButton(string name, string text) : base(name, text)
         {
         }
+
+        #endregion
     }
 }

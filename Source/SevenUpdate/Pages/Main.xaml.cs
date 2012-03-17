@@ -40,6 +40,8 @@ namespace SevenUpdate.Pages
     /// <summary>Interaction logic for Main.xaml.</summary>
     public sealed partial class Main
     {
+        #region Constants and Fields
+
         /// <summary>Indicates if the page was already initialized.</summary>
         private static bool init;
 
@@ -48,6 +50,10 @@ namespace SevenUpdate.Pages
 
         /// <summary>A timer to check if seven update is trying to connect.</summary>
         private Timer timer;
+
+        #endregion
+
+        #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="Main" /> class.</summary>
         public Main()
@@ -73,6 +79,10 @@ namespace SevenUpdate.Pages
                 this.spBackButton.Visibility = Visibility.Collapsed;
             }
         }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>Updates the UI when the downloading of updates completes.</summary>
         /// <param name="e">The <c>SevenUpdate.DownloadCompletedEventArgs</c> instance containing the event data.</param>
@@ -210,19 +220,16 @@ namespace SevenUpdate.Pages
                 App.TaskBar.ProgressState = TaskbarItemProgressState.Normal;
                 App.TaskBar.ProgressValue = Convert.ToDouble(progress) / 100;
                 this.tbStatus.Text = string.Format(
-                        CultureInfo.CurrentCulture, 
-                        Properties.Resources.DownloadPercentProgress, 
-                        Utilities.ConvertFileSize(e.BytesTotal), 
-                        progress.ToString("F0", CultureInfo.CurrentCulture));
+                    CultureInfo.CurrentCulture, 
+                    Properties.Resources.DownloadPercentProgress, 
+                    Utilities.ConvertFileSize(e.BytesTotal), 
+                    progress.ToString("F0", CultureInfo.CurrentCulture));
             }
             else
             {
                 App.TaskBar.ProgressState = TaskbarItemProgressState.Indeterminate;
                 this.tbStatus.Text = string.Format(
-                        CultureInfo.CurrentCulture, 
-                        Properties.Resources.DownloadProgress, 
-                        e.FilesTransferred, 
-                        e.FilesTotal);
+                    CultureInfo.CurrentCulture, Properties.Resources.DownloadProgress, e.FilesTransferred, e.FilesTotal);
             }
         }
 
@@ -345,10 +352,10 @@ namespace SevenUpdate.Pages
                         if (File.Exists(Path.Combine(App.AllUserStore, "updates.sui")))
                         {
                             Task.Factory.StartNew(
-                                    () =>
-                                    Search.SetUpdatesFound(
-                                            Utilities.Deserialize<Collection<Sui>>(
-                                                    Path.Combine(App.AllUserStore, "updates.sui"))));
+                                () =>
+                                Search.SetUpdatesFound(
+                                    Utilities.Deserialize<Collection<Sui>>(
+                                        Path.Combine(App.AllUserStore, "updates.sui"))));
                         }
                     }
                 }
@@ -409,11 +416,11 @@ namespace SevenUpdate.Pages
             if (e.UpdatesFailed <= 0)
             {
                 this.tbStatus.Text = e.UpdatesInstalled == 1
-                                             ? Properties.Resources.UpdateInstalled
-                                             : string.Format(
-                                                     CultureInfo.CurrentCulture, 
-                                                     Properties.Resources.UpdatesInstalled, 
-                                                     e.UpdatesInstalled);
+                                         ? Properties.Resources.UpdateInstalled
+                                         : string.Format(
+                                             CultureInfo.CurrentCulture, 
+                                             Properties.Resources.UpdatesInstalled, 
+                                             e.UpdatesInstalled);
                 return;
             }
 
@@ -422,19 +429,19 @@ namespace SevenUpdate.Pages
             if (e.UpdatesInstalled == 0)
             {
                 this.tbStatus.Text = e.UpdatesFailed == 1
-                                             ? Properties.Resources.UpdateFailed
-                                             : string.Format(
-                                                     CultureInfo.CurrentCulture, 
-                                                     Properties.Resources.UpdatesFailed, 
-                                                     e.UpdatesFailed);
+                                         ? Properties.Resources.UpdateFailed
+                                         : string.Format(
+                                             CultureInfo.CurrentCulture, 
+                                             Properties.Resources.UpdatesFailed, 
+                                             e.UpdatesFailed);
             }
             else
             {
                 this.tbStatus.Text = string.Format(
-                        CultureInfo.CurrentCulture, 
-                        Properties.Resources.UpdatesInstalledFailed, 
-                        e.UpdatesInstalled, 
-                        e.UpdatesFailed);
+                    CultureInfo.CurrentCulture, 
+                    Properties.Resources.UpdatesInstalledFailed, 
+                    e.UpdatesInstalled, 
+                    e.UpdatesFailed);
             }
         }
 
@@ -473,18 +480,18 @@ namespace SevenUpdate.Pages
                 App.TaskBar.ProgressState = TaskbarItemProgressState.Normal;
                 App.TaskBar.ProgressValue = e.CurrentProgress;
                 this.tbStatus.Text = e.TotalUpdates > 1
-                                             ? string.Format(
-                                                     CultureInfo.CurrentCulture, 
-                                                     Properties.Resources.InstallExtendedProgress, 
-                                                     e.UpdateName, 
-                                                     e.UpdatesComplete, 
-                                                     e.TotalUpdates, 
-                                                     e.CurrentProgress)
-                                             : string.Format(
-                                                     CultureInfo.CurrentCulture, 
-                                                     Properties.Resources.InstallProgress, 
-                                                     e.UpdateName, 
-                                                     e.CurrentProgress);
+                                         ? string.Format(
+                                             CultureInfo.CurrentCulture, 
+                                             Properties.Resources.InstallExtendedProgress, 
+                                             e.UpdateName, 
+                                             e.UpdatesComplete, 
+                                             e.TotalUpdates, 
+                                             e.CurrentProgress)
+                                         : string.Format(
+                                             CultureInfo.CurrentCulture, 
+                                             Properties.Resources.InstallProgress, 
+                                             e.UpdateName, 
+                                             e.CurrentProgress);
             }
         }
 
@@ -526,7 +533,7 @@ namespace SevenUpdate.Pages
         private void NavigateToRestoreUpdates(object sender, MouseButtonEventArgs e)
         {
             MainWindow.NavService.Navigate(
-                    new Uri(@"/SevenUpdate;component/Pages/RestoreUpdates.xaml", UriKind.Relative));
+                new Uri(@"/SevenUpdate;component/Pages/RestoreUpdates.xaml", UriKind.Relative));
         }
 
         /// <summary>Navigates to the Update History page.</summary>
@@ -535,7 +542,7 @@ namespace SevenUpdate.Pages
         private void NavigateToUpdateHistory(object sender, MouseButtonEventArgs e)
         {
             MainWindow.NavService.Navigate(
-                    new Uri(@"/SevenUpdate;component/Pages/UpdateHistory.xaml", UriKind.Relative));
+                new Uri(@"/SevenUpdate;component/Pages/UpdateHistory.xaml", UriKind.Relative));
         }
 
         /// <summary>Opens a browser and navigates to the Uri.</summary>
@@ -641,10 +648,10 @@ namespace SevenUpdate.Pages
                 {
                     Utilities.Serialize(Core.Applications, Path.Combine(App.AllUserStore, "updates.sui"));
                     Utilities.StartProcess(
-                            @"cacls.exe", "\"" + Path.Combine(App.AllUserStore, "updates.sui") + "\" /c /e /g Users:F");
+                        @"cacls.exe", "\"" + Path.Combine(App.AllUserStore, "updates.sui") + "\" /c /e /g Users:F");
                     Utilities.StartProcess(
-                            @"cacls.exe", 
-                            "\"" + Path.Combine(App.AllUserStore, "updates.sui") + "\" /c /e /r " + Environment.UserName);
+                        @"cacls.exe", 
+                        "\"" + Path.Combine(App.AllUserStore, "updates.sui") + "\" /c /e /r " + Environment.UserName);
                 }
                 catch (Exception ex)
                 {
@@ -669,10 +676,10 @@ namespace SevenUpdate.Pages
                     if (e.ImportantCount > 0)
                     {
                         uiString = e.ImportantCount == 1
-                                           ? Properties.Resources.ImportantUpdateAvailable
-                                           : Properties.Resources.ImportantUpdatesAvailable;
+                                       ? Properties.Resources.ImportantUpdateAvailable
+                                       : Properties.Resources.ImportantUpdatesAvailable;
                         this.tbViewImportantUpdates.Text = string.Format(
-                                CultureInfo.CurrentCulture, uiString, e.ImportantCount);
+                            CultureInfo.CurrentCulture, uiString, e.ImportantCount);
 
                         this.tbViewImportantUpdates.Visibility = Visibility.Visible;
                     }
@@ -689,11 +696,11 @@ namespace SevenUpdate.Pages
                         }
 
                         uiString = e.OptionalCount == 1
-                                           ? Properties.Resources.OptionalUpdateAvailable
-                                           : Properties.Resources.OptionalUpdatesAvailable;
+                                       ? Properties.Resources.OptionalUpdateAvailable
+                                       : Properties.Resources.OptionalUpdatesAvailable;
 
                         this.tbViewOptionalUpdates.Text = string.Format(
-                                CultureInfo.CurrentCulture, uiString, e.OptionalCount);
+                            CultureInfo.CurrentCulture, uiString, e.OptionalCount);
 
                         this.tbViewOptionalUpdates.Visibility = Visibility.Visible;
                     }
@@ -922,11 +929,11 @@ namespace SevenUpdate.Pages
             {
                 this.tbViewImportantUpdates.Visibility = Visibility.Visible;
                 this.tbSelectedUpdates.Text = e.ImportantUpdates == 1
-                                                      ? Properties.Resources.ImportantUpdateSelected
-                                                      : string.Format(
-                                                              CultureInfo.CurrentCulture, 
-                                                              Properties.Resources.ImportantUpdatesSelected, 
-                                                              e.ImportantUpdates);
+                                                  ? Properties.Resources.ImportantUpdateSelected
+                                                  : string.Format(
+                                                      CultureInfo.CurrentCulture, 
+                                                      Properties.Resources.ImportantUpdatesSelected, 
+                                                      e.ImportantUpdates);
 
                 if (e.ImportantDownloadSize > 0)
                 {
@@ -940,11 +947,11 @@ namespace SevenUpdate.Pages
                 if (e.ImportantUpdates == 0)
                 {
                     this.tbSelectedUpdates.Text = e.OptionalUpdates == 1
-                                                          ? Properties.Resources.OptionalUpdateSelected
-                                                          : string.Format(
-                                                                  CultureInfo.CurrentCulture, 
-                                                                  Properties.Resources.OptionalUpdatesSelected, 
-                                                                  e.OptionalUpdates);
+                                                      ? Properties.Resources.OptionalUpdateSelected
+                                                      : string.Format(
+                                                          CultureInfo.CurrentCulture, 
+                                                          Properties.Resources.OptionalUpdatesSelected, 
+                                                          e.OptionalUpdates);
                 }
                 else
                 {
@@ -957,9 +964,9 @@ namespace SevenUpdate.Pages
                         this.tbSelectedUpdates.Text += Environment.NewLine
                                                        +
                                                        string.Format(
-                                                               CultureInfo.CurrentCulture, 
-                                                               Properties.Resources.OptionalUpdatesSelected, 
-                                                               e.OptionalUpdates);
+                                                           CultureInfo.CurrentCulture, 
+                                                           Properties.Resources.OptionalUpdatesSelected, 
+                                                           e.OptionalUpdates);
                     }
                 }
 
@@ -1014,5 +1021,7 @@ namespace SevenUpdate.Pages
                 this.spBackButton.Visibility = Visibility.Collapsed;
             }
         }
+
+        #endregion
     }
 }

@@ -27,9 +27,15 @@ namespace SevenSoftware.Windows.ValidationRules
     /// <summary>Validates if the input is a filename.</summary>
     public class FileNameInputRule : ValidationRule
     {
+        #region Public Properties
+
         /// <summary>Gets or sets a value indicating whether the filename is required to pass validation.</summary>
         /// <value><c>True</c> if the filename is required; otherwise, <c>False</c>.</value>
         public bool IsRequired { get; set; }
+
+        #endregion
+
+        #region Public Methods and Operators
 
         /// <summary>When overridden in a derived class, performs validation checks on a value.</summary>
         /// <param name="value">The value from the binding target to check.</param>
@@ -42,8 +48,7 @@ namespace SevenSoftware.Windows.ValidationRules
             if (string.IsNullOrWhiteSpace(input))
             {
                 return this.IsRequired
-                               ? new ValidationResult(false, Resources.FilePathInvalid)
-                               : new ValidationResult(true, null);
+                           ? new ValidationResult(false, Resources.FilePathInvalid) : new ValidationResult(true, null);
             }
 
             var r = new Regex(@"^(([a-zA-Z]\:)|(\\))(\\{1}|((\\{1})[^\\]([^/:*?<>""|]*))+)$");
@@ -57,16 +62,14 @@ namespace SevenSoftware.Windows.ValidationRules
             if (string.IsNullOrEmpty(fileName))
             {
                 return this.IsRequired
-                               ? new ValidationResult(false, Resources.FilePathInvalid)
-                               : new ValidationResult(true, null);
+                           ? new ValidationResult(false, Resources.FilePathInvalid) : new ValidationResult(true, null);
             }
 
             string directoryName = Path.GetDirectoryName(input);
             if (string.IsNullOrEmpty(directoryName))
             {
                 return this.IsRequired
-                               ? new ValidationResult(false, Resources.FilePathInvalid)
-                               : new ValidationResult(true, null);
+                           ? new ValidationResult(false, Resources.FilePathInvalid) : new ValidationResult(true, null);
             }
 
             if (fileName.IndexOfAny(Path.GetInvalidFileNameChars()) >= 0
@@ -77,5 +80,7 @@ namespace SevenSoftware.Windows.ValidationRules
 
             return new ValidationResult(true, null);
         }
+
+        #endregion
     }
 }

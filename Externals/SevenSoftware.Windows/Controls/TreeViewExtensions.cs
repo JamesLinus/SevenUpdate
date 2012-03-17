@@ -24,6 +24,8 @@ namespace SevenSoftware.Windows.Controls
     /// <summary>Contains methods that extend the <c>TreeView</c> control.</summary>
     public static class TreeViewExtensions
     {
+        #region Public Methods and Operators
+
         /// <summary>Finds the parent TreeViewItem of the current TreeViewItem.</summary>
         /// <param name="treeView">The treeview control.</param>
         /// <param name="predicate">The TreeViewItem to use as a starting point.</param>
@@ -43,27 +45,31 @@ namespace SevenSoftware.Windows.Controls
             return FindTreeViewItem(treeView.ItemContainerGenerator, treeView.Items, predicate);
         }
 
+        #endregion
+
+        #region Methods
+
         /// <summary>Finds the TreeViewItem from the collection.</summary>
         /// <param name="parentItemContainerGenerator">The parent item container.</param>
         /// <param name="itemCollection">The item collection.</param>
         /// <param name="predicate">The TreeViewItem.</param>
         /// <returns>The TreeViewItem found.</returns>
-        private static TreeViewItem FindTreeViewItem(ItemContainerGenerator parentItemContainerGenerator, 
-                                                     ItemCollection itemCollection, 
-                                                     Predicate<TreeViewItem> predicate)
+        private static TreeViewItem FindTreeViewItem(
+            ItemContainerGenerator parentItemContainerGenerator, 
+            ItemCollection itemCollection, 
+            Predicate<TreeViewItem> predicate)
         {
             foreach (var trvItem in
-                    from object item in itemCollection
-                    select item as TreeViewItem ?? (TreeViewItem)parentItemContainerGenerator.ContainerFromItem(item))
+                from object item in itemCollection
+                select item as TreeViewItem ?? (TreeViewItem)parentItemContainerGenerator.ContainerFromItem(item))
             {
                 if (predicate(trvItem))
                 {
                     return trvItem;
                 }
 
-                TreeViewItem nestedSearchResult = FindTreeViewItem(trvItem.ItemContainerGenerator, 
-                        trvItem.Items, 
-                        predicate);
+                TreeViewItem nestedSearchResult = FindTreeViewItem(
+                    trvItem.ItemContainerGenerator, trvItem.Items, predicate);
                 if (nestedSearchResult != null)
                 {
                     return nestedSearchResult;
@@ -72,5 +78,7 @@ namespace SevenSoftware.Windows.Controls
 
             return null;
         }
+
+        #endregion
     }
 }

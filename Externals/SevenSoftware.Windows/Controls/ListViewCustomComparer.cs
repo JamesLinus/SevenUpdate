@@ -25,6 +25,8 @@ namespace SevenSoftware.Windows.Controls
     /// <summary>Enables the listView sorter to compare classes.</summary>
     public abstract class ListViewCustomComparer : IComparer
     {
+        #region Properties
+
         /// <summary>Gets a List of strings from a column that needs to be sorted.</summary>
         /// <returns>A collection of columns that are sorted.</returns>
         protected IEnumerable<string> SortColumnList
@@ -50,6 +52,10 @@ namespace SevenSoftware.Windows.Controls
 
         /// <summary>Gets a dictionary of SortColumns.</summary>
         protected Dictionary<string, ListSortDirection> SortColumns { get; private set; }
+
+        #endregion
+
+        #region Public Methods and Operators
 
         /// <summary>Adds a column to the <c>SortColumns</c>.</summary>
         /// <param name="sortColumn">A string representing a column to be sorted.</param>
@@ -82,6 +88,10 @@ namespace SevenSoftware.Windows.Controls
         /// <paramref name="y" />. Greater than zero <paramref name="x" /> is greater than <paramref name="y" />.</returns>
         public abstract int Compare(object x, object y);
 
+        #endregion
+
+        #region Methods
+
         /// <summary>Clears the sort columns.</summary>
         private void ClearSort()
         {
@@ -90,5 +100,7 @@ namespace SevenSoftware.Windows.Controls
                 this.SortColumns.Clear();
             }
         }
+
+        #endregion
     }
 }

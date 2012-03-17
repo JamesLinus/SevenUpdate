@@ -10,8 +10,14 @@ namespace SevenSoftware.Windows.Internal
     /// <summary>Provide Error Message Helper Methods.This is intended for Library Internal use only.</summary>
     public static class ErrorHelper
     {
+        #region Constants and Fields
+
         /// <summary>This is intended for Library Internal use only.</summary>
         public const int Ignored = (int)Result.Ok;
+
+        #endregion
+
+        #region Public Methods and Operators
 
         /// <summary>This is intended for Library Internal use only.</summary>
         /// <param name="result">The error code.</param>
@@ -66,5 +72,7 @@ namespace SevenSoftware.Windows.Internal
         {
             return Succeeded((int)result);
         }
+
+        #endregion
     }
 }

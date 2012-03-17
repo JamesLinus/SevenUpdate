@@ -31,11 +31,17 @@ namespace SevenUpdate.Helper
     /// <summary>The main class.</summary>
     internal static class Program
     {
+        #region Constants and Fields
+
         /// <summary>Moves a file on reboot.</summary>
         private const int MoveOnReboot = 5;
 
         /// <summary>The current directory the application resides in.</summary>
         private static readonly string AppDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
+
+        #endregion
+
+        #region Methods
 
         /// <summary>Stops a running process.</summary>
         /// <param name="name">The name of the process to kill.</param>
@@ -55,8 +61,8 @@ namespace SevenUpdate.Helper
             catch (Exception e)
             {
                 if (
-                        !(e is OperationCanceledException || e is UnauthorizedAccessException
-                          || e is InvalidOperationException || e is NotSupportedException || e is Win32Exception))
+                    !(e is OperationCanceledException || e is UnauthorizedAccessException
+                      || e is InvalidOperationException || e is NotSupportedException || e is Win32Exception))
                 {
                     throw;
                 }
@@ -87,9 +93,9 @@ namespace SevenUpdate.Helper
                     }
 
                     NativeMethods.MoveFileExW(
-                            Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "reboot.lock"), 
-                            null, 
-                            MoveOnReboot);
+                        Path.Combine(Environment.ExpandEnvironmentVariables("%WINDIR%"), "Temp", "reboot.lock"), 
+                        null, 
+                        MoveOnReboot);
                 }
 
                 string[] files = Directory.GetFiles(AppDir, "*.bak");
@@ -183,8 +189,8 @@ namespace SevenUpdate.Helper
                 catch (Exception e)
                 {
                     if (
-                            !(e is OperationCanceledException || e is UnauthorizedAccessException
-                              || e is InvalidOperationException || e is NotSupportedException || e is Win32Exception))
+                        !(e is OperationCanceledException || e is UnauthorizedAccessException
+                          || e is InvalidOperationException || e is NotSupportedException || e is Win32Exception))
                     {
                         throw;
                     }
@@ -193,5 +199,7 @@ namespace SevenUpdate.Helper
 
             return;
         }
+
+        #endregion
     }
 }

@@ -44,12 +44,13 @@ namespace SharpBits.Base
         /// <returns><c>True</c> if function succeeded.</returns>
         [DllImport(@"advapi32.dll", CharSet = CharSet.Unicode)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        internal static extern bool LookupAccountSidW(string systemName, 
-                                                      IntPtr sid, 
-                                                      StringBuilder name, 
-                                                      ref long nameSize, 
-                                                      StringBuilder referencedDomainName, 
-                                                      ref long domainNameSize, 
-                                                      ref int use);
+        internal static extern bool LookupAccountSidW(
+            string systemName, 
+            IntPtr sid, 
+            StringBuilder name, 
+            ref long nameSize, 
+            StringBuilder referencedDomainName, 
+            ref long domainNameSize, 
+            ref int use);
     }
 }

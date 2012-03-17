@@ -34,6 +34,8 @@ namespace SevenUpdate
     [KnownType(typeof(Importance))]
     public sealed class Update : INotifyPropertyChanged
     {
+        #region Constants and Fields
+
         /// <summary>The source main location to download files for the update.</summary>
         private string downloadUrl;
 
@@ -58,17 +60,22 @@ namespace SevenUpdate
         /// <summary>The total download size in bytes of the update.</summary>
         private ulong size;
 
+        #endregion
+
+        #region Constructors and Destructors
+
         /// <summary>Initializes a new instance of the <see cref="Update" /> class.</summary>
         /// <param name="name">The collection of localized update names.</param>
         /// <param name="description">The collection localized update descriptions.</param>
         /// <param name="files">The collection of localized update files.</param>
         /// <param name="registryItems">The collection of registry keys and values to perform actions on in the update.</param>
         /// <param name="shortcuts">The collection of shortcuts to perform actions on in the update.</param>
-        public Update(ObservableCollection<LocaleString> name, 
-                      ObservableCollection<LocaleString> description, 
-                      ObservableCollection<UpdateFile> files, 
-                      ObservableCollection<RegistryItem> registryItems, 
-                      ObservableCollection<Shortcut> shortcuts)
+        public Update(
+            ObservableCollection<LocaleString> name, 
+            ObservableCollection<LocaleString> description, 
+            ObservableCollection<UpdateFile> files, 
+            ObservableCollection<RegistryItem> registryItems, 
+            ObservableCollection<Shortcut> shortcuts)
         {
             this.Name = name;
             this.Description = description;
@@ -123,8 +130,16 @@ namespace SevenUpdate
             this.Description.CollectionChanged += this.DescriptionCollectionChanged;
         }
 
+        #endregion
+
+        #region Public Events
+
         /// <summary>Occurs when a property has changed.</summary>
         public event PropertyChangedEventHandler PropertyChanged;
+
+        #endregion
+
+        #region Public Properties
 
         /// <summary>Gets the collection of localized update descriptions.</summary>
         /// <value>The localized description for the update.</value>
@@ -316,6 +331,10 @@ namespace SevenUpdate
             }
         }
 
+        #endregion
+
+        #region Methods
+
         /// <summary>Fires the OnPropertyChanged Event with the collection changes.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The event data.</param>
@@ -343,5 +362,7 @@ namespace SevenUpdate
                 handler(this, new PropertyChangedEventArgs(propertyName));
             }
         }
+
+        #endregion
     }
 }

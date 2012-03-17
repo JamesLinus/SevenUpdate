@@ -12,8 +12,14 @@ namespace SharpBits.Base
     /// <summary>The <c>BitsJob</c> Progress.</summary>
     public class JobReplyProgress
     {
+        #region Constants and Fields
+
         /// <summary>The current project.</summary>
         private BGJobReplyProgress jobReplyProgress;
+
+        #endregion
+
+        #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="JobReplyProgress" /> class.</summary>
         /// <param name="jobReplyProgress">The job reply progress.</param>
@@ -21,6 +27,10 @@ namespace SharpBits.Base
         {
             this.jobReplyProgress = jobReplyProgress;
         }
+
+        #endregion
+
+        #region Public Properties
 
         /// <summary>Gets the total number of bytes downloaded.</summary>
         public ulong BytesTotal
@@ -40,5 +50,7 @@ namespace SharpBits.Base
                 return this.jobReplyProgress.BytesTransferred;
             }
         }
+
+        #endregion
     }
 }

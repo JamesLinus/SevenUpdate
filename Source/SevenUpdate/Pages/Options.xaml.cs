@@ -36,6 +36,8 @@ namespace SevenUpdate.Pages
     /// <summary>Interaction logic for Options.xaml.</summary>
     public partial class Options
     {
+        #region Constants and Fields
+
         /// <summary>The official collection of the applications that Seven Update can update.</summary>
         private static ObservableCollection<Sua> apps;
 
@@ -44,6 +46,10 @@ namespace SevenUpdate.Pages
 
         /// <summary>The program configuration.</summary>
         private Config config;
+
+        #endregion
+
+        #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="Options" /> class.</summary>
         public Options()
@@ -71,6 +77,10 @@ namespace SevenUpdate.Pages
                 this.rectangle.Visibility = Visibility.Visible;
             }
         }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>Downloads the Seven Update Application List.</summary>
         private static void DownloadSul()
@@ -110,7 +120,7 @@ namespace SevenUpdate.Pages
             this.lvApps.ItemsSource = null;
             machineAppList = null;
             Task.Factory.StartNew(DownloadSul).ContinueWith(
-                    delegate { this.Dispatcher.BeginInvoke(() => this.LoadSul(apps)); });
+                delegate { this.Dispatcher.BeginInvoke(() => this.LoadSul(apps)); });
         }
 
         /// <summary>
@@ -152,14 +162,15 @@ namespace SevenUpdate.Pages
                     else
                     {
                         if (
-                                Directory.Exists(Utilities.IsRegistryKey(machineAppList[x].Directory)
-                                                         ? Utilities.GetRegistryValue(machineAppList[x].Directory, 
-                                                                 machineAppList[x].ValueName, 
-                                                                 machineAppList[x].Platform)
-                                                         : Utilities.ConvertPath(machineAppList[x].Directory, 
-                                                                 true, 
-                                                                 machineAppList[x].Platform))
-                                && machineAppList[x].IsEnabled)
+                            Directory.Exists(
+                                Utilities.IsRegistryKey(machineAppList[x].Directory)
+                                    ? Utilities.GetRegistryValue(
+                                        machineAppList[x].Directory, 
+                                        machineAppList[x].ValueName, 
+                                        machineAppList[x].Platform)
+                                    : Utilities.ConvertPath(
+                                        machineAppList[x].Directory, true, machineAppList[x].Platform))
+                            && machineAppList[x].IsEnabled)
                         {
                             continue;
                         }
@@ -184,14 +195,14 @@ namespace SevenUpdate.Pages
                     }
 
                     if (
-                            !Directory.Exists(Utilities.IsRegistryKey(officialApplicationList[x].Directory)
-                                                      ? Utilities.GetRegistryValue(
-                                                              officialApplicationList[x].Directory, 
-                                                              officialApplicationList[x].ValueName, 
-                                                              officialApplicationList[x].Platform)
-                                                      : Utilities.ConvertPath(officialApplicationList[x].Directory, 
-                                                              true, 
-                                                              officialApplicationList[x].Platform)))
+                        !Directory.Exists(
+                            Utilities.IsRegistryKey(officialApplicationList[x].Directory)
+                                ? Utilities.GetRegistryValue(
+                                    officialApplicationList[x].Directory, 
+                                    officialApplicationList[x].ValueName, 
+                                    officialApplicationList[x].Platform)
+                                : Utilities.ConvertPath(
+                                    officialApplicationList[x].Directory, true, officialApplicationList[x].Platform)))
                     {
                         // Remove the application from the list if it is not installed
                         officialApplicationList.RemoveAt(x);
@@ -304,5 +315,7 @@ namespace SevenUpdate.Pages
                 this.rectangle.Visibility = Visibility.Visible;
             }
         }
+
+        #endregion
     }
 }

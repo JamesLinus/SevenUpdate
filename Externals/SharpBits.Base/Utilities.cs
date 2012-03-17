@@ -15,6 +15,8 @@ namespace SharpBits.Base
     /// <summary>Various utility methods.</summary>
     internal static class Utilities
     {
+        #region Methods
+
         /// <summary>Converts the <c>FileTime</c> to <c>DateTime</c>.</summary>
         /// <param name="fileTime">The file time.</param>
         /// <returns>The converted <c>FileTime</c> to <c>DateTime</c>.</returns>
@@ -43,13 +45,8 @@ namespace SharpBits.Base
             var domainName = new StringBuilder(255);
             if (NativeMethods.ConvertStringSidToSidW(sid, ref pointerSid))
             {
-                if (NativeMethods.LookupAccountSidW(string.Empty, 
-                        pointerSid, 
-                        userName, 
-                        ref userNameSize, 
-                        domainName, 
-                        ref domainNameSize, 
-                        ref use))
+                if (NativeMethods.LookupAccountSidW(
+                    string.Empty, pointerSid, userName, ref userNameSize, domainName, ref domainNameSize, ref use))
                 {
                     return string.Concat(domainName.ToString(), "\\", userName.ToString());
                 }
@@ -57,5 +54,7 @@ namespace SharpBits.Base
 
             return string.Empty;
         }
+
+        #endregion
     }
 }

@@ -40,8 +40,14 @@ namespace SevenUpdate.Sdk.Pages
     /// <summary>Interaction logic for AppInfo.xaml.</summary>
     public sealed partial class AppInfo
     {
+        #region Constants and Fields
+
         /// <summary>Indicates the platform of the application before editing.</summary>
         private static Platform oldPlatform;
+
+        #endregion
+
+        #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="AppInfo" /> class.</summary>
         public AppInfo()
@@ -79,6 +85,10 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
+        #endregion
+
+        #region Methods
+
         /// <summary>Opens a <c>OpenFileDialog</c> to browse for the application install location.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.</param>
@@ -89,7 +99,7 @@ namespace SevenUpdate.Sdk.Pages
                 if (folderBrowserDialog.ShowDialog(Application.Current.MainWindow.GetIWin32Window()) == DialogResult.OK)
                 {
                     this.tbxAppLocation.Text = Utilities.ConvertPath(
-                            folderBrowserDialog.SelectedPath, false, Core.AppInfo.Platform);
+                        folderBrowserDialog.SelectedPath, false, Core.AppInfo.Platform);
                 }
             }
         }
@@ -259,7 +269,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <summary>Loads the <c>LocaleString</c>'s for the <c>Sua</c> into the UI.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.Controls.SelectionChangedEventArgs</c> instance containing the event data.</param>
-        private void LoadLocaleStrings(object sender, SelectionChangedEventArgs selectionChangedEventArgs)
+        private void LoadLocaleStrings(object sender, SelectionChangedEventArgs e)
         {
             if (this.tbxAppName == null || this.cbxLocale.SelectedIndex < 0)
             {
@@ -364,9 +374,9 @@ namespace SevenUpdate.Sdk.Pages
                         && string.Compare(oldAppName, appName, StringComparison.OrdinalIgnoreCase) != 0)
                     {
                         File.Copy(
-                                Path.Combine(App.UserStore, oldAppName + ".sui"), 
-                                Path.Combine(App.UserStore, appName + ".sui"), 
-                                true);
+                            Path.Combine(App.UserStore, oldAppName + ".sui"), 
+                            Path.Combine(App.UserStore, appName + ".sui"), 
+                            true);
                         File.Delete(Path.Combine(App.UserStore, oldAppName + ".sui"));
                         File.Delete(Path.Combine(App.UserStore, oldAppName + ".sua"));
                     }
@@ -497,5 +507,7 @@ namespace SevenUpdate.Sdk.Pages
             textBox.HasError = !new UrlInputRule { IsRequired = true }.Validate(textBox.Text, null).IsValid;
             textBox.ToolTip = textBox.HasError ? Properties.Resources.UrlNotValid : null;
         }
+
+        #endregion
     }
 }

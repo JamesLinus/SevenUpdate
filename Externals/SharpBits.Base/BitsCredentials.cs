@@ -12,6 +12,8 @@ namespace SharpBits.Base
     /// <summary>The credentials for the job.</summary>
     public class BitsCredentials
     {
+        #region Public Properties
+
         /// <summary>Gets or sets the authentication scheme.</summary>
         /// <value>The authentication scheme.</value>
         public AuthenticationScheme AuthenticationScheme { get; set; }
@@ -27,5 +29,7 @@ namespace SharpBits.Base
         /// <summary>Gets or sets the name of the user.</summary>
         /// <value>The name of the user.</value>
         public string UserName { get; set; }
+
+        #endregion
     }
 }

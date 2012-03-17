@@ -23,6 +23,8 @@ namespace SevenSoftware.Windows.Controls
     /// <summary>Contains methods that extend the <c>ListView</c> control.</summary>
     public static class ListViewExtensions
     {
+        #region Public Methods and Operators
+
         /// <summary>Limits resizing of a <c>GridViewColumn</c>.</summary>
         /// <param name="control">The Thumb object of the <c>GridViewColumn</c> to limit it's size.</param>
         public static void LimitColumnSize(FrameworkElement control)
@@ -50,5 +52,7 @@ namespace SevenSoftware.Windows.Controls
                 header.Column.Width = 25;
             }
         }
+
+        #endregion
     }
 }

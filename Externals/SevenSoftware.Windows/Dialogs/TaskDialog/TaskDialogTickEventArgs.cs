@@ -12,6 +12,8 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
     /// <summary>The event data for a TaskDialogTick event.</summary>
     public class TaskDialogTickEventArgs : EventArgs
     {
+        #region Constructors and Destructors
+
         /// <summary>Initializes a new instance of the <see cref="TaskDialogTickEventArgs" /> class.</summary>
         /// <param name="ticks">The total number of ticks since the control was activated.</param>
         public TaskDialogTickEventArgs(int ticks)
@@ -19,7 +21,13 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
             this.Ticks = ticks;
         }
 
+        #endregion
+
+        #region Public Properties
+
         /// <summary>Gets a value that determines the current number of ticks.</summary>
         public int Ticks { get; private set; }
+
+        #endregion
     }
 }

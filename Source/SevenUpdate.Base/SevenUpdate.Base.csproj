@@ -89,7 +89,6 @@
     <Compile Include="ErrorOccurredEventArgs.cs" />
     <Compile Include="ErrorType.cs" />
     <Compile Include="FileAction.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Importance.cs" />
     <Compile Include="InstallCompletedEventArgs.cs" />
     <Compile Include="InstallProgressChangedEventArgs.cs" />

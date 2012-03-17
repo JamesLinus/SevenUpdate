@@ -109,7 +109,6 @@
     </ApplicationDefinition>
     <Compile Include="Converters\DateConverter.cs" />
     <Compile Include="Converters\StringToLocaleStringConverter.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="Project.cs" />
     <Page Include="Pages\AppInfo.xaml">
       <Generator>MSBuild:Compile</Generator>

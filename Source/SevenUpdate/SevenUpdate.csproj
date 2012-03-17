@@ -111,7 +111,6 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Converters\UpdateStatusToBooleanConverter.cs" />
-    <Compile Include="GlobalSuppressions.cs" />
     <Compile Include="MyServiceHost.cs" />
     <Compile Include="UpdateAction.cs" />
     <Compile Include="WcfService.cs" />

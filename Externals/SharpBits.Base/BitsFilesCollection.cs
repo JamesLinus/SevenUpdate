@@ -15,6 +15,8 @@ namespace SharpBits.Base
     /// <summary>Collection of <c>BitsFile</c>.</summary>
     public sealed class BitsFilesCollection : Collection<BitsFile>, IDisposable
     {
+        #region Constants and Fields
+
         /// <summary>The current job in the collection.</summary>
         private readonly BitsJob job;
 
@@ -23,6 +25,10 @@ namespace SharpBits.Base
 
         /// <summary>Gets a list of the <c>BitsFile</c>.</summary>
         private IEnumBackgroundCopyFiles fileList;
+
+        #endregion
+
+        #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="BitsFilesCollection" /> class.</summary>
         /// <param name="job">The current job.</param>
@@ -34,12 +40,20 @@ namespace SharpBits.Base
             this.Refresh();
         }
 
+        #endregion
+
+        #region Public Methods and Operators
+
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
         public void Dispose()
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
         }
+
+        #endregion
+
+        #region Methods
 
         /// <summary>Refreshes the <c>BitsFile</c> collection.</summary>
         internal void Refresh()
@@ -79,5 +93,7 @@ namespace SharpBits.Base
 
             this.disposed = true;
         }
+
+        #endregion
     }
 }

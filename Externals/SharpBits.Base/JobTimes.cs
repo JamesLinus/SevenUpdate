@@ -14,8 +14,14 @@ namespace SharpBits.Base
     /// <summary>Data containing various <c>DateTime</c>'s about the <c>BitsJob</c>.</summary>
     public class JobTimes
     {
+        #region Constants and Fields
+
         /// <summary>The current <c>JobTimes</c> for the <c>BitsJob</c>.</summary>
         private BGJobTimes jobTimes;
+
+        #endregion
+
+        #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="JobTimes" /> class.</summary>
         /// <param name="jobTimes">The job times.</param>
@@ -23,6 +29,10 @@ namespace SharpBits.Base
         {
             this.jobTimes = jobTimes;
         }
+
+        #endregion
+
+        #region Public Properties
 
         /// <summary>Gets the creation time.</summary>
         /// <value>The creation time.</value>
@@ -53,5 +63,7 @@ namespace SharpBits.Base
                 return Utilities.FileTimeToDateTime(this.jobTimes.TransferCompletionTime);
             }
         }
+
+        #endregion
     }
 }

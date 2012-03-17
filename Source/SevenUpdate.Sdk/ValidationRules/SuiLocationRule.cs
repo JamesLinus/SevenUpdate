@@ -27,9 +27,11 @@ namespace SevenUpdate.Sdk.ValidationRules
 
     /// <summary>Validates a value and determines if the value is a Sui location.</summary>
     [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", 
-            Justification = "ValidationRule")]
+        Justification = "ValidationRule")]
     public class SuiLocationRule : ValidationRule
     {
+        #region Public Methods and Operators
+
         /// <summary>When overridden in a derived class, performs validation checks on a value.</summary>
         /// <param name="value">The value from the binding target to check.</param>
         /// <param name="cultureInfo">The culture to use in this rule.</param>
@@ -67,5 +69,7 @@ namespace SevenUpdate.Sdk.ValidationRules
 
             return new ValidationResult(true, null);
         }
+
+        #endregion
     }
 }

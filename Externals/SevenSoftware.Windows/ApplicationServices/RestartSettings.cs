@@ -18,6 +18,8 @@ namespace SevenSoftware.Windows.ApplicationServices
     /// </remarks>
     public class RestartSettings
     {
+        #region Constants and Fields
+
         /// <summary>Gets the command line arguments used to restart the application.</summary>
         /// <value>A <c>System.String</c> object.</value>
         private string command;
@@ -25,6 +27,10 @@ namespace SevenSoftware.Windows.ApplicationServices
         /// <summary>Gets the set of conditions when the application should not be restarted.</summary>
         /// <value>A set of <c>RestartRestrictions</c> values.</value>
         private RestartRestrictions restrictions;
+
+        #endregion
+
+        #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="RestartSettings" /> class.  Creates a new instance of the RestartSettings class.</summary>
         /// <param name="command">The command line arguments used to restart the application.</param>
@@ -34,6 +40,10 @@ namespace SevenSoftware.Windows.ApplicationServices
             this.command = command;
             this.restrictions = restrictions;
         }
+
+        #endregion
+
+        #region Public Properties
 
         /// <summary>Gets the command line arguments used to restart the application.</summary>
         /// <value>A <see cref="string" /> object.</value>
@@ -55,14 +65,21 @@ namespace SevenSoftware.Windows.ApplicationServices
             }
         }
 
+        #endregion
+
+        #region Public Methods and Operators
+
         /// <summary>Returns a string representation of the current state of this object.</summary>
         /// <returns>A <see cref="string" /> that displays the command line arguments and restrictions for restarting the application.</returns>
         public override string ToString()
         {
-            return string.Format(CultureInfo.InvariantCulture, 
-                    Resources.RestartSettingsFormatString, 
-                    this.command, 
-                    this.restrictions.ToString());
+            return string.Format(
+                CultureInfo.InvariantCulture, 
+                Resources.RestartSettingsFormatString, 
+                this.command, 
+                this.restrictions.ToString());
         }
+
+        #endregion
     }
 }

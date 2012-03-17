@@ -15,9 +15,15 @@ namespace WPFLocalizeExtension.Engine
     /// <summary>This class ensures, that a specific object lives as long a associated object is alive.</summary>
     public static class ObjectDependencyManager
     {
+        #region Constants and Fields
+
         /// <summary>This member holds the list of all <c>WeakReference</c>s and their appropriate objects.</summary>
         private static readonly Dictionary<object, List<WeakReference>> InternalList =
-                new Dictionary<object, List<WeakReference>>();
+            new Dictionary<object, List<WeakReference>>();
+
+        #endregion
+
+        #region Public Methods and Operators
 
         /// <summary>Adds an object dependency</summary>
         /// <param name="weakRef">The weak reference</param>
@@ -73,6 +79,10 @@ namespace WPFLocalizeExtension.Engine
             return;
         }
 
+        #endregion
+
+        #region Methods
+
         /// <summary>This method cleans up all independent (!<c>WeakReference</c>.IsAlive) objects or a single object.</summary>
         /// <param name="value">If defined, the associated object dependency will be removed instead of a full CleanUp.</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
@@ -126,5 +136,7 @@ namespace WPFLocalizeExtension.Engine
             // clear up the keysToRemove
             keysToRemove.Clear();
         }
+
+        #endregion
     }
 }
