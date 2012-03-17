@@ -1,25 +1,27 @@
 ﻿// ***********************************************************************
-// <copyright file="VirtualizingCollection.cs" project="SevenSoftware.Windows" assembly="SevenSoftware.Windows" solution="SteamCDRTool" company="Seven Software">
+// <copyright file="VirtualizingCollection.cs" project="SevenSoftware.Windows" assembly="SevenSoftware.Windows" solution="SevenSoftware.Windows" company="Seven Software">
 //     Copyright (c) Seven Software. All rights reserved.
 // </copyright>
 // <author username="Robert Baker">Robert</author>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
-// This file is part of SteamCDRTool.
-//   SteamCDRTool is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
+// This file is part of SevenSoftware.Windows.
+//   SevenSoftware.Windows is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
 //   License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any
-//   later version. SteamCDRTool is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
+//   later version. SevenSoftware.Windows is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
 //   even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
 //  License for more details. You should have received a copy of the GNU General Public   License
-//  along with SteamCDRTool.  If not, see http://www.gnu.org/licenses/.
+//  along with SevenSoftware.Windows.  If not, see http://www.gnu.org/licenses/.
 // </license>
 // ***********************************************************************
 
-namespace SevenSoftware.Windows.Controls
+namespace SevenSoftware.Windows
 {
     using System;
     using System.Collections;
     using System.Collections.Generic;
     using System.Diagnostics;
+
+    using SevenSoftware.Windows.Controls;
 
     /// <summary>
     /// Specialized list implementation that provides data virtualization. The collection is divided up into pages,
@@ -417,7 +419,7 @@ namespace SevenSoftware.Windows.Controls
         {
             throw new NotSupportedException();
         }
-        
+
         /// <summary>
         /// Not supported.
         /// </summary>
@@ -494,7 +496,7 @@ namespace SevenSoftware.Windows.Controls
         /// <returns>The number of items from the collection</returns>
         protected int FetchCount()
         {
-            return this.ItemsProvider.FetchCount();
+            return this.ItemsProvider.Count;
         }
 
         /// <summary>

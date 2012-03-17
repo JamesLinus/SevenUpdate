@@ -77,12 +77,11 @@
     <Compile Include="ApplicationServices\RestartRestrictions.cs" />
     <Compile Include="ApplicationServices\RestartSettings.cs" />
     <Compile Include="Controls\AdornerLabel.cs" />
-    <Compile Include="Controls\AsyncVirtualizingCollection.cs" />
+    <Compile Include="Controls\BackButton.cs" />
     <Compile Include="Controls\IItemsProvider.cs" />
     <Compile Include="Controls\ListViewCustomComparer.cs" />
     <Compile Include="Controls\ProgressRing.cs" />
     <Compile Include="Controls\TreeViewExtensions.cs" />
-    <Compile Include="Controls\VirtualizingCollection.cs" />
     <Compile Include="Converters\InverseBooleanConverter.cs" />
     <Compile Include="Converters\EnumToBooleanConverter.cs" />
     <Compile Include="Converters\IndexToVisibilityConverter.cs" />
@@ -197,6 +196,12 @@
     <Resource Include="Resources\Images\restore_hover.png" />
     <Resource Include="Resources\Images\Shield.png" />
     <Resource Include="Resources\Images\ShieldDisabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Resources\Images\BackArrow.png" />
+    <Resource Include="Resources\Images\BackArrowDisabled.png" />
+    <Resource Include="Resources\Images\BackArrowHover.png" />
+    <Resource Include="Resources\Images\BackArrowPressed.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

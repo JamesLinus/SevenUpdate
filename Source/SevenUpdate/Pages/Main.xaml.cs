@@ -1012,7 +1012,6 @@ namespace SevenUpdate.Pages
                 Grid.SetRow(this.rectSide, 1);
                 Grid.SetRowSpan(this.rectSide, 5);
                 this.spBackButton.Visibility = Visibility.Visible;
-                lv
             }
             else
             {

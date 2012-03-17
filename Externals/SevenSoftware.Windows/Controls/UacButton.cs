@@ -53,14 +53,14 @@ namespace SevenSoftware.Windows.Controls
         private static readonly BitmapImage Shield =
                 new BitmapImage(
                         new Uri(
-                                @"pack://application:,,,/SevenSoftware.Windows;component/Images/Shield.png", 
+                                @"pack://application:,,,/SevenSoftware.Windows;component/Resources/Images/Shield.png", 
                                 UriKind.Absolute));
 
         /// <summary>The disabled shield image.</summary>
         private static readonly BitmapImage ShieldDisabled =
                 new BitmapImage(
                         new Uri(
-                                @"pack://application:,,,/SevenSoftware.Windows;component/Images/ShieldDisabled.png", 
+                                @"pack://application:,,,/SevenSoftware.Windows;component/Resources/Images/ShieldDisabled.png", 
                                 UriKind.Absolute));
 
         /// <summary>Dependency Property - The shield icon to display.</summary>

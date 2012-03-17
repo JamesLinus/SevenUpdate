@@ -4,6 +4,90 @@
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
   <BooleanToVisibilityConverter x:Key="VisibilityOfBool" />
 
+  <!--Back Button Style-->
+  <Style TargetType="controls:BackButton">
+    <Setter Property="HorizontalAlignment" Value="Left" />
+    <Setter Property="VerticalAlignment" Value="Center" />
+    <Setter Property="Template">
+      <Setter.Value>
+        <ControlTemplate TargetType="controls:BackButton">
+          <Canvas MinWidth="28" MinHeight="28">
+            <Image Name="Normal" Source="/SevenSoftware.Windows;component/Resources/Images/BackArrow.png"
+                RenderOptions.BitmapScalingMode="HighQuality" Stretch="None" Opacity="1" />
+            <Image Name="Hover" Source="/SevenSoftware.Windows;component/Resources/Images/BackArrowHover.png"
+                RenderOptions.BitmapScalingMode="HighQuality" Stretch="None" Opacity="0" />
+            <Image Name="Pressed" Source="/SevenSoftware.Windows;component/Resources/Images/BackArrowPressed.png"
+                RenderOptions.BitmapScalingMode="HighQuality" Stretch="None" Opacity="0" />
+            <Image Name="Selected" Source="/SevenSoftware.Windows;component/Resources/Images/BackArrowPressed.png"
+                RenderOptions.BitmapScalingMode="HighQuality" Stretch="None" Opacity="0" />
+            <Image Name="Disabled" Source="/SevenSoftware.Windows;component/Resources/Images/BackArrowDisabled.png"
+                RenderOptions.BitmapScalingMode="HighQuality" Stretch="None" Opacity="0" />
+          </Canvas>
+          <ControlTemplate.Triggers>
+            <DataTrigger Value="False" Binding="{Binding Path=IsEnabled, RelativeSource={RelativeSource Self}}">
+              <DataTrigger.Setters>
+                <Setter TargetName="Disabled" Property="Image.Opacity" Value=".7" />
+                <Setter TargetName="Normal" Property="Image.Opacity" Value="0" />
+              </DataTrigger.Setters>
+            </DataTrigger>
+            <!--<DataTrigger Value="True" Binding="{Binding Path=IsChecked, RelativeSource={RelativeSource Self}}">
+                            <DataTrigger.EnterActions>
+                                <BeginStoryboard>
+                                    <Storyboard Storyboard.TargetName="Selected" Storyboard.TargetProperty="Opacity">
+                                        <DoubleAnimation AccelerationRatio="0.2" DecelerationRatio="0.3" From="0.3" To="0.7" Duration="0:0:2" AutoReverse="True" RepeatBehavior="Forever" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.EnterActions>
+                            <DataTrigger.ExitActions>
+                                <BeginStoryboard>
+                                    <Storyboard Storyboard.TargetName="Selected" Storyboard.TargetProperty="Opacity">
+                                        <DoubleAnimation To="0" Duration="0:0:1" />
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </DataTrigger.ExitActions>
+                        </DataTrigger>-->
+            <EventTrigger RoutedEvent="Button.MouseEnter">
+              <EventTrigger.Actions>
+                <BeginStoryboard>
+                  <Storyboard Storyboard.TargetName="Hover" Storyboard.TargetProperty="Opacity">
+                    <DoubleAnimation To="1" Duration="0:0:0.2" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger.Actions>
+            </EventTrigger>
+            <EventTrigger RoutedEvent="Button.MouseLeave">
+              <EventTrigger.Actions>
+                <BeginStoryboard>
+                  <Storyboard Storyboard.TargetName="Hover" Storyboard.TargetProperty="Opacity">
+                    <DoubleAnimation To="0" Duration="0:0:0.2" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger.Actions>
+            </EventTrigger>
+            <EventTrigger RoutedEvent="Button.PreviewMouseLeftButtonDown">
+              <EventTrigger.Actions>
+                <BeginStoryboard>
+                  <Storyboard Storyboard.TargetName="Pressed" Storyboard.TargetProperty="Opacity">
+                    <DoubleAnimation To="1" Duration="0:0:0.2" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger.Actions>
+            </EventTrigger>
+            <EventTrigger RoutedEvent="Button.PreviewMouseLeftButtonUp">
+              <EventTrigger.Actions>
+                <BeginStoryboard>
+                  <Storyboard Storyboard.TargetName="Pressed" Storyboard.TargetProperty="Opacity">
+                    <DoubleAnimation To="0" Duration="0:0:0.5" />
+                  </Storyboard>
+                </BeginStoryboard>
+              </EventTrigger.Actions>
+            </EventTrigger>
+          </ControlTemplate.Triggers>
+        </ControlTemplate>
+      </Setter.Value>
+    </Setter>
+  </Style>
+  
   <!--CommandLink Style-->
   <Style TargetType="controls:CommandLink">
     <Setter Property="MinWidth" Value="325" />
@@ -75,21 +159,24 @@ Value="True">
           </Border>
           <ControlTemplate.Triggers>
             <Trigger Property="UseShield" Value="True">
-              <Setter TargetName="Icon" Property="Image.Source" Value="/Resources\Images\Shield.png" />
+              <Setter TargetName="Icon" Property="Image.Source"
+                  Value="/SevenSoftware.Windows;component/Resources\Images\Shield.png" />
             </Trigger>
             <MultiTrigger>
               <MultiTrigger.Conditions>
                 <Condition Property="IsMouseOver" Value="True" />
                 <Condition Property="UseShield" Value="False" />
               </MultiTrigger.Conditions>
-              <Setter TargetName="Icon" Property="Image.Source" Value="/Resources\Images\GreenArrowHover.png" />
+              <Setter TargetName="Icon" Property="Image.Source"
+                  Value="/SevenSoftware.Windows;component/Resources\Images\GreenArrowHover.png" />
             </MultiTrigger>
             <MultiTrigger>
               <MultiTrigger.Conditions>
                 <Condition Property="IsPressed" Value="True" />
                 <Condition Property="UseShield" Value="False" />
               </MultiTrigger.Conditions>
-              <Setter TargetName="Icon" Property="Image.Source" Value="/Resources\Images\GreenArrow.png" />
+              <Setter TargetName="Icon" Property="Image.Source"
+                  Value="/SevenSoftware.Windows;component/Resources\Images\GreenArrow.png" />
             </MultiTrigger>
             <MultiTrigger>
               <MultiTrigger.Conditions>
