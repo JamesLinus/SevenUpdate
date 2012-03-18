@@ -37,6 +37,7 @@ Once you have your project information filled out it will auto create your first
 
 ###Update Name
 You should have a short descriptive name for your update and it's recommended that it ends with your application name.
+
 	Security update for MyAppUpdate
 	
 ###Update Details
@@ -65,13 +66,13 @@ By default this is set to your source download location. You can change this to 
 The SDK will generate the location based off the location of the files on your machine, you can make changes if needed.
 
 ### File action
-**Update** = Updates or adds the file
-**Update if the file exists** = Only updates the file if the client machine has the file installed. This is useful for optional files like plugins, language files or stuff that can be delected at installation time.
-**Update & Execute** = Updates or adds the file, then executes it and waits until it exits to move on.
-**Execute** = Executes a file. This is a special action. The file can already be on the system or it can be downloaded. You can use this action for advanced senarios. For example, you can download a update helper application to the tmp directory and execute it
-**Compare Only** = Compares a files hash against the clients hash, does not update or execute the file. This can be used for advanced senarios.  For example, you can use a file to determine if you need to run an update helper. This is often used along with the execute action. You can also compare your main exe file and then execute a seperate installer to do the actual updating.
-**Delete** = Deletes a file if it exists on the system
-**ExecuteThenDelete** = Executes a file, then deletes it. You would normally have the file download to the tmp folder in this case. This can be used for updates that just run a standalone installer package.
+* **Update** = Updates or adds the file
+* **Update if the file exists** = Only updates the file if the client machine has the file installed. This is useful for optional files like plugins, language files or stuff that can be delected at installation time.
+* **Update & Execute** = Updates or adds the file, then executes it and waits until it exits to move on.
+* **Execute** = Executes a file. This is a special action. The file can already be on the system or it can be downloaded. You can use this action for advanced senarios. For example, you can download a update helper application to the tmp directory and execute it
+* **Compare Only** = Compares a files hash against the clients hash, does not update or execute the file. This can be used for advanced senarios.  For example, you can use a file to determine if you need to run an update helper. This is often used along with the execute action. You can also compare your main exe file and then execute a seperate installer to do the actual updating.
+* **Delete** = Deletes a file if it exists on the system
+* **ExecuteThenDelete** = Executes a file, then deletes it. You would normally have the file download to the tmp folder in this case. This can be used for updates that just run a standalone installer package.
 
 The execute commands set the window style to none, so no UI will be shown.
 
@@ -103,6 +104,7 @@ Deploying Updates
 Once your project is created, export the files on the review page or right clicking the list box on the start page.
 
 You should upload your SUA, SUI, and update files to your webserver or other location and make sure the links you specified are working. If any errors occur during your update, they will be stored in the Error log found in
+
 	%appdata%\Seven Update\error.log
 
 ###How can my clients use Seven Update to update my app?
@@ -111,6 +113,7 @@ There are a ways to have client machines update your application.
 The first option is to install Seven Update when your application is installed and call some commandline arguments to add your application as default.
 
 You could also offer a special link on your website that tells Seven Update to download your SUA file and prompt the user to allow Seven Update to manage updates for your app.
+
     sevenupdate://pathtomysuafile.sua
 	
 The third option is double clicking on the SUA file which does the same thing as the 2nd option.

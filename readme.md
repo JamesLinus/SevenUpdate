@@ -27,9 +27,9 @@ Before you finish the first step you will need to pre-determine a public locatio
 
 Files Types Explained
 ------
-SUI - Seven Update Information - Contains a list of updates and data for the application updates.
-SUA - Seven Update Application - Contains data including the app name, install location, publisher information, and a location where to find the corresponding SUI file.
-SUL - Seven Update List - Acts like a reposistory for SUA files. It's an array containing SUA items.
+* **SUI - Seven Update Information** - Contains a list of updates and data for the application updates.
+* **SUA - Seven Update Application** - Contains data including the app name, install location, publisher information, and a location where to find the corresponding SUI file.
+* **SUL - Seven Update List** - Acts like a reposistory for SUA files. It's an array containing SUA items.
 
 
 Contributing
