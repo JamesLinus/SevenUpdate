@@ -30,8 +30,6 @@ namespace SevenUpdate.Windows
     /// <summary>Interaction logic for License_Agreement.xaml.</summary>
     public sealed partial class LicenseAgreement
     {
-        #region Constants and Fields
-
         /// <summary>Current index.</summary>
         private int index;
 
@@ -40,10 +38,6 @@ namespace SevenUpdate.Windows
 
         /// <summary>An array of the strings that consist of the software licenses.</summary>
         private string[] licenseText;
-
-        #endregion
-
-        #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="LicenseAgreement" /> class.</summary>
         public LicenseAgreement()
@@ -60,10 +54,6 @@ namespace SevenUpdate.Windows
                 this.Title += " - " + Properties.Resources.BetaChannel;
             }
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>Loads the <c>licenseInformation</c> and shows the form.</summary>
         /// <returns>Returns the dialog result.</returns>
@@ -254,13 +244,9 @@ namespace SevenUpdate.Windows
             }
         }
 
-        #endregion
-
         /// <summary>Data containing the <c>Update</c> license agreement.</summary>
         private struct Eula
         {
-            #region Properties
-
             /// <summary>Gets or sets the index of the application of the update.</summary>
             internal int AppIndex { get; set; }
 
@@ -272,8 +258,6 @@ namespace SevenUpdate.Windows
 
             /// <summary>Gets or sets the index of the update.</summary>
             internal int UpdateIndex { get; set; }
-
-            #endregion
         }
     }
 }

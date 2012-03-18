@@ -27,8 +27,6 @@ namespace SevenUpdate.Sdk.ValidationRules
     /// <summary>Validates a value and determines if the value is a application location.</summary>
     internal sealed class AppDirectoryRule : ValidationRule
     {
-        #region Public Methods and Operators
-
         /// <summary>When overridden in a derived class, performs validation checks on a value.</summary>
         /// <param name="value">The value from the binding target to check.</param>
         /// <param name="cultureInfo">The culture to use in this rule.</param>
@@ -63,7 +61,5 @@ namespace SevenUpdate.Sdk.ValidationRules
 
             return new ValidationResult(false, Resources.FilePathInvalid);
         }
-
-        #endregion
     }
 }

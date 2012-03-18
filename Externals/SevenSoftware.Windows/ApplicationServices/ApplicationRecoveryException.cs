@@ -18,8 +18,6 @@ namespace SevenSoftware.Windows.ApplicationServices
     [Serializable]
     public class ApplicationRecoveryException : ExternalException
     {
-        #region Constructors and Destructors
-
         /// <summary>Initializes a new instance of the <see cref="ApplicationRecoveryException" /> class.</summary>
         public ApplicationRecoveryException()
         {
@@ -53,7 +51,5 @@ namespace SevenSoftware.Windows.ApplicationServices
         {
             // Empty
         }
-
-        #endregion
     }
 }

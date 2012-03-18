@@ -39,8 +39,6 @@ namespace SevenUpdate.Admin
     /// <summary>The main class of the application.</summary>
     internal static class App
     {
-        #region Constants and Fields
-
         /// <summary>The all users application data location.</summary>
         public static readonly string AllUserStore =
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Seven Update");
@@ -72,10 +70,6 @@ namespace SevenUpdate.Admin
         /// <summary>Indicates if the program is waiting.</summary>
         private static bool waiting;
 
-        #endregion
-
-        #region Enums
-
         /// <summary>Defines constants for the notification type, such has SearchComplete.</summary>
         private enum NotifyType
         {
@@ -95,10 +89,6 @@ namespace SevenUpdate.Admin
             InstallCompleted
         }
 
-        #endregion
-
-        #region Properties
-
         /// <summary>Gets or sets the collection of applications to update.</summary>
         internal static Collection<Sui> Applications { get; set; }
 
@@ -115,10 +105,6 @@ namespace SevenUpdate.Admin
                            : new Config { AutoOption = AutoUpdateOption.Notify, IncludeRecommended = false };
             }
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>Adds an update to the history.</summary>
         /// <param name="sender">The object that called the event.</param>
@@ -693,7 +679,5 @@ namespace SevenUpdate.Admin
                     break;
             }
         }
-
-        #endregion
     }
 }

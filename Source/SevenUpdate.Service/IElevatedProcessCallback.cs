@@ -25,8 +25,6 @@ namespace SevenUpdate.Service
     [ServiceContract(Namespace = "http://sevenupdate.com", CallbackContract = typeof(IElevatedProcess))]
     public interface IElevatedProcessCallback
     {
-        #region Public Methods and Operators
-
         /// <summary>Occurs when the process starts.</summary>
         [OperationContract(IsOneWay = false)]
         [ProtoBehavior]
@@ -71,7 +69,5 @@ namespace SevenUpdate.Service
         [OperationContract(IsOneWay = false)]
         [ProtoBehavior]
         void OnInstallProgressChanged(object sender, InstallProgressChangedEventArgs e);
-
-        #endregion
     }
 }

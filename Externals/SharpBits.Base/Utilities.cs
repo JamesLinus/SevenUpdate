@@ -15,8 +15,6 @@ namespace SharpBits.Base
     /// <summary>Various utility methods.</summary>
     internal static class Utilities
     {
-        #region Methods
-
         /// <summary>Converts the <c>FileTime</c> to <c>DateTime</c>.</summary>
         /// <param name="fileTime">The file time.</param>
         /// <returns>The converted <c>FileTime</c> to <c>DateTime</c>.</returns>
@@ -54,7 +52,5 @@ namespace SharpBits.Base
 
             return string.Empty;
         }
-
-        #endregion
     }
 }

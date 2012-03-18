@@ -17,8 +17,6 @@ namespace SharpBits.Base
     /// <summary>Contains data about the files to download or upload using BITS.</summary>
     public sealed partial class BitsJob
     {
-        #region Constants and Fields
-
         /// <summary>The BITS manager.</summary>
         private readonly BitsManager manager;
 
@@ -49,10 +47,6 @@ namespace SharpBits.Base
         /// <summary>The proxy settings of the job.</summary>
         private ProxySettings proxySettings;
 
-        #endregion
-
-        #region Constructors and Destructors
-
         /// <summary>Initializes a new instance of the <see cref="BitsJob" /> class.</summary>
         /// <param name="manager">The manager for the BITS.</param>
         /// <param name="job">The current job.</param>
@@ -75,10 +69,6 @@ namespace SharpBits.Base
 
             // notification interface will be disabled when NotifyCmd is set
         }
-
-        #endregion
-
-        #region Public Events
 
         /// <summary>Occurs when the job occurred an error.</summary>
         public event EventHandler<JobErrorNotificationEventArgs> OnJobError
@@ -121,10 +111,6 @@ namespace SharpBits.Base
                 this.jobTransferred -= value;
             }
         }
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>Gets or sets the description, max 1024 chars.</summary>
         /// <value>The description.</value>
@@ -523,10 +509,6 @@ namespace SharpBits.Base
             }
         }
 
-        #endregion
-
-        #region Properties
-
         /// <summary>Gets the notification target.</summary>
         /// <value>The notification target.</value>
         internal IBackgroundCopyCallback NotificationTarget { get; private set; }
@@ -569,10 +551,6 @@ namespace SharpBits.Base
                 }
             }
         }
-
-        #endregion
-
-        #region Public Methods and Operators
 
         /// <summary>Adds the file.</summary>
         /// <param name="remoteName">Name of the remote.</param>
@@ -708,10 +686,6 @@ namespace SharpBits.Base
             }
         }
 
-        #endregion
-
-        #region Methods
-
         /// <summary>Adds the files to the current job.</summary>
         /// <param name="files">The files.</param>
         internal void AddFiles(BGFileInfo[] files)
@@ -793,24 +767,16 @@ namespace SharpBits.Base
 
             this.disposed = true;
         }
-
-        #endregion
     }
 
     /// <summary>Contains data about the files to download or upload using BITS.</summary>
     public sealed partial class BitsJob
     {
-        #region Constants and Fields
-
         /// <summary>The current job.</summary>
         private readonly IBackgroundCopyJob2 job2;
 
         /// <summary>The current reply progress.</summary>
         private JobReplyProgress replyProgress;
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>Gets or sets the notify command line parameters.</summary>
         /// <value>The notify command line parameters.</value>
@@ -994,10 +960,6 @@ namespace SharpBits.Base
             }
         }
 
-        #endregion
-
-        #region Public Methods and Operators
-
         /// <summary>Adds the credentials.</summary>
         /// <param name="credentials">The credentials.</param>
         public void AddCredentials(BitsCredentials credentials)
@@ -1099,21 +1061,13 @@ namespace SharpBits.Base
                 this.manager.PublishException(this, exception);
             }
         }
-
-        #endregion
     }
 
     /// <summary>Contains data about the files to download or upload using BITS.</summary>
     public sealed partial class BitsJob : IDisposable
     {
-        #region Constants and Fields
-
         /// <summary>The current job.</summary>
         private readonly IBackgroundCopyJob3 job3;
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>Gets or sets the file acl flags.</summary>
         /// <value>The file acl flags.</value>
@@ -1162,10 +1116,6 @@ namespace SharpBits.Base
                 }
             }
         }
-
-        #endregion
-
-        #region Public Methods and Operators
 
         /// <summary>Adds the file with ranges.</summary>
         /// <param name="remoteName">Name of the remote.</param>
@@ -1219,21 +1169,13 @@ namespace SharpBits.Base
                 this.manager.PublishException(this, exception);
             }
         }
-
-        #endregion
     }
 
     /// <summary>Contains data about the files to download or upload using BITS.</summary>
     public sealed partial class BitsJob
     {
-        #region Constants and Fields
-
         /// <summary>The current job.</summary>
         private readonly IBackgroundCopyJob4 job4;
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>Gets or sets the peer caching flags.</summary>
         /// <value>The peer caching flags.</value>
@@ -1386,7 +1328,5 @@ namespace SharpBits.Base
                 return integrityLevel;
             }
         }
-
-        #endregion
     }
 }

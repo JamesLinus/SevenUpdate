@@ -15,13 +15,9 @@ namespace SevenSoftware.Windows
     [ServiceContract]
     internal interface IPriorApplicationInstance
     {
-        #region Public Methods and Operators
-
         /// <summary>Signals the startup of the next application instance.</summary>
         /// <param name="args">The parameters used to run the next instance of the application.</param>
         [OperationContract]
         void SignalStartupNextInstance(string[] args);
-
-        #endregion
     }
 }

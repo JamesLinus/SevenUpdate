@@ -26,7 +26,6 @@ namespace SevenUpdate.Sdk.Pages
     using System.Windows.Forms;
     using System.Windows.Input;
     using System.Windows.Media;
-    using System.Windows.Threading;
 
     using SevenSoftware.Windows;
     using SevenSoftware.Windows.Controls;
@@ -41,14 +40,8 @@ namespace SevenUpdate.Sdk.Pages
     /// <summary>Interaction logic for UpdateFiles.xaml.</summary>
     public sealed partial class UpdateFiles
     {
-        #region Constants and Fields
-
         /// <summary>The number of SHA-2 hashes generating.</summary>
         private int hashesGenerating;
-
-        #endregion
-
-        #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="UpdateFiles" /> class.</summary>
         public UpdateFiles()
@@ -75,22 +68,18 @@ namespace SevenUpdate.Sdk.Pages
             }
         }
 
-        #endregion
-
-        #region Methods
-
         /// <summary>Gets the size of the file.</summary>
         /// <param name="file">The <c>UpdateFile</c> to get the file size for.</param>
         /// <param name="fileLocation">The location for the file.</param>
         private static void GetFileSize(ref UpdateFile file, string fileLocation = null)
         {
             file.FileSize =
-                            Utilities.GetFileSize(
-                                Utilities.ExpandInstallLocation(
-                                    fileLocation ?? file.Destination, 
-                                    Core.AppInfo.Directory, 
-                                    Core.AppInfo.Platform, 
-                                    Core.AppInfo.ValueName));
+                Utilities.GetFileSize(
+                    Utilities.ExpandInstallLocation(
+                        fileLocation ?? file.Destination, 
+                        Core.AppInfo.Directory, 
+                        Core.AppInfo.Platform, 
+                        Core.AppInfo.ValueName));
         }
 
         /// <summary>Adds a file to the list.</summary>
@@ -123,12 +112,12 @@ namespace SevenUpdate.Sdk.Pages
             }
 
             var file = new UpdateFile
-            {
-                Action = FileAction.Update,
-                Destination = installUrl,
-                Hash = Properties.Resources.CalculatingHash,
-                Source = downloadUrl
-            };
+                {
+                    Action = FileAction.Update, 
+                    Destination = installUrl, 
+                    Hash = Properties.Resources.CalculatingHash, 
+                    Source = downloadUrl
+                };
 
             this.Dispatcher.BeginInvoke(new Action(() => Core.UpdateInfo.Files.Add(file)));
 
@@ -206,13 +195,13 @@ namespace SevenUpdate.Sdk.Pages
         private void CalculateHash(ref UpdateFile file, string fileLocation = null)
         {
             this.hashesGenerating++;
-                        file.Hash =
-                            Utilities.GetHash(
-                                Utilities.ExpandInstallLocation(
-                                    fileLocation ?? file.Destination, 
-                                    Core.AppInfo.Directory, 
-                                    Core.AppInfo.Platform, 
-                                    Core.AppInfo.ValueName));
+            file.Hash =
+                Utilities.GetHash(
+                    Utilities.ExpandInstallLocation(
+                        fileLocation ?? file.Destination, 
+                        Core.AppInfo.Directory, 
+                        Core.AppInfo.Platform, 
+                        Core.AppInfo.ValueName));
         }
 
         /// <summary>Changes the UI based on the selected <c>UpdateFile</c>'s <c>FileAction</c>.</summary>
@@ -275,7 +264,8 @@ namespace SevenUpdate.Sdk.Pages
                 }
                 else
                 {
-                    this.Dispatcher.BeginInvoke(new Action(() => { this.tbHashCalculating.Visibility = Visibility.Collapsed; }));
+                    this.Dispatcher.BeginInvoke(
+                        new Action(() => { this.tbHashCalculating.Visibility = Visibility.Collapsed; }));
                 }
             }
         }
@@ -435,11 +425,13 @@ namespace SevenUpdate.Sdk.Pages
             {
                 return;
             }
-            Task.Factory.StartNew(() =>
-            {
-                this.CalculateHash(ref selectedItem, files[0]);
-                GetFileSize(ref selectedItem, files[0]);
-            });
+
+            Task.Factory.StartNew(
+                () =>
+                    {
+                        this.CalculateHash(ref selectedItem, files[0]);
+                        GetFileSize(ref selectedItem, files[0]);
+                    });
         }
 
         /// <summary>Updates the UI based on whether Aero Glass is enabled.</summary>
@@ -512,7 +504,5 @@ namespace SevenUpdate.Sdk.Pages
                 ((UpdateFile)this.listBox.SelectedItem).Destination = textBox.Text;
             }
         }
-
-        #endregion
     }
 }

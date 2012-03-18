@@ -1,12 +1,12 @@
 ﻿<!-- Copyright (c) Robert Baker, Seven Software -->
 <Window x:Class="SevenUpdate.Windows.LicenseAgreement" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    Title="{LocText SevenUpdate:Resources:SoftwareLicenseAgreement}" MinWidth="640" MinHeight="390" mc:Ignorable="d"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:Controls="clr-namespace:SevenSoftware.Windows.Controls;assembly=SevenSoftware.Windows" SizeToContent="Manual"
-    Width="640" Height="390" Loaded="DownloadLicenseInformation" WindowStartupLocation="CenterOwner"
-    Icon="/Images/wicon.ico">
+        Title="{LocText SevenUpdate:Resources:SoftwareLicenseAgreement}" MinWidth="640" MinHeight="390" mc:Ignorable="d"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:Controls="clr-namespace:SevenSoftware.Windows.Controls;assembly=SevenSoftware.Windows" SizeToContent="Manual"
+        Width="640" Height="390" Loaded="DownloadLicenseInformation" WindowStartupLocation="CenterOwner"
+        Icon="/Images/wicon.ico">
   <Grid>
     <Grid.RowDefinitions>
       <RowDefinition Height="Auto" />
@@ -18,18 +18,18 @@
       <ColumnDefinition Width="606*" />
     </Grid.ColumnDefinitions>
     <TextBlock FontSize="16" Foreground="#FF003399" HorizontalAlignment="Left" Name="tbHeading" Padding="2"
-        Text="{LocText SevenUpdate:Resources:DownloadingLicenseAgreement}" VerticalAlignment="Bottom" Grid.Column="1"
-        Margin="0,0,0,12" x:FieldModifier="private" />
+               Text="{LocText SevenUpdate:Resources:DownloadingLicenseAgreement}" VerticalAlignment="Bottom" Grid.Column="1"
+               Margin="0,0,0,12" x:FieldModifier="private" />
     <StackPanel Grid.Column="1" Grid.Row="2" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="20,1,0,0">
       <RadioButton Content="{LocText SevenUpdate:Resources:AcceptTerms}" Name="rbtnAccept" Padding="4,0,0,7"
-          MinHeight="17" IsEnabled="False" />
-      <RadioButton Content="{LocText SevenUpdate:Resources:Decline}" Name="rbtnDecline" MinHeight="17" IsEnabled="False"
-          x:FieldModifier="private" />
+                   MinHeight="17" IsEnabled="False" />
+      <RadioButton Content="{LocText SevenUpdate:Resources:Decline}" Name="rbtnDecline" MinHeight="17"
+                   IsEnabled="False" x:FieldModifier="private" />
     </StackPanel>
     <StackPanel HorizontalAlignment="Right" Orientation="Horizontal" VerticalAlignment="Bottom" Grid.Column="1"
-        Grid.Row="2" Margin="0,0,11,10">
+                Grid.Row="2" Margin="0,0,11,10">
       <Controls:UacButton IsDefault="True" MinHeight="23" MinWidth="75" Name="btnAction" Padding="5,1"
-          Click="PerformAction" ButtonText="{LocText SevenUpdate:Resources:Finish}" x:FieldModifier="private">
+                          Click="PerformAction" ButtonText="{LocText SevenUpdate:Resources:Finish}" x:FieldModifier="private">
         <Controls:UacButton.Style>
           <Style TargetType="Controls:UacButton">
             <Style.Triggers>
@@ -44,10 +44,10 @@
         </Controls:UacButton.Style>
       </Controls:UacButton>
       <Button Content="{LocText SevenUpdate:Resources:Cancel}" IsDefault="False" Margin="8,0,0,0" MinHeight="23"
-          MinWidth="75" Padding="5,1" IsCancel="True" Click="Cancel" />
+              MinWidth="75" Padding="5,1" IsCancel="True" Click="Cancel" />
     </StackPanel>
     <RichTextBox Grid.Row="1" Name="rtbSLA" Grid.Column="1" Margin="0,0,12,10" BorderThickness="1"
-        BorderBrush="#FFF0F0F0" IsReadOnly="True" AutoWordSelection="False" AcceptsReturn="False" IsUndoEnabled="False"
-        Focusable="False" Cursor="Wait" x:FieldModifier="private" />
+                 BorderBrush="#FFF0F0F0" IsReadOnly="True" AutoWordSelection="False" AcceptsReturn="False" IsUndoEnabled="False"
+                 Focusable="False" Cursor="Wait" x:FieldModifier="private" />
   </Grid>
 </Window>

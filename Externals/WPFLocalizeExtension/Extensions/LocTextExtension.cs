@@ -18,8 +18,6 @@ namespace WPFLocalizeExtension.Extensions
     [MarkupExtensionReturnType(typeof(string))]
     public class LocTextExtension : BaseLocalizeExtension<string>
     {
-        #region Constants and Fields
-
         /// <summary>Holds the local format segment array.</summary>
         private string[] formatSegments;
 
@@ -28,10 +26,6 @@ namespace WPFLocalizeExtension.Extensions
 
         /// <summary>Holds the local suffix value.</summary>
         private string suffix;
-
-        #endregion
-
-        #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="LocTextExtension" /> class.</summary>
         /// <param name="key">The resource identifier.</param>
@@ -46,10 +40,6 @@ namespace WPFLocalizeExtension.Extensions
             this.InitializeLocText();
         }
 
-        #endregion
-
-        #region Enums
-
         /// <summary>This enumeration is used to determine the type of the return value of <c>GetAppendText</c>.</summary>
         private enum TextAppendType
         {
@@ -59,10 +49,6 @@ namespace WPFLocalizeExtension.Extensions
             /// <summary>The return value is used as suffix.</summary>
             Suffix
         }
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>
         ///   Gets or sets the format segment 1.This will be used to replace format place holders from the localized
@@ -193,10 +179,6 @@ namespace WPFLocalizeExtension.Extensions
             }
         }
 
-        #endregion
-
-        #region Public Methods and Operators
-
         /// <summary>Provides the Value for the first Binding as <c>System.String</c>.</summary>
         /// <param name="serviceProvider">The <c>System.Windows.Markup.IProvideValueTarget</c> provided from the <c>MarkupExtension</c>.</param>
         /// <returns>The found item from the .resx directory or <c>null</c> if not found.</returns>
@@ -226,10 +208,6 @@ namespace WPFLocalizeExtension.Extensions
                     this.Key, 
                     obj.GetType().FullName));
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>This method returns the finished formatted text.</summary>
         /// <param name="input">If the passed string not <c>null</c>, it will be used, otherwise a fresh localized text will be loaded.</param>
@@ -341,7 +319,5 @@ namespace WPFLocalizeExtension.Extensions
 
             ////SetNewValue(FormatOutput(null));
         }
-
-        #endregion
     }
 }

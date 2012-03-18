@@ -36,8 +36,6 @@ namespace SevenUpdate.Sdk.Pages
     /// <summary>Interaction logic for UpdateRegistry.xaml.</summary>
     public sealed partial class UpdateRegistry
     {
-        #region Constructors and Destructors
-
         /// <summary>Initializes a new instance of the <see cref="UpdateRegistry" /> class.</summary>
         public UpdateRegistry()
         {
@@ -62,10 +60,6 @@ namespace SevenUpdate.Sdk.Pages
                 this.rectangle.Visibility = Visibility.Visible;
             }
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>Deletes the selected <c>RegistryItem</c> from the <c>ListBox</c>.</summary>
         /// <param name="sender">The object that called the event.</param>
@@ -273,7 +267,5 @@ namespace SevenUpdate.Sdk.Pages
                 ((RegistryItem)this.listBox.SelectedItem).Key = textBox.Text;
             }
         }
-
-        #endregion
     }
 }

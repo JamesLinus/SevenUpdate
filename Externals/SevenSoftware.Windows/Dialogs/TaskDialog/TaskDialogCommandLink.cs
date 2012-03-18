@@ -13,14 +13,8 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
     /// <summary>Represents a command-link.</summary>
     public class TaskDialogCommandLink : TaskDialogButton
     {
-        #region Constants and Fields
-
         /// <summary>The instruction text for the commandlink.</summary>
         private string instruction;
-
-        #endregion
-
-        #region Constructors and Destructors
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="TaskDialogCommandLink" /> class. Creates a new instance of
@@ -52,10 +46,6 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
             this.instruction = instruction;
         }
 
-        #endregion
-
-        #region Public Properties
-
         /// <summary>Gets or sets the instruction associated with this command link button.</summary>
         public string Instruction
         {
@@ -70,10 +60,6 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
             }
         }
 
-        #endregion
-
-        #region Public Methods and Operators
-
         /// <summary>Returns a string representation of this object.</summary>
         /// <returns>A <see cref="string" /></returns>
         public override string ToString()
@@ -86,7 +72,5 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
                     ? Environment.NewLine : string.Empty, 
                 this.instruction ?? string.Empty);
         }
-
-        #endregion
     }
 }

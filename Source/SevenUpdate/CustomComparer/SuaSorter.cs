@@ -27,8 +27,6 @@ namespace SevenUpdate.CustomComparer
     /// <summary>Sorts the SUA class.</summary>
     internal sealed class SuaSorter : ListViewCustomComparer
     {
-        #region Public Methods and Operators
-
         /// <summary>
         ///   Compares two objects and returns a value indicating whether one is less than, equal to, or greater than
         ///   the other.
@@ -86,7 +84,5 @@ namespace SevenUpdate.CustomComparer
 
             return result;
         }
-
-        #endregion
     }
 }

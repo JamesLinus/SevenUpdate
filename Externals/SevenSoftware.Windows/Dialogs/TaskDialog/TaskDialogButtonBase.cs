@@ -20,8 +20,6 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
     /// </remarks>
     public abstract class TaskDialogButtonBase : TaskDialogControl
     {
-        #region Constants and Fields
-
         /// <summary>A value indicating whether this button is the default button,</summary>
         private bool defaultControl;
 
@@ -30,10 +28,6 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
 
         /// <summary>The button text.</summary>
         private string text;
-
-        #endregion
-
-        #region Constructors and Destructors
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="TaskDialogButtonBase" /> class. Creates a new instance on a
@@ -54,19 +48,12 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
             this.text = text;
         }
 
-        #endregion
-
         // Note that we don't need to explicitly implement the add/remove delegate for the Click event; the hosting
         // dialog only needs the delegate information when the Click event is raised (indirectly) by NativeTaskDialog,
         // so the latest delegate is always available.
-        #region Public Events
 
         /// <summary>Raised when the task dialog button is clicked.</summary>
         public event EventHandler Click;
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>Gets or sets a value indicating whether this button is the default button.</summary>
         public bool Default
@@ -119,20 +106,12 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
             }
         }
 
-        #endregion
-
-        #region Public Methods and Operators
-
         /// <summary>Returns the Text property value for this button.</summary>
         /// <returns>A <see cref="string" />.</returns>
         public override string ToString()
         {
             return this.text ?? string.Empty;
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>Raises the click event.</summary>
         internal void RaiseClickEvent()
@@ -148,7 +127,5 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
                 this.Click(this, EventArgs.Empty);
             }
         }
-
-        #endregion
     }
 }

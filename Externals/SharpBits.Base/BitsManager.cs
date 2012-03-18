@@ -19,8 +19,6 @@ namespace SharpBits.Base
     /// </summary>
     public sealed class BitsManager : IDisposable
     {
-        #region Constants and Fields
-
         /// <summary>Indicates if this instance is disposed.</summary>
         private bool disposed;
 
@@ -42,10 +40,6 @@ namespace SharpBits.Base
         /// <summary>Occurs when a job has transfered.</summary>
         private EventHandler<NotificationEventArgs> jobTransferred;
 
-        #endregion
-
-        #region Constructors and Destructors
-
         /// <summary>Initializes a new instance of the <see cref="BitsManager" /> class.</summary>
         public BitsManager()
         {
@@ -64,10 +58,6 @@ namespace SharpBits.Base
             this.NotificationHandler.OnJobModifiedEvent += this.NotificationHandlerOnJobModifiedEvent;
             this.NotificationHandler.OnJobTransferredEvent += this.NotificationHandlerOnJobTransferredEvent;
         }
-
-        #endregion
-
-        #region Public Events
 
         /// <summary>Occurs when an interface error occurs.</summary>
         public event EventHandler<BitsInterfaceNotificationEventArgs> OnInterfaceError
@@ -153,17 +143,9 @@ namespace SharpBits.Base
             }
         }
 
-        #endregion
-
-        #region Public Properties
-
         /// <summary>Gets the collection of <c>BitsJob</c>.</summary>
         /// <value>The collection of <c>BitsJob</c>.</value>
         public BitsJobsDictionary Jobs { get; private set; }
-
-        #endregion
-
-        #region Properties
 
         /// <summary>Gets or sets current owner of the job.</summary>
         /// <value>The current owner.</value>
@@ -176,10 +158,6 @@ namespace SharpBits.Base
         /// <summary>Gets or sets the background copy manager.</summary>
         /// <value>The background copy manager.</value>
         private IBackgroundCopyManager BackgroundCopyManager { get; set; }
-
-        #endregion
-
-        #region Public Methods and Operators
 
         /// <summary>Creates a new transfer job.</summary>
         /// <param name="displayName">Null-terminated string that contains a display name for the job. Typically, the display name is used to identify the job in a user interface. Note that more than one job may have the same display name. Must not be <c>null</c>.The name is limited to 256 characters, not including the <c>null</c> terminator.</param>
@@ -234,10 +212,6 @@ namespace SharpBits.Base
                 this.Jobs.Update(jobList);
             }
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>Notifies the on job removal.</summary>
         /// <param name="job">The job to remove.</param>
@@ -353,7 +327,5 @@ namespace SharpBits.Base
                 this.jobTransferred(sender, e);
             }
         }
-
-        #endregion
     }
 }

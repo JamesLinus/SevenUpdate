@@ -25,8 +25,6 @@ namespace SevenSoftware.Windows.Converters
     [ValueConversion(typeof(bool), typeof(bool))]
     public class InverseBooleanConverter : IValueConverter
     {
-        #region Public Methods and Operators
-
         /// <summary>Converts a object into another object.</summary>
         /// <param name="value">The value produced by the binding source.</param>
         /// <param name="targetType">The type of the binding target property.</param>
@@ -48,7 +46,5 @@ namespace SevenSoftware.Windows.Converters
         {
             return !System.Convert.ToBoolean(value, CultureInfo.CurrentCulture);
         }
-
-        #endregion
     }
 }

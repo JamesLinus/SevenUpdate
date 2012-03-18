@@ -27,8 +27,6 @@ namespace SevenSoftware.Windows.Controls
     /// <summary>A <c>TextBox</c> that includes help text and error indicators.</summary>
     public sealed class InfoTextBox : TextBox
     {
-        #region Constants and Fields
-
         /// <summary>Indicates if the <c>InfoTextBox</c> has an error.</summary>
         private static readonly DependencyProperty HasErrorProperty = DependencyProperty.Register(
             "HasError", typeof(bool), typeof(InfoTextBox), new PropertyMetadata(false));
@@ -55,10 +53,6 @@ namespace SevenSoftware.Windows.Controls
         /// <summary>The adorner layer.</summary>
         private AdornerLayer myAdornerLayer;
 
-        #endregion
-
-        #region Constructors and Destructors
-
         /// <summary>Initializes a new instance of the <see cref="InfoTextBox" /> class.</summary>
         public InfoTextBox()
         {
@@ -73,10 +67,6 @@ namespace SevenSoftware.Windows.Controls
                 };
             this.Resources.MergedDictionaries.Add(resourceDictionary);
         }
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>Gets or sets a value indicating whether the input has a validation error.</summary>
         public bool HasError
@@ -136,10 +126,6 @@ namespace SevenSoftware.Windows.Controls
             }
         }
 
-        #endregion
-
-        #region Properties
-
         /// <summary>Gets or sets a value indicating whether this instance has text.</summary>
         /// <value><c>True</c> if this instance has text; otherwise, <c>False</c>.</value>
         private bool HasText
@@ -159,10 +145,6 @@ namespace SevenSoftware.Windows.Controls
                 this.SetValue(HasTextProperty, value);
             }
         }
-
-        #endregion
-
-        #region Public Methods and Operators
 
         /// <summary>Is called when a control template is applied.</summary>
         public override void OnApplyTemplate()
@@ -187,10 +169,6 @@ namespace SevenSoftware.Windows.Controls
                 containsTextProp.AddValueChanged(this, delegate { this.UpdateAdorner(this); });
             }
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>
         ///   Invoked whenever an unhandled <c>DragDrop</c>.DragEnter attached routed event reaches an element derived
@@ -312,7 +290,5 @@ namespace SevenSoftware.Windows.Controls
                 this.myAdornerLayer.Add(this.myAdornerLabel);
             }
         }
-
-        #endregion
     }
 }

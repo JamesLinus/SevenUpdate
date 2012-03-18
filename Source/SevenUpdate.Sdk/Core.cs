@@ -42,8 +42,6 @@ namespace SevenUpdate.Sdk
     /// <summary>Contains methods that are essential for the program.</summary>
     internal static class Core
     {
-        #region Constants and Fields
-
         /// <summary>The location of the file that contains the collection of Projects for the SDK.</summary>
         public static readonly string ProjectsFile =
             Path.Combine(
@@ -70,17 +68,9 @@ namespace SevenUpdate.Sdk
         /// <summary>The update shortcuts page.</summary>
         private static UpdateShortcuts updateShortcutsPage;
 
-        #endregion
-
-        #region Public Properties
-
         /// <summary>Gets the application information of the project.</summary>
         /// <value>The application info.</value>
         public static Sua AppInfo { get; private set; }
-
-        #endregion
-
-        #region Properties
 
         /// <summary>Gets or sets the index for the selected project.</summary>
         /// <value>The index of the application.</value>
@@ -198,10 +188,6 @@ namespace SevenUpdate.Sdk
         /// <summary>Gets or sets a value indicating whether the current project being edited is new.</summary>
         /// <value><c>True</c> if this instance is new project; otherwise, <c>False</c>.</value>
         private static bool IsNewProject { get; set; }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>Edit the selected project or update.</summary>
         internal static void EditItem()
@@ -684,7 +670,5 @@ namespace SevenUpdate.Sdk
                     return;
             }
         }
-
-        #endregion
     }
 }

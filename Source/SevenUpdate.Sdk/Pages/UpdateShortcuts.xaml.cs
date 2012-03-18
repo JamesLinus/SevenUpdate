@@ -36,8 +36,6 @@ namespace SevenUpdate.Sdk.Pages
     /// <summary>Interaction logic for UpdateShortcuts.xaml.</summary>
     public sealed partial class UpdateShortcuts
     {
-        #region Constructors and Destructors
-
         /// <summary>Initializes a new instance of the <see cref="UpdateShortcuts" /> class.</summary>
         public UpdateShortcuts()
         {
@@ -63,10 +61,6 @@ namespace SevenUpdate.Sdk.Pages
                 this.rectangle.Visibility = Visibility.Visible;
             }
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>Fires the OnPropertyChanged Event with the collection changes.</summary>
         /// <param name="sender">The object that called the event.</param>
@@ -433,7 +427,5 @@ namespace SevenUpdate.Sdk.Pages
 
             textBox.ToolTip = textBox.HasError ? Properties.Resources.FilePathInvalid : null;
         }
-
-        #endregion
     }
 }

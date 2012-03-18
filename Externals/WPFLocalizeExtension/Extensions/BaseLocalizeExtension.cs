@@ -33,8 +33,6 @@ namespace WPFLocalizeExtension.Extensions
     [ContentProperty("ResourceIdentifierKey")]
     public abstract class BaseLocalizeExtension<TValue> : MarkupExtension, IWeakEventListener, INotifyPropertyChanged
     {
-        #region Constants and Fields
-
         /// <summary>Holds the collection of assigned dependency objects as WeakReferences.</summary>
         private readonly Dictionary<WeakReference, object> targetObjects;
 
@@ -49,10 +47,6 @@ namespace WPFLocalizeExtension.Extensions
 
         /// <summary>Holds the Key to a .resx object.</summary>
         private string key;
-
-        #endregion
-
-        #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="BaseLocalizeExtension{TValue}" /> class.</summary>
         protected BaseLocalizeExtension()
@@ -73,16 +67,8 @@ namespace WPFLocalizeExtension.Extensions
             Localize.ParseKey(key, out this.assembly, out this.dict, out this.key);
         }
 
-        #endregion
-
-        #region Public Events
-
         /// <summary>Occurs when a property value changes.</summary>
         public event PropertyChangedEventHandler PropertyChanged;
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>
         ///   Gets the current value.This property has only a value, if the <c>BaseLocalizeExtension</c> is binded to a
@@ -136,10 +122,6 @@ namespace WPFLocalizeExtension.Extensions
                 return this.targetObjects;
             }
         }
-
-        #endregion
-
-        #region Properties
 
         /// <summary>
         ///   Gets or sets the name of the Assembly where the .resx is located.If it's <c>null</c>, the executing
@@ -230,10 +212,6 @@ namespace WPFLocalizeExtension.Extensions
                 this.key = value;
             }
         }
-
-        #endregion
-
-        #region Public Methods and Operators
 
         /// <summary>Provides the Value for the first Binding.</summary>
         /// <param name="serviceProvider">The <c>System.Windows.Markup.IProvideValueTarget</c> provided from the <c>MarkupExtension</c>.</param>
@@ -391,10 +369,6 @@ namespace WPFLocalizeExtension.Extensions
             return base.ToString() + " -> " + this.ResourceIdentifierKey;
         }
 
-        #endregion
-
-        #region Explicit Interface Methods
-
         /// <summary>Receives events from the centralized event manager.</summary>
         /// <param name="managerType">The type of the <c>T:System.Windows.WeakEventManager</c> calling this method.</param>
         /// <param name="sender">Object that originated the event.</param>
@@ -418,10 +392,6 @@ namespace WPFLocalizeExtension.Extensions
             // return false, to notify the event was not processed
             return false;
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>Determines whether if the <paramref name="checkType" /> is the <paramref name="targetType" />.</summary>
         /// <param name="checkType">Type of the check.</param>
@@ -599,7 +569,5 @@ namespace WPFLocalizeExtension.Extensions
             // return false: resolve was not successfully.
             return false;
         }
-
-        #endregion
     }
 }

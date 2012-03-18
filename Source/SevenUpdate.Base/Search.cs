@@ -31,8 +31,6 @@ namespace SevenUpdate
     /// <summary>Contains methods to search for updates.</summary>
     public static class Search
     {
-        #region Constants and Fields
-
         /// <summary>The directory containing the app update files.</summary>
         private static string downloadDirectory;
 
@@ -45,26 +43,14 @@ namespace SevenUpdate
         /// <summary>The number of recommended updates found.</summary>
         private static int recommendedCount;
 
-        #endregion
-
-        #region Public Events
-
         /// <summary>Occurs if an error occurred.</summary>
         public static event EventHandler<ErrorOccurredEventArgs> ErrorOccurred;
 
         /// <summary>Occurs when the searching of updates has completed.</summary>
         public static event EventHandler<SearchCompletedEventArgs> SearchCompleted;
 
-        #endregion
-
-        #region Public Properties
-
         /// <summary>Gets a value indicating whether Seven update is currently searching for updates.</summary>
         public static bool IsSearching { get; private set; }
-
-        #endregion
-
-        #region Public Methods and Operators
 
         /// <summary>Searches for updates while blocking the calling thread.</summary>
         /// <param name="applications">The collection of applications to check for updates.</param>
@@ -209,10 +195,6 @@ namespace SevenUpdate
                     null, new SearchCompletedEventArgs(updateList, importantCount, recommendedCount, optionalCount));
             }
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>Checks for updates.</summary>
         /// <param name="app">A collection of applications to check for updates.</param>
@@ -407,7 +389,5 @@ namespace SevenUpdate
 
             return size;
         }
-
-        #endregion
     }
 }

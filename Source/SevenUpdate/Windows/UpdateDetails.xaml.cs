@@ -25,17 +25,11 @@ namespace SevenUpdate.Windows
     /// <summary>Interaction logic for Update_Details.xaml.</summary>
     public sealed partial class UpdateDetails
     {
-        #region Constants and Fields
-
         /// <summary>The help and support url for the update.</summary>
         private string helpUrl;
 
         /// <summary>The more update information url for the update.</summary>
         private string infoUrl;
-
-        #endregion
-
-        #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="UpdateDetails" /> class.</summary>
         public UpdateDetails()
@@ -52,10 +46,6 @@ namespace SevenUpdate.Windows
                 this.Title += " - " + Properties.Resources.BetaChannel;
             }
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>Shows the window and displays the update information.</summary>
         /// <param name="updateInfo">The update information to display.</param>
@@ -97,7 +87,5 @@ namespace SevenUpdate.Windows
         {
             Utilities.StartProcess(this.infoUrl);
         }
-
-        #endregion
     }
 }

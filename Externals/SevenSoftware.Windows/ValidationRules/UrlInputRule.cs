@@ -31,15 +31,9 @@ namespace SevenSoftware.Windows.ValidationRules
         Justification = "Validation Rule")]
     public class UrlInputRule : ValidationRule
     {
-        #region Public Properties
-
         /// <summary>Gets or sets a value indicating whether this instance is required.</summary>
         /// <value><c>True</c> if this instance is required; otherwise, <c>False</c>.</value>
         public bool IsRequired { get; set; }
-
-        #endregion
-
-        #region Public Methods and Operators
 
         /// <summary>When overridden in a derived class, performs validation checks on a value.</summary>
         /// <param name="value">The value from the binding target to check.</param>
@@ -75,7 +69,5 @@ namespace SevenSoftware.Windows.ValidationRules
             return r.IsMatch(input)
                        ? new ValidationResult(true, null) : new ValidationResult(false, Resources.UrilInvalid);
         }
-
-        #endregion
     }
 }

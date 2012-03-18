@@ -14,14 +14,8 @@ namespace SharpBits.Base
     /// <summary>The <c>BitsFile</c> progress.</summary>
     public class FileProgress
     {
-        #region Constants and Fields
-
         /// <summary>The current file progress.</summary>
         private BGFileProgress fileProgress;
-
-        #endregion
-
-        #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="FileProgress" /> class.</summary>
         /// <param name="fileProgress">The file progress.</param>
@@ -29,10 +23,6 @@ namespace SharpBits.Base
         {
             this.fileProgress = fileProgress;
         }
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>Gets the total number of bytes downloaded.</summary>
         /// <value>The bytes total.</value>
@@ -63,7 +53,5 @@ namespace SharpBits.Base
                 return Convert.ToBoolean(this.fileProgress.Completed);
             }
         }
-
-        #endregion
     }
 }

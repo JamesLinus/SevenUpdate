@@ -21,8 +21,6 @@ namespace SevenSoftware.Windows.ApplicationServices
     /// </remarks>
     public class RecoverySettings
     {
-        #region Constants and Fields
-
         /// <summary>Gets the time interval for notifying Windows Error Reporting.  The <c>RecoveryCallback</c> method must invoke <c>ApplicationRestartRecoveryManager.ApplicationRecoveryInProgress</c> within this interval to prevent WER from terminating the application.</summary>
         /// <remarks>
         ///   The recovery ping interval is specified in milliseconds. By default, the interval is 5 seconds. If you
@@ -37,10 +35,6 @@ namespace SevenSoftware.Windows.ApplicationServices
         /// <value>A <c>RecoveryData</c> object.</value>
         private RecoveryData recoveryData;
 
-        #endregion
-
-        #region Constructors and Destructors
-
         /// <summary>Initializes a new instance of the <see cref="RecoverySettings" /> class.</summary>
         /// <param name="data">A recovery data object that contains the callback method (invoked by the system before Windows Error Reporting terminates the application) and an optional state object.</param>
         /// <param name="interval">The time interval within which the callback method must invoke <see
@@ -52,10 +46,6 @@ namespace SevenSoftware.Windows.ApplicationServices
             this.recoveryData = data;
             this.pingInterval = interval;
         }
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>
         ///   Gets the time interval for notifying Windows Error Reporting. The <see cref="RecoveryCallback" /> method
@@ -88,10 +78,6 @@ namespace SevenSoftware.Windows.ApplicationServices
             }
         }
 
-        #endregion
-
-        #region Public Methods and Operators
-
         /// <summary>Returns a string representation of the current state of this object.</summary>
         /// <returns>A <see cref="string" /> object.</returns>
         public override string ToString()
@@ -103,7 +89,5 @@ namespace SevenSoftware.Windows.ApplicationServices
                 this.recoveryData.State, 
                 this.PingInterval);
         }
-
-        #endregion
     }
 }

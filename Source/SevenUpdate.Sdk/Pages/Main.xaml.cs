@@ -34,8 +34,6 @@ namespace SevenUpdate.Sdk.Pages
     /// <summary>Interaction logic for Main.xaml.</summary>
     public sealed partial class Main
     {
-        #region Constructors and Destructors
-
         /// <summary>Initializes a new instance of the <see cref="Main" /> class.</summary>
         public Main()
         {
@@ -57,10 +55,6 @@ namespace SevenUpdate.Sdk.Pages
                 this.tbAbout.Foreground = new SolidColorBrush(Color.FromRgb(0, 102, 204));
             }
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>Updates the UI based on the <c>TreeViewItem</c> selected.</summary>
         /// <param name="sender">The object that called the event.</param>
@@ -346,7 +340,5 @@ namespace SevenUpdate.Sdk.Pages
                 this.tbAbout.Foreground = new SolidColorBrush(Color.FromRgb(0, 102, 204));
             }
         }
-
-        #endregion
     }
 }

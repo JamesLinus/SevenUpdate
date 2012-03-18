@@ -27,17 +27,11 @@ namespace SevenUpdate
     [DataContract(IsReference = true)]
     public sealed class LocaleString : INotifyPropertyChanged
     {
-        #region Constants and Fields
-
         /// <summary>The ISO language code.</summary>
         private string lang;
 
         /// <summary>The value of the string.</summary>
         private string value;
-
-        #endregion
-
-        #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="LocaleString" /> class.</summary>
         public LocaleString()
@@ -53,16 +47,8 @@ namespace SevenUpdate
             this.Value = value;
         }
 
-        #endregion
-
-        #region Public Events
-
         /// <summary>Occurs when a property has changed.</summary>
         public event PropertyChangedEventHandler PropertyChanged;
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>Gets or sets an ISO language code.</summary>
         /// <value>The iso code.</value>
@@ -104,10 +90,6 @@ namespace SevenUpdate
             }
         }
 
-        #endregion
-
-        #region Methods
-
         /// <summary>When a property has changed, call the <c>OnPropertyChanged</c> Event.</summary>
         /// <param name="name">The name of the property that changed.</param>
         private void OnPropertyChanged(string name)
@@ -119,7 +101,5 @@ namespace SevenUpdate
                 handler(this, new PropertyChangedEventArgs(name));
             }
         }
-
-        #endregion
     }
 }

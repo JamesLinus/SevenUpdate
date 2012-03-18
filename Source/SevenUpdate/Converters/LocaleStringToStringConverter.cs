@@ -32,8 +32,6 @@ namespace SevenUpdate.Converters
     [ValueConversion(typeof(LocaleString), typeof(string))]
     internal sealed class LocaleStringToStringConverter : IValueConverter
     {
-        #region Public Methods and Operators
-
         /// <summary>Converts a object into another object.</summary>
         /// <param name="value">The value produced by the binding source.</param>
         /// <param name="targetType">The type of the binding target property.</param>
@@ -60,7 +58,5 @@ namespace SevenUpdate.Converters
         {
             return DependencyProperty.UnsetValue;
         }
-
-        #endregion
     }
 }

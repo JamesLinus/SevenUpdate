@@ -31,8 +31,6 @@ namespace SevenSoftware.Windows.Controls
     /// <summary>Sorts a <c>ListView</c>.</summary>
     public static class ListViewSorter
     {
-        #region Constants and Fields
-
         /// <summary>Indicates if the <c>ListView</c> will auto sort.</summary>
         private static readonly DependencyProperty AutoSortProperty = DependencyProperty.RegisterAttached(
             "AutoSort", typeof(bool), typeof(ListViewSorter), new UIPropertyMetadata(false, AutoSortCallback));
@@ -67,10 +65,6 @@ namespace SevenSoftware.Windows.Controls
 
         /// <summary>The current sort direction.</summary>
         private static ListSortDirection currentSortDirection;
-
-        #endregion
-
-        #region Public Methods and Operators
 
         /// <summary>Sets the auto sort.</summary>
         /// <param name="obj">The dependency object.</param>
@@ -174,10 +168,6 @@ namespace SevenSoftware.Windows.Controls
 
             obj.SetValue(SortedColumnHeaderProperty, header);
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>Adds the sort glyph.</summary>
         /// <param name="columnHeader">The column header.</param>
@@ -486,13 +476,9 @@ namespace SevenSoftware.Windows.Controls
             }
         }
 
-        #endregion
-
         /// <summary>The sort glyph.</summary>
         private class SortGlyphAdorner : Adorner
         {
-            #region Constants and Fields
-
             /// <summary>The ascending arrow.</summary>
             private static readonly Geometry AscGeometry = Geometry.Parse("M 0,0 L 10,0 L 5,5 Z");
 
@@ -505,10 +491,6 @@ namespace SevenSoftware.Windows.Controls
             /// <summary>The sort glyph image.</summary>
             private readonly ImageSource sortGlyph;
 
-            #endregion
-
-            #region Constructors and Destructors
-
             /// <summary>Initializes a new instance of the <see cref="SortGlyphAdorner" /> class.</summary>
             /// <param name="columnHeader">The column header.</param>
             /// <param name="sortGlyph">The sort glyph.</param>
@@ -517,10 +499,6 @@ namespace SevenSoftware.Windows.Controls
                 this.columnHeader = columnHeader;
                 this.sortGlyph = sortGlyph;
             }
-
-            #endregion
-
-            #region Methods
 
             /// <summary>
             ///   When overridden in a derived class, participates in rendering operations that are directed by the
@@ -563,8 +541,6 @@ namespace SevenSoftware.Windows.Controls
                     drawingContext.Pop();
                 }
             }
-
-            #endregion
         }
     }
 }

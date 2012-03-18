@@ -13,8 +13,6 @@ namespace SevenSoftware.Windows.Dialogs
     /// </summary>
     public interface IDialogControlHost
     {
-        #region Public Methods and Operators
-
         /// <summary>Applies changes to the collection.</summary>
         void ApplyCollectionChanged();
 
@@ -36,7 +34,5 @@ namespace SevenSoftware.Windows.Dialogs
         /// <param name="control">The control propertyName applies to.</param>
         /// <returns>true if the property change is allowed.</returns>
         bool IsControlPropertyChangeAllowed(string propertyName, DialogControl control);
-
-        #endregion
     }
 }

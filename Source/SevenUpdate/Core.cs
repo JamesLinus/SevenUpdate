@@ -39,8 +39,6 @@ namespace SevenUpdate
     /// <summary>Contains properties and methods that are essential.</summary>
     internal sealed class Core : INotifyPropertyChanged
     {
-        #region Constants and Fields
-
         /// <summary>Gets the main location where Seven Update files are stored.</summary>
         internal const string SevenUpdateUrl = @"http://apps.sevenupdate.com/SevenUpdate";
 
@@ -56,23 +54,11 @@ namespace SevenUpdate
         /// <summary>The current action Seven Update is performing.</summary>
         private static UpdateAction updateAction;
 
-        #endregion
-
-        #region Public Events
-
         /// <summary>Occurs when a property value changes.</summary>
         public event PropertyChangedEventHandler PropertyChanged;
 
-        #endregion
-
-        #region Events
-
         /// <summary>Occurs when the user cancels their update selection.</summary>
         internal static event EventHandler UpdateActionChanged;
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>Gets the update configuration settings.</summary>
         public static Config Settings
@@ -120,10 +106,6 @@ namespace SevenUpdate
                 }
             }
         }
-
-        #endregion
-
-        #region Properties
 
         /// <summary>Gets or sets a collection of applications to update.</summary>
         internal static Collection<Sui> Applications { get; set; }
@@ -192,10 +174,6 @@ namespace SevenUpdate
                 return apps;
             }
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>Checks for updates.</summary>
         /// <param name="auto"><c>True</c> if it's called because of an auto update check, otherwise <c>False</c>.</param>
@@ -406,7 +384,5 @@ namespace SevenUpdate
                 handler(this, new PropertyChangedEventArgs(name));
             }
         }
-
-        #endregion
     }
 }

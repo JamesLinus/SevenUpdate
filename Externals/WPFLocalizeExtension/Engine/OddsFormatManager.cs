@@ -16,8 +16,6 @@ namespace WPFLocalizeExtension.Engine
     /// <summary>Represents the odds format manager.</summary>
     public sealed class OddsFormatManager : DependencyObject
     {
-        #region Constants and Fields
-
         /// <summary>Registers the design odds format property</summary>
         [DesignOnly(true)]
         private static readonly DependencyProperty DesignOddsFormatProperty =
@@ -36,25 +34,13 @@ namespace WPFLocalizeExtension.Engine
         /// <summary>Holds the current chosen <c>OddsFormatType</c>.</summary>
         private OddsFormatType oddsFormatType = DefaultOddsFormatType;
 
-        #endregion
-
-        #region Constructors and Destructors
-
         /// <summary>Prevents a default instance of the OddsFormatManager class from being created. Static Constructor.</summary>
         private OddsFormatManager()
         {
         }
 
-        #endregion
-
-        #region Events
-
         /// <summary>Action for when the odds format changes</summary>
         internal event Action OnOddsFormatChanged;
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>
         ///   Gets the <c>OddsFormatManager</c> singleton.If the underlying instance is <c>null</c>, a instance will be
@@ -113,10 +99,6 @@ namespace WPFLocalizeExtension.Engine
             }
         }
 
-        #endregion
-
-        #region Properties
-
         /// <summary>Gets the default odds format type</summary>
         private static OddsFormatType DefaultOddsFormatType
         {
@@ -135,10 +117,6 @@ namespace WPFLocalizeExtension.Engine
                 return DesignerProperties.GetIsInDesignMode(this);
             }
         }
-
-        #endregion
-
-        #region Public Methods and Operators
 
         /// <summary>Attach an WeakEventListener to the <c>OddsFormatManager</c>.</summary>
         /// <param name="listener">The listener to attach.</param>
@@ -196,10 +174,6 @@ namespace WPFLocalizeExtension.Engine
             }
         }
 
-        #endregion
-
-        #region Methods
-
         /// <summary>Sets the odds format from the dependency property</summary>
         /// <param name="obj">The dependency object</param>
         /// <param name="args">The event arguments</param>
@@ -231,7 +205,5 @@ namespace WPFLocalizeExtension.Engine
                     (OddsFormatType)Enum.Parse(typeof(OddsFormatType), args.NewValue.ToString(), true);
             }
         }
-
-        #endregion
     }
 }

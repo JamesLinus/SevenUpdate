@@ -40,14 +40,8 @@ namespace SevenUpdate.Sdk.Pages
     /// <summary>Interaction logic for AppInfo.xaml.</summary>
     public sealed partial class AppInfo
     {
-        #region Constants and Fields
-
         /// <summary>Indicates the platform of the application before editing.</summary>
         private static Platform oldPlatform;
-
-        #endregion
-
-        #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="AppInfo" /> class.</summary>
         public AppInfo()
@@ -84,10 +78,6 @@ namespace SevenUpdate.Sdk.Pages
                 this.rectangle.Visibility = Visibility.Visible;
             }
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>Opens a <c>OpenFileDialog</c> to browse for the application install location.</summary>
         /// <param name="sender">The object that called the event.</param>
@@ -507,7 +497,5 @@ namespace SevenUpdate.Sdk.Pages
             textBox.HasError = !new UrlInputRule { IsRequired = true }.Validate(textBox.Text, null).IsValid;
             textBox.ToolTip = textBox.HasError ? Properties.Resources.UrlNotValid : null;
         }
-
-        #endregion
     }
 }

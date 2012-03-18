@@ -15,8 +15,6 @@ namespace WPFLocalizeExtension.Engine
     /// <summary>Implements the LocalizedObjectOperation.</summary>
     public static class LocalizedObjectOperation
     {
-        #region Public Methods and Operators
-
         /// <summary>Gets the error message.</summary>
         /// <param name="errorNo">The error no.</param>
         /// <returns>The resolved string or a default error string.</returns>
@@ -108,10 +106,6 @@ namespace WPFLocalizeExtension.Engine
                     Localize.Instance.Culture);
         }
 
-        #endregion
-
-        #region Methods
-
         /// <summary>Gets the GUI string.</summary>
         /// <param name="key">The resource identifier.</param>
         /// <param name="language">The language.</param>
@@ -133,7 +127,5 @@ namespace WPFLocalizeExtension.Engine
                 Localize.Instance.GetLocalizedObject<object>(
                     Localize.GetAssemblyName(Assembly.GetExecutingAssembly()), "ResGui", key, language);
         }
-
-        #endregion
     }
 }

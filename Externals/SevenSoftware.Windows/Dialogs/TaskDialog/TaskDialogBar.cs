@@ -10,14 +10,8 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
     /// <summary>Defines a common class for all task dialog bar controls, such as the progress and marquee bars.</summary>
     public class TaskDialogBar : TaskDialogControl
     {
-        #region Constants and Fields
-
         /// <summary>The state of the progressbar.</summary>
         private TaskDialogProgressBarState state;
-
-        #endregion
-
-        #region Constructors and Destructors
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="TaskDialogBar" /> class. Creates a new instance of this
@@ -36,10 +30,6 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         {
         }
 
-        #endregion
-
-        #region Public Properties
-
         /// <summary>Gets or sets the state of the progress bar.</summary>
         public TaskDialogProgressBarState State
         {
@@ -56,16 +46,10 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
             }
         }
 
-        #endregion
-
-        #region Methods
-
         /// <summary>Resets the state of the control to normal.</summary>
         protected internal virtual void Reset()
         {
             this.state = TaskDialogProgressBarState.Normal;
         }
-
-        #endregion
     }
 }

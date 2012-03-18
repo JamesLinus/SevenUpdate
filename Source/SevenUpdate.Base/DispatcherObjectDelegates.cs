@@ -23,24 +23,22 @@ namespace SevenUpdate
     /// <summary>Extension Methods for Dispatcher.BeginInvoke.</summary>
     public static class DispatcherObjectDelegates
     {
-        #region Public Methods and Operators
-
         ///// <summary>Invokes a Method to run on the UI thread.</summary>
         ///// <param name="dispatcher">The dispatcher object.</param>
         ///// <param name="method">The method to invoke.</param>
         ///// <param name="background"> </param>
-        //public static void BeginInvoke(this Dispatcher dispatcher, Action method, DispatcherPriority background)
-        //{
-        //    if (method == null)
-        //    {
-        //        throw new ArgumentNullException("method");
-        //    }
+        // public static void BeginInvoke(this Dispatcher dispatcher, Action method, DispatcherPriority background)
+        // {
+        // if (method == null)
+        // {
+        // throw new ArgumentNullException("method");
+        // }
 
-        //    if (dispatcher != null)
-        //    {
-        //        dispatcher.BeginInvoke(method, DispatcherPriority.Background, null);
-        //    }
-        //}
+        // if (dispatcher != null)
+        // {
+        // dispatcher.BeginInvoke(method, DispatcherPriority.Background, null);
+        // }
+        // }
 
         /// <summary>Invokes a Method to run on the UI thread.</summary>
         /// <param name="dispatcher">The dispatcher object.</param>
@@ -78,7 +76,5 @@ namespace SevenUpdate
                 dispatcher.BeginInvoke(method, DispatcherPriority.Background);
             }
         }
-
-        #endregion
     }
 }

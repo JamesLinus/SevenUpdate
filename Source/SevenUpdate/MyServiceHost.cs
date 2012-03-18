@@ -30,14 +30,8 @@ namespace SevenUpdate
     /// <summary>Contains methods to start the WCF service host.</summary>
     internal static class MyServiceHost
     {
-        #region Properties
-
         /// <summary>Gets or sets the <c>ServiceHost</c> instance.</summary>
         private static ServiceHost Instance { get; set; }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>Starts the service.</summary>
         internal static void StartService()
@@ -113,7 +107,5 @@ namespace SevenUpdate
 
             Instance = null;
         }
-
-        #endregion
     }
 }

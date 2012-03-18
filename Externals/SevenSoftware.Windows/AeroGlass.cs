@@ -28,14 +28,8 @@ namespace SevenSoftware.Windows
     /// <summary>Contains methods to allow use of Aero Glass.</summary>
     public static class AeroGlass
     {
-        #region Public Events
-
         /// <summary>Occurs when DWM becomes enabled or disabled on the system.</summary>
         public static event EventHandler<CompositionChangedEventArgs> CompositionChanged;
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>Gets a value indicating whether DWM is enabled on the desktop.</summary>
         /// <value><c>True</c> if this instance is enabled; otherwise, <c>False</c>.</value>
@@ -58,10 +52,6 @@ namespace SevenSoftware.Windows
             }
 */
         }
-
-        #endregion
-
-        #region Public Methods and Operators
 
         /// <summary>Enables Blur on Aero Glass for a WPF window.</summary>
         /// <param name="window">The window object to add blur to.</param>
@@ -227,10 +217,6 @@ namespace SevenSoftware.Windows
             }
         }
 
-        #endregion
-
-        #region Methods
-
         /// <summary>An application-defined function that processes messages sent to a window.</summary>
         /// <param name="handle">A handle to the window.</param>
         /// <param name="msg">The message to send.</param>
@@ -252,7 +238,5 @@ namespace SevenSoftware.Windows
 
             return IntPtr.Zero;
         }
-
-        #endregion
     }
 }

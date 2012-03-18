@@ -14,14 +14,8 @@ namespace SharpBits.Base
     /// <summary>The event data for the interface notification event.</summary>
     public class BitsInterfaceNotificationEventArgs : NotificationEventArgs
     {
-        #region Constants and Fields
-
         /// <summary>The Com exception.</summary>
         private readonly COMException exception;
-
-        #endregion
-
-        #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="BitsInterfaceNotificationEventArgs" /> class.</summary>
         /// <param name="job">The job the notification is for.</param>
@@ -32,10 +26,6 @@ namespace SharpBits.Base
             this.Description = description;
             this.exception = exception;
         }
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>Gets the description.</summary>
         /// <value>The description.</value>
@@ -60,7 +50,5 @@ namespace SharpBits.Base
                 return this.exception.ErrorCode;
             }
         }
-
-        #endregion
     }
 }

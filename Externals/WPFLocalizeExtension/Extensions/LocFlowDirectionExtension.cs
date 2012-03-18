@@ -19,8 +19,6 @@ namespace WPFLocalizeExtension.Extensions
     [MarkupExtensionReturnType(typeof(FlowDirection))]
     public class LocFlowDirectionExtension : BaseLocalizeExtension<FlowDirection>
     {
-        #region Constructors and Destructors
-
         /// <summary>Initializes a new instance of the <see cref="LocFlowDirectionExtension" /> class.</summary>
         public LocFlowDirectionExtension()
         {
@@ -31,10 +29,6 @@ namespace WPFLocalizeExtension.Extensions
         public LocFlowDirectionExtension(string key) : base(key)
         {
         }
-
-        #endregion
-
-        #region Public Methods and Operators
 
         /// <summary>Provides the Value for the first Binding as <c>LocFlowDirectionExtension</c>.</summary>
         /// <param name="serviceProvider">The <c>System.Windows.Markup.IProvideValueTarget</c> provided from the <c>MarkupExtension</c>.</param>
@@ -61,10 +55,6 @@ namespace WPFLocalizeExtension.Extensions
                     obj.GetType().FullName));
         }
 
-        #endregion
-
-        #region Methods
-
         /// <summary>This method is used to modify the passed object into the target format.</summary>
         /// <param name="input">The object that will be modified.</param>
         /// <returns>Returns the modified object.</returns>
@@ -88,7 +78,5 @@ namespace WPFLocalizeExtension.Extensions
                 this.Assembly, this.Dictionary, this.Key, this.Culture);
             this.SetNewValue(this.FormatOutput(obj));
         }
-
-        #endregion
     }
 }

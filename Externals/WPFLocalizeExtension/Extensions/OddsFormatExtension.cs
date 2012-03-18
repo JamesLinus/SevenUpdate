@@ -29,8 +29,6 @@ namespace WPFLocalizeExtension.Extensions
     [ContentProperty("ResourceIdentifierKey")]
     public sealed class OddsFormatExtension : MarkupExtension, IWeakEventListener
     {
-        #region Constants and Fields
-
         /// <summary>Holds the collection of assigned dependency objects as WeakReferences.</summary>
         private readonly Collection<WeakReference> targetObjects;
 
@@ -39,10 +37,6 @@ namespace WPFLocalizeExtension.Extensions
 
         /// <summary>Holds the value to display.</summary>
         private decimal displayValue;
-
-        #endregion
-
-        #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="OddsFormatExtension" /> class.  <c>BaseLocalizeExtension"</c>.</summary>
         /// <param name="displayValue">The display Value.</param>
@@ -64,10 +58,6 @@ namespace WPFLocalizeExtension.Extensions
             // initialize the collection of the assigned dependency objects
             this.targetObjects = new Collection<WeakReference>();
         }
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>Gets the UK odds format lookup table.</summary>
         /// <value>The UK odds format lookup table.</value>
@@ -115,10 +105,6 @@ namespace WPFLocalizeExtension.Extensions
 
         /// <summary>Gets the <c>DependencyProperty</c> which should get the localized content.</summary>
         public DependencyProperty TargetProperty { get; private set; }
-
-        #endregion
-
-        #region Public Methods and Operators
 
         /// <summary>Converts a decimal odds into a localized odds string in the current <c>OddsFormatType</c>.</summary>
         /// <param name="sourceOdds">The source odds.</param>
@@ -271,10 +257,6 @@ namespace WPFLocalizeExtension.Extensions
                 CultureInfo.CurrentCulture, "{0} -> {1}", this.DisplayValue, this.GetForcedOddsFormatOrDefault());
         }
 
-        #endregion
-
-        #region Explicit Interface Methods
-
         /// <summary>
         ///   This method will be called through the interface, passed to the<see cref =
         ///   "WeakCultureChangedEventManager" /> to get notified on culture changed.
@@ -301,10 +283,6 @@ namespace WPFLocalizeExtension.Extensions
             // return false, to notify the event was not processed
             return false;
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>Converts a decimal odds into a localized odds string in the defined <c>OddsFormatType</c>.</summary>
         /// <param name="sourceOdds">The source odds.</param>
@@ -514,7 +492,5 @@ namespace WPFLocalizeExtension.Extensions
                 ((DependencyObject)dpo.Target).SetValue(this.TargetProperty, newValue);
             }
         }
-
-        #endregion
     }
 }

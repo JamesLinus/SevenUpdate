@@ -31,8 +31,6 @@ namespace SevenUpdate.Sdk
     /// <summary>Parses a reg file.</summary>
     internal sealed class RegistryParser
     {
-        #region Constants and Fields
-
         /// <summary>The signature of a reg version 4 file.</summary>
         private const string RegV4Signature = "REGEDIT4\r\n";
 
@@ -77,10 +75,6 @@ namespace SevenUpdate.Sdk
 
         /// <summary>The signature of the reg file.</summary>
         private static int regVersionSignature;
-
-        #endregion
-
-        #region Public Methods and Operators
 
         /// <summary>Parses a registry file into a <c>RegistryItem</c>.</summary>
         /// <param name="file">The reg file.</param>
@@ -139,10 +133,6 @@ namespace SevenUpdate.Sdk
 
             return this.regItem;
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>Apply fixes to the line.</summary>
         /// <param name="line">Line to apply fixes to.</param>
@@ -936,7 +926,5 @@ namespace SevenUpdate.Sdk
                 this.regItem.Add(regBlockResult);
             }
         }
-
-        #endregion
     }
 }

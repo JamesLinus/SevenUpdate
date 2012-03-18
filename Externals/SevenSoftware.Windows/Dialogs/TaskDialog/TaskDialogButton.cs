@@ -10,17 +10,11 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
     /// <summary>Implements a button that can be hosted in a task dialog.</summary>
     public class TaskDialogButton : TaskDialogButtonBase
     {
-        #region Constants and Fields
-
         /// <summary>Indicates whether to show the UAC icon.</summary>
         private bool showElevationIcon;
 
         /// <summary>Indicates a value indicating whether the elevation icon will be used.</summary>
         private bool useElevationIcon;
-
-        #endregion
-
-        #region Constructors and Destructors
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="TaskDialogButton" /> class. Creates a new instance of this
@@ -39,10 +33,6 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         public TaskDialogButton(string name, string text) : base(name, text)
         {
         }
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>Gets or sets a value indicating whether the elevation icon is displayed.</summary>
         /// <value><c>True</c> if [show elevation icon]; otherwise, <c>False</c>.</value>
@@ -76,7 +66,5 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
                 this.ApplyPropertyChange("ShowElevationIcon");
             }
         }
-
-        #endregion
     }
 }

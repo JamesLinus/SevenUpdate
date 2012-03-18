@@ -19,17 +19,11 @@ namespace SharpBits.Base
     [Serializable]
     public sealed class BitsJobsDictionary : Dictionary<Guid, BitsJob>, IDisposable
     {
-        #region Constants and Fields
-
         /// <summary>The current BITS manager.</summary>
         private readonly BitsManager manager;
 
         /// <summary>Indicates if the job collection as been disposed.</summary>
         private bool disposed;
-
-        #endregion
-
-        #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="BitsJobsDictionary" /> class.</summary>
         public BitsJobsDictionary()
@@ -68,17 +62,9 @@ namespace SharpBits.Base
             this.disposed = (bool)info.GetValue("disposed", typeof(bool));
         }
 
-        #endregion
-
-        #region Properties
-
         /// <summary>Gets or sets the jobs.</summary>
         /// <value>The jobs of the current collection.</value>
         private IEnumBackgroundCopyJobs Jobs { get; set; }
-
-        #endregion
-
-        #region Public Methods and Operators
 
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
         public void Dispose()
@@ -101,10 +87,6 @@ namespace SharpBits.Base
             base.GetObjectData(info, context);
             info.AddValue("disposed", this.disposed);
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>Updates the specified job list.</summary>
         /// <param name="jobList">The job list.</param>
@@ -178,7 +160,5 @@ namespace SharpBits.Base
                 disposeJob.Dispose();
             }
         }
-
-        #endregion
     }
 }

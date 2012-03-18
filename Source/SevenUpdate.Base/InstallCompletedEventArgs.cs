@@ -27,8 +27,6 @@ namespace SevenUpdate
     [DataContract]
     public sealed class InstallCompletedEventArgs : EventArgs
     {
-        #region Constructors and Destructors
-
         /// <summary>Initializes a new instance of the <see cref="InstallCompletedEventArgs" /> class.</summary>
         /// <param name="updatesInstalled">The number of updates installed.</param>
         /// <param name="updatesFailed">The number of updates that failed.</param>
@@ -43,10 +41,6 @@ namespace SevenUpdate
         {
         }
 
-        #endregion
-
-        #region Public Properties
-
         /// <summary>Gets the number of updates that failed.</summary>
         /// <value>The updates failed.</value>
         [ProtoMember(1)]
@@ -58,7 +52,5 @@ namespace SevenUpdate
         [ProtoMember(2)]
         [DataMember]
         public int UpdatesInstalled { get; private set; }
-
-        #endregion
     }
 }

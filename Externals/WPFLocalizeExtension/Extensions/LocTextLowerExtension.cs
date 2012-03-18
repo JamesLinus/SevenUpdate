@@ -18,8 +18,6 @@ namespace WPFLocalizeExtension.Extensions
     [MarkupExtensionReturnType(typeof(string))]
     public class LocTextLowerExtension : LocTextExtension
     {
-        #region Constructors and Destructors
-
         /// <summary>Initializes a new instance of the <see cref="LocTextLowerExtension" /> class.</summary>
         public LocTextLowerExtension()
         {
@@ -30,10 +28,6 @@ namespace WPFLocalizeExtension.Extensions
         public LocTextLowerExtension(string key) : base(key)
         {
         }
-
-        #endregion
-
-        #region Public Methods and Operators
 
         /// <summary>Provides the Value for the first Binding as <c>System.String</c>.</summary>
         /// <param name="serviceProvider">The <c>System.Windows.Markup.IProvideValueTarget</c> provided from the <c>MarkupExtension</c>.</param>
@@ -66,10 +60,6 @@ namespace WPFLocalizeExtension.Extensions
                     obj.GetType().FullName));
         }
 
-        #endregion
-
-        #region Methods
-
         /// <summary>
         ///   This method formats the localized text.If the passed target text is <c>null</c>, string.empty will be
         ///   returned.
@@ -91,7 +81,5 @@ namespace WPFLocalizeExtension.Extensions
                 this.Assembly, this.Dictionary, this.Key, this.Culture);
             this.SetNewValue(this.FormatOutput(obj));
         }
-
-        #endregion
     }
 }

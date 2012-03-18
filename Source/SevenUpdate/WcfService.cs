@@ -33,14 +33,8 @@ namespace SevenUpdate
     [ServiceBehavior(ConcurrencyMode = ConcurrencyMode.Reentrant, InstanceContextMode = InstanceContextMode.PerSession)]
     internal class WcfService : IElevatedProcessCallback
     {
-        #region Constants and Fields
-
         /// <summary>The service callback context.</summary>
         private static IElevatedProcess context;
-
-        #endregion
-
-        #region Public Events
 
         /// <summary>Occurs when the download completed.</summary>
         public static event EventHandler<DownloadCompletedEventArgs> DownloadDone;
@@ -63,16 +57,8 @@ namespace SevenUpdate
         /// <summary>Occurs when one or more hidden updates have been restored.</summary>
         public static event EventHandler<EventArgs> SettingsChanged;
 
-        #endregion
-
-        #region Properties
-
         /// <summary>Gets or sets a value indicating whether Seven Update is connected to the admin process.</summary>
         private static bool IsConnected { get; set; }
-
-        #endregion
-
-        #region Public Methods and Operators
 
         /// <summary>Occurs when the process starts.</summary>
         public void ElevatedProcessStarted()
@@ -142,10 +128,6 @@ namespace SevenUpdate
         {
             InstallProgressChanged(this, e);
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>Aborts the installation of updates.</summary>
         /// <returns><c>True</c> if the install was aborted, otherwise <c>False</c>.</returns>
@@ -243,7 +225,7 @@ namespace SevenUpdate
                 IsConnected = false;
                 context = null;
                 Core.Instance.IsAdmin = false;
-                var success = Utilities.StartProcess(Path.Combine(Utilities.AppDir, @"SevenUpdate.Admin.exe"));
+                bool success = Utilities.StartProcess(Path.Combine(Utilities.AppDir, @"SevenUpdate.Admin.exe"));
                 if (!success)
                 {
                     return false;
@@ -501,7 +483,5 @@ namespace SevenUpdate
                     });
             task.Wait(15000);
         }
-
-        #endregion
     }
 }

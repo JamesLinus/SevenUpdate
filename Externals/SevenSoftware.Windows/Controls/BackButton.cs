@@ -25,8 +25,6 @@ namespace SevenSoftware.Windows.Controls
     /// <summary>Implements BackButton that can be used in WPF user interfaces.</summary>
     public sealed class BackButton : Button
     {
-        #region Constructors and Destructors
-
         /// <summary>Initializes static members of the <see cref="BackButton" /> class.</summary>
         static BackButton()
         {
@@ -49,7 +47,5 @@ namespace SevenSoftware.Windows.Controls
             this.Resources.MergedDictionaries.Add(resourceDictionary);
             this.Command = NavigationCommands.BrowseBack;
         }
-
-        #endregion
     }
 }

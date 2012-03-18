@@ -30,8 +30,6 @@ namespace SevenSoftware.Windows
     [ServiceBehavior(InstanceContextMode = InstanceContextMode.Single)]
     public class InstanceAwareApplication : Application, IPriorApplicationInstance, IDisposable
     {
-        #region Constants and Fields
-
         /// <summary>The milliseconds to wait to determine if the current instance is the first one.</summary>
         private const double FirstInstanceTimeoutMilliseconds = 500;
 
@@ -78,10 +76,6 @@ namespace SevenSoftware.Windows
         /// </summary>
         private EventWaitHandle signaledToFirstInstanceSemaphore;
 
-        #endregion
-
-        #region Constructors and Destructors
-
         /// <summary>Initializes a new instance of the <see cref="InstanceAwareApplication" /> class.</summary>
         /// <exception cref="InvalidOperationException">More than one instance of the <c>System.Windows.Application</c> class is created per <c>System.AppDomain</c>.</exception>
         public InstanceAwareApplication() : this(ApplicationInstanceAwareness.Host)
@@ -102,28 +96,16 @@ namespace SevenSoftware.Windows
             this.Dispose(false);
         }
 
-        #endregion
-
-        #region Public Events
-
         /// <summary>
         ///   Occurs when the <c>System.Windows.Application.Run()</c> or <c>System.Windows.Application.Run(Window)</c>
         ///   method of the next <c>InstanceAwareApplication</c> having the same <c>Guid</c> is called.
         /// </summary>
         public event EventHandler<StartupNextInstanceEventArgs> StartupNextInstance;
 
-        #endregion
-
-        #region Public Properties
-
         /// <summary>Gets a value indicating whether the current application instance is the first one.</summary>
         /// <value><c>True</c> if the current application instance is the first one, otherwise <c>false</c>.</value>
         /// <remarks>The first application instance gets notified about subsequent application instances startup.</remarks>
         public bool IsFirstInstance { get; private set; }
-
-        #endregion
-
-        #region Explicit Interface Methods
 
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
         void IDisposable.Dispose()
@@ -144,10 +126,6 @@ namespace SevenSoftware.Windows
             // Since the method is called asynchronously, invoke the function using the dispatcher!
             this.Dispatcher.BeginInvoke(onStartupNextApplication, DispatcherPriority.Background, (object)args);
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>Raises the <c>System.Windows.Application.Exit</c> event.</summary>
         /// <param name="e">An <c>System.Windows.ExitEventArgs</c> that contains the event data.</param>
@@ -481,7 +459,5 @@ namespace SevenSoftware.Windows
             this.signaledToFirstInstanceSemaphore.Close();
             this.signaledToFirstInstanceSemaphore = null;
         }
-
-        #endregion
     }
 }

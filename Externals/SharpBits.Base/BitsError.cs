@@ -16,17 +16,11 @@ namespace SharpBits.Base
     /// <summary>Bits error.</summary>
     public class BitsError
     {
-        #region Constants and Fields
-
         /// <summary>The error that occurred.</summary>
         private readonly IBackgroundCopyError error;
 
         /// <summary>The job the error occurred on.</summary>
         private readonly BitsJob job;
-
-        #endregion
-
-        #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="BitsError" /> class.</summary>
         /// <param name="job">The job the error occurred on.</param>
@@ -41,10 +35,6 @@ namespace SharpBits.Base
             this.error = error;
             this.job = job;
         }
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>Gets the context description.</summary>
         /// <value>The context description.</value>
@@ -172,7 +162,5 @@ namespace SharpBits.Base
                 return protocol;
             }
         }
-
-        #endregion
     }
 }

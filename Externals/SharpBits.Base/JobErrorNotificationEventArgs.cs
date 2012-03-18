@@ -12,8 +12,6 @@ namespace SharpBits.Base
     /// <summary>The event data for the JobError event.</summary>
     public class JobErrorNotificationEventArgs : JobNotificationEventArgs
     {
-        #region Constructors and Destructors
-
         /// <summary>Initializes a new instance of the <see cref="JobErrorNotificationEventArgs" /> class.</summary>
         /// <param name="error">The error.</param>
         internal JobErrorNotificationEventArgs(BitsError error)
@@ -21,14 +19,8 @@ namespace SharpBits.Base
             this.Error = error;
         }
 
-        #endregion
-
-        #region Public Properties
-
         /// <summary>Gets the error.</summary>
         /// <value>The error that occurred.</value>
         public BitsError Error { get; private set; }
-
-        #endregion
     }
 }

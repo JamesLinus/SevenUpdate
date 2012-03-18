@@ -29,8 +29,6 @@ namespace SevenSoftware.Windows
                                                   INotifyCollectionChanged, 
                                                   INotifyPropertyChanged
     {
-        #region Constants and Fields
-
         /// <summary>
         /// The syncronization context.
         /// </summary>
@@ -40,10 +38,6 @@ namespace SevenSoftware.Windows
         /// A bool indicating of the list is loading.
         /// </summary>
         private bool isLoading;
-
-        #endregion
-
-        #region Constructors and Destructors
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AsyncVirtualizingCollection&lt;T&gt;"/> class.
@@ -77,10 +71,6 @@ namespace SevenSoftware.Windows
             this.synchronizationContext = SynchronizationContext.Current;
         }
 
-        #endregion
-
-        #region Public Events
-
         /// <summary>
         /// Occurs when the collection changes.
         /// </summary>
@@ -90,10 +80,6 @@ namespace SevenSoftware.Windows
         /// Occurs when a property value changes.
         /// </summary>
         public event PropertyChangedEventHandler PropertyChanged;
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>
         /// Gets or sets a value indicating whether the collection is loading.
@@ -113,10 +99,6 @@ namespace SevenSoftware.Windows
             }
         }
 
-        #endregion
-
-        #region Properties
-
         /// <summary>
         /// Gets the synchronization context used for UI-related operations. This is obtained as
         /// the current SynchronizationContext when the AsyncVirtualizingCollection is created.
@@ -129,10 +111,6 @@ namespace SevenSoftware.Windows
                 return this.synchronizationContext;
             }
         }
-
-        #endregion
-
-        #region Public Methods and Operators
 
         /// <summary>
         /// Raises the <see cref="CollectionChanged"/> event.
@@ -159,10 +137,6 @@ namespace SevenSoftware.Windows
                 h(this, e);
             }
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>
         /// Asynchronously loads the count of items.
@@ -248,7 +222,5 @@ namespace SevenSoftware.Windows
             IList<T> page = this.FetchPage(pageIndex);
             this.SynchronizationContext.Send(this.LoadPageCompleted, new object[] { pageIndex, page });
         }
-
-        #endregion
     }
 }

@@ -22,8 +22,6 @@ namespace WPFLocalizeExtension.Extensions
     [MarkupExtensionReturnType(typeof(BitmapSource))]
     public class LocImageExtension : BaseLocalizeExtension<BitmapSource>
     {
-        #region Constructors and Destructors
-
         /// <summary>Initializes a new instance of the <see cref="LocImageExtension" /> class.</summary>
         public LocImageExtension()
         {
@@ -34,10 +32,6 @@ namespace WPFLocalizeExtension.Extensions
         public LocImageExtension(string key) : base(key)
         {
         }
-
-        #endregion
-
-        #region Public Methods and Operators
 
         /// <summary>Provides the Value for the first Binding as <c>System.Windows.Media.Imaging.BitmapSource</c>.</summary>
         /// <param name="serviceProvider">The <c>System.Windows.Markup.IProvideValueTarget</c> provided from the <c>MarkupExtension</c>.</param>
@@ -68,10 +62,6 @@ namespace WPFLocalizeExtension.Extensions
                     this.Key, 
                     obj.GetType().FullName));
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>
         ///   Creates a <c>System.Windows.Media.Imaging.BitmapSource</c> from a <see cref="System.Drawing.Bitmap"
@@ -108,7 +98,5 @@ namespace WPFLocalizeExtension.Extensions
                 this.Assembly, this.Dictionary, this.Key, this.Culture);
             this.SetNewValue(this.FormatOutput(obj));
         }
-
-        #endregion
     }
 }

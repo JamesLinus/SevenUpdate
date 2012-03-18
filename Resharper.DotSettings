@@ -79,7 +79,6 @@
 	<s:String x:Key="/Default/CodeStyle/CSharpMemberOrderPattern/CustomPattern/@EntryValue">&lt;?xml version="1.0" encoding="utf-8"?&gt;&#xD;
 &lt;!-- Last updated 08.01.2012 --&gt;&#xD;
 &lt;Patterns xmlns="urn:shemas-jetbrains-com:member-reordering-patterns"&gt;&#xD;
-&#xD;
   &lt;!-- Do not reorder COM interfaces --&gt;&#xD;
   &lt;Pattern&gt;&#xD;
     &lt;Match&gt;&#xD;
@@ -92,7 +91,6 @@
       &lt;/And&gt;&#xD;
     &lt;/Match&gt;&#xD;
   &lt;/Pattern&gt;&#xD;
-&#xD;
   &lt;!-- Do not reorder P/Invoke structs --&gt;&#xD;
   &lt;Pattern&gt;&#xD;
     &lt;Match&gt;&#xD;
@@ -105,7 +103,6 @@
       &lt;/And&gt;&#xD;
     &lt;/Match&gt;&#xD;
   &lt;/Pattern&gt;&#xD;
-&#xD;
   &lt;!-- Do not reorder P/Invoke classes (called xxxNativeMethods) --&gt;&#xD;
   &lt;Pattern&gt;&#xD;
     &lt;Match&gt;&#xD;
@@ -115,7 +112,6 @@
       &lt;/And&gt;&#xD;
     &lt;/Match&gt;&#xD;
   &lt;/Pattern&gt;&#xD;
-&#xD;
   &lt;!-- StyleCop pattern --&gt;&#xD;
   &lt;Pattern RemoveAllRegions="true"&gt;&#xD;
     &lt;Match&gt;&#xD;
@@ -125,7 +121,6 @@
         &lt;Kind Is="interface"/&gt;&#xD;
       &lt;/Or&gt;&#xD;
     &lt;/Match&gt;&#xD;
-&#xD;
     &lt;!-- constants and fields --&gt;&#xD;
     &lt;Entry&gt;&#xD;
       &lt;Match&gt;&#xD;
@@ -141,9 +136,7 @@
         &lt;Static/&gt;&#xD;
         &lt;Name/&gt;&#xD;
       &lt;/Sort&gt;&#xD;
-      &lt;Group Region="Constants and Fields"/&gt;&#xD;
     &lt;/Entry&gt;&#xD;
-&#xD;
     &lt;!-- constructors and destructors --&gt;&#xD;
     &lt;Entry&gt;&#xD;
       &lt;Match&gt;&#xD;
@@ -157,9 +150,7 @@
         &lt;Kind Order="constructor destructor"/&gt;&#xD;
         &lt;Access Order="public internal protected-internal protected private"/&gt;&#xD;
       &lt;/Sort&gt;&#xD;
-      &lt;Group Region="Constructors and Destructors"/&gt;&#xD;
     &lt;/Entry&gt;&#xD;
-&#xD;
     &lt;!-- delegates --&gt;&#xD;
     &lt;Entry&gt;&#xD;
       &lt;Match&gt;&#xD;
@@ -170,9 +161,7 @@
         &lt;Static /&gt;&#xD;
         &lt;Name/&gt;&#xD;
       &lt;/Sort&gt;&#xD;
-      &lt;Group Region="Delegates"/&gt;&#xD;
     &lt;/Entry&gt;&#xD;
-&#xD;
     &lt;!-- public events --&gt;&#xD;
     &lt;Entry&gt;&#xD;
       &lt;Match&gt;&#xD;
@@ -186,9 +175,7 @@
         &lt;Static /&gt;&#xD;
         &lt;Name/&gt;&#xD;
       &lt;/Sort&gt;&#xD;
-      &lt;Group Region="Public Events"/&gt;&#xD;
     &lt;/Entry&gt;&#xD;
-&#xD;
     &lt;!-- interface events --&gt;&#xD;
     &lt;Entry&gt;&#xD;
       &lt;Match&gt;&#xD;
@@ -201,9 +188,7 @@
         &lt;ImplementsInterface Immediate="true"/&gt;&#xD;
         &lt;Name/&gt;&#xD;
       &lt;/Sort&gt;&#xD;
-      &lt;Group Region="Explicit Interface Events" /&gt;&#xD;
     &lt;/Entry&gt;&#xD;
-&#xD;
     &lt;!-- other events --&gt;&#xD;
     &lt;Entry&gt;&#xD;
       &lt;Match&gt;&#xD;
@@ -214,9 +199,7 @@
         &lt;Static /&gt;&#xD;
         &lt;Name/&gt;&#xD;
       &lt;/Sort&gt;&#xD;
-      &lt;Group Region="Events"/&gt;&#xD;
     &lt;/Entry&gt;&#xD;
-&#xD;
     &lt;!-- enum --&gt;&#xD;
     &lt;Entry&gt;&#xD;
       &lt;Match&gt;&#xD;
@@ -226,9 +209,7 @@
         &lt;Access Order="public internal protected-internal protected private" /&gt;&#xD;
         &lt;Name/&gt;&#xD;
       &lt;/Sort&gt;&#xD;
-      &lt;Group Region="Enums"/&gt;&#xD;
     &lt;/Entry&gt;&#xD;
-&#xD;
     &lt;!-- interfaces --&gt;&#xD;
     &lt;Entry&gt;&#xD;
       &lt;Match&gt;&#xD;
@@ -238,9 +219,7 @@
         &lt;Access Order="public internal protected-internal protected private" /&gt;&#xD;
         &lt;Name/&gt;&#xD;
       &lt;/Sort&gt;&#xD;
-      &lt;Group Region="Interfaces"/&gt;&#xD;
     &lt;/Entry&gt;&#xD;
-&#xD;
     &lt;!-- public properties --&gt;&#xD;
     &lt;Entry&gt;&#xD;
       &lt;Match&gt;&#xD;
@@ -254,9 +233,7 @@
         &lt;Static/&gt;&#xD;
         &lt;Name/&gt;&#xD;
       &lt;/Sort&gt;&#xD;
-      &lt;Group Region="Public Properties"/&gt;&#xD;
     &lt;/Entry&gt;&#xD;
-&#xD;
     &lt;!-- interface properties --&gt;&#xD;
     &lt;Entry&gt;&#xD;
       &lt;Match&gt;&#xD;
@@ -269,9 +246,7 @@
         &lt;ImplementsInterface Immediate="true"/&gt;&#xD;
         &lt;Name/&gt;&#xD;
       &lt;/Sort&gt;&#xD;
-      &lt;Group Region="Explicit Interface Properties" /&gt;&#xD;
     &lt;/Entry&gt;&#xD;
-&#xD;
     &lt;!-- other properties --&gt;&#xD;
     &lt;Entry&gt;&#xD;
       &lt;Match&gt;&#xD;
@@ -282,9 +257,7 @@
         &lt;Static/&gt;&#xD;
         &lt;Name/&gt;&#xD;
       &lt;/Sort&gt;&#xD;
-      &lt;Group Region="Properties"/&gt;&#xD;
     &lt;/Entry&gt;&#xD;
-&#xD;
     &lt;!-- public indexers --&gt;&#xD;
     &lt;Entry&gt;&#xD;
       &lt;Match&gt;&#xD;
@@ -298,9 +271,7 @@
         &lt;Static/&gt;&#xD;
         &lt;Name/&gt;&#xD;
       &lt;/Sort&gt;&#xD;
-      &lt;Group Region="Public Indexers"/&gt;&#xD;
     &lt;/Entry&gt;&#xD;
-&#xD;
     &lt;!-- interface indexers --&gt;&#xD;
     &lt;Entry&gt;&#xD;
       &lt;Match&gt;&#xD;
@@ -313,9 +284,7 @@
         &lt;ImplementsInterface Immediate="true"/&gt;&#xD;
         &lt;Name/&gt;&#xD;
       &lt;/Sort&gt;&#xD;
-      &lt;Group Region="Explicit Interface Indexers" /&gt;&#xD;
     &lt;/Entry&gt;&#xD;
-&#xD;
     &lt;!-- other indexers --&gt;&#xD;
     &lt;Entry&gt;&#xD;
       &lt;Match&gt;&#xD;
@@ -326,9 +295,7 @@
         &lt;Static/&gt;&#xD;
         &lt;Name/&gt;&#xD;
       &lt;/Sort&gt;&#xD;
-      &lt;Group Region="Indexers"/&gt;&#xD;
     &lt;/Entry&gt;&#xD;
-&#xD;
     &lt;!-- public methods (includes operators) --&gt;&#xD;
     &lt;Entry&gt;&#xD;
       &lt;Match&gt;&#xD;
@@ -345,9 +312,7 @@
         &lt;Static/&gt;&#xD;
         &lt;Name/&gt;&#xD;
       &lt;/Sort&gt;&#xD;
-      &lt;Group Region="Public Methods and Operators"/&gt;&#xD;
     &lt;/Entry&gt;&#xD;
-&#xD;
     &lt;!-- interface methods --&gt;&#xD;
     &lt;Entry&gt;&#xD;
       &lt;Match&gt;&#xD;
@@ -360,9 +325,7 @@
         &lt;ImplementsInterface Immediate="true"/&gt;&#xD;
         &lt;Name/&gt;&#xD;
       &lt;/Sort&gt;&#xD;
-      &lt;Group Region="Explicit Interface Methods" /&gt;&#xD;
     &lt;/Entry&gt;&#xD;
-&#xD;
     &lt;!-- other methods --&gt;&#xD;
     &lt;Entry&gt;&#xD;
       &lt;Match&gt;&#xD;
@@ -373,9 +336,7 @@
         &lt;Static/&gt;&#xD;
         &lt;Name/&gt;&#xD;
       &lt;/Sort&gt;&#xD;
-      &lt;Group Region="Methods"/&gt;&#xD;
     &lt;/Entry&gt;&#xD;
-&#xD;
     &lt;!-- operators --&gt;&#xD;
     &lt;Entry&gt;&#xD;
       &lt;Match&gt;&#xD;
@@ -386,9 +347,7 @@
         &lt;Static/&gt;&#xD;
         &lt;Name/&gt;&#xD;
       &lt;/Sort&gt;&#xD;
-      &lt;Group Region="Operators"/&gt;&#xD;
     &lt;/Entry&gt;&#xD;
-&#xD;
     &lt;!-- Nested structs --&gt;&#xD;
     &lt;Entry&gt;&#xD;
       &lt;Match&gt;&#xD;
@@ -401,7 +360,6 @@
         &lt;Name/&gt;&#xD;
       &lt;/Sort&gt;&#xD;
     &lt;/Entry&gt;&#xD;
-&#xD;
     &lt;!-- Nested classes --&gt;&#xD;
     &lt;Entry&gt;&#xD;
       &lt;Match&gt;&#xD;
@@ -414,10 +372,8 @@
         &lt;Name/&gt;&#xD;
       &lt;/Sort&gt;&#xD;
     &lt;/Entry&gt;&#xD;
-&#xD;
     &lt;!-- all other members --&gt;&#xD;
     &lt;Entry/&gt;&#xD;
-&#xD;
   &lt;/Pattern&gt;&#xD;
 &lt;/Patterns&gt;</s:String>
 	<s:Boolean x:Key="/Default/CodeStyle/CSharpUsing/AddImportsToDeepestScope/@EntryValue">True</s:Boolean>
@@ -969,7 +925,7 @@ This file is part of $SOLUTION$.&#xD;
 	<s:Boolean x:Key="/Default/Housekeeping/VsActionManager/KeyboardShortcutToVsCommand/=Subtract/@KeyIndexDefined">True</s:Boolean>
 	<s:Boolean x:Key="/Default/Housekeeping/VsActionManager/KeyboardShortcutToVsCommand/=Tab/@KeyIndexDefined">True</s:Boolean>
 	<s:Boolean x:Key="/Default/Housekeeping/VsActionManager/KeyboardShortcutToVsCommand/=Up/@KeyIndexDefined">True</s:Boolean>
-	<s:String x:Key="/Default/Housekeeping/VsSavedAutocompletionValue/OverrideParameterInfo/=CSharp/@EntryIndexedValue">NotOverridden</s:String>
+	<s:String x:Key="/Default/Housekeeping/VsSavedAutocompletionValue/OverrideParameterInfo/=CSharp/@EntryIndexedValue">OverriddenFalse</s:String>
 	<s:String x:Key="/Default/Housekeeping/VsSavedAutocompletionValue/OverrideParameterInfo/=Css/@EntryIndexedValue">NotOverridden</s:String>
 	<s:String x:Key="/Default/Housekeeping/VsSavedAutocompletionValue/OverrideParameterInfo/=Html/@EntryIndexedValue">NotOverridden</s:String>
 	<s:String x:Key="/Default/Housekeeping/VsSavedAutocompletionValue/OverrideParameterInfo/=JavaScript/@EntryIndexedValue">NotOverridden</s:String>

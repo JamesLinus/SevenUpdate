@@ -31,7 +31,6 @@ namespace SevenUpdate.Pages
     using System.Windows.Media;
     using System.Windows.Navigation;
     using System.Windows.Shell;
-    using System.Windows.Threading;
 
     using SevenSoftware.Windows;
 
@@ -41,8 +40,6 @@ namespace SevenUpdate.Pages
     /// <summary>Interaction logic for Main.xaml.</summary>
     public sealed partial class Main
     {
-        #region Constants and Fields
-
         /// <summary>Indicates if the page was already initialized.</summary>
         private static bool init;
 
@@ -51,10 +48,6 @@ namespace SevenUpdate.Pages
 
         /// <summary>A timer to check if seven update is trying to connect.</summary>
         private Timer timer;
-
-        #endregion
-
-        #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="Main" /> class.</summary>
         public Main()
@@ -80,10 +73,6 @@ namespace SevenUpdate.Pages
                 this.spBackButton.Visibility = Visibility.Collapsed;
             }
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>Updates the UI when the downloading of updates completes.</summary>
         /// <param name="e">The <c>SevenUpdate.DownloadCompletedEventArgs</c> instance containing the event data.</param>
@@ -1022,7 +1011,5 @@ namespace SevenUpdate.Pages
                 this.spBackButton.Visibility = Visibility.Collapsed;
             }
         }
-
-        #endregion
     }
 }

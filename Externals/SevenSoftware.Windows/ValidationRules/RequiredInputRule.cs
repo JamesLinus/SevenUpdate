@@ -28,8 +28,6 @@ namespace SevenSoftware.Windows.ValidationRules
         Justification = "Validation Rule")]
     public class RequiredInputRule : ValidationRule
     {
-        #region Public Methods and Operators
-
         /// <summary>When overridden in a derived class, performs validation checks on a value.</summary>
         /// <param name="value">The value from the binding target to check.</param>
         /// <param name="cultureInfo">The culture to use in this rule.</param>
@@ -41,7 +39,5 @@ namespace SevenSoftware.Windows.ValidationRules
             return string.IsNullOrWhiteSpace(input)
                        ? new ValidationResult(false, Resources.InputRequired) : new ValidationResult(true, null);
         }
-
-        #endregion
     }
 }

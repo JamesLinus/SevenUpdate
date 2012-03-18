@@ -35,8 +35,6 @@ namespace SevenUpdate
     [KnownType(typeof(ShortcutAction))]
     public sealed class Shortcut : INotifyPropertyChanged
     {
-        #region Constants and Fields
-
         /// <summary>The max feature length.</summary>
         private const int MaxFeatureLength = 38;
 
@@ -66,10 +64,6 @@ namespace SevenUpdate
 
         /// <summary>The file or folder that is executed by the shortcut.</summary>
         private string target;
-
-        #endregion
-
-        #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="Shortcut" /> class.</summary>
         /// <param name="name">The collection of localized update names.</param>
@@ -107,16 +101,8 @@ namespace SevenUpdate
             this.Description.CollectionChanged += this.DescriptionCollectionChanged;
         }
 
-        #endregion
-
-        #region Public Events
-
         /// <summary>Occurs when a property has changed.</summary>
         public event PropertyChangedEventHandler PropertyChanged;
-
-        #endregion
-
-        #region Interfaces
 
         /// <summary>The interface for a Persistent file.</summary>
         [ComImport]
@@ -294,10 +280,6 @@ namespace SevenUpdate
             void SetPath([MarshalAs(UnmanagedType.LPWStr)] string file);
         }
 
-        #endregion
-
-        #region Public Properties
-
         /// <summary>Gets or sets the action to perform on the <c>Shortcut</c>.</summary>
         /// <value>The action.</value>
         [ProtoMember(3)]
@@ -410,10 +392,6 @@ namespace SevenUpdate
             }
         }
 
-        #endregion
-
-        #region Public Methods and Operators
-
         /// <summary>Creates a shortcut on the system.</summary>
         /// <param name="shortcut">The shortcut data used to create the shortcut.</param>
         public static void CreateShortcut(Shortcut shortcut)
@@ -504,10 +482,6 @@ namespace SevenUpdate
             return shortcut;
         }
 
-        #endregion
-
-        #region Methods
-
         /// <summary>Gets the target path from a Msi shortcut.</summary>
         /// <param name="shortcutPath">The path to the shortcut lnk file.</param>
         /// <returns>The resolved path to the shortcut.</returns>
@@ -559,8 +533,6 @@ namespace SevenUpdate
                 handler(this, new PropertyChangedEventArgs(propertyName));
             }
         }
-
-        #endregion
 
         /// <summary>The file time.</summary>
         [StructLayout(LayoutKind.Sequential)]

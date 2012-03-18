@@ -29,8 +29,6 @@ namespace SevenUpdate
     /// <summary>Class containing methods to install updates.</summary>
     public static class Install
     {
-        #region Constants and Fields
-
         /// <summary>Gets an int that indicates to move a file on reboot.</summary>
         private const int MoveOnReboot = 5;
 
@@ -49,10 +47,6 @@ namespace SevenUpdate
         /// <summary>The index position of the current update being installed.</summary>
         private static int updateIndex;
 
-        #endregion
-
-        #region Public Events
-
         /// <summary>Occurs when the installation completed.</summary>
         public static event EventHandler<InstallCompletedEventArgs> InstallCompleted;
 
@@ -62,16 +56,8 @@ namespace SevenUpdate
         /// <summary>Occurs when the installation progress changed.</summary>
         public static event EventHandler<UpdateInstalledEventArgs> UpdateInstalled;
 
-        #endregion
-
-        #region Public Properties
-
         /// <summary>Gets a value indicating whether Seven Update is installing updates.</summary>
         public static bool IsInstalling { get; private set; }
-
-        #endregion
-
-        #region Public Methods and Operators
 
         /// <summary>Cancel the installation of updates.</summary>
         public static void CancelInstall()
@@ -197,10 +183,6 @@ namespace SevenUpdate
 
             return;
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>Adds an update to the update history.</summary>
         /// <param name="appInfo">The application information.</param>
@@ -548,7 +530,5 @@ namespace SevenUpdate
                 task.Wait();
             }
         }
-
-        #endregion
     }
 }

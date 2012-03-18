@@ -1,10 +1,10 @@
 <!-- Copyright (c) Robert Baker, Seven Software -->
 <Window x:Class="SevenUpdate.Windows.About" xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Title="{LocText SevenUpdate:Resources:AboutSevenUpdate}"
-    ResizeMode="NoResize" WindowStartupLocation="CenterScreen" ShowInTaskbar="True" Icon="/Images/wicon.ico"
-    mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" MinWidth="500" d:DesignHeight="245"
-    d:DesignWidth="500" SizeToContent="WidthAndHeight" MinHeight="245" MouseLeftButtonDown="EnableDragOnGlass">
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Title="{LocText SevenUpdate:Resources:AboutSevenUpdate}"
+        ResizeMode="NoResize" WindowStartupLocation="CenterScreen" ShowInTaskbar="True" Icon="/Images/wicon.ico"
+        mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" MinWidth="500" d:DesignHeight="245"
+        d:DesignWidth="500" SizeToContent="WidthAndHeight" MinHeight="245" MouseLeftButtonDown="EnableDragOnGlass">
   <Grid>
     <Grid.ColumnDefinitions>
       <ColumnDefinition Width="16" />
@@ -21,22 +21,22 @@
     <Rectangle Grid.Row="0" Grid.ColumnSpan="3" Fill="White" Grid.RowSpan="4" />
     <Rectangle Grid.ColumnSpan="3" Grid.Row="4" Name="rectangle" Fill="#FFF0F0F0" x:FieldModifier="private" />
     <Button Content="{LocText SevenUpdate:Resources:Close}" HorizontalContentAlignment="Center" IsDefault="True"
-        MinHeight="23" MinWidth="75" Padding="5,1" VerticalAlignment="Bottom" VerticalContentAlignment="Center"
-        Grid.Row="4" Grid.Column="2" Click="CloseWindow" Margin="0,0,11,10" HorizontalAlignment="Right" />
+            MinHeight="23" MinWidth="75" Padding="5,1" VerticalAlignment="Bottom" VerticalContentAlignment="Center" Grid.Row="4"
+            Grid.Column="2" Click="CloseWindow" Margin="0,0,11,10" HorizontalAlignment="Right" />
     <TextBlock HorizontalAlignment="Left" Padding="2" Text="{LocText SevenUpdate:Resources:Version}"
-        VerticalAlignment="Top" Grid.Column="1" />
+               VerticalAlignment="Top" Grid.Column="1" />
     <TextBlock HorizontalAlignment="Left" Padding="2" Text="{LocText SevenUpdate:Resources:Support}" Grid.Row="1"
-        Grid.Column="1" Height="20" />
+               Grid.Column="1" Height="20" />
     <TextBlock Name="tbVersion" Padding="2" VerticalAlignment="Top" Grid.Column="2" HorizontalAlignment="Left"
-        x:FieldModifier="private" />
+               x:FieldModifier="private" />
     <TextBlock Grid.Row="1" Padding="2" VerticalAlignment="Top" Grid.Column="2" HorizontalAlignment="Left"
-        Foreground="#FF0066CC">
+               Foreground="#FF0066CC">
       <Hyperlink RequestNavigate="NavigateToUri" NavigateUri="http://sevenupdate.com/support/" Foreground="#FF0066CC">
         http://sevenupdate.com/support
       </Hyperlink>
     </TextBlock>
     <TextBlock Grid.ColumnSpan="2" VerticalAlignment="Center" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Left"
-        TextWrapping="Wrap" Padding="2">
+               TextWrapping="Wrap" Padding="2">
       <Run Text="{LocText SevenUpdate:Resources:SevenUpdateLicense}" />
       <Hyperlink NavigateUri="http://sevenupdate.com/license" RequestNavigate="NavigateToUri" Foreground="#FF0066CC">
         <Run Text="{LocText SevenUpdate:Resources:GPL}" />
@@ -45,30 +45,30 @@
       <LineBreak />
       <Run Text="{LocText SevenUpdate:Resources:SharpBitsLicense}" />
       <Hyperlink NavigateUri="http://sharpbits.codeplex.com/license" RequestNavigate="NavigateToUri"
-          Foreground="#FF0066CC">
+                 Foreground="#FF0066CC">
         <Run Text="{LocText SevenUpdate:Resources:BSDLicense}" />
       </Hyperlink>
       <Run Text="&#169; 2007, 2008" />
       <LineBreak />
       <Run Text="{LocText SevenUpdate:Resources:ProtobufLicense}" />
       <Hyperlink NavigateUri="http://www.apache.org/licenses/LICENSE-2.0" RequestNavigate="NavigateToUri"
-          Foreground="#FF0066CC">
+                 Foreground="#FF0066CC">
         <Run Text="{LocText SevenUpdate:Resources:ApacheLicense}" />
       </Hyperlink>
       <Run Text="&#169; 2008" />
       <LineBreak />
       <Run Text="{LocText SevenUpdate:Resources:WPFLocalizeExtensionLicense}" />
       <Hyperlink NavigateUri="http://wpflocalizeextension.codeplex.com/license" RequestNavigate="NavigateToUri"
-          Foreground="#FF0066CC">
+                 Foreground="#FF0066CC">
         <Run Text="{LocText SevenUpdate:Resources:MicrosoftPublicLicense}" />
       </Hyperlink>
       <Run Text="&#169; 2008" />
     </TextBlock>
     <TextBlock HorizontalAlignment="Left" Padding="2" Text="{LocText SevenUpdate:Resources:Copyright}" Grid.Row="2"
-        Grid.Column="1" VerticalAlignment="Top" Margin="0,0,5,0" />
+               Grid.Column="1" VerticalAlignment="Top" Margin="0,0,5,0" />
     <TextBlock HorizontalAlignment="Left" Padding="2" VerticalAlignment="Top" Grid.Column="2" Grid.Row="2"
-        Text="2007-2011 Robert Baker, Seven Software." />
+               Text="2007-2011 Robert Baker, Seven Software." />
     <Separator Grid.ColumnSpan="3" Name="line" Background="#FFDFDFDF" Margin="0" Grid.Row="4" VerticalAlignment="Top"
-        x:FieldModifier="private" />
+               x:FieldModifier="private" />
   </Grid>
 </Window>

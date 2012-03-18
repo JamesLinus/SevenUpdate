@@ -33,22 +33,12 @@ namespace SevenUpdate.Sdk
     /// <summary>Interaction logic for App.xaml.</summary>
     public sealed partial class App
     {
-        #region Constants and Fields
-
         /// <summary>The user application data location.</summary>
         public static readonly string UserStore =
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Seven Update SDK");
 
-        #endregion
-
-        #region Properties
-
         /// <summary>Gets the command line arguments passed to this instance.</summary>
         internal static IList<string> Args { get; private set; }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>Process command line args.</summary>
         /// <param name="args">The list of arguments.</param>
@@ -192,7 +182,5 @@ namespace SevenUpdate.Sdk
             ApplicationRestartRecoveryManager.UnregisterApplicationRestart();
             ApplicationRestartRecoveryManager.UnregisterApplicationRecovery();
         }
-
-        #endregion
     }
 }

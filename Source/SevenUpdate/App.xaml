@@ -1,9 +1,8 @@
 ﻿<!-- Copyright (c) Robert Baker, Seven Software -->
 <Windows:InstanceAwareApplication x:Class="SevenUpdate.App"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:Windows="clr-namespace:SevenSoftware.Windows;assembly=SevenSoftware.Windows"
-    StartupUri="Windows\MainWindow.xaml">
+                                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                                  xmlns:Windows="clr-namespace:SevenSoftware.Windows;assembly=SevenSoftware.Windows" StartupUri="Windows\MainWindow.xaml">
   <Application.Resources>
     <ResourceDictionary>
       <ResourceDictionary.MergedDictionaries>

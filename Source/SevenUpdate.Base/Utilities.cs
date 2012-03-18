@@ -38,24 +38,14 @@ namespace SevenUpdate
     /// <summary>Methods that are shared between other classes.</summary>
     public static class Utilities
     {
-        #region Constants and Fields
-
         /// <summary>The application directory of the current assembly.</summary>
         public static readonly string AppDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 
         /// <summary>Indicates if a system reboot is needed.</summary>
         private static bool rebootNeeded;
 
-        #endregion
-
-        #region Public Events
-
         /// <summary>Occurs when an error occurs.</summary>
         public static event EventHandler<ErrorOccurredEventArgs> ErrorOccurred;
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>Gets a value indicating whether the OS is 64 bit.</summary>
         public static bool IsRunning64BitOS
@@ -87,10 +77,6 @@ namespace SevenUpdate
                 rebootNeeded = value;
             }
         }
-
-        #endregion
-
-        #region Public Methods and Operators
 
         /// <summary>Converts bytes into the proper increments depending on size.</summary>
         /// <param name="bytes">The fileSize in bytes.</param>
@@ -685,10 +671,6 @@ namespace SevenUpdate
             return false;
         }
 
-        #endregion
-
-        #region Methods
-
         /// <summary>Determines if a string contains another string.</summary>
         /// <param name="original">The original string to check.</param>
         /// <param name="value">The value to check the string for.</param>
@@ -806,7 +788,5 @@ namespace SevenUpdate
             {
             }
         }
-
-        #endregion
     }
 }

@@ -28,8 +28,6 @@ namespace SevenUpdate
     [KnownType(typeof(FileAction))]
     public sealed class UpdateFile : INotifyPropertyChanged
     {
-        #region Constants and Fields
-
         /// <summary>The action to perform on the <c>UpdateFile</c>.</summary>
         private FileAction action;
 
@@ -48,16 +46,8 @@ namespace SevenUpdate
         /// <summary>The download location for the file.</summary>
         private string source;
 
-        #endregion
-
-        #region Public Events
-
         /// <summary>Occurs when a property has changed.</summary>
         public event PropertyChangedEventHandler PropertyChanged;
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>Gets or sets the action to perform on the <c>UpdateFile</c>.</summary>
         /// <value>The action.</value>
@@ -179,10 +169,6 @@ namespace SevenUpdate
             }
         }
 
-        #endregion
-
-        #region Methods
-
         /// <summary>When a property has changed, call the <c>OnPropertyChanged</c> Event.</summary>
         /// <param name="name">The name of the property that changed.</param>
         private void OnPropertyChanged(string name)
@@ -194,7 +180,5 @@ namespace SevenUpdate
                 handler(this, new PropertyChangedEventArgs(name));
             }
         }
-
-        #endregion
     }
 }

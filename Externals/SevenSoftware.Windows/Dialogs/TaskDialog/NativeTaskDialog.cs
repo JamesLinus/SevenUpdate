@@ -27,8 +27,6 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
     /// </remarks>
     internal class NativeTaskDialog : IDisposable
     {
-        #region Constants and Fields
-
         /// <summary>The collection of buttons.</summary>
         private IntPtr buttonArray;
 
@@ -56,10 +54,6 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>The strings for the dialog.</summary>
         private IntPtr[] updatedStrings = new IntPtr[Enum.GetNames(typeof(TaskDialogElements)).Length];
 
-        #endregion
-
-        #region Constructors and Destructors
-
         /// <summary>Initializes a new instance of the <see cref="NativeTaskDialog" /> class.</summary>
         /// <param name="settings">The settings.</param>
         /// <param name="outerDialog">The outer dialog.</param>
@@ -83,10 +77,6 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
             this.Dispose(false);
         }
 
-        #endregion
-
-        #region Public Properties
-
         /// <summary>Gets a value indicating whether the <c>CheckBox</c> is checked.</summary>
         public bool CheckBoxChecked { get; private set; }
 
@@ -99,20 +89,12 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Gets the state of the dialog.</summary>
         public DialogShowState ShowState { get; private set; }
 
-        #endregion
-
-        #region Public Methods and Operators
-
         /// <summary>Finalizes an instance of the NativeTaskDialog class.</summary>
         public void Dispose()
         {
             this.Dispose(true);
             GC.SuppressFinalize(this);
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>Show debug message when the native dialog is showing.</summary>
         internal void AssertCurrentlyShowing()
@@ -653,7 +635,5 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
             this.SendMessageHelper(
                 TaskDialogMessages.SetElementText, (int)element, (long)this.MakeNewString(text, element));
         }
-
-        #endregion
     }
 }

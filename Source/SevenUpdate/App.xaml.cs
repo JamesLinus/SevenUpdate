@@ -39,8 +39,6 @@ namespace SevenUpdate
     /// <summary>Interaction logic for App.xaml.</summary>
     public sealed partial class App
     {
-        #region Constants and Fields
-
         /// <summary>The all users application data location.</summary>
         public static readonly string AllUserStore =
             Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "Seven Update");
@@ -64,10 +62,6 @@ namespace SevenUpdate
         /// <summary>The Seven Update list location.</summary>
         internal const string SulLocation = @"http://apps.sevenupdate.com/list.sul";
 
-        #endregion
-
-        #region Properties
-
         /// <summary>Gets the command line arguments passed to this instance.</summary>
         internal static IList<string> Args { get; private set; }
 
@@ -79,10 +73,6 @@ namespace SevenUpdate
 
         /// <summary>Gets or sets the application TaskBarItemInfo.</summary>
         internal static TaskbarItemInfo TaskBar { get; set; }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>Logs an error.</summary>
         /// <param name="sender">The object that called the event.</param>
@@ -339,7 +329,5 @@ namespace SevenUpdate
 
             ApplicationRestartRecoveryManager.UnregisterApplicationRestart();
         }
-
-        #endregion
     }
 }

@@ -20,8 +20,6 @@ namespace WPFLocalizeExtension.Engine
     /// <summary>Represents the culture interface for localization.</summary>
     public sealed class Localize : DependencyObject
     {
-        #region Constants and Fields
-
         /// <summary>Holds the default <c>ResourceDictionary</c> name.</summary>
         public const string ResourcesName = "Resources";
 
@@ -53,26 +51,14 @@ namespace WPFLocalizeExtension.Engine
         /// <summary>Holds the current chosen <c>CultureInfo</c>.</summary>
         private CultureInfo culture;
 
-        #endregion
-
-        #region Constructors and Destructors
-
         /// <summary>Prevents a default instance of the Localize class from being created.</summary>
         private Localize()
         {
             this.ResourceManagerList = new Dictionary<string, ResourceManager>();
         }
 
-        #endregion
-
-        #region Events
-
         /// <summary>Get raised if the LocalizeDictionary.Culture is changed.</summary>
         internal event Action OnCultureChanged;
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>
         ///   Gets the LocalizeDictionary singleton.If the underlying instance is <c>null</c>, a instance will be
@@ -161,10 +147,6 @@ namespace WPFLocalizeExtension.Engine
             }
         }
 
-        #endregion
-
-        #region Properties
-
         /// <summary>Gets the default <c>CultureInfo</c> to initialize the LocalizeDictionary. <c>CultureInfo</c>.</summary>
         private static CultureInfo DefaultCultureInfo
         {
@@ -173,10 +155,6 @@ namespace WPFLocalizeExtension.Engine
                 return CultureInfo.InvariantCulture;
             }
         }
-
-        #endregion
-
-        #region Public Methods and Operators
 
         /// <summary>Attach an WeakEventListener to the LocalizeDictionary.</summary>
         /// <param name="listener">The listener to attach.</param>
@@ -395,10 +373,6 @@ namespace WPFLocalizeExtension.Engine
                 resourceAssembly, resourceDictionary, resourceKey, CultureInfo.InvariantCulture);
         }
 
-        #endregion
-
-        #region Methods
-
         /// <summary>Callback function. Used to set the LocalizeDictionary.Culture if set in Xaml.Only supported at DesignTime.</summary>
         /// <param name="obj">The dependency object.</param>
         /// <param name="args">The event argument.</param>
@@ -536,7 +510,7 @@ namespace WPFLocalizeExtension.Engine
 
                     // get the static ResourceManager property
                     object resManObject = methodInfo.Invoke(null, null);
-
+                    
                     // cast it to a Resource Manager for better working with
                     resManager = (ResourceManager)resManObject;
                 }
@@ -582,7 +556,5 @@ namespace WPFLocalizeExtension.Engine
                 throw;
             }
         }
-
-        #endregion
     }
 }

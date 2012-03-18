@@ -21,8 +21,6 @@ namespace SevenSoftware.Windows.ApplicationServices
     /// </summary>
     public static class ApplicationRestartRecoveryManager
     {
-        #region Public Methods and Operators
-
         /// <summary>
         ///   Called by an application's <see cref="RecoveryCallback" /> method to indicate that the recovery work is
         ///   complete.
@@ -145,7 +143,5 @@ namespace SevenSoftware.Windows.ApplicationServices
                 throw new ApplicationRecoveryException(Resources.ApplicationRecoveryFailedToUnregisterForRestart);
             }
         }
-
-        #endregion
     }
 }

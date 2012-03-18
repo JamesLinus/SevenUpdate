@@ -10,8 +10,6 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
     /// <summary>Declares the abstract base class for all custom task dialog controls.</summary>
     public abstract class TaskDialogControl : DialogControl
     {
-        #region Constructors and Destructors
-
         /// <summary>
         ///   Initializes a new instance of the <see cref="TaskDialogControl" /> class. Creates a new instance of a task
         ///   dialog control.
@@ -28,7 +26,5 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         protected TaskDialogControl(string name) : base(name)
         {
         }
-
-        #endregion
     }
 }

@@ -15,8 +15,6 @@ namespace SharpBits.Base
     /// <summary>The notification class for the bits manager.</summary>
     internal class BitsNotification : IBackgroundCopyCallback
     {
-        #region Constants and Fields
-
         /// <summary>The BITS manager.</summary>
         private readonly BitsManager manager;
 
@@ -29,20 +27,12 @@ namespace SharpBits.Base
         /// <summary>Occurs when a <c>BitsJob</c> is transfered.</summary>
         private EventHandler<NotificationEventArgs> onJobTransfered;
 
-        #endregion
-
-        #region Constructors and Destructors
-
         /// <summary>Initializes a new instance of the <see cref="BitsNotification" /> class.</summary>
         /// <param name="manager">The manager.</param>
         internal BitsNotification(BitsManager manager)
         {
             this.manager = manager;
         }
-
-        #endregion
-
-        #region Public Events
 
         /// <summary>Occurs when [on job error event].</summary>
         public event EventHandler<ErrorNotificationEventArgs> OnJobErrorEvent
@@ -85,10 +75,6 @@ namespace SharpBits.Base
                 this.onJobTransfered -= value;
             }
         }
-
-        #endregion
-
-        #region Public Methods and Operators
 
         /// <summary>Called when an error occurs.</summary>
         /// <param name="copyJob">Contains job-related information, such as the number of bytes and files transferred before the error occurred. It also contains the methods to resume and cancel the job. Do not release pJob; BITS releases the interface when the JobError method returns.</param>
@@ -250,7 +236,5 @@ namespace SharpBits.Base
                 }
             }
         }
-
-        #endregion
     }
 }

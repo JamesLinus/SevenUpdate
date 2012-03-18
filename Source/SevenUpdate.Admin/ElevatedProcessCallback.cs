@@ -25,8 +25,6 @@ namespace SevenUpdate.Admin
     /// <summary>The WCF client callback.</summary>
     public class ElevatedProcessCallback : DuplexClientBase<IElevatedProcessCallback>, IElevatedProcessCallback
     {
-        #region Constructors and Destructors
-
         /// <summary>Initializes a new instance of the <see cref="ElevatedProcessCallback" /> class.</summary>
         /// <param name="callbackInstance">The callback instance context.</param>
         /// <param name="binding">The service binding configuration.</param>
@@ -35,10 +33,6 @@ namespace SevenUpdate.Admin
             : base(callbackInstance, binding, remoteAddress)
         {
         }
-
-        #endregion
-
-        #region Public Methods and Operators
 
         /// <summary>Occurs when the process starts.</summary>
         public void ElevatedProcessStarted()
@@ -91,7 +85,5 @@ namespace SevenUpdate.Admin
         {
             this.Channel.OnInstallProgressChanged(sender, e);
         }
-
-        #endregion
     }
 }

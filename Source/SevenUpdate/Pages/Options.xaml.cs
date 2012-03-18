@@ -29,7 +29,6 @@ namespace SevenUpdate.Pages
     using System.Windows.Input;
     using System.Windows.Media;
     using System.Windows.Navigation;
-    using System.Windows.Threading;
 
     using SevenSoftware.Windows;
     using SevenSoftware.Windows.Controls;
@@ -37,8 +36,6 @@ namespace SevenUpdate.Pages
     /// <summary>Interaction logic for Options.xaml.</summary>
     public partial class Options
     {
-        #region Constants and Fields
-
         /// <summary>The official collection of the applications that Seven Update can update.</summary>
         private static ObservableCollection<Sua> apps;
 
@@ -47,10 +44,6 @@ namespace SevenUpdate.Pages
 
         /// <summary>The program configuration.</summary>
         private Config config;
-
-        #endregion
-
-        #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="Options" /> class.</summary>
         public Options()
@@ -78,10 +71,6 @@ namespace SevenUpdate.Pages
                 this.rectangle.Visibility = Visibility.Visible;
             }
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>Downloads the Seven Update Application List.</summary>
         private static void DownloadSul()
@@ -316,7 +305,5 @@ namespace SevenUpdate.Pages
                 this.rectangle.Visibility = Visibility.Visible;
             }
         }
-
-        #endregion
     }
 }

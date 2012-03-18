@@ -29,8 +29,6 @@ namespace SevenUpdate.Sdk.Pages
     /// <summary>Interaction logic for UpdateRegistry.xaml.</summary>
     public sealed partial class UpdateReview
     {
-        #region Constructors and Destructors
-
         /// <summary>Initializes a new instance of the <see cref="UpdateReview" /> class.</summary>
         public UpdateReview()
         {
@@ -44,10 +42,6 @@ namespace SevenUpdate.Sdk.Pages
             this.tbTitle.Foreground = AeroGlass.IsGlassEnabled
                                           ? Brushes.Black : new SolidColorBrush(Color.FromRgb(0, 51, 153));
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>Saves and exports the Project.</summary>
         /// <param name="sender">The object that called the event.</param>
@@ -74,7 +68,5 @@ namespace SevenUpdate.Sdk.Pages
         {
             this.tbTitle.Foreground = e.IsGlassEnabled ? Brushes.Black : new SolidColorBrush(Color.FromRgb(0, 51, 153));
         }
-
-        #endregion
     }
 }

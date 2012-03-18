@@ -30,14 +30,8 @@ namespace SevenUpdate
     [KnownType(typeof(ObservableCollection<Update>))]
     public sealed class Sui : INotifyPropertyChanged
     {
-        #region Constants and Fields
-
         /// <summary>The application information.</summary>
         private Sua appInfo;
-
-        #endregion
-
-        #region Constructors and Destructors
 
         /// <summary>Initializes a new instance of the <see cref="Sui" /> class.</summary>
         /// <param name="updates">The collection of updates for the application.</param>
@@ -67,16 +61,8 @@ namespace SevenUpdate
             this.Updates = updates;
         }
 
-        #endregion
-
-        #region Public Events
-
         /// <summary>Occurs when a property has changed.</summary>
         public event PropertyChangedEventHandler PropertyChanged;
-
-        #endregion
-
-        #region Public Properties
 
         /// <summary>Gets or sets the software information for the application updates.</summary>
         [ProtoMember(2)]
@@ -102,10 +88,6 @@ namespace SevenUpdate
         [DataMember]
         public ObservableCollection<Update> Updates { get; private set; }
 
-        #endregion
-
-        #region Methods
-
         /// <summary>When a property has changed, call the <c>OnPropertyChanged</c> Event.</summary>
         /// <param name="name">The name of the property that changed.</param>
         private void OnPropertyChanged(string name)
@@ -117,7 +99,5 @@ namespace SevenUpdate
                 handler(this, new PropertyChangedEventArgs(name));
             }
         }
-
-        #endregion
     }
 }

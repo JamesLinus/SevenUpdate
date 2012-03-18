@@ -27,8 +27,6 @@ namespace SevenUpdate
     [DataContract]
     public sealed class ErrorOccurredEventArgs : EventArgs
     {
-        #region Constructors and Destructors
-
         /// <summary>Initializes a new instance of the <see cref="ErrorOccurredEventArgs" /> class.</summary>
         /// <param name="exception">The exception that occurred.</param>
         /// <param name="type">The type of error that occurred.</param>
@@ -43,10 +41,6 @@ namespace SevenUpdate
         {
         }
 
-        #endregion
-
-        #region Public Properties
-
         /// <summary>Gets the <c>ErrorType</c> of the error that occurred.</summary>
         /// <value>The type of error that occurred.</value>
         [ProtoMember(1)]
@@ -58,7 +52,5 @@ namespace SevenUpdate
         [ProtoMember(2)]
         [DataMember]
         public string Exception { get; private set; }
-
-        #endregion
     }
 }
