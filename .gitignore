@@ -1,0 +1,11 @@
+
+bin
+obj
+resharper
+*.user
+*.suo
+*.user
+_ReSharper
+*.stylecop
+*.cache
+*.vs10x
