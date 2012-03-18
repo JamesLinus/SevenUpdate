@@ -23,10 +23,10 @@ Start by filling out the application and publisher information.
 If your application uses a registry path to determine it's installation location, you need to specify the key and value where to find the path. Otherwise if it's in a fix location you can use standard windows environment variables.
 
 ###Update File Location
-The SUI file generated when you are finished creating an update. That file contains the list of updates and information needed. It needs to be a public readable location. It can be a network, filesystem or web server location.
+The SUI file generated when you are finished creating an update. That file contains the list of updates and information needed. It needs to be a public readable location. It can be a network, file system or web server location.
 
 ###Application Type
-Specificy if your application is 32 bit, 64 bit or a hybrid. Most .NET programs are hybrid, they will run 64 bit on 64 bit systems, and 32 bit on 32 bit systems. This setting is mainly used to help determine the install location.
+Specify if your application is 32 bit, 64 bit or a hybrid. Most .NET programs are hybrid, they will run 64 bit on 64 bit systems, and 32 bit on 32 bit systems. This setting is mainly used to help determine the install location.
 
 ###Localization
 You can localize the strings by switching the current language by using the combobox in the top right corner.
@@ -45,7 +45,7 @@ Provide a short overview of what the update entails. Use a paragraph format inst
 You can include a link to a page that goes into detail.
 
 ###Software License URL
-A URI to a public readable plain text file containg your software license. It will be displayed before a user can install your update. This field only applies to that specific update and is not application wide. So you can choose if you want to display your license for a specific update if you wish.
+A URI to a public readable plain text file containing your software license. It will be displayed before a user can install your update. This field only applies to that specific update and is not application wide. So you can choose if you want to display your license for a specific update if you wish.
 
 ###Source Download Location
 This should be a URI to a directory containing where the update files are stored. This should be the parent directory. Files can be located anywhere, but this field allows you to specify the default download location.
@@ -67,10 +67,10 @@ The SDK will generate the location based off the location of the files on your m
 
 ### File action
 * **Update** = Updates or adds the file
-* **Update if the file exists** = Only updates the file if the client machine has the file installed. This is useful for optional files like plugins, language files or stuff that can be delected at installation time.
+* **Update if the file exists** = Only updates the file if the client machine has the file installed. This is useful for optional files like plugins, language files or stuff that can be selected at installation time.
 * **Update & Execute** = Updates or adds the file, then executes it and waits until it exits to move on.
-* **Execute** = Executes a file. This is a special action. The file can already be on the system or it can be downloaded. You can use this action for advanced senarios. For example, you can download a update helper application to the tmp directory and execute it
-* **Compare Only** = Compares a files hash against the clients hash, does not update or execute the file. This can be used for advanced senarios.  For example, you can use a file to determine if you need to run an update helper. This is often used along with the execute action. You can also compare your main exe file and then execute a seperate installer to do the actual updating.
+* **Execute** = Executes a file. This is a special action. The file can already be on the system or it can be downloaded. You can use this action for advanced scenarios. For example, you can download a update helper application to the tmp directory and execute it
+* **Compare Only** = Compares a files hash against the clients hash, does not update or execute the file. This can be used for advanced scenarios.  For example, you can use a file to determine if you need to run an update helper. This is often used along with the execute action. You can also compare your main exe file and then execute a separate installer to do the actual updating.
 * **Delete** = Deletes a file if it exists on the system
 * **ExecuteThenDelete** = Executes a file, then deletes it. You would normally have the file download to the tmp folder in this case. This can be used for updates that just run a standalone installer package.
 
@@ -86,7 +86,7 @@ Adding Registry Items
 ---------------------
 Right click the listbox and add an item. You can import a .reg file to use or add the information manually.
 
-This page should be self explainitory so no need to go into any detail here.
+This page should be self explanatory so no need to go into any detail here.
 
 Adding Shortcuts
 ----------------
