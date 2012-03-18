@@ -136,8 +136,6 @@ namespace SevenUpdate.Sdk.Pages
 
             Core.UpdateInfo.Files.Add(file);
 
-            this.tbHashCalculating.Visibility = Visibility.Visible;
-
             this.CalculateHash(ref file, fullName);
             GetFileSize(ref file, fullName);
         }
@@ -148,12 +146,16 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="impersonateAppDirectory"><c>True</c> to use use %INSTALLDIR% instead of real location of the file; otherwise, <c>False</c>.</param>
         private void AddFiles(IList<string> files, string pathToFiles, bool impersonateAppDirectory)
         {
-            this.AddFile(files[0], pathToFiles, impersonateAppDirectory);
-            for (int x = 1; x < files.Count; x++)
-            {
-                this.AddFile(files[x], pathToFiles, impersonateAppDirectory);
-            }
-
+            this.tbHashCalculating.Visibility = Visibility.Visible;
+            Task.Factory.StartNew(
+                () =>
+                    {
+                        this.AddFile(files[0], pathToFiles, impersonateAppDirectory);
+                        for (int x = 1; x < files.Count; x++)
+                        {
+                            this.AddFile(files[x], pathToFiles, impersonateAppDirectory);
+                        }
+                    }).ContinueWith(delegate { this.CheckHashGenerating(); });
             this.listBox.SelectedIndex = this.listBox.SelectedIndex + 1;
         }
 
@@ -208,7 +210,6 @@ namespace SevenUpdate.Sdk.Pages
         {
             TaskScheduler context = TaskScheduler.FromCurrentSynchronizationContext();
             UpdateFile updateFile = file;
-            this.tbHashCalculating.Visibility = Visibility.Visible;
             this.hashesGenerating++;
             Task.Factory.StartNew(
                 () =>

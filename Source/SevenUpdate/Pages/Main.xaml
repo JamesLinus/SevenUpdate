@@ -1,10 +1,10 @@
 ﻿<!-- Copyright (c) Robert Baker, Seven Software -->
 <Page x:Class="SevenUpdate.Pages.Main" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Properties="clr-namespace:SevenUpdate.Properties"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:SevenUpdate="clr-namespace:SevenUpdate"
-      xmlns:Controls="clr-namespace:SevenSoftware.Windows.Controls;assembly=SevenSoftware.Windows" mc:Ignorable="d"
-      MinWidth="850" MinHeight="467" KeepAlive="True" Loaded="Init" d:DesignHeight="467" d:DesignWidth="850">
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:Properties="clr-namespace:SevenUpdate.Properties"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation" xmlns:SevenUpdate="clr-namespace:SevenUpdate"
+    xmlns:Controls="clr-namespace:SevenSoftware.Windows.Controls;assembly=SevenSoftware.Windows" mc:Ignorable="d"
+    MinWidth="850" MinHeight="467" KeepAlive="True" Loaded="Init" d:DesignHeight="467" d:DesignWidth="850">
   <!-- Grid-->
   <Grid ShowGridLines="False">
     <Grid.RowDefinitions>
@@ -24,7 +24,7 @@
     </Grid.ColumnDefinitions>
     <Rectangle Fill="White" Grid.ColumnSpan="3" Grid.RowSpan="5" Grid.Column="1" Grid.Row="1" />
     <Rectangle HorizontalAlignment="Stretch" Grid.RowSpan="5" MinWidth="182" Name="rectSide" Grid.Row="1"
-               x:FieldModifier="private">
+        x:FieldModifier="private">
       <Rectangle.Fill>
         <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
           <GradientStop Color="#FF0C5D64" Offset="0" />
@@ -34,22 +34,22 @@
     </Rectangle>
     <StackPanel HorizontalAlignment="Left" VerticalAlignment="Top" Margin="12,4,0,0" Grid.Row="1">
       <TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top"
-                 Margin="5" Text="{LocText SevenUpdate:Resources:CheckForUpdates}" Padding="2" Foreground="White"
-                 MouseDown="CheckForUpdates" />
+          Margin="5" Text="{LocText SevenUpdate:Resources:CheckForUpdates}" Padding="2" Foreground="White"
+          MouseDown="CheckForUpdates" />
       <TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top"
-                 Margin="5" Text="{LocText SevenUpdate:Resources:ChangeSettings}" Padding="2" Foreground="White"
-                 MouseDown="NavigateToOptions" />
+          Margin="5" Text="{LocText SevenUpdate:Resources:ChangeSettings}" Padding="2" Foreground="White"
+          MouseDown="NavigateToOptions" />
 
       <TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top"
-                 Margin="5" Text="{LocText SevenUpdate:Resources:ViewUpdateHistory}" Padding="2" Foreground="White"
-                 MouseDown="NavigateToUpdateHistory" />
+          Margin="5" Text="{LocText SevenUpdate:Resources:ViewUpdateHistory}" Padding="2" Foreground="White"
+          MouseDown="NavigateToUpdateHistory" />
       <TextBlock Style="{StaticResource underlineTextBlock}" HorizontalAlignment="Left" VerticalAlignment="Top"
-                 Margin="5" Text="{LocText SevenUpdate:Resources:RestoreHiddenUpdates}" Padding="2" Foreground="White"
-                 MouseDown="NavigateToRestoreUpdates" />
+          Margin="5" Text="{LocText SevenUpdate:Resources:RestoreHiddenUpdates}" Padding="2" Foreground="White"
+          MouseDown="NavigateToRestoreUpdates" />
     </StackPanel>
     <!-- Update Info-->
     <Grid MinWidth="550" Grid.Column="2" VerticalAlignment="Top" Grid.ColumnSpan="2" HorizontalAlignment="Left"
-          Grid.Row="1" Margin="0,15">
+        Grid.Row="1" Margin="0,15">
       <Grid.ColumnDefinitions>
         <ColumnDefinition Width="Auto" />
         <ColumnDefinition Width="Auto" />
@@ -63,17 +63,17 @@
       <Border Grid.ColumnSpan="3" Grid.RowSpan="3" BorderThickness="1" BorderBrush="LightGray" />
       <StackPanel Grid.Column="2" Grid.Row="1">
         <ProgressBar IsIndeterminate="True" VerticalAlignment="Top" HorizontalAlignment="Left" Width="250"
-                     MinHeight="16" Margin="0,5,0,0">
+            MinHeight="16" Margin="0,5,0,0">
           <ProgressBar.Style>
             <Style TargetType="ProgressBar">
               <Setter Property="Visibility" Value="Collapsed" />
               <Style.Triggers>
                 <DataTrigger Binding="{Binding UpdateAction}"
-                             Value="{x:Static SevenUpdate:UpdateAction.CheckingForUpdates}">
+                    Value="{x:Static SevenUpdate:UpdateAction.CheckingForUpdates}">
                   <Setter Property="Visibility" Value="Visible" />
                 </DataTrigger>
                 <DataTrigger Binding="{Binding UpdateAction}"
-                             Value="{x:Static SevenUpdate:UpdateAction.ConnectingToService}">
+                    Value="{x:Static SevenUpdate:UpdateAction.ConnectingToService}">
                   <Setter Property="Visibility" Value="Visible" />
                 </DataTrigger>
                 <DataTrigger Binding="{Binding UpdateAction}" Value="{x:Static SevenUpdate:UpdateAction.Downloading}">
@@ -87,8 +87,8 @@
           </ProgressBar.Style>
         </ProgressBar>
         <TextBlock Name="tbStatus" Padding="2" Visibility="Visible" TextWrapping="Wrap" VerticalAlignment="Top"
-                   Margin="0,10,12,0" HorizontalAlignment="Stretch" Text="{LocText SevenUpdate:Resources:NoUpdates}" MaxHeight="50"
-                   x:FieldModifier="private" />
+            Margin="0,10,12,0" HorizontalAlignment="Stretch" Text="{LocText SevenUpdate:Resources:NoUpdates}"
+            MaxHeight="50" x:FieldModifier="private" />
       </StackPanel>
       <Rectangle Grid.RowSpan="3" Width="20" Stretch="Fill">
         <Rectangle.Style>
@@ -106,14 +106,14 @@
                 <Setter Property="Fill" Value="{StaticResource yellowGradient}" />
               </DataTrigger>
               <DataTrigger Binding="{Binding UpdateAction}"
-                           Value="{x:Static SevenUpdate:UpdateAction.ConnectingToService}">
+                  Value="{x:Static SevenUpdate:UpdateAction.ConnectingToService}">
                 <Setter Property="Fill" Value="{StaticResource yellowGradient}" />
               </DataTrigger>
               <DataTrigger Binding="{Binding UpdateAction}" Value="{x:Static SevenUpdate:UpdateAction.Downloading}">
                 <Setter Property="Fill" Value="{StaticResource yellowGradient}" />
               </DataTrigger>
               <DataTrigger Binding="{Binding UpdateAction}"
-                           Value="{x:Static SevenUpdate:UpdateAction.DownloadCompleted}">
+                  Value="{x:Static SevenUpdate:UpdateAction.DownloadCompleted}">
                 <Setter Property="Fill" Value="{StaticResource yellowGradient}" />
               </DataTrigger>
               <DataTrigger Binding="{Binding UpdateAction}" Value="{x:Static SevenUpdate:UpdateAction.UpdatesFound}">
@@ -123,7 +123,7 @@
                 <Setter Property="Fill" Value="{StaticResource yellowGradient}" />
               </DataTrigger>
               <DataTrigger Binding="{Binding UpdateAction}"
-                           Value="{x:Static SevenUpdate:UpdateAction.CheckingForUpdates}">
+                  Value="{x:Static SevenUpdate:UpdateAction.CheckingForUpdates}">
                 <Setter Property="Visibility" Value="Collapsed" />
               </DataTrigger>
               <DataTrigger Binding="{Binding UpdateAction}" Value="{x:Static SevenUpdate:UpdateAction.Installing}">
@@ -134,10 +134,10 @@
         </Rectangle.Style>
       </Rectangle>
       <TextBlock FontSize="16" Foreground="#FF003399" Grid.Column="2" Name="tbHeading"
-                 Text="{LocText SevenUpdate:Resources:ProgramsUpToDate}" VerticalAlignment="Center" Margin="0,5,4,0"
-                 x:FieldModifier="private" />
-      <Rectangle Height="48" HorizontalAlignment="Left" Margin="15,10" Stretch="Fill" VerticalAlignment="Top"
-                 Width="48" Grid.Column="1" Grid.RowSpan="2">
+          Text="{LocText SevenUpdate:Resources:ProgramsUpToDate}" VerticalAlignment="Center" Margin="0,5,4,0"
+          x:FieldModifier="private" />
+      <Rectangle Height="48" HorizontalAlignment="Left" Margin="15,10" Stretch="Fill" VerticalAlignment="Top" Width="48"
+          Grid.Column="1" Grid.RowSpan="2">
         <Rectangle.Style>
           <Style TargetType="Rectangle">
             <Setter Property="Fill" Value="{StaticResource GreenShield}" />
@@ -152,14 +152,14 @@
                 <Setter Property="Fill" Value="{StaticResource OrangeShield}" />
               </DataTrigger>
               <DataTrigger Binding="{Binding UpdateAction}"
-                           Value="{x:Static SevenUpdate:UpdateAction.ConnectingToService}">
+                  Value="{x:Static SevenUpdate:UpdateAction.ConnectingToService}">
                 <Setter Property="Fill" Value="{StaticResource OrangeShield}" />
               </DataTrigger>
               <DataTrigger Binding="{Binding UpdateAction}" Value="{x:Static SevenUpdate:UpdateAction.Downloading}">
                 <Setter Property="Fill" Value="{StaticResource OrangeShield}" />
               </DataTrigger>
               <DataTrigger Binding="{Binding UpdateAction}"
-                           Value="{x:Static SevenUpdate:UpdateAction.DownloadCompleted}">
+                  Value="{x:Static SevenUpdate:UpdateAction.DownloadCompleted}">
                 <Setter Property="Fill" Value="{StaticResource OrangeShield}" />
               </DataTrigger>
               <DataTrigger Binding="{Binding UpdateAction}" Value="{x:Static SevenUpdate:UpdateAction.UpdatesFound}">
@@ -169,7 +169,7 @@
                 <Setter Property="Fill" Value="{StaticResource OrangeShield}" />
               </DataTrigger>
               <DataTrigger Binding="{Binding UpdateAction}"
-                           Value="{x:Static SevenUpdate:UpdateAction.CheckingForUpdates}">
+                  Value="{x:Static SevenUpdate:UpdateAction.CheckingForUpdates}">
                 <Setter Property="Fill" Value="{StaticResource SevenUpdateIcon}" />
               </DataTrigger>
               <DataTrigger Binding="{Binding UpdateAction}" Value="{x:Static SevenUpdate:UpdateAction.Installing}">
@@ -180,36 +180,36 @@
         </Rectangle.Style>
       </Rectangle>
       <Line Grid.Column="2" StrokeThickness="1" Stretch="Fill" Stroke="LightGray" Grid.Row="1" Grid.RowSpan="2" Y1="25"
-            HorizontalAlignment="Center" Margin="0,10,0,0" Name="line" VerticalAlignment="Top" x:FieldModifier="private" />
+          HorizontalAlignment="Center" Margin="0,10,0,0" Name="line" VerticalAlignment="Top" x:FieldModifier="private" />
       <StackPanel Grid.Column="2" Grid.Row="1" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="0,5,0,0">
         <TextBlock Padding="2" MouseDown="SelectImportantUpdates" Name="tbViewImportantUpdates"
-                   Style="{StaticResource textBlockLink}" Grid.Column="2" Grid.Row="1"
-                   Text="{LocText SevenUpdate:Resources:ViewImportantUpdates}" HorizontalAlignment="Left" VerticalAlignment="Top"
-                   Focusable="True" Margin="0,4,0,0" x:FieldModifier="private" />
+            Style="{StaticResource textBlockLink}" Grid.Column="2" Grid.Row="1"
+            Text="{LocText SevenUpdate:Resources:ViewImportantUpdates}" HorizontalAlignment="Left"
+            VerticalAlignment="Top" Focusable="True" Margin="0,4,0,0" x:FieldModifier="private" />
         <TextBlock Padding="2" MouseDown="SelectOptionalUpdates" Name="tbViewOptionalUpdates"
-                   Style="{StaticResource textBlockLink}" Grid.Column="2" Grid.Row="2"
-                   Text="{LocText SevenUpdate:Resources:ViewOptionalUpdates}" HorizontalAlignment="Left" VerticalAlignment="Top"
-                   Focusable="True" Margin="0,5,0,0" x:FieldModifier="private" />
+            Style="{StaticResource textBlockLink}" Grid.Column="2" Grid.Row="2"
+            Text="{LocText SevenUpdate:Resources:ViewOptionalUpdates}" HorizontalAlignment="Left"
+            VerticalAlignment="Top" Focusable="True" Margin="0,5,0,0" x:FieldModifier="private" />
       </StackPanel>
       <TextBlock TextWrapping="Wrap" Grid.Column="2" LineHeight="25" Grid.Row="1" Name="tbSelectedUpdates"
-                 HorizontalAlignment="Right" Padding="2" Margin="0,9,4,0" VerticalAlignment="Top"
-                 Text="{LocText SevenUpdate:Resources:NoUpdatesSelected}" x:FieldModifier="private" />
+          HorizontalAlignment="Right" Padding="2" Margin="0,9,4,0" VerticalAlignment="Top"
+          Text="{LocText SevenUpdate:Resources:NoUpdatesSelected}" x:FieldModifier="private" />
       <Controls:UacButton MinHeight="23" MinWidth="75" Padding="5,1" Visibility="Collapsed" HorizontalAlignment="Right"
-                          VerticalAlignment="Bottom" Margin="0,0,12,12" Grid.Column="2" Grid.Row="2" IsDefault="True" Click="PerformAction"
-                          Name="btnAction" TabIndex="0" x:FieldModifier="private" />
+          VerticalAlignment="Bottom" Margin="0,0,12,12" Grid.Column="2" Grid.Row="2" IsDefault="True"
+          Click="PerformAction" Name="btnAction" TabIndex="0" x:FieldModifier="private" />
     </Grid>
 
     <TextBlock Grid.Row="2" HorizontalAlignment="Left" Padding="2" Text="{LocText SevenUpdate:Resources:RecentCheck}"
-               VerticalAlignment="Top" Grid.Column="2" Margin="0,0,5,0" />
+        VerticalAlignment="Top" Grid.Column="2" Margin="0,0,5,0" />
     <TextBlock Grid.Row="3" HorizontalAlignment="Left" Padding="2" Text="{LocText SevenUpdate:Resources:RecentInstall}"
-               VerticalAlignment="Top" Grid.Column="2" Margin="0,5,0,0" />
+        VerticalAlignment="Top" Grid.Column="2" Margin="0,5,0,0" />
     <TextBlock Grid.Column="3" Grid.Row="2" HorizontalAlignment="Left" Padding="2" VerticalAlignment="Top"
-               Text="{Binding Source={x:Static Properties:Settings.Default},  Path=LastUpdateCheck, Converter={StaticResource dateConverter}, UpdateSourceTrigger=LostFocus, FallbackValue=Never}" />
+        Text="{Binding Source={x:Static Properties:Settings.Default},  Path=LastUpdateCheck, Converter={StaticResource dateConverter}, UpdateSourceTrigger=LostFocus, FallbackValue=Never}" />
     <TextBlock Grid.Column="3" Grid.Row="3" HorizontalAlignment="Left" Padding="2" VerticalAlignment="Top"
-               Text="{Binding Source={x:Static Properties:Settings.Default}, Path=LastInstall, Converter={StaticResource dateConverter}, UpdateSourceTrigger=LostFocus, FallbackValue=Never}"
-               Margin="0,5,0,0" />
+        Text="{Binding Source={x:Static Properties:Settings.Default}, Path=LastInstall, Converter={StaticResource dateConverter}, UpdateSourceTrigger=LostFocus, FallbackValue=Never}"
+        Margin="0,5,0,0" />
     <TextBlock Grid.Column="2" Grid.Row="4" VerticalAlignment="Top" Padding="2" Margin="0,15,0,0" Grid.ColumnSpan="2"
-               TextWrapping="Wrap" HorizontalAlignment="Left" Name="tbDevNote" Visibility="Collapsed" x:FieldModifier="private">
+        TextWrapping="Wrap" HorizontalAlignment="Left" Name="tbDevNote" Visibility="Collapsed" x:FieldModifier="private">
       <Run Text="{LocText SevenUpdate:Resources:DevNote}" />
       <LineBreak />
       <LineBreak />
@@ -224,13 +224,13 @@
       </Hyperlink>
     </TextBlock>
     <TextBlock Style="{StaticResource glassLink}" Text="{LocText SevenUpdate:Resources:AboutSevenUpdate}"
-               HorizontalAlignment="Left" VerticalAlignment="Center" Padding="2" MouseDown="ShowAboutDialog" Grid.Row="6"
-               Name="tbAbout" Grid.RowSpan="1" Margin="10,0,0,0" x:FieldModifier="private" />
+        HorizontalAlignment="Left" VerticalAlignment="Center" Padding="2" MouseDown="ShowAboutDialog" Grid.Row="6"
+        Name="tbAbout" Grid.RowSpan="1" Margin="10,0,0,0" x:FieldModifier="private" />
     <StackPanel Grid.ColumnSpan="3" Grid.RowSpan="1" HorizontalAlignment="Left" Orientation="Horizontal"
-                Name="spBackButton" VerticalAlignment="Top" x:FieldModifier="private">
+        Name="spBackButton" VerticalAlignment="Top" x:FieldModifier="private">
       <Controls:BackButton Grid.RowSpan="3" TabIndex="13" IsEnabled="False" />
       <TextBlock Style="{StaticResource glassText}" FontSize="16" Margin="15,-2,0,0" Padding="2"
-                 Text="{LocText SevenUpdate:Resources:SevenUpdate}" VerticalAlignment="Center" />
+          Text="{LocText SevenUpdate:Resources:SevenUpdate}" VerticalAlignment="Center" />
     </StackPanel>
   </Grid>
 </Page>

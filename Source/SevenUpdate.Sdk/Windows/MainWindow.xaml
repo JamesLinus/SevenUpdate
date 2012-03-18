@@ -1,6 +1,6 @@
 ﻿<!-- Copyright (c) Robert Baker, Seven Software -->
 <NavigationWindow x:Class="SevenUpdate.Sdk.Windows.MainWindow"
-                  xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-                  xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Title="Seven Update SDK" Icon="/Images/wicon.ico" MinWidth="900"
-                  MinHeight="550" ShowsNavigationUI="False" Loaded="LoadWindowSize" Closing="SaveWindowSize"
-                  MouseLeftButtonDown="EnableDragOnGlass" Width="900" Height="550"></NavigationWindow>
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" Title="Seven Update SDK" Icon="/Images/wicon.ico"
+    MinWidth="900" MinHeight="550" ShowsNavigationUI="False" Loaded="LoadWindowSize" Closing="SaveWindowSize"
+    MouseLeftButtonDown="EnableDragOnGlass" Width="900" Height="550"></NavigationWindow>

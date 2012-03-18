@@ -411,16 +411,23 @@ namespace SevenUpdate
             }
 
             var buff = new StringBuilder(10);
-            using (var stream = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read, 8192))
+            try
             {
-                using (var sha2 = new SHA256Managed())
+                using (var stream = new FileStream(file, FileMode.Open, FileAccess.Read, FileShare.Read, 8192))
                 {
-                    sha2.ComputeHash(stream);
-                    foreach (byte hashByte in sha2.Hash)
+                    using (var sha2 = new SHA256Managed())
                     {
-                        buff.Append(string.Format(CultureInfo.InvariantCulture, "{0:X1}", hashByte));
+                        sha2.ComputeHash(stream);
+                        foreach (byte hashByte in sha2.Hash)
+                        {
+                            buff.Append(string.Format(CultureInfo.InvariantCulture, "{0:X1}", hashByte));
+                        }
                     }
                 }
+            }
+            catch (IOException)
+            {
+                return null;
             }
 
             return buff.ToString();
