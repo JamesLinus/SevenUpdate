@@ -17,10 +17,14 @@
 
 namespace SevenUpdate.Sdk.Pages
 {
+    using System;
+    using System.Threading.Tasks;
     using System.Windows;
     using System.Windows.Media;
 
     using SevenSoftware.Windows;
+
+    using SevenUpdate.Sdk.Windows;
 
     /// <summary>Interaction logic for UpdateRegistry.xaml.</summary>
     public sealed partial class UpdateReview
@@ -50,7 +54,8 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
         private void SaveExportProject(object sender, RoutedEventArgs e)
         {
-            Core.SaveProject(true);
+            Task.Factory.StartNew(() => Core.SaveProject(true)).ContinueWith(
+                delegate { this.Dispatcher.BeginInvoke(new Action(() => MainWindow.NavService.Navigate(Core.MainPage))); });
         }
 
         /// <summary>Saves the Project.</summary>
@@ -58,7 +63,8 @@ namespace SevenUpdate.Sdk.Pages
         /// <param name="e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
         private void SaveProject(object sender, RoutedEventArgs e)
         {
-            Core.SaveProject();
+            Task.Factory.StartNew(() => Core.SaveProject()).ContinueWith(
+                delegate { this.Dispatcher.BeginInvoke(new Action(() => MainWindow.NavService.Navigate(Core.MainPage))); });
         }
 
         /// <summary>Updates the UI based on whether Aero Glass is enabled.</summary>

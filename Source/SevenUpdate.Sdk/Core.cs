@@ -495,7 +495,6 @@ namespace SevenUpdate.Sdk
                 Utilities.Serialize(Projects, ProjectsFile);
 
                 IsNewProject = false;
-                MainWindow.NavService.Navigate(MainPage);
                 return;
             }
 
@@ -537,7 +536,6 @@ namespace SevenUpdate.Sdk
             Utilities.Serialize(Projects, ProjectsFile);
 
             IsNewProject = false;
-            MainWindow.NavService.Navigate(MainPage);
         }
 
         /// <summary>Shows either a <c>TaskDialog</c> or a <c>System.Windows.MessageBox</c> if running legacy windows.</summary>

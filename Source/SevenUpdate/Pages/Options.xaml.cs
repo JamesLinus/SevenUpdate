@@ -29,6 +29,7 @@ namespace SevenUpdate.Pages
     using System.Windows.Input;
     using System.Windows.Media;
     using System.Windows.Navigation;
+    using System.Windows.Threading;
 
     using SevenSoftware.Windows;
     using SevenSoftware.Windows.Controls;
@@ -120,7 +121,7 @@ namespace SevenUpdate.Pages
             this.lvApps.ItemsSource = null;
             machineAppList = null;
             Task.Factory.StartNew(DownloadSul).ContinueWith(
-                delegate { this.Dispatcher.BeginInvoke(() => this.LoadSul(apps)); });
+                delegate { this.Dispatcher.BeginInvoke(this.LoadSul, apps); });
         }
 
         /// <summary>
@@ -245,7 +246,7 @@ namespace SevenUpdate.Pages
                 machineAppList = officialApplicationList;
             }
 
-            this.Dispatcher.BeginInvoke(this.UpdateList);
+            this.Dispatcher.BeginInvoke(new Action(this.UpdateList));
         }
 
         /// <summary>Goes back to the Main page.</summary>

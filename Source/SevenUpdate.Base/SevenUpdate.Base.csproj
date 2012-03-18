@@ -84,6 +84,7 @@
   <ItemGroup>
     <Compile Include="AutoUpdateOption.cs" />
     <Compile Include="Config.cs" />
+    <Compile Include="DispatcherObjectDelegates.cs" />
     <Compile Include="DownloadCompletedEventArgs.cs" />
     <Compile Include="DownloadProgressChangedEventArgs.cs" />
     <Compile Include="ErrorOccurredEventArgs.cs" />
@@ -110,7 +111,6 @@
     <Compile Include="Utilities.cs" />
     <Compile Include="Download.cs" />
     <Compile Include="Install.cs" />
-    <Compile Include="DispatcherObjectDelegates.cs" />
     <Compile Include="Properties\AssemblyInfo.cs">
       <SubType>Code</SubType>
     </Compile>

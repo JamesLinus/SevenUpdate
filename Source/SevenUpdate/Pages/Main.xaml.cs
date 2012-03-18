@@ -31,6 +31,7 @@ namespace SevenUpdate.Pages
     using System.Windows.Media;
     using System.Windows.Navigation;
     using System.Windows.Shell;
+    using System.Windows.Threading;
 
     using SevenSoftware.Windows;
 
@@ -903,7 +904,7 @@ namespace SevenUpdate.Pages
         {
             if (!this.Dispatcher.CheckAccess())
             {
-                this.Dispatcher.BeginInvoke(() => this.SetUI(Core.Instance.UpdateAction));
+                this.Dispatcher.BeginInvoke(this.SetUI, Core.Instance.UpdateAction);
             }
             else
             {
