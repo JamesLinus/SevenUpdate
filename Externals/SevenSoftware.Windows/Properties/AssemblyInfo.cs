@@ -32,7 +32,7 @@ using System.Windows.Markup;
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 [assembly: AssemblyVersion("1.2.1")]
-[assembly: AssemblyFileVersion("11.9.15")]
+[assembly: AssemblyFileVersion("12.3.18")]
 [assembly: ComVisible(false)]
 [assembly: ThemeInfo(ResourceDictionaryLocation.ExternalAssembly, ResourceDictionaryLocation.SourceAssembly)]
 [assembly: XmlnsDefinition("http://sevenupdate.com/steamcdrtool", "SevenSoftware.Windows.Controls")]
