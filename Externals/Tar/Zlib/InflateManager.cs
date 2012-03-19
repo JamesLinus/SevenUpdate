@@ -1,10 +1,5 @@
-//-----------------------------------------------------------------------
-// <copyright file="InflateManager.cs" project="Zlib" assembly="Zlib" solution="Zlib" company="Dino Chiesa">
-//     Copyright (c) Dino Chiesa. All rights reserved.
-// </copyright>
-// <author username="Cheeso">Dino Chiesa</author>
-// <summary></summary>
-//-----------------------------------------------------------------------
+// <copyright file="InflateManager.cs" project="Tar">Dino Chiesa</copyright>
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
 namespace Zlib
 {
@@ -14,8 +9,6 @@ namespace Zlib
     /// </summary>
     internal sealed class InflateManager
     {
-        #region Constants and Fields
-
         private const int PresetDict = 0x20;
 
         private const int ZDeflated = 8;
@@ -27,7 +20,6 @@ namespace Zlib
         // mode dependent information
 
         // if CHECK, check values to compare
-
         private uint computedCheck; // computed check value
 
         private uint expectedCheck; // stream check value
@@ -37,7 +29,6 @@ namespace Zlib
         /*
         private static readonly byte[] Mark = new byte[] { 0, 0, 0xff, 0xff };
 */
-
         private bool handleRfc1950HeaderBytes = true;
 
         private int method; // if FLAGS, method byte
@@ -46,18 +37,10 @@ namespace Zlib
 
         private int wbits; // log2(window size)  (8..15, defaults to 15)
 
-        #endregion
-
-        #region Constructors and Destructors
-
         public InflateManager(bool expectRfc1950HeaderBytes)
         {
             this.handleRfc1950HeaderBytes = expectRfc1950HeaderBytes;
         }
-
-        #endregion
-
-        #region Enums
 
         private enum InflateManagerMode
         {
@@ -118,26 +101,12 @@ namespace Zlib
             Bad = 13, // got an error--stay here
         }
 
-        #endregion
-
-        #region Properties
-
         internal bool HandleRfc1950HeaderBytes
         {
-            get
-            {
-                return this.handleRfc1950HeaderBytes;
-            }
+            get { return this.handleRfc1950HeaderBytes; }
 
-            set
-            {
-                this.handleRfc1950HeaderBytes = value;
-            }
+            set { this.handleRfc1950HeaderBytes = value; }
         }
-
-        #endregion
-
-        #region Methods
 
         /// <returns>
         /// </returns>
@@ -164,7 +133,7 @@ namespace Zlib
 
             // workitem 8870
             const int f = ZlibConstants.Zok;
-            var r = ZlibConstants.ZBufError;
+            int r = ZlibConstants.ZBufError;
 
             while (true)
             {
@@ -207,7 +176,7 @@ namespace Zlib
                         r = f;
                         this.codec.AvailableBytesIn--;
                         this.codec.TotalBytesIn++;
-                        var b = this.codec.InputBuffer[this.codec.NextIn++] & 0xff;
+                        int b = this.codec.InputBuffer[this.codec.NextIn++] & 0xff;
 
                         if ((((this.method << 8) + b) % 31) != 0)
                         {
@@ -418,8 +387,6 @@ namespace Zlib
             this.blocks.Reset();
             return ZlibConstants.Zok;
         }
-
-        #endregion
 
         // preset dictionary flag in zlib header
 

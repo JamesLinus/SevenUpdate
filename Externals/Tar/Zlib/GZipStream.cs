@@ -1,10 +1,5 @@
-//-----------------------------------------------------------------------
-// <copyright file="GZipStream.cs" project="Zlib" assembly="Zlib" solution="Zlib" company="Dino Chiesa">
-//     Copyright (c) Dino Chiesa. All rights reserved.
-// </copyright>
-// <author username="Cheeso">Dino Chiesa</author>
-// <summary></summary>
-//-----------------------------------------------------------------------
+// <copyright file="GZipStream.cs" project="Tar">Dino Chiesa</copyright>
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
 namespace Zlib
 {
@@ -16,8 +11,6 @@ namespace Zlib
     /// <summary>A class for compressing and decompressing GZIP streams.</summary>
     public class GZipStream : Stream
     {
-        #region Constants and Fields
-
         internal static readonly Encoding Iso8859Dash1 = Encoding.GetEncoding("iso-8859-1");
 
         private static readonly DateTime UnixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
@@ -33,10 +26,6 @@ namespace Zlib
         private bool firstReadDone;
 
         private int headerByteCount;
-
-        #endregion
-
-        #region Constructors and Destructors
 
         /// <summary>Create a <c>GZipStream</c> using the specified <c>CompressionMode</c>, and explicitly specify whether the stream should be left open after Deflation or Inflation.</summary>
         /// <remarks>
@@ -69,17 +58,13 @@ namespace Zlib
         /// <param name="level">A tuning knob to trade speed for effectiveness.</param>
         /// <param name="leaveOpen">true if the application would like the stream to remain open after inflation/deflation.</param>
         public GZipStream(
-            Stream stream,
-            CompressionMode mode,
-            CompressionLevel level = CompressionLevel.Default,
+            Stream stream, 
+            CompressionMode mode, 
+            CompressionLevel level = CompressionLevel.Default, 
             bool leaveOpen = false)
         {
             this.baseStream = new ZlibBaseStream(stream, mode, level, ZlibStreamFlavor.Gzip, leaveOpen);
         }
-
-        #endregion
-
-        #region Properties
 
         /// <summary>Indicates whether the stream can be read.</summary>
         /// <remarks>The return value depends on whether the captive stream supports reading.</remarks>
@@ -100,10 +85,7 @@ namespace Zlib
         /// <remarks>Always returns false.</remarks>
         public override bool CanSeek
         {
-            get
-            {
-                return false;
-            }
+            get { return false; }
         }
 
         /// <summary>Indicates whether the stream can be written.</summary>
@@ -126,10 +108,7 @@ namespace Zlib
         ///   <para>The GZIP format allows for each file to optionally have an associated comment stored with the file.  The comment is encoded with the ISO-8859-1 code page.  To include a comment in a GZIP stream you create, set this property before calling <c>Write()</c> for the first time on the <c>GZipStream</c>.</para><para>When using <c>GZipStream</c> to decompress, you can retrieve this property after the first call to <c>Read()</c>.  If no comment has been set in the GZIP bytestream, the Comment property will return <c>null</c> (<c>Nothing</c> in VB).</para></remarks>
         public string Comment
         {
-            get
-            {
-                return this.comment;
-            }
+            get { return this.comment; }
 
             set
             {
@@ -151,10 +130,7 @@ namespace Zlib
         ///   <para>The GZIP format optionally allows each file to have an associated filename.  When compressing data (through <c>Write()</c>), set this FileName before calling <c>Write()</c> the first time on the <c>GZipStream</c>. The actual filename is encoded into the GZIP bytestream with the ISO-8859-1 code page, according to RFC 1952. It is the application's responsibility to insure that the FileName can be encoded and decoded correctly with this code page.</para><para>When decompressing (through <c>Read()</c>), you can retrieve this value any time after the first <c>Read()</c>.  In the case where there was no filename encoded into the GZIP bytestream, the property will return <c>null</c> (<c>Nothing</c> in VB).</para></remarks>
         public string FileName
         {
-            get
-            {
-                return this.fileName;
-            }
+            get { return this.fileName; }
 
             set
             {
@@ -215,10 +191,7 @@ namespace Zlib
         /// <summary>Reading this property always throws a <c>NotImplementedException</c>.</summary>
         public override long Length
         {
-            get
-            {
-                throw new NotImplementedException();
-            }
+            get { throw new NotImplementedException(); }
         }
 
         /// <summary>The position of the stream pointer.</summary>
@@ -240,15 +213,8 @@ namespace Zlib
                 return 0;
             }
 
-            set
-            {
-                throw new NotImplementedException();
-            }
+            set { throw new NotImplementedException(); }
         }
-
-        #endregion
-
-        #region Public Methods
 
         /// <summary>Flush the stream.</summary>
         public override void Flush()
@@ -275,7 +241,7 @@ namespace Zlib
                 throw new ObjectDisposedException("GZipStream");
             }
 
-            var n = this.baseStream.Read(buffer, offset, count);
+            int n = this.baseStream.Read(buffer, offset, count);
 
             // Console.WriteLine("GZipStream::Read(buffer, off({0}), c({1}) = {2}", offset, count, n);
             // Console.WriteLine( Util.FormatByteArray(buffer, offset, n) );
@@ -334,10 +300,6 @@ namespace Zlib
             this.baseStream.Write(buffer, offset, count);
         }
 
-        #endregion
-
-        #region Methods
-
         /// <summary>Dispose the stream.</summary><param name="disposing"></param>
         /// <remarks>This may or may not result in a <c>Close()</c> call on the captive stream. See the doc on constructors that take a <c>leaveOpen</c> parameter for more information.</remarks>
         protected override void Dispose(bool disposing)
@@ -365,15 +327,15 @@ namespace Zlib
         /// </returns>
         private int EmitHeader()
         {
-            var commentBytes = (this.Comment == null) ? null : Iso8859Dash1.GetBytes(this.Comment);
-            var filenameBytes = (this.FileName == null) ? null : Iso8859Dash1.GetBytes(this.FileName);
+            byte[] commentBytes = (this.Comment == null) ? null : Iso8859Dash1.GetBytes(this.Comment);
+            byte[] filenameBytes = (this.FileName == null) ? null : Iso8859Dash1.GetBytes(this.FileName);
 
-            var commentBytesLength = (this.Comment == null) ? 0 : commentBytes.Length + 1;
-            var fileNameLength = (this.FileName == null) ? 0 : filenameBytes.Length + 1;
+            int commentBytesLength = (this.Comment == null) ? 0 : commentBytes.Length + 1;
+            int fileNameLength = (this.FileName == null) ? 0 : filenameBytes.Length + 1;
 
-            var bufferLength = 10 + commentBytesLength + fileNameLength;
+            int bufferLength = 10 + commentBytesLength + fileNameLength;
             var header = new byte[bufferLength];
-            var i = 0;
+            int i = 0;
 
             // ID
             header[i++] = 0x1F;
@@ -401,7 +363,7 @@ namespace Zlib
                 this.LastModified = DateTime.Now;
             }
 
-            var delta = this.LastModified.Value - UnixEpoch;
+            TimeSpan delta = this.LastModified.Value - UnixEpoch;
             var timet = (Int32)delta.TotalSeconds;
             Array.Copy(BitConverter.GetBytes(timet), 0, header, i, 4);
             i += 4;
@@ -434,8 +396,6 @@ namespace Zlib
 
             return header.Length; // bytes written
         }
-
-        #endregion
 
         /*
         /// <summary>Create a <c>GZipStream</c> using the specified <c>CompressionMode</c> and the specified <c>CompressionLevel</c>.</summary><remarks><para>The <c>CompressionMode</c> (Compress or Decompress) also establishes the "direction" of the stream.  A <c>GZipStream</c> with<c>CompressionMode.Compress</c> works only through <c>Write()</c>.  A<c>GZipStream</c> with <c>CompressionMode.Decompress</c> works only through <c>Read()</c>.</para></remarks>

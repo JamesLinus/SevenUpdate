@@ -1,10 +1,5 @@
-//-----------------------------------------------------------------------
-// <copyright file="TarEntry.cs" project="SevenUpdate.Installer" assembly="SevenUpdate.Installer" solution="SevenUpdate.Installer" company="Dino Chiesa">
-//     Copyright (c) Dino Chiesa. All rights reserved.
-// </copyright>
-// <author username="Cheeso">Dino Chiesa</author>
-// <summary></summary>
-//-----------------------------------------------------------------------
+// <copyright file="TarEntry.cs" project="Tar">Dino Chiesa</copyright>
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
 namespace Tar
 {
@@ -13,16 +8,10 @@ namespace Tar
     /// <summary>Represents an entry in a TAR archive.</summary>
     public sealed class TarEntry
     {
-        #region Constructors and Destructors
-
         /// <summary>Initializes a new instance of the TarEntry class.</summary>
         internal TarEntry()
         {
         }
-
-        #endregion
-
-        #region Properties
 
         /// <summary>Gets the last-modified time on the file or directory.</summary>
         public DateTime Mtime { get; internal set; }
@@ -35,8 +24,6 @@ namespace Tar
 
         /// <summary>Gets the type of the entry.</summary>
         public TarEntryType @Type { get; internal set; }
-
-        #endregion
 
         /*
         /// <summary>Gets a char representation of the type of the entry.</summary>

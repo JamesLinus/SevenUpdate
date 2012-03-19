@@ -1,10 +1,5 @@
-//-----------------------------------------------------------------------
-// <copyright file="Extensions.cs" project="SevenUpdate.Installer" assembly="SevenUpdate.Installer" solution="SevenUpdate.Installer" company="Dino Chiesa">
-//     Copyright (c) Dino Chiesa. All rights reserved.
-// </copyright>
-// <author username="Cheeso">Dino Chiesa</author>
-// <summary></summary>
-//-----------------------------------------------------------------------
+// <copyright file="Extensions.cs" project="Tar">Dino Chiesa</copyright>
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
 namespace Tar
 {
@@ -13,8 +8,6 @@ namespace Tar
     /// <summary>This class is intended for internal use only, by the Tar library.</summary>
     internal static class Extensions
     {
-        #region Public Methods
-
         /// <param name="t">
         /// </param><returns></returns>
         public static string TrimNull(this string t)
@@ -28,8 +21,6 @@ namespace Tar
         {
             return t.TrimEnd(new[] { Path.DirectorySeparatorChar }).TrimStart(new[] { Path.DirectorySeparatorChar });
         }
-
-        #endregion
 
         /*
         public static string TrimVolume(this string t)

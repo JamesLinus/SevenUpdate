@@ -1,10 +1,5 @@
-//-----------------------------------------------------------------------
-// <copyright file="SharedUtils.cs" project="Zlib" assembly="Zlib" solution="Zlib" company="Dino Chiesa">
-//     Copyright (c) Dino Chiesa. All rights reserved.
-// </copyright>
-// <author username="Cheeso">Dino Chiesa</author>
-// <summary></summary>
-//-----------------------------------------------------------------------
+// <copyright file="SharedUtils.cs" project="Tar">Dino Chiesa</copyright>
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
 namespace Zlib
 {
@@ -12,8 +7,6 @@ namespace Zlib
     /// </summary>
     internal static class SharedUtils
     {
-        #region Public Methods
-
         /// <summary>Performs an unsigned bitwise right shift with the specified number</summary>
         /// <param name="number">Number to operate on</param>
         /// <param name="bits">Ammount of bits to shift</param>
@@ -22,8 +15,6 @@ namespace Zlib
         {
             return (int)((uint)number >> bits);
         }
-
-        #endregion
 
         /*
         /// <summary>Reads a number of characters from the current source TextReader and writesthe data to the target array at the specified index.</summary>

@@ -1,10 +1,5 @@
-//-----------------------------------------------------------------------
-// <copyright file="InflateCodes.cs" project="Zlib" assembly="Zlib" solution="Zlib" company="Dino Chiesa">
-//     Copyright (c) Dino Chiesa. All rights reserved.
-// </copyright>
-// <author username="Cheeso">Dino Chiesa</author>
-// <summary></summary>
-//-----------------------------------------------------------------------
+// <copyright file="InflateCodes.cs" project="Tar">Dino Chiesa</copyright>
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
 namespace Zlib
 {
@@ -14,8 +9,6 @@ namespace Zlib
     /// </summary>
     internal sealed class InflateCodes
     {
-        #region Constants and Fields
-
         private const int Badcode = 9; // x: got error
 
         private const int Copy = 5; // o: copying bytes in window, waiting for space
@@ -64,10 +57,6 @@ namespace Zlib
 
         private int treeIndex;
 
-        #endregion
-
-        #region Methods
-
         internal void Init(int bl, int bd, int[] tl, int tlIndex, int[] td, int tdIndex)
         {
             this.mode = Start;
@@ -82,15 +71,15 @@ namespace Zlib
 
         internal int Process(InflateBlocks blocks, int r)
         {
-            var z = blocks.Codec;
+            ZlibCodec z = blocks.Codec;
 
             // copy input/output information to locals (UPDATE macro restores)
-            var p = z.NextIn; // input data pointer
-            var n = z.AvailableBytesIn;
-            var b = blocks.Bitb; // bit buffer
-            var k = blocks.Bitk; // bits in bit buffer
-            var q = blocks.WriteAt;
-            var m = q < blocks.ReadAt ? blocks.ReadAt - q - 1 : blocks.End - q;
+            int p = z.NextIn; // input data pointer
+            int n = z.AvailableBytesIn;
+            int b = blocks.Bitb; // bit buffer
+            int k = blocks.Bitk; // bits in bit buffer
+            int q = blocks.WriteAt;
+            int m = q < blocks.ReadAt ? blocks.ReadAt - q - 1 : blocks.End - q;
 
             // process input and output based on current state
             while (true)
@@ -111,13 +100,13 @@ namespace Zlib
                             z.NextIn = p;
                             blocks.WriteAt = q;
                             r = InflateFast(
-                                this.lbits,
-                                this.dbits,
-                                this.ltree,
-                                this.ltreeIndex,
-                                this.dtree,
-                                this.dtreeIndex,
-                                blocks,
+                                this.lbits, 
+                                this.dbits, 
+                                this.ltree, 
+                                this.ltreeIndex, 
+                                this.dtree, 
+                                this.dtreeIndex, 
+                                blocks, 
                                 z);
 
                             p = z.NextIn;
@@ -347,7 +336,7 @@ namespace Zlib
                         goto case Copy;
 
                     case Copy: // o: copying bytes in window, waiting for space
-                        var f = q - this.dist; // pointer to copy strings from
+                        int f = q - this.dist; // pointer to copy strings from
                         while (f < 0)
                         {
                             // modulo window size-"while" instead
@@ -517,16 +506,16 @@ namespace Zlib
             int c; // bytes to copy
 
             // load input, output, bit values
-            var p = z.NextIn;
-            var n = z.AvailableBytesIn;
-            var b = s.Bitb;
-            var k = s.Bitk;
-            var q = s.WriteAt;
-            var m = q < s.ReadAt ? s.ReadAt - q - 1 : s.End - q;
+            int p = z.NextIn;
+            int n = z.AvailableBytesIn;
+            int b = s.Bitb;
+            int k = s.Bitk;
+            int q = s.WriteAt;
+            int m = q < s.ReadAt ? s.ReadAt - q - 1 : s.End - q;
 
             // initialize masks
-            var ml = InternalInflateConstants.InflateMask[bl];
-            var md = InternalInflateConstants.InflateMask[bd];
+            int ml = InternalInflateConstants.InflateMask[bl];
+            int md = InternalInflateConstants.InflateMask[bd];
 
             // do until not enough input or output space for fast loop
             do
@@ -540,10 +529,10 @@ namespace Zlib
                     k += 8;
                 }
 
-                var t = b & ml; // temporary pointer
-                var tp = tl; // temporary pointer
-                var tpIndex = tlIndex; // temporary pointer
-                var tpIndexT3 = (tpIndex + t) * 3; // (tp_index+t)*3
+                int t = b & ml; // temporary pointer
+                int[] tp = tl; // temporary pointer
+                int tpIndex = tlIndex; // temporary pointer
+                int tpIndexT3 = (tpIndex + t) * 3; // (tp_index+t)*3
                 int e; // extra bits or operation
                 if ((e = tp[tpIndexT3]) == 0)
                 {
@@ -600,7 +589,7 @@ namespace Zlib
                                     k += 8;
                                 }
 
-                                var d = tp[tpIndexT3 + 2] + (b & InternalInflateConstants.InflateMask[e]);
+                                int d = tp[tpIndexT3 + 2] + (b & InternalInflateConstants.InflateMask[e]);
 
                                 // distance back to copy from
                                 b >>= e;
@@ -783,8 +772,6 @@ namespace Zlib
 
             return ZlibConstants.Zok;
         }
-
-        #endregion
 
         // waiting for "i:"=input, "o:"=output, "x:"=nothing
 

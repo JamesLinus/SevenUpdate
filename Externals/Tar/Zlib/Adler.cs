@@ -1,10 +1,6 @@
-//-----------------------------------------------------------------------
-// <copyright file="Adler.cs" project="Zlib" assembly="Zlib" solution="Zlib" company="Dino Chiesa">
-//     Copyright (c) Dino Chiesa. All rights reserved.
-// </copyright>
-// <author username="Cheeso">Dino Chiesa</author>
-// <summary></summary>
-//-----------------------------------------------------------------------
+// <copyright file="Adler.cs" project="Tar">Dino Chiesa</copyright>
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
+
 namespace Zlib
 {
     using Interop = System.Runtime.InteropServices;
@@ -13,17 +9,10 @@ namespace Zlib
     /// <remarks>The Adler checksum is similar to a CRC checksum, but faster to compute, though less reliable.  It is used in producing RFC1950 compressed streams.  The Adler checksum is a required part of the "ZLIB" standard.  Applications will almost never need to use this class directly.</remarks>
     internal static class Adler
     {
-        #region Constants and Fields
-
         private const int Base = 65521;
 
         // NMAX is the largest n such that 255n(n+1)/2 + (n+1)(BASE-1) <= 2^32-1
-
         private const int Nmax = 5552;
-
-        #endregion
-
-        #region Methods
 
         /// <param name="adler"></param><param name="buf"></param> <param name="index"></param><param name="len"></param><returns></returns>
         internal static uint Adler32(uint adler, byte[] buf, int index, int len)
@@ -38,7 +27,7 @@ namespace Zlib
 
             while (len > 0)
             {
-                var k = len < Nmax ? len : Nmax;
+                int k = len < Nmax ? len : Nmax;
                 len -= k;
                 while (k >= 16)
                 {
@@ -94,8 +83,6 @@ namespace Zlib
 
             return (uint)((s2 << 16) | s1);
         }
-
-        #endregion
 
         // largest prime smaller than 65536
     }

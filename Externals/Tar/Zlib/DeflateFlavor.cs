@@ -1,10 +1,5 @@
-//-----------------------------------------------------------------------
-// <copyright file="DeflateFlavor.cs" project="Zlib" assembly="Zlib" solution="Zlib" company="Dino Chiesa">
-//     Copyright (c) Dino Chiesa. All rights reserved.
-// </copyright>
-// <author username="Cheeso">Dino Chiesa</author>
-// <summary></summary>
-//-----------------------------------------------------------------------
+// <copyright file="DeflateFlavor.cs" project="Tar">Dino Chiesa</copyright>
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
 namespace Zlib
 {
@@ -12,9 +7,9 @@ namespace Zlib
     /// </summary>
     internal enum DeflateFlavor
     {
-        Store,
+        Store, 
 
-        Fast,
+        Fast, 
 
         Slow
     }

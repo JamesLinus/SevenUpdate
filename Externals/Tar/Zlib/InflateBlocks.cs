@@ -1,10 +1,5 @@
-//-----------------------------------------------------------------------
-// <copyright file="InflateBlocks.cs" project="Zlib" assembly="Zlib" solution="Zlib" company="Dino Chiesa">
-//     Copyright (c) Dino Chiesa. All rights reserved.
-// </copyright>
-// <author username="Cheeso">Dino Chiesa</author>
-// <summary></summary>
-//-----------------------------------------------------------------------
+// <copyright file="InflateBlocks.cs" project="Tar">Dino Chiesa</copyright>
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
 namespace Zlib
 {
@@ -14,8 +9,6 @@ namespace Zlib
     /// </summary>
     internal sealed class InflateBlocks
     {
-        #region Constants and Fields
-
         internal readonly ZlibCodec Codec; // pointer back to this zlib stream
 
         internal readonly int End; // one byte after sliding window
@@ -34,7 +27,7 @@ namespace Zlib
 
         private static readonly int[] Border = new[]
             {
-                16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15
+               16, 17, 18, 0, 8, 7, 9, 6, 10, 5, 11, 4, 12, 3, 13, 2, 14, 1, 15 
             };
 
         private readonly int[] bb = new int[1]; // bit length tree depth
@@ -63,10 +56,6 @@ namespace Zlib
 
         private int table; // table lengths (14 bits)
 
-        #endregion
-
-        #region Constructors and Destructors
-
         internal InflateBlocks(ZlibCodec codec, object checkfn, int w)
         {
             this.Codec = codec;
@@ -77,10 +66,6 @@ namespace Zlib
             this.mode = InflateBlockMode.Type;
             this.Reset();
         }
-
-        #endregion
-
-        #region Enums
 
         private enum InflateBlockMode
         {
@@ -125,15 +110,11 @@ namespace Zlib
             Bad = 9, // ot a data error--stuck here
         }
 
-        #endregion
-
-        #region Methods
-
         /// <param name="r">
         /// </param><returns></returns>
         internal int Flush(int r)
         {
-            for (var pass = 0; pass < 2; pass++)
+            for (int pass = 0; pass < 2; pass++)
             {
                 int bytes;
                 if (pass == 0)
@@ -215,13 +196,13 @@ namespace Zlib
         internal int Process(int r)
         {
             // copy input/output information to locals (UPDATE macro restores)
-            var p = this.Codec.NextIn;
-            var n = this.Codec.AvailableBytesIn;
-            var b = this.Bitb;
-            var k = this.Bitk;
+            int p = this.Codec.NextIn;
+            int n = this.Codec.AvailableBytesIn;
+            int b = this.Bitb;
+            int k = this.Bitk;
 
-            var q = this.WriteAt;
-            var m = q < this.ReadAt ? this.ReadAt - q - 1 : this.End - q;
+            int q = this.WriteAt;
+            int m = q < this.ReadAt ? this.ReadAt - q - 1 : this.End - q;
 
             // process input based on current state
             while (true)
@@ -572,7 +553,7 @@ namespace Zlib
                             }
 
                             t = this.hufts[(this.tb[0] + (b & InternalInflateConstants.InflateMask[t])) * 3 + 1];
-                            var c = this.hufts[(this.tb[0] + (b & InternalInflateConstants.InflateMask[t])) * 3 + 2];
+                            int c = this.hufts[(this.tb[0] + (b & InternalInflateConstants.InflateMask[t])) * 3 + 2];
 
                             if (c < 16)
                             {
@@ -583,8 +564,8 @@ namespace Zlib
                             else
                             {
                                 // c == 16..18
-                                var i = c == 18 ? 7 : c - 14;
-                                var j = c == 18 ? 11 : 3;
+                                int i = c == 18 ? 7 : c - 14;
+                                int j = c == 18 ? 11 : 3;
 
                                 while (k < (t + i))
                                 {
@@ -653,14 +634,14 @@ namespace Zlib
 
                             t = this.table;
                             t = this.inftree.InflateTreesDynamic(
-                                257 + (t & 0x1f),
-                                1 + ((t >> 5) & 0x1f),
-                                this.blens,
-                                bl,
-                                bd,
-                                tl,
-                                td,
-                                this.hufts,
+                                257 + (t & 0x1f), 
+                                1 + ((t >> 5) & 0x1f), 
+                                this.blens, 
+                                bl, 
+                                bd, 
+                                tl, 
+                                td, 
+                                this.hufts, 
                                 this.Codec);
 
                             if (t != ZlibConstants.Zok)
@@ -777,7 +758,7 @@ namespace Zlib
         /// </returns>
         internal uint Reset()
         {
-            var oldCheck = this.check;
+            uint oldCheck = this.check;
             this.mode = InflateBlockMode.Type;
             this.Bitk = 0;
             this.Bitb = 0;
@@ -790,8 +771,6 @@ namespace Zlib
 
             return oldCheck;
         }
-
-        #endregion
 
         // Table for deflate from PKZIP's appnote.txt.
 

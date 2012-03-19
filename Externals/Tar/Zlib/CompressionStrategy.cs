@@ -1,10 +1,5 @@
-//-----------------------------------------------------------------------
-// <copyright file="CompressionStrategy.cs" project="Tar" assembly="Tar" solution="SevenTools" company="Dino Chiesa">
-//     Copyright (c) Dino Chiesa. All rights reserved.
-// </copyright>
-// <author username="sevenalive">Robert Baker</author>
-// <summary></summary>
-//-----------------------------------------------------------------------
+// <copyright file="CompressionStrategy.cs" project="Tar">Dino Chiesa</copyright>
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
 namespace Zlib
 {
@@ -12,12 +7,12 @@ namespace Zlib
     public enum CompressionStrategy
     {
         /// <summary>The default strategy is probably the best for normal data.</summary>
-        Default = 0,
+        Default = 0, 
 
         /// <summary>The <c>Filtered</c> strategy is intended to be used most effectively with data produced by a filter or predictor.  By this definition, filtered data consists mostly of small values with a somewhat random distribution.  In this case, the compression algorithm is tuned to compress them better.  The effect of <c>Filtered</c> is to force more Huffman coding and less string matching; it is a half-step between <c>Default</c> and <c>HuffmanOnly</c>.</summary>
-        Filtered = 1,
+        Filtered = 1, 
 
         /// <summary>Using <c>HuffmanOnly</c> will force the compressor to do Huffman encoding only, with no string matching.</summary>
-        HuffmanOnly = 2,
+        HuffmanOnly = 2, 
     }
 }

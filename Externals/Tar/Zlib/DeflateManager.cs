@@ -1,10 +1,5 @@
-//-----------------------------------------------------------------------
-// <copyright file="DeflateManager.cs" project="Zlib" assembly="Zlib" solution="Zlib" company="Dino Chiesa">
-//     Copyright (c) Dino Chiesa. All rights reserved.
-// </copyright>
-// <author username="Cheeso">Dino Chiesa</author>
-// <summary></summary>
-//-----------------------------------------------------------------------
+// <copyright file="DeflateManager.cs" project="Tar">Dino Chiesa</copyright>
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
 namespace Zlib
 {
@@ -15,8 +10,6 @@ namespace Zlib
     /// </summary>
     internal sealed class DeflateManager
     {
-        #region Constants and Fields
-
         internal readonly short[] BlCount = new short[InternalConstants.MaxBits + 1];
 
         internal readonly sbyte[] Depth = new sbyte[2 * InternalConstants.LCodes + 1];
@@ -31,7 +24,6 @@ namespace Zlib
 
         // Buffer for distances. To simplify the code, d_buf and l_buf have the same number of elements. To use
         // different lengths, an extra flag array would be necessary.
-
         internal int OptLen; // bit length of current block with optimal trees
 
         internal byte[] Pending; // output still pending - waiting to be compressed
@@ -76,14 +68,13 @@ namespace Zlib
 
         private static readonly string[] ErrorMessage = new[]
             {
-                "need dictionary", "stream end", string.Empty, "file error", "stream error", "data error",
+                "need dictionary", "stream end", string.Empty, "file error", "stream error", "data error", 
                 "insufficient memory", "buffer error", "incompatible version", string.Empty
             };
 
         private static readonly int StoredBlock;
 
         // The three kinds of block type
-
         private static readonly int ZBinary;
 
         private readonly short[] blTree; // Huffman tree for bit lengths
@@ -102,19 +93,16 @@ namespace Zlib
 
         // Number of valid bits in bi_buf.  All bits above the last valid bit
         // are always zero.
-
         private int biValid;
 
         // Window position at the beginning of the current output block. Gets negative when the window is moved
         // backwards.
-
         private int blockStart;
 
         private ZlibCodec codec; // the zlib encoder/decoder
 
         // Insert new strings in the hash table only if the match length is not greater than this length. This saves
         // time but degrades compression. max_insert_length is used only for compression levels <= 3.
-
         private CompressionLevel compressionLevel; // compression level (1..9)
 
         private CompressionStrategy compressionStrategy; // favor or force Huffman coding
@@ -133,7 +121,6 @@ namespace Zlib
 
         // Number of bits by which ins_h must be shifted at each input step. It must be such that after MIN_MATCH steps,
         // the oldest byte no longer takes part in the hash key, that is: hash_shift * MIN_MATCH >= hash_bits
-
         private int hashShift;
 
         private int hashSize; // number of elements in hash table
@@ -141,7 +128,6 @@ namespace Zlib
         private short[] head; // Heads of the hash chains or NIL.
 
         // heap used to build the Huffman trees
-
         private int insH; // hash index of string to be inserted
 
         private int lastEobLen; // bit length of EOB code for last block
@@ -152,7 +138,6 @@ namespace Zlib
         // all trees.
 
         // Depth of each subtree used as tie breaker for trees of equal frequency
-
         private int lastLit; // running index in l_buf
 
         private int lengthOffset; // index for literals or lengths 
@@ -181,13 +166,13 @@ namespace Zlib
 
         private int strStart; // start of string to insert into.....????
 
+        private bool wantRfc1950HeaderBytes = true;
+
         private int winBits; // log2(w_size)  (8..16)
 
         private int winMask; // w_size - 1
 
         private int winSize; // LZ77 window size (32K by default)
-
-        private bool wantRfc1950HeaderBytes = true;
 
         private byte[] window;
 
@@ -195,12 +180,7 @@ namespace Zlib
         // keep a dictionary of at least wSize bytes. With this organization, matches are limited to a distance of
         // wSize-MAX_MATCH bytes, but this ensures that IO is always performed with a length multiple of the block size.
         // To do: use the user input buffer as sliding window.
-
         private int windowSize;
-
-        #endregion
-
-        #region Constructors and Destructors
 
         internal DeflateManager()
         {
@@ -209,41 +189,23 @@ namespace Zlib
             this.blTree = new short[(2 * InternalConstants.BlCodes + 1) * 2]; // Huffman tree for bit lengths
         }
 
-        #endregion
-
-        #region Delegates
-
         /// <param name="flush">
         /// </param>
         private delegate BlockState CompressFunc(FlushType flush);
 
-        #endregion
-
-        #region Properties
-
         internal bool WantRfc1950HeaderBytes
         {
-            get
-            {
-                return this.wantRfc1950HeaderBytes;
-            }
+            get { return this.wantRfc1950HeaderBytes; }
 
-            set
-            {
-                this.wantRfc1950HeaderBytes = value;
-            }
+            set { this.wantRfc1950HeaderBytes = value; }
         }
-
-        #endregion
-
-        #region Methods
 
         /// <param name="flush">
         /// </param><returns></returns> <exception cref = "ZlibException"></exception><exception cref = "ZlibException"></exception> <exception cref = "ZlibException"></exception>
         internal int Deflate(FlushType flush)
         {
-            if (this.codec.OutputBuffer == null || (this.codec.InputBuffer == null && this.codec.AvailableBytesIn != 0) ||
-                (this.status == FinishState && flush != FlushType.Finish))
+            if (this.codec.OutputBuffer == null || (this.codec.InputBuffer == null && this.codec.AvailableBytesIn != 0)
+                || (this.status == FinishState && flush != FlushType.Finish))
             {
                 this.codec.Message = ErrorMessage[ZlibConstants.ZNeedDict - ZlibConstants.ZStreamError];
                 throw new ZlibException(
@@ -260,14 +222,14 @@ namespace Zlib
                 // return ZlibConstants.Z_BUF_ERROR;
             }
 
-            var oldFlush = this.lastFlush;
+            int oldFlush = this.lastFlush;
             this.lastFlush = (int)flush;
 
             // Write the zlib (rfc1950) header bytes
             if (this.status == InitState)
             {
-                var header = (ZDeflated + ((this.winBits - 8) << 4)) << 8;
-                var levelFlags = (((int)this.compressionLevel - 1) & 0xff) >> 1;
+                int header = (ZDeflated + ((this.winBits - 8) << 4)) << 8;
+                int levelFlags = (((int)this.compressionLevel - 1) & 0xff) >> 1;
 
                 if (levelFlags > 3)
                 {
@@ -341,10 +303,10 @@ namespace Zlib
             }
 
             // Start a new block or continue the current one.
-            if (this.codec.AvailableBytesIn != 0 || this.lookAhead != 0 ||
-                (flush != FlushType.None && this.status != FinishState))
+            if (this.codec.AvailableBytesIn != 0 || this.lookAhead != 0
+                || (flush != FlushType.None && this.status != FinishState))
             {
-                var bstate = this.deflateFunction(flush);
+                BlockState bstate = this.deflateFunction(flush);
 
                 if (bstate == BlockState.FinishStarted || bstate == BlockState.FinishDone)
                 {
@@ -381,7 +343,7 @@ namespace Zlib
                         if (flush == FlushType.Full)
                         {
                             // clear hash (forget the history)
-                            for (var i = 0; i < this.hashSize; i++)
+                            for (int i = 0; i < this.hashSize; i++)
                             {
                                 this.head[i] = 0;
                             }
@@ -437,10 +399,10 @@ namespace Zlib
         /// <param name="codec"></param><param name="level"></param> <param name="windowBits"></param><param name="memLevel"></param><param name="strategy"></param>
         /// <returns></returns> <exception cref = "ZlibException"></exception><exception cref = "ZlibException"></exception>
         internal int Initialize(
-            ZlibCodec codec,
-            CompressionLevel level,
-            int windowBits = ZlibConstants.WindowBitsMax,
-            int memLevel = MemLevelDefault,
+            ZlibCodec codec, 
+            CompressionLevel level, 
+            int windowBits = ZlibConstants.WindowBitsMax, 
+            int memLevel = MemLevelDefault, 
             CompressionStrategy strategy = CompressionStrategy.Default)
         {
             this.codec = codec;
@@ -496,8 +458,8 @@ namespace Zlib
         /// </param><param name="k"></param>
         internal void Pqdownheap(short[] tree, int k)
         {
-            var v = this.Heap[k];
-            var j = k << 1; // left son of k
+            int v = this.Heap[k];
+            int j = k << 1; // left son of k
             while (j <= this.HeapLen)
             {
                 // Set j to the smallest of the two sons:
@@ -528,15 +490,14 @@ namespace Zlib
         /// <param name="tree"></param><param name="n"></param> <param name="m"></param><param name="depth"></param><returns></returns>
         private static bool IsSmaller(short[] tree, int n, int m, sbyte[] depth)
         {
-            var tn2 = tree[n * 2];
-            var tm2 = tree[m * 2];
+            short tn2 = tree[n * 2];
+            short tm2 = tree[m * 2];
             return tn2 < tm2 || (tn2 == tm2 && depth[n] <= depth[m]);
         }
 
         // Scan a literal or distance tree to determine the frequencies of the codes in the bit length tree.
 
         // Flush the bit buffer, keeping at most 7 bits in it.
-
         private void BiFlush()
         {
             if (this.biValid == 16)
@@ -636,7 +597,7 @@ namespace Zlib
         private BlockState DeflateFast(FlushType flush)
         {
             // short hash_head = 0; // head of the hash chain
-            var hashHead = 0; // head of the hash chain
+            int hashHead = 0; // head of the hash chain
 
             while (true)
             {
@@ -661,8 +622,8 @@ namespace Zlib
                 // the hash chain:
                 if (this.lookAhead >= MinMatch)
                 {
-                    this.insH = ((this.insH << this.hashShift) ^ (this.window[this.strStart + (MinMatch - 1)] & 0xff)) &
-                                this.hashMask;
+                    this.insH = ((this.insH << this.hashShift) ^ (this.window[this.strStart + (MinMatch - 1)] & 0xff))
+                                & this.hashMask;
 
                     // prev[strstart&w_mask]=hash_head=head[ins_h];
                     hashHead = this.head[this.insH] & 0xffff;
@@ -702,8 +663,8 @@ namespace Zlib
                         {
                             this.strStart++;
 
-                            this.insH = ((this.insH << this.hashShift) ^
-                                         (this.window[this.strStart + (MinMatch - 1)] & 0xff)) & this.hashMask;
+                            this.insH = ((this.insH << this.hashShift)
+                                         ^ (this.window[this.strStart + (MinMatch - 1)] & 0xff)) & this.hashMask;
 
                             // prev[strstart&w_mask]=hash_head=head[ins_h];
                             hashHead = this.head[this.insH] & 0xffff;
@@ -721,8 +682,8 @@ namespace Zlib
                         this.matchLength = 0;
                         this.insH = this.window[this.strStart] & 0xff;
 
-                        this.insH = ((this.insH << this.hashShift) ^ (this.window[this.strStart + 1] & 0xff)) &
-                                    this.hashMask;
+                        this.insH = ((this.insH << this.hashShift) ^ (this.window[this.strStart + 1] & 0xff))
+                                    & this.hashMask;
 
                         // If lookahead < MIN_MATCH, ins_h is garbage, but it does not matter since it will be
                         // recomputed at next deflate call.
@@ -763,7 +724,7 @@ namespace Zlib
         {
             // Stored blocks are limited to 0xffff bytes, pending is limited to pending_buf_size, and each stored block
             // has a 5 byte header:
-            var maxBlockSize = 0xffff;
+            int maxBlockSize = 0xffff;
 
             if (maxBlockSize > this.Pending.Length - 5)
             {
@@ -792,7 +753,7 @@ namespace Zlib
                 this.lookAhead = 0;
 
                 // Emit a stored block if pending will be full:
-                var maxStart = this.blockStart + maxBlockSize;
+                int maxStart = this.blockStart + maxBlockSize;
                 if (this.strStart == 0 || this.strStart >= maxStart)
                 {
                     // strstart == 0 is possible when wraparound on 16-bit machine
@@ -836,7 +797,7 @@ namespace Zlib
         private BlockState DeflateSlow(FlushType flush)
         {
             // short hash_head = 0;    // head of hash chain
-            var hashHead = 0; // head of hash chain
+            int hashHead = 0; // head of hash chain
 
             // Process the input block.
             while (true)
@@ -864,9 +825,8 @@ namespace Zlib
 
                 if (this.lookAhead >= MinMatch)
                 {
-                    this.insH = ((this.insH << this.hashShift) ^ (this.window[this.strStart + (MinMatch - 1)] & 0xff)) &
-                                this.hashMask;
-
+                    this.insH = ((this.insH << this.hashShift) ^ (this.window[this.strStart + (MinMatch - 1)] & 0xff))
+                                & this.hashMask;
                     // prev[strstart&w_mask]=hash_head=head[ins_h];
                     hashHead = this.head[this.insH] & 0xffff;
                     this.prev[this.strStart & this.winMask] = this.head[this.insH];
@@ -878,8 +838,8 @@ namespace Zlib
                 this.prevMatch = this.matchStart;
                 this.matchLength = MinMatch - 1;
 
-                if (hashHead != 0 && this.prevLength < this.config.MaxLazy &&
-                    ((this.strStart - hashHead) & 0xffff) <= this.winSize - MinLookahead)
+                if (hashHead != 0 && this.prevLength < this.config.MaxLazy
+                    && ((this.strStart - hashHead) & 0xffff) <= this.winSize - MinLookahead)
                 {
                     // To simplify the code, we prevent matches with the string of window index 0 (in particular we have
                     // to avoid a match of the string with itself at the start of the input file).
@@ -889,9 +849,10 @@ namespace Zlib
                     }
 
                     // longest_match() sets match_start
-                    if (this.matchLength <= 5 &&
-                        (this.compressionStrategy == CompressionStrategy.Filtered ||
-                         (this.matchLength == MinMatch && this.strStart - this.matchStart > 4096)))
+                    if (this.matchLength <= 5
+                        &&
+                        (this.compressionStrategy == CompressionStrategy.Filtered
+                         || (this.matchLength == MinMatch && this.strStart - this.matchStart > 4096)))
                     {
                         // If prev_match is also MIN_MATCH, match_start is garbage but we will ignore the current match
                         // anyway.
@@ -904,7 +865,7 @@ namespace Zlib
                 bool bflush; // set if current block must be flushed
                 if (this.prevLength >= MinMatch && this.matchLength <= this.prevLength)
                 {
-                    var maxInsert = this.strStart + this.lookAhead - MinMatch;
+                    int maxInsert = this.strStart + this.lookAhead - MinMatch;
 
                     // Do not insert strings in hash table beyond this.
 
@@ -923,8 +884,8 @@ namespace Zlib
                             continue;
                         }
 
-                        this.insH = ((this.insH << this.hashShift) ^
-                                     (this.window[this.strStart + (MinMatch - 1)] & 0xff)) & this.hashMask;
+                        this.insH = ((this.insH << this.hashShift)
+                                     ^ (this.window[this.strStart + (MinMatch - 1)] & 0xff)) & this.hashMask;
 
                         // prev[strstart&w_mask]=hash_head=head[ins_h];
                         hashHead = this.head[this.insH] & 0xffff;
@@ -992,7 +953,7 @@ namespace Zlib
         {
             do
             {
-                var more = this.windowSize - this.lookAhead - this.strStart;
+                int more = this.windowSize - this.lookAhead - this.strStart;
 
                 // Amount of free space at the end of the window.
 
@@ -1023,7 +984,7 @@ namespace Zlib
                     // later. (Using level 0 permanently is not an optimal usage of zlib, so we don't care about this
                     // pathological case.)
                     n = this.hashSize;
-                    var p = n;
+                    int p = n;
                     int m;
                     do
                     {
@@ -1063,8 +1024,8 @@ namespace Zlib
                 if (this.lookAhead >= MinMatch)
                 {
                     this.insH = this.window[this.strStart] & 0xff;
-                    this.insH = ((this.insH << this.hashShift) ^ (this.window[this.strStart + 1] & 0xff)) &
-                                this.hashMask;
+                    this.insH = ((this.insH << this.hashShift) ^ (this.window[this.strStart + 1] & 0xff))
+                                & this.hashMask;
                 }
 
                 // If the whole input has less than MIN_MATCH bytes, ins_h is garbage, but this is not important since
@@ -1104,17 +1065,17 @@ namespace Zlib
         private void InitializeBlocks()
         {
             // Initialize the trees.
-            for (var i = 0; i < InternalConstants.LCodes; i++)
+            for (int i = 0; i < InternalConstants.LCodes; i++)
             {
                 this.dynLtree[i * 2] = 0;
             }
 
-            for (var i = 0; i < InternalConstants.DCodes; i++)
+            for (int i = 0; i < InternalConstants.DCodes; i++)
             {
                 this.dynDtree[i * 2] = 0;
             }
 
-            for (var i = 0; i < InternalConstants.BlCodes; i++)
+            for (int i = 0; i < InternalConstants.BlCodes; i++)
             {
                 this.blTree[i * 2] = 0;
             }
@@ -1159,7 +1120,6 @@ namespace Zlib
             this.biBuf = 0;
             this.biValid = 0;
             this.lastEobLen = 8; // enough lookahead for inflate
-
             // Initialize the first block of the first file:
             this.InitializeBlocks();
         }
@@ -1168,20 +1128,21 @@ namespace Zlib
         /// </param><returns></returns>
         private int LongestMatch(int curMatch)
         {
-            var chainLength = this.config.MaxChainLength; // max hash chain length
-            var scan = this.strStart; // current string
-            var bestLen = this.prevLength; // best match length so far
-            var limit = this.strStart > (this.winSize - MinLookahead) ? this.strStart - (this.winSize - MinLookahead) : 0;
+            int chainLength = this.config.MaxChainLength; // max hash chain length
+            int scan = this.strStart; // current string
+            int bestLen = this.prevLength; // best match length so far
+            int limit = this.strStart > (this.winSize - MinLookahead)
+                            ? this.strStart - (this.winSize - MinLookahead) : 0;
 
-            var niceLength = this.config.NiceLength;
+            int niceLength = this.config.NiceLength;
 
             // Stop when cur_match becomes <= limit. To simplify the code, we prevent matches with the string of window
             // index 0.
-            var wmask = this.winMask;
+            int wmask = this.winMask;
 
-            var strend = this.strStart + MaxMatch;
-            var scanEnd1 = this.window[scan + bestLen - 1];
-            var scanEnd = this.window[scan + bestLen];
+            int strend = this.strStart + MaxMatch;
+            byte scanEnd1 = this.window[scan + bestLen - 1];
+            byte scanEnd = this.window[scan + bestLen];
 
             // The code is optimized for HASH_BITS >= 8 and MAX_MATCH-2 multiple of 16. It is easy to get rid of this
             // optimization if necessary.
@@ -1200,11 +1161,11 @@ namespace Zlib
 
             do
             {
-                var match = curMatch; // matched string
+                int match = curMatch; // matched string
 
                 // Skip to next match if the match length cannot increase or if the match length is less than 2:
-                if (this.window[match + bestLen] != scanEnd || this.window[match + bestLen - 1] != scanEnd1 ||
-                    this.window[match] != this.window[scan] || this.window[++match] != this.window[scan + 1])
+                if (this.window[match + bestLen] != scanEnd || this.window[match + bestLen - 1] != scanEnd1
+                    || this.window[match] != this.window[scan] || this.window[++match] != this.window[scan + 1])
                 {
                     continue;
                 }
@@ -1220,13 +1181,13 @@ namespace Zlib
                 do
                 {
                 }
-                while (this.window[++scan] == this.window[++match] && this.window[++scan] == this.window[++match] &&
-                       this.window[++scan] == this.window[++match] && this.window[++scan] == this.window[++match] &&
-                       this.window[++scan] == this.window[++match] && this.window[++scan] == this.window[++match] &&
-                       this.window[++scan] == this.window[++match] && this.window[++scan] == this.window[++match] &&
-                       scan < strend);
+                while (this.window[++scan] == this.window[++match] && this.window[++scan] == this.window[++match]
+                       && this.window[++scan] == this.window[++match] && this.window[++scan] == this.window[++match]
+                       && this.window[++scan] == this.window[++match] && this.window[++scan] == this.window[++match]
+                       && this.window[++scan] == this.window[++match] && this.window[++scan] == this.window[++match]
+                       && scan < strend);
 
-                var len = MaxMatch - (strend - scan); // length of current match
+                int len = MaxMatch - (strend - scan); // length of current match
                 scan = strend - MaxMatch;
 
                 if (len <= bestLen)
@@ -1286,11 +1247,11 @@ namespace Zlib
         private void ScanTree(short[] tree, int maxCode)
         {
             int n; // iterates over all tree elements
-            var prevlen = -1; // last emitted length
+            int prevlen = -1; // last emitted length
             int nextlen = tree[0 * 2 + 1]; // length of next code
-            var count = 0; // repeat count of the current code
-            var maxCount = 7; // max repeat count
-            var minCount = 4; // min repeat count
+            int count = 0; // repeat count of the current code
+            int maxCount = 7; // max repeat count
+            int minCount = 4; // min repeat count
 
             if (nextlen == 0)
             {
@@ -1302,7 +1263,7 @@ namespace Zlib
 
             for (n = 0; n <= maxCode; n++)
             {
-                var curlen = nextlen; // length of current code
+                int curlen = nextlen; // length of current code
                 nextlen = tree[(n + 1) * 2 + 1];
                 if (++count < maxCount && curlen == nextlen)
                 {
@@ -1372,7 +1333,7 @@ namespace Zlib
         /// </param><param name="length"></param>
         private void SendBits(int value, int length)
         {
-            var len = length;
+            int len = length;
             unchecked
             {
                 if (this.biValid > BufSize - len)
@@ -1400,7 +1361,7 @@ namespace Zlib
         /// </param><param name="tree"></param>
         private void SendCode(int c, short[] tree)
         {
-            var c2 = c * 2;
+            int c2 = c * 2;
             this.SendBits(tree[c2] & 0xffff, tree[c2 + 1] & 0xffff);
         }
 
@@ -1408,17 +1369,17 @@ namespace Zlib
         /// </param><param name="dtree"></param>
         private void SendCompressedBlock(short[] ltree, short[] dtree)
         {
-            var lx = 0; // running index in l_buf
+            int lx = 0; // running index in l_buf
 
             if (this.lastLit != 0)
             {
                 do
                 {
-                    var ix = this.distanceOffset + lx * 2;
-                    var distance = ((this.Pending[ix] << 8) & 0xff00) | (this.Pending[ix + 1] & 0xff);
+                    int ix = this.distanceOffset + lx * 2;
+                    int distance = ((this.Pending[ix] << 8) & 0xff00) | (this.Pending[ix + 1] & 0xff);
 
                     // distance of matched string
-                    var lc = this.Pending[this.lengthOffset + lx] & 0xff;
+                    int lc = this.Pending[this.lengthOffset + lx] & 0xff;
 
                     // match length or unmatched char (if dist == 0)
                     lx++;
@@ -1434,7 +1395,7 @@ namespace Zlib
 
                         // send the length code
                         this.SendCode(code + InternalConstants.Literals + 1, ltree);
-                        var extra = Tree.ExtraLengthBits[code]; // number of extra bits to send
+                        int extra = Tree.ExtraLengthBits[code]; // number of extra bits to send
                         if (extra != 0)
                         {
                             // send the extra length bits
@@ -1471,11 +1432,11 @@ namespace Zlib
         private void SendTree(short[] tree, int maxCode)
         {
             int n; // iterates over all tree elements
-            var prevlen = -1; // last emitted length
+            int prevlen = -1; // last emitted length
             int nextlen = tree[0 * 2 + 1]; // length of next code
-            var count = 0; // repeat count of the current code
-            var maxCount = 7; // max repeat count
-            var minCount = 4; // min repeat count
+            int count = 0; // repeat count of the current code
+            int maxCount = 7; // max repeat count
+            int minCount = 4; // min repeat count
 
             if (nextlen == 0)
             {
@@ -1485,7 +1446,7 @@ namespace Zlib
 
             for (n = 0; n <= maxCode; n++)
             {
-                var curlen = nextlen; // length of current code
+                int curlen = nextlen; // length of current code
                 nextlen = tree[(n + 1) * 2 + 1];
                 if (++count < maxCount && curlen == nextlen)
                 {
@@ -1544,9 +1505,9 @@ namespace Zlib
 
         private void SetDataType()
         {
-            var n = 0;
-            var asciiFreq = 0;
-            var binFreq = 0;
+            int n = 0;
+            int asciiFreq = 0;
+            int binFreq = 0;
             while (n < 7)
             {
                 binFreq += this.dynLtree[n * 2];
@@ -1681,7 +1642,7 @@ namespace Zlib
         private void TrFlushBlock(int buf, int storedLen, bool eof)
         {
             int optLenb, staticLenb; // opt_len and static_len in bytes
-            var maxBlindex = 0; // index of last bit length code of non zero freq
+            int maxBlindex = 0; // index of last bit length code of non zero freq
 
             // Build the Huffman trees unless a stored block is forced
             if (this.compressionLevel > 0)
@@ -1780,8 +1741,8 @@ namespace Zlib
             if ((this.lastLit & 0x1fff) == 0 && (int)this.compressionLevel > 2)
             {
                 // Compute an upper bound for the compressed length
-                var outLength = this.lastLit << 3;
-                var inLength = this.strStart - this.blockStart;
+                int outLength = this.lastLit << 3;
+                int inLength = this.strStart - this.blockStart;
                 int dcode;
                 for (dcode = 0; dcode < InternalConstants.DCodes; dcode++)
                 {
@@ -1800,7 +1761,5 @@ namespace Zlib
             // dinoch - wraparound? We avoid equality with lit_bufsize because of wraparound at 64K on 16 bit machines
             // and because stored blocks are restricted to 64K-1 bytes.
         }
-
-        #endregion
     }
 }

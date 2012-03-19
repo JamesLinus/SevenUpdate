@@ -1,10 +1,5 @@
-//-----------------------------------------------------------------------
-// <copyright file="HeaderBlock.cs" project="SevenUpdate.Installer" assembly="SevenUpdate.Installer" solution="SevenUpdate.Installer" company="Dino Chiesa">
-//     Copyright (c) Dino Chiesa. All rights reserved.
-// </copyright>
-// <author username="Cheeso">Dino Chiesa</author>
-// <summary></summary>
-//-----------------------------------------------------------------------
+// <copyright file="HeaderBlock.cs" project="Tar">Dino Chiesa</copyright>
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
 namespace Tar
 {
@@ -89,22 +84,22 @@ namespace Tar
         {
             var hb = new HeaderBlock
                 {
-                    name = new byte[100],
-                    mode = new byte[8],
-                    uid = new byte[8],
-                    gid = new byte[8],
-                    size = new byte[12],
-                    modifiedTime = new byte[12],
-                    checkSum = new byte[8],
-                    linkName = new byte[100],
-                    magic = new byte[6],
-                    version = new byte[2],
-                    userName = new byte[32],
-                    groupName = new byte[32],
-                    devMajor = new byte[8],
-                    devMinor = new byte[8],
-                    prefix = new byte[155],
-                    pad = new byte[12],
+                    name = new byte[100], 
+                    mode = new byte[8], 
+                    uid = new byte[8], 
+                    gid = new byte[8], 
+                    size = new byte[12], 
+                    modifiedTime = new byte[12], 
+                    checkSum = new byte[8], 
+                    linkName = new byte[100], 
+                    magic = new byte[6], 
+                    version = new byte[2], 
+                    userName = new byte[32], 
+                    groupName = new byte[32], 
+                    devMajor = new byte[8], 
+                    devMinor = new byte[8], 
+                    prefix = new byte[155], 
+                    pad = new byte[12], 
                 };
 
             Array.Copy(Encoding.ASCII.GetBytes("ustar "), 0, hb.magic, 0, 6);
@@ -115,8 +110,8 @@ namespace Tar
 
         public bool VerifyChksum()
         {
-            var stored = this.GetChksum();
-            var calculated = this.SetChksum();
+            int stored = this.GetChksum();
+            int calculated = this.SetChksum();
 
             return stored == calculated;
         }
@@ -126,9 +121,9 @@ namespace Tar
         public int GetChksum()
         {
             // special case
-            var allZeros = true;
+            bool allZeros = true;
             Array.ForEach(
-                this.checkSum,
+                this.checkSum, 
                 x =>
                     {
                         if (x != 0)
@@ -144,34 +139,34 @@ namespace Tar
 
             // validation 6 and 7 have to be 0 and 0x20, in some order.
             if (
-                !(((this.checkSum[6] == 0) && (this.checkSum[7] == 0x20)) ||
-                  ((this.checkSum[7] == 0) && (this.checkSum[6] == 0x20))))
+                !(((this.checkSum[6] == 0) && (this.checkSum[7] == 0x20))
+                  || ((this.checkSum[7] == 0) && (this.checkSum[6] == 0x20))))
             {
                 return -1;
             }
 
-            var v = Encoding.ASCII.GetString(this.checkSum, 0, 6).Trim();
+            string v = Encoding.ASCII.GetString(this.checkSum, 0, 6).Trim();
             return Convert.ToInt32(v, 8);
         }
 
         public int SetChksum()
         {
             // first set the checksum to all ASCII _space_ (dec 32)
-            var a = Encoding.ASCII.GetBytes(new string(' ', 8));
+            byte[] a = Encoding.ASCII.GetBytes(new string(' ', 8));
             Array.Copy(a, 0, this.checkSum, 0, a.Length); // always 8
 
             // then sum all the bytes
             const int rawSize = 512;
-            var buffer = Marshal.AllocHGlobal(rawSize);
+            IntPtr buffer = Marshal.AllocHGlobal(rawSize);
             Marshal.StructureToPtr(this, buffer, false);
             var block = new byte[rawSize];
             Marshal.Copy(buffer, block, 0, rawSize);
             Marshal.FreeHGlobal(buffer);
 
             // format as octal
-            var sum = 0;
+            int sum = 0;
             Array.ForEach(block, x => sum += x);
-            var s = "000000" + Convert.ToString(sum, 8);
+            string s = "000000" + Convert.ToString(sum, 8);
 
             // put that into the checksum block
             a = Encoding.ASCII.GetBytes(s.Substring(s.Length - 6));
@@ -184,10 +179,10 @@ namespace Tar
 
         public void SetSize(int sz)
         {
-            var ssz = string.Format("          {0} ", Convert.ToString(sz, 8));
+            string ssz = string.Format("          {0} ", Convert.ToString(sz, 8));
 
             // get last 12 chars
-            var a = Encoding.ASCII.GetBytes(ssz.Substring(ssz.Length - 12));
+            byte[] a = Encoding.ASCII.GetBytes(ssz.Substring(ssz.Length - 12));
             Array.Copy(a, 0, this.size, 0, a.Length); // always 12
         }
 
@@ -199,7 +194,7 @@ namespace Tar
         public void InsertLinkName(string linkName)
         {
             // if greater than 100, then an exception occurs
-            var a = Encoding.ASCII.GetBytes(linkName);
+            byte[] a = Encoding.ASCII.GetBytes(linkName);
             Array.Copy(a, 0, this.linkName, 0, a.Length);
         }
 
@@ -207,40 +202,40 @@ namespace Tar
         {
             if (itemName.Length <= 100)
             {
-                var a = Encoding.ASCII.GetBytes(itemName);
+                byte[] a = Encoding.ASCII.GetBytes(itemName);
                 Array.Copy(a, 0, this.name, 0, a.Length);
             }
             else
             {
-                var a = Encoding.ASCII.GetBytes(itemName);
+                byte[] a = Encoding.ASCII.GetBytes(itemName);
                 Array.Copy(a, a.Length - 100, this.name, 0, 100);
                 Array.Copy(a, 0, this.prefix, 0, a.Length - 100);
             }
 
             // insert the modified time for the file or directory, also
-            var dt = File.GetLastWriteTimeUtc(fileName);
-            var timeT = TimeConverter.DateTime2TimeT(dt);
-            var time = "     " + Convert.ToString(timeT, 8) + " ";
-            var a1 = Encoding.ASCII.GetBytes(time.Substring(time.Length - 12));
+            DateTime dt = File.GetLastWriteTimeUtc(fileName);
+            int timeT = TimeConverter.DateTime2TimeT(dt);
+            string time = "     " + Convert.ToString(timeT, 8) + " ";
+            byte[] a1 = Encoding.ASCII.GetBytes(time.Substring(time.Length - 12));
             Array.Copy(a1, 0, this.modifiedTime, 0, a1.Length); // always 12
         }
 
         public DateTime GetMtime()
         {
-            var timeT = Convert.ToInt32(Encoding.ASCII.GetString(this.modifiedTime).TrimNull(), 8);
+            int timeT = Convert.ToInt32(Encoding.ASCII.GetString(this.modifiedTime).TrimNull(), 8);
             return DateTime.SpecifyKind(TimeConverter.TimeT2DateTime(timeT), DateTimeKind.Utc);
         }
 
         public string GetName()
         {
             string n;
-            var m = this.GetMagic();
+            string m = this.GetMagic();
             if (m != null && m.Equals("ustar"))
             {
                 n = (this.prefix[0] == 0)
                         ? Encoding.ASCII.GetString(this.name).TrimNull()
-                        : Encoding.ASCII.GetString(this.prefix).TrimNull() +
-                          Encoding.ASCII.GetString(this.name).TrimNull();
+                        : Encoding.ASCII.GetString(this.prefix).TrimNull()
+                          + Encoding.ASCII.GetString(this.name).TrimNull();
             }
             else
             {
@@ -252,7 +247,7 @@ namespace Tar
 
         private string GetMagic()
         {
-            var m = (this.magic[0] == 0) ? null : Encoding.ASCII.GetString(this.magic).Trim();
+            string m = (this.magic[0] == 0) ? null : Encoding.ASCII.GetString(this.magic).Trim();
             return m;
         }
     }

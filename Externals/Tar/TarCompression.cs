@@ -1,10 +1,5 @@
-//-----------------------------------------------------------------------
-// <copyright file="TarCompression.cs" project="SevenUpdate.Installer" assembly="SevenUpdate.Installer" solution="SevenUpdate.Installer" company="Dino Chiesa">
-//     Copyright (c) Dino Chiesa. All rights reserved.
-// </copyright>
-// <author username="Cheeso">Dino Chiesa</author>
-// <summary></summary>
-//-----------------------------------------------------------------------
+// <copyright file="TarCompression.cs" project="Tar">Dino Chiesa</copyright>
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
 namespace Tar
 {
@@ -12,9 +7,9 @@ namespace Tar
     public enum TarCompression
     {
         /// <summary>No compression - just a vanilla tar.</summary>
-        None = 0,
+        None = 0, 
 
         /// <summary>GZIP compression is applied to the tar to produce a .tgz file</summary>
-        GZip,
+        GZip, 
     }
 }

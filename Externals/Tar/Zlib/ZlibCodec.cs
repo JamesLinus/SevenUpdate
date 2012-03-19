@@ -1,10 +1,6 @@
-//-----------------------------------------------------------------------
-// <copyright file="ZlibCodec.cs" project="Zlib" assembly="Zlib" solution="Zlib" company="Dino Chiesa">
-//     Copyright (c) Dino Chiesa. All rights reserved.
-// </copyright>
-// <author username="Cheeso">Dino Chiesa</author>
-// <summary></summary>
-//-----------------------------------------------------------------------
+// <copyright file="ZlibCodec.cs" project="Tar">Dino Chiesa</copyright>
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
+
 namespace Zlib
 {
     using System;
@@ -19,8 +15,6 @@ namespace Zlib
     [ClassInterface(ClassInterfaceType.AutoDispatch)]
     public sealed class ZlibCodec
     {
-        #region Constants and Fields
-
         internal uint Adler32;
 
         internal DeflateManager Dstate;
@@ -38,10 +32,6 @@ namespace Zlib
         /// <remarks>This gauges the size of the sliding window, and hence the compression effectiveness as well as memory consumption. It's best to just leave this  setting alone if you don't know what it is.  The maximum value is 15 bits, which implies a 32k window.</remarks>
         private int windowBits = ZlibConstants.WindowBitsDefault; // ENCAPSULATE FIELD BY CODEIT.RIGHT
 
-        #endregion
-
-        #region Constructors and Destructors
-
         /// <summary>Create a ZlibCodec.</summary>
         /// <remarks>If you use this default constructor, you will later have to explicitly call InitializeInflate() or InitializeDeflate() before using the ZlibCodec to compress or decompress.</remarks>
         public ZlibCodec()
@@ -54,7 +44,7 @@ namespace Zlib
         {
             if (mode == CompressionMode.Compress)
             {
-                var rc = this.InitializeDeflate();
+                int rc = this.InitializeDeflate();
                 if (rc != ZlibConstants.Zok)
                 {
                     throw new ZlibException("Cannot initialize for deflate.");
@@ -62,7 +52,7 @@ namespace Zlib
             }
             else if (mode == CompressionMode.Decompress)
             {
-                var rc = this.InitializeInflate();
+                int rc = this.InitializeInflate();
                 if (rc != ZlibConstants.Zok)
                 {
                     throw new ZlibException("Cannot initialize for inflate.");
@@ -73,10 +63,6 @@ namespace Zlib
                 throw new ZlibException("Invalid ZlibStreamFlavor.");
             }
         }
-
-        #endregion
-
-        #region Properties
 
         /// <summary>Gets or sets the available bytes in.</summary>
         /// <value>The available bytes in.</value>
@@ -110,15 +96,9 @@ namespace Zlib
         /// <value>The strategy.</value>
         internal CompressionStrategy Strategy
         {
-            get
-            {
-                return this.strategy;
-            }
+            get { return this.strategy; }
 
-            set
-            {
-                this.strategy = value;
-            }
+            set { this.strategy = value; }
         }
 
         /// <summary>Gets or sets the total bytes in.</summary>
@@ -133,35 +113,19 @@ namespace Zlib
         /// <value>The compress level.</value><remarks></remarks>
         private CompressionLevel CompressLevel
         {
-            get
-            {
-                return this.compressLevel;
-            }
+            get { return this.compressLevel; }
 
-            set
-            {
-                this.compressLevel = value;
-            }
+            set { this.compressLevel = value; }
         }
 
         /// <summary>Gets or sets the window bits.</summary>
         /// <value>The window bits.</value><remarks></remarks>
         private int WindowBits
         {
-            get
-            {
-                return this.windowBits;
-            }
+            get { return this.windowBits; }
 
-            set
-            {
-                this.windowBits = value;
-            }
+            set { this.windowBits = value; }
         }
-
-        #endregion
-
-        #region Methods
 
         /// <summary>Deflate one batch of data.</summary>
         /// <remarks>You must have set InputBuffer and OutputBuffer before calling this method.</remarks>
@@ -243,7 +207,7 @@ namespace Zlib
                 throw new ZlibException("No Inflate State!");
             }
 
-            var ret = this.Istate.End();
+            int ret = this.Istate.End();
             this.Istate = null;
             return ret;
         }
@@ -252,7 +216,7 @@ namespace Zlib
         /// </exception>
         internal void FlushPending()
         {
-            var len = this.Dstate.PendingCount;
+            int len = this.Dstate.PendingCount;
 
             if (len > this.AvailableBytesOut)
             {
@@ -264,15 +228,15 @@ namespace Zlib
                 return;
             }
 
-            if (this.Dstate.Pending.Length <= this.Dstate.NextPending || this.OutputBuffer.Length <= this.NextOut ||
-                this.Dstate.Pending.Length < (this.Dstate.NextPending + len) ||
-                this.OutputBuffer.Length < (this.NextOut + len))
+            if (this.Dstate.Pending.Length <= this.Dstate.NextPending || this.OutputBuffer.Length <= this.NextOut
+                || this.Dstate.Pending.Length < (this.Dstate.NextPending + len)
+                || this.OutputBuffer.Length < (this.NextOut + len))
             {
                 throw new ZlibException(
                     string.Format(
-                        CultureInfo.InvariantCulture,
-                        "Invalid State. (pending.Length={0}, pendingCount={1})",
-                        this.Dstate.Pending.Length,
+                        CultureInfo.InvariantCulture, 
+                        "Invalid State. (pending.Length={0}, pendingCount={1})", 
+                        this.Dstate.Pending.Length, 
                         this.Dstate.PendingCount));
             }
 
@@ -523,7 +487,7 @@ namespace Zlib
         /// <param name="buf"></param><param name="start"></param> <param name="size"></param><returns></returns>
         internal int ReadBuf(byte[] buf, int start, int size)
         {
-            var len = this.AvailableBytesIn;
+            int len = this.AvailableBytesIn;
 
             if (len > size)
             {
@@ -562,8 +526,6 @@ namespace Zlib
 
             return this.Dstate.Initialize(this, this.CompressLevel, this.WindowBits, this.Strategy);
         }
-
-        #endregion
 
         /*
         /// <summary>The Adler32 checksum on the data transferred through the codec so far. You probably don't need to look at this.</summary>

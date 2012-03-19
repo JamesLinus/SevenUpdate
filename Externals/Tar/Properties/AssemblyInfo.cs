@@ -1,17 +1,11 @@
-//-----------------------------------------------------------------------
-// <copyright file="AssemblyInfo.cs" project="SevenUpdate.Installer" assembly="SevenUpdate.Installer" solution="SevenUpdate.Installer" company="Dino Chiesa">
-//     Copyright (c) Dino Chiesa. All rights reserved.
-// </copyright>
-// <author username="Cheeso">Dino Chiesa</author>
-// <summary></summary>
-//-----------------------------------------------------------------------
+﻿// <copyright file="AssemblyInfo.cs" project="Tar">Dino Chiesa</copyright>
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
 using System.Reflection;
 using System.Runtime.InteropServices;
 
 // General Information about an assembly is controlled through the following set of attributes. Change these attribute
 // values to modify the information associated with an assembly.
-
 [assembly: AssemblyTitle("Tar")]
 [assembly: AssemblyDescription("Tar")]
 [assembly: AssemblyConfiguration("")]

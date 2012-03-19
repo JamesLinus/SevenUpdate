@@ -1,18 +1,11 @@
-//-----------------------------------------------------------------------
-// <copyright file="ZlibConstants.cs" project="Tar" assembly="Tar" solution="SevenTools" company="Dino Chiesa">
-//     Copyright (c) Dino Chiesa. All rights reserved.
-// </copyright>
-// <author username="sevenalive">Robert Baker</author>
-// <summary></summary>
-//-----------------------------------------------------------------------
+// <copyright file="ZlibConstants.cs" project="Tar">Dino Chiesa</copyright>
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
 namespace Zlib
 {
     /// <summary>A bunch of constants used in the Zlib interface.</summary>
     public static class ZlibConstants
     {
-        #region Constants and Fields
-
         /// <summary>The size of the working buffer used in the ZlibCodec class. Defaults to 8192 bytes.</summary>
         public const int WorkingBufferSizeDefault = 16384;
 
@@ -44,7 +37,5 @@ namespace Zlib
 
         /// <summary>The maximum number of window bits for the Deflate algorithm.</summary>
         internal const int WindowBitsMax = 15; // 32K LZ77 window
-
-        #endregion
     }
 }

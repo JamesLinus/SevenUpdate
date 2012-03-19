@@ -1,10 +1,5 @@
-//-----------------------------------------------------------------------
-// <copyright file="TarEntryType.cs" project="SevenUpdate.Installer" assembly="SevenUpdate.Installer" solution="SevenUpdate.Installer" company="Dino Chiesa">
-//     Copyright (c) Dino Chiesa. All rights reserved.
-// </copyright>
-// <author username="Cheeso">Dino Chiesa</author>
-// <summary></summary>
-//-----------------------------------------------------------------------
+// <copyright file="TarEntryType.cs" project="Tar">Dino Chiesa</copyright>
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
 namespace Tar
 {
@@ -12,31 +7,31 @@ namespace Tar
     public enum TarEntryType : byte
     {
         /// <summary>a file (old version)</summary>
-        FileOld = 0,
+        FileOld = 0, 
 
         /// <summary>a file</summary>
-        File = 48,
+        File = 48, 
 
         /// <summary>a hard link</summary>
-        HardLink = 49,
+        HardLink = 49, 
 
         /// <summary>a symbolic link</summary>
-        SymbolicLink = 50,
+        SymbolicLink = 50, 
 
         /// <summary>a char special device</summary>
-        CharSpecial = 51,
+        CharSpecial = 51, 
 
         /// <summary>a block special device</summary>
-        BlockSpecial = 52,
+        BlockSpecial = 52, 
 
         /// <summary>a directory</summary>
-        Directory = 53,
+        Directory = 53, 
 
         /// <summary>a pipe</summary>
-        Fifo = 54,
+        Fifo = 54, 
 
         /// <summary>Contiguous file</summary>
-        FileContiguous = 55,
+        FileContiguous = 55, 
 
         /// <summary>a GNU Long name?</summary>
         GnuLongLink = (byte)'K', // "././@LongLink"
@@ -45,9 +40,9 @@ namespace Tar
         GnuLongName = (byte)'L', // "././@LongLink"
 
         /// <summary>a GNU sparse file</summary>
-        GnuSparseFile = (byte)'S',
+        GnuSparseFile = (byte)'S', 
 
         /// <summary>a GNU volume header</summary>
-        GnuVolumeHeader = (byte)'V',
+        GnuVolumeHeader = (byte)'V', 
     }
 }

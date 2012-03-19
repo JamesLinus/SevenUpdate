@@ -1,10 +1,5 @@
-//-----------------------------------------------------------------------
-// <copyright file="TimeConverter.cs" project="SevenUpdate.Installer" assembly="SevenUpdate.Installer" solution="SevenUpdate.Installer" company="Dino Chiesa">
-//     Copyright (c) Dino Chiesa. All rights reserved.
-// </copyright>
-// <author username="Cheeso">Dino Chiesa</author>
-// <summary></summary>
-//-----------------------------------------------------------------------
+// <copyright file="TimeConverter.cs" project="Tar">Dino Chiesa</copyright>
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
 namespace Tar
 {
@@ -13,19 +8,13 @@ namespace Tar
     /// <summary>This class is intended for internal use only, by the Tar library.</summary>
     internal static class TimeConverter
     {
-        #region Constants and Fields
-
         private static DateTime unixEpoch = new DateTime(1970, 1, 1, 0, 0, 0, DateTimeKind.Utc);
-
-        #endregion
-
-        #region Public Methods
 
         /// <param name="dateTime">
         /// </param><returns></returns>
         public static int DateTime2TimeT(DateTime dateTime)
         {
-            var delta = dateTime - unixEpoch;
+            TimeSpan delta = dateTime - unixEpoch;
             return (int)delta.TotalSeconds;
         }
 
@@ -43,8 +32,6 @@ namespace Tar
         {
             return unixEpoch.AddSeconds(time);
         }
-
-        #endregion
 
         /*
         private static DateTime win32Epoch = new DateTime(1601, 1, 1, 0, 0, 0, DateTimeKind.Utc);

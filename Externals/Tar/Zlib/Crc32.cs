@@ -1,10 +1,5 @@
-//-----------------------------------------------------------------------
-// <copyright file="CRC32.cs" project="Zlib" assembly="Zlib" solution="Zlib" company="Dino Chiesa">
-//     Copyright (c) Dino Chiesa. All rights reserved.
-// </copyright>
-// <author username="Cheeso">Dino Chiesa</author>
-// <summary></summary>
-//-----------------------------------------------------------------------
+// <copyright file="Crc32.cs" project="Tar">Dino Chiesa</copyright>
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
 namespace Zlib
 {
@@ -16,15 +11,9 @@ namespace Zlib
     [ClassInterface(ClassInterfaceType.AutoDispatch)]
     public sealed class Crc32
     {
-        #region Constants and Fields
-
         private static readonly uint[] Crc32Table;
 
         private uint runningCrc32Result = 0xFFFFFFFF;
-
-        #endregion
-
-        #region Constructors and Destructors
 
         static Crc32()
         {
@@ -40,7 +29,7 @@ namespace Zlib
 
                 for (i = 0; i < 256; i++)
                 {
-                    var dwCrc = i;
+                    uint dwCrc = i;
                     uint j;
                     for (j = 8; j > 0; j--)
                     {
@@ -59,10 +48,6 @@ namespace Zlib
             }
         }
 
-        #endregion
-
-        #region Properties
-
         /// <summary>Indicates the current CRC for all blocks slurped in.</summary>
         internal int Crc32Result
         {
@@ -76,10 +61,6 @@ namespace Zlib
         /// <summary>indicates the total number of bytes read on the CRC stream. This is used when writing the ZipDirEntry when compressing files.</summary>
         internal long TotalBytesRead { get; private set; }
 
-        #endregion
-
-        #region Methods
-
         /// <summary>Update the value for the running CRC32 using the given block of bytes. This is useful when using the CRC32() class in a Stream.</summary>
         /// <param name="block">block of bytes to slurp</param>
         /// <param name="offset">starting point in the block</param>
@@ -91,17 +72,15 @@ namespace Zlib
                 throw new ZlibException("The data buffer must not be null.");
             }
 
-            for (var i = 0; i < count; i++)
+            for (int i = 0; i < count; i++)
             {
-                var x = offset + i;
-                this.runningCrc32Result = (this.runningCrc32Result >> 8) ^
-                                          Crc32Table[block[x] ^ (this.runningCrc32Result & 0x000000FF)];
+                int x = offset + i;
+                this.runningCrc32Result = (this.runningCrc32Result >> 8)
+                                          ^ Crc32Table[block[x] ^ (this.runningCrc32Result & 0x000000FF)];
             }
 
             this.TotalBytesRead += count;
         }
-
-        #endregion
 
         /*
         private const int BufferSize = 8192;

@@ -1,10 +1,5 @@
-//-----------------------------------------------------------------------
-// <copyright file="Tar.cs" project="SevenUpdate.Installer" assembly="SevenUpdate.Installer" solution="SevenUpdate.Installer" company="Dino Chiesa">
-//     Copyright (c) Dino Chiesa. All rights reserved.
-// </copyright>
-// <author username="Cheeso">Dino Chiesa</author>
-// <summary></summary>
-//-----------------------------------------------------------------------
+// <copyright file="Tar.cs" project="Tar">Dino Chiesa</copyright>
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
 namespace Tar
 {
@@ -20,29 +15,16 @@ namespace Tar
     /// <summary>A class to create, list, or extract TAR archives. This is the primary, central class for the Tar library.</summary><remarks>Bugs: <list type = "bullet"> <item>does not read or write bzip2 compressed tarballs  (.tar.bz2)</item> <item>uses Marshal.StructureToPtr and thus requires a LinkDemand, full trust.d </item></list></remarks>
     public class Tar
     {
-        #region Constants and Fields
-
         private Stream outFS;
 
         private RawSerializer<HeaderBlock> s;
 
-        #endregion
-
-        #region Properties
-
         private RawSerializer<HeaderBlock> Serializer
         {
-            get
-            {
-                return this.s ?? (this.s = new RawSerializer<HeaderBlock>());
-            }
+            get { return this.s ?? (this.s = new RawSerializer<HeaderBlock>()); }
         }
 
         private Options TarOptions { get; set; }
-
-        #endregion
-
-        #region Public Methods
 
         /// <summary>Create a tar archive with the given name, and containing the given set of files or directories, and using GZIP compression by default.</summary>
         /// <param name="outputFile">The name of the tar archive to create. The file must not exist at the time of the call.</param>
@@ -99,32 +81,32 @@ namespace Tar
                 this.TarOptions.StatusWriter.WriteLine("{0}", dirName);
             }
 
-            var dir = dirName.Replace(parent, null).TrimSlash();
+            string dir = dirName.Replace(parent, null).TrimSlash();
             if (dir != string.Empty)
             {
                 // add the block for the dir, right here.
-                var hb = HeaderBlock.CreateHeaderBlock();
+                HeaderBlock hb = HeaderBlock.CreateHeaderBlock();
                 hb.InsertName(dir, dirName);
                 hb.TypeFlag = 5 + (byte)'0';
                 hb.SetSize(0); // some impls use agg size of all files contained
                 hb.SetChksum();
-                var block = this.Serializer.RawSerialize(hb);
+                byte[] block = this.Serializer.RawSerialize(hb);
                 this.outFS.Write(block, 0, block.Length);
             }
 
             // add the files:
-            var filenames = Directory.GetFiles(dirName);
-            foreach (var filename in filenames)
+            string[] filenames = Directory.GetFiles(dirName);
+            foreach (string filename in filenames)
             {
                 this.AddFile(filename, dir);
             }
 
             // add the subdirectories:
-            var dirnames = Directory.GetDirectories(dirName);
-            foreach (var d in dirnames)
+            string[] dirnames = Directory.GetDirectories(dirName);
+            foreach (string d in dirnames)
             {
                 // handle reparse points
-                var a = File.GetAttributes(d);
+                FileAttributes a = File.GetAttributes(d);
                 if ((a & FileAttributes.ReparsePoint) == 0)
                 {
                     // not a symlink
@@ -153,7 +135,7 @@ namespace Tar
             }
 
             // is it a symlink (ReparsePoint)?
-            var a = File.GetAttributes(fullName);
+            FileAttributes a = File.GetAttributes(fullName);
             if ((a & FileAttributes.ReparsePoint) != 0)
             {
                 this.AddSymlink(fullName);
@@ -165,9 +147,9 @@ namespace Tar
                 this.TarOptions.StatusWriter.WriteLine("{0}", fullName);
             }
 
-            var hb = HeaderBlock.CreateHeaderBlock();
+            HeaderBlock hb = HeaderBlock.CreateHeaderBlock();
 
-            var file = Path.Combine(directory, Path.GetFileName(fullName));
+            string file = Path.Combine(directory, Path.GetFileName(fullName));
 
             if (file == fullName)
             {
@@ -179,10 +161,10 @@ namespace Tar
             var fi = new FileInfo(fullName);
             hb.SetSize((int)fi.Length);
             hb.SetChksum();
-            var block = this.Serializer.RawSerialize(hb);
+            byte[] block = this.Serializer.RawSerialize(hb);
             this.outFS.Write(block, 0, block.Length);
 
-            using (var fs = File.Open(fullName, FileMode.Open, FileAccess.Read))
+            using (FileStream fs = File.Open(fullName, FileMode.Open, FileAccess.Read))
             {
                 Array.Clear(block, 0, block.Length);
                 while (fs.Read(block, 0, block.Length) > 0)
@@ -192,10 +174,6 @@ namespace Tar
                 }
             }
         }
-
-        #endregion
-
-        #region Methods
 
         /// <param name="archive"></param><param name="extractDirectory"></param> <param name="wantExtract"></param><param name="options"></param><returns></returns>
         private static List<TarEntry> ListOrExtract(
@@ -215,13 +193,13 @@ namespace Tar
             }
 
             // add the block for the symlink, right here.
-            var hb = HeaderBlock.CreateHeaderBlock();
+            HeaderBlock hb = HeaderBlock.CreateHeaderBlock();
             hb.InsertName(name, null);
             hb.InsertLinkName(name);
             hb.TypeFlag = (byte)TarEntryType.SymbolicLink;
             hb.SetSize(0);
             hb.SetChksum();
-            var block = this.Serializer.RawSerialize(hb);
+            byte[] block = this.Serializer.RawSerialize(hb);
             this.outFS.Write(block, 0, block.Length);
         }
 
@@ -244,12 +222,12 @@ namespace Tar
                 throw new InvalidOperationException("The output file you specified is a directory.");
             }
 
-            var fcount = 0;
+            int fcount = 0;
             try
             {
                 using (this.outFS = this.InternalGetOutputArchiveStream(outputFile))
                 {
-                    foreach (var f in files)
+                    foreach (string f in files)
                     {
                         fcount++;
 
@@ -305,8 +283,8 @@ namespace Tar
                     this.TarOptions.StatusWriter.WriteLine("{0}", name);
                 }
 
-                var file = Path.Combine(extractDirectory, name);
-                var directory = Path.GetDirectoryName(file);
+                string file = Path.Combine(extractDirectory, name);
+                string directory = Path.GetDirectoryName(file);
                 if (!string.IsNullOrWhiteSpace(directory))
                 {
                     Directory.CreateDirectory(directory);
@@ -327,10 +305,10 @@ namespace Tar
         /// </param><returns></returns>
         private Stream InternalGetInputStream(string archive)
         {
-            if (archive.EndsWith(".tgz") || archive.EndsWith(".tar.gz") ||
-                this.TarOptions.Compression == TarCompression.GZip)
+            if (archive.EndsWith(".tgz") || archive.EndsWith(".tar.gz")
+                || this.TarOptions.Compression == TarCompression.GZip)
             {
-                var fs = File.Open(archive, FileMode.Open, FileAccess.Read);
+                FileStream fs = File.Open(archive, FileMode.Open, FileAccess.Read);
                 return new GZipStream(fs, CompressionMode.Decompress, false);
             }
 
@@ -349,7 +327,7 @@ namespace Tar
 
                 case TarCompression.GZip:
                     {
-                        var fs = File.Open(filename, FileMode.Create, FileAccess.ReadWrite);
+                        FileStream fs = File.Open(filename, FileMode.Create, FileAccess.ReadWrite);
                         return new GZipStream(fs, CompressionMode.Compress);
                     }
 
@@ -364,10 +342,10 @@ namespace Tar
         {
             var entryList = new List<TarEntry>();
             var block = new byte[512];
-            var blocksToMunch = 0;
-            var remainingBytes = 0;
+            int blocksToMunch = 0;
+            int remainingBytes = 0;
             Stream output = null;
-            var mtime = DateTime.Now;
+            DateTime mtime = DateTime.Now;
             string name = null;
             TarEntry entry = null;
             var deferredDirTimestamp = new Dictionary<string, DateTime>();
@@ -377,7 +355,7 @@ namespace Tar
                 throw new FileNotFoundException("The archive does not exist", archive);
             }
 
-            using (var fs = this.InternalGetInputStream(archive))
+            using (Stream fs = this.InternalGetInputStream(archive))
             {
                 while (fs.Read(block, 0, block.Length) > 0)
                 {
@@ -385,7 +363,7 @@ namespace Tar
                     {
                         if (output != null)
                         {
-                            var bytesToWrite = (block.Length < remainingBytes) ? block.Length : remainingBytes;
+                            int bytesToWrite = (block.Length < remainingBytes) ? block.Length : remainingBytes;
 
                             output.Write(block, 0, bytesToWrite);
                             remainingBytes -= bytesToWrite;
@@ -418,7 +396,7 @@ namespace Tar
                         continue;
                     }
 
-                    var hb = this.Serializer.RawDeserialize(block);
+                    HeaderBlock hb = this.Serializer.RawDeserialize(block);
 
                     if (!hb.VerifyChksum())
                     {
@@ -446,10 +424,7 @@ namespace Tar
 
                     entry = new TarEntry
                         {
-                            Name = name,
-                            Mtime = mtime,
-                            Size = remainingBytes,
-                            @Type = (TarEntryType)hb.TypeFlag
+                           Name = name, Mtime = mtime, Size = remainingBytes, @Type = (TarEntryType)hb.TypeFlag 
                         };
 
                     if (entry.Type != TarEntryType.GnuLongName)
@@ -510,7 +485,7 @@ namespace Tar
                             case TarEntryType.FileOld:
                             case TarEntryType.File:
                             case TarEntryType.FileContiguous:
-                                var p = Path.GetDirectoryName(Path.Combine(extractDirectory, name));
+                                string p = Path.GetDirectoryName(Path.Combine(extractDirectory, name));
                                 if (!string.IsNullOrEmpty(p))
                                 {
                                     if (!Directory.Exists(p))
@@ -542,7 +517,7 @@ namespace Tar
             // apply the deferred timestamps on the directories
             if (deferredDirTimestamp.Count > 0)
             {
-                foreach (var key in deferredDirTimestamp.Keys)
+                foreach (string key in deferredDirTimestamp.Keys)
                 {
                     Directory.SetLastWriteTimeUtc(key, deferredDirTimestamp[key]);
                 }
@@ -550,8 +525,6 @@ namespace Tar
 
             return entryList;
         }
-
-        #endregion
 
         /*
         [DllImport("kernel32.dll", EntryPoint = "CreateSymbolicLinkW", CharSet = CharSet.Unicode)]
