@@ -1,9 +1,5 @@
-// ***********************************************************************
-// <copyright file="TaskDialog.cs" project="SevenSoftware.Windows" assembly="SevenSoftware.Windows" solution="SevenUpdate" company="Microsoft Corporation">
-//     Copyright (c) Microsoft Corporation. All rights reserved.
-// </copyright>
-// <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
-// ***********************************************************************
+// <copyright file="TaskDialog.cs" project="SevenSoftware.Windows" company="Microsoft Corporation">Microsoft Corporation</copyright>
+// <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx" name="Microsoft Software License" />
 
 namespace SevenSoftware.Windows.Dialogs.TaskDialog
 {
@@ -145,10 +141,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Gets or sets a value indicating whether CanCancel is set.</summary>
         public bool CanCancel
         {
-            get
-            {
-                return this.canCancel;
-            }
+            get { return this.canCancel; }
 
             set
             {
@@ -160,10 +153,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Gets or sets a value that contains the caption text.</summary>
         public string Caption
         {
-            get
-            {
-                return this.caption;
-            }
+            get { return this.caption; }
 
             set
             {
@@ -176,19 +166,13 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         public DialogControlCollection<TaskDialogControl> Controls
         {
             // "Show protection" provided by collection itself, as well as individual controls.
-            get
-            {
-                return this.controls;
-            }
+            get { return this.controls; }
         }
 
         /// <summary>Gets or sets a value that contains the collapsed control text.</summary>
         public string DetailsCollapsedLabel
         {
-            get
-            {
-                return this.detailsCollapsedLabel;
-            }
+            get { return this.detailsCollapsedLabel; }
 
             set
             {
@@ -200,10 +184,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Gets or sets a value indicating whether the details section is expanded.</summary>
         public bool DetailsExpanded
         {
-            get
-            {
-                return this.detailsExpanded;
-            }
+            get { return this.detailsExpanded; }
 
             set
             {
@@ -215,10 +196,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Gets or sets a value that contains the expanded control text.</summary>
         public string DetailsExpandedLabel
         {
-            get
-            {
-                return this.detailsExpandedLabel;
-            }
+            get { return this.detailsExpandedLabel; }
 
             set
             {
@@ -230,10 +208,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Gets or sets a value that contains the expanded text in the details section.</summary>
         public string DetailsExpandedText
         {
-            get
-            {
-                return this.detailsExpandedText;
-            }
+            get { return this.detailsExpandedText; }
 
             set
             {
@@ -249,10 +224,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Gets or sets a value that contains the expansion mode for this dialog.</summary>
         public TaskDialogExpandedDetailsLocation ExpansionMode
         {
-            get
-            {
-                return this.expansionMode;
-            }
+            get { return this.expansionMode; }
 
             set
             {
@@ -264,10 +236,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Gets or sets a value that indicates if the footer checkbox is checked.</summary>
         public bool? FooterCheckBoxChecked
         {
-            get
-            {
-                return this.footerCheckBoxChecked.GetValueOrDefault(false);
-            }
+            get { return this.footerCheckBoxChecked.GetValueOrDefault(false); }
 
             set
             {
@@ -286,10 +255,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Gets or sets a value that contains the footer check box text.</summary>
         public string FooterCheckBoxText
         {
-            get
-            {
-                return this.checkBoxText;
-            }
+            get { return this.checkBoxText; }
 
             set
             {
@@ -301,10 +267,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Gets or sets a value that contains the footer icon.</summary>
         public TaskDialogStandardIcon FooterIcon
         {
-            get
-            {
-                return this.footerIcon;
-            }
+            get { return this.footerIcon; }
 
             set
             {
@@ -320,10 +283,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Gets or sets a value that contains the footer text.</summary>
         public string FooterText
         {
-            get
-            {
-                return this.footerText;
-            }
+            get { return this.footerText; }
 
             set
             {
@@ -339,10 +299,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Gets or sets a value indicating whether hyperlinks are enabled.</summary>
         public bool HyperlinksEnabled
         {
-            get
-            {
-                return this.hyperlinksEnabled;
-            }
+            get { return this.hyperlinksEnabled; }
 
             set
             {
@@ -354,10 +311,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Gets or sets a value that contains the TaskDialog main icon.</summary>
         public TaskDialogStandardIcon Icon
         {
-            get
-            {
-                return this.icon;
-            }
+            get { return this.icon; }
 
             set
             {
@@ -373,10 +327,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Gets or sets a value that contains the instruction text.</summary>
         public string InstructionText
         {
-            get
-            {
-                return this.instructionText;
-            }
+            get { return this.instructionText; }
 
             set
             {
@@ -392,10 +343,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Gets or sets a value that contains the owner window's handle.</summary>
         public IntPtr OwnerWindowHandle
         {
-            get
-            {
-                return this.ownerWindow;
-            }
+            get { return this.ownerWindow; }
 
             set
             {
@@ -410,10 +358,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// </summary>
         public TaskDialogProgressBar ProgressBar
         {
-            get
-            {
-                return this.progressBar;
-            }
+            get { return this.progressBar; }
 
             set
             {
@@ -435,10 +380,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Gets or sets a value that contains the standard buttons.</summary>
         public TaskDialogStandardButtons StandardButtons
         {
-            get
-            {
-                return this.standardButtons;
-            }
+            get { return this.standardButtons; }
 
             set
             {
@@ -450,10 +392,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Gets or sets a value that contains the startup location.</summary>
         public TaskDialogStartupLocation StartupLocation
         {
-            get
-            {
-                return this.startupLocation;
-            }
+            get { return this.startupLocation; }
 
             set
             {
@@ -465,10 +404,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Gets or sets a value that contains the message text.</summary>
         public string Text
         {
-            get
-            {
-                return this.text;
-            }
+            get { return this.text; }
 
             set
             {

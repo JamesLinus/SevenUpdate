@@ -1,11 +1,5 @@
-// ***********************************************************************
-// <copyright file="JobTimes.cs" project="SharpBits.Base" assembly="SharpBits.Base" solution="SevenUpdate" company="Xidar Solutions">
-//     Copyright (c) xidar solutions. All rights reserved.
-// </copyright>
-// <author username="xidar">xidar</author>
-// <author username="sevenalive">Robert Baker</author>
-// <license href="http://sharpbits.codeplex.com/license">BSD License</license> 
-// ***********************************************************************
+// <copyright file="JobTimes.cs" project="SharpBits.Base">Xidar</copyright>
+// <license href="http://sharpbits.codeplex.com/license" name="BSD License" />
 
 namespace SharpBits.Base
 {
@@ -28,30 +22,21 @@ namespace SharpBits.Base
         /// <value>The creation time.</value>
         public DateTime CreationTime
         {
-            get
-            {
-                return Utilities.FileTimeToDateTime(this.jobTimes.CreationTime);
-            }
+            get { return Utilities.FileTimeToDateTime(this.jobTimes.CreationTime); }
         }
 
         /// <summary>Gets the modification time.</summary>
         /// <value>The modification time.</value>
         public DateTime ModificationTime
         {
-            get
-            {
-                return Utilities.FileTimeToDateTime(this.jobTimes.ModificationTime);
-            }
+            get { return Utilities.FileTimeToDateTime(this.jobTimes.ModificationTime); }
         }
 
         /// <summary>Gets the transfer completion time.</summary>
         /// <value>The transfer completion time.</value>
         public DateTime TransferCompletionTime
         {
-            get
-            {
-                return Utilities.FileTimeToDateTime(this.jobTimes.TransferCompletionTime);
-            }
+            get { return Utilities.FileTimeToDateTime(this.jobTimes.TransferCompletionTime); }
         }
     }
 }

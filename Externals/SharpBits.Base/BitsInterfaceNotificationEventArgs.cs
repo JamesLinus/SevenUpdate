@@ -1,11 +1,5 @@
-// ***********************************************************************
-// <copyright file="BitsInterfaceNotificationEventArgs.cs" project="SharpBits.Base" assembly="SharpBits.Base" solution="SevenUpdate" company="Xidar Solutions">
-//     Copyright (c) xidar solutions. All rights reserved.
-// </copyright>
-// <author username="xidar">xidar</author>
-// <author username="sevenalive">Robert Baker</author>
-// <license href="http://sharpbits.codeplex.com/license">BSD License</license> 
-// ***********************************************************************
+// <copyright file="BitsInterfaceNotificationEventArgs.cs" project="SharpBits.Base">Xidar</copyright>
+// <license href="http://sharpbits.codeplex.com/license" name="BSD License" />
 
 namespace SharpBits.Base
 {
@@ -35,20 +29,14 @@ namespace SharpBits.Base
         /// <value>The message.</value>
         public string Message
         {
-            get
-            {
-                return this.exception.Message;
-            }
+            get { return this.exception.Message; }
         }
 
         /// <summary>Gets the error code.</summary>
         /// <value>The error code.</value>
         public int Result
         {
-            get
-            {
-                return this.exception.ErrorCode;
-            }
+            get { return this.exception.ErrorCode; }
         }
     }
 }

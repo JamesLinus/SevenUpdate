@@ -1,9 +1,5 @@
-// ***********************************************************************
-// <copyright file="TaskDialogDefaults.cs" project="SevenSoftware.Windows" assembly="SevenSoftware.Windows" solution="SevenUpdate" company="Microsoft Corporation">
-//     Copyright (c) Microsoft Corporation. All rights reserved.
-// </copyright>
-// <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
-// ***********************************************************************
+// <copyright file="TaskDialogDefaults.cs" project="SevenSoftware.Windows" company="Microsoft Corporation">Microsoft Corporation</copyright>
+// <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx" name="Microsoft Software License" />
 
 namespace SevenSoftware.Windows.Dialogs.TaskDialog
 {
@@ -27,28 +23,19 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Gets the default dialog caption.</summary>
         public static string Caption
         {
-            get
-            {
-                return Resources.TaskDialogDefaultCaption;
-            }
+            get { return Resources.TaskDialogDefaultCaption; }
         }
 
         /// <summary>Gets the default dialog content.</summary>
         public static string Content
         {
-            get
-            {
-                return null;
-            }
+            get { return null; }
         }
 
         /// <summary>Gets the default dialog main instruction.</summary>
         public static string MainInstruction
         {
-            get
-            {
-                return null;
-            }
+            get { return null; }
         }
     }
 }

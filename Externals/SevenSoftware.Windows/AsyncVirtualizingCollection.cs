@@ -1,18 +1,5 @@
-﻿// ***********************************************************************
-// <copyright file="AsyncVirtualizingCollection.cs" project="SevenSoftware.Windows" assembly="SevenSoftware.Windows" solution="SevenSoftware.Windows" company="Seven Software">
-//     Copyright (c) Seven Software. All rights reserved.
-// </copyright>
-// <author username="Robert Baker">Robert</author>
-// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
-// This file is part of SevenSoftware.Windows.
-//   SevenSoftware.Windows is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-//   License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any
-//   later version. SevenSoftware.Windows is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//   even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
-//  License for more details. You should have received a copy of the GNU General Public   License
-//  along with SevenSoftware.Windows.  If not, see http://www.gnu.org/licenses/.
-// </license>
-// ***********************************************************************
+﻿// <copyright file="AsyncVirtualizingCollection.cs" project="SevenSoftware.Windows">Paul McClean</copyright>
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
 namespace SevenSoftware.Windows
 {
@@ -87,10 +74,7 @@ namespace SevenSoftware.Windows
         /// <returns><c>true</c> if this collection is loading; otherwise, <c>false</c>.</returns>
         public bool IsLoading
         {
-            get
-            {
-                return this.isLoading;
-            }
+            get { return this.isLoading; }
 
             set
             {
@@ -106,10 +90,7 @@ namespace SevenSoftware.Windows
         /// <value>The synchronization context.</value>
         protected SynchronizationContext SynchronizationContext
         {
-            get
-            {
-                return this.synchronizationContext;
-            }
+            get { return this.synchronizationContext; }
         }
 
         /// <summary>

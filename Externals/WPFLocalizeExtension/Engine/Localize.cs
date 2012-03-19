@@ -1,10 +1,5 @@
-// ***********************************************************************
-// <copyright file="Localize.cs" project="WPFLocalizeExtension" assembly="WPFLocalizeExtension" solution="SevenUpdate" company="Bernhard Millauer">
-//     Copyright (c) Bernhard Millauer. All rights reserved.
-// </copyright>
-// <author username="SeriousM">Bernhard Millauer</author>
-// <license href="http://wpflocalizeextension.codeplex.com/license">Microsoft Public License</license>
-// ***********************************************************************
+// <copyright file="Localize.cs" project="WPFLocalizeExtension">Bernhard Millauer</copyright>
+// <license href="http://www.microsoft.com/en-us/openness/licenses.aspx" name="Microsoft Public License" />
 
 namespace WPFLocalizeExtension.Engine
 {
@@ -97,10 +92,7 @@ namespace WPFLocalizeExtension.Engine
         /// <exception cref="System.ArgumentNullException">thrown if Culture will be set to <c>null</c></exception>
         public CultureInfo Culture
         {
-            get
-            {
-                return this.culture ?? (this.culture = DefaultCultureInfo);
-            }
+            get { return this.culture ?? (this.culture = DefaultCultureInfo); }
 
             set
             {
@@ -125,10 +117,7 @@ namespace WPFLocalizeExtension.Engine
         /// <returns><c>True</c> if in design mode, else <c>False</c>.</returns>
         public bool IsInDesignMode
         {
-            get
-            {
-                return DesignerProperties.GetIsInDesignMode(this);
-            }
+            get { return DesignerProperties.GetIsInDesignMode(this); }
         }
 
         /// <summary>Gets the used ResourceManagers with their corresponding <c>namespaces</c>.</summary>
@@ -141,19 +130,13 @@ namespace WPFLocalizeExtension.Engine
         /// </summary>
         public CultureInfo SpecificCulture
         {
-            get
-            {
-                return CultureInfo.CreateSpecificCulture(this.Culture.ToString());
-            }
+            get { return CultureInfo.CreateSpecificCulture(this.Culture.ToString()); }
         }
 
         /// <summary>Gets the default <c>CultureInfo</c> to initialize the LocalizeDictionary. <c>CultureInfo</c>.</summary>
         private static CultureInfo DefaultCultureInfo
         {
-            get
-            {
-                return CultureInfo.InvariantCulture;
-            }
+            get { return CultureInfo.InvariantCulture; }
         }
 
         /// <summary>Attach an WeakEventListener to the LocalizeDictionary.</summary>
@@ -510,7 +493,7 @@ namespace WPFLocalizeExtension.Engine
 
                     // get the static ResourceManager property
                     object resManObject = methodInfo.Invoke(null, null);
-                    
+
                     // cast it to a Resource Manager for better working with
                     resManager = (ResourceManager)resManObject;
                 }

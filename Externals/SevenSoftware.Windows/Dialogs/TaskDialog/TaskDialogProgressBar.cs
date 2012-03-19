@@ -1,9 +1,5 @@
-// ***********************************************************************
-// <copyright file="TaskDialogProgressBar.cs" project="SevenSoftware.Windows" assembly="SevenSoftware.Windows" solution="SevenUpdate" company="Microsoft Corporation">
-//     Copyright (c) Microsoft Corporation. All rights reserved.
-// </copyright>
-// <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
-// ***********************************************************************
+// <copyright file="TaskDialogProgressBar.cs" project="SevenSoftware.Windows" company="Microsoft Corporation">Microsoft Corporation</copyright>
+// <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx" name="Microsoft Software License" />
 
 namespace SevenSoftware.Windows.Dialogs.TaskDialog
 {
@@ -57,10 +53,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Gets or sets the maximum value for the control.</summary>
         public int Maximum
         {
-            get
-            {
-                return this.maximum;
-            }
+            get { return this.maximum; }
 
             set
             {
@@ -80,10 +73,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Gets or sets the minimum value for the control.</summary>
         public int Minimum
         {
-            get
-            {
-                return this.minimum;
-            }
+            get { return this.minimum; }
 
             set
             {
@@ -109,10 +99,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Gets or sets the current value for the control.</summary>
         public int Value
         {
-            get
-            {
-                return this.value;
-            }
+            get { return this.value; }
 
             set
             {
@@ -132,10 +119,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Gets a value indicating whether the progress bar's value is between its minimum and maximum.</summary>
         internal bool HasValidValues
         {
-            get
-            {
-                return this.minimum <= this.value && this.value <= this.maximum;
-            }
+            get { return this.minimum <= this.value && this.value <= this.maximum; }
         }
 
         /// <summary>Resets the control to its minimum value.</summary>

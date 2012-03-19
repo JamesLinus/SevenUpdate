@@ -1,11 +1,5 @@
-// ***********************************************************************
-// <copyright file="ProxySettings.cs" project="SharpBits.Base" assembly="SharpBits.Base" solution="SevenUpdate" company="Xidar Solutions">
-//     Copyright (c) xidar solutions. All rights reserved.
-// </copyright>
-// <author username="xidar">xidar</author>
-// <author username="sevenalive">Robert Baker</author>
-// <license href="http://sharpbits.codeplex.com/license">BSD License</license> 
-// ***********************************************************************
+// <copyright file="ProxySettings.cs" project="SharpBits.Base">Xidar</copyright>
+// <license href="http://sharpbits.codeplex.com/license" name="BSD License" />
 
 namespace SharpBits.Base
 {
@@ -36,45 +30,27 @@ namespace SharpBits.Base
         /// <value>The proxy bypass list.</value>
         public string ProxyBypassList
         {
-            get
-            {
-                return this.proxyBypassList;
-            }
+            get { return this.proxyBypassList; }
 
-            set
-            {
-                this.proxyBypassList = value;
-            }
+            set { this.proxyBypassList = value; }
         }
 
         /// <summary>Gets or sets the proxy list.</summary>
         /// <value>The proxy list.</value>
         public string ProxyList
         {
-            get
-            {
-                return this.proxyList;
-            }
+            get { return this.proxyList; }
 
-            set
-            {
-                this.proxyList = value;
-            }
+            set { this.proxyList = value; }
         }
 
         /// <summary>Gets or sets the proxy usage.</summary>
         /// <value>The proxy usage.</value>
         public ProxyUsage ProxyUsage
         {
-            get
-            {
-                return (ProxyUsage)this.proxyUsage;
-            }
+            get { return (ProxyUsage)this.proxyUsage; }
 
-            set
-            {
-                this.proxyUsage = (BGJobProxyUsage)value;
-            }
+            set { this.proxyUsage = (BGJobProxyUsage)value; }
         }
 
         /// <summary>Updates <c>BitsJob</c> with the proxy usage.</summary>

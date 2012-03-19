@@ -1,19 +1,5 @@
-// ***********************************************************************
-// <copyright file="UacButton.cs" project="SevenSoftware.Windows" assembly="SevenSoftware.Windows" solution="SevenUpdate" company="Seven Software">
-//     Copyright (c) Seven Software. All rights reserved.
-// </copyright>
-// <author username="sevenalive">Robert Baker</author>
-// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
-//  This file is part of Seven Update.
-//    Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-//    License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any
-//    later version. Seven Update is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//    even the implied warranty of
-//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details. You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
-// </license>
-// ***********************************************************************
+// <copyright file="UacButton.cs" project="SevenSoftware.Windows">Robert Baker</copyright>
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
 namespace SevenSoftware.Windows.Controls
 {
@@ -105,24 +91,15 @@ namespace SevenSoftware.Windows.Controls
         /// <summary>Gets or sets the text to display on the button.</summary>
         public string ButtonText
         {
-            get
-            {
-                return (string)this.GetValue(ButtonTextProperty);
-            }
+            get { return (string)this.GetValue(ButtonTextProperty); }
 
-            set
-            {
-                this.SetValue(ButtonTextProperty, value);
-            }
+            set { this.SetValue(ButtonTextProperty, value); }
         }
 
         /// <summary>Gets a value indicating whether the shield is desired and the OS supports elevation.</summary>
         public bool IsShieldDisplayed
         {
-            get
-            {
-                return ShieldNeeded && this.IsShieldNeeded;
-            }
+            get { return ShieldNeeded && this.IsShieldNeeded; }
         }
 
         /// <summary>Gets or sets a value indicating whether the caller desires the <c>ShieldIcon</c> to be displayed.  This is a dependency property.</summary>
@@ -130,30 +107,18 @@ namespace SevenSoftware.Windows.Controls
         /// <remarks>This is only an indication of desire.  If the operating system does not support UAC or the user is already elevated, any request to display is ignored.</remarks>
         public bool IsShieldNeeded
         {
-            get
-            {
-                return (bool)this.GetValue(IsShieldNeededProperty);
-            }
+            get { return (bool)this.GetValue(IsShieldNeededProperty); }
 
-            set
-            {
-                this.SetValue(IsShieldNeededProperty, value);
-            }
+            set { this.SetValue(IsShieldNeededProperty, value); }
         }
 
         /// <summary>Gets or sets the icon so show when elevation is required.  This is a dependency property.</summary>
         /// <value>An <c>ImageSource</c> that represents a graphic to be displayed .</value>
         public ImageSource ShieldIcon
         {
-            get
-            {
-                return (ImageSource)this.GetValue(ShieldIconProperty);
-            }
+            get { return (ImageSource)this.GetValue(ShieldIconProperty); }
 
-            set
-            {
-                this.SetValue(ShieldIconProperty, value);
-            }
+            set { this.SetValue(ShieldIconProperty, value); }
         }
 
         /// <summary>Gets or sets <c>ToolTip</c> shown when elevation has been preformed.</summary>

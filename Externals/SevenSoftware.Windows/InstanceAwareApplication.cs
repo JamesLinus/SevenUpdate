@@ -1,11 +1,5 @@
-// ***********************************************************************
-// <copyright file="InstanceAwareApplication.cs" project="SevenSoftware.Windows" assembly="SevenSoftware.Windows" solution="SevenUpdate" company="Seven Software">
-//     Copyright (c) BladeWise. All rights reserved.
-// </copyright>
-// <author username="BladeWise">BladeWise</author>
-// <author username="sevenalive">Robert Baker</author>
-// <license href="http://wpfinstanceawareapp.codeplex.com/license">Microsoft Public License</license>
-// ***********************************************************************
+// <copyright file="InstanceAwareApplication.cs" project="SevenSoftware.Windows">BladeWise</copyright>
+// <license href="http://www.microsoft.com/en-us/openness/licenses.aspx" name="Microsoft Public License" />
 
 namespace SevenSoftware.Windows
 {

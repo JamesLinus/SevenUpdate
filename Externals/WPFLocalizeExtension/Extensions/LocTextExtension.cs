@@ -1,10 +1,5 @@
-// ***********************************************************************
-// <copyright file="LocTextExtension.cs" project="WPFLocalizeExtension" assembly="WPFLocalizeExtension" solution="SevenUpdate" company="Bernhard Millauer">
-//     Copyright (c) Bernhard Millauer. All rights reserved.
-// </copyright>
-// <author username="SeriousM">Bernhard Millauer</author>
-// <license href="http://wpflocalizeextension.codeplex.com/license">Microsoft Public License</license>
-// ***********************************************************************
+// <copyright file="LocTextExtension.cs" project="WPFLocalizeExtension">Bernhard Millauer</copyright>
+// <license href="http://www.microsoft.com/en-us/openness/licenses.aspx" name="Microsoft Public License" />
 
 namespace WPFLocalizeExtension.Extensions
 {
@@ -57,10 +52,7 @@ namespace WPFLocalizeExtension.Extensions
         /// <value>The format segment 1.</value>
         public string FormatSegment1
         {
-            get
-            {
-                return this.formatSegments[0];
-            }
+            get { return this.formatSegments[0]; }
 
             set
             {
@@ -76,10 +68,7 @@ namespace WPFLocalizeExtension.Extensions
         /// <value>The format segment 2.</value>
         public string FormatSegment2
         {
-            get
-            {
-                return this.formatSegments[1];
-            }
+            get { return this.formatSegments[1]; }
 
             set
             {
@@ -95,10 +84,7 @@ namespace WPFLocalizeExtension.Extensions
         /// <value>The format segment 3.</value>
         public string FormatSegment3
         {
-            get
-            {
-                return this.formatSegments[2];
-            }
+            get { return this.formatSegments[2]; }
 
             set
             {
@@ -114,10 +100,7 @@ namespace WPFLocalizeExtension.Extensions
         /// <value>The format segment 4.</value>
         public string FormatSegment4
         {
-            get
-            {
-                return this.formatSegments[3];
-            }
+            get { return this.formatSegments[3]; }
 
             set
             {
@@ -133,10 +116,7 @@ namespace WPFLocalizeExtension.Extensions
         /// <value>The format segment 5.</value>
         public string FormatSegment5
         {
-            get
-            {
-                return this.formatSegments[4];
-            }
+            get { return this.formatSegments[4]; }
 
             set
             {
@@ -148,10 +128,7 @@ namespace WPFLocalizeExtension.Extensions
         /// <summary>Gets or sets a prefix for the localized text.</summary>
         public string Prefix
         {
-            get
-            {
-                return this.prefix;
-            }
+            get { return this.prefix; }
 
             set
             {
@@ -165,10 +142,7 @@ namespace WPFLocalizeExtension.Extensions
         /// <summary>Gets or sets a suffix for the localized text.</summary>
         public string Suffix
         {
-            get
-            {
-                return this.suffix;
-            }
+            get { return this.suffix; }
 
             set
             {

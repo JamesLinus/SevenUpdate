@@ -1,9 +1,5 @@
-// ***********************************************************************
-// <copyright file="AppRestartRecoveryNativeMethods.cs" project="SevenSoftware.Windows" assembly="SevenSoftware.Windows" solution="SevenUpdate" company="Microsoft Corporation">
-//     Copyright (c) Microsoft Corporation. All rights reserved.
-// </copyright>
-// <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
-// ***********************************************************************
+// <copyright file="AppRestartRecoveryNativeMethods.cs" project="SevenSoftware.Windows" company="Microsoft Corporation">Microsoft Corporation</copyright>
+// <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx" name="Microsoft Software License" />
 
 namespace SevenSoftware.Windows.ApplicationServices
 {
@@ -26,10 +22,7 @@ namespace SevenSoftware.Windows.ApplicationServices
         /// <summary>Gets the internal recovery callback.</summary>
         internal static InternalRecoveryCallback InternalCallback
         {
-            get
-            {
-                return internalCallback;
-            }
+            get { return internalCallback; }
         }
 
         [DllImport("kernel32.dll")]

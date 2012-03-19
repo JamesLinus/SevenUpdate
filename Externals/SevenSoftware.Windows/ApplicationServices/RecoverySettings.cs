@@ -1,9 +1,5 @@
-// ***********************************************************************
-// <copyright file="RecoverySettings.cs" project="SevenSoftware.Windows" assembly="SevenSoftware.Windows" solution="SevenUpdate" company="Microsoft Corporation">
-//     Copyright (c) Microsoft Corporation. All rights reserved.
-// </copyright>
-// <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
-// ***********************************************************************
+// <copyright file="RecoverySettings.cs" project="SevenSoftware.Windows" company="Microsoft Corporation">Microsoft Corporation</copyright>
+// <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx" name="Microsoft Software License" />
 
 namespace SevenSoftware.Windows.ApplicationServices
 {
@@ -59,10 +55,7 @@ namespace SevenSoftware.Windows.ApplicationServices
         /// </remarks>
         public uint PingInterval
         {
-            get
-            {
-                return this.pingInterval;
-            }
+            get { return this.pingInterval; }
         }
 
         /// <summary>
@@ -72,10 +65,7 @@ namespace SevenSoftware.Windows.ApplicationServices
         /// <value>A <see cref="RecoveryData" /> object.</value>
         public RecoveryData RecoveryData
         {
-            get
-            {
-                return this.recoveryData;
-            }
+            get { return this.recoveryData; }
         }
 
         /// <summary>Returns a string representation of the current state of this object.</summary>

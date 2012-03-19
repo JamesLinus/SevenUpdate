@@ -1,9 +1,5 @@
-// ***********************************************************************
-// <copyright file="TaskDialogButtonBase.cs" project="SevenSoftware.Windows" assembly="SevenSoftware.Windows" solution="SevenUpdate" company="Microsoft Corporation">
-//     Copyright (c) Microsoft Corporation. All rights reserved.
-// </copyright>
-// <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
-// ***********************************************************************
+// <copyright file="TaskDialogButtonBase.cs" project="SevenSoftware.Windows" company="Microsoft Corporation">Microsoft Corporation</copyright>
+// <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx" name="Microsoft Software License" />
 
 namespace SevenSoftware.Windows.Dialogs.TaskDialog
 {
@@ -58,10 +54,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Gets or sets a value indicating whether this button is the default button.</summary>
         public bool Default
         {
-            get
-            {
-                return this.defaultControl;
-            }
+            get { return this.defaultControl; }
 
             set
             {
@@ -77,10 +70,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// </summary>
         public bool Enabled
         {
-            get
-            {
-                return this.enabled;
-            }
+            get { return this.enabled; }
 
             set
             {
@@ -93,10 +83,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Gets or sets the button text.</summary>
         public string Text
         {
-            get
-            {
-                return this.text;
-            }
+            get { return this.text; }
 
             set
             {

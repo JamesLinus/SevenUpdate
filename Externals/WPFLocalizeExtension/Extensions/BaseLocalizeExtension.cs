@@ -1,10 +1,5 @@
-﻿// ***********************************************************************
-// <copyright file="BaseLocalizeExtension.cs" project="WPFLocalizeExtension" assembly="WPFLocalizeExtension" solution="SevenUpdate" company="Bernhard Millauer">
-//     Copyright (c) Bernhard Millauer. All rights reserved.
-// </copyright>
-// <author username="SeriousM">Bernhard Millauer</author>
-// <license href="http://wpflocalizeextension.codeplex.com/license">Microsoft Public License</license>
-// ***********************************************************************
+﻿// <copyright file="BaseLocalizeExtension.cs" project="WPFLocalizeExtension">Bernhard Millauer</copyright>
+// <license href="http://www.microsoft.com/en-us/openness/licenses.aspx" name="Microsoft Public License" />
 
 namespace WPFLocalizeExtension.Extensions
 {
@@ -77,10 +72,7 @@ namespace WPFLocalizeExtension.Extensions
         /// <value>The current value.</value>
         public TValue CurrentValue
         {
-            get
-            {
-                return this.currentValue;
-            }
+            get { return this.currentValue; }
 
             private set
             {
@@ -108,19 +100,13 @@ namespace WPFLocalizeExtension.Extensions
                     CultureInfo.CurrentCulture, "{0}:{1}:{2}", this.Assembly, this.Dictionary, this.Key ?? "(null)");
             }
 
-            set
-            {
-                Localize.ParseKey(value, out this.assembly, out this.dict, out this.key);
-            }
+            set { Localize.ParseKey(value, out this.assembly, out this.dict, out this.key); }
         }
 
         /// <summary>Gets the collection of <c>DependencyObject</c> as WeakReferences and the target property.</summary>
         public Dictionary<WeakReference, object> TargetObjects
         {
-            get
-            {
-                return this.targetObjects;
-            }
+            get { return this.targetObjects; }
         }
 
         /// <summary>
@@ -129,15 +115,9 @@ namespace WPFLocalizeExtension.Extensions
         /// </summary>
         protected string Assembly
         {
-            get
-            {
-                return this.assembly ?? Localize.GetAssemblyName(System.Reflection.Assembly.GetExecutingAssembly());
-            }
+            get { return this.assembly ?? Localize.GetAssemblyName(System.Reflection.Assembly.GetExecutingAssembly()); }
 
-            set
-            {
-                this.assembly = !string.IsNullOrEmpty(value) ? value : null;
-            }
+            set { this.assembly = !string.IsNullOrEmpty(value) ? value : null; }
         }
 
         /// <summary>Gets the current <c>CultureInfo</c>, otherwise LocalizeDictionary.Culture will get returned.</summary>
@@ -188,29 +168,17 @@ namespace WPFLocalizeExtension.Extensions
         /// <summary>Gets or sets the Name of the .resx dictionary.If it's <c>null</c>, "Resources" will get returned.</summary>
         protected string Dictionary
         {
-            get
-            {
-                return this.dict ?? Localize.ResourcesName;
-            }
+            get { return this.dict ?? Localize.ResourcesName; }
 
-            set
-            {
-                this.dict = !string.IsNullOrEmpty(value) ? value : null;
-            }
+            set { this.dict = !string.IsNullOrEmpty(value) ? value : null; }
         }
 
         /// <summary>Gets or sets the Key to a .resx object.</summary>
         protected string Key
         {
-            get
-            {
-                return this.key;
-            }
+            get { return this.key; }
 
-            set
-            {
-                this.key = value;
-            }
+            set { this.key = value; }
         }
 
         /// <summary>Provides the Value for the first Binding.</summary>

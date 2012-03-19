@@ -1,19 +1,5 @@
-// ***********************************************************************
-// <copyright file="Update.cs" project="SevenUpdate.Base" assembly="SevenUpdate.Base" solution="SevenUpdate" company="Seven Software">
-//     Copyright (c) Seven Software. All rights reserved.
-// </copyright>
-// <author username="sevenalive">Robert Baker</author>
-// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
-//  This file is part of Seven Update.
-//    Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-//    License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any
-//    later version. Seven Update is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//    even the implied warranty of
-//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details. You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
-// </license>
-// ***********************************************************************
+// <copyright file="Update.cs" project="SevenUpdate.Base">Robert Baker</copyright>
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
 namespace SevenUpdate
 {
@@ -139,10 +125,7 @@ namespace SevenUpdate
         [DataMember]
         public string DownloadUrl
         {
-            get
-            {
-                return this.downloadUrl;
-            }
+            get { return this.downloadUrl; }
 
             set
             {
@@ -165,10 +148,7 @@ namespace SevenUpdate
         [IgnoreDataMember]
         public bool Hidden
         {
-            get
-            {
-                return this.hidden;
-            }
+            get { return this.hidden; }
 
             set
             {
@@ -185,10 +165,7 @@ namespace SevenUpdate
         [DataMember]
         public Importance Importance
         {
-            get
-            {
-                return this.importance;
-            }
+            get { return this.importance; }
 
             set
             {
@@ -205,10 +182,7 @@ namespace SevenUpdate
         [DataMember]
         public string InfoUrl
         {
-            get
-            {
-                return this.infoUrl;
-            }
+            get { return this.infoUrl; }
 
             set
             {
@@ -225,10 +199,7 @@ namespace SevenUpdate
         [DataMember]
         public string LicenseUrl
         {
-            get
-            {
-                return this.licenseUrl;
-            }
+            get { return this.licenseUrl; }
 
             set
             {
@@ -257,10 +228,7 @@ namespace SevenUpdate
         [DataMember]
         public string ReleaseDate
         {
-            get
-            {
-                return this.releaseDate;
-            }
+            get { return this.releaseDate; }
 
             set
             {
@@ -277,10 +245,7 @@ namespace SevenUpdate
         [IgnoreDataMember]
         public bool Selected
         {
-            get
-            {
-                return this.selected;
-            }
+            get { return this.selected; }
 
             set
             {
@@ -303,10 +268,7 @@ namespace SevenUpdate
         [DataMember]
         public ulong Size
         {
-            get
-            {
-                return this.size;
-            }
+            get { return this.size; }
 
             internal set
             {

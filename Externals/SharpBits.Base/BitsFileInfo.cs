@@ -1,11 +1,5 @@
-// ***********************************************************************
-// <copyright file="BitsFileInfo.cs" project="SharpBits.Base" assembly="SharpBits.Base" solution="SevenUpdate" company="Xidar Solutions">
-//     Copyright (c) xidar solutions. All rights reserved.
-// </copyright>
-// <author username="xidar">xidar</author>
-// <author username="sevenalive">Robert Baker</author>
-// <license href="http://sharpbits.codeplex.com/license">BSD License</license> 
-// ***********************************************************************
+// <copyright file="BitsFileInfo.cs" project="SharpBits.Base">Xidar</copyright>
+// <license href="http://sharpbits.codeplex.com/license" name="BSD License" />
 
 namespace SharpBits.Base
 {
@@ -24,20 +18,14 @@ namespace SharpBits.Base
         /// <value>The name of the local.</value>
         public string LocalName
         {
-            get
-            {
-                return this.BGFileInfo.LocalName;
-            }
+            get { return this.BGFileInfo.LocalName; }
         }
 
         /// <summary>Gets the remote file name.</summary>
         /// <value>The name of the remote.</value>
         public string RemoteName
         {
-            get
-            {
-                return this.BGFileInfo.RemoteName;
-            }
+            get { return this.BGFileInfo.RemoteName; }
         }
 
         /// <summary>Gets the BG file info.</summary>

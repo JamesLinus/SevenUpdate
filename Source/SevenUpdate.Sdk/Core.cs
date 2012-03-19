@@ -1,19 +1,5 @@
-// ***********************************************************************
-// <copyright file="Core.cs" project="SevenUpdate.Sdk" assembly="SevenUpdate.Sdk" solution="SevenUpdate" company="Seven Software">
-//     Copyright (c) Seven Software. All rights reserved.
-// </copyright>
-// <author username="sevenalive">Robert Baker</author>
-// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
-//  This file is part of Seven Update.
-//    Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-//    License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any
-//    later version. Seven Update is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//    even the implied warranty of
-//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details. You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
-// </license>
-// ***********************************************************************
+// <copyright file="Core.cs" project="SevenUpdate.Sdk">Robert Baker</copyright>
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
 namespace SevenUpdate.Sdk
 {
@@ -79,10 +65,7 @@ namespace SevenUpdate.Sdk
         /// <summary>Gets the Main page.</summary>
         internal static Main MainPage
         {
-            get
-            {
-                return mainPage ?? (mainPage = new Main());
-            }
+            get { return mainPage ?? (mainPage = new Main()); }
         }
 
         /// <summary>Gets or sets a collection of Projects.</summary>
@@ -96,15 +79,9 @@ namespace SevenUpdate.Sdk
         /// <summary>Gets the UpdateFiles page.</summary>
         internal static UpdateFiles UpdateFilesPage
         {
-            get
-            {
-                return updateFilesPage ?? (updateFilesPage = new UpdateFiles());
-            }
+            get { return updateFilesPage ?? (updateFilesPage = new UpdateFiles()); }
 
-            private set
-            {
-                updateFilesPage = value;
-            }
+            private set { updateFilesPage = value; }
         }
 
         /// <summary>Gets or sets the index for the selected update in the selected project.</summary>
@@ -118,71 +95,41 @@ namespace SevenUpdate.Sdk
         /// <summary>Gets the UpdateInfo page.</summary>
         internal static UpdateInfo UpdateInfoPage
         {
-            get
-            {
-                return updateInfoPage ?? (updateInfoPage = new UpdateInfo());
-            }
+            get { return updateInfoPage ?? (updateInfoPage = new UpdateInfo()); }
 
-            private set
-            {
-                updateInfoPage = value;
-            }
+            private set { updateInfoPage = value; }
         }
 
         /// <summary>Gets the UpdateRegistry page.</summary>
         internal static UpdateRegistry UpdateRegistryPage
         {
-            get
-            {
-                return updateRegistryPage ?? (updateRegistryPage = new UpdateRegistry());
-            }
+            get { return updateRegistryPage ?? (updateRegistryPage = new UpdateRegistry()); }
 
-            private set
-            {
-                updateRegistryPage = value;
-            }
+            private set { updateRegistryPage = value; }
         }
 
         /// <summary>Gets the UpdateReview page.</summary>
         internal static UpdateReview UpdateReviewPage
         {
-            get
-            {
-                return updateReviewPage ?? (updateReviewPage = new UpdateReview());
-            }
+            get { return updateReviewPage ?? (updateReviewPage = new UpdateReview()); }
 
-            private set
-            {
-                updateReviewPage = value;
-            }
+            private set { updateReviewPage = value; }
         }
 
         /// <summary>Gets the UpdateShortcuts page.</summary>
         internal static UpdateShortcuts UpdateShortcutsPage
         {
-            get
-            {
-                return updateShortcutsPage ?? (updateShortcutsPage = new UpdateShortcuts());
-            }
+            get { return updateShortcutsPage ?? (updateShortcutsPage = new UpdateShortcuts()); }
 
-            private set
-            {
-                updateShortcutsPage = value;
-            }
+            private set { updateShortcutsPage = value; }
         }
 
         /// <summary>Gets or sets the AppInfo page.</summary>
         private static AppInfo AppInfoPage
         {
-            get
-            {
-                return appInfoPage ?? (appInfoPage = new AppInfo());
-            }
+            get { return appInfoPage ?? (appInfoPage = new AppInfo()); }
 
-            set
-            {
-                appInfoPage = value;
-            }
+            set { appInfoPage = value; }
         }
 
         /// <summary>Gets or sets a value indicating whether the current project being edited is new.</summary>

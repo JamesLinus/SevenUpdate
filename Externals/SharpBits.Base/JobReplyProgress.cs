@@ -1,11 +1,5 @@
-// ***********************************************************************
-// <copyright file="JobReplyProgress.cs" project="SharpBits.Base" assembly="SharpBits.Base" solution="SevenUpdate" company="Xidar Solutions">
-//     Copyright (c) xidar solutions. All rights reserved.
-// </copyright>
-// <author username="xidar">xidar</author>
-// <author username="sevenalive">Robert Baker</author>
-// <license href="http://sharpbits.codeplex.com/license">BSD License</license> 
-// ***********************************************************************
+// <copyright file="JobReplyProgress.cs" project="SharpBits.Base">Xidar</copyright>
+// <license href="http://sharpbits.codeplex.com/license" name="BSD License" />
 
 namespace SharpBits.Base
 {
@@ -25,20 +19,14 @@ namespace SharpBits.Base
         /// <summary>Gets the total number of bytes downloaded.</summary>
         public ulong BytesTotal
         {
-            get
-            {
-                return this.jobReplyProgress.BytesTotal == ulong.MaxValue ? 0 : this.jobReplyProgress.BytesTotal;
-            }
+            get { return this.jobReplyProgress.BytesTotal == ulong.MaxValue ? 0 : this.jobReplyProgress.BytesTotal; }
         }
 
         /// <summary>Gets the total number of bytes transferred.</summary>
         /// <value>The bytes transferred.</value>
         public ulong BytesTransferred
         {
-            get
-            {
-                return this.jobReplyProgress.BytesTransferred;
-            }
+            get { return this.jobReplyProgress.BytesTransferred; }
         }
     }
 }

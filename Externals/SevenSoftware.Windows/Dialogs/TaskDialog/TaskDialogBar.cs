@@ -1,9 +1,5 @@
-// ***********************************************************************
-// <copyright file="TaskDialogBar.cs" project="SevenSoftware.Windows" assembly="SevenSoftware.Windows" solution="SevenUpdate" company="Microsoft Corporation">
-//     Copyright (c) Microsoft Corporation. All rights reserved.
-// </copyright>
-// <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
-// ***********************************************************************
+// <copyright file="TaskDialogBar.cs" project="SevenSoftware.Windows" company="Microsoft Corporation">Microsoft Corporation</copyright>
+// <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx" name="Microsoft Software License" />
 
 namespace SevenSoftware.Windows.Dialogs.TaskDialog
 {
@@ -33,10 +29,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Gets or sets the state of the progress bar.</summary>
         public TaskDialogProgressBarState State
         {
-            get
-            {
-                return this.state;
-            }
+            get { return this.state; }
 
             set
             {

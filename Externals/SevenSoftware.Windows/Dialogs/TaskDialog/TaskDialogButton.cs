@@ -1,9 +1,5 @@
-// ***********************************************************************
-// <copyright file="TaskDialogButton.cs" project="SevenSoftware.Windows" assembly="SevenSoftware.Windows" solution="SevenUpdate" company="Microsoft Corporation">
-//     Copyright (c) Microsoft Corporation. All rights reserved.
-// </copyright>
-// <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
-// ***********************************************************************
+// <copyright file="TaskDialogButton.cs" project="SevenSoftware.Windows" company="Microsoft Corporation">Microsoft Corporation</copyright>
+// <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx" name="Microsoft Software License" />
 
 namespace SevenSoftware.Windows.Dialogs.TaskDialog
 {
@@ -38,10 +34,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <value><c>True</c> if [show elevation icon]; otherwise, <c>False</c>.</value>
         public bool ShowElevationIcon
         {
-            get
-            {
-                return this.showElevationIcon;
-            }
+            get { return this.showElevationIcon; }
 
             set
             {
@@ -54,10 +47,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Gets or sets a value indicating whether the elevation icon is displayed.</summary>
         public bool UseElevationIcon
         {
-            get
-            {
-                return this.useElevationIcon;
-            }
+            get { return this.useElevationIcon; }
 
             set
             {

@@ -1,4 +1,5 @@
-<!-- Copyright (c) Robert Baker, Seven Software -->
+<!--<copyright file="Options.xaml" project="SevenUpdate">Robert Baker</copyright>
+<license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />-->
 <Page x:Class="SevenUpdate.Pages.Options" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:SevenUpdate="clr-namespace:SevenUpdate;assembly=SevenUpdate.Base" MinHeight="500" MinWidth="850"
       ShowsNavigationUI="False" mc:Ignorable="d" xmlns:d="http://schemas.microsoft.com/expression/blend/2008"

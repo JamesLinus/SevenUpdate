@@ -1,4 +1,5 @@
-﻿<!-- Copyright (c) Robert Baker, Seven Software -->
+﻿<!--<copyright file="Dictionary.xaml" project="SevenSoftware.Windows">Robert Baker</copyright>
+<license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />-->
 <ResourceDictionary xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                     xmlns:controls="clr-namespace:SevenSoftware.Windows.Controls" xmlns:Windows="clr-namespace:SevenSoftware.Windows"
                     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation">

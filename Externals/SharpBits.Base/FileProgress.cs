@@ -1,11 +1,5 @@
-// ***********************************************************************
-// <copyright file="FileProgress.cs" project="SharpBits.Base" assembly="SharpBits.Base" solution="SevenUpdate" company="Xidar Solutions">
-//     Copyright (c) xidar solutions. All rights reserved.
-// </copyright>
-// <author username="xidar">xidar</author>
-// <author username="sevenalive">Robert Baker</author>
-// <license href="http://sharpbits.codeplex.com/license">BSD License</license> 
-// ***********************************************************************
+// <copyright file="FileProgress.cs" project="SharpBits.Base">Xidar</copyright>
+// <license href="http://sharpbits.codeplex.com/license" name="BSD License" />
 
 namespace SharpBits.Base
 {
@@ -28,30 +22,21 @@ namespace SharpBits.Base
         /// <value>The bytes total.</value>
         public ulong BytesTotal
         {
-            get
-            {
-                return this.fileProgress.BytesTotal == ulong.MaxValue ? 0 : this.fileProgress.BytesTotal;
-            }
+            get { return this.fileProgress.BytesTotal == ulong.MaxValue ? 0 : this.fileProgress.BytesTotal; }
         }
 
         /// <summary>Gets the total number of bytes transferred.</summary>
         /// <value>The bytes transferred.</value>
         public ulong BytesTransferred
         {
-            get
-            {
-                return this.fileProgress.BytesTransferred;
-            }
+            get { return this.fileProgress.BytesTransferred; }
         }
 
         /// <summary>Gets a value indicating whether this <c>FileProgress</c> is completed.</summary>
         /// <value><c>True</c> if completed; otherwise, <c>False</c>.</value>
         public bool Completed
         {
-            get
-            {
-                return Convert.ToBoolean(this.fileProgress.Completed);
-            }
+            get { return Convert.ToBoolean(this.fileProgress.Completed); }
         }
     }
 }

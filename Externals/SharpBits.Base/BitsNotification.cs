@@ -1,11 +1,5 @@
-// ***********************************************************************
-// <copyright file="BitsNotification.cs" project="SharpBits.Base" assembly="SharpBits.Base" solution="SevenUpdate" company="Xidar Solutions">
-//     Copyright (c) xidar solutions. All rights reserved.
-// </copyright>
-// <author username="xidar">xidar</author>
-// <author username="sevenalive">Robert Baker</author>
-// <license href="http://sharpbits.codeplex.com/license">BSD License</license> 
-// ***********************************************************************
+// <copyright file="BitsNotification.cs" project="SharpBits.Base">Xidar</copyright>
+// <license href="http://sharpbits.codeplex.com/license" name="BSD License" />
 
 namespace SharpBits.Base
 {
@@ -37,43 +31,25 @@ namespace SharpBits.Base
         /// <summary>Occurs when [on job error event].</summary>
         public event EventHandler<ErrorNotificationEventArgs> OnJobErrorEvent
         {
-            add
-            {
-                this.errorOccurred += value;
-            }
+            add { this.errorOccurred += value; }
 
-            remove
-            {
-                this.errorOccurred -= value;
-            }
+            remove { this.errorOccurred -= value; }
         }
 
         /// <summary>Occurs when [on job modified event].</summary>
         public event EventHandler<NotificationEventArgs> OnJobModifiedEvent
         {
-            add
-            {
-                this.onJobModified += value;
-            }
+            add { this.onJobModified += value; }
 
-            remove
-            {
-                this.onJobModified -= value;
-            }
+            remove { this.onJobModified -= value; }
         }
 
         /// <summary>Occurs when [on job transferred event].</summary>
         public event EventHandler<NotificationEventArgs> OnJobTransferredEvent
         {
-            add
-            {
-                this.onJobTransfered += value;
-            }
+            add { this.onJobTransfered += value; }
 
-            remove
-            {
-                this.onJobTransfered -= value;
-            }
+            remove { this.onJobTransfered -= value; }
         }
 
         /// <summary>Called when an error occurs.</summary>

@@ -1,10 +1,5 @@
-﻿// ***********************************************************************
-// <copyright file="OddsFormatExtension.cs" project="WPFLocalizeExtension" assembly="WPFLocalizeExtension" solution="SevenUpdate" company="Bernhard Millauer">
-//     Copyright (c) Bernhard Millauer. All rights reserved.
-// </copyright>
-// <author username="SeriousM">Bernhard Millauer</author>
-// <license href="http://wpflocalizeextension.codeplex.com/license">Microsoft Public License</license>
-// ***********************************************************************
+﻿// <copyright file="OddsFormatExtension.cs" project="WPFLocalizeExtension">Bernhard Millauer</copyright>
+// <license href="http://www.microsoft.com/en-us/openness/licenses.aspx" name="Microsoft Public License" />
 
 namespace WPFLocalizeExtension.Extensions
 {
@@ -63,20 +58,14 @@ namespace WPFLocalizeExtension.Extensions
         /// <value>The UK odds format lookup table.</value>
         public static Dictionary<decimal, string> OddsFormatLookupTableUK
         {
-            get
-            {
-                return oddsFormatLookupTableUk ?? (oddsFormatLookupTableUk = GetUKOddsFormatLookupTable());
-            }
+            get { return oddsFormatLookupTableUk ?? (oddsFormatLookupTableUk = GetUKOddsFormatLookupTable()); }
         }
 
         /// <summary>Gets or sets the display value.</summary>
         /// <value>The display value.</value>
         public decimal DisplayValue
         {
-            get
-            {
-                return this.displayValue;
-            }
+            get { return this.displayValue; }
 
             set
             {
@@ -97,10 +86,7 @@ namespace WPFLocalizeExtension.Extensions
         /// <summary>Gets the collection of <c>DependencyObject</c> as WeakReferences which contains the <c>TargetProperty</c>.</summary>
         public ReadOnlyCollection<WeakReference> TargetObjects
         {
-            get
-            {
-                return new ReadOnlyCollection<WeakReference>(this.targetObjects);
-            }
+            get { return new ReadOnlyCollection<WeakReference>(this.targetObjects); }
         }
 
         /// <summary>Gets the <c>DependencyProperty</c> which should get the localized content.</summary>

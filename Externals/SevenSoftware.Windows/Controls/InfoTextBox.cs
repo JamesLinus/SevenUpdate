@@ -1,20 +1,5 @@
-// ***********************************************************************
-// <copyright file="InfoTextBox.cs" project="SevenSoftware.Windows" assembly="SevenSoftware.Windows" solution="SevenUpdate" company="Seven Software">
-//     Copyright (c) Ben Dewey. All rights reserved.
-// </copyright>
-// <author>Ben Dewey</author>
-// <author username="sevenalive">Robert Baker</author>
-// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
-//  This file is part of Seven Update.
-//    Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-//    License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any
-//    later version. Seven Update is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//    even the implied warranty of
-//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details. You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
-// </license>
-// ***********************************************************************
+// <copyright file="InfoTextBox.cs" project="SevenSoftware.Windows">Ben Dewey</copyright>
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License" />
 
 namespace SevenSoftware.Windows.Controls
 {
@@ -71,59 +56,35 @@ namespace SevenSoftware.Windows.Controls
         /// <summary>Gets or sets a value indicating whether the input has a validation error.</summary>
         public bool HasError
         {
-            get
-            {
-                return (bool)this.GetValue(HasErrorProperty);
-            }
+            get { return (bool)this.GetValue(HasErrorProperty); }
 
-            set
-            {
-                this.SetValue(HasErrorProperty, value);
-            }
+            set { this.SetValue(HasErrorProperty, value); }
         }
 
         /// <summary>Gets or sets a value indicating whether the input has a validation warning.</summary>
         public bool HasWarning
         {
-            get
-            {
-                return (bool)this.GetValue(HasWarningProperty);
-            }
+            get { return (bool)this.GetValue(HasWarningProperty); }
 
-            set
-            {
-                this.SetValue(HasWarningProperty, value);
-            }
+            set { this.SetValue(HasWarningProperty, value); }
         }
 
         /// <summary>Gets or sets the note to display.</summary>
         /// <value>The note to display.</value>
         public string Note
         {
-            get
-            {
-                return (string)this.GetValue(NoteProperty);
-            }
+            get { return (string)this.GetValue(NoteProperty); }
 
-            set
-            {
-                this.SetValue(NoteProperty, value);
-            }
+            set { this.SetValue(NoteProperty, value); }
         }
 
         /// <summary>Gets or sets the note style.</summary>
         /// <value>The note style.</value>
         public Style NoteStyle
         {
-            get
-            {
-                return (Style)this.GetValue(NoteStyleProperty);
-            }
+            get { return (Style)this.GetValue(NoteStyleProperty); }
 
-            set
-            {
-                this.SetValue(NoteStyleProperty, value);
-            }
+            set { this.SetValue(NoteStyleProperty, value); }
         }
 
         /// <summary>Gets or sets a value indicating whether this instance has text.</summary>
@@ -140,10 +101,7 @@ namespace SevenSoftware.Windows.Controls
                 return (bool)this.GetValue(HasTextProperty);
             }
 
-            set
-            {
-                this.SetValue(HasTextProperty, value);
-            }
+            set { this.SetValue(HasTextProperty, value); }
         }
 
         /// <summary>Is called when a control template is applied.</summary>

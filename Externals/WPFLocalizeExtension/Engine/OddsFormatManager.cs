@@ -1,10 +1,5 @@
-// ***********************************************************************
-// <copyright file="OddsFormatManager.cs" project="WPFLocalizeExtension" assembly="WPFLocalizeExtension" solution="SevenUpdate" company="Bernhard Millauer">
-//     Copyright (c) Bernhard Millauer. All rights reserved.
-// </copyright>
-// <author username="SeriousM">Bernhard Millauer</author>
-// <license href="http://wpflocalizeextension.codeplex.com/license">Microsoft Public License</license>
-// ***********************************************************************
+// <copyright file="OddsFormatManager.cs" project="WPFLocalizeExtension">Bernhard Millauer</copyright>
+// <license href="http://www.microsoft.com/en-us/openness/licenses.aspx" name="Microsoft Public License" />
 
 namespace WPFLocalizeExtension.Engine
 {
@@ -75,10 +70,7 @@ namespace WPFLocalizeExtension.Engine
         /// <summary>Gets or sets the odds format type</summary>
         public OddsFormatType OddsFormatType
         {
-            get
-            {
-                return this.oddsFormatType;
-            }
+            get { return this.oddsFormatType; }
 
             set
             {
@@ -102,20 +94,14 @@ namespace WPFLocalizeExtension.Engine
         /// <summary>Gets the default odds format type</summary>
         private static OddsFormatType DefaultOddsFormatType
         {
-            get
-            {
-                return OddsFormatType.EU;
-            }
+            get { return OddsFormatType.EU; }
         }
 
         /// <summary>Gets a value indicating whether the status of the design mode.</summary>
         /// <returns><c>True</c> if in design mode, else <c>False</c>.</returns>
         private bool IsInDesignMode
         {
-            get
-            {
-                return DesignerProperties.GetIsInDesignMode(this);
-            }
+            get { return DesignerProperties.GetIsInDesignMode(this); }
         }
 
         /// <summary>Attach an WeakEventListener to the <c>OddsFormatManager</c>.</summary>

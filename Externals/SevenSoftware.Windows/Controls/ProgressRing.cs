@@ -1,20 +1,5 @@
-// ***********************************************************************
-// <copyright file="ProgressRing.cs" project="SevenSoftware.Windows" assembly="SevenSoftware.Windows" solution="SevenUpdate" company="Seven Software">
-//     Copyright (c) Seven Software. All rights reserved.
-// </copyright>
-// <author>Michael Detras</author>
-// <author username="sevenalive">Robert Baker</author>
-// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
-//  This file is part of Seven Update.
-//    Seven Update is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-//    License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any
-//    later version. Seven Update is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//    even the implied warranty of
-//    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-//    GNU General Public License for more details. You should have received a copy of the GNU General Public License
-//    along with Seven Update.  If not, see http://www.gnu.org/licenses/.
-// </license>
-// ***********************************************************************
+// <copyright file="ProgressRing.cs" project="SevenSoftware.Windows">Robert Baker</copyright>
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
 namespace SevenSoftware.Windows.Controls
 {
@@ -95,60 +80,36 @@ namespace SevenSoftware.Windows.Controls
         /// <value>The element storyboard.</value>
         public Storyboard ElementStoryboard
         {
-            get
-            {
-                return (Storyboard)this.GetValue(elementStoryboardProperty);
-            }
+            get { return (Storyboard)this.GetValue(elementStoryboardProperty); }
 
-            set
-            {
-                this.SetValue(elementStoryboardProperty, value);
-            }
+            set { this.SetValue(elementStoryboardProperty, value); }
         }
 
         /// <summary>Gets or sets the indeterminate text.</summary>
         /// <value>The indeterminate text.</value>
         public string IndeterminateText
         {
-            get
-            {
-                return (string)this.GetValue(indeterminateTextProperty);
-            }
+            get { return (string)this.GetValue(indeterminateTextProperty); }
 
-            set
-            {
-                this.SetValue(indeterminateTextProperty, value);
-            }
+            set { this.SetValue(indeterminateTextProperty, value); }
         }
 
         /// <summary>Gets or sets a value indicating whether this instance is indeterminate.</summary>
         /// <value><c>True</c> if this instance is indeterminate; otherwise, <c>False</c>.</value>
         public bool IsIndeterminate
         {
-            get
-            {
-                return (bool)this.GetValue(isIndeterminateProperty);
-            }
+            get { return (bool)this.GetValue(isIndeterminateProperty); }
 
-            set
-            {
-                this.SetValue(isIndeterminateProperty, value);
-            }
+            set { this.SetValue(isIndeterminateProperty, value); }
         }
 
         /// <summary>Gets or sets a value indicating whether this instance is running.</summary>
         /// <value><c>True</c> if this instance is running; otherwise, <c>False</c>.</value>
         public bool IsRunning
         {
-            get
-            {
-                return (bool)this.GetValue(isRunningProperty);
-            }
+            get { return (bool)this.GetValue(isRunningProperty); }
 
-            set
-            {
-                this.SetValue(isRunningProperty, value);
-            }
+            set { this.SetValue(isRunningProperty, value); }
         }
 
         /// <summary>

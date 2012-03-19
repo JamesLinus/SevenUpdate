@@ -1,18 +1,5 @@
-﻿// ***********************************************************************
-// <copyright file="VirtualizingCollection.cs" project="SevenSoftware.Windows" assembly="SevenSoftware.Windows" solution="SevenSoftware.Windows" company="Seven Software">
-//     Copyright (c) Seven Software. All rights reserved.
-// </copyright>
-// <author username="Robert Baker">Robert</author>
-// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3">
-// This file is part of SevenSoftware.Windows.
-//   SevenSoftware.Windows is free software: you can redistribute it and/or modify it under the terms of the GNU General Public
-//   License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any
-//   later version. SevenSoftware.Windows is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without
-//   even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public
-//  License for more details. You should have received a copy of the GNU General Public   License
-//  along with SevenSoftware.Windows.  If not, see http://www.gnu.org/licenses/.
-// </license>
-// ***********************************************************************
+﻿// <copyright file="VirtualizingCollection.cs" project="SevenSoftware.Windows">Paul McClean</copyright>
+// <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
 namespace SevenSoftware.Windows
 {
@@ -118,10 +105,7 @@ namespace SevenSoftware.Windows
                 return this.count;
             }
 
-            protected set
-            {
-                this.count = value;
-            }
+            protected set { this.count = value; }
         }
 
         /// <summary>
@@ -132,10 +116,7 @@ namespace SevenSoftware.Windows
         /// </returns>
         public bool IsFixedSize
         {
-            get
-            {
-                return false;
-            }
+            get { return false; }
         }
 
         /// <summary>
@@ -146,10 +127,7 @@ namespace SevenSoftware.Windows
         /// </returns>
         public bool IsReadOnly
         {
-            get
-            {
-                return true;
-            }
+            get { return true; }
         }
 
         /// <summary>
@@ -160,10 +138,7 @@ namespace SevenSoftware.Windows
         /// </returns>
         public bool IsSynchronized
         {
-            get
-            {
-                return false;
-            }
+            get { return false; }
         }
 
         /// <summary>
@@ -175,10 +150,7 @@ namespace SevenSoftware.Windows
         /// </returns>
         public object SyncRoot
         {
-            get
-            {
-                return this;
-            }
+            get { return this; }
         }
 
         /// <summary>
@@ -187,10 +159,7 @@ namespace SevenSoftware.Windows
         /// <value>The items provider.</value>
         private IItemsProvider<T> ItemsProvider
         {
-            get
-            {
-                return this.itemsProvider;
-            }
+            get { return this.itemsProvider; }
         }
 
         /// <summary>
@@ -199,10 +168,7 @@ namespace SevenSoftware.Windows
         /// <value>The size of the page.</value>
         private int PageSize
         {
-            get
-            {
-                return this.pageSize;
-            }
+            get { return this.pageSize; }
         }
 
         /// <summary>
@@ -211,10 +177,7 @@ namespace SevenSoftware.Windows
         /// <value>The page timeout.</value>
         private long PageTimeout
         {
-            get
-            {
-                return this.pageTimeout;
-            }
+            get { return this.pageTimeout; }
         }
 
         /// <summary>
@@ -259,10 +222,7 @@ namespace SevenSoftware.Windows
                 return this.pages[pageIndex][pageOffset];
             }
 
-            set
-            {
-                throw new NotSupportedException();
-            }
+            set { throw new NotSupportedException(); }
         }
 
         /// <summary>
@@ -272,15 +232,9 @@ namespace SevenSoftware.Windows
         /// <returns>The item from the collection.</returns>
         object IList.this[int index]
         {
-            get
-            {
-                return this[index];
-            }
+            get { return this[index]; }
 
-            set
-            {
-                throw new NotSupportedException();
-            }
+            set { throw new NotSupportedException(); }
         }
 
         /// <summary>

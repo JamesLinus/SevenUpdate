@@ -1,9 +1,5 @@
-// ***********************************************************************
-// <copyright file="DialogControl.cs" project="SevenSoftware.Windows" assembly="SevenSoftware.Windows" solution="SevenUpdate" company="Microsoft Corporation">
-//     Copyright (c) Microsoft Corporation. All rights reserved.
-// </copyright>
-// <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx">Microsoft Software License</license>
-// ***********************************************************************
+// <copyright file="DialogControl.cs" project="SevenSoftware.Windows" company="Microsoft Corporation">Microsoft Corporation</copyright>
+// <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx" name="Microsoft Software License" />
 
 namespace SevenSoftware.Windows.Dialogs
 {
@@ -65,10 +61,7 @@ namespace SevenSoftware.Windows.Dialogs
         /// <value>A <see cref="string" /> value.</value>
         public string Name
         {
-            get
-            {
-                return this.name;
-            }
+            get { return this.name; }
 
             private set
             {

@@ -1,11 +1,5 @@
-// ***********************************************************************
-// <copyright file="BitsManager.cs" project="SharpBits.Base" assembly="SharpBits.Base" solution="SevenUpdate" company="Xidar Solutions">
-//     Copyright (c) xidar solutions. All rights reserved.
-// </copyright>
-// <author username="xidar">xidar</author>
-// <author username="sevenalive">Robert Baker</author>
-// <license href="http://sharpbits.codeplex.com/license">BSD License</license> 
-// ***********************************************************************
+// <copyright file="BitsManager.cs" project="SharpBits.Base">Xidar</copyright>
+// <license href="http://sharpbits.codeplex.com/license" name="BSD License" />
 
 namespace SharpBits.Base
 {
@@ -62,85 +56,49 @@ namespace SharpBits.Base
         /// <summary>Occurs when an interface error occurs.</summary>
         public event EventHandler<BitsInterfaceNotificationEventArgs> OnInterfaceError
         {
-            add
-            {
-                this.interfaceError += value;
-            }
+            add { this.interfaceError += value; }
 
-            remove
-            {
-                this.interfaceError -= value;
-            }
+            remove { this.interfaceError -= value; }
         }
 
         /// <summary>Occurs when a <c>BitsJob</c> is added.</summary>
         public event EventHandler<NotificationEventArgs> OnJobAdded
         {
-            add
-            {
-                this.jobAdded += value;
-            }
+            add { this.jobAdded += value; }
 
-            remove
-            {
-                this.jobAdded -= value;
-            }
+            remove { this.jobAdded -= value; }
         }
 
         /// <summary>Occurs when a <c>BitsJob</c> error occurs.</summary>
         public event EventHandler<ErrorNotificationEventArgs> OnJobError
         {
-            add
-            {
-                this.jobError += value;
-            }
+            add { this.jobError += value; }
 
-            remove
-            {
-                this.jobError -= value;
-            }
+            remove { this.jobError -= value; }
         }
 
         /// <summary>Occurs when a <c>BitsJob</c> is modified.</summary>
         public event EventHandler<NotificationEventArgs> OnJobModified
         {
-            add
-            {
-                this.jobModified += value;
-            }
+            add { this.jobModified += value; }
 
-            remove
-            {
-                this.jobModified -= value;
-            }
+            remove { this.jobModified -= value; }
         }
 
         /// <summary>Occurs when a <c>BitsJob</c> is removed.</summary>
         public event EventHandler<NotificationEventArgs> OnJobRemoved
         {
-            add
-            {
-                this.jobRemoved += value;
-            }
+            add { this.jobRemoved += value; }
 
-            remove
-            {
-                this.jobRemoved -= value;
-            }
+            remove { this.jobRemoved -= value; }
         }
 
         /// <summary>Occurs when a <c>BitsJob</c> is transfered.</summary>
         public event EventHandler<NotificationEventArgs> OnJobTransferred
         {
-            add
-            {
-                this.jobTransferred += value;
-            }
+            add { this.jobTransferred += value; }
 
-            remove
-            {
-                this.jobTransferred -= value;
-            }
+            remove { this.jobTransferred -= value; }
         }
 
         /// <summary>Gets the collection of <c>BitsJob</c>.</summary>

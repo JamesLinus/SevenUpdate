@@ -1,11 +1,5 @@
-// ***********************************************************************
-// <copyright file="BitsJob.cs" project="SharpBits.Base" assembly="SharpBits.Base" solution="SevenUpdate" company="Xidar Solutions">
-//     Copyright (c) xidar solutions. All rights reserved.
-// </copyright>
-// <author username="xidar">xidar</author>
-// <author username="sevenalive">Robert Baker</author>
-// <license href="http://sharpbits.codeplex.com/license">BSD License</license> 
-// ***********************************************************************
+// <copyright file="BitsJob.cs" project="SharpBits.Base">Xidar</copyright>
+// <license href="http://sharpbits.codeplex.com/license" name="BSD License" />
 
 namespace SharpBits.Base
 {
@@ -73,43 +67,25 @@ namespace SharpBits.Base
         /// <summary>Occurs when the job occurred an error.</summary>
         public event EventHandler<JobErrorNotificationEventArgs> OnJobError
         {
-            add
-            {
-                this.jobError += value;
-            }
+            add { this.jobError += value; }
 
-            remove
-            {
-                this.jobError -= value;
-            }
+            remove { this.jobError -= value; }
         }
 
         /// <summary>Occurs when the job has been modified.</summary>
         public event EventHandler<JobNotificationEventArgs> OnJobModified
         {
-            add
-            {
-                this.jobModified += value;
-            }
+            add { this.jobModified += value; }
 
-            remove
-            {
-                this.jobModified -= value;
-            }
+            remove { this.jobModified -= value; }
         }
 
         /// <summary>Occurs when the job has been transferred.</summary>
         public event EventHandler<JobNotificationEventArgs> OnJobTransferred
         {
-            add
-            {
-                this.jobTransferred += value;
-            }
+            add { this.jobTransferred += value; }
 
-            remove
-            {
-                this.jobTransferred -= value;
-            }
+            remove { this.jobTransferred -= value; }
         }
 
         /// <summary>Gets or sets the description, max 1024 chars.</summary>
@@ -483,10 +459,7 @@ namespace SharpBits.Base
         /// <value>The proxy settings.</value>
         public ProxySettings ProxySettings
         {
-            get
-            {
-                return this.proxySettings ?? (this.proxySettings = new ProxySettings(this.Job));
-            }
+            get { return this.proxySettings ?? (this.proxySettings = new ProxySettings(this.Job)); }
         }
 
         /// <summary>Gets the state.</summary>
