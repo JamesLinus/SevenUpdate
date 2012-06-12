@@ -10,16 +10,16 @@ namespace SharpBits.Base
     internal class BitsNotification : IBackgroundCopyCallback
     {
         /// <summary>The BITS manager.</summary>
-        private readonly BitsManager manager;
+        readonly BitsManager manager;
 
         /// <summary>Occurs when a <c>BitsJob</c> error occurs.</summary>
-        private EventHandler<ErrorNotificationEventArgs> errorOccurred;
+        EventHandler<ErrorNotificationEventArgs> errorOccurred;
 
         /// <summary>Occurs when a <c>BitsJob</c> is modified.</summary>
-        private EventHandler<NotificationEventArgs> onJobModified;
+        EventHandler<NotificationEventArgs> onJobModified;
 
         /// <summary>Occurs when a <c>BitsJob</c> is transfered.</summary>
-        private EventHandler<NotificationEventArgs> onJobTransfered;
+        EventHandler<NotificationEventArgs> onJobTransfered;
 
         /// <summary>Initializes a new instance of the <see cref="BitsNotification" /> class.</summary>
         /// <param name="manager">The manager.</param>

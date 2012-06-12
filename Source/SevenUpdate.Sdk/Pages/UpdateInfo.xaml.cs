@@ -50,7 +50,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <summary>Fires the OnPropertyChanged Event with the collection changes.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The event data.</param>
-        private void ChangeDescription(object sender, RoutedEventArgs e)
+        void ChangeDescription(object sender, RoutedEventArgs e)
         {
             var textBox = (InfoTextBox)sender;
 
@@ -60,7 +60,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <summary>Fires the OnPropertyChanged Event with the collection changes.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The event data.</param>
-        private void ChangeName(object sender, RoutedEventArgs e)
+        void ChangeName(object sender, RoutedEventArgs e)
         {
             var textBox = (InfoTextBox)sender;
 
@@ -69,7 +69,7 @@ namespace SevenUpdate.Sdk.Pages
 
         /// <summary>Determines whether this instance has errors.</summary>
         /// <returns><c>True</c> if this instance has errors; otherwise, <c>False</c>.</returns>
-        private bool HasErrors()
+        bool HasErrors()
         {
             return this.tbxUpdateName.HasError || this.tbxUpdateDetails.HasError || this.tbxSourceLocation.HasError
                    || this.imgReleaseDate.Visibility == Visibility.Visible;
@@ -78,7 +78,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <summary>Loads the <c>LocaleString</c>'s for the <c>Update</c> into the UI.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.Controls.SelectionChangedEventArgs</c> instance containing the event data.</param>
-        private void LoadLocaleStrings(object sender, SelectionChangedEventArgs e)
+        void LoadLocaleStrings(object sender, SelectionChangedEventArgs e)
         {
             if (this.tbxUpdateName == null || this.cbxLocale.SelectedIndex < 0)
             {
@@ -119,7 +119,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <summary>Loads the <c>Update</c> information to the UI.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
-        private void LoadUI(object sender, RoutedEventArgs e)
+        void LoadUI(object sender, RoutedEventArgs e)
         {
             if (string.IsNullOrWhiteSpace(this.tbxUpdateDetails.Text))
             {
@@ -165,7 +165,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <summary>Moves on to the next pages if no errors are present.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
-        private void MoveOn(object sender, RoutedEventArgs e)
+        void MoveOn(object sender, RoutedEventArgs e)
         {
             if (!this.HasErrors())
             {
@@ -180,7 +180,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <summary>Navigates to the main page.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
-        private void NavigateToMainPage(object sender, RoutedEventArgs e)
+        void NavigateToMainPage(object sender, RoutedEventArgs e)
         {
             MainWindow.NavService.Navigate(Core.MainPage);
         }
@@ -188,7 +188,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <summary>Updates the UI based on whether Aero Glass is enabled.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>CompositionChangedEventArgs</c> instance containing the event data.</param>
-        private void UpdateUI(object sender, CompositionChangedEventArgs e)
+        void UpdateUI(object sender, CompositionChangedEventArgs e)
         {
             if (e.IsGlassEnabled)
             {
@@ -207,7 +207,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <summary>Validates the textbox to see if required input exists.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The event data.</param>
-        private void ValidateInputRequired(object sender, TextChangedEventArgs e)
+        void ValidateInputRequired(object sender, TextChangedEventArgs e)
         {
             var textBox = (InfoTextBox)sender;
 
@@ -226,7 +226,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <summary>Validates input to see if it's a valid URL.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The event data.</param>
-        private void ValidateUrlInput(object sender, TextChangedEventArgs e)
+        void ValidateUrlInput(object sender, TextChangedEventArgs e)
         {
             var textBox = (InfoTextBox)sender;
 
@@ -236,7 +236,8 @@ namespace SevenUpdate.Sdk.Pages
             }
 
             textBox.HasError =
-                !new UrlInputRule { IsRequired = textBox.Name == @"tbxSourceLocation" }.Validate(textBox.Text, null).IsValid;
+                !new UrlInputRule { IsRequired = textBox.Name == @"tbxSourceLocation" }.Validate(textBox.Text, null).
+                     IsValid;
             textBox.ToolTip = textBox.HasError ? Properties.Resources.UrlNotValid : null;
         }
     }

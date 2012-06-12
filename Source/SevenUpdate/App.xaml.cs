@@ -205,7 +205,7 @@ namespace SevenUpdate
         }
 
         /// <summary>Gets the application ready for startup.</summary>
-        private static void Init()
+        static void Init()
         {
             Utilities.Locale = Settings.Default.Locale;
 
@@ -243,7 +243,7 @@ namespace SevenUpdate
         }
 
         /// <summary>Registers the application to use the Recovery Manager.</summary>
-        private static void RegisterApplicationRecoveryAndRestart()
+        static void RegisterApplicationRecoveryAndRestart()
         {
             if (Environment.OSVersion.Version.Major < 6)
             {
@@ -256,7 +256,7 @@ namespace SevenUpdate
         }
 
         /// <summary>Sets the application jump list.</summary>
-        private static void SetJumpList()
+        static void SetJumpList()
         {
             var jumpList = new JumpList();
 
@@ -304,7 +304,7 @@ namespace SevenUpdate
         }
 
         /// <summary>The unregister application recovery and restart.</summary>
-        private static void UnregisterApplicationRecoveryAndRestart()
+        static void UnregisterApplicationRecoveryAndRestart()
         {
             if (Environment.OSVersion.Version.Major < 6)
             {

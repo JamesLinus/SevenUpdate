@@ -13,10 +13,10 @@ namespace SevenSoftware.Windows.Dialogs
     public abstract class DialogControl
     {
         /// <summary>The next ID.</summary>
-        private static int nextId = TaskDialogDefaults.MinimumDialogControlId;
+        static int nextId = TaskDialogDefaults.MinimumDialogControlId;
 
         /// <summary>The control name.</summary>
-        private string name;
+        string name;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="DialogControl" /> class. Creates a new instance of a dialog

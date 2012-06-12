@@ -9,7 +9,7 @@ namespace SharpBits.Base
     public class JobTimes
     {
         /// <summary>The current <c>JobTimes</c> for the <c>BitsJob</c>.</summary>
-        private BGJobTimes jobTimes;
+        BGJobTimes jobTimes;
 
         /// <summary>Initializes a new instance of the <see cref="JobTimes" /> class.</summary>
         /// <param name="jobTimes">The job times.</param>

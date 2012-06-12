@@ -12,7 +12,7 @@ namespace SevenSoftware.Windows.Controls
     public class AdornerLabel : Adorner
     {
         /// <summary>The textBlock.</summary>
-        private readonly TextBlock textBlock;
+        readonly TextBlock textBlock;
 
         /// <summary>Initializes a new instance of the <see cref="AdornerLabel" /> class.</summary>
         /// <param name="adornedElement">The adorned element.</param>

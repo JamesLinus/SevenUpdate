@@ -19,19 +19,19 @@ namespace SevenUpdate
     public sealed class RegistryItem : INotifyPropertyChanged
     {
         /// <summary>The action to perform on the <c>RegistryItem</c>.</summary>
-        private RegistryAction action;
+        RegistryAction action;
 
         /// <summary>The data for the key value.</summary>
-        private string data;
+        string data;
 
         /// <summary>The registry key and hive.</summary>
-        private string key;
+        string key;
 
         /// <summary>The value for the registry key.</summary>
-        private string keyValue;
+        string keyValue;
 
         /// <summary>The type of the value.</summary>
-        private RegistryValueKind valueKind;
+        RegistryValueKind valueKind;
 
         /// <summary>Occurs when a property has changed.</summary>
         public event PropertyChangedEventHandler PropertyChanged;
@@ -123,7 +123,7 @@ namespace SevenUpdate
 
         /// <summary>When a property has changed, call the <c>OnPropertyChanged</c> Event.</summary>
         /// <param name="name">The name of the property that changed.</param>
-        private void OnPropertyChanged(string name)
+        void OnPropertyChanged(string name)
         {
             PropertyChangedEventHandler handler = this.PropertyChanged;
 

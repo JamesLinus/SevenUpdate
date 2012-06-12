@@ -17,25 +17,25 @@ namespace SevenUpdate
     public sealed class Sua : INotifyPropertyChanged
     {
         /// <summary>The <c>Uri</c> for the application's website.</summary>
-        private string appUrl;
+        string appUrl;
 
         /// <summary>The directory where the application is installed.</summary>
-        private string directory;
+        string directory;
 
         /// <summary>The help website <c>Uri</c> of the application.</summary>
-        private string helpUrl;
+        string helpUrl;
 
         /// <summary>Indicates whether the SUA is enabled with Seven Update (SDK does not use this value).</summary>
-        private bool isEnabled;
+        bool isEnabled;
 
         /// <summary>Indicates the cpu platform the application can run under.</summary>
-        private Platform platform;
+        Platform platform;
 
         /// <summary>The <c>Uri</c> pointing to the sui file containing the application updates.</summary>
-        private string suiUrl;
+        string suiUrl;
 
         /// <summary>The name of the value to the registry key that contains the application directory location.</summary>
-        private string valueName;
+        string valueName;
 
         /// <summary>Initializes a new instance of the <see cref="Sua" /> class.</summary>
         /// <param name="name">The collection of localized update names.</param>
@@ -248,7 +248,7 @@ namespace SevenUpdate
         /// <summary>Fires the OnPropertyChanged Event with the collection changes.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The event data.</param>
-        private void DescriptionCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        void DescriptionCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             this.OnPropertyChanged("Description");
         }
@@ -256,14 +256,14 @@ namespace SevenUpdate
         /// <summary>Fires the OnPropertyChanged Event with the collection changes.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The event data.</param>
-        private void NameCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        void NameCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             this.OnPropertyChanged("Name");
         }
 
         /// <summary>When a property has changed, call the <c>OnPropertyChanged</c> Event.</summary>
         /// <param name="propertyName">The name of the property.</param>
-        private void OnPropertyChanged(string propertyName)
+        void OnPropertyChanged(string propertyName)
         {
             PropertyChangedEventHandler handler = this.PropertyChanged;
 
@@ -276,7 +276,7 @@ namespace SevenUpdate
         /// <summary>Fires the OnPropertyChanged Event with the collection changes.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The event data.</param>
-        private void PublisherCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        void PublisherCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             this.OnPropertyChanged("Publisher");
         }

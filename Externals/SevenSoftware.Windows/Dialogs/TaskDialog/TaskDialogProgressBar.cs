@@ -11,13 +11,13 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
     public class TaskDialogProgressBar : TaskDialogBar
     {
         /// <summary>The maximum value.</summary>
-        private int maximum = TaskDialogDefaults.ProgressBarMaximumValue;
+        int maximum = TaskDialogDefaults.ProgressBarMaximumValue;
 
         /// <summary>The minimum value.</summary>
-        private int minimum;
+        int minimum;
 
         /// <summary>The current progress bar value.</summary>
-        private int value;
+        int value;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="TaskDialogProgressBar" /> class. Creates a new instance of

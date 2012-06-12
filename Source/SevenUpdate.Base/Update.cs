@@ -21,28 +21,28 @@ namespace SevenUpdate
     public sealed class Update : INotifyPropertyChanged
     {
         /// <summary>The source main location to download files for the update.</summary>
-        private string downloadUrl;
+        string downloadUrl;
 
         /// <summary>Indicates if the update is hidden.</summary>
-        private bool hidden;
+        bool hidden;
 
         /// <summary>Indicates the importance type of the update.</summary>
-        private Importance importance;
+        Importance importance;
 
         /// <summary>The Uri pointing to a resource to find more information about the update.</summary>
-        private string infoUrl;
+        string infoUrl;
 
         /// <summary>The Uri pointing to the software license for the application/update.</summary>
-        private string licenseUrl;
+        string licenseUrl;
 
         /// <summary>The formatted date string depicting the release date of the update.</summary>
-        private string releaseDate;
+        string releaseDate;
 
         /// <summary>Indicates if the update is selected.</summary>
-        private bool selected;
+        bool selected;
 
         /// <summary>The total download size in bytes of the update.</summary>
-        private ulong size;
+        ulong size;
 
         /// <summary>Initializes a new instance of the <see cref="Update" /> class.</summary>
         /// <param name="name">The collection of localized update names.</param>
@@ -282,7 +282,7 @@ namespace SevenUpdate
         /// <summary>Fires the OnPropertyChanged Event with the collection changes.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The event data.</param>
-        private void DescriptionCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        void DescriptionCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             this.OnPropertyChanged("Description");
         }
@@ -290,14 +290,14 @@ namespace SevenUpdate
         /// <summary>Fires the OnPropertyChanged Event with the collection changes.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The event data.</param>
-        private void NameCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        void NameCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             this.OnPropertyChanged("Name");
         }
 
         /// <summary>When a property has changed, call the <c>OnPropertyChanged</c> Event.</summary>
         /// <param name="propertyName">The name of the property.</param>
-        private void OnPropertyChanged(string propertyName)
+        void OnPropertyChanged(string propertyName)
         {
             PropertyChangedEventHandler handler = this.PropertyChanged;
 

@@ -11,10 +11,10 @@ namespace SharpBits.Base
     public class BitsError
     {
         /// <summary>The error that occurred.</summary>
-        private readonly IBackgroundCopyError error;
+        readonly IBackgroundCopyError error;
 
         /// <summary>The job the error occurred on.</summary>
-        private readonly BitsJob job;
+        readonly BitsJob job;
 
         /// <summary>Initializes a new instance of the <see cref="BitsError" /> class.</summary>
         /// <param name="job">The job the error occurred on.</param>

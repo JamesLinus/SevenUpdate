@@ -17,7 +17,7 @@ namespace SevenUpdate
     public sealed class Sui : INotifyPropertyChanged
     {
         /// <summary>The application information.</summary>
-        private Sua appInfo;
+        Sua appInfo;
 
         /// <summary>Initializes a new instance of the <see cref="Sui" /> class.</summary>
         /// <param name="updates">The collection of updates for the application.</param>
@@ -73,7 +73,7 @@ namespace SevenUpdate
 
         /// <summary>When a property has changed, call the <c>OnPropertyChanged</c> Event.</summary>
         /// <param name="name">The name of the property that changed.</param>
-        private void OnPropertyChanged(string name)
+        void OnPropertyChanged(string name)
         {
             PropertyChangedEventHandler handler = this.PropertyChanged;
 

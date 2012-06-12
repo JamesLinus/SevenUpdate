@@ -28,7 +28,7 @@ namespace SevenUpdate
         public static readonly string AppDir = Path.GetDirectoryName(Assembly.GetEntryAssembly().Location);
 
         /// <summary>Indicates if a system reboot is needed.</summary>
-        private static bool rebootNeeded;
+        static bool rebootNeeded;
 
         /// <summary>Occurs when an error occurs.</summary>
         public static event EventHandler<ErrorOccurredEventArgs> ErrorOccurred;
@@ -659,7 +659,7 @@ namespace SevenUpdate
         /// <param name="value">The value to check the string for.</param>
         /// <param name="comparisonType">Type of the comparison.</param>
         /// <returns><c>True</c> if the string contains the specified value; otherwise, <c>False</c>.</returns>
-        private static bool Contains(this string original, string value, StringComparison comparisonType)
+        static bool Contains(this string original, string value, StringComparison comparisonType)
         {
             return original.IndexOf(value, comparisonType) >= 0;
         }
@@ -668,7 +668,7 @@ namespace SevenUpdate
         /// <param name="fileName">The file that contains the object to DeSerialize.</param>
         /// <returns>Returns the object.</returns>
         /// <typeparam name="T">The class to deserialize.</typeparam>
-        private static T DeserializeFile<T>(string fileName) where T : class
+        static T DeserializeFile<T>(string fileName) where T : class
         {
             T obj;
             using (FileStream file = File.OpenRead(fileName))
@@ -683,7 +683,7 @@ namespace SevenUpdate
         /// <param name="stream">The Stream to deserialize.</param>
         /// <returns>Returns the object.</returns>
         /// <typeparam name="T">The class to deserialize.</typeparam>
-        private static T DeserializeStream<T>(Stream stream) where T : class
+        static T DeserializeStream<T>(Stream stream) where T : class
         {
             stream.Position = 0;
             return Serializer.Deserialize<T>(stream);
@@ -695,7 +695,7 @@ namespace SevenUpdate
         /// <param name="replaceValue">A string to use to replace the find string in the complete string.</param>
         /// <param name="ignoreCase">If set to <c>True</c> case is ignored.</param>
         /// <returns>The <c>StringBuilder</c> with replacements.</returns>
-        private static StringBuilder Replace(this StringBuilder sb, string find, string replaceValue, bool ignoreCase)
+        static StringBuilder Replace(this StringBuilder sb, string find, string replaceValue, bool ignoreCase)
         {
             if (sb == null || find == null)
             {
@@ -748,7 +748,7 @@ namespace SevenUpdate
         /// <param name="item">The object to serialize.</param>
         /// <param name="fileName">The location of a file that will be serialized.</param>
         /// <typeparam name="T">The class to serialize.</typeparam>
-        private static void SerializeFile<T>(T item, string fileName) where T : class
+        static void SerializeFile<T>(T item, string fileName) where T : class
         {
             try
             {

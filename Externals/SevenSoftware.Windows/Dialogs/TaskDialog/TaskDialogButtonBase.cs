@@ -17,13 +17,13 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
     public abstract class TaskDialogButtonBase : TaskDialogControl
     {
         /// <summary>A value indicating whether this button is the default button,</summary>
-        private bool defaultControl;
+        bool defaultControl;
 
         /// <summary>A value indicating whether the button is enabled.</summary>
-        private bool enabled = true;
+        bool enabled = true;
 
         /// <summary>The button text.</summary>
-        private string text;
+        string text;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="TaskDialogButtonBase" /> class. Creates a new instance on a

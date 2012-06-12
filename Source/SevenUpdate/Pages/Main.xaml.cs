@@ -25,13 +25,13 @@ namespace SevenUpdate.Pages
     public sealed partial class Main
     {
         /// <summary>Indicates if the page was already initialized.</summary>
-        private static bool init;
+        static bool init;
 
         /// <summary>Indicates if Seven Update will only install updates.</summary>
-        private static bool isInstallOnly;
+        static bool isInstallOnly;
 
         /// <summary>A timer to check if seven update is trying to connect.</summary>
-        private Timer timer;
+        Timer timer;
 
         /// <summary>Initializes a new instance of the <see cref="Main" /> class.</summary>
         public Main()
@@ -60,13 +60,13 @@ namespace SevenUpdate.Pages
 
         /// <summary>Updates the UI when the downloading of updates completes.</summary>
         /// <param name="e">The <c>SevenUpdate.DownloadCompletedEventArgs</c> instance containing the event data.</param>
-        private static void DownloadCompleted(DownloadCompletedEventArgs e)
+        static void DownloadCompleted(DownloadCompletedEventArgs e)
         {
             Core.Instance.UpdateAction = e.ErrorOccurred ? UpdateAction.ErrorOccurred : UpdateAction.Installing;
         }
 
         /// <summary>Downloads updates.</summary>
-        private static void DownloadInstallUpdates()
+        static void DownloadInstallUpdates()
         {
             for (int x = 0; x < Core.Applications.Count; x++)
             {
@@ -130,7 +130,7 @@ namespace SevenUpdate.Pages
         /// <summary>Checks for updates after settings were changed.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.EventArgs</c> instance containing the event data.</param>
-        private static void SettingsChanged(object sender, EventArgs e)
+        static void SettingsChanged(object sender, EventArgs e)
         {
             Core.CheckForUpdates(true);
         }
@@ -138,7 +138,7 @@ namespace SevenUpdate.Pages
         /// <summary>Checks for updates.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.</param>
-        private void CheckForUpdates(object sender, MouseButtonEventArgs e)
+        void CheckForUpdates(object sender, MouseButtonEventArgs e)
         {
             Core.CheckForUpdates();
         }
@@ -146,7 +146,7 @@ namespace SevenUpdate.Pages
         /// <summary>Check if Seven Update is still trying to connect to <c>WcfService</c>.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Timers.ElapsedEventArgs</c> instance containing the event data.</param>
-        private void CheckIfConnecting(object sender, ElapsedEventArgs e)
+        void CheckIfConnecting(object sender, ElapsedEventArgs e)
         {
             this.timer.Enabled = false;
             this.timer.Stop();
@@ -161,7 +161,7 @@ namespace SevenUpdate.Pages
         /// <summary>Updates the UI when the downloading of updates has completed.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>SevenUpdate.DownloadCompletedEventArgs</c> instance containing the event data.</param>
-        private void DownloadCompleted(object sender, DownloadCompletedEventArgs e)
+        void DownloadCompleted(object sender, DownloadCompletedEventArgs e)
         {
             if (!this.Dispatcher.CheckAccess())
             {
@@ -175,7 +175,7 @@ namespace SevenUpdate.Pages
 
         /// <summary>Updates the UI when the download progress has changed.</summary>
         /// <param name="e">The DownloadProgress data.</param>
-        private void DownloadProgressChanged(DownloadProgressChangedEventArgs e)
+        void DownloadProgressChanged(DownloadProgressChangedEventArgs e)
         {
             if (Core.IsReconnect)
             {
@@ -210,7 +210,7 @@ namespace SevenUpdate.Pages
         /// <summary>Updates the UI when the download progress has changed.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>SevenUpdate.DownloadProgressChangedEventArgs</c> instance containing the event data.</param>
-        private void DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        void DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
             if (!this.Dispatcher.CheckAccess())
             {
@@ -224,7 +224,7 @@ namespace SevenUpdate.Pages
 
         /// <summary>Sets the UI when an error occurs.</summary>
         /// <param name="e">The <c>SevenUpdate.ErrorOccurredEventArgs</c> instance containing the event data.</param>
-        private void ErrorOccurred(ErrorOccurredEventArgs e)
+        void ErrorOccurred(ErrorOccurredEventArgs e)
         {
             Core.Instance.UpdateAction = UpdateAction.ErrorOccurred;
             switch (e.ErrorType)
@@ -245,7 +245,7 @@ namespace SevenUpdate.Pages
         /// <summary>Sets the UI when an error has occurred.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>SevenUpdate.ErrorOccurredEventArgs</c> instance containing the event data.</param>
-        private void ErrorOccurred(object sender, ErrorOccurredEventArgs e)
+        void ErrorOccurred(object sender, ErrorOccurredEventArgs e)
         {
             if (!this.Dispatcher.CheckAccess())
             {
@@ -260,7 +260,7 @@ namespace SevenUpdate.Pages
         /// <summary>Loads settings and UI for the page.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
-        private void Init(object sender, RoutedEventArgs e)
+        void Init(object sender, RoutedEventArgs e)
         {
             if (Utilities.RebootNeeded)
             {
@@ -373,7 +373,7 @@ namespace SevenUpdate.Pages
 
         /// <summary>Updates the UI when the installation has completed.</summary>
         /// <param name="e">The InstallCompleted data.</param>
-        private void InstallCompleted(InstallCompletedEventArgs e)
+        void InstallCompleted(InstallCompletedEventArgs e)
         {
             Settings.Default.LastInstall = DateTime.Now;
             Core.Instance.IsAdmin = false;
@@ -422,7 +422,7 @@ namespace SevenUpdate.Pages
         /// <summary>Sets the UI when the installation of updates has completed.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>SevenUpdate.InstallCompletedEventArgs</c> instance containing the event data.</param>
-        private void InstallCompleted(object sender, InstallCompletedEventArgs e)
+        void InstallCompleted(object sender, InstallCompletedEventArgs e)
         {
             if (!this.Dispatcher.CheckAccess())
             {
@@ -436,7 +436,7 @@ namespace SevenUpdate.Pages
 
         /// <summary>Updates the UI when the installation progress has changed.</summary>
         /// <param name="e">The InstallProgress data.</param>
-        private void InstallProgressChanged(InstallProgressChangedEventArgs e)
+        void InstallProgressChanged(InstallProgressChangedEventArgs e)
         {
             if (Core.IsReconnect)
             {
@@ -472,7 +472,7 @@ namespace SevenUpdate.Pages
         /// <summary>Sets the UI when the install progress has changed.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>SevenUpdate.InstallProgressChangedEventArgs</c> instance containing the event data.</param>
-        private void InstallProgressChanged(object sender, InstallProgressChangedEventArgs e)
+        void InstallProgressChanged(object sender, InstallProgressChangedEventArgs e)
         {
             if (!this.Dispatcher.CheckAccess())
             {
@@ -487,7 +487,7 @@ namespace SevenUpdate.Pages
         /// <summary>Opens a browser and navigates to the Uri.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.Navigation.RequestNavigateEventArgs</c> instance containing the event data.</param>
-        private void NavigateToGoogleCode(object sender, RequestNavigateEventArgs e)
+        void NavigateToGoogleCode(object sender, RequestNavigateEventArgs e)
         {
             Utilities.StartProcess(e.Uri.AbsoluteUri);
             e.Handled = true;
@@ -496,7 +496,7 @@ namespace SevenUpdate.Pages
         /// <summary>Navigates to the Options page.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.</param>
-        private void NavigateToOptions(object sender, MouseButtonEventArgs e)
+        void NavigateToOptions(object sender, MouseButtonEventArgs e)
         {
             MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate;component/Pages/Options.xaml", UriKind.Relative));
         }
@@ -504,7 +504,7 @@ namespace SevenUpdate.Pages
         /// <summary>Navigates to the Restore Updates page.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.</param>
-        private void NavigateToRestoreUpdates(object sender, MouseButtonEventArgs e)
+        void NavigateToRestoreUpdates(object sender, MouseButtonEventArgs e)
         {
             MainWindow.NavService.Navigate(
                 new Uri(@"/SevenUpdate;component/Pages/RestoreUpdates.xaml", UriKind.Relative));
@@ -513,7 +513,7 @@ namespace SevenUpdate.Pages
         /// <summary>Navigates to the Update History page.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.</param>
-        private void NavigateToUpdateHistory(object sender, MouseButtonEventArgs e)
+        void NavigateToUpdateHistory(object sender, MouseButtonEventArgs e)
         {
             MainWindow.NavService.Navigate(
                 new Uri(@"/SevenUpdate;component/Pages/UpdateHistory.xaml", UriKind.Relative));
@@ -522,7 +522,7 @@ namespace SevenUpdate.Pages
         /// <summary>Opens a browser and navigates to the Uri.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.Navigation.RequestNavigateEventArgs</c> instance containing the event data.</param>
-        private void OpenErrorLog(object sender, RequestNavigateEventArgs e)
+        void OpenErrorLog(object sender, RequestNavigateEventArgs e)
         {
             string errorLog = Path.Combine(App.UserStore, "error.log");
 
@@ -537,7 +537,7 @@ namespace SevenUpdate.Pages
         /// <summary>Performs an action based on the <c>UpdateAction</c>.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
-        private void PerformAction(object sender, RoutedEventArgs e)
+        void PerformAction(object sender, RoutedEventArgs e)
         {
             switch (Core.Instance.UpdateAction)
             {
@@ -568,7 +568,7 @@ namespace SevenUpdate.Pages
 
         /// <summary>Updates the UI the search for updates has completed.</summary>
         /// <param name="e">The SearchComplete data.</param>
-        private void SearchCompleted(SearchCompletedEventArgs e)
+        void SearchCompleted(SearchCompletedEventArgs e)
         {
             if (Core.Instance.UpdateAction == UpdateAction.ErrorOccurred)
             {
@@ -693,7 +693,7 @@ namespace SevenUpdate.Pages
         /// <summary>Sets the UI when the search for updates has completed.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>SevenUpdate.SearchCompletedEventArgs</c> instance containing the event data.</param>
-        private void SearchCompleted(object sender, SearchCompletedEventArgs e)
+        void SearchCompleted(object sender, SearchCompletedEventArgs e)
         {
             if (!this.Dispatcher.CheckAccess())
             {
@@ -708,7 +708,7 @@ namespace SevenUpdate.Pages
         /// <summary>Handles the MouseDown event of the ImportantUpdates control.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.</param>
-        private void SelectImportantUpdates(object sender, MouseButtonEventArgs e)
+        void SelectImportantUpdates(object sender, MouseButtonEventArgs e)
         {
             UpdateInfo.DisplayOptionalUpdates = false;
             MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate;component/Pages/UpdateInfo.xaml", UriKind.Relative));
@@ -717,7 +717,7 @@ namespace SevenUpdate.Pages
         /// <summary>Selects optional updates and navigates to the <c>UpdateInfo</c> page.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.</param>
-        private void SelectOptionalUpdates(object sender, MouseButtonEventArgs e)
+        void SelectOptionalUpdates(object sender, MouseButtonEventArgs e)
         {
             UpdateInfo.DisplayOptionalUpdates = true;
             MainWindow.NavService.Navigate(new Uri(@"/SevenUpdate;component/Pages/UpdateInfo.xaml", UriKind.Relative));
@@ -725,7 +725,7 @@ namespace SevenUpdate.Pages
 
         /// <summary>Sets the UI based on the <c>UpdateAction</c>.</summary>
         /// <param name="action">The action.</param>
-        private void SetUI(UpdateAction action)
+        void SetUI(UpdateAction action)
         {
             this.btnAction.IsShieldNeeded = false;
             this.btnAction.Visibility = Visibility.Collapsed;
@@ -873,7 +873,7 @@ namespace SevenUpdate.Pages
         /// <summary>Sets the UI when the update action is changed.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.EventArgs</c> instance containing the event data.</param>
-        private void SetUI(object sender, EventArgs e)
+        void SetUI(object sender, EventArgs e)
         {
             if (!this.Dispatcher.CheckAccess())
             {
@@ -888,7 +888,7 @@ namespace SevenUpdate.Pages
         /// <summary>Shows the About Dialog window.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.</param>
-        private void ShowAboutDialog(object sender, MouseButtonEventArgs e)
+        void ShowAboutDialog(object sender, MouseButtonEventArgs e)
         {
             var about = new About();
             about.ShowDialog();
@@ -897,7 +897,7 @@ namespace SevenUpdate.Pages
         /// <summary>Updates the UI when the update selection changes.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>UpdateInfo.UpdateSelectionChangedEventArgs</c> instance containing the event data.</param>
-        private void UpdateSelectionChanged(object sender, UpdateInfo.UpdateSelectionChangedEventArgs e)
+        void UpdateSelectionChanged(object sender, UpdateInfo.UpdateSelectionChangedEventArgs e)
         {
             if (e.ImportantUpdates > 0)
             {
@@ -978,7 +978,7 @@ namespace SevenUpdate.Pages
         /// <summary>Changes the UI depending on whether Aero Glass is enabled.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>CompositionChangedEventArgs</c> instance containing the event data.</param>
-        private void UpdateUI(object sender, CompositionChangedEventArgs e)
+        void UpdateUI(object sender, CompositionChangedEventArgs e)
         {
             if (AeroGlass.IsGlassEnabled)
             {

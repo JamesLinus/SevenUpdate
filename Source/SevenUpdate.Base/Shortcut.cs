@@ -22,34 +22,34 @@ namespace SevenUpdate
     public sealed class Shortcut : INotifyPropertyChanged
     {
         /// <summary>The max feature length.</summary>
-        private const int MaxFeatureLength = 38;
+        const int MaxFeatureLength = 38;
 
         /// <summary>The max Guid length.</summary>
-        private const int MaxGuidLength = 38;
+        const int MaxGuidLength = 38;
 
         /// <summary>The max path.</summary>
-        private const int MaxPath = 260;
+        const int MaxPath = 260;
 
         /// <summary>The path path length.</summary>
-        private const int MaxPathLength = 1024;
+        const int MaxPathLength = 1024;
 
         /// <summary>The read constant.</summary>
-        private const uint Read = 0;
+        const uint Read = 0;
 
         /// <summary>The action to perform on the <c>Shortcut</c>.</summary>
-        private ShortcutAction action;
+        ShortcutAction action;
 
         /// <summary>The command line arguments for the shortcut.</summary>
-        private string arguments;
+        string arguments;
 
         /// <summary>The icon resource for the shortcut.</summary>
-        private string icon;
+        string icon;
 
         /// <summary>The physical location of the shortcut lnk file.</summary>
-        private string location;
+        string location;
 
         /// <summary>The file or folder that is executed by the shortcut.</summary>
-        private string target;
+        string target;
 
         /// <summary>Initializes a new instance of the <see cref="Shortcut" /> class.</summary>
         /// <param name="name">The collection of localized update names.</param>
@@ -94,7 +94,7 @@ namespace SevenUpdate
         [ComImport]
         [Guid("0000010c-0000-0000-c000-000000000046")]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-        private interface IPersist
+        interface IPersist
         {
             /// <summary>Gets the class ID.</summary>
             /// <param name="classId">The class ID.</param>
@@ -110,7 +110,7 @@ namespace SevenUpdate
         [ComImport]
         [Guid("0000010b-0000-0000-C000-000000000046")]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-        private interface IPersistFile : IPersist
+        interface IPersistFile : IPersist
         {
             /// <summary>Gets the class ID.</summary>
             /// <param name="classId">The class ID.</param>
@@ -155,7 +155,7 @@ namespace SevenUpdate
         [ComImport]
         [Guid("000214F9-0000-0000-C000-000000000046")]
         [InterfaceType(ComInterfaceType.InterfaceIsIUnknown)]
-        private interface IShellLink
+        interface IShellLink
         {
             /// <summary>Retrieves the path and file name of a Shell link object.</summary>
             /// <param name="file">The filename of the shortcut.</param>
@@ -456,7 +456,7 @@ namespace SevenUpdate
         /// <summary>Gets the target path from a Msi shortcut.</summary>
         /// <param name="shortcutPath">The path to the shortcut lnk file.</param>
         /// <returns>The resolved path to the shortcut.</returns>
-        private static string GetMsiTargetPath(string shortcutPath)
+        static string GetMsiTargetPath(string shortcutPath)
         {
             var product = new StringBuilder(MaxGuidLength + 1);
             var feature = new StringBuilder(MaxFeatureLength + 1);
@@ -480,7 +480,7 @@ namespace SevenUpdate
         /// <summary>Fires the OnPropertyChanged Event with the collection changes.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The event data.</param>
-        private void DescriptionCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        void DescriptionCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             this.OnPropertyChanged("Description");
         }
@@ -488,14 +488,14 @@ namespace SevenUpdate
         /// <summary>Fires the OnPropertyChanged Event with the collection changes.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The event data.</param>
-        private void NameCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        void NameCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
         {
             this.OnPropertyChanged("Name");
         }
 
         /// <summary>When a property has changed, call the <c>OnPropertyChanged</c> Event.</summary>
         /// <param name="propertyName">The name of the property.</param>
-        private void OnPropertyChanged(string propertyName)
+        void OnPropertyChanged(string propertyName)
         {
             PropertyChangedEventHandler handler = this.PropertyChanged;
 
@@ -507,31 +507,31 @@ namespace SevenUpdate
 
         /// <summary>The file time.</summary>
         [StructLayout(LayoutKind.Sequential)]
-        private struct FileTime
+        struct FileTime
         {
             /// <summary>The low-order part of the file time.</summary>
-            private readonly uint lowDateTime;
+            readonly uint lowDateTime;
 
             /// <summary>The high-order part of the file time.</summary>
-            private readonly uint highDateTime;
+            readonly uint highDateTime;
         }
 
         /// <summary>The win 32 find data.</summary>
         [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Unicode)]
-        private struct Win32FindData
+        struct Win32FindData
         {
             /// <summary>The file attributes.</summary>
-            private readonly uint fileAttributes;
+            readonly uint fileAttributes;
 
             /// <summary>A FileTime structure that specifies when a file or directory was created.</summary>
-            private readonly FileTime creationTime;
+            readonly FileTime creationTime;
 
             /// <summary>
             ///   For a file, the structure specifies when the file was last read from, written to, or for executable
             ///   files, run.For a directory, the structure specifies when the directory is created. If the underlying
             ///   file system does not support last access time, this member is zero.
             /// </summary>
-            private readonly FileTime lastAccessTime;
+            readonly FileTime lastAccessTime;
 
             /// <summary>
             ///   For a file, the structure specifies when the file was last written to, truncated, or overwritten, for
@@ -540,34 +540,34 @@ namespace SevenUpdate
             ///   directory is created. If the underlying file system does not support last write time, this member is
             ///   zero.
             /// </summary>
-            private readonly FileTime lastWriteTime;
+            readonly FileTime lastWriteTime;
 
             /// <summary>The high-order file size.</summary>
-            private readonly uint fileSizeHigh;
+            readonly uint fileSizeHigh;
 
             /// <summary>The low-order file size.</summary>
-            private readonly uint fileSizeLow;
+            readonly uint fileSizeLow;
 
             /// <summary>Reserved data.</summary>
-            private readonly uint reserved0;
+            readonly uint reserved0;
 
             /// <summary>Reserved data.</summary>
-            private readonly uint reserved1;
+            readonly uint reserved1;
 
             /// <summary>The name of the file.</summary>
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = MaxPath)]
-            private readonly string fileName;
+            readonly string fileName;
 
             /// <summary>The alternate name of the file.</summary>
             [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 14)]
-            private readonly string alternateFileName;
+            readonly string alternateFileName;
         }
 
         /// <summary>The c shell link.</summary>
         [Guid("00021401-0000-0000-C000-000000000046")]
         [ClassInterface(ClassInterfaceType.None)]
         [ComImport]
-        private class ShellLink
+        class ShellLink
         {
         }
     }

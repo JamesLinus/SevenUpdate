@@ -12,34 +12,34 @@ namespace SharpBits.Base
     public sealed partial class BitsJob
     {
         /// <summary>The BITS manager.</summary>
-        private readonly BitsManager manager;
+        readonly BitsManager manager;
 
         /// <summary>Indicates if the <c>BitsJob</c> has been disposed.</summary>
-        private bool disposed;
+        bool disposed;
 
         /// <summary>Data about the error.</summary>
-        private BitsError error;
+        BitsError error;
 
         /// <summary>The job GUID.</summary>
-        private Guid guid;
+        Guid guid;
 
         /// <summary>Occurs when a job has has an error occur.</summary>
-        private EventHandler<JobErrorNotificationEventArgs> jobError;
+        EventHandler<JobErrorNotificationEventArgs> jobError;
 
         /// <summary>Occurs when a job has been modified.</summary>
-        private EventHandler<JobNotificationEventArgs> jobModified;
+        EventHandler<JobNotificationEventArgs> jobModified;
 
         /// <summary>The times for the current job.</summary>
-        private JobTimes jobTimes;
+        JobTimes jobTimes;
 
         /// <summary>Occurs when a job as transferred.</summary>
-        private EventHandler<JobNotificationEventArgs> jobTransferred;
+        EventHandler<JobNotificationEventArgs> jobTransferred;
 
         /// <summary>The current progress of the job.</summary>
-        private JobProgress progress;
+        JobProgress progress;
 
         /// <summary>The proxy settings of the job.</summary>
-        private ProxySettings proxySettings;
+        ProxySettings proxySettings;
 
         /// <summary>Initializes a new instance of the <see cref="BitsJob" /> class.</summary>
         /// <param name="manager">The manager for the BITS.</param>
@@ -253,7 +253,7 @@ namespace SharpBits.Base
         {
             get
             {
-                BGJobType jobType = BGJobType.Unknown;
+                var jobType = BGJobType.Unknown;
                 try
                 {
                     this.Job.GetType(out jobType);
@@ -408,7 +408,7 @@ namespace SharpBits.Base
         {
             get
             {
-                BGJobPriority priority = BGJobPriority.Normal;
+                var priority = BGJobPriority.Normal;
                 try
                 {
                     this.Job.GetPriority(out priority);
@@ -468,7 +468,7 @@ namespace SharpBits.Base
         {
             get
             {
-                BGJobState state = BGJobState.Unknown;
+                var state = BGJobState.Unknown;
                 try
                 {
                     this.Job.GetState(out state);
@@ -488,11 +488,11 @@ namespace SharpBits.Base
 
         /// <summary>Gets or sets the current <c>BitsJob</c>.</summary>
         /// <value>The <c>BitsJob</c>.</value>
-        private IBackgroundCopyJob Job { get; set; }
+        IBackgroundCopyJob Job { get; set; }
 
         /// <summary>Gets or sets the notification interface.</summary>
         /// <value>The notification interface.</value>
-        private IBackgroundCopyCallback NotificationInterface
+        IBackgroundCopyCallback NotificationInterface
         {
             get
             {
@@ -714,7 +714,7 @@ namespace SharpBits.Base
 
         /// <summary>Releases unmanaged and - optionally - managed resources.</summary>
         /// <param name="disposing"><c>True</c> to release both managed and unmanaged resources; otherwise, <c>False</c> to release only unmanaged resources.</param>
-        private void Dispose(bool disposing)
+        void Dispose(bool disposing)
         {
             if (!this.disposed)
             {
@@ -746,10 +746,10 @@ namespace SharpBits.Base
     public sealed partial class BitsJob
     {
         /// <summary>The current job.</summary>
-        private readonly IBackgroundCopyJob2 job2;
+        readonly IBackgroundCopyJob2 job2;
 
         /// <summary>The current reply progress.</summary>
-        private JobReplyProgress replyProgress;
+        JobReplyProgress replyProgress;
 
         /// <summary>Gets or sets the notify command line parameters.</summary>
         /// <value>The notify command line parameters.</value>
@@ -1040,7 +1040,7 @@ namespace SharpBits.Base
     public sealed partial class BitsJob : IDisposable
     {
         /// <summary>The current job.</summary>
-        private readonly IBackgroundCopyJob3 job3;
+        readonly IBackgroundCopyJob3 job3;
 
         /// <summary>Gets or sets the file acl flags.</summary>
         /// <value>The file acl flags.</value>
@@ -1148,7 +1148,7 @@ namespace SharpBits.Base
     public sealed partial class BitsJob
     {
         /// <summary>The current job.</summary>
-        private readonly IBackgroundCopyJob4 job4;
+        readonly IBackgroundCopyJob4 job4;
 
         /// <summary>Gets or sets the peer caching flags.</summary>
         /// <value>The peer caching flags.</value>

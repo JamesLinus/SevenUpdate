@@ -13,7 +13,7 @@ namespace WPFLocalizeExtension.Engine
     {
         /// <summary>Registers the design odds format property</summary>
         [DesignOnly(true)]
-        private static readonly DependencyProperty DesignOddsFormatProperty =
+        static readonly DependencyProperty DesignOddsFormatProperty =
             DependencyProperty.RegisterAttached(
                 "DesignOddsFormat", 
                 typeof(OddsFormatType), 
@@ -21,16 +21,16 @@ namespace WPFLocalizeExtension.Engine
                 new PropertyMetadata(DefaultOddsFormatType, SetOddsFormatFromDependencyProperty));
 
         /// <summary>Holds a SyncRoot to be thread safe.</summary>
-        private static readonly object SyncRoot = new object();
+        static readonly object SyncRoot = new object();
 
         /// <summary>Holds the instance of singleton.</summary>
-        private static OddsFormatManager instance;
+        static OddsFormatManager instance;
 
         /// <summary>Holds the current chosen <c>OddsFormatType</c>.</summary>
-        private OddsFormatType oddsFormatType = DefaultOddsFormatType;
+        OddsFormatType oddsFormatType = DefaultOddsFormatType;
 
         /// <summary>Prevents a default instance of the OddsFormatManager class from being created. Static Constructor.</summary>
-        private OddsFormatManager()
+        OddsFormatManager()
         {
         }
 
@@ -92,14 +92,14 @@ namespace WPFLocalizeExtension.Engine
         }
 
         /// <summary>Gets the default odds format type</summary>
-        private static OddsFormatType DefaultOddsFormatType
+        static OddsFormatType DefaultOddsFormatType
         {
             get { return OddsFormatType.EU; }
         }
 
         /// <summary>Gets a value indicating whether the status of the design mode.</summary>
         /// <returns><c>True</c> if in design mode, else <c>False</c>.</returns>
-        private bool IsInDesignMode
+        bool IsInDesignMode
         {
             get { return DesignerProperties.GetIsInDesignMode(this); }
         }
@@ -164,8 +164,7 @@ namespace WPFLocalizeExtension.Engine
         /// <param name="obj">The dependency object</param>
         /// <param name="args">The event arguments</param>
         [DesignOnly(true)]
-        private static void SetOddsFormatFromDependencyProperty(
-            DependencyObject obj, DependencyPropertyChangedEventArgs args)
+        static void SetOddsFormatFromDependencyProperty(DependencyObject obj, DependencyPropertyChangedEventArgs args)
         {
             if (!Instance.IsInDesignMode)
             {

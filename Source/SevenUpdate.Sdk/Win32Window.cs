@@ -10,10 +10,10 @@ namespace SevenUpdate.Sdk
     public sealed class Win32Window : IWin32Window, IDisposable
     {
         /// <summary>The pointer to the window.</summary>
-        private readonly IntPtr windowHandle;
+        readonly IntPtr windowHandle;
 
         /// <summary>Indicates if the window is disposed.</summary>
-        private bool disposed;
+        bool disposed;
 
         /// <summary>Initializes a new instance of the <see cref="Win32Window" /> class.</summary>
         /// <param name="handle">The handle.</param>
@@ -46,7 +46,7 @@ namespace SevenUpdate.Sdk
 
         /// <summary>Releases unmanaged and - optionally - managed resources.</summary>
         /// <param name="disposing">Release both managed and unmanaged resources; <c>False</c> to release only unmanaged resources.</param>
-        private void Dispose(bool disposing)
+        void Dispose(bool disposing)
         {
             lock (this)
             {

@@ -17,10 +17,10 @@ namespace SevenUpdate.Sdk
     public class Project : INotifyPropertyChanged
     {
         /// <summary>The collection of localized update names.</summary>
-        private readonly ObservableCollection<string> updateNames = new ObservableCollection<string>();
+        readonly ObservableCollection<string> updateNames = new ObservableCollection<string>();
 
         /// <summary>The localized name of the application.</summary>
-        private string applicationName;
+        string applicationName;
 
         /// <summary>Occurs when a property has changed.</summary>
         public event PropertyChangedEventHandler PropertyChanged;
@@ -61,7 +61,7 @@ namespace SevenUpdate.Sdk
 
         /// <summary>When a property has changed, call the <c>OnPropertyChanged</c> Event.</summary>
         /// <param name="name">The name of the property changed.</param>
-        private void OnPropertyChanged(string name)
+        void OnPropertyChanged(string name)
         {
             PropertyChangedEventHandler handler = this.PropertyChanged;
 

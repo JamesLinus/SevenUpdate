@@ -10,10 +10,10 @@ namespace SevenUpdate.Windows
     public sealed partial class UpdateDetails
     {
         /// <summary>The help and support url for the update.</summary>
-        private string helpUrl;
+        string helpUrl;
 
         /// <summary>The more update information url for the update.</summary>
-        private string infoUrl;
+        string infoUrl;
 
         /// <summary>Initializes a new instance of the <see cref="UpdateDetails" /> class.</summary>
         public UpdateDetails()
@@ -59,7 +59,7 @@ namespace SevenUpdate.Windows
         /// <summary>Launches the Help <c>Uri</c>.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.</param>
-        private void NavigateToHelpUrl(object sender, MouseButtonEventArgs e)
+        void NavigateToHelpUrl(object sender, MouseButtonEventArgs e)
         {
             Utilities.StartProcess(this.helpUrl);
         }
@@ -67,7 +67,7 @@ namespace SevenUpdate.Windows
         /// <summary>Launches the More Information <c>Uri</c>.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.</param>
-        private void NavigateToInfoUrl(object sender, MouseButtonEventArgs e)
+        void NavigateToInfoUrl(object sender, MouseButtonEventArgs e)
         {
             Utilities.StartProcess(this.infoUrl);
         }

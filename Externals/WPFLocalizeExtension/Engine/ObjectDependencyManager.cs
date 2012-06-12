@@ -11,7 +11,7 @@ namespace WPFLocalizeExtension.Engine
     public static class ObjectDependencyManager
     {
         /// <summary>This member holds the list of all <c>WeakReference</c>s and their appropriate objects.</summary>
-        private static readonly Dictionary<object, List<WeakReference>> InternalList =
+        static readonly Dictionary<object, List<WeakReference>> InternalList =
             new Dictionary<object, List<WeakReference>>();
 
         /// <summary>Adds an object dependency</summary>
@@ -71,7 +71,7 @@ namespace WPFLocalizeExtension.Engine
         /// <summary>This method cleans up all independent (!<c>WeakReference</c>.IsAlive) objects or a single object.</summary>
         /// <param name="value">If defined, the associated object dependency will be removed instead of a full CleanUp.</param>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        private static void CleanUp(object value = null)
+        static void CleanUp(object value = null)
         {
             // if a particular object is passed, remove it.
             if (value != null)

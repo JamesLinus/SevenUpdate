@@ -23,82 +23,82 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         ///   via static Show() will have identical parameters, we'll create one TaskDialog and treat it as a
         ///   NativeTaskDialog generator for all static Show() calls.
         /// </summary>
-        private static TaskDialog staticDialog;
+        static TaskDialog staticDialog;
 
         /// <summary>The collection of buttons displayed on the TaskDialog</summary>
-        private List<TaskDialogButtonBase> buttons = new List<TaskDialogButtonBase>();
+        List<TaskDialogButtonBase> buttons = new List<TaskDialogButtonBase>();
 
         /// <summary>Indicates whether the dialog can be canceled</summary>
-        private bool canCancel;
+        bool canCancel;
 
         /// <summary>The caption for the dialog</summary>
-        private string caption;
+        string caption;
 
         /// <summary>The text to display for the checkbox</summary>
-        private string checkBoxText;
+        string checkBoxText;
 
         /// <summary>The collection of commandlinks to show on the dialog</summary>
-        private List<TaskDialogButtonBase> commandLinks = new List<TaskDialogButtonBase>();
+        List<TaskDialogButtonBase> commandLinks = new List<TaskDialogButtonBase>();
 
         /// <summary>The collection of controls to show on the dialog</summary>
-        private DialogControlCollection<TaskDialogControl> controls;
+        DialogControlCollection<TaskDialogControl> controls;
 
         /// <summary>The text for the collapsed details</summary>
-        private string detailsCollapsedLabel;
+        string detailsCollapsedLabel;
 
         /// <summary>The text when the details are expanded.</summary>
-        private bool detailsExpanded;
+        bool detailsExpanded;
 
         /// <summary>The label for the details expander control.</summary>
-        private string detailsExpandedLabel;
+        string detailsExpandedLabel;
 
         /// <summary>The text to show when the details section is expanded.</summary>
-        private string detailsExpandedText;
+        string detailsExpandedText;
 
         /// <summary>Indicates if the object is disposed.</summary>
-        private bool disposed;
+        bool disposed;
 
         /// <summary>The expansion mode for the details</summary>
-        private TaskDialogExpandedDetailsLocation expansionMode;
+        TaskDialogExpandedDetailsLocation expansionMode;
 
         /// <summary>Indicates of the footer checkbox is checked</summary>
-        private bool? footerCheckBoxChecked;
+        bool? footerCheckBoxChecked;
 
         /// <summary>The icon to display on the footer</summary>
-        private TaskDialogStandardIcon footerIcon;
+        TaskDialogStandardIcon footerIcon;
 
         /// <summary>The text to display on the footer</summary>
-        private string footerText;
+        string footerText;
 
         /// <summary>Indicates a value indicating whether hyperlinks are enabled for urls</summary>
-        private bool hyperlinksEnabled;
+        bool hyperlinksEnabled;
 
         /// <summary>The icon to display on the dialog</summary>
-        private TaskDialogStandardIcon icon;
+        TaskDialogStandardIcon icon;
 
         /// <summary>The instruction text to display</summary>
-        private string instructionText;
+        string instructionText;
 
         /// <summary>The native dialog object</summary>
-        private NativeTaskDialog nativeDialog;
+        NativeTaskDialog nativeDialog;
 
         /// <summary>The window that owns this item.</summary>
-        private IntPtr ownerWindow;
+        IntPtr ownerWindow;
 
         /// <summary>The progress bar object for the dialog</summary>
-        private TaskDialogProgressBar progressBar;
+        TaskDialogProgressBar progressBar;
 
         /// <summary>The collection of radio buttons displayed on the dialog</summary>
-        private List<TaskDialogButtonBase> radioButtons = new List<TaskDialogButtonBase>();
+        List<TaskDialogButtonBase> radioButtons = new List<TaskDialogButtonBase>();
 
         /// <summary>The collection of standard buttons displayed on the task dialog</summary>
-        private TaskDialogStandardButtons standardButtons = TaskDialogStandardButtons.None;
+        TaskDialogStandardButtons standardButtons = TaskDialogStandardButtons.None;
 
         /// <summary>The location where the task dialog should be shown.</summary>
-        private TaskDialogStartupLocation startupLocation;
+        TaskDialogStartupLocation startupLocation;
 
         /// <summary>The main text to display on the dialog.</summary>
-        private string text;
+        string text;
 
         /// <summary>Initializes a new instance of the <see cref="TaskDialog" /> class. Creates a basic TaskDialog window</summary>
         public TaskDialog()
@@ -419,7 +419,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
 
         /// <summary>Gets a value indicating whether a native dialog is showing.</summary>
         /// <value><c>True</c> if a native dialog is showing; otherwise, <c>False</c>.</value>
-        private bool NativeDialogShowing
+        bool NativeDialogShowing
         {
             get
             {
@@ -797,8 +797,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Applies the elevated icons.</summary>
         /// <param name="settings">The dialog settings.</param>
         /// <param name="controls">The dialog controls.</param>
-        private static void ApplyElevatedIcons(
-            NativeTaskDialogSettings settings, IEnumerable<TaskDialogButtonBase> controls)
+        static void ApplyElevatedIcons(NativeTaskDialogSettings settings, IEnumerable<TaskDialogButtonBase> controls)
         {
             foreach (TaskDialogButton control in controls)
             {
@@ -817,7 +816,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Builds the button struct array.</summary>
         /// <param name="controls">The dialog buttons</param>
         /// <returns>An array of TaskDialogButtons.</returns>
-        private static TaskDialogButtonData[] BuildButtonStructArray(List<TaskDialogButtonBase> controls)
+        static TaskDialogButtonData[] BuildButtonStructArray(List<TaskDialogButtonBase> controls)
         {
             int totalButtons = controls.Count;
             var buttonStructs = new TaskDialogButtonData[totalButtons];
@@ -833,7 +832,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Constructs the dialog result.</summary>
         /// <param name="native">The native task dialog</param>
         /// <returns>The <c>TaskDialogResults</c>.</returns>
-        private static TaskDialogResult ConstructDialogResult(NativeTaskDialog native)
+        static TaskDialogResult ConstructDialogResult(NativeTaskDialog native)
         {
             Debug.Assert(
                 native.ShowState == DialogShowState.Closed, "dialog result being constructed for unshown dialog.");
@@ -858,7 +857,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Finds the default button id.</summary>
         /// <param name="controls">The collection of button controls.</param>
         /// <returns>The button id.</returns>
-        private static int FindDefaultButtonId(List<TaskDialogButtonBase> controls)
+        static int FindDefaultButtonId(List<TaskDialogButtonBase> controls)
         {
             List<TaskDialogButtonBase> defaults = controls.FindAll(control => control.Default);
 
@@ -878,7 +877,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Maps the button id to standard button.</summary>
         /// <param name="id">The button id.</param>
         /// <returns>The <c>TaskDialogButton</c>.</returns>
-        private static TaskDialogStandardButtons MapButtonIdToStandardButton(int id)
+        static TaskDialogStandardButtons MapButtonIdToStandardButton(int id)
         {
             switch ((TaskDialogCommonButtonReturnIds)id)
             {
@@ -912,7 +911,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <param name="instructionText">The instruction text.</param>
         /// <param name="caption">The caption for the dialog</param>
         /// <returns>The <c>TaskDialogResults</c>.</returns>
-        private static TaskDialogResult ShowCoreStatic(string text, string instructionText, string caption)
+        static TaskDialogResult ShowCoreStatic(string text, string instructionText, string caption)
         {
             // If no instance cached yet, create it.
             if (staticDialog == null)
@@ -932,7 +931,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
 
         /// <summary>Applies the control configuration.</summary>
         /// <param name="settings">The task dialog settings.</param>
-        private void ApplyControlConfiguration(NativeTaskDialogSettings settings)
+        void ApplyControlConfiguration(NativeTaskDialogSettings settings)
         {
             // Deal with progress bars/marquees.
             if (this.progressBar != null)
@@ -986,7 +985,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
 
         /// <summary>Applies the core dialog settings.</summary>
         /// <param name="settings">The dialog settings.</param>
-        private void ApplyCoreSettings(NativeTaskDialogSettings settings)
+        void ApplyCoreSettings(NativeTaskDialogSettings settings)
         {
             this.ApplyGeneralNativeConfiguration(settings.NativeConfiguration);
             this.ApplyTextConfiguration(settings.NativeConfiguration);
@@ -996,7 +995,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
 
         /// <summary>Applies the core settings.</summary>
         /// <param name="dialogConfig">The settings for the dialog</param>
-        private void ApplyGeneralNativeConfiguration(TaskDialogConfiguration dialogConfig)
+        void ApplyGeneralNativeConfiguration(TaskDialogConfiguration dialogConfig)
         {
             // If an owner wasn't specifically specified, we'll use the app's main window.
             if (this.ownerWindow != IntPtr.Zero)
@@ -1012,10 +1011,10 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
 
         /// <summary>Applies the option configuration.</summary>
         /// <param name="dialogConfig">The dialog config.</param>
-        private void ApplyOptionConfiguration(TaskDialogConfiguration dialogConfig)
+        void ApplyOptionConfiguration(TaskDialogConfiguration dialogConfig)
         {
             // Handle options - start with no options set.
-            TaskDialogOptions options = TaskDialogOptions.None;
+            var options = TaskDialogOptions.None;
             if (this.canCancel)
             {
                 options |= TaskDialogOptions.AllowCancel;
@@ -1059,7 +1058,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
 
         /// <summary>Applies the supplemental settings.</summary>
         /// <param name="settings">The dialog settings.</param>
-        private void ApplySupplementalSettings(NativeTaskDialogSettings settings)
+        void ApplySupplementalSettings(NativeTaskDialogSettings settings)
         {
             if (this.progressBar != null)
             {
@@ -1080,7 +1079,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
 
         /// <summary>Sets important text properties.</summary>
         /// <param name="dialogConfig">An instance of a <see cref="TaskDialogConfiguration" /> object.</param>
-        private void ApplyTextConfiguration(TaskDialogConfiguration dialogConfig)
+        void ApplyTextConfiguration(TaskDialogConfiguration dialogConfig)
         {
             // note that nulls or empty strings are fine here.
             dialogConfig.Content = this.text;
@@ -1094,7 +1093,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         }
 
         /// <summary>Cleans up data and structs from a single native dialog Show() invocation.</summary>
-        private void CleanUp()
+        void CleanUp()
         {
             // Reset values that would be considered 'volatile' in a given instance.
             if (this.progressBar != null)
@@ -1131,14 +1130,14 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Gets the button for id.</summary>
         /// <param name="id">The button id.</param>
         /// <returns>The <c>TaskDialogButton</c>.</returns>
-        private TaskDialogButtonBase GetButtonForId(int id)
+        TaskDialogButtonBase GetButtonForId(int id)
         {
             return (TaskDialogButtonBase)this.controls.GetControlbyId(id);
         }
 
         /// <summary>Shows the core dialog</summary>
         /// <returns>Returns the result of the <c>TaskDialog</c>.</returns>
-        private TaskDialogResult ShowCore()
+        TaskDialogResult ShowCore()
         {
             TaskDialogResult result;
 
@@ -1176,7 +1175,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         }
 
         /// <summary>Sorts the dialog controls.</summary>
-        private void SortDialogControls()
+        void SortDialogControls()
         {
             foreach (var control in this.controls)
             {
@@ -1228,7 +1227,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
 
         /// <summary>Throws if dialog showing.</summary>
         /// <param name="message">The message to be shown in the exception.</param>
-        private void ThrowIfDialogShowing(string message)
+        void ThrowIfDialogShowing(string message)
         {
             if (this.NativeDialogShowing)
             {
@@ -1237,7 +1236,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         }
 
         /// <summary>Validates the current dialog settings.</summary>
-        private void ValidateCurrentDialogSettings()
+        void ValidateCurrentDialogSettings()
         {
             if (this.footerCheckBoxChecked.HasValue && this.footerCheckBoxChecked.Value
                 && string.IsNullOrEmpty(this.checkBoxText))

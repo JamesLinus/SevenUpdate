@@ -7,10 +7,10 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
     public class TaskDialogButton : TaskDialogButtonBase
     {
         /// <summary>Indicates whether to show the UAC icon.</summary>
-        private bool showElevationIcon;
+        bool showElevationIcon;
 
         /// <summary>Indicates a value indicating whether the elevation icon will be used.</summary>
-        private bool useElevationIcon;
+        bool useElevationIcon;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="TaskDialogButton" /> class. Creates a new instance of this

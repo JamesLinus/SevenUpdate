@@ -14,10 +14,10 @@ namespace SharpBits.Base
     public sealed class BitsJobsDictionary : Dictionary<Guid, BitsJob>, IDisposable
     {
         /// <summary>The current BITS manager.</summary>
-        private readonly BitsManager manager;
+        readonly BitsManager manager;
 
         /// <summary>Indicates if the job collection as been disposed.</summary>
-        private bool disposed;
+        bool disposed;
 
         /// <summary>Initializes a new instance of the <see cref="BitsJobsDictionary" /> class.</summary>
         public BitsJobsDictionary()
@@ -46,7 +46,7 @@ namespace SharpBits.Base
         /// <summary>Initializes a new instance of the <see cref="BitsJobsDictionary" /> class.</summary>
         /// <param name="info">The serialization info.</param>
         /// <param name="context">The context.</param>
-        private BitsJobsDictionary(SerializationInfo info, StreamingContext context) : base(info, context)
+        BitsJobsDictionary(SerializationInfo info, StreamingContext context) : base(info, context)
         {
             if (info == null)
             {
@@ -58,7 +58,7 @@ namespace SharpBits.Base
 
         /// <summary>Gets or sets the jobs.</summary>
         /// <value>The jobs of the current collection.</value>
-        private IEnumBackgroundCopyJobs Jobs { get; set; }
+        IEnumBackgroundCopyJobs Jobs { get; set; }
 
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
         public void Dispose()
@@ -96,7 +96,7 @@ namespace SharpBits.Base
 
         /// <summary>Releases unmanaged and - optionally - managed resources.</summary>
         /// <param name="disposing"><c>True</c> to release both managed and unmanaged resources; otherwise, <c>False</c> to release only unmanaged resources.</param>
-        private void Dispose(bool disposing)
+        void Dispose(bool disposing)
         {
             if (!this.disposed)
             {
@@ -115,7 +115,7 @@ namespace SharpBits.Base
         }
 
         /// <summary>Updates the <c>BitsJob</c> collection.</summary>
-        private void Update()
+        void Update()
         {
             uint count;
             Dictionary<Guid, BitsJob> currentList = this.ToDictionary(entry => entry.Key, entry => entry.Value);

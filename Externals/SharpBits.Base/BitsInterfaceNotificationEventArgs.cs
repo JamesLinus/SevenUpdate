@@ -9,7 +9,7 @@ namespace SharpBits.Base
     public class BitsInterfaceNotificationEventArgs : NotificationEventArgs
     {
         /// <summary>The Com exception.</summary>
-        private readonly COMException exception;
+        readonly COMException exception;
 
         /// <summary>Initializes a new instance of the <see cref="BitsInterfaceNotificationEventArgs" /> class.</summary>
         /// <param name="job">The job the notification is for.</param>

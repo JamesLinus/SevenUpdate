@@ -9,7 +9,7 @@ namespace SharpBits.Base
     public class FileProgress
     {
         /// <summary>The current file progress.</summary>
-        private BGFileProgress fileProgress;
+        BGFileProgress fileProgress;
 
         /// <summary>Initializes a new instance of the <see cref="FileProgress" /> class.</summary>
         /// <param name="fileProgress">The file progress.</param>

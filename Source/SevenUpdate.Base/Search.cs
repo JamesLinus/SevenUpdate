@@ -18,16 +18,16 @@ namespace SevenUpdate
     public static class Search
     {
         /// <summary>The directory containing the app update files.</summary>
-        private static string downloadDirectory;
+        static string downloadDirectory;
 
         /// <summary>The number of important updates found.</summary>
-        private static int importantCount;
+        static int importantCount;
 
         /// <summary>The number of optional updates found.</summary>
-        private static int optionalCount;
+        static int optionalCount;
 
         /// <summary>The number of recommended updates found.</summary>
-        private static int recommendedCount;
+        static int recommendedCount;
 
         /// <summary>Occurs if an error occurred.</summary>
         public static event EventHandler<ErrorOccurredEventArgs> ErrorOccurred;
@@ -185,7 +185,7 @@ namespace SevenUpdate
         /// <summary>Checks for updates.</summary>
         /// <param name="app">A collection of applications to check for updates.</param>
         /// <returns>Returns <c>True</c> if found updates, otherwise <c>False</c>.</returns>
-        private static bool CheckForUpdates(ref Sui app)
+        static bool CheckForUpdates(ref Sui app)
         {
             app.AppInfo.Directory = Utilities.IsRegistryKey(app.AppInfo.Directory)
                                         ? Utilities.GetRegistryValue(
@@ -281,7 +281,7 @@ namespace SevenUpdate
         /// <param name="valueName">The name of the registry value, can be <c>null</c>.</param>
         /// <param name="platform">A value that indicates what cpu architecture the application supports.</param>
         /// <returns>The current download size of the update.</returns>
-        private static ulong IterateUpdate(ref Update update, string directory, string valueName, Platform platform)
+        static ulong IterateUpdate(ref Update update, string directory, string valueName, Platform platform)
         {
             ulong size = 0;
             for (int z = 0; z < update.Files.Count; z++)

@@ -39,25 +39,25 @@ namespace SevenUpdate.Admin
         public static readonly string HiddenFile = Path.Combine(AllUserStore, "Hidden.suh");
 
         /// <summary>The location of the update history file.</summary>
-        private static readonly string HistoryFile = Path.Combine(AllUserStore, "History.suh");
+        static readonly string HistoryFile = Path.Combine(AllUserStore, "History.suh");
 
         /// <summary>The WCF service host.</summary>
-        private static ElevatedProcessCallback client;
+        static ElevatedProcessCallback client;
 
         /// <summary>Gets or sets a value indicating whether the installation was executed by automatic settings.</summary>
-        private static bool isAutoInstall;
+        static bool isAutoInstall;
 
         /// <summary>Gets or sets a value indicating whether Seven Update UI is currently connected.</summary>
-        private static bool isClientConnected;
+        static bool isClientConnected;
 
         /// <summary>The notifyIcon used only when Auto Updating.</summary>
-        private static NotifyIcon notifyIcon;
+        static NotifyIcon notifyIcon;
 
         /// <summary>Indicates if the program is waiting.</summary>
-        private static bool waiting;
+        static bool waiting;
 
         /// <summary>Defines constants for the notification type, such has SearchComplete.</summary>
-        private enum NotifyType
+        enum NotifyType
         {
             /// <summary>Indicates searching is completed.</summary>
             SearchComplete, 
@@ -82,7 +82,7 @@ namespace SevenUpdate.Admin
         internal static bool IsInstalling { get; private set; }
 
         /// <summary>Gets Seven Updates program settings.</summary>
-        private static Config Settings
+        static Config Settings
         {
             get
             {
@@ -95,7 +95,7 @@ namespace SevenUpdate.Admin
         /// <summary>Adds an update to the history.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The event data.</param>
-        private static void AddHistory(object sender, UpdateInstalledEventArgs e)
+        static void AddHistory(object sender, UpdateInstalledEventArgs e)
         {
             Collection<Suh> history = File.Exists(HistoryFile)
                                           ? Utilities.Deserialize<Collection<Suh>>(HistoryFile) : new Collection<Suh>();
@@ -106,7 +106,7 @@ namespace SevenUpdate.Admin
         /// <summary>Checks if Seven Update is running.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.Timers.ElapsedEventArgs" /> instance containing the event data.</param>
-        private static void CheckIfRunning(object sender, ElapsedEventArgs e)
+        static void CheckIfRunning(object sender, ElapsedEventArgs e)
         {
             Task.Factory.StartNew(
                 () =>
@@ -152,7 +152,7 @@ namespace SevenUpdate.Admin
         /// <summary>Reports that the download has completed and starts update installation if necessary.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>DownloadCompletedEventArgs</c> instance containing the event data.</param>
-        private static void DownloadCompleted(object sender, DownloadCompletedEventArgs e)
+        static void DownloadCompleted(object sender, DownloadCompletedEventArgs e)
         {
             if ((Settings.AutoOption == AutoUpdateOption.Install && isAutoInstall) || !isAutoInstall)
             {
@@ -177,7 +177,7 @@ namespace SevenUpdate.Admin
         /// <summary>Reports that the download progress has changed.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>DownloadProgressChangedEventArgs</c> instance containing the event data.</param>
-        private static void DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
+        static void DownloadProgressChanged(object sender, DownloadProgressChangedEventArgs e)
         {
             IsInstalling = true;
             if (isClientConnected)
@@ -193,7 +193,7 @@ namespace SevenUpdate.Admin
         /// <summary>Runs when there is an error occurs</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>ErrorOccurredEventArgs</c> instance containing the event data.</param>
-        private static void ErrorOccurred(object sender, ErrorOccurredEventArgs e)
+        static void ErrorOccurred(object sender, ErrorOccurredEventArgs e)
         {
             if (e.ErrorType == ErrorType.FatalNetworkError)
             {
@@ -217,7 +217,7 @@ namespace SevenUpdate.Admin
         /// <summary>Reports the installation has completed.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>InstallCompletedEventArgs</c> instance containing the event data.</param>
-        private static void InstallCompleted(object sender, InstallCompletedEventArgs e)
+        static void InstallCompleted(object sender, InstallCompletedEventArgs e)
         {
             IsInstalling = false;
             File.Delete(Path.Combine(AllUserStore, "updates.sui"));
@@ -234,7 +234,7 @@ namespace SevenUpdate.Admin
         /// <summary>Reports when the installation progress has changed.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>InstallProgressChangedEventArgs</c> instance containing the event data.</param>
-        private static void InstallProgressChanged(object sender, InstallProgressChangedEventArgs e)
+        static void InstallProgressChanged(object sender, InstallProgressChangedEventArgs e)
         {
             if (isClientConnected)
             {
@@ -249,7 +249,7 @@ namespace SevenUpdate.Admin
         /// <summary>The main execution method.</summary>
         /// <param name="args">The command line arguments.</param>
         [STAThread]
-        private static void Main(string[] args)
+        static void Main(string[] args)
         {
             bool createdNew;
             using (new Mutex(true, "SevenUpdate.Admin", out createdNew))
@@ -315,7 +315,7 @@ namespace SevenUpdate.Admin
         /// <summary>Prevents the system from shutting down until the installation is safely stopped.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="Microsoft.Win32.SessionEndingEventArgs" /> instance containing the event data.</param>
-        private static void PreventClose(object sender, SessionEndingEventArgs e)
+        static void PreventClose(object sender, SessionEndingEventArgs e)
         {
             if (notifyIcon != null)
             {
@@ -336,7 +336,7 @@ namespace SevenUpdate.Admin
 
         /// <summary>Processes the command line arguments.</summary>
         /// <param name="args">The arguments to process.</param>
-        private static void ProcessArgs(IList<string> args)
+        static void ProcessArgs(IList<string> args)
         {
             if (args.Count <= 0)
             {
@@ -473,7 +473,7 @@ namespace SevenUpdate.Admin
         /// <summary>Starts Seven Update UI.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <see cref="System.EventArgs" /> instance containing the event data.</param>
-        private static void RunSevenUpdate(object sender, EventArgs e)
+        static void RunSevenUpdate(object sender, EventArgs e)
         {
             if (Environment.OSVersion.Version.Major < 6)
             {
@@ -504,7 +504,7 @@ namespace SevenUpdate.Admin
         /// <summary>Runs when the search for updates has completed for an auto update.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>SearchCompletedEventArgs</c> instance containing the event data.</param>
-        private static void SearchCompleted(object sender, SearchCompletedEventArgs e)
+        static void SearchCompleted(object sender, SearchCompletedEventArgs e)
         {
             IsInstalling = false;
             Applications = e.Applications as Collection<Sui>;
@@ -551,7 +551,7 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Shuts down the process and removes the icon of the notification bar.</summary>
-        private static void ShutdownApp()
+        static void ShutdownApp()
         {
             if (client != null)
             {
@@ -590,12 +590,13 @@ namespace SevenUpdate.Admin
         }
 
         /// <summary>Starts the WCF service.</summary>
-        private static void StartWcfHost()
+        static void StartWcfHost()
         {
             var binding = new NetNamedPipeBinding
                 {
-                    Name = "sevenupdatebinding",
-                    Security = { Mode = NetNamedPipeSecurityMode.Transport }
+                   Name = "sevenupdatebinding", Security = {
+                                                                Mode = NetNamedPipeSecurityMode.Transport 
+                                                            } 
                 };
             var address = new EndpointAddress(@"net.pipe://localhost/sevenupdate/");
 
@@ -619,7 +620,7 @@ namespace SevenUpdate.Admin
 
         /// <summary>Updates the notify icon text.</summary>
         /// <param name="text">The string to set the <c>notifyIcon</c> text.</param>
-        private static void UpdateNotifyIcon(string text)
+        static void UpdateNotifyIcon(string text)
         {
             if (notifyIcon != null)
             {
@@ -629,7 +630,7 @@ namespace SevenUpdate.Admin
 
         /// <summary>Updates the <c>notifyIcon</c> state.</summary>
         /// <param name="filter">The <c>NotifyType</c> to set the <c>notifyIcon</c> to.</param>
-        private static void UpdateNotifyIcon(NotifyType filter)
+        static void UpdateNotifyIcon(NotifyType filter)
         {
             if (notifyIcon == null)
             {

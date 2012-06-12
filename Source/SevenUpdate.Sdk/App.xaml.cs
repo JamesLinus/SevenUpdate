@@ -102,7 +102,7 @@ namespace SevenUpdate.Sdk
         /// <summary>Performs recovery by saving the state.</summary>
         /// <param name="parameter">This parameter is not used.</param>
         /// <returns>Return value is not used.</returns>
-        private static int PerformRecovery(object parameter)
+        static int PerformRecovery(object parameter)
         {
             try
             {
@@ -121,7 +121,7 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>Registers the application to use the Recovery Manager.</summary>
-        private static void RegisterApplicationRecoveryAndRestart()
+        static void RegisterApplicationRecoveryAndRestart()
         {
             if (Environment.OSVersion.Version.Major < 6)
             {
@@ -138,7 +138,7 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>Sets the Windows 7 <c>JumpList</c>.</summary>
-        private static void SetJumpList()
+        static void SetJumpList()
         {
             // Create JumpTask
             var jumpList = new JumpList { ShowRecentCategory = true };
@@ -158,7 +158,7 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>The unregister application recovery and restart.</summary>
-        private static void UnregisterApplicationRecoveryAndRestart()
+        static void UnregisterApplicationRecoveryAndRestart()
         {
             if (Environment.OSVersion.Version.Major < 6)
             {

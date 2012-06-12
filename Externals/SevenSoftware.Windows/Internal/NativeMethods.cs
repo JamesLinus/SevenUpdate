@@ -119,6 +119,6 @@ namespace SevenSoftware.Windows.Internal
         /// <returns><c>True</c> if the user is a member of the Administrator's group; otherwise, <c>False</c>.</returns>
         [DllImport(@"shell32.dll", EntryPoint = "IsUserAnAdmin", SetLastError = true, CharSet = CharSet.Auto)]
         [return: MarshalAs(UnmanagedType.Bool)]
-        private static extern bool IsUserAnAdmin();
+        static extern bool IsUserAnAdmin();
     }
 }

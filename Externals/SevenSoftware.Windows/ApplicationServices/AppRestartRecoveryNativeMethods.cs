@@ -12,7 +12,7 @@ namespace SevenSoftware.Windows.ApplicationServices
     internal static class AppRestartRecoveryNativeMethods
     {
         /// <summary>The internal callback.</summary>
-        private static InternalRecoveryCallback internalCallback = InternalRecoveryHandler;
+        static InternalRecoveryCallback internalCallback = InternalRecoveryHandler;
 
         /// <summary>The application recovery callback.</summary>
         /// <param name="state">The state of the application.</param>
@@ -55,7 +55,7 @@ namespace SevenSoftware.Windows.ApplicationServices
         /// <summary>Handles and invokes the internal recovery callback.</summary>
         /// <param name="parameter">The parameter.</param>
         /// <returns>Returns an error free result.</returns>
-        private static uint InternalRecoveryHandler(IntPtr parameter)
+        static uint InternalRecoveryHandler(IntPtr parameter)
         {
             bool cancelled;
             ApplicationRecoveryInProgress(out cancelled);

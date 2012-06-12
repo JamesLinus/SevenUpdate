@@ -7,7 +7,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
     public class TaskDialogBar : TaskDialogControl
     {
         /// <summary>The state of the progressbar.</summary>
-        private TaskDialogProgressBarState state;
+        TaskDialogProgressBarState state;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="TaskDialogBar" /> class. Creates a new instance of this

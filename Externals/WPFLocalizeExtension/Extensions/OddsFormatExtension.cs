@@ -25,13 +25,13 @@ namespace WPFLocalizeExtension.Extensions
     public sealed class OddsFormatExtension : MarkupExtension, IWeakEventListener
     {
         /// <summary>Holds the collection of assigned dependency objects as WeakReferences.</summary>
-        private readonly Collection<WeakReference> targetObjects;
+        readonly Collection<WeakReference> targetObjects;
 
         /// <summary>Holds the Dictionary of the Lookup Table.</summary>
-        private static Dictionary<decimal, string> oddsFormatLookupTableUk;
+        static Dictionary<decimal, string> oddsFormatLookupTableUk;
 
         /// <summary>Holds the value to display.</summary>
-        private decimal displayValue;
+        decimal displayValue;
 
         /// <summary>Initializes a new instance of the <see cref="OddsFormatExtension" /> class.  <c>BaseLocalizeExtension"</c>.</summary>
         /// <param name="displayValue">The display Value.</param>
@@ -48,7 +48,7 @@ namespace WPFLocalizeExtension.Extensions
         ///   Prevents a default instance of the OddsFormatExtension class from being created. Initialize the
         ///   <c>BaseLocalizeExtension</c>.
         /// </summary>
-        private OddsFormatExtension()
+        OddsFormatExtension()
         {
             // initialize the collection of the assigned dependency objects
             this.targetObjects = new Collection<WeakReference>();
@@ -276,7 +276,7 @@ namespace WPFLocalizeExtension.Extensions
         /// <param name="specificCulture">The specific culture.</param>
         /// <returns>The ready to use odds string.</returns>
         /// <remarks>The specific Culture has to be a "xx-xx" culture to support the value.<c>ToString</c> method.</remarks>
-        private static string GetLocalizedOddsString(
+        static string GetLocalizedOddsString(
             decimal sourceOdds, OddsFormatType oddsType, IFormatProvider specificCulture)
         {
             switch (oddsType)
@@ -346,10 +346,10 @@ namespace WPFLocalizeExtension.Extensions
 
         /// <summary>Gets the UK odds format lookup table.</summary>
         /// <returns>Returns a Lookup Table.</returns>
-        private static Dictionary<decimal, string> GetUKOddsFormatLookupTable()
+        static Dictionary<decimal, string> GetUKOddsFormatLookupTable()
         {
-            var dictionary = new Dictionary<decimal, string> 
-            {
+            var dictionary = new Dictionary<decimal, string>
+                {
                     { 11.00m, "10/1" }, 
                     { 10.00m, "9/1" }, 
                     { 9.50m, "17/2" }, 
@@ -430,7 +430,7 @@ namespace WPFLocalizeExtension.Extensions
         /// <param name="valToCheck">The value to check.</param>
         /// <param name="retVal">The return value. <c>null</c> if nothing was found.</param>
         /// <returns><c>True</c> if the value was found, otherwise <c>False</c>.</returns>
-        private static bool TryGetUKOddsLookupValue(decimal valToCheck, out string retVal)
+        static bool TryGetUKOddsLookupValue(decimal valToCheck, out string retVal)
         {
             if (OddsFormatLookupTableUK.ContainsKey(valToCheck))
             {
@@ -448,13 +448,13 @@ namespace WPFLocalizeExtension.Extensions
         ///   returned, otherwise LocalizeDictionary.Culture will get returned.
         /// </summary>
         /// <returns>The <c>CultureInfo</c>.</returns>
-        private OddsFormatType GetForcedOddsFormatOrDefault()
+        OddsFormatType GetForcedOddsFormatOrDefault()
         {
             return this.ForceOddsFormatType ?? OddsFormatManager.Instance.OddsFormatType;
         }
 
         /// <summary>This method gets the new value for the target property and call <c>SetNewValue</c>.</summary>
-        private void HandleNewValue()
+        void HandleNewValue()
         {
             // gets the new value and set it to the dependency property on the dependency object
             this.SetNewValue(
@@ -464,7 +464,7 @@ namespace WPFLocalizeExtension.Extensions
 
         /// <summary>Set the Value of the <c>DependencyProperty</c> to the passed Value.</summary>
         /// <param name="newValue">The new Value.</param>
-        private void SetNewValue(object newValue)
+        void SetNewValue(object newValue)
         {
             // if the list of dependency objects is empty or the target property is null, return
             if (this.targetObjects.Count == 0 || this.TargetProperty == null)

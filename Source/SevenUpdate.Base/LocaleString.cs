@@ -14,10 +14,10 @@ namespace SevenUpdate
     public sealed class LocaleString : INotifyPropertyChanged
     {
         /// <summary>The ISO language code.</summary>
-        private string lang;
+        string lang;
 
         /// <summary>The value of the string.</summary>
-        private string value;
+        string value;
 
         /// <summary>Initializes a new instance of the <see cref="LocaleString" /> class.</summary>
         public LocaleString()
@@ -72,7 +72,7 @@ namespace SevenUpdate
 
         /// <summary>When a property has changed, call the <c>OnPropertyChanged</c> Event.</summary>
         /// <param name="name">The name of the property that changed.</param>
-        private void OnPropertyChanged(string name)
+        void OnPropertyChanged(string name)
         {
             PropertyChangedEventHandler handler = this.PropertyChanged;
 

@@ -15,13 +15,13 @@ namespace SevenUpdate.Windows
     public sealed partial class LicenseAgreement
     {
         /// <summary>Current index.</summary>
-        private int index;
+        int index;
 
         /// <summary>List of updates that have EULAS.</summary>
-        private Collection<Eula> licenseInformation;
+        Collection<Eula> licenseInformation;
 
         /// <summary>An array of the strings that consist of the software licenses.</summary>
-        private string[] licenseText;
+        string[] licenseText;
 
         /// <summary>Initializes a new instance of the <see cref="LicenseAgreement" /> class.</summary>
         public LicenseAgreement()
@@ -61,7 +61,7 @@ namespace SevenUpdate.Windows
         /// <summary>Closes the window, declining all software licenses.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
-        private void Cancel(object sender, RoutedEventArgs e)
+        void Cancel(object sender, RoutedEventArgs e)
         {
             this.DialogResult = false;
             this.Close();
@@ -70,7 +70,7 @@ namespace SevenUpdate.Windows
         /// <summary>Updates the UI with the licenses and displays the first license.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.ComponentModel.RunWorkerCompletedEventArgs</c> instance containing the event data.</param>
-        private void DisplayLicense(object sender, RunWorkerCompletedEventArgs e)
+        void DisplayLicense(object sender, RunWorkerCompletedEventArgs e)
         {
             this.rtbSLA.Cursor = Cursors.IBeam;
             var flowDoc = new FlowDocument();
@@ -100,7 +100,7 @@ namespace SevenUpdate.Windows
         /// <summary>Downloads the <c>licenseInformation</c>.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
-        private void DownloadLicenseInformation(object sender, RoutedEventArgs e)
+        void DownloadLicenseInformation(object sender, RoutedEventArgs e)
         {
             var worker = new BackgroundWorker();
 
@@ -118,7 +118,7 @@ namespace SevenUpdate.Windows
         /// <summary>Downloads the license agreements of the updates.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.ComponentModel.DoWorkEventArgs</c> instance containing the event data.</param>
-        private void DownloadLicenses(object sender, DoWorkEventArgs e)
+        void DownloadLicenses(object sender, DoWorkEventArgs e)
         {
             this.licenseText = new string[this.licenseInformation.Count];
 
@@ -141,7 +141,7 @@ namespace SevenUpdate.Windows
         }
 
         /// <summary>Gets the license agreements from the selected updates.</summary>
-        private void GetLicenseAgreements()
+        void GetLicenseAgreements()
         {
             this.licenseInformation = new Collection<Eula>();
 
@@ -180,7 +180,7 @@ namespace SevenUpdate.Windows
         /// <summary>Displays the next license agreement or returns the collection of updates.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
-        private void PerformAction(object sender, RoutedEventArgs e)
+        void PerformAction(object sender, RoutedEventArgs e)
         {
             if (this.rbtnDecline.IsChecked == true)
             {
@@ -229,7 +229,7 @@ namespace SevenUpdate.Windows
         }
 
         /// <summary>Data containing the <c>Update</c> license agreement.</summary>
-        private struct Eula
+        struct Eula
         {
             /// <summary>Gets or sets the index of the application of the update.</summary>
             internal int AppIndex { get; set; }

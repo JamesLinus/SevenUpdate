@@ -17,38 +17,38 @@ namespace SevenSoftware.Windows.Controls
     public class ProgressRing : RangeBase
     {
         /// <summary>The element name.</summary>
-        private const string ElementCanvas = "PART_Canvas";
+        const string ElementCanvas = "PART_Canvas";
 
         /// <summary>The storyboard.</summary>
-        private static readonly DependencyProperty elementStoryboardProperty =
-            DependencyProperty.Register("ElementStoryboard", typeof(Storyboard), typeof(ProgressRing));
+        static readonly DependencyProperty elementStoryboardProperty = DependencyProperty.Register(
+            "ElementStoryboard", typeof(Storyboard), typeof(ProgressRing));
 
         /// <summary>The text to display when the progress is indeterminate.</summary>
-        private static readonly DependencyProperty indeterminateTextProperty =
-            DependencyProperty.Register("IndeterminateText", typeof(string), typeof(ProgressRing));
+        static readonly DependencyProperty indeterminateTextProperty = DependencyProperty.Register(
+            "IndeterminateText", typeof(string), typeof(ProgressRing));
 
         /// <summary>Indicates if the progress is indeterminate.</summary>
-        private static readonly DependencyProperty isIndeterminateProperty =
-            DependencyProperty.Register("IsIndeterminate", typeof(bool), typeof(ProgressRing));
+        static readonly DependencyProperty isIndeterminateProperty = DependencyProperty.Register(
+            "IsIndeterminate", typeof(bool), typeof(ProgressRing));
 
         /// <summary>Indicates if the progress is running.</summary>
-        private static readonly DependencyProperty isRunningProperty = DependencyProperty.Register(
+        static readonly DependencyProperty isRunningProperty = DependencyProperty.Register(
             "IsRunning", typeof(bool), typeof(ProgressRing), new FrameworkPropertyMetadata(IsRunningPropertyChanged));
 
         /// <summary>The dispatch timer.</summary>
-        private readonly DispatcherTimer dispatcherTimer;
+        readonly DispatcherTimer dispatcherTimer;
 
         /// <summary>The canvas.</summary>
-        private Canvas canvas;
+        Canvas canvas;
 
         /// <summary>The canvas elements.</summary>
-        private Array canvasElements;
+        Array canvasElements;
 
         /// <summary>Indicates if the progress runs clockwise.</summary>
-        private bool clockwise;
+        bool clockwise;
 
         /// <summary>The index for the progress.</summary>
-        private int index;
+        int index;
 
         /// <summary>Initializes static members of the <see cref="ProgressRing" /> class.</summary>
         static ProgressRing()
@@ -153,7 +153,7 @@ namespace SevenSoftware.Windows.Controls
         /// <summary>Stops or starts the progress indicator based on the <c>IsRunning</c> property.</summary>
         /// <param name="d">The dependency object.</param>
         /// <param name="e">The <c>System.Windows.DependencyPropertyChangedEventArgs</c> instance containing the event data.</param>
-        private static void IsRunningPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        static void IsRunningPropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var progressRing = (ProgressRing)d;
 
@@ -170,7 +170,7 @@ namespace SevenSoftware.Windows.Controls
         /// <summary>Animates the progress wheel.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.EventArgs</c> instance containing the event data.</param>
-        private void Animate(object sender, EventArgs e)
+        void Animate(object sender, EventArgs e)
         {
             if (this.canvasElements == null || this.ElementStoryboard == null)
             {
@@ -187,7 +187,7 @@ namespace SevenSoftware.Windows.Controls
         }
 
         /// <summary>Starts this instance.</summary>
-        private void Start()
+        void Start()
         {
             this.dispatcherTimer.Tick -= this.Animate;
             this.dispatcherTimer.Tick += this.Animate;
@@ -196,7 +196,7 @@ namespace SevenSoftware.Windows.Controls
 
         /// <summary>Starts the storyboard.</summary>
         /// <param name="element">The element.</param>
-        private void StartStoryboard(FrameworkElement element)
+        void StartStoryboard(FrameworkElement element)
         {
             NameScope.SetNameScope(this, new NameScope());
             element.Name = "Element";
@@ -217,7 +217,7 @@ namespace SevenSoftware.Windows.Controls
         }
 
         /// <summary>Stops this instance.</summary>
-        private void Stop()
+        void Stop()
         {
             this.dispatcherTimer.Stop();
             this.dispatcherTimer.Tick -= this.Animate;

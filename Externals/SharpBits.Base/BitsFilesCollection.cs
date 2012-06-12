@@ -10,13 +10,13 @@ namespace SharpBits.Base
     public sealed class BitsFilesCollection : Collection<BitsFile>, IDisposable
     {
         /// <summary>The current job in the collection.</summary>
-        private readonly BitsJob job;
+        readonly BitsJob job;
 
         /// <summary>Indicates of the files has been disposed.</summary>
-        private bool disposed;
+        bool disposed;
 
         /// <summary>Gets a list of the <c>BitsFile</c>.</summary>
-        private IEnumBackgroundCopyFiles fileList;
+        IEnumBackgroundCopyFiles fileList;
 
         /// <summary>Initializes a new instance of the <see cref="BitsFilesCollection" /> class.</summary>
         /// <param name="job">The current job.</param>
@@ -56,7 +56,7 @@ namespace SharpBits.Base
 
         /// <summary>Releases unmanaged and - optionally - managed resources.</summary>
         /// <param name="disposing"><c>True</c> to release both managed and unmanaged resources; otherwise, <c>False</c> to release only unmanaged resources.</param>
-        private void Dispose(bool disposing)
+        void Dispose(bool disposing)
         {
             if (!this.disposed)
             {

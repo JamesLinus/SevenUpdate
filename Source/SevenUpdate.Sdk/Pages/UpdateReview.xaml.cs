@@ -32,7 +32,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <summary>Saves and exports the Project.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
-        private void SaveExportProject(object sender, RoutedEventArgs e)
+        void SaveExportProject(object sender, RoutedEventArgs e)
         {
             Task.Factory.StartNew(() => Core.SaveProject(true)).ContinueWith(
                 delegate { this.Dispatcher.BeginInvoke(new Action(() => MainWindow.NavService.Navigate(Core.MainPage))); });
@@ -41,7 +41,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <summary>Saves the Project.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
-        private void SaveProject(object sender, RoutedEventArgs e)
+        void SaveProject(object sender, RoutedEventArgs e)
         {
             Task.Factory.StartNew(() => Core.SaveProject()).ContinueWith(
                 delegate { this.Dispatcher.BeginInvoke(new Action(() => MainWindow.NavService.Navigate(Core.MainPage))); });
@@ -50,7 +50,7 @@ namespace SevenUpdate.Sdk.Pages
         /// <summary>Updates the UI based on whether Aero Glass is enabled.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>CompositionChangedEventArgs</c> instance containing the event data.</param>
-        private void UpdateUI(object sender, CompositionChangedEventArgs e)
+        void UpdateUI(object sender, CompositionChangedEventArgs e)
         {
             this.tbTitle.Foreground = e.IsGlassEnabled ? Brushes.Black : new SolidColorBrush(Color.FromRgb(0, 51, 153));
         }

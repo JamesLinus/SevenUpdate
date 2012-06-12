@@ -29,19 +29,19 @@ namespace WPFLocalizeExtension.Extensions
     public abstract class BaseLocalizeExtension<TValue> : MarkupExtension, IWeakEventListener, INotifyPropertyChanged
     {
         /// <summary>Holds the collection of assigned dependency objects as WeakReferences.</summary>
-        private readonly Dictionary<WeakReference, object> targetObjects;
+        readonly Dictionary<WeakReference, object> targetObjects;
 
         /// <summary>Holds the name of the Assembly where the .resx is located.</summary>
-        private string assembly;
+        string assembly;
 
         /// <summary>The current value.</summary>
-        private TValue currentValue;
+        TValue currentValue;
 
         /// <summary>Holds the Name of the .resx dictionary.If it's <c>null</c>, "Resources" will get returned.</summary>
-        private string dict;
+        string dict;
 
         /// <summary>Holds the Key to a .resx object.</summary>
-        private string key;
+        string key;
 
         /// <summary>Initializes a new instance of the <see cref="BaseLocalizeExtension{TValue}" /> class.</summary>
         protected BaseLocalizeExtension()
@@ -459,7 +459,7 @@ namespace WPFLocalizeExtension.Extensions
         /// <param name="targetObject">The target object.</param>
         /// <param name="targetProperty">The target property.</param>
         /// <param name="value">The value.</param>
-        private static void SetTargetValue(DependencyObject targetObject, object targetProperty, object value)
+        static void SetTargetValue(DependencyObject targetObject, object targetProperty, object value)
         {
             // check if the target property is a DependencyProperty
             if (targetProperty is DependencyProperty)
@@ -478,8 +478,7 @@ namespace WPFLocalizeExtension.Extensions
         /// <param name="targetObject">The target object.</param>
         /// <param name="targetProperty">The target property.</param>
         /// <param name="value">The value.</param>
-        private static void SetTargetValue(
-            DependencyObject targetObject, DependencyProperty targetProperty, object value)
+        static void SetTargetValue(DependencyObject targetObject, DependencyProperty targetProperty, object value)
         {
             targetObject.SetValue(targetProperty, value);
         }
@@ -488,14 +487,14 @@ namespace WPFLocalizeExtension.Extensions
         /// <param name="targetObject">The target object.</param>
         /// <param name="targetProperty">The target property.</param>
         /// <param name="value">The value.</param>
-        private static void SetTargetValue(DependencyObject targetObject, PropertyInfo targetProperty, object value)
+        static void SetTargetValue(DependencyObject targetObject, PropertyInfo targetProperty, object value)
         {
             targetProperty.SetValue(targetObject, value, null);
         }
 
         /// <summary>Raises the notify property changed.</summary>
         /// <param name="propertyName">Name of the property.</param>
-        private void RaiseNotifyPropertyChanged(string propertyName)
+        void RaiseNotifyPropertyChanged(string propertyName)
         {
             if (this.PropertyChanged != null)
             {
@@ -508,7 +507,7 @@ namespace WPFLocalizeExtension.Extensions
         /// <param name="targetCulture">The target culture.</param>
         /// <returns>True if the resolve was success, otherwise <c>False</c>.</returns>
         /// <exception>If the Assembly, Dictionary, Key pair was not found.</exception>
-        private bool ResolveLocalizedValue(out TValue resolvedValue, CultureInfo targetCulture)
+        bool ResolveLocalizedValue(out TValue resolvedValue, CultureInfo targetCulture)
         {
             // define the default value of the resolved value
             resolvedValue = default(TValue);

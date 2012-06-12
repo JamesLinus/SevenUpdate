@@ -18,7 +18,7 @@ namespace SevenUpdate
     internal class WcfService : IElevatedProcessCallback
     {
         /// <summary>The service callback context.</summary>
-        private static IElevatedProcess context;
+        static IElevatedProcess context;
 
         /// <summary>Occurs when the download completed.</summary>
         public static event EventHandler<DownloadCompletedEventArgs> DownloadDone;
@@ -42,7 +42,7 @@ namespace SevenUpdate
         public static event EventHandler<EventArgs> SettingsChanged;
 
         /// <summary>Gets or sets a value indicating whether Seven Update is connected to the admin process.</summary>
-        private static bool IsConnected { get; set; }
+        static bool IsConnected { get; set; }
 
         /// <summary>Occurs when the process starts.</summary>
         public void ElevatedProcessStarted()
@@ -456,7 +456,7 @@ namespace SevenUpdate
         }
 
         /// <summary>Waits for the admin process to connect.</summary>
-        private static void WaitForAdmin()
+        static void WaitForAdmin()
         {
             Task task = Task.Factory.StartNew(
                 () =>

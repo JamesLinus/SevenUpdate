@@ -10,7 +10,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
     public class TaskDialogCommandLink : TaskDialogButton
     {
         /// <summary>The instruction text for the commandlink.</summary>
-        private string instruction;
+        string instruction;
 
         /// <summary>
         ///   Initializes a new instance of the <see cref="TaskDialogCommandLink" /> class. Creates a new instance of

@@ -15,22 +15,22 @@ namespace SevenUpdate
     public sealed class UpdateFile : INotifyPropertyChanged
     {
         /// <summary>The action to perform on the <c>UpdateFile</c>.</summary>
-        private FileAction action;
+        FileAction action;
 
         /// <summary>The command line arguments to execute with the file.</summary>
-        private string args;
+        string args;
 
         /// <summary>The location where the file will be installed.</summary>
-        private string destination;
+        string destination;
 
         /// <summary>The size of the file in bytes.</summary>
-        private ulong fileSize;
+        ulong fileSize;
 
         /// <summary>The SHA-2 hash of the file.</summary>
-        private string hash;
+        string hash;
 
         /// <summary>The download location for the file.</summary>
-        private string source;
+        string source;
 
         /// <summary>Occurs when a property has changed.</summary>
         public event PropertyChangedEventHandler PropertyChanged;
@@ -139,7 +139,7 @@ namespace SevenUpdate
 
         /// <summary>When a property has changed, call the <c>OnPropertyChanged</c> Event.</summary>
         /// <param name="name">The name of the property that changed.</param>
-        private void OnPropertyChanged(string name)
+        void OnPropertyChanged(string name)
         {
             PropertyChangedEventHandler handler = this.PropertyChanged;
 

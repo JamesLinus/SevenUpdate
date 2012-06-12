@@ -13,7 +13,7 @@ namespace SevenUpdate.Sdk.ValidationRules
     public class RegistryPathRule : ValidationRule
     {
         /// <summary>A regex to detect a registry root key.</summary>
-        private const string RegistryPattern =
+        const string RegistryPattern =
             @"^HKLM\\|^HKEY_CLASSES_ROOT\\|^HKEY_CURRENT_USER\\|^HKEY_LOCAL_MACHINE\\|^HKEY_USERS\\|^HKU\\|^HKCR\\";
 
         /// <summary>When overridden in a derived class, performs validation checks on a value.</summary>

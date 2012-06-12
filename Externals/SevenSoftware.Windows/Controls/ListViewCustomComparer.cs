@@ -69,7 +69,7 @@ namespace SevenSoftware.Windows.Controls
         public abstract int Compare(object x, object y);
 
         /// <summary>Clears the sort columns.</summary>
-        private void ClearSort()
+        void ClearSort()
         {
             if (this.SortColumns != null)
             {

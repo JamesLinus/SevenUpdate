@@ -16,11 +16,11 @@ namespace SevenSoftware.Windows.ApplicationServices
     {
         /// <summary>Gets the command line arguments used to restart the application.</summary>
         /// <value>A <c>System.String</c> object.</value>
-        private string command;
+        string command;
 
         /// <summary>Gets the set of conditions when the application should not be restarted.</summary>
         /// <value>A set of <c>RestartRestrictions</c> values.</value>
-        private RestartRestrictions restrictions;
+        RestartRestrictions restrictions;
 
         /// <summary>Initializes a new instance of the <see cref="RestartSettings" /> class.  Creates a new instance of the RestartSettings class.</summary>
         /// <param name="command">The command line arguments used to restart the application.</param>

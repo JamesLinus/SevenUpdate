@@ -20,7 +20,7 @@ namespace SevenUpdate.Pages
     public partial class UpdateHistory
     {
         /// <summary>Gets or sets a collection of SUH items.</summary>
-        private ObservableCollection<Suh> updateHistory;
+        ObservableCollection<Suh> updateHistory;
 
         /// <summary>Initializes a new instance of the <see cref="UpdateHistory" /> class.</summary>
         public UpdateHistory()
@@ -49,7 +49,7 @@ namespace SevenUpdate.Pages
         /// <summary>Gets the update history and loads it to the listView.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
-        private void GetHistory(object sender, RoutedEventArgs e)
+        void GetHistory(object sender, RoutedEventArgs e)
         {
             if (!File.Exists(App.HistoryFile))
             {
@@ -70,7 +70,7 @@ namespace SevenUpdate.Pages
         /// <summary>Goes back to the Main page.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
-        private void NavigateToMainPage(object sender, RoutedEventArgs e)
+        void NavigateToMainPage(object sender, RoutedEventArgs e)
         {
             Core.NavigateToMainPage();
         }
@@ -78,7 +78,7 @@ namespace SevenUpdate.Pages
         /// <summary>Updates the <c>CollectionView</c> when the collection changes.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>NotifyCollectionChangedEventArgs</c> instance containing the event data.</param>
-        private void RefreshDataView(object sender, NotifyCollectionChangedEventArgs e)
+        void RefreshDataView(object sender, NotifyCollectionChangedEventArgs e)
         {
             // update the view when item change is NOT caused by replacement
             if (e.Action != NotifyCollectionChangedAction.Replace)
@@ -93,7 +93,7 @@ namespace SevenUpdate.Pages
         /// <summary>Shows the selected update details.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.</param>
-        private void ShowDetails(object sender, MouseButtonEventArgs e)
+        void ShowDetails(object sender, MouseButtonEventArgs e)
         {
             if (e.ClickCount != 2 || this.lvUpdateHistory.SelectedIndex == -1)
             {
@@ -107,7 +107,7 @@ namespace SevenUpdate.Pages
         /// <summary>Shows the selected update details.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
-        private void ShowDetailsDialog(object sender, RoutedEventArgs e)
+        void ShowDetailsDialog(object sender, RoutedEventArgs e)
         {
             var details = new UpdateDetails();
             details.ShowDialog(this.updateHistory[this.lvUpdateHistory.SelectedIndex]);
@@ -116,7 +116,7 @@ namespace SevenUpdate.Pages
         /// <summary>Changes the UI depending on whether Aero Glass is enabled.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>CompositionChangedEventArgs</c> instance containing the event data.</param>
-        private void UpdateUI(object sender, CompositionChangedEventArgs e)
+        void UpdateUI(object sender, CompositionChangedEventArgs e)
         {
             if (e.IsGlassEnabled)
             {

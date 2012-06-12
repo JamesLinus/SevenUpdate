@@ -50,7 +50,7 @@ namespace SevenUpdate.Sdk.Windows
         /// <summary>Changes the Window Background when Aero Glass is enabled or disabled.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>CompositionChangedEventArgs</c> instance containing the event data.</param>
-        private void ChangeWindowChrome(object sender, CompositionChangedEventArgs e)
+        void ChangeWindowChrome(object sender, CompositionChangedEventArgs e)
         {
             this.Background = e.IsGlassEnabled ? Brushes.Transparent : Brushes.White;
 
@@ -65,7 +65,7 @@ namespace SevenUpdate.Sdk.Windows
         /// <summary>Enables the ability to drag the window on glass.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.</param>
-        private void EnableDragOnGlass(object sender, MouseButtonEventArgs e)
+        void EnableDragOnGlass(object sender, MouseButtonEventArgs e)
         {
             if (AeroGlass.IsGlassEnabled && e.LeftButton == MouseButtonState.Pressed)
             {
@@ -76,7 +76,7 @@ namespace SevenUpdate.Sdk.Windows
         /// <summary>Sets the Height and Width of the window from the settings.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
-        private void LoadWindowSize(object sender, RoutedEventArgs e)
+        void LoadWindowSize(object sender, RoutedEventArgs e)
         {
             this.Height = Settings.Default.WindowHeight;
             this.Width = Settings.Default.WindowWidth;
@@ -85,7 +85,7 @@ namespace SevenUpdate.Sdk.Windows
         /// <summary>When Seven Update is closing, save the Window Width and Height in the settings.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.ComponentModel.CancelEventArgs</c> instance containing the event data.</param>
-        private void SaveWindowSize(object sender, CancelEventArgs e)
+        void SaveWindowSize(object sender, CancelEventArgs e)
         {
             Settings.Default.WindowHeight = this.Height;
             Settings.Default.WindowWidth = this.Width;

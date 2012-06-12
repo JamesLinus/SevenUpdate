@@ -25,50 +25,50 @@ namespace SevenSoftware.Windows
     public class InstanceAwareApplication : Application, IPriorApplicationInstance, IDisposable
     {
         /// <summary>The milliseconds to wait to determine if the current instance is the first one.</summary>
-        private const double FirstInstanceTimeoutMilliseconds = 500;
+        const double FirstInstanceTimeoutMilliseconds = 500;
 
         /// <summary>The mutex prefix used if the application instance must be single per machine.</summary>
-        private const string GlobalPrefix = @"Global\";
+        const string GlobalPrefix = @"Global\";
 
         /// <summary>The mutex prefix used if the application instance must be single per user session.</summary>
-        private const string LocalPrefix = @"Local\";
+        const string LocalPrefix = @"Local\";
 
         /// <summary>The milliseconds to wait for the prior instance to signal that the startup information have been received.</summary>
-        private const double PriorInstanceSignaledTimeoutMilliseconds = 2500;
+        const double PriorInstanceSignaledTimeoutMilliseconds = 2500;
 
         /// <summary>The milliseconds to wait for the service to be ready.</summary>
-        private const double ServiceReadyTimeoutMilliseconds = 1000;
+        const double ServiceReadyTimeoutMilliseconds = 1000;
 
         /// <summary>The SID value to be used to retrieve the <c>Users</c> group identity.</summary>
-        private const string UsersSidValue = "S-1-5-32-545";
+        const string UsersSidValue = "S-1-5-32-545";
 
         /// <summary>Gets or sets the instance awareness of the application.</summary>
         /// <value>The instance awareness of the application.</value>
-        private readonly ApplicationInstanceAwareness awareness;
+        readonly ApplicationInstanceAwareness awareness;
 
         /// <summary>
         ///   Flag used to determine if the synchronization objects (and the inter-process communication service) have
         ///   been disposed.
         /// </summary>
-        private bool disposed;
+        bool disposed;
 
         /// <summary>The synchronization object owned by the first instance.</summary>
-        private Mutex firstInstanceMutex;
+        Mutex firstInstanceMutex;
 
         /// <summary>The host used to communicate between multiple application instances.</summary>
-        private ServiceHost serviceHost;
+        ServiceHost serviceHost;
 
         /// <summary>The synchronization object used to synchronize the service creation or destruction.</summary>
-        private Mutex serviceInitializationMutex;
+        Mutex serviceInitializationMutex;
 
         /// <summary>The synchronization object used to signal that the service is ready.</summary>
-        private EventWaitHandle serviceReadySemaphore;
+        EventWaitHandle serviceReadySemaphore;
 
         /// <summary>
         ///   The synchronization object used to signal a subsequent application instance that the first one received
         ///   the notification.
         /// </summary>
-        private EventWaitHandle signaledToFirstInstanceSemaphore;
+        EventWaitHandle signaledToFirstInstanceSemaphore;
 
         /// <summary>Initializes a new instance of the <see cref="InstanceAwareApplication" /> class.</summary>
         /// <exception cref="InvalidOperationException">More than one instance of the <c>System.Windows.Application</c> class is created per <c>System.AppDomain</c>.</exception>
@@ -178,7 +178,7 @@ namespace SevenSoftware.Windows
         /// <param name="awareness">The <c>ApplicationInstanceAwareness</c> value to extract parameters from.</param>
         /// <param name="prefix">The synchronization object prefix.</param>
         /// <param name="identity">The identity used to handle the synchronization object.</param>
-        private static void ExtractParameters(
+        static void ExtractParameters(
             ApplicationInstanceAwareness awareness, out string prefix, out IdentityReference identity)
         {
             new SecurityPermission(SecurityPermissionFlag.ControlPrincipal).Assert();
@@ -214,14 +214,14 @@ namespace SevenSoftware.Windows
         /// <summary>Gets the <c>Uri</c> of the pipe used for inter-process communication.</summary>
         /// <param name="applicationPath">The application unique path, used to define the <c>Uri</c> pipe.</param>
         /// <returns>The <c>Uri</c> of the pipe used for inter-process communication.</returns>
-        private static Uri GetPipeUri(string applicationPath)
+        static Uri GetPipeUri(string applicationPath)
         {
             return new Uri(string.Format("net.pipe://localhost/{0}/", applicationPath));
         }
 
         /// <summary>Releases unmanaged and - optionally - managed resources</summary>
         /// <param name="disposing"><c>True</c> to release both managed and unmanaged resources, <c>false</c> to release only unmanaged resources.</param>
-        private void Dispose(bool disposing)
+        void Dispose(bool disposing)
         {
             // Try to dispose the synchronization objects, just in case the application did not exit...
             if (this.Dispatcher.Thread != Thread.CurrentThread)
@@ -236,7 +236,7 @@ namespace SevenSoftware.Windows
 
         /// <summary>Gets the application unique identifier.</summary>
         /// <returns>The application unique identifier.</returns>
-        private string GetApplicationId()
+        string GetApplicationId()
         {
             // By default, the application is marked using the entry assembly Guid!
             Assembly assembly = Assembly.GetEntryAssembly();
@@ -249,7 +249,7 @@ namespace SevenSoftware.Windows
 
         /// <summary>Initializes the first application instance.</summary>
         /// <param name="uri">The <c>Uri</c> used by the service that allows for inter-process communication.</param>
-        private void InitializeFirstInstance(Uri uri)
+        void InitializeFirstInstance(Uri uri)
         {
             try
             {
@@ -277,7 +277,7 @@ namespace SevenSoftware.Windows
         /// <summary>Initializes the application instance.</summary>
         /// <param name="e">The <c>System.Windows.StartupEventArgs</c> instance containing the event data.</param>
         /// <returns><c>True</c> if the current instance is the first application instance, otherwise <c>false</c>.</returns>
-        private bool InitializeInstance(StartupEventArgs e)
+        bool InitializeInstance(StartupEventArgs e)
         {
             string id = this.GetApplicationId();
 
@@ -329,7 +329,7 @@ namespace SevenSoftware.Windows
         /// <param name="uri">The <c>Uri</c> used by the service that allows for inter-process communication.</param>
         /// <param name="args">The arguments passed to the current instance.</param>
         /// <returns><c>True</c> if the prior instance was notified about curernt instance startup, otherwise <c>false</c>.</returns>
-        private bool InitializeNextInstance(Uri uri, string[] args)
+        bool InitializeNextInstance(Uri uri, string[] args)
         {
             // Check if the service is up... wait a bit in case two applications are started simultaneously...
             if (!this.serviceReadySemaphore.WaitOne(TimeSpan.FromMilliseconds(ServiceReadyTimeoutMilliseconds), false))
@@ -362,7 +362,7 @@ namespace SevenSoftware.Windows
         /// <summary>Initializes the synchronization objects needed to deal with multiple instances of the same application.</summary>
         /// <param name="baseName">The base name of the synchronization objects.</param>
         /// <param name="identity">The identity to be associated to the synchronization objects.</param>
-        private void InitializeSynchronizationObjects(string baseName, IdentityReference identity)
+        void InitializeSynchronizationObjects(string baseName, IdentityReference identity)
         {
             string firstInstanceMutexName = baseName + "_FirstInstance";
             string serviceInitializationMutexName = baseName + "_ServiceInitialization";
@@ -389,7 +389,7 @@ namespace SevenSoftware.Windows
 
         /// <summary>Called on next application instance startup.</summary>
         /// <param name="args">The parameters used to run the next instance of the application.</param>
-        private void OnStartupNextApplicationInstance(string[] args)
+        void OnStartupNextApplicationInstance(string[] args)
         {
             var e = new StartupNextInstanceEventArgs(args);
             this.OnStartupNextInstance(e);
@@ -410,7 +410,7 @@ namespace SevenSoftware.Windows
         }
 
         /// <summary>Tries the dispose synchronization objects (if needed).</summary>
-        private void TryDisposeSynchronizationObjects()
+        void TryDisposeSynchronizationObjects()
         {
             if (this.disposed)
             {

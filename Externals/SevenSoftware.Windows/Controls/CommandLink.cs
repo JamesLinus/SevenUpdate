@@ -12,14 +12,14 @@ namespace SevenSoftware.Windows.Controls
     public class CommandLink : Button, INotifyPropertyChanged
     {
         /// <summary>The text to display below the main instruction text.</summary>
-        private static readonly DependencyProperty NoteProperty = DependencyProperty.Register(
+        static readonly DependencyProperty NoteProperty = DependencyProperty.Register(
             "Note", 
             typeof(string), 
             typeof(CommandLink), 
             new FrameworkPropertyMetadata(string.Empty, FrameworkPropertyMetadataOptions.AffectsRender, OnNoteChanged));
 
         /// <summary>Indicates if the Uac shield is needed.</summary>
-        private static readonly DependencyProperty UseShieldProperty = DependencyProperty.Register(
+        static readonly DependencyProperty UseShieldProperty = DependencyProperty.Register(
             "UseShield", 
             typeof(bool), 
             typeof(CommandLink), 
@@ -70,7 +70,7 @@ namespace SevenSoftware.Windows.Controls
         /// <summary>Handles a change to the <c>Note</c> property.</summary>
         /// <param name="obj">The dependency object.</param>
         /// <param name="e">The <c>System.Windows.DependencyPropertyChangedEventArgs</c> instance containing the event data.</param>
-        private static void OnNoteChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+        static void OnNoteChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
             var me = (CommandLink)obj;
             me.Note = e.NewValue.ToString();
@@ -80,7 +80,7 @@ namespace SevenSoftware.Windows.Controls
         /// <summary>Handles a change to the <c>UseShield</c> property.</summary>
         /// <param name="obj">The dependency object.</param>
         /// <param name="e">The <c>System.Windows.DependencyPropertyChangedEventArgs</c> instance containing the event data.</param>
-        private static void OnUseShieldChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+        static void OnUseShieldChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
             var me = (CommandLink)obj;
             me.UseShield = (bool)e.NewValue;
@@ -89,7 +89,7 @@ namespace SevenSoftware.Windows.Controls
 
         /// <summary>When a property has changed, call the <c>OnPropertyChanged</c> Event.</summary>
         /// <param name="name">The name of the property that has changed.</param>
-        private void OnPropertyChanged(string name)
+        void OnPropertyChanged(string name)
         {
             PropertyChangedEventHandler handler = this.PropertyChanged;
 

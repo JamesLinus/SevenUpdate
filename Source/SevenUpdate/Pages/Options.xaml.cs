@@ -21,13 +21,13 @@ namespace SevenUpdate.Pages
     public partial class Options
     {
         /// <summary>The official collection of the applications that Seven Update can update.</summary>
-        private static ObservableCollection<Sua> apps;
+        static ObservableCollection<Sua> apps;
 
         /// <summary>The local collection of the apps that Seven Update can update.</summary>
-        private static ObservableCollection<Sua> machineAppList;
+        static ObservableCollection<Sua> machineAppList;
 
         /// <summary>The program configuration.</summary>
-        private Config config;
+        Config config;
 
         /// <summary>Initializes a new instance of the <see cref="Options" /> class.</summary>
         public Options()
@@ -57,7 +57,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Downloads the Seven Update Application List.</summary>
-        private static void DownloadSul()
+        static void DownloadSul()
         {
             try
             {
@@ -76,7 +76,7 @@ namespace SevenUpdate.Pages
         /// <summary>Navigates to the Seven Update privacy policy.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The event data.</param>
-        private void GoToPrivacyPolicy(object sender, RequestNavigateEventArgs e)
+        void GoToPrivacyPolicy(object sender, RequestNavigateEventArgs e)
         {
             Utilities.StartProcess("http://sevenupdate.com/privacy");
             e.Handled = true;
@@ -85,7 +85,7 @@ namespace SevenUpdate.Pages
         /// <summary>Loads the settings and <c>Sua</c> list when the page is loaded.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
-        private void Init(object sender, RoutedEventArgs e)
+        void Init(object sender, RoutedEventArgs e)
         {
             this.lvApps.Cursor = Cursors.Wait;
             this.tbDownloading.Visibility = Visibility.Visible;
@@ -102,7 +102,7 @@ namespace SevenUpdate.Pages
         ///   the stored list on the system.
         /// </summary>
         /// <param name="officialApplicationList">The official application list from the server.</param>
-        private void LoadSul(ObservableCollection<Sua> officialApplicationList = null)
+        void LoadSul(ObservableCollection<Sua> officialApplicationList = null)
         {
             try
             {
@@ -225,7 +225,7 @@ namespace SevenUpdate.Pages
         /// <summary>Goes back to the Main page.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
-        private void NavigateToMainPage(object sender, RoutedEventArgs e)
+        void NavigateToMainPage(object sender, RoutedEventArgs e)
         {
             Core.NavigateToMainPage();
         }
@@ -233,7 +233,7 @@ namespace SevenUpdate.Pages
         /// <summary>Navigates to a Uri.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.Navigation.RequestNavigateEventArgs</c> instance containing the event data.</param>
-        private void NavigateToUri(object sender, RequestNavigateEventArgs e)
+        void NavigateToUri(object sender, RequestNavigateEventArgs e)
         {
             Utilities.StartProcess(e.Uri.AbsoluteUri);
 
@@ -243,7 +243,7 @@ namespace SevenUpdate.Pages
         /// <summary>Limit the size of the <c>GridViewColumn</c> when it's being resized.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.Controls.Primitives.DragDeltaEventArgs</c> instance containing the event data.</param>
-        private void RestrictColumn(object sender, DragDeltaEventArgs e)
+        void RestrictColumn(object sender, DragDeltaEventArgs e)
         {
             ListViewExtensions.LimitColumnSize((Thumb)e.OriginalSource);
         }
@@ -251,7 +251,7 @@ namespace SevenUpdate.Pages
         /// <summary>Saves the settings and goes back to the Main page.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
-        private void SaveSettings(object sender, RoutedEventArgs e)
+        void SaveSettings(object sender, RoutedEventArgs e)
         {
             if (WcfService.SaveSettings(this.config.AutoOption != AutoUpdateOption.Never, this.config, machineAppList))
             {
@@ -260,7 +260,7 @@ namespace SevenUpdate.Pages
         }
 
         /// <summary>Updates the list with the <c>machineAppList</c>.</summary>
-        private void UpdateList()
+        void UpdateList()
         {
             this.lvApps.Cursor = Cursors.Arrow;
             if (machineAppList.Count < 1)
@@ -274,7 +274,7 @@ namespace SevenUpdate.Pages
         /// <summary>Changes the UI depending on whether Aero Glass is enabled.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>CompositionChangedEventArgs</c> instance containing the event data.</param>
-        private void UpdateUI(object sender, CompositionChangedEventArgs e)
+        void UpdateUI(object sender, CompositionChangedEventArgs e)
         {
             if (e.IsGlassEnabled)
             {

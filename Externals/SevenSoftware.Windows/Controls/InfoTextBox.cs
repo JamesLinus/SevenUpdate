@@ -13,30 +13,30 @@ namespace SevenSoftware.Windows.Controls
     public sealed class InfoTextBox : TextBox
     {
         /// <summary>Indicates if the <c>InfoTextBox</c> has an error.</summary>
-        private static readonly DependencyProperty HasErrorProperty = DependencyProperty.Register(
+        static readonly DependencyProperty HasErrorProperty = DependencyProperty.Register(
             "HasError", typeof(bool), typeof(InfoTextBox), new PropertyMetadata(false));
 
         /// <summary>Indicates if the <c>InfoTextBox</c> has text.</summary>
-        private static readonly DependencyProperty HasTextProperty = DependencyProperty.Register(
+        static readonly DependencyProperty HasTextProperty = DependencyProperty.Register(
             "HasText", typeof(bool), typeof(InfoTextBox), new PropertyMetadata(false));
 
         /// <summary>Indicates if the <c>InfoTextBox</c> has a warning.</summary>
-        private static readonly DependencyProperty HasWarningProperty = DependencyProperty.Register(
+        static readonly DependencyProperty HasWarningProperty = DependencyProperty.Register(
             "HasWarning", typeof(bool), typeof(InfoTextBox), new PropertyMetadata(false));
 
         /// <summary>The text to display when there is no text in the <c>InfoTextBox</c>.</summary>
-        private static readonly DependencyProperty NoteProperty = DependencyProperty.Register(
+        static readonly DependencyProperty NoteProperty = DependencyProperty.Register(
             "Note", typeof(string), typeof(InfoTextBox), new UIPropertyMetadata(string.Empty, NotePropertyChanged));
 
         /// <summary>The style of the Note.</summary>
-        private static readonly DependencyProperty NoteStyleProperty = DependencyProperty.Register(
+        static readonly DependencyProperty NoteStyleProperty = DependencyProperty.Register(
             "NoteStyle", typeof(Style), typeof(InfoTextBox), new UIPropertyMetadata(null));
 
         /// <summary>The adorner label.</summary>
-        private AdornerLabel myAdornerLabel;
+        AdornerLabel myAdornerLabel;
 
         /// <summary>The adorner layer.</summary>
-        private AdornerLayer myAdornerLayer;
+        AdornerLayer myAdornerLayer;
 
         /// <summary>Initializes a new instance of the <see cref="InfoTextBox" /> class.</summary>
         public InfoTextBox()
@@ -89,7 +89,7 @@ namespace SevenSoftware.Windows.Controls
 
         /// <summary>Gets or sets a value indicating whether this instance has text.</summary>
         /// <value><c>True</c> if this instance has text; otherwise, <c>False</c>.</value>
-        private bool HasText
+        bool HasText
         {
             get
             {
@@ -169,7 +169,7 @@ namespace SevenSoftware.Windows.Controls
         /// <summary>Determines whether the <c>InfoTextBox</c> is Visible.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.EventArgs</c> instance containing the event data.</param>
-        private static new void IsVisibleChanged(object sender, EventArgs e)
+        static new void IsVisibleChanged(object sender, EventArgs e)
         {
             var infoTextBox = sender as InfoTextBox;
             if (infoTextBox == null)
@@ -183,7 +183,7 @@ namespace SevenSoftware.Windows.Controls
         /// <summary>Updates the adorner when the label changes.</summary>
         /// <param name="d">The dependency object.</param>
         /// <param name="e">The <c>System.Windows.DependencyPropertyChangedEventArgs</c> instance containing the event data.</param>
-        private static void NotePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        static void NotePropertyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
         {
             var infoTextBox = d as InfoTextBox;
 
@@ -202,7 +202,7 @@ namespace SevenSoftware.Windows.Controls
         /// <param name="element">The element.</param>
         /// <typeparameter name="T">The type of element</typeparameter>
         /// <typeparam name="T">The type of element.</typeparam>
-        private static void RemoveAdorners<T>(AdornerLayer adorner, UIElement element)
+        static void RemoveAdorners<T>(AdornerLayer adorner, UIElement element)
         {
             if (adorner == null)
             {
@@ -233,7 +233,7 @@ namespace SevenSoftware.Windows.Controls
         /// <summary>Updates the adorner.</summary>
         /// <param name="element">The element.</param>
         /// <param name="hide">If set to <c>True</c> hide the adorner.</param>
-        private void UpdateAdorner(FrameworkElement element, bool hide = false)
+        void UpdateAdorner(FrameworkElement element, bool hide = false)
         {
             if (element == null || this.myAdornerLayer == null)
             {

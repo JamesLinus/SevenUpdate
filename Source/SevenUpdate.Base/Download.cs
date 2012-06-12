@@ -15,19 +15,19 @@ namespace SevenUpdate
     public static class Download
     {
         /// <summary>Gets a value indicating whether to cancel the current download.</summary>
-        private static bool cancelDownload;
+        static bool cancelDownload;
 
         /// <summary>The directory containing the app update files.</summary>
-        private static string downloadDirectory;
+        static string downloadDirectory;
 
         /// <summary>Gets a value indicating whether an error has occurred.</summary>
-        private static bool errorOccurred;
+        static bool errorOccurred;
 
         /// <summary>The download job name.</summary>
-        private static string jobName;
+        static string jobName;
 
         /// <summary>Manager for Background Intelligent Transfer Service.</summary>
-        private static BitsManager manager;
+        static BitsManager manager;
 
         /// <summary>Occurs when the download completed.</summary>
         public static event EventHandler<DownloadCompletedEventArgs> DownloadCompleted;
@@ -158,7 +158,7 @@ namespace SevenUpdate
         /// <summary>Downloads the application updates.</summary>
         /// <param name="application">The Sui containing the update info.</param>
         /// <param name="bitsJob">The bits job that will download the update.</param>
-        private static void DownloadUpdates(Sui application, ref BitsJob bitsJob)
+        static void DownloadUpdates(Sui application, ref BitsJob bitsJob)
         {
             if (application == null)
             {
@@ -216,7 +216,7 @@ namespace SevenUpdate
         /// <summary>Reports when a download completes.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>SharpBits.Base.NotificationEventArgs</c> instance containing the event data.</param>
-        private static void ReportDownloadComplete(object sender, NotificationEventArgs e)
+        static void ReportDownloadComplete(object sender, NotificationEventArgs e)
         {
             if (e.Job == null)
             {
@@ -262,7 +262,7 @@ namespace SevenUpdate
         /// <summary>Reports a download error.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>SharpBits.Base.ErrorNotificationEventArgs</c> instance containing the event data.</param>
-        private static void ReportDownloadError(object sender, ErrorNotificationEventArgs e)
+        static void ReportDownloadError(object sender, ErrorNotificationEventArgs e)
         {
             if (e.Job == null)
             {
@@ -313,7 +313,7 @@ namespace SevenUpdate
         /// <summary>Reports the download progress.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>SharpBits.Base.NotificationEventArgs</c> instance containing the event data.</param>
-        private static void ReportDownloadProgress(object sender, NotificationEventArgs e)
+        static void ReportDownloadProgress(object sender, NotificationEventArgs e)
         {
             if (cancelDownload)
             {

@@ -15,7 +15,7 @@ namespace SevenUpdate
     internal static class MyServiceHost
     {
         /// <summary>Gets or sets the <c>ServiceHost</c> instance.</summary>
-        private static ServiceHost Instance { get; set; }
+        static ServiceHost Instance { get; set; }
 
         /// <summary>Starts the service.</summary>
         internal static void StartService()
@@ -27,8 +27,9 @@ namespace SevenUpdate
 
             var binding = new NetNamedPipeBinding
                 {
-                    Name = "sevenupdatebinding", Security = 
-                    { Mode = NetNamedPipeSecurityMode.Transport } 
+                   Name = "sevenupdatebinding", Security = {
+                                                                Mode = NetNamedPipeSecurityMode.Transport 
+                                                            } 
                 };
 
             var baseAddress = new Uri("net.pipe://localhost/sevenupdate/");

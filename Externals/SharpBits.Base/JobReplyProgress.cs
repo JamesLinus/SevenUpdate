@@ -7,7 +7,7 @@ namespace SharpBits.Base
     public class JobReplyProgress
     {
         /// <summary>The current project.</summary>
-        private BGJobReplyProgress jobReplyProgress;
+        BGJobReplyProgress jobReplyProgress;
 
         /// <summary>Initializes a new instance of the <see cref="JobReplyProgress" /> class.</summary>
         /// <param name="jobReplyProgress">The job reply progress.</param>

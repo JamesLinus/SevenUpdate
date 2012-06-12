@@ -1,6 +1,5 @@
 ﻿// <copyright file="AssemblyInfo.cs" project="SevenSoftware.Windows">Robert Baker</copyright>
 // <license href="http://www.microsoft.com/en-us/openness/licenses.aspx" name="Microsoft Public License" />
-
 using System;
 using System.Reflection;
 using System.Resources;

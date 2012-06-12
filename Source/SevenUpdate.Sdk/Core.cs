@@ -34,25 +34,25 @@ namespace SevenUpdate.Sdk
                 Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData), "Seven Update SDK", "Projects.sul");
 
         /// <summary>The application information page.</summary>
-        private static AppInfo appInfoPage;
+        static AppInfo appInfoPage;
 
         /// <summary>The main page.</summary>
-        private static Main mainPage;
+        static Main mainPage;
 
         /// <summary>The update files page.</summary>
-        private static UpdateFiles updateFilesPage;
+        static UpdateFiles updateFilesPage;
 
         /// <summary>The update information page.</summary>
-        private static UpdateInfo updateInfoPage;
+        static UpdateInfo updateInfoPage;
 
         /// <summary>The update registry page.</summary>
-        private static UpdateRegistry updateRegistryPage;
+        static UpdateRegistry updateRegistryPage;
 
         /// <summary>The update review page.</summary>
-        private static UpdateReview updateReviewPage;
+        static UpdateReview updateReviewPage;
 
         /// <summary>The update shortcuts page.</summary>
-        private static UpdateShortcuts updateShortcutsPage;
+        static UpdateShortcuts updateShortcutsPage;
 
         /// <summary>Gets the application information of the project.</summary>
         /// <value>The application info.</value>
@@ -125,7 +125,7 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>Gets or sets the AppInfo page.</summary>
-        private static AppInfo AppInfoPage
+        static AppInfo AppInfoPage
         {
             get { return appInfoPage ?? (appInfoPage = new AppInfo()); }
 
@@ -134,7 +134,7 @@ namespace SevenUpdate.Sdk
 
         /// <summary>Gets or sets a value indicating whether the current project being edited is new.</summary>
         /// <value><c>True</c> if this instance is new project; otherwise, <c>False</c>.</value>
-        private static bool IsNewProject { get; set; }
+        static bool IsNewProject { get; set; }
 
         /// <summary>Edit the selected project or update.</summary>
         internal static void EditItem()
@@ -514,7 +514,7 @@ namespace SevenUpdate.Sdk
         }
 
         /// <summary>Resets the pages to default status.</summary>
-        private static void ResetPages()
+        static void ResetPages()
         {
             AppInfoPage = null; // new AppInfo();
             UpdateInfoPage = null; // new UpdateInfo();
@@ -532,7 +532,7 @@ namespace SevenUpdate.Sdk
         /// <param name="footerText">Text to display as a footer message.</param>
         /// <param name="defaultButtonText">Text to display on the button.</param>
         /// <param name="displayShieldOnButton">Indicates if a UAC shield is to be displayed on the defaultButton.</param>
-        private static void ShowMessage(
+        static void ShowMessage(
             string instructionText, 
             TaskDialogStandardIcon icon, 
             TaskDialogStandardButtons standardButtons, 
@@ -569,7 +569,7 @@ namespace SevenUpdate.Sdk
             }
 
             string message = instructionText;
-            MessageBoxImage msgIcon = MessageBoxImage.None;
+            var msgIcon = MessageBoxImage.None;
 
             if (description != null)
             {

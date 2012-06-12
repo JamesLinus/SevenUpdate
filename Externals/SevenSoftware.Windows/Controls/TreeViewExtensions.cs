@@ -34,7 +34,7 @@ namespace SevenSoftware.Windows.Controls
         /// <param name="itemCollection">The item collection.</param>
         /// <param name="predicate">The TreeViewItem.</param>
         /// <returns>The TreeViewItem found.</returns>
-        private static TreeViewItem FindTreeViewItem(
+        static TreeViewItem FindTreeViewItem(
             ItemContainerGenerator parentItemContainerGenerator, 
             ItemCollection itemCollection, 
             Predicate<TreeViewItem> predicate)

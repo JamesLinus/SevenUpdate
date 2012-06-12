@@ -16,7 +16,7 @@ namespace SevenSoftware.Windows.Controls
     public sealed class UacButton : Button, INotifyPropertyChanged
     {
         /// <summary>Dependency Property - Specifies the text to display on the button.</summary>
-        private static readonly DependencyProperty ButtonTextProperty = DependencyProperty.Register(
+        static readonly DependencyProperty ButtonTextProperty = DependencyProperty.Register(
             "ButtonText", 
             typeof(string), 
             typeof(UacButton), 
@@ -26,7 +26,7 @@ namespace SevenSoftware.Windows.Controls
                 OnButtonTextChanged));
 
         /// <summary>Dependency Property - Indicates if the UAC Shield is desired on the button.</summary>
-        private static readonly DependencyProperty IsShieldNeededProperty = DependencyProperty.Register(
+        static readonly DependencyProperty IsShieldNeededProperty = DependencyProperty.Register(
             "IsShieldNeeded", 
             typeof(bool), 
             typeof(UacButton), 
@@ -36,31 +36,31 @@ namespace SevenSoftware.Windows.Controls
                 OnIsShieldNeededChanged));
 
         /// <summary>The UAC shield.</summary>
-        private static readonly BitmapImage Shield =
+        static readonly BitmapImage Shield =
             new BitmapImage(
                 new Uri(
                     @"pack://application:,,,/SevenSoftware.Windows;component/Resources/Images/Shield.png", 
                     UriKind.Absolute));
 
         /// <summary>The disabled shield image.</summary>
-        private static readonly BitmapImage ShieldDisabled =
+        static readonly BitmapImage ShieldDisabled =
             new BitmapImage(
                 new Uri(
                     @"pack://application:,,,/SevenSoftware.Windows;component/Resources/Images/ShieldDisabled.png", 
                     UriKind.Absolute));
 
         /// <summary>Dependency Property - The shield icon to display.</summary>
-        private static readonly DependencyProperty ShieldIconProperty = DependencyProperty.Register(
+        static readonly DependencyProperty ShieldIconProperty = DependencyProperty.Register(
             "ShieldIcon", 
             typeof(ImageSource), 
             typeof(Button), 
             new FrameworkPropertyMetadata(Shield, FrameworkPropertyMetadataOptions.AffectsRender, OnShieldIconChanged));
 
         /// <summary>Indicates if the Uac shield is needed.</summary>
-        private static readonly bool ShieldNeeded = !NativeMethods.IsUserAdmin;
+        static readonly bool ShieldNeeded = !NativeMethods.IsUserAdmin;
 
         /// <summary>The text for the button.</summary>
-        private static readonly string Text = string.Empty;
+        static readonly string Text = string.Empty;
 
         /// <summary>Initializes a new instance of the <see cref="UacButton" /> class.</summary>
         public UacButton()
@@ -132,7 +132,7 @@ namespace SevenSoftware.Windows.Controls
         /// <summary>Handles a change to the <c>ButtonText</c> property.</summary>
         /// <param name="obj">The dependency object.</param>
         /// <param name="e">The <c>System.Windows.DependencyPropertyChangedEventArgs</c> instance containing the event data.</param>
-        private static void OnButtonTextChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+        static void OnButtonTextChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
             var me = (UacButton)obj;
             var stackPanel = (StackPanel)me.Content;
@@ -153,7 +153,7 @@ namespace SevenSoftware.Windows.Controls
         /// <param name="obj">The dependency object.</param>
         /// <param name="e">The <c>System.Windows.DependencyPropertyChangedEventArgs</c> instance containing the event data.</param>
         /// <remarks>Adds or removes the UACShieldAdorner as appropriate</remarks>
-        private static void OnIsShieldNeededChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+        static void OnIsShieldNeededChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
             bool showShield = (bool)e.NewValue && ShieldNeeded;
             var me = (UacButton)obj;
@@ -171,7 +171,7 @@ namespace SevenSoftware.Windows.Controls
         /// <summary>Handles a change to the <c>ShieldIcon</c> property.</summary>
         /// <param name="obj">The dependency object.</param>
         /// <param name="e">The <c>System.Windows.DependencyPropertyChangedEventArgs</c> instance containing the event data.</param>
-        private static void OnShieldIconChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
+        static void OnShieldIconChanged(DependencyObject obj, DependencyPropertyChangedEventArgs e)
         {
             var me = (UacButton)obj;
             var sp = (StackPanel)me.Content;
@@ -188,7 +188,7 @@ namespace SevenSoftware.Windows.Controls
         /// <summary>Changes the UAC icon.</summary>
         /// <param name="sender">The object that raised the event.</param>
         /// <param name="e">The <c>System.Windows.DependencyPropertyChangedEventArgs</c> instance containing the event data.</param>
-        private void ChangeUacIcon(object sender, DependencyPropertyChangedEventArgs e)
+        void ChangeUacIcon(object sender, DependencyPropertyChangedEventArgs e)
         {
             if (!this.IsShieldDisplayed)
             {
@@ -209,7 +209,7 @@ namespace SevenSoftware.Windows.Controls
         /// <returns>If both <c>ToolTipElevated</c> and <c>ToolTipNotElevated</c> are <c>null</c>,<c>Button.ToolTip</c>
         /// is returned.Otherwise <c>ToolTipElevated</c> or <c>ToolTipNotElevated</c> is returned based on <see
         /// cref="IsShieldNeeded" />.</returns>
-        private object GetToolTip()
+        object GetToolTip()
         {
             if (this.ToolTipElevated == null && this.ToolTipNotElevated == null)
             {
@@ -222,14 +222,14 @@ namespace SevenSoftware.Windows.Controls
         /// <summary>Called when the control is loaded.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
-        private void OnLoaded(object sender, RoutedEventArgs e)
+        void OnLoaded(object sender, RoutedEventArgs e)
         {
             this.ToolTip = this.GetToolTip();
         }
 
         /// <summary>When a property has changed, call the <c>OnPropertyChanged</c> Event.</summary>
         /// <param name="name">The property name that has changed.</param>
-        private void OnPropertyChanged(string name)
+        void OnPropertyChanged(string name)
         {
             PropertyChangedEventHandler handler = this.PropertyChanged;
 

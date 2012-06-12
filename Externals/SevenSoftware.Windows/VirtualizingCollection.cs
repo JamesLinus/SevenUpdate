@@ -25,32 +25,32 @@ namespace SevenSoftware.Windows
         /// <summary>
         /// The items provider.
         /// </summary>
-        private readonly IItemsProvider<T> itemsProvider;
+        readonly IItemsProvider<T> itemsProvider;
 
         /// <summary>
         /// Gets the size of the page.
         /// </summary>
-        private readonly int pageSize = 100;
+        readonly int pageSize = 100;
 
         /// <summary>
         /// Gets the page timeout.
         /// </summary>
-        private readonly long pageTimeout = 10000;
+        readonly long pageTimeout = 10000;
 
         /// <summary>
         /// The times when the page was last updated.
         /// </summary>
-        private readonly Dictionary<int, DateTime> pageTouchTimes = new Dictionary<int, DateTime>();
+        readonly Dictionary<int, DateTime> pageTouchTimes = new Dictionary<int, DateTime>();
 
         /// <summary>
         /// The collection of pages.
         /// </summary>
-        private readonly Dictionary<int, IList<T>> pages = new Dictionary<int, IList<T>>();
+        readonly Dictionary<int, IList<T>> pages = new Dictionary<int, IList<T>>();
 
         /// <summary>
         /// Gets the number of elements contained in the <see cref="T:System.Collections.Generic.ICollection`1"/>.
         /// </summary>
-        private int count = -1;
+        int count = -1;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="VirtualizingCollection&lt;T&gt;"/> class.
@@ -157,7 +157,7 @@ namespace SevenSoftware.Windows
         /// Gets the items provider.
         /// </summary>
         /// <value>The items provider.</value>
-        private IItemsProvider<T> ItemsProvider
+        IItemsProvider<T> ItemsProvider
         {
             get { return this.itemsProvider; }
         }
@@ -166,7 +166,7 @@ namespace SevenSoftware.Windows
         /// Gets the size of the page.
         /// </summary>
         /// <value>The size of the page.</value>
-        private int PageSize
+        int PageSize
         {
             get { return this.pageSize; }
         }
@@ -175,7 +175,7 @@ namespace SevenSoftware.Windows
         /// Gets the page timeout.
         /// </summary>
         /// <value>The page timeout.</value>
-        private long PageTimeout
+        long PageTimeout
         {
             get { return this.pageTimeout; }
         }
@@ -515,7 +515,7 @@ namespace SevenSoftware.Windows
         /// <summary>
         /// Cleans up any stale pages that have not been accessed in the period dictated by PageTimeout.
         /// </summary>
-        private void CleanUpPages()
+        void CleanUpPages()
         {
             var keys = new List<int>(this.pageTouchTimes.Keys);
             foreach (int key in keys)

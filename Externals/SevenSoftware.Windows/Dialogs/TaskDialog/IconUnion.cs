@@ -15,11 +15,11 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
     {
         /// <summary>The index for the icon to display has the main icon.</summary>
         [FieldOffset(0)]
-        private int mainIcon;
+        int mainIcon;
 
         /// <summary>This field is used to adjust the length of the structure on 32/64bit OS.</summary>
         [FieldOffset(0)]
-        private IntPtr spacer;
+        IntPtr spacer;
 
         /// <summary>Initializes a new instance of the <see cref="IconUnion" /> struct.</summary>
         /// <param name="i">The index for the icon.</param>

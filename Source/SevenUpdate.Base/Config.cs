@@ -14,13 +14,13 @@ namespace SevenUpdate
     public sealed class Config : INotifyPropertyChanged
     {
         /// <summary>The automatic update setting.</summary>
-        private AutoUpdateOption autoOption;
+        AutoUpdateOption autoOption;
 
         /// <summary>
         ///   A value that indicates whether to treat <c>Importance.Recommended</c> updates the same as
         ///   <c>Importance.Important</c> updates.
         /// </summary>
-        private bool includeRecommended;
+        bool includeRecommended;
 
         /// <summary>Occurs when a property value changes.</summary>
         public event PropertyChangedEventHandler PropertyChanged;
@@ -64,7 +64,7 @@ namespace SevenUpdate
 
         /// <summary>When a property has changed, call the <c>OnPropertyChanged</c> Event.</summary>
         /// <param name="name">The name of the property that changed.</param>
-        private void OnPropertyChanged(string name)
+        void OnPropertyChanged(string name)
         {
             PropertyChangedEventHandler handler = this.PropertyChanged;
 

@@ -19,12 +19,12 @@ namespace SevenSoftware.Windows
         /// <summary>
         /// The syncronization context.
         /// </summary>
-        private readonly SynchronizationContext synchronizationContext;
+        readonly SynchronizationContext synchronizationContext;
 
         /// <summary>
         /// A bool indicating of the list is loading.
         /// </summary>
-        private bool isLoading;
+        bool isLoading;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="AsyncVirtualizingCollection&lt;T&gt;"/> class.
@@ -142,7 +142,7 @@ namespace SevenSoftware.Windows
         /// <summary>
         /// Fires the collection reset event.
         /// </summary>
-        private void FireCollectionReset()
+        void FireCollectionReset()
         {
             var e = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset);
             this.OnCollectionChanged(e);
@@ -152,7 +152,7 @@ namespace SevenSoftware.Windows
         /// Fires the property changed event.
         /// </summary>
         /// <param name="propertyName">Name of the property.</param>
-        private void FirePropertyChanged(string propertyName)
+        void FirePropertyChanged(string propertyName)
         {
             var e = new PropertyChangedEventArgs(propertyName);
             this.OnPropertyChanged(e);
@@ -162,7 +162,7 @@ namespace SevenSoftware.Windows
         /// Performed on UI-thread after LoadCountWork.
         /// </summary>
         /// <param name="args">Number of items returned.</param>
-        private void LoadCountCompleted(object args)
+        void LoadCountCompleted(object args)
         {
             this.Count = (int)args;
             this.IsLoading = false;
@@ -173,7 +173,7 @@ namespace SevenSoftware.Windows
         /// Performed on background thread.
         /// </summary>
         /// <param name="args">None required.</param>
-        private void LoadCountWork(object args)
+        void LoadCountWork(object args)
         {
             int count = this.FetchCount();
             this.SynchronizationContext.Send(this.LoadCountCompleted, count);
@@ -183,7 +183,7 @@ namespace SevenSoftware.Windows
         /// Performed on UI-thread after LoadPageWork.
         /// </summary>
         /// <param name="args">object[] { int pageIndex, IList(T) page }</param>
-        private void LoadPageCompleted(object args)
+        void LoadPageCompleted(object args)
         {
             var pageIndex = (int)((object[])args)[0];
             var page = (IList<T>)((object[])args)[1];
@@ -197,7 +197,7 @@ namespace SevenSoftware.Windows
         /// Performed on background thread.
         /// </summary>
         /// <param name="args">Index of the page to load.</param>
-        private void LoadPageWork(object args)
+        void LoadPageWork(object args)
         {
             var pageIndex = (int)args;
             IList<T> page = this.FetchPage(pageIndex);

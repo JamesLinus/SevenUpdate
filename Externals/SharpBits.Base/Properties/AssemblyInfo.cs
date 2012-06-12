@@ -1,6 +1,5 @@
 // <copyright file="AssemblyInfo.cs" project="SharpBits.Base">Xidar</copyright>
 // <license href="http://sharpbits.codeplex.com/license" name="BSD License" />
-
 using System;
 using System.Reflection;
 using System.Runtime.InteropServices;

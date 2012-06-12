@@ -208,7 +208,7 @@ namespace SevenSoftware.Windows
         /// <param name="parameter2">Another additional message information. The contents of this parameter depend on the value of the msg parameter.</param>
         /// <param name="handled">If set to <c>True</c> the event was handled.</param>
         /// <returns>The return value is the result of the message processing and depends on the message sent.</returns>
-        private static IntPtr WndProc(IntPtr handle, int msg, IntPtr parameter, IntPtr parameter2, ref bool handled)
+        static IntPtr WndProc(IntPtr handle, int msg, IntPtr parameter, IntPtr parameter2, ref bool handled)
         {
             if (msg == 0x031E)
             {

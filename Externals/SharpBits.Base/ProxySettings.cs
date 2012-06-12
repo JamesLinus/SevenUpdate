@@ -7,16 +7,16 @@ namespace SharpBits.Base
     public class ProxySettings
     {
         /// <summary>The job for the proxy settings.</summary>
-        private readonly IBackgroundCopyJob job;
+        readonly IBackgroundCopyJob job;
 
         /// <summary>The proxy bypass list.</summary>
-        private string proxyBypassList;
+        string proxyBypassList;
 
         /// <summary>The proxy list.</summary>
-        private string proxyList;
+        string proxyList;
 
         /// <summary>The usage of proxy.</summary>
-        private BGJobProxyUsage proxyUsage;
+        BGJobProxyUsage proxyUsage;
 
         /// <summary>Initializes a new instance of the <see cref="ProxySettings" /> class.</summary>
         /// <param name="job">The job to set the proxy settings for.</param>

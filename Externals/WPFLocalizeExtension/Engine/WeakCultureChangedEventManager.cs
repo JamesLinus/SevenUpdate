@@ -11,20 +11,20 @@ namespace WPFLocalizeExtension.Engine
     internal sealed class WeakCultureChangedEventManager : WeakEventManager
     {
         /// <summary>Holds the inner list of listeners.</summary>
-        private readonly ListenerList listeners;
+        readonly ListenerList listeners;
 
         /// <summary>Indicates, if the current instance is listening on the source event.</summary>
-        private bool isListening;
+        bool isListening;
 
         /// <summary>Prevents a default instance of the WeakCultureChangedEventManager class from being created.</summary>
-        private WeakCultureChangedEventManager()
+        WeakCultureChangedEventManager()
         {
             // creates a new list and assign it to listeners
             this.listeners = new ListenerList();
         }
 
         /// <summary>Gets the singleton instance of <c>WeakCultureChangedEventManager</c>.</summary>
-        private static WeakCultureChangedEventManager CurrentManager
+        static WeakCultureChangedEventManager CurrentManager
         {
             get
             {
@@ -104,7 +104,7 @@ namespace WPFLocalizeExtension.Engine
         ///   This method is called if the LocalizeDictionary.OnCultureChanged is called and the listening process is
         ///   enabled.
         /// </summary>
-        private void InstanceOnCultureChanged()
+        void InstanceOnCultureChanged()
         {
             // tells every listener in the list that the event is occurred
             this.DeliverEventToList(Localize.Instance, EventArgs.Empty, this.listeners);
@@ -112,7 +112,7 @@ namespace WPFLocalizeExtension.Engine
 
         /// <summary>This method starts and stops the listening process by attaching/detaching on the source event.</summary>
         [MethodImpl(MethodImplOptions.Synchronized)]
-        private void StartStopListening()
+        void StartStopListening()
         {
             // check if listeners are available and the listening process is stopped, start it. otherwise if no
             // listeners are available and the listening process is started, stop it

@@ -14,13 +14,13 @@ namespace WPFLocalizeExtension.Extensions
     public class LocTextExtension : BaseLocalizeExtension<string>
     {
         /// <summary>Holds the local format segment array.</summary>
-        private string[] formatSegments;
+        string[] formatSegments;
 
         /// <summary>Holds the local prefix value.</summary>
-        private string prefix;
+        string prefix;
 
         /// <summary>Holds the local suffix value.</summary>
-        private string suffix;
+        string suffix;
 
         /// <summary>Initializes a new instance of the <see cref="LocTextExtension" /> class.</summary>
         /// <param name="key">The resource identifier.</param>
@@ -36,7 +36,7 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>This enumeration is used to determine the type of the return value of <c>GetAppendText</c>.</summary>
-        private enum TextAppendType
+        enum TextAppendType
         {
             /// <summary>The return value is used as prefix.</summary>
             Prefix, 
@@ -261,7 +261,7 @@ namespace WPFLocalizeExtension.Extensions
         /// </summary>
         /// <param name="at">The <c>TextAppendType</c> defines the format of the return value.</param>
         /// <returns>Returns the formated prefix or suffix.</returns>
-        private string GetAppendText(TextAppendType at)
+        string GetAppendText(TextAppendType at)
         {
             // define a return value
             string retVal = string.Empty;
@@ -282,7 +282,7 @@ namespace WPFLocalizeExtension.Extensions
         }
 
         /// <summary>Initalizes the localized text</summary>
-        private void InitializeLocText()
+        void InitializeLocText()
         {
             this.formatSegments = new string[5];
             this.formatSegments.Initialize();

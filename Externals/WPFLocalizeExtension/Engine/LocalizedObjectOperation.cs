@@ -105,7 +105,7 @@ namespace WPFLocalizeExtension.Engine
         /// <param name="key">The resource identifier.</param>
         /// <param name="language">The language.</param>
         /// <returns>The resolved string or a default error string.</returns>
-        private static string GetGuiString(string key, CultureInfo language)
+        static string GetGuiString(string key, CultureInfo language)
         {
             if (key == null)
             {

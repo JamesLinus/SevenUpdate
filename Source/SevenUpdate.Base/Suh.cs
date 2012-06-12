@@ -18,28 +18,28 @@ namespace SevenUpdate
     public sealed class Suh : INotifyPropertyChanged
     {
         /// <summary>The <c>Uri</c> for the application's website.</summary>
-        private string appUrl;
+        string appUrl;
 
         /// <summary>The help website <c>Uri</c> of the application.</summary>
-        private string helpUrl;
+        string helpUrl;
 
         /// <summary>The importance of the update.</summary>
-        private Importance importance;
+        Importance importance;
 
         /// <summary>The url pointing to a resource to find more information about the update.</summary>
-        private string infoUrl;
+        string infoUrl;
 
         /// <summary>The formatted date string when the update was installed.</summary>
-        private string installDate;
+        string installDate;
 
         /// <summary>The formatted date string depicting the release date of the update.</summary>
-        private string releaseDate;
+        string releaseDate;
 
         /// <summary>The current status of the update.</summary>
-        private UpdateStatus status;
+        UpdateStatus status;
 
         /// <summary>The total download size in bytes of the update.</summary>
-        private ulong updateSize;
+        ulong updateSize;
 
         /// <summary>Initializes a new instance of the <see cref="Suh" /> class.</summary>
         /// <param name="name">The collection of localized update names.</param>
@@ -237,7 +237,7 @@ namespace SevenUpdate
 
         /// <summary>When a property has changed, call the <c>OnPropertyChanged</c> Event.</summary>
         /// <param name="propertyName">The name of the property that changed.</param>
-        private void OnPropertyChanged(string propertyName)
+        void OnPropertyChanged(string propertyName)
         {
             PropertyChangedEventHandler handler = this.PropertyChanged;
 

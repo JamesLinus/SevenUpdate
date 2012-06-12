@@ -11,16 +11,16 @@ namespace SharpBits.Base
     public sealed partial class BitsFile : IDisposable
     {
         /// <summary>The current job.</summary>
-        private readonly BitsJob job;
+        readonly BitsJob job;
 
         /// <summary>Indicates if the file has been disposed.</summary>
-        private bool disposed;
+        bool disposed;
 
         /// <summary>The current <c>BitsFile</c>.</summary>
-        private IBackgroundCopyFile file;
+        IBackgroundCopyFile file;
 
         /// <summary>The current <c>BitsFile</c> progress.</summary>
-        private FileProgress progress;
+        FileProgress progress;
 
         /// <summary>Initializes a new instance of the <see cref="BitsFile" /> class.</summary>
         /// <exception cref="ArgumentNullException">Thrown when one or more required arguments are <c>null</c>.</exception>
@@ -131,7 +131,7 @@ namespace SharpBits.Base
 
         /// <summary>Releases unmanaged and - optionally - managed resources.</summary>
         /// <param name="disposing"><c>True</c> to release both managed and unmanaged resources; otherwise, <c>False</c> to release only unmanaged resources.</param>
-        private void Dispose(bool disposing)
+        void Dispose(bool disposing)
         {
             if (!this.disposed)
             {
@@ -154,7 +154,7 @@ namespace SharpBits.Base
     public sealed partial class BitsFile
     {
         /// <summary>The file to download.</summary>
-        private readonly IBackgroundCopyFile2 file2;
+        readonly IBackgroundCopyFile2 file2;
 
         /// <summary>Gets the file ranges.</summary>
         /// <value>The file ranges.</value>

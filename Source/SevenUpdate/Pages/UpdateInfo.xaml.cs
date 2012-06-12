@@ -21,7 +21,7 @@ namespace SevenUpdate.Pages
     public sealed partial class UpdateInfo
     {
         /// <summary>Gets or sets a list of indices relating to the current Update Collection.</summary>
-        private List<int> appIndices;
+        List<int> appIndices;
 
         /// <summary>Initializes a new instance of the <see cref="UpdateInfo" /> class.</summary>
         public UpdateInfo()
@@ -57,7 +57,7 @@ namespace SevenUpdate.Pages
 
         /// <summary>Loops through the <c>ListView</c> and updates the source when the update selection has been saved.</summary>
         /// <param name="element">The <c>DependencyObject</c>.</param>
-        private static void IterateVisualChild(DependencyObject element)
+        static void IterateVisualChild(DependencyObject element)
         {
             for (int i = 0; i < VisualTreeHelper.GetChildrenCount(element); i++)
             {
@@ -83,7 +83,7 @@ namespace SevenUpdate.Pages
         /// <summary>Adds the updates to the list.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
-        private void AddUpdates(object sender, RoutedEventArgs e)
+        void AddUpdates(object sender, RoutedEventArgs e)
         {
             var selectedUpdates = new ObservableCollection<Update>();
             this.appIndices = new List<int>();
@@ -110,7 +110,7 @@ namespace SevenUpdate.Pages
         /// <summary>Launches the Help <c>Url</c> of the update.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.</param>
-        private void NavigateToHelpUrl(object sender, MouseButtonEventArgs e)
+        void NavigateToHelpUrl(object sender, MouseButtonEventArgs e)
         {
             Utilities.StartProcess(Core.Applications[this.appIndices[this.lvUpdates.SelectedIndex]].AppInfo.HelpUrl);
         }
@@ -118,7 +118,7 @@ namespace SevenUpdate.Pages
         /// <summary>Launches the More Information <c>Url</c> of the update.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.</param>
-        private void NavigateToInfoUrl(object sender, MouseButtonEventArgs e)
+        void NavigateToInfoUrl(object sender, MouseButtonEventArgs e)
         {
             Utilities.StartProcess(((Update)this.lvUpdates.SelectedItem).InfoUrl);
         }
@@ -126,7 +126,7 @@ namespace SevenUpdate.Pages
         /// <summary>Navigates back to the Main page.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
-        private void NavigateToMainPage(object sender, RoutedEventArgs e)
+        void NavigateToMainPage(object sender, RoutedEventArgs e)
         {
             Core.NavigateToMainPage();
         }
@@ -134,7 +134,7 @@ namespace SevenUpdate.Pages
         /// <summary>Saves the selection of updates and navigates back to the Main page.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
-        private void SaveUpdateSelection(object sender, RoutedEventArgs e)
+        void SaveUpdateSelection(object sender, RoutedEventArgs e)
         {
             IterateVisualChild(this.lvUpdates);
             var count = new int[2];
@@ -191,7 +191,7 @@ namespace SevenUpdate.Pages
         /// <summary>Expands the group expander based on the which link was clicked from the main page.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
-        private void SetExpanded(object sender, RoutedEventArgs e)
+        void SetExpanded(object sender, RoutedEventArgs e)
         {
             var expander = e.Source as Expander;
             if (expander == null)
@@ -222,7 +222,7 @@ namespace SevenUpdate.Pages
         /// <summary>Shows or Hides the selected update.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
-        private void ShowOrHideUpdate(object sender, RoutedEventArgs e)
+        void ShowOrHideUpdate(object sender, RoutedEventArgs e)
         {
             int appIndex = this.appIndices[this.lvUpdates.SelectedIndex];
 
@@ -263,7 +263,7 @@ namespace SevenUpdate.Pages
         /// <summary>Changes the UI depending on whether Aero Glass is enabled.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>CompositionChangedEventArgs</c> instance containing the event data.</param>
-        private void UpdateUI(object sender, CompositionChangedEventArgs e)
+        void UpdateUI(object sender, CompositionChangedEventArgs e)
         {
             if (e.IsGlassEnabled)
             {

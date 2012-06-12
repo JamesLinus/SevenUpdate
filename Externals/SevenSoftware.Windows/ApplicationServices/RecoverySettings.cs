@@ -22,14 +22,14 @@ namespace SevenSoftware.Windows.ApplicationServices
         ///   The recovery ping interval is specified in milliseconds. By default, the interval is 5 seconds. If you
         ///   specify zero, the default interval is used.
         /// </remarks>
-        private uint pingInterval;
+        uint pingInterval;
 
         /// <summary>
         ///   Gets the recovery data object that contains the callback method and an optional parameter (usually the
         ///   state of the application) to be passed to the callback method.
         /// </summary>
         /// <value>A <c>RecoveryData</c> object.</value>
-        private RecoveryData recoveryData;
+        RecoveryData recoveryData;
 
         /// <summary>Initializes a new instance of the <see cref="RecoverySettings" /> class.</summary>
         /// <param name="data">A recovery data object that contains the callback method (invoked by the system before Windows Error Reporting terminates the application) and an optional state object.</param>

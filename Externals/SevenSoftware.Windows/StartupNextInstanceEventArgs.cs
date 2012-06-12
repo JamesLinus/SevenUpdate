@@ -9,7 +9,7 @@ namespace SevenSoftware.Windows
     public sealed class StartupNextInstanceEventArgs : EventArgs
     {
         /// <summary>The application arguments.</summary>
-        private readonly string[] args;
+        readonly string[] args;
 
         /// <summary>Initializes a new instance of the <see cref="StartupNextInstanceEventArgs" /> class.</summary>
         /// <param name="args">The arguments passed to the program.</param>

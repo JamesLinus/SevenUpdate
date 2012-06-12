@@ -14,7 +14,7 @@ namespace SevenSoftware.Windows.Dialogs
     public sealed class DialogControlCollection<T> : Collection<T> where T : DialogControl
     {
         /// <summary>The host dialog.</summary>
-        private IDialogControlHost hostingDialog;
+        IDialogControlHost hostingDialog;
 
         /// <summary>Initializes a new instance of the <see cref="DialogControlCollection{T}" /> class.</summary>
         /// <param name="host">The host.</param>

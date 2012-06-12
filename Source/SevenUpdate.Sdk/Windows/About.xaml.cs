@@ -54,7 +54,7 @@ namespace SevenUpdate.Sdk.Windows
         /// <summary>Changes the Window Background when Aero Glass is enabled or disabled.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>CompositionChangedEventArgs</c> instance containing the event data.</param>
-        private void ChangeWindowChrome(object sender, CompositionChangedEventArgs e)
+        void ChangeWindowChrome(object sender, CompositionChangedEventArgs e)
         {
             if (e.IsGlassEnabled)
             {
@@ -74,7 +74,7 @@ namespace SevenUpdate.Sdk.Windows
         /// <summary>Closes the About window.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
-        private void CloseWindow(object sender, RoutedEventArgs e)
+        void CloseWindow(object sender, RoutedEventArgs e)
         {
             this.Close();
         }
@@ -82,7 +82,7 @@ namespace SevenUpdate.Sdk.Windows
         /// <summary>Enables the ability to drag the window on glass.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.Input.MouseButtonEventArgs</c> instance containing the event data.</param>
-        private void EnableDragOnGlass(object sender, MouseButtonEventArgs e)
+        void EnableDragOnGlass(object sender, MouseButtonEventArgs e)
         {
             if (AeroGlass.IsGlassEnabled && e.LeftButton == MouseButtonState.Pressed)
             {
@@ -93,7 +93,7 @@ namespace SevenUpdate.Sdk.Windows
         /// <summary>Opens a browser and navigates to the Uri.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>System.Windows.Navigation.RequestNavigateEventArgs</c> instance containing the event data.</param>
-        private void NavigateToUri(object sender, RequestNavigateEventArgs e)
+        void NavigateToUri(object sender, RequestNavigateEventArgs e)
         {
             Utilities.StartProcess(e.Uri.AbsoluteUri);
             e.Handled = true;

@@ -14,25 +14,25 @@ namespace SharpBits.Base
     public sealed class BitsManager : IDisposable
     {
         /// <summary>Indicates if this instance is disposed.</summary>
-        private bool disposed;
+        bool disposed;
 
         /// <summary>Occurs when there is an interface error.</summary>
-        private EventHandler<BitsInterfaceNotificationEventArgs> interfaceError;
+        EventHandler<BitsInterfaceNotificationEventArgs> interfaceError;
 
         /// <summary>Occurs when a job is added.</summary>
-        private EventHandler<NotificationEventArgs> jobAdded;
+        EventHandler<NotificationEventArgs> jobAdded;
 
         /// <summary>Occurs when a job error occurs.</summary>
-        private EventHandler<ErrorNotificationEventArgs> jobError;
+        EventHandler<ErrorNotificationEventArgs> jobError;
 
         /// <summary>Occurs when a job is modified.</summary>
-        private EventHandler<NotificationEventArgs> jobModified;
+        EventHandler<NotificationEventArgs> jobModified;
 
         /// <summary>Occurs when a job is removed.</summary>
-        private EventHandler<NotificationEventArgs> jobRemoved;
+        EventHandler<NotificationEventArgs> jobRemoved;
 
         /// <summary>Occurs when a job has transfered.</summary>
-        private EventHandler<NotificationEventArgs> jobTransferred;
+        EventHandler<NotificationEventArgs> jobTransferred;
 
         /// <summary>Initializes a new instance of the <see cref="BitsManager" /> class.</summary>
         public BitsManager()
@@ -115,7 +115,7 @@ namespace SharpBits.Base
 
         /// <summary>Gets or sets the background copy manager.</summary>
         /// <value>The background copy manager.</value>
-        private IBackgroundCopyManager BackgroundCopyManager { get; set; }
+        IBackgroundCopyManager BackgroundCopyManager { get; set; }
 
         /// <summary>Creates a new transfer job.</summary>
         /// <param name="displayName">Null-terminated string that contains a display name for the job. Typically, the display name is used to identify the job in a user interface. Note that more than one job may have the same display name. Must not be <c>null</c>.The name is limited to 256 characters, not including the <c>null</c> terminator.</param>
@@ -197,7 +197,7 @@ namespace SharpBits.Base
 
         /// <summary>Releases unmanaged and - optionally - managed resources.</summary>
         /// <param name="disposing"><c>True</c> to release both managed and unmanaged resources; otherwise, <c>False</c> to release only unmanaged resources.</param>
-        private void Dispose(bool disposing)
+        void Dispose(bool disposing)
         {
             if (!this.disposed)
             {
@@ -221,7 +221,7 @@ namespace SharpBits.Base
         /// <summary>Gets the error description.</summary>
         /// <param name="result">The h result.</param>
         /// <returns>The error description.</returns>
-        private string GetErrorDescription(int result)
+        string GetErrorDescription(int result)
         {
             string description;
             this.BackgroundCopyManager.GetErrorDescription(
@@ -232,7 +232,7 @@ namespace SharpBits.Base
         /// <summary>Notifications the handler on job error event.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>SharpBits.Base.ErrorNotificationEventArgs</c> instance containing the event data.</param>
-        private void NotificationHandlerOnJobErrorEvent(object sender, ErrorNotificationEventArgs e)
+        void NotificationHandlerOnJobErrorEvent(object sender, ErrorNotificationEventArgs e)
         {
             // route the event to the job
             if (this.Jobs.ContainsKey(e.Job.JobId))
@@ -251,7 +251,7 @@ namespace SharpBits.Base
         /// <summary>Notifications the handler on job modified event.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>NotificationEventArgs</c> instance containing the event data.</param>
-        private void NotificationHandlerOnJobModifiedEvent(object sender, NotificationEventArgs e)
+        void NotificationHandlerOnJobModifiedEvent(object sender, NotificationEventArgs e)
         {
             // route the event to the job
             if (this.Jobs.ContainsKey(e.Job.JobId))
@@ -270,7 +270,7 @@ namespace SharpBits.Base
         /// <summary>Notifications the handler on job transferred event.</summary>
         /// <param name="sender">The object that called the event.</param>
         /// <param name="e">The <c>NotificationEventArgs</c> instance containing the event data.</param>
-        private void NotificationHandlerOnJobTransferredEvent(object sender, NotificationEventArgs e)
+        void NotificationHandlerOnJobTransferredEvent(object sender, NotificationEventArgs e)
         {
             // route the event to the job
             if (this.Jobs.ContainsKey(e.Job.JobId))
