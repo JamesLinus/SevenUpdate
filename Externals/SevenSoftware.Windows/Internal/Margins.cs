@@ -1,10 +1,10 @@
 // <copyright file="Margins.cs" project="SevenSoftware.Windows">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
+using System.Runtime.InteropServices;
+
 namespace SevenSoftware.Windows.Internal
 {
-    using System.Runtime.InteropServices;
-
     /// <summary>Defines the margins of windows that have visual styles applied.</summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct Margins
@@ -13,7 +13,7 @@ namespace SevenSoftware.Windows.Internal
         /// <param name="fullWindow">If set to <c>True</c> the margin is set to the full window.</param>
         public Margins(bool fullWindow) : this()
         {
-            this.LeftWidth = this.RightWidth = this.TopHeight = this.BottomHeight = fullWindow ? -1 : 0;
+            LeftWidth = RightWidth = TopHeight = BottomHeight = fullWindow ? -1 : 0;
         }
 
         /// <summary>Initializes a new instance of the <see cref="Margins" /> struct.</summary>
@@ -23,10 +23,10 @@ namespace SevenSoftware.Windows.Internal
         /// <param name="bottom">Height of the bottom border that retains its size.</param>
         public Margins(int left, int top, int right, int bottom) : this()
         {
-            this.LeftWidth = left;
-            this.RightWidth = right;
-            this.TopHeight = top;
-            this.BottomHeight = bottom;
+            LeftWidth = left;
+            RightWidth = right;
+            TopHeight = top;
+            BottomHeight = bottom;
         }
 
         /// <summary>Gets the width of the left border that retains its size.</summary>

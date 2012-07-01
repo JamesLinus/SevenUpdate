@@ -1,10 +1,10 @@
 ﻿// <copyright file="IItemsProvider.cs" project="SevenSoftware.Windows">Paul McClean</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
+using System.Collections.Generic;
+
 namespace SevenSoftware.Windows
 {
-    using System.Collections.Generic;
-
     /// <summary>
     /// Represents a provider of collection details.
     /// </summary>

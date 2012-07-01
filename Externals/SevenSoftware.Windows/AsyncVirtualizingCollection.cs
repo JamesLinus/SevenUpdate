@@ -1,13 +1,13 @@
 ﻿// <copyright file="AsyncVirtualizingCollection.cs" project="SevenSoftware.Windows">Paul McClean</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
+using System.Collections.Generic;
+using System.Collections.Specialized;
+using System.ComponentModel;
+using System.Threading;
+
 namespace SevenSoftware.Windows
 {
-    using System.Collections.Generic;
-    using System.Collections.Specialized;
-    using System.ComponentModel;
-    using System.Threading;
-
     /// <summary>
     /// Derived VirtualizatingCollection, performing loading asychronously.
     /// </summary>
@@ -32,7 +32,7 @@ namespace SevenSoftware.Windows
         /// <param name="itemsProvider">The items provider.</param>
         public AsyncVirtualizingCollection(IItemsProvider<T> itemsProvider) : base(itemsProvider)
         {
-            this.synchronizationContext = SynchronizationContext.Current;
+            synchronizationContext = SynchronizationContext.Current;
         }
 
         /// <summary>
@@ -43,7 +43,7 @@ namespace SevenSoftware.Windows
         public AsyncVirtualizingCollection(IItemsProvider<T> itemsProvider, int pageSize)
             : base(itemsProvider, pageSize)
         {
-            this.synchronizationContext = SynchronizationContext.Current;
+            synchronizationContext = SynchronizationContext.Current;
         }
 
         /// <summary>
@@ -55,7 +55,7 @@ namespace SevenSoftware.Windows
         public AsyncVirtualizingCollection(IItemsProvider<T> itemsProvider, int pageSize, int pageTimeout)
             : base(itemsProvider, pageSize, pageTimeout)
         {
-            this.synchronizationContext = SynchronizationContext.Current;
+            synchronizationContext = SynchronizationContext.Current;
         }
 
         /// <summary>
@@ -74,12 +74,12 @@ namespace SevenSoftware.Windows
         /// <returns><c>true</c> if this collection is loading; otherwise, <c>false</c>.</returns>
         public bool IsLoading
         {
-            get { return this.isLoading; }
+            get { return isLoading; }
 
             set
             {
-                this.isLoading = value;
-                this.FirePropertyChanged("IsLoading");
+                isLoading = value;
+                FirePropertyChanged("IsLoading");
             }
         }
 
@@ -90,7 +90,7 @@ namespace SevenSoftware.Windows
         /// <value>The synchronization context.</value>
         protected SynchronizationContext SynchronizationContext
         {
-            get { return this.synchronizationContext; }
+            get { return synchronizationContext; }
         }
 
         /// <summary>
@@ -99,7 +99,7 @@ namespace SevenSoftware.Windows
         /// <param name="e">The <see cref="System.Collections.Specialized.NotifyCollectionChangedEventArgs"/> instance containing the event data.</param>
         public virtual void OnCollectionChanged(NotifyCollectionChangedEventArgs e)
         {
-            NotifyCollectionChangedEventHandler h = this.CollectionChanged;
+            NotifyCollectionChangedEventHandler h = CollectionChanged;
             if (h != null)
             {
                 h(this, e);
@@ -112,7 +112,7 @@ namespace SevenSoftware.Windows
         /// <param name="e">The <see cref="System.ComponentModel.PropertyChangedEventArgs"/> instance containing the event data.</param>
         public virtual void OnPropertyChanged(PropertyChangedEventArgs e)
         {
-            PropertyChangedEventHandler h = this.PropertyChanged;
+            PropertyChangedEventHandler h = PropertyChanged;
             if (h != null)
             {
                 h(this, e);
@@ -124,9 +124,9 @@ namespace SevenSoftware.Windows
         /// </summary>
         protected override void LoadCount()
         {
-            this.Count = 0;
-            this.IsLoading = true;
-            ThreadPool.QueueUserWorkItem(this.LoadCountWork);
+            Count = 0;
+            IsLoading = true;
+            ThreadPool.QueueUserWorkItem(LoadCountWork);
         }
 
         /// <summary>
@@ -135,8 +135,8 @@ namespace SevenSoftware.Windows
         /// <param name="index">The index.</param>
         protected override void LoadPage(int index)
         {
-            this.IsLoading = true;
-            ThreadPool.QueueUserWorkItem(this.LoadPageWork, index);
+            IsLoading = true;
+            ThreadPool.QueueUserWorkItem(LoadPageWork, index);
         }
 
         /// <summary>
@@ -145,7 +145,7 @@ namespace SevenSoftware.Windows
         void FireCollectionReset()
         {
             var e = new NotifyCollectionChangedEventArgs(NotifyCollectionChangedAction.Reset);
-            this.OnCollectionChanged(e);
+            OnCollectionChanged(e);
         }
 
         /// <summary>
@@ -155,7 +155,7 @@ namespace SevenSoftware.Windows
         void FirePropertyChanged(string propertyName)
         {
             var e = new PropertyChangedEventArgs(propertyName);
-            this.OnPropertyChanged(e);
+            OnPropertyChanged(e);
         }
 
         /// <summary>
@@ -164,9 +164,9 @@ namespace SevenSoftware.Windows
         /// <param name="args">Number of items returned.</param>
         void LoadCountCompleted(object args)
         {
-            this.Count = (int)args;
-            this.IsLoading = false;
-            this.FireCollectionReset();
+            Count = (int)args;
+            IsLoading = false;
+            FireCollectionReset();
         }
 
         /// <summary>
@@ -175,8 +175,8 @@ namespace SevenSoftware.Windows
         /// <param name="args">None required.</param>
         void LoadCountWork(object args)
         {
-            int count = this.FetchCount();
-            this.SynchronizationContext.Send(this.LoadCountCompleted, count);
+            int count = FetchCount();
+            SynchronizationContext.Send(LoadCountCompleted, count);
         }
 
         /// <summary>
@@ -188,9 +188,9 @@ namespace SevenSoftware.Windows
             var pageIndex = (int)((object[])args)[0];
             var page = (IList<T>)((object[])args)[1];
 
-            this.PopulatePage(pageIndex, page);
-            this.IsLoading = false;
-            this.FireCollectionReset();
+            PopulatePage(pageIndex, page);
+            IsLoading = false;
+            FireCollectionReset();
         }
 
         /// <summary>
@@ -200,8 +200,8 @@ namespace SevenSoftware.Windows
         void LoadPageWork(object args)
         {
             var pageIndex = (int)args;
-            IList<T> page = this.FetchPage(pageIndex);
-            this.SynchronizationContext.Send(this.LoadPageCompleted, new object[] { pageIndex, page });
+            IList<T> page = FetchPage(pageIndex);
+            SynchronizationContext.Send(LoadPageCompleted, new object[] { pageIndex, page });
         }
     }
 }

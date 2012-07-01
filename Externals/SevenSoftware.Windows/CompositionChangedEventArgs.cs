@@ -1,10 +1,10 @@
 // <copyright file="CompositionChangedEventArgs.cs" project="SevenSoftware.Windows">Robert Baker</copyright>
 // <license href="http://www.microsoft.com/en-us/openness/licenses.aspx" name="Microsoft Public License" />
 
+using System;
+
 namespace SevenSoftware.Windows
 {
-    using System;
-
     /// <summary>Event argument for The CompositionChanged event.</summary>
     public class CompositionChangedEventArgs : EventArgs
     {
@@ -12,7 +12,7 @@ namespace SevenSoftware.Windows
         /// <param name="isGlassEnabled">If set to <c>True</c> aero glass is enabled.</param>
         internal CompositionChangedEventArgs(bool isGlassEnabled)
         {
-            this.IsGlassEnabled = isGlassEnabled;
+            IsGlassEnabled = isGlassEnabled;
         }
 
         /// <summary>Gets a value indicating whether DWM/Glass is currently enabled.</summary>

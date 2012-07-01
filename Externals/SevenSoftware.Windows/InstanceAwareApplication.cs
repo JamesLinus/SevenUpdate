@@ -1,22 +1,22 @@
 // <copyright file="InstanceAwareApplication.cs" project="SevenSoftware.Windows">BladeWise</copyright>
 // <license href="http://www.microsoft.com/en-us/openness/licenses.aspx" name="Microsoft Public License" />
 
+using System;
+using System.Diagnostics;
+using System.Linq;
+using System.Reflection;
+using System.Runtime.InteropServices;
+using System.Security;
+using System.Security.AccessControl;
+using System.Security.Permissions;
+using System.Security.Principal;
+using System.ServiceModel;
+using System.Threading;
+using System.Windows;
+using System.Windows.Threading;
+
 namespace SevenSoftware.Windows
 {
-    using System;
-    using System.Diagnostics;
-    using System.Linq;
-    using System.Reflection;
-    using System.Runtime.InteropServices;
-    using System.Security;
-    using System.Security.AccessControl;
-    using System.Security.Permissions;
-    using System.Security.Principal;
-    using System.ServiceModel;
-    using System.Threading;
-    using System.Windows;
-    using System.Windows.Threading;
-
     /// <summary>
     ///   Class used to define a WPF application which is aware of subsequent application instances running, either
     ///   locally (per session) or globally (per host).
@@ -87,7 +87,7 @@ namespace SevenSoftware.Windows
         /// <summary>Finalizes an instance of the InstanceAwareApplication class.</summary>
         ~InstanceAwareApplication()
         {
-            this.Dispose(false);
+            Dispose(false);
         }
 
         /// <summary>
@@ -104,7 +104,7 @@ namespace SevenSoftware.Windows
         /// <summary>Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.</summary>
         void IDisposable.Dispose()
         {
-            this.Dispose(true);
+            Dispose(true);
             GC.SuppressFinalize(this);
         }
 
@@ -112,13 +112,12 @@ namespace SevenSoftware.Windows
         /// <param name="args">The parameters used to run the next instance of the application.</param>
         void IPriorApplicationInstance.SignalStartupNextInstance(string[] args)
         {
-            this.signaledToFirstInstanceSemaphore.Set();
+            signaledToFirstInstanceSemaphore.Set();
 
-            ParameterizedThreadStart onStartupNextApplication =
-                obj => this.OnStartupNextApplicationInstance((string[])obj);
+            ParameterizedThreadStart onStartupNextApplication = obj => OnStartupNextApplicationInstance((string[])obj);
 
             // Since the method is called asynchronously, invoke the function using the dispatcher!
-            this.Dispatcher.BeginInvoke(onStartupNextApplication, DispatcherPriority.Background, (object)args);
+            Dispatcher.BeginInvoke(onStartupNextApplication, DispatcherPriority.Background, (object)args);
         }
 
         /// <summary>Raises the <c>System.Windows.Application.Exit</c> event.</summary>
@@ -127,7 +126,7 @@ namespace SevenSoftware.Windows
         {
             // On exit, try to dispose everything related to the synchronization context and the inter-process
             // communication service...
-            this.TryDisposeSynchronizationObjects();
+            TryDisposeSynchronizationObjects();
             base.OnExit(e);
         }
 
@@ -135,8 +134,8 @@ namespace SevenSoftware.Windows
         /// <param name="e">A <c>System.Windows.StartupEventArgs</c> that contains the event data.</param>
         protected override sealed void OnStartup(StartupEventArgs e)
         {
-            this.IsFirstInstance = this.InitializeInstance(e);
-            this.OnStartup(e, this.IsFirstInstance);
+            IsFirstInstance = InitializeInstance(e);
+            OnStartup(e, IsFirstInstance);
         }
 
         /// <summary>Raises the <c>System.Windows.Application.Startup</c> event.</summary>
@@ -151,7 +150,7 @@ namespace SevenSoftware.Windows
         /// <param name="e">The <c>StartupNextInstanceEventArgs</c> instance containing the event data.</param>
         protected virtual void OnStartupNextInstance(StartupNextInstanceEventArgs e)
         {
-            EventHandler<StartupNextInstanceEventArgs> startupNextInstanceEvent = this.StartupNextInstance;
+            EventHandler<StartupNextInstanceEventArgs> startupNextInstanceEvent = StartupNextInstance;
             if (startupNextInstanceEvent != null)
             {
                 startupNextInstanceEvent(this, e);
@@ -224,13 +223,13 @@ namespace SevenSoftware.Windows
         void Dispose(bool disposing)
         {
             // Try to dispose the synchronization objects, just in case the application did not exit...
-            if (this.Dispatcher.Thread != Thread.CurrentThread)
+            if (Dispatcher.Thread != Thread.CurrentThread)
             {
-                this.Dispatcher.Invoke((Action)this.TryDisposeSynchronizationObjects);
+                Dispatcher.Invoke((Action)TryDisposeSynchronizationObjects);
             }
             else
             {
-                this.TryDisposeSynchronizationObjects();
+                TryDisposeSynchronizationObjects();
             }
         }
 
@@ -254,18 +253,18 @@ namespace SevenSoftware.Windows
             try
             {
                 // Acquire the mutex used to synchornize service initialization...
-                this.serviceInitializationMutex.WaitOne();
+                serviceInitializationMutex.WaitOne();
 
                 // Create and start the service...
-                this.serviceHost = new ServiceHost(this, uri);
-                this.serviceHost.AddServiceEndpoint(typeof(IPriorApplicationInstance), new NetNamedPipeBinding(), uri);
-                this.serviceHost.Open();
+                serviceHost = new ServiceHost(this, uri);
+                serviceHost.AddServiceEndpoint(typeof(IPriorApplicationInstance), new NetNamedPipeBinding(), uri);
+                serviceHost.Open();
 
                 // Release the mutex used to synchornize service initialization...
-                this.serviceInitializationMutex.ReleaseMutex();
+                serviceInitializationMutex.ReleaseMutex();
 
                 // Signal that the service is ready, so that subsequent instances can go on...
-                this.serviceReadySemaphore.Set();
+                serviceReadySemaphore.Set();
             }
             catch (Exception exc)
             {
@@ -279,24 +278,24 @@ namespace SevenSoftware.Windows
         /// <returns><c>True</c> if the current instance is the first application instance, otherwise <c>false</c>.</returns>
         bool InitializeInstance(StartupEventArgs e)
         {
-            string id = this.GetApplicationId();
+            string id = GetApplicationId();
 
             string prefix;
             IdentityReference identity;
 
             // Extract synchronization objects parameters...
-            ExtractParameters(this.awareness, out prefix, out identity);
+            ExtractParameters(awareness, out prefix, out identity);
 
             // Initialize synchornization objects...
-            this.InitializeSynchronizationObjects(prefix + id, identity);
+            InitializeSynchronizationObjects(prefix + id, identity);
 
             // The mutex is acquired by the first instance, and never released until first application shutdown!
             bool isFirstInstance;
 
             try
             {
-                isFirstInstance =
-                    this.firstInstanceMutex.WaitOne(TimeSpan.FromMilliseconds(FirstInstanceTimeoutMilliseconds));
+                isFirstInstance = firstInstanceMutex.WaitOne(
+                    TimeSpan.FromMilliseconds(FirstInstanceTimeoutMilliseconds));
             }
             catch (AbandonedMutexException)
             {
@@ -308,17 +307,17 @@ namespace SevenSoftware.Windows
             Uri uri = GetPipeUri(id + "/" + identity);
             if (isFirstInstance)
             {
-                this.InitializeFirstInstance(uri);
+                InitializeFirstInstance(uri);
             }
             else
             {
-                if (this.InitializeNextInstance(uri, e.Args))
+                if (InitializeNextInstance(uri, e.Args))
                 {
-                    this.OnStartupSignaledToPriorApplicationSucceeded();
+                    OnStartupSignaledToPriorApplicationSucceeded();
                 }
                 else
                 {
-                    this.OnStartupSignaledToPriorApplicationFailed();
+                    OnStartupSignaledToPriorApplicationFailed();
                 }
             }
 
@@ -332,7 +331,7 @@ namespace SevenSoftware.Windows
         bool InitializeNextInstance(Uri uri, string[] args)
         {
             // Check if the service is up... wait a bit in case two applications are started simultaneously...
-            if (!this.serviceReadySemaphore.WaitOne(TimeSpan.FromMilliseconds(ServiceReadyTimeoutMilliseconds), false))
+            if (!serviceReadySemaphore.WaitOne(TimeSpan.FromMilliseconds(ServiceReadyTimeoutMilliseconds), false))
             {
                 return false;
             }
@@ -349,13 +348,13 @@ namespace SevenSoftware.Windows
                 Debug.WriteLine(
                     "Exception while signaling first application instance (signal while first application shutdown?)"
                     + Environment.NewLine + exc, 
-                    this.GetType().ToString());
+                    GetType().ToString());
                 return false;
             }
 
             // If the first application does not notify back that the signal has been received, just return false...
             return
-                this.signaledToFirstInstanceSemaphore.WaitOne(
+                signaledToFirstInstanceSemaphore.WaitOne(
                     TimeSpan.FromMilliseconds(PriorInstanceSignaledTimeoutMilliseconds), false);
         }
 
@@ -379,11 +378,11 @@ namespace SevenSoftware.Windows
             var mutexSecurity = new MutexSecurity();
             mutexSecurity.AddAccessRule(mutexRule);
 
-            this.firstInstanceMutex = new Mutex(false, firstInstanceMutexName, out isNew, mutexSecurity);
-            this.serviceInitializationMutex = new Mutex(false, serviceInitializationMutexName, out isNew, mutexSecurity);
-            this.serviceReadySemaphore = new EventWaitHandle(
+            firstInstanceMutex = new Mutex(false, firstInstanceMutexName, out isNew, mutexSecurity);
+            serviceInitializationMutex = new Mutex(false, serviceInitializationMutexName, out isNew, mutexSecurity);
+            serviceReadySemaphore = new EventWaitHandle(
                 false, EventResetMode.ManualReset, serviceReadySemaphoreName, out isNew, eventSecurity);
-            this.signaledToFirstInstanceSemaphore = new EventWaitHandle(
+            signaledToFirstInstanceSemaphore = new EventWaitHandle(
                 false, EventResetMode.AutoReset, signaledToFirstInstanceSemaphoreName, out isNew, eventSecurity);
         }
 
@@ -392,66 +391,66 @@ namespace SevenSoftware.Windows
         void OnStartupNextApplicationInstance(string[] args)
         {
             var e = new StartupNextInstanceEventArgs(args);
-            this.OnStartupNextInstance(e);
+            OnStartupNextInstance(e);
 
-            if (!e.BringToForeground || (this.MainWindow == null))
+            if (!e.BringToForeground || (MainWindow == null))
             {
                 return;
             }
 
             (new UIPermission(UIPermissionWindow.AllWindows)).Assert();
-            if (this.MainWindow.WindowState == WindowState.Minimized)
+            if (MainWindow.WindowState == WindowState.Minimized)
             {
-                this.MainWindow.WindowState = WindowState.Normal;
+                MainWindow.WindowState = WindowState.Normal;
             }
 
-            this.MainWindow.Activate();
+            MainWindow.Activate();
             CodeAccessPermission.RevertAssert();
         }
 
         /// <summary>Tries the dispose synchronization objects (if needed).</summary>
         void TryDisposeSynchronizationObjects()
         {
-            if (this.disposed)
+            if (disposed)
             {
                 return;
             }
 
-            this.disposed = true;
+            disposed = true;
 
-            if (this.IsFirstInstance)
+            if (IsFirstInstance)
             {
                 // Signal other applications that the service is not ready anymore (it is, but since the application is
                 // going to shutdown, it is the same...)
-                this.serviceReadySemaphore.Reset();
+                serviceReadySemaphore.Reset();
 
                 // Stop the service...
-                this.serviceInitializationMutex.WaitOne();
+                serviceInitializationMutex.WaitOne();
 
-                if (this.serviceHost.State == CommunicationState.Opened)
+                if (serviceHost.State == CommunicationState.Opened)
                 {
-                    this.serviceHost.Close(TimeSpan.Zero); // Shut down the service without waiting!
+                    serviceHost.Close(TimeSpan.Zero); // Shut down the service without waiting!
                 }
 
-                this.serviceHost = null;
+                serviceHost = null;
 
-                this.serviceInitializationMutex.ReleaseMutex();
+                serviceInitializationMutex.ReleaseMutex();
 
                 // Release the first application mutex!
-                this.firstInstanceMutex.ReleaseMutex();
+                firstInstanceMutex.ReleaseMutex();
             }
 
-            this.firstInstanceMutex.Close();
-            this.firstInstanceMutex = null;
+            firstInstanceMutex.Close();
+            firstInstanceMutex = null;
 
-            this.serviceInitializationMutex.Close();
-            this.serviceInitializationMutex = null;
+            serviceInitializationMutex.Close();
+            serviceInitializationMutex = null;
 
-            this.serviceReadySemaphore.Close();
-            this.serviceReadySemaphore = null;
+            serviceReadySemaphore.Close();
+            serviceReadySemaphore = null;
 
-            this.signaledToFirstInstanceSemaphore.Close();
-            this.signaledToFirstInstanceSemaphore = null;
+            signaledToFirstInstanceSemaphore.Close();
+            signaledToFirstInstanceSemaphore = null;
         }
     }
 }

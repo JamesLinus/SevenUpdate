@@ -34,26 +34,26 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <value><c>True</c> if [show elevation icon]; otherwise, <c>False</c>.</value>
         public bool ShowElevationIcon
         {
-            get { return this.showElevationIcon; }
+            get { return showElevationIcon; }
 
             set
             {
-                this.CheckPropertyChangeAllowed("ShowElevationIcon");
-                this.showElevationIcon = value;
-                this.ApplyPropertyChange("ShowElevationIcon");
+                CheckPropertyChangeAllowed("ShowElevationIcon");
+                showElevationIcon = value;
+                ApplyPropertyChange("ShowElevationIcon");
             }
         }
 
         /// <summary>Gets or sets a value indicating whether the elevation icon is displayed.</summary>
         public bool UseElevationIcon
         {
-            get { return this.useElevationIcon; }
+            get { return useElevationIcon; }
 
             set
             {
-                this.CheckPropertyChangeAllowed("ShowElevationIcon");
-                this.useElevationIcon = value;
-                this.ApplyPropertyChange("ShowElevationIcon");
+                CheckPropertyChangeAllowed("ShowElevationIcon");
+                useElevationIcon = value;
+                ApplyPropertyChange("ShowElevationIcon");
             }
         }
     }

@@ -1,10 +1,10 @@
 // <copyright file="Rect.cs" project="SevenSoftware.Windows">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
+using System.Runtime.InteropServices;
+
 namespace SevenSoftware.Windows.Internal
 {
-    using System.Runtime.InteropServices;
-
     /// <summary>Defines the coordinates of the upper-left and lower-right corners of a rectangle.</summary>
     [StructLayout(LayoutKind.Sequential)]
     public struct Rect

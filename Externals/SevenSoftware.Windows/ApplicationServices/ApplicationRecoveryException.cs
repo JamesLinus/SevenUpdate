@@ -1,12 +1,12 @@
 // <copyright file="ApplicationRecoveryException.cs" project="SevenSoftware.Windows" company="Microsoft Corporation">Microsoft Corporation</copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx" name="Microsoft Software License" />
 
+using System;
+using System.Runtime.InteropServices;
+using System.Runtime.Serialization;
+
 namespace SevenSoftware.Windows.ApplicationServices
 {
-    using System;
-    using System.Runtime.InteropServices;
-    using System.Runtime.Serialization;
-
     /// <summary>
     ///   This exception is thrown when there are problems with registering, unregistering or updating applications
     ///   using Application Restart Recovery.

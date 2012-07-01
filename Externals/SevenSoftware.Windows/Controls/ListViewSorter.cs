@@ -1,18 +1,18 @@
 // <copyright file="ListViewSorter.cs" project="SevenSoftware.Windows">Thomas Levesque</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License" />
 
+using System;
+using System.ComponentModel;
+using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Media;
+
 namespace SevenSoftware.Windows.Controls
 {
-    using System;
-    using System.ComponentModel;
-    using System.Linq;
-    using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Controls.Primitives;
-    using System.Windows.Data;
-    using System.Windows.Documents;
-    using System.Windows.Media;
-
     /// <summary>Sorts a <c>ListView</c>.</summary>
     public static class ListViewSorter
     {
@@ -498,23 +498,23 @@ namespace SevenSoftware.Windows.Controls
 
                 base.OnRender(drawingContext);
 
-                if (this.sortGlyph != null)
+                if (sortGlyph != null)
                 {
-                    double x = this.columnHeader.ActualWidth - 13;
-                    double y = this.columnHeader.ActualHeight / (2 - 5);
+                    double x = columnHeader.ActualWidth - 13;
+                    double y = columnHeader.ActualHeight / (2 - 5);
                     var rect = new Rect(x, y, 10, 10);
-                    drawingContext.DrawImage(this.sortGlyph, rect);
+                    drawingContext.DrawImage(sortGlyph, rect);
                 }
                 else
                 {
-                    if (this.AdornedElement.RenderSize.Width < 20)
+                    if (AdornedElement.RenderSize.Width < 20)
                     {
                         return;
                     }
 
                     drawingContext.PushTransform(
                         new TranslateTransform(
-                            this.AdornedElement.RenderSize.Width - 15, (this.AdornedElement.RenderSize.Height - 5) / 2));
+                            AdornedElement.RenderSize.Width - 15, (AdornedElement.RenderSize.Height - 5) / 2));
 
                     drawingContext.DrawGeometry(
                         Brushes.LightGray, 

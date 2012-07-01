@@ -1,12 +1,11 @@
 // <copyright file="TaskDialogProgressBar.cs" project="SevenSoftware.Windows" company="Microsoft Corporation">Microsoft Corporation</copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx" name="Microsoft Software License" />
 
+using System;
+using SevenSoftware.Windows.Properties;
+
 namespace SevenSoftware.Windows.Dialogs.TaskDialog
 {
-    using System;
-
-    using SevenSoftware.Windows.Properties;
-
     /// <summary>Provides a visual representation of the progress of a long running operation.</summary>
     public class TaskDialogProgressBar : TaskDialogBar
     {
@@ -45,39 +44,39 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <param name="value">The current value for this control.</param>
         public TaskDialogProgressBar(int minimum, int maximum, int value)
         {
-            this.Minimum = minimum;
-            this.Maximum = maximum;
-            this.Value = value;
+            Minimum = minimum;
+            Maximum = maximum;
+            Value = value;
         }
 
         /// <summary>Gets or sets the maximum value for the control.</summary>
         public int Maximum
         {
-            get { return this.maximum; }
+            get { return maximum; }
 
             set
             {
-                this.CheckPropertyChangeAllowed("Maximum");
+                CheckPropertyChangeAllowed("Maximum");
 
                 // Check if min / max differ
-                if (value < this.Minimum)
+                if (value < Minimum)
                 {
                     throw new ArgumentException(Resources.TaskDialogProgressBarMaxValueGreaterThanMin, "value");
                 }
 
-                this.maximum = value;
-                this.ApplyPropertyChange("Maximum");
+                maximum = value;
+                ApplyPropertyChange("Maximum");
             }
         }
 
         /// <summary>Gets or sets the minimum value for the control.</summary>
         public int Minimum
         {
-            get { return this.minimum; }
+            get { return minimum; }
 
             set
             {
-                this.CheckPropertyChangeAllowed("Minimum");
+                CheckPropertyChangeAllowed("Minimum");
 
                 // Check for positive numbers
                 if (value < 0)
@@ -86,47 +85,47 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
                 }
 
                 // Check if min / max differ
-                if (value >= this.Maximum)
+                if (value >= Maximum)
                 {
                     throw new ArgumentException(Resources.TaskDialogProgressBarMinValueLessThanMax, "value");
                 }
 
-                this.minimum = value;
-                this.ApplyPropertyChange("Minimum");
+                minimum = value;
+                ApplyPropertyChange("Minimum");
             }
         }
 
         /// <summary>Gets or sets the current value for the control.</summary>
         public int Value
         {
-            get { return this.value; }
+            get { return value; }
 
             set
             {
-                this.CheckPropertyChangeAllowed("Value");
+                CheckPropertyChangeAllowed("Value");
 
                 // Check for positive numbers
-                if (value < this.Minimum || value > this.Maximum)
+                if (value < Minimum || value > Maximum)
                 {
                     throw new ArgumentException(Resources.TaskDialogProgressBarValueInRange, "value");
                 }
 
                 this.value = value;
-                this.ApplyPropertyChange("Value");
+                ApplyPropertyChange("Value");
             }
         }
 
         /// <summary>Gets a value indicating whether the progress bar's value is between its minimum and maximum.</summary>
         internal bool HasValidValues
         {
-            get { return this.minimum <= this.value && this.value <= this.maximum; }
+            get { return minimum <= value && value <= maximum; }
         }
 
         /// <summary>Resets the control to its minimum value.</summary>
         protected internal override void Reset()
         {
             base.Reset();
-            this.value = this.minimum;
+            value = minimum;
         }
     }
 }

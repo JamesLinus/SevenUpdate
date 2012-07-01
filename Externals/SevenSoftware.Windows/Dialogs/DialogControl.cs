@@ -1,14 +1,13 @@
 // <copyright file="DialogControl.cs" project="SevenSoftware.Windows" company="Microsoft Corporation">Microsoft Corporation</copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx" name="Microsoft Software License" />
 
+using System;
+using System.Diagnostics;
+using SevenSoftware.Windows.Dialogs.TaskDialog;
+using SevenSoftware.Windows.Properties;
+
 namespace SevenSoftware.Windows.Dialogs
 {
-    using System;
-    using System.Diagnostics;
-
-    using SevenSoftware.Windows.Dialogs.TaskDialog;
-    using SevenSoftware.Windows.Properties;
-
     /// <summary>Abstract base class for all dialog controls</summary>
     public abstract class DialogControl
     {
@@ -24,7 +23,7 @@ namespace SevenSoftware.Windows.Dialogs
         /// </summary>
         protected DialogControl()
         {
-            this.Id = nextId;
+            Id = nextId;
 
             // Support wrapping of control IDs in case you create a lot of custom controls
             if (nextId == int.MaxValue)
@@ -44,7 +43,7 @@ namespace SevenSoftware.Windows.Dialogs
         /// <param name="name">The name for this dialog.</param>
         protected DialogControl(string name) : this()
         {
-            this.Name = name;
+            Name = name;
         }
 
         /// <summary>
@@ -61,7 +60,7 @@ namespace SevenSoftware.Windows.Dialogs
         /// <value>A <see cref="string" /> value.</value>
         public string Name
         {
-            get { return this.name; }
+            get { return name; }
 
             private set
             {
@@ -72,14 +71,14 @@ namespace SevenSoftware.Windows.Dialogs
                     throw new ArgumentException(Resources.DialogControlNameCannotBeEmpty);
                 }
 
-                if (!string.IsNullOrEmpty(this.name))
+                if (!string.IsNullOrEmpty(name))
                 {
                     throw new InvalidOperationException(Resources.DialogControlsCannotBeRenamed);
                 }
 
                 // Note that we don't notify the hosting dialog of the change, as the initial set of name is (must be)
                 // always legal, and renames are always illegal.
-                this.name = value;
+                name = value;
             }
         }
 
@@ -92,7 +91,7 @@ namespace SevenSoftware.Windows.Dialogs
 
             if (control != null)
             {
-                return this.Id == control.Id;
+                return Id == control.Id;
             }
 
             return false;
@@ -102,12 +101,12 @@ namespace SevenSoftware.Windows.Dialogs
         /// <returns>An <see cref="int" /> hash code for this control.</returns>
         public override int GetHashCode()
         {
-            if (this.Name == null)
+            if (Name == null)
             {
-                return this.ToString().GetHashCode();
+                return ToString().GetHashCode();
             }
 
-            return this.Name.GetHashCode();
+            return Name.GetHashCode();
         }
 
         /// <summary>
@@ -120,9 +119,9 @@ namespace SevenSoftware.Windows.Dialogs
         {
             Debug.Assert(!string.IsNullOrEmpty(propName), "Property changed was not specified");
 
-            if (this.HostingDialog != null)
+            if (HostingDialog != null)
             {
-                this.HostingDialog.ApplyControlPropertyChange(propName, this);
+                HostingDialog.ApplyControlPropertyChange(propName, this);
             }
         }
 
@@ -136,10 +135,10 @@ namespace SevenSoftware.Windows.Dialogs
         {
             Debug.Assert(!string.IsNullOrEmpty(propName), "Property to change was not specified");
 
-            if (this.HostingDialog != null)
+            if (HostingDialog != null)
             {
                 // This will throw if the property change is not allowed.
-                this.HostingDialog.IsControlPropertyChangeAllowed(propName, this);
+                HostingDialog.IsControlPropertyChangeAllowed(propName, this);
             }
         }
     }

@@ -1,13 +1,13 @@
 // <copyright file="CommandLink.cs" project="SevenSoftware.Windows">Thomas Levesque</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License" />
 
+using System;
+using System.ComponentModel;
+using System.Windows;
+using System.Windows.Controls;
+
 namespace SevenSoftware.Windows.Controls
 {
-    using System;
-    using System.ComponentModel;
-    using System.Windows;
-    using System.Windows.Controls;
-
     /// <summary>Implements a CommandLink button that can be used in WPF user interfaces.</summary>
     public class CommandLink : Button, INotifyPropertyChanged
     {
@@ -35,7 +35,7 @@ namespace SevenSoftware.Windows.Controls
         /// <summary>Initializes a new instance of the <see cref="CommandLink" /> class.</summary>
         public CommandLink()
         {
-            if (this.Resources.Count != 0)
+            if (Resources.Count != 0)
             {
                 return;
             }
@@ -44,7 +44,7 @@ namespace SevenSoftware.Windows.Controls
                 {
                    Source = new Uri("/SevenSoftware.Windows;component/Resources/Dictionary.xaml", UriKind.Relative) 
                 };
-            this.Resources.MergedDictionaries.Add(resourceDictionary);
+            Resources.MergedDictionaries.Add(resourceDictionary);
         }
 
         /// <summary>Occurs when a property has changed.</summary>
@@ -53,18 +53,18 @@ namespace SevenSoftware.Windows.Controls
         /// <summary>Gets or sets the supporting text to display on the <c>CommandLink</c> below the instruction text.</summary>
         public string Note
         {
-            get { return (string)this.GetValue(NoteProperty); }
+            get { return (string)GetValue(NoteProperty); }
 
-            set { this.SetValue(NoteProperty, value); }
+            set { SetValue(NoteProperty, value); }
         }
 
         /// <summary>Gets or sets a value indicating whether a Uac shield is needed.</summary>
         /// <value><c>True</c> if [use shield]; otherwise, <c>False</c>.</value>
         public bool UseShield
         {
-            get { return (bool)this.GetValue(UseShieldProperty); }
+            get { return (bool)GetValue(UseShieldProperty); }
 
-            set { this.SetValue(UseShieldProperty, value); }
+            set { SetValue(UseShieldProperty, value); }
         }
 
         /// <summary>Handles a change to the <c>Note</c> property.</summary>
@@ -91,7 +91,7 @@ namespace SevenSoftware.Windows.Controls
         /// <param name="name">The name of the property that has changed.</param>
         void OnPropertyChanged(string name)
         {
-            PropertyChangedEventHandler handler = this.PropertyChanged;
+            PropertyChangedEventHandler handler = PropertyChanged;
 
             if (handler != null)
             {

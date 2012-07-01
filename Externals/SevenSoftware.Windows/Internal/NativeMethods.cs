@@ -1,13 +1,12 @@
 // <copyright file="NativeMethods.cs" project="SevenSoftware.Windows">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
+using System;
+using System.Runtime.InteropServices;
+using SevenSoftware.Windows.Dialogs.TaskDialog;
+
 namespace SevenSoftware.Windows.Internal
 {
-    using System;
-    using System.Runtime.InteropServices;
-
-    using SevenSoftware.Windows.Dialogs.TaskDialog;
-
     /// <summary>Wrappers for Native Methods and Structs. This type is intended for internal use only.</summary>
     public static class NativeMethods
     {

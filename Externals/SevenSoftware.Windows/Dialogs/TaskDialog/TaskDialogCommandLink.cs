@@ -1,11 +1,11 @@
 // <copyright file="TaskDialogCommandLink.cs" project="SevenSoftware.Windows" company="Microsoft Corporation">Microsoft Corporation</copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx" name="Microsoft Software License" />
 
+using System;
+using System.Globalization;
+
 namespace SevenSoftware.Windows.Dialogs.TaskDialog
 {
-    using System;
-    using System.Globalization;
-
     /// <summary>Represents a command-link.</summary>
     public class TaskDialogCommandLink : TaskDialogButton
     {
@@ -45,9 +45,9 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Gets or sets the instruction associated with this command link button.</summary>
         public string Instruction
         {
-            get { return this.instruction; }
+            get { return instruction; }
 
-            set { this.instruction = value; }
+            set { instruction = value; }
         }
 
         /// <summary>Returns a string representation of this object.</summary>
@@ -57,10 +57,9 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
             return string.Format(
                 CultureInfo.CurrentCulture, 
                 "{0}{1}{2}", 
-                this.Text ?? string.Empty, 
-                (string.IsNullOrEmpty(this.Text) || string.IsNullOrEmpty(this.instruction))
-                    ? Environment.NewLine : string.Empty, 
-                this.instruction ?? string.Empty);
+                Text ?? string.Empty, 
+                (string.IsNullOrEmpty(Text) || string.IsNullOrEmpty(instruction)) ? Environment.NewLine : string.Empty, 
+                instruction ?? string.Empty);
         }
     }
 }

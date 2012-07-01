@@ -1,13 +1,12 @@
 // <copyright file="TaskDialogConfiguration.cs" project="SevenSoftware.Windows" company="Microsoft Corporation">Microsoft Corporation</copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx" name="Microsoft Software License" />
 
+using System;
+using System.Runtime.InteropServices;
+using SevenSoftware.Windows.Internal;
+
 namespace SevenSoftware.Windows.Dialogs.TaskDialog
 {
-    using System;
-    using System.Runtime.InteropServices;
-
-    using SevenSoftware.Windows.Internal;
-
     /// <summary>Contains information used to display a task dialog. NOTE: Do not convert to auto properties and do not change layout or it will break!</summary>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 4)]
     internal class TaskDialogConfiguration

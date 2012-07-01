@@ -1,17 +1,16 @@
 // <copyright file="UacButton.cs" project="SevenSoftware.Windows">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
+using System;
+using System.ComponentModel;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using SevenSoftware.Windows.Internal;
+
 namespace SevenSoftware.Windows.Controls
 {
-    using System;
-    using System.ComponentModel;
-    using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Media;
-    using System.Windows.Media.Imaging;
-
-    using SevenSoftware.Windows.Internal;
-
     /// <summary>Provides a WPF button that displays a UAC Shield icon when required.</summary>
     public sealed class UacButton : Button, INotifyPropertyChanged
     {
@@ -65,16 +64,16 @@ namespace SevenSoftware.Windows.Controls
         /// <summary>Initializes a new instance of the <see cref="UacButton" /> class.</summary>
         public UacButton()
         {
-            this.Loaded -= this.OnLoaded;
-            this.Loaded += this.OnLoaded;
-            this.IsEnabledChanged -= this.ChangeUacIcon;
-            this.IsEnabledChanged += this.ChangeUacIcon;
+            Loaded -= OnLoaded;
+            Loaded += OnLoaded;
+            IsEnabledChanged -= ChangeUacIcon;
+            IsEnabledChanged += ChangeUacIcon;
 
             var stackPanel = new StackPanel { Orientation = Orientation.Horizontal };
 
             var imgShield = new Image
                 {
-                    Source = this.IsEnabled ? Shield : ShieldDisabled, 
+                    Source = IsEnabled ? Shield : ShieldDisabled, 
                     Stretch = Stretch.None, 
                     Margin = new Thickness(0, 0, 5, 0)
                 };
@@ -82,7 +81,7 @@ namespace SevenSoftware.Windows.Controls
 
             var textBlock = new TextBlock { Text = Text, VerticalAlignment = VerticalAlignment.Center };
             stackPanel.Children.Add(textBlock);
-            this.Content = stackPanel;
+            Content = stackPanel;
         }
 
         /// <summary>Occurs when a property has changed.</summary>
@@ -91,15 +90,15 @@ namespace SevenSoftware.Windows.Controls
         /// <summary>Gets or sets the text to display on the button.</summary>
         public string ButtonText
         {
-            get { return (string)this.GetValue(ButtonTextProperty); }
+            get { return (string)GetValue(ButtonTextProperty); }
 
-            set { this.SetValue(ButtonTextProperty, value); }
+            set { SetValue(ButtonTextProperty, value); }
         }
 
         /// <summary>Gets a value indicating whether the shield is desired and the OS supports elevation.</summary>
         public bool IsShieldDisplayed
         {
-            get { return ShieldNeeded && this.IsShieldNeeded; }
+            get { return ShieldNeeded && IsShieldNeeded; }
         }
 
         /// <summary>Gets or sets a value indicating whether the caller desires the <c>ShieldIcon</c> to be displayed.  This is a dependency property.</summary>
@@ -107,18 +106,18 @@ namespace SevenSoftware.Windows.Controls
         /// <remarks>This is only an indication of desire.  If the operating system does not support UAC or the user is already elevated, any request to display is ignored.</remarks>
         public bool IsShieldNeeded
         {
-            get { return (bool)this.GetValue(IsShieldNeededProperty); }
+            get { return (bool)GetValue(IsShieldNeededProperty); }
 
-            set { this.SetValue(IsShieldNeededProperty, value); }
+            set { SetValue(IsShieldNeededProperty, value); }
         }
 
         /// <summary>Gets or sets the icon so show when elevation is required.  This is a dependency property.</summary>
         /// <value>An <c>ImageSource</c> that represents a graphic to be displayed .</value>
         public ImageSource ShieldIcon
         {
-            get { return (ImageSource)this.GetValue(ShieldIconProperty); }
+            get { return (ImageSource)GetValue(ShieldIconProperty); }
 
-            set { this.SetValue(ShieldIconProperty, value); }
+            set { SetValue(ShieldIconProperty, value); }
         }
 
         /// <summary>Gets or sets <c>ToolTip</c> shown when elevation has been preformed.</summary>
@@ -190,18 +189,18 @@ namespace SevenSoftware.Windows.Controls
         /// <param name="e">The <c>System.Windows.DependencyPropertyChangedEventArgs</c> instance containing the event data.</param>
         void ChangeUacIcon(object sender, DependencyPropertyChangedEventArgs e)
         {
-            if (!this.IsShieldDisplayed)
+            if (!IsShieldDisplayed)
             {
                 return;
             }
 
             if ((bool)e.NewValue)
             {
-                this.ShieldIcon = Shield;
+                ShieldIcon = Shield;
             }
             else
             {
-                this.ShieldIcon = ShieldDisabled;
+                ShieldIcon = ShieldDisabled;
             }
         }
 
@@ -211,12 +210,12 @@ namespace SevenSoftware.Windows.Controls
         /// cref="IsShieldNeeded" />.</returns>
         object GetToolTip()
         {
-            if (this.ToolTipElevated == null && this.ToolTipNotElevated == null)
+            if (ToolTipElevated == null && ToolTipNotElevated == null)
             {
-                return this.ToolTip;
+                return ToolTip;
             }
 
-            return this.IsShieldNeeded ? this.ToolTipNotElevated : this.ToolTipElevated;
+            return IsShieldNeeded ? ToolTipNotElevated : ToolTipElevated;
         }
 
         /// <summary>Called when the control is loaded.</summary>
@@ -224,14 +223,14 @@ namespace SevenSoftware.Windows.Controls
         /// <param name="e">The <c>System.Windows.RoutedEventArgs</c> instance containing the event data.</param>
         void OnLoaded(object sender, RoutedEventArgs e)
         {
-            this.ToolTip = this.GetToolTip();
+            ToolTip = GetToolTip();
         }
 
         /// <summary>When a property has changed, call the <c>OnPropertyChanged</c> Event.</summary>
         /// <param name="name">The property name that has changed.</param>
         void OnPropertyChanged(string name)
         {
-            PropertyChangedEventHandler handler = this.PropertyChanged;
+            PropertyChangedEventHandler handler = PropertyChanged;
 
             if (handler != null)
             {

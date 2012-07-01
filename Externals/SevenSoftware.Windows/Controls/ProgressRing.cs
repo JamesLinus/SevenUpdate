@@ -1,17 +1,17 @@
 // <copyright file="ProgressRing.cs" project="SevenSoftware.Windows">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
+using System;
+using System.Linq;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Controls.Primitives;
+using System.Windows.Media;
+using System.Windows.Media.Animation;
+using System.Windows.Threading;
+
 namespace SevenSoftware.Windows.Controls
 {
-    using System;
-    using System.Linq;
-    using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Controls.Primitives;
-    using System.Windows.Media;
-    using System.Windows.Media.Animation;
-    using System.Windows.Threading;
-
     /// <summary>Displays a progress circle.</summary>
     [TemplatePart(Name = ElementCanvas, Type = typeof(Canvas))]
     public class ProgressRing : RangeBase
@@ -70,7 +70,7 @@ namespace SevenSoftware.Windows.Controls
             // { Source = new Uri("/SevenSoftware.Windows;component/Resources/Dictionary.xaml", UriKind.Relative) };
 
             // this.Resources.MergedDictionaries.Add(resourceDictionary);
-            this.dispatcherTimer = new DispatcherTimer(DispatcherPriority.Background, this.Dispatcher)
+            dispatcherTimer = new DispatcherTimer(DispatcherPriority.Background, Dispatcher)
                 {
                    Interval = new TimeSpan(0, 0, 0, 0, 300) 
                 };
@@ -80,36 +80,36 @@ namespace SevenSoftware.Windows.Controls
         /// <value>The element storyboard.</value>
         public Storyboard ElementStoryboard
         {
-            get { return (Storyboard)this.GetValue(elementStoryboardProperty); }
+            get { return (Storyboard)GetValue(elementStoryboardProperty); }
 
-            set { this.SetValue(elementStoryboardProperty, value); }
+            set { SetValue(elementStoryboardProperty, value); }
         }
 
         /// <summary>Gets or sets the indeterminate text.</summary>
         /// <value>The indeterminate text.</value>
         public string IndeterminateText
         {
-            get { return (string)this.GetValue(indeterminateTextProperty); }
+            get { return (string)GetValue(indeterminateTextProperty); }
 
-            set { this.SetValue(indeterminateTextProperty, value); }
+            set { SetValue(indeterminateTextProperty, value); }
         }
 
         /// <summary>Gets or sets a value indicating whether this instance is indeterminate.</summary>
         /// <value><c>True</c> if this instance is indeterminate; otherwise, <c>False</c>.</value>
         public bool IsIndeterminate
         {
-            get { return (bool)this.GetValue(isIndeterminateProperty); }
+            get { return (bool)GetValue(isIndeterminateProperty); }
 
-            set { this.SetValue(isIndeterminateProperty, value); }
+            set { SetValue(isIndeterminateProperty, value); }
         }
 
         /// <summary>Gets or sets a value indicating whether this instance is running.</summary>
         /// <value><c>True</c> if this instance is running; otherwise, <c>False</c>.</value>
         public bool IsRunning
         {
-            get { return (bool)this.GetValue(isRunningProperty); }
+            get { return (bool)GetValue(isRunningProperty); }
 
-            set { this.SetValue(isRunningProperty, value); }
+            set { SetValue(isRunningProperty, value); }
         }
 
         /// <summary>
@@ -120,25 +120,25 @@ namespace SevenSoftware.Windows.Controls
         {
             base.OnApplyTemplate();
 
-            this.canvas = this.GetTemplateChild(ElementCanvas) as Canvas;
-            if (this.canvas == null)
+            canvas = GetTemplateChild(ElementCanvas) as Canvas;
+            if (canvas == null)
             {
                 return;
             }
 
             // Get the center of the canvas. This will be the base of the rotation.
-            double centerX = this.canvas.Width / 2;
-            double centerY = this.canvas.Height / 2;
+            double centerX = canvas.Width / 2;
+            double centerY = canvas.Height / 2;
 
             // Get the no. of degrees between each circles.
-            double interval = 360.0 / this.canvas.Children.Count;
+            double interval = 360.0 / canvas.Children.Count;
             double angle = -135;
 
-            this.canvasElements = new UIElement[this.canvas.Children.Count];
-            this.canvas.Children.CopyTo(this.canvasElements, 0);
-            this.canvas.Children.Clear();
+            canvasElements = new UIElement[canvas.Children.Count];
+            canvas.Children.CopyTo(canvasElements, 0);
+            canvas.Children.Clear();
 
-            foreach (UIElement element in this.canvasElements)
+            foreach (UIElement element in canvasElements)
             {
                 var contentControl = new ContentControl { Content = element };
 
@@ -146,7 +146,7 @@ namespace SevenSoftware.Windows.Controls
                 contentControl.RenderTransform = rotateTransform;
                 angle += interval;
 
-                this.canvas.Children.Add(contentControl);
+                canvas.Children.Add(contentControl);
             }
         }
 
@@ -172,26 +172,26 @@ namespace SevenSoftware.Windows.Controls
         /// <param name="e">The <c>System.EventArgs</c> instance containing the event data.</param>
         void Animate(object sender, EventArgs e)
         {
-            if (this.canvasElements == null || this.ElementStoryboard == null)
+            if (canvasElements == null || ElementStoryboard == null)
             {
                 return;
             }
 
-            int trueIndex = this.clockwise ? this.index : this.canvasElements.Length - this.index - 1;
+            int trueIndex = clockwise ? index : canvasElements.Length - index - 1;
 
-            var element = this.canvasElements.GetValue(trueIndex) as FrameworkElement;
-            this.StartStoryboard(element);
+            var element = canvasElements.GetValue(trueIndex) as FrameworkElement;
+            StartStoryboard(element);
 
-            this.clockwise = this.index == this.canvasElements.Length - 1 ? !this.clockwise : this.clockwise;
-            this.index = (this.index + 1) % this.canvasElements.Length;
+            clockwise = index == canvasElements.Length - 1 ? !clockwise : clockwise;
+            index = (index + 1) % canvasElements.Length;
         }
 
         /// <summary>Starts this instance.</summary>
         void Start()
         {
-            this.dispatcherTimer.Tick -= this.Animate;
-            this.dispatcherTimer.Tick += this.Animate;
-            this.dispatcherTimer.Start();
+            dispatcherTimer.Tick -= Animate;
+            dispatcherTimer.Tick += Animate;
+            dispatcherTimer.Start();
         }
 
         /// <summary>Starts the storyboard.</summary>
@@ -207,7 +207,7 @@ namespace SevenSoftware.Windows.Controls
             var storyboard = new Storyboard();
             NameScope.SetNameScope(storyboard, NameScope.GetNameScope(this));
 
-            foreach (var timelineClone in this.ElementStoryboard.Children.Select(timeline => timeline.Clone()))
+            foreach (var timelineClone in ElementStoryboard.Children.Select(timeline => timeline.Clone()))
             {
                 storyboard.Children.Add(timelineClone);
                 Storyboard.SetTargetName(timelineClone, element.Name);
@@ -219,8 +219,8 @@ namespace SevenSoftware.Windows.Controls
         /// <summary>Stops this instance.</summary>
         void Stop()
         {
-            this.dispatcherTimer.Stop();
-            this.dispatcherTimer.Tick -= this.Animate;
+            dispatcherTimer.Stop();
+            dispatcherTimer.Tick -= Animate;
         }
     }
 }

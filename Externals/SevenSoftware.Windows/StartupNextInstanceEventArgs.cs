@@ -1,10 +1,10 @@
 // <copyright file="StartupNextInstanceEventArgs.cs" project="SevenSoftware.Windows">BladeWise</copyright>
 // <license href="http://www.microsoft.com/en-us/openness/licenses.aspx" name="Microsoft Public License" />
 
+using System;
+
 namespace SevenSoftware.Windows
 {
-    using System;
-
     /// <summary>Class used to define the arguments of another application instance startup.</summary>
     public sealed class StartupNextInstanceEventArgs : EventArgs
     {
@@ -22,7 +22,7 @@ namespace SevenSoftware.Windows
             }
 
             this.args = args;
-            this.BringToForeground = bringToFront;
+            BringToForeground = bringToFront;
         }
 
         /// <summary>Gets a value indicating whether the application main window has to be brought to foreground.</summary>
@@ -34,7 +34,7 @@ namespace SevenSoftware.Windows
         /// <value>The arguments passed to the other application.</value>
         public string[] GetArgs()
         {
-            return this.args;
+            return args;
         }
     }
 }

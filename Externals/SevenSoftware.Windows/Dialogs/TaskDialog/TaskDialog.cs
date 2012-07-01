@@ -1,17 +1,16 @@
 // <copyright file="TaskDialog.cs" project="SevenSoftware.Windows" company="Microsoft Corporation">Microsoft Corporation</copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx" name="Microsoft Software License" />
 
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Windows;
+using System.Windows.Interop;
+using SevenSoftware.Windows.Internal;
+using SevenSoftware.Windows.Properties;
+
 namespace SevenSoftware.Windows.Dialogs.TaskDialog
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-    using System.Windows;
-    using System.Windows.Interop;
-
-    using SevenSoftware.Windows.Internal;
-    using SevenSoftware.Windows.Properties;
-
     /// <summary>
     ///   Encapsulates a new-to-Vista Win32 TaskDialog window - a powerful successor to the MessageBox available in
     ///   previous versions of Windows.
@@ -104,13 +103,13 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         public TaskDialog()
         {
             // Initialize various data structs.
-            this.controls = new DialogControlCollection<TaskDialogControl>(this);
+            controls = new DialogControlCollection<TaskDialogControl>(this);
         }
 
         /// <summary>Finalizes an instance of the <see cref="TaskDialog" /> class. TaskDialog Finalizer</summary>
         ~TaskDialog()
         {
-            this.Dispose(false);
+            Dispose(false);
         }
 
         /// <summary>Occurs when the TaskDialog is closing.</summary>
@@ -141,24 +140,24 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Gets or sets a value indicating whether CanCancel is set.</summary>
         public bool CanCancel
         {
-            get { return this.canCancel; }
+            get { return canCancel; }
 
             set
             {
-                this.ThrowIfDialogShowing(Resources.CancelableCannotBeChanged);
-                this.canCancel = value;
+                ThrowIfDialogShowing(Resources.CancelableCannotBeChanged);
+                canCancel = value;
             }
         }
 
         /// <summary>Gets or sets a value that contains the caption text.</summary>
         public string Caption
         {
-            get { return this.caption; }
+            get { return caption; }
 
             set
             {
-                this.ThrowIfDialogShowing(Resources.CaptionCannotBeChanged);
-                this.caption = value;
+                ThrowIfDialogShowing(Resources.CaptionCannotBeChanged);
+                caption = value;
             }
         }
 
@@ -166,57 +165,57 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         public DialogControlCollection<TaskDialogControl> Controls
         {
             // "Show protection" provided by collection itself, as well as individual controls.
-            get { return this.controls; }
+            get { return controls; }
         }
 
         /// <summary>Gets or sets a value that contains the collapsed control text.</summary>
         public string DetailsCollapsedLabel
         {
-            get { return this.detailsCollapsedLabel; }
+            get { return detailsCollapsedLabel; }
 
             set
             {
-                this.ThrowIfDialogShowing(Resources.CollapsedTextCannotBeChanged);
-                this.detailsCollapsedLabel = value;
+                ThrowIfDialogShowing(Resources.CollapsedTextCannotBeChanged);
+                detailsCollapsedLabel = value;
             }
         }
 
         /// <summary>Gets or sets a value indicating whether the details section is expanded.</summary>
         public bool DetailsExpanded
         {
-            get { return this.detailsExpanded; }
+            get { return detailsExpanded; }
 
             set
             {
-                this.ThrowIfDialogShowing(Resources.ExpandingStateCannotBeChanged);
-                this.detailsExpanded = value;
+                ThrowIfDialogShowing(Resources.ExpandingStateCannotBeChanged);
+                detailsExpanded = value;
             }
         }
 
         /// <summary>Gets or sets a value that contains the expanded control text.</summary>
         public string DetailsExpandedLabel
         {
-            get { return this.detailsExpandedLabel; }
+            get { return detailsExpandedLabel; }
 
             set
             {
-                this.ThrowIfDialogShowing(Resources.ExpandedLabelCannotBeChanged);
-                this.detailsExpandedLabel = value;
+                ThrowIfDialogShowing(Resources.ExpandedLabelCannotBeChanged);
+                detailsExpandedLabel = value;
             }
         }
 
         /// <summary>Gets or sets a value that contains the expanded text in the details section.</summary>
         public string DetailsExpandedText
         {
-            get { return this.detailsExpandedText; }
+            get { return detailsExpandedText; }
 
             set
             {
                 // Set local value, then update native dialog if showing.
-                this.detailsExpandedText = value;
-                if (this.NativeDialogShowing)
+                detailsExpandedText = value;
+                if (NativeDialogShowing)
                 {
-                    this.nativeDialog.UpdateExpandedText(this.detailsExpandedText);
+                    nativeDialog.UpdateExpandedText(detailsExpandedText);
                 }
             }
         }
@@ -224,58 +223,58 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Gets or sets a value that contains the expansion mode for this dialog.</summary>
         public TaskDialogExpandedDetailsLocation ExpansionMode
         {
-            get { return this.expansionMode; }
+            get { return expansionMode; }
 
             set
             {
-                this.ThrowIfDialogShowing(Resources.ExpandedDetailsCannotBeChanged);
-                this.expansionMode = value;
+                ThrowIfDialogShowing(Resources.ExpandedDetailsCannotBeChanged);
+                expansionMode = value;
             }
         }
 
         /// <summary>Gets or sets a value that indicates if the footer checkbox is checked.</summary>
         public bool? FooterCheckBoxChecked
         {
-            get { return this.footerCheckBoxChecked.GetValueOrDefault(false); }
+            get { return footerCheckBoxChecked.GetValueOrDefault(false); }
 
             set
             {
                 // Set local value, then update native dialog if showing.
-                this.footerCheckBoxChecked = value;
-                if (!this.NativeDialogShowing)
+                footerCheckBoxChecked = value;
+                if (!NativeDialogShowing)
                 {
                     return;
                 }
 
-                bool? checkBoxChecked = this.footerCheckBoxChecked;
-                this.nativeDialog.UpdateCheckBoxChecked(checkBoxChecked != null && checkBoxChecked.Value);
+                bool? checkBoxChecked = footerCheckBoxChecked;
+                nativeDialog.UpdateCheckBoxChecked(checkBoxChecked != null && checkBoxChecked.Value);
             }
         }
 
         /// <summary>Gets or sets a value that contains the footer check box text.</summary>
         public string FooterCheckBoxText
         {
-            get { return this.checkBoxText; }
+            get { return checkBoxText; }
 
             set
             {
-                this.ThrowIfDialogShowing(Resources.CheckBoxCannotBeChanged);
-                this.checkBoxText = value;
+                ThrowIfDialogShowing(Resources.CheckBoxCannotBeChanged);
+                checkBoxText = value;
             }
         }
 
         /// <summary>Gets or sets a value that contains the footer icon.</summary>
         public TaskDialogStandardIcon FooterIcon
         {
-            get { return this.footerIcon; }
+            get { return footerIcon; }
 
             set
             {
                 // Set local value, then update native dialog if showing.
-                this.footerIcon = value;
-                if (this.NativeDialogShowing)
+                footerIcon = value;
+                if (NativeDialogShowing)
                 {
-                    this.nativeDialog.UpdateFooterIcon(this.footerIcon);
+                    nativeDialog.UpdateFooterIcon(footerIcon);
                 }
             }
         }
@@ -283,15 +282,15 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Gets or sets a value that contains the footer text.</summary>
         public string FooterText
         {
-            get { return this.footerText; }
+            get { return footerText; }
 
             set
             {
                 // Set local value, then update native dialog if showing.
-                this.footerText = value;
-                if (this.NativeDialogShowing)
+                footerText = value;
+                if (NativeDialogShowing)
                 {
-                    this.nativeDialog.UpdateFooterText(this.footerText);
+                    nativeDialog.UpdateFooterText(footerText);
                 }
             }
         }
@@ -299,27 +298,27 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Gets or sets a value indicating whether hyperlinks are enabled.</summary>
         public bool HyperlinksEnabled
         {
-            get { return this.hyperlinksEnabled; }
+            get { return hyperlinksEnabled; }
 
             set
             {
-                this.ThrowIfDialogShowing(Resources.HyperlinksCannotBetSet);
-                this.hyperlinksEnabled = value;
+                ThrowIfDialogShowing(Resources.HyperlinksCannotBetSet);
+                hyperlinksEnabled = value;
             }
         }
 
         /// <summary>Gets or sets a value that contains the TaskDialog main icon.</summary>
         public TaskDialogStandardIcon Icon
         {
-            get { return this.icon; }
+            get { return icon; }
 
             set
             {
                 // Set local value, then update native dialog if showing.
-                this.icon = value;
-                if (this.NativeDialogShowing)
+                icon = value;
+                if (NativeDialogShowing)
                 {
-                    this.nativeDialog.UpdateMainIcon(this.icon);
+                    nativeDialog.UpdateMainIcon(icon);
                 }
             }
         }
@@ -327,15 +326,15 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Gets or sets a value that contains the instruction text.</summary>
         public string InstructionText
         {
-            get { return this.instructionText; }
+            get { return instructionText; }
 
             set
             {
                 // Set local value, then update native dialog if showing.
-                this.instructionText = value;
-                if (this.NativeDialogShowing)
+                instructionText = value;
+                if (NativeDialogShowing)
                 {
-                    this.nativeDialog.UpdateInstruction(this.instructionText);
+                    nativeDialog.UpdateInstruction(instructionText);
                 }
             }
         }
@@ -343,12 +342,12 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Gets or sets a value that contains the owner window's handle.</summary>
         public IntPtr OwnerWindowHandle
         {
-            get { return this.ownerWindow; }
+            get { return ownerWindow; }
 
             set
             {
-                this.ThrowIfDialogShowing(Resources.OwnerCannotBeChanged);
-                this.ownerWindow = value;
+                ThrowIfDialogShowing(Resources.OwnerCannotBeChanged);
+                ownerWindow = value;
             }
         }
 
@@ -358,11 +357,11 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// </summary>
         public TaskDialogProgressBar ProgressBar
         {
-            get { return this.progressBar; }
+            get { return progressBar; }
 
             set
             {
-                this.ThrowIfDialogShowing(Resources.ProgressBarCannotBeChanged);
+                ThrowIfDialogShowing(Resources.ProgressBarCannotBeChanged);
                 if (value != null)
                 {
                     if (value.HostingDialog != null)
@@ -373,46 +372,46 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
                     value.HostingDialog = this;
                 }
 
-                this.progressBar = value;
+                progressBar = value;
             }
         }
 
         /// <summary>Gets or sets a value that contains the standard buttons.</summary>
         public TaskDialogStandardButtons StandardButtons
         {
-            get { return this.standardButtons; }
+            get { return standardButtons; }
 
             set
             {
-                this.ThrowIfDialogShowing(Resources.StandardButtonsCannotBeChanged);
-                this.standardButtons = value;
+                ThrowIfDialogShowing(Resources.StandardButtonsCannotBeChanged);
+                standardButtons = value;
             }
         }
 
         /// <summary>Gets or sets a value that contains the startup location.</summary>
         public TaskDialogStartupLocation StartupLocation
         {
-            get { return this.startupLocation; }
+            get { return startupLocation; }
 
             set
             {
-                this.ThrowIfDialogShowing(Resources.StartupLocationCannotBeChanged);
-                this.startupLocation = value;
+                ThrowIfDialogShowing(Resources.StartupLocationCannotBeChanged);
+                startupLocation = value;
             }
         }
 
         /// <summary>Gets or sets a value that contains the message text.</summary>
         public string Text
         {
-            get { return this.text; }
+            get { return text; }
 
             set
             {
                 // Set local value, then update native dialog if showing.
-                this.text = value;
-                if (this.NativeDialogShowing)
+                text = value;
+                if (NativeDialogShowing)
                 {
-                    this.nativeDialog.UpdateText(this.text);
+                    nativeDialog.UpdateText(text);
                 }
             }
         }
@@ -423,10 +422,10 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         {
             get
             {
-                return (this.nativeDialog != null)
+                return (nativeDialog != null)
                        &&
-                       (this.nativeDialog.ShowState == DialogShowState.Showing
-                        || this.nativeDialog.ShowState == DialogShowState.Closing);
+                       (nativeDialog.ShowState == DialogShowState.Showing
+                        || nativeDialog.ShowState == DialogShowState.Closing);
             }
         }
 
@@ -461,12 +460,12 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <exception cref="InvalidOperationException">if TaskDialog is not showing.</exception>
         public void Close()
         {
-            if (!this.NativeDialogShowing)
+            if (!NativeDialogShowing)
             {
                 throw new InvalidOperationException(Resources.TaskDialogCloseNonShowing);
             }
 
-            this.nativeDialog.NativeClose(TaskDialogResult.Cancel);
+            nativeDialog.NativeClose(TaskDialogResult.Cancel);
 
             // TaskDialog's own cleanup code - which runs post show - will handle disposal of native dialog.
         }
@@ -476,12 +475,12 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <exception cref="InvalidOperationException">if TaskDialog is not showing.</exception>
         public void Close(TaskDialogResult closingResult)
         {
-            if (!this.NativeDialogShowing)
+            if (!NativeDialogShowing)
             {
                 throw new InvalidOperationException(Resources.TaskDialogCloseNonShowing);
             }
 
-            this.nativeDialog.NativeClose(closingResult);
+            nativeDialog.NativeClose(closingResult);
 
             // TaskDialog's own cleanup code - which runs post show - will handle disposal of native dialog.
         }
@@ -489,7 +488,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Dispose TaskDialog Resources</summary>
         public void Dispose()
         {
-            this.Dispose(true);
+            Dispose(true);
             GC.SuppressFinalize(this);
         }
 
@@ -497,28 +496,28 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <param name="disposing">If true, indicates that this is being called via Dispose rather than via the finalizer.</param>
         public void Dispose(bool disposing)
         {
-            if (!this.disposed)
+            if (!disposed)
             {
-                this.disposed = true;
+                disposed = true;
 
                 if (disposing)
                 {
                     // Clean up managed resources.
-                    if (this.nativeDialog != null && this.nativeDialog.ShowState == DialogShowState.Showing)
+                    if (nativeDialog != null && nativeDialog.ShowState == DialogShowState.Showing)
                     {
-                        this.nativeDialog.NativeClose(TaskDialogResult.Cancel);
+                        nativeDialog.NativeClose(TaskDialogResult.Cancel);
                     }
 
-                    this.buttons = null;
-                    this.radioButtons = null;
-                    this.commandLinks = null;
+                    buttons = null;
+                    radioButtons = null;
+                    commandLinks = null;
                 }
 
                 // Clean up unmanaged resources SECOND, NTD counts on being closed before being disposed.
-                if (this.nativeDialog != null)
+                if (nativeDialog != null)
                 {
-                    this.nativeDialog.Dispose();
-                    this.nativeDialog = null;
+                    nativeDialog.Dispose();
+                    nativeDialog = null;
                 }
 
                 if (staticDialog != null)
@@ -533,7 +532,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <returns>The dialog result.</returns>
         public TaskDialogResult Show()
         {
-            return this.ShowCore();
+            return ShowCore();
         }
 
         /// <summary>Creates and shows a modal task dialog.</summary>
@@ -541,8 +540,8 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <returns>The dialog result.</returns>
         public TaskDialogResult ShowDialog(Window window)
         {
-            this.OwnerWindowHandle = new WindowInteropHelper(window).Handle;
-            return this.ShowCore();
+            OwnerWindowHandle = new WindowInteropHelper(window).Handle;
+            return ShowCore();
         }
 
         /// <summary>Called whenever controls have been added or removed</summary>
@@ -550,8 +549,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         {
             // If we're showing, we should never get here - the changing notification would have thrown and the property
             // would not have been changed.
-            Debug.Assert(
-                !this.NativeDialogShowing, "Collection changed notification received despite show state of dialog");
+            Debug.Assert(!NativeDialogShowing, "Collection changed notification received despite show state of dialog");
         }
 
         /// <summary>
@@ -564,13 +562,13 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         void IDialogControlHost.ApplyControlPropertyChange(string propertyName, DialogControl control)
         {
             // We only need to apply changes to the native dialog when it actually exists.
-            if (this.NativeDialogShowing)
+            if (NativeDialogShowing)
             {
                 TaskDialogButton button;
                 TaskDialogRadioButton radioButton;
                 if (control is TaskDialogProgressBar)
                 {
-                    if (!this.progressBar.HasValidValues)
+                    if (!progressBar.HasValidValues)
                     {
                         throw new ArgumentException(Resources.TaskDialogProgressBarValueInRange);
                     }
@@ -578,14 +576,14 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
                     switch (propertyName)
                     {
                         case "State":
-                            this.nativeDialog.UpdateProgressBarState(this.progressBar.State);
+                            nativeDialog.UpdateProgressBarState(progressBar.State);
                             break;
                         case "Value":
-                            this.nativeDialog.UpdateProgressBarValue(this.progressBar.Value);
+                            nativeDialog.UpdateProgressBarValue(progressBar.Value);
                             break;
                         case "Minimum":
                         case "Maximum":
-                            this.nativeDialog.UpdateProgressBarRange();
+                            nativeDialog.UpdateProgressBarRange();
                             break;
                         default:
                             Debug.Assert(true, "Unknown property being set");
@@ -597,10 +595,10 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
                     switch (propertyName)
                     {
                         case "ShowElevationIcon":
-                            this.nativeDialog.UpdateElevationIcon(button.Id, button.UseElevationIcon);
+                            nativeDialog.UpdateElevationIcon(button.Id, button.UseElevationIcon);
                             break;
                         case "Enabled":
-                            this.nativeDialog.UpdateButtonEnabled(button.Id, button.Enabled);
+                            nativeDialog.UpdateButtonEnabled(button.Id, button.Enabled);
                             break;
                         default:
                             Debug.Assert(true, "Unknown property being set");
@@ -612,7 +610,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
                     switch (propertyName)
                     {
                         case "Enabled":
-                            this.nativeDialog.UpdateRadioButtonEnabled(radioButton.Id, radioButton.Enabled);
+                            nativeDialog.UpdateRadioButtonEnabled(radioButton.Id, radioButton.Enabled);
                             break;
                         default:
                             Debug.Assert(true, "Unknown property being set");
@@ -637,7 +635,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         bool IDialogControlHost.IsCollectionChangeAllowed()
         {
             // Only allow additions to collection if dialog is NOT showing.
-            return !this.NativeDialogShowing;
+            return !NativeDialogShowing;
         }
 
         /// <summary>
@@ -659,7 +657,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
 
             bool canChange = false;
 
-            if (!this.NativeDialogShowing)
+            if (!NativeDialogShowing)
             {
                 // Certain properties can't be changed if the dialog is not showing we need a handle created before we
                 // can set these...
@@ -697,7 +695,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         internal void RaiseButtonClickEvent(int id)
         {
             // First check to see if the ID matches a custom button.
-            TaskDialogButtonBase button = this.GetButtonForId(id);
+            TaskDialogButtonBase button = GetButtonForId(id);
 
             // If a custom button was found, raise the event - if not, it's a standard button, and we don't support
             // custom event handling for the standard buttons
@@ -716,7 +714,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <returns>An integer.</returns>
         internal int RaiseClosingEvent(int id)
         {
-            EventHandler<TaskDialogClosingEventArgs> handler = this.Closing;
+            EventHandler<TaskDialogClosingEventArgs> handler = Closing;
             if (handler != null)
             {
                 var e = new TaskDialogClosingEventArgs();
@@ -727,7 +725,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
                 // If not, it had better be a custom button...
                 if (buttonClicked == TaskDialogStandardButtons.None)
                 {
-                    TaskDialogButtonBase customButton = this.GetButtonForId(id);
+                    TaskDialogButtonBase customButton = GetButtonForId(id);
 
                     // ... or we have a problem.
                     if (customButton == null)
@@ -758,9 +756,9 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Raises the help invoked event.</summary>
         internal void RaiseHelpInvokedEvent()
         {
-            if (this.HelpInvoked != null)
+            if (HelpInvoked != null)
             {
-                this.HelpInvoked(this, EventArgs.Empty);
+                HelpInvoked(this, EventArgs.Empty);
             }
         }
 
@@ -768,7 +766,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <param name="link">The link from the hyperlink.</param>
         internal void RaiseHyperlinkClickEvent(string link)
         {
-            EventHandler<TaskDialogHyperlinkClickedEventArgs> handler = this.HyperlinkClick;
+            EventHandler<TaskDialogHyperlinkClickedEventArgs> handler = HyperlinkClick;
             if (handler != null)
             {
                 handler(this, new TaskDialogHyperlinkClickedEventArgs(link));
@@ -778,9 +776,9 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Raises the opened event.</summary>
         internal void RaiseOpenedEvent()
         {
-            if (this.Opened != null)
+            if (Opened != null)
             {
-                this.Opened(this, EventArgs.Empty);
+                Opened(this, EventArgs.Empty);
             }
         }
 
@@ -788,9 +786,9 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <param name="ticks">The ticks.</param>
         internal void RaiseTickEvent(int ticks)
         {
-            if (this.Tick != null)
+            if (Tick != null)
             {
-                this.Tick(this, new TaskDialogTickEventArgs(ticks));
+                Tick(this, new TaskDialogTickEventArgs(ticks));
             }
         }
 
@@ -934,9 +932,9 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         void ApplyControlConfiguration(NativeTaskDialogSettings settings)
         {
             // Deal with progress bars/marquees.
-            if (this.progressBar != null)
+            if (progressBar != null)
             {
-                if (this.progressBar.State == TaskDialogProgressBarState.Marquee)
+                if (progressBar.State == TaskDialogProgressBarState.Marquee)
                 {
                     settings.NativeConfiguration.TaskDialogFlags |= TaskDialogOptions.ShowMarqueeProgressBar;
                 }
@@ -948,14 +946,14 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
 
             // Build the native struct arrays that NativeTaskDialog needs - though NTD will handle the heavy lifting
             // marshalling to make sure all the cleanup is centralized there.
-            if (this.buttons.Count > 0 || this.commandLinks.Count > 0)
+            if (buttons.Count > 0 || commandLinks.Count > 0)
             {
                 // These are the actual arrays/lists of the structs that we'll copy to the unmanaged heap.
-                List<TaskDialogButtonBase> sourceList = this.buttons.Count > 0 ? this.buttons : this.commandLinks;
+                List<TaskDialogButtonBase> sourceList = buttons.Count > 0 ? buttons : commandLinks;
                 settings.Buttons = BuildButtonStructArray(sourceList);
 
                 // Apply option flag that forces all custom buttons to render as command links.
-                if (this.commandLinks.Count > 0)
+                if (commandLinks.Count > 0)
                 {
                     settings.NativeConfiguration.TaskDialogFlags |= TaskDialogOptions.UseCommandLinks;
                 }
@@ -966,15 +964,15 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
                 ApplyElevatedIcons(settings, sourceList);
             }
 
-            if (this.radioButtons.Count <= 0)
+            if (radioButtons.Count <= 0)
             {
                 return;
             }
 
-            settings.RadioButtons = BuildButtonStructArray(this.radioButtons);
+            settings.RadioButtons = BuildButtonStructArray(radioButtons);
 
             // Set default radio button - radio buttons don't support.
-            int defaultRadioButton = FindDefaultButtonId(this.radioButtons);
+            int defaultRadioButton = FindDefaultButtonId(radioButtons);
             settings.NativeConfiguration.DefaultRadioButtonIndex = defaultRadioButton;
 
             if (defaultRadioButton == 0)
@@ -987,10 +985,10 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <param name="settings">The dialog settings.</param>
         void ApplyCoreSettings(NativeTaskDialogSettings settings)
         {
-            this.ApplyGeneralNativeConfiguration(settings.NativeConfiguration);
-            this.ApplyTextConfiguration(settings.NativeConfiguration);
-            this.ApplyOptionConfiguration(settings.NativeConfiguration);
-            this.ApplyControlConfiguration(settings);
+            ApplyGeneralNativeConfiguration(settings.NativeConfiguration);
+            ApplyTextConfiguration(settings.NativeConfiguration);
+            ApplyOptionConfiguration(settings.NativeConfiguration);
+            ApplyControlConfiguration(settings);
         }
 
         /// <summary>Applies the core settings.</summary>
@@ -998,15 +996,15 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         void ApplyGeneralNativeConfiguration(TaskDialogConfiguration dialogConfig)
         {
             // If an owner wasn't specifically specified, we'll use the app's main window.
-            if (this.ownerWindow != IntPtr.Zero)
+            if (ownerWindow != IntPtr.Zero)
             {
-                dialogConfig.ParentHandle = this.ownerWindow;
+                dialogConfig.ParentHandle = ownerWindow;
             }
 
             // Other miscellaneous sets.
-            dialogConfig.MainIcon = new IconUnion((int)this.icon);
-            dialogConfig.FooterIcon = new IconUnion((int)this.footerIcon);
-            dialogConfig.CommonButtons = (TaskDialogCommonButtons)this.standardButtons;
+            dialogConfig.MainIcon = new IconUnion((int)icon);
+            dialogConfig.FooterIcon = new IconUnion((int)footerIcon);
+            dialogConfig.CommonButtons = (TaskDialogCommonButtons)standardButtons;
         }
 
         /// <summary>Applies the option configuration.</summary>
@@ -1015,39 +1013,39 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         {
             // Handle options - start with no options set.
             var options = TaskDialogOptions.None;
-            if (this.canCancel)
+            if (canCancel)
             {
                 options |= TaskDialogOptions.AllowCancel;
             }
 
-            if (this.footerCheckBoxChecked.HasValue && this.footerCheckBoxChecked.Value)
+            if (footerCheckBoxChecked.HasValue && footerCheckBoxChecked.Value)
             {
                 options |= TaskDialogOptions.CheckVerificationFlag;
             }
 
-            if (this.hyperlinksEnabled)
+            if (hyperlinksEnabled)
             {
                 options |= TaskDialogOptions.EnableHyperlinks;
             }
 
-            if (this.detailsExpanded)
+            if (detailsExpanded)
             {
                 options |= TaskDialogOptions.ExpandedByDefault;
             }
 
-            if (this.Tick != null)
+            if (Tick != null)
             {
                 options |= TaskDialogOptions.UseCallbackTimer;
             }
 
-            if (this.startupLocation == TaskDialogStartupLocation.CenterOwner)
+            if (startupLocation == TaskDialogStartupLocation.CenterOwner)
             {
                 options |= TaskDialogOptions.PositionRelativeToWindow;
             }
 
             // Note: no validation required, as we allow this to be set even if there is no expanded information text
             // because that could be added later. Default for Win32 API is to expand into (and after) the content area.
-            if (this.expansionMode == TaskDialogExpandedDetailsLocation.ExpandFooter)
+            if (expansionMode == TaskDialogExpandedDetailsLocation.ExpandFooter)
             {
                 options |= TaskDialogOptions.ExpandFooterArea;
             }
@@ -1060,18 +1058,18 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <param name="settings">The dialog settings.</param>
         void ApplySupplementalSettings(NativeTaskDialogSettings settings)
         {
-            if (this.progressBar != null)
+            if (progressBar != null)
             {
-                if (this.progressBar.State != TaskDialogProgressBarState.Marquee)
+                if (progressBar.State != TaskDialogProgressBarState.Marquee)
                 {
-                    settings.ProgressBarMinimum = this.progressBar.Minimum;
-                    settings.ProgressBarMaximum = this.progressBar.Maximum;
-                    settings.ProgressBarValue = this.progressBar.Value;
-                    settings.ProgressBarState = this.progressBar.State;
+                    settings.ProgressBarMinimum = progressBar.Minimum;
+                    settings.ProgressBarMaximum = progressBar.Maximum;
+                    settings.ProgressBarValue = progressBar.Value;
+                    settings.ProgressBarState = progressBar.State;
                 }
             }
 
-            if (this.HelpInvoked != null)
+            if (HelpInvoked != null)
             {
                 settings.InvokeHelp = true;
             }
@@ -1082,48 +1080,48 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         void ApplyTextConfiguration(TaskDialogConfiguration dialogConfig)
         {
             // note that nulls or empty strings are fine here.
-            dialogConfig.Content = this.text;
-            dialogConfig.WindowTitle = this.caption;
-            dialogConfig.MainInstruction = this.instructionText;
-            dialogConfig.ExpandedInformation = this.detailsExpandedText;
-            dialogConfig.ExpandedControlText = this.detailsExpandedLabel;
-            dialogConfig.CollapsedControlText = this.detailsCollapsedLabel;
-            dialogConfig.FooterText = this.footerText;
-            dialogConfig.VerificationText = this.checkBoxText;
+            dialogConfig.Content = text;
+            dialogConfig.WindowTitle = caption;
+            dialogConfig.MainInstruction = instructionText;
+            dialogConfig.ExpandedInformation = detailsExpandedText;
+            dialogConfig.ExpandedControlText = detailsExpandedLabel;
+            dialogConfig.CollapsedControlText = detailsCollapsedLabel;
+            dialogConfig.FooterText = footerText;
+            dialogConfig.VerificationText = checkBoxText;
         }
 
         /// <summary>Cleans up data and structs from a single native dialog Show() invocation.</summary>
         void CleanUp()
         {
             // Reset values that would be considered 'volatile' in a given instance.
-            if (this.progressBar != null)
+            if (progressBar != null)
             {
-                this.progressBar.Reset();
+                progressBar.Reset();
             }
 
             // Clean out sorted control lists - though we don't of course clear the main controls collection, so the
             // controls are still around; we'll resort on next show, since the collection may have changed.
-            if (this.buttons != null)
+            if (buttons != null)
             {
-                this.buttons.Clear();
+                buttons.Clear();
             }
 
-            if (this.commandLinks != null)
+            if (commandLinks != null)
             {
-                this.commandLinks.Clear();
+                commandLinks.Clear();
             }
 
-            if (this.radioButtons != null)
+            if (radioButtons != null)
             {
-                this.radioButtons.Clear();
+                radioButtons.Clear();
             }
 
-            this.progressBar = null;
+            progressBar = null;
 
             // Have the native dialog clean up the rest.
-            if (this.nativeDialog != null)
+            if (nativeDialog != null)
             {
-                this.nativeDialog.Dispose();
+                nativeDialog.Dispose();
             }
         }
 
@@ -1132,7 +1130,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <returns>The <c>TaskDialogButton</c>.</returns>
         TaskDialogButtonBase GetButtonForId(int id)
         {
-            return (TaskDialogButtonBase)this.controls.GetControlbyId(id);
+            return (TaskDialogButtonBase)controls.GetControlbyId(id);
         }
 
         /// <summary>Shows the core dialog</summary>
@@ -1145,30 +1143,30 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
             {
                 // Populate control lists, based on current contents - note we are somewhat late-bound on our control
                 // lists, to support XAML scenarios.
-                this.SortDialogControls();
+                SortDialogControls();
 
                 // First, let's make sure it even makes sense to try a show.
-                this.ValidateCurrentDialogSettings();
+                ValidateCurrentDialogSettings();
 
                 // Create settings object for new dialog, based on current state.
                 var settings = new NativeTaskDialogSettings();
-                this.ApplyCoreSettings(settings);
-                this.ApplySupplementalSettings(settings);
+                ApplyCoreSettings(settings);
+                ApplySupplementalSettings(settings);
 
                 // Show the dialog. NOTE: this is a BLOCKING call; the dialog proc callbacks will be executed by the
                 // same thread as the Show() call before the thread of execution contines to the end of this method.
-                this.nativeDialog = new NativeTaskDialog(settings, this);
-                this.nativeDialog.NativeShow();
+                nativeDialog = new NativeTaskDialog(settings, this);
+                nativeDialog.NativeShow();
 
                 // Build and return dialog result to public API - leaving it null after an exception is thrown is fine
                 // in this case
-                result = ConstructDialogResult(this.nativeDialog);
-                this.footerCheckBoxChecked = this.nativeDialog.CheckBoxChecked;
+                result = ConstructDialogResult(nativeDialog);
+                footerCheckBoxChecked = nativeDialog.CheckBoxChecked;
             }
             finally
             {
-                this.CleanUp();
-                this.nativeDialog = null;
+                CleanUp();
+                nativeDialog = null;
             }
 
             return result;
@@ -1177,7 +1175,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Sorts the dialog controls.</summary>
         void SortDialogControls()
         {
-            foreach (var control in this.controls)
+            foreach (var control in controls)
             {
                 var buttonBase = control as TaskDialogButtonBase;
                 var commandLink = control as TaskDialogCommandLink;
@@ -1194,29 +1192,29 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
                 // Loop through child controls and sort the controls based on type.
                 if (commandLink != null)
                 {
-                    this.commandLinks.Add(commandLink);
+                    commandLinks.Add(commandLink);
                 }
                 else if ((radButton = control as TaskDialogRadioButton) != null)
                 {
-                    if (this.radioButtons == null)
+                    if (radioButtons == null)
                     {
-                        this.radioButtons = new List<TaskDialogButtonBase>();
+                        radioButtons = new List<TaskDialogButtonBase>();
                     }
 
-                    this.radioButtons.Add(radButton);
+                    radioButtons.Add(radButton);
                 }
                 else if (buttonBase != null)
                 {
-                    if (this.buttons == null)
+                    if (buttons == null)
                     {
-                        this.buttons = new List<TaskDialogButtonBase>();
+                        buttons = new List<TaskDialogButtonBase>();
                     }
 
-                    this.buttons.Add(buttonBase);
+                    buttons.Add(buttonBase);
                 }
                 else if ((progBar = control as TaskDialogProgressBar) != null)
                 {
-                    this.progressBar = progBar;
+                    progressBar = progBar;
                 }
                 else
                 {
@@ -1229,7 +1227,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <param name="message">The message to be shown in the exception.</param>
         void ThrowIfDialogShowing(string message)
         {
-            if (this.NativeDialogShowing)
+            if (NativeDialogShowing)
             {
                 throw new NotSupportedException(message);
             }
@@ -1238,22 +1236,21 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Validates the current dialog settings.</summary>
         void ValidateCurrentDialogSettings()
         {
-            if (this.footerCheckBoxChecked.HasValue && this.footerCheckBoxChecked.Value
-                && string.IsNullOrEmpty(this.checkBoxText))
+            if (footerCheckBoxChecked.HasValue && footerCheckBoxChecked.Value && string.IsNullOrEmpty(checkBoxText))
             {
                 throw new InvalidOperationException(Resources.TaskDialogCheckBoxTextRequiredToEnableCheckBox);
             }
 
             // Progress bar validation. Make sure the progress bar values are valid. the Win32 API will valiantly try to
             // rationalize bizarre min/max/value combinations, but we'll save it the trouble by validating.
-            if (this.progressBar != null && !this.progressBar.HasValidValues)
+            if (progressBar != null && !progressBar.HasValidValues)
             {
                 throw new InvalidOperationException(Resources.TaskDialogProgressBarValueInRange);
             }
 
             // Validate Buttons collection. Make sure we don't have buttons AND command-links - the Win32 API treats
             // them as different flavors of a single button struct.
-            if (this.buttons.Count > 0 && this.commandLinks.Count > 0)
+            if (buttons.Count > 0 && commandLinks.Count > 0)
             {
                 throw new NotSupportedException(Resources.TaskDialogSupportedButtonsAndLinks);
             }

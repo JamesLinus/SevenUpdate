@@ -1,13 +1,13 @@
 // <copyright file="ListViewCustomComparer.cs" project="SevenSoftware.Windows">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License" />
 
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.ComponentModel;
+
 namespace SevenSoftware.Windows.Controls
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.ComponentModel;
-
     /// <summary>Enables the listView sorter to compare classes.</summary>
     public abstract class ListViewCustomComparer : IComparer
     {
@@ -20,7 +20,7 @@ namespace SevenSoftware.Windows.Controls
                 var result = new List<string>();
                 var temp = new Stack<string>();
 
-                foreach (string col in this.SortColumns.Keys)
+                foreach (string col in SortColumns.Keys)
                 {
                     temp.Push(col);
                 }
@@ -47,13 +47,13 @@ namespace SevenSoftware.Windows.Controls
                 throw new ArgumentNullException("sortColumn");
             }
 
-            this.ClearSort();
-            if (this.SortColumns == null)
+            ClearSort();
+            if (SortColumns == null)
             {
-                this.SortColumns = new Dictionary<string, ListSortDirection>();
+                SortColumns = new Dictionary<string, ListSortDirection>();
             }
 
-            this.SortColumns.Add(sortColumn, direction);
+            SortColumns.Add(sortColumn, direction);
         }
 
         /// <summary>
@@ -71,9 +71,9 @@ namespace SevenSoftware.Windows.Controls
         /// <summary>Clears the sort columns.</summary>
         void ClearSort()
         {
-            if (this.SortColumns != null)
+            if (SortColumns != null)
             {
-                this.SortColumns.Clear();
+                SortColumns.Clear();
             }
         }
     }

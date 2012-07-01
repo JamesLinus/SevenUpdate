@@ -1,14 +1,13 @@
 // <copyright file="DialogControlCollection.cs" project="SevenSoftware.Windows" company="Microsoft Corporation">Microsoft Corporation</copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx" name="Microsoft Software License" />
 
+using System;
+using System.Collections.ObjectModel;
+using System.Linq;
+using SevenSoftware.Windows.Properties;
+
 namespace SevenSoftware.Windows.Dialogs
 {
-    using System;
-    using System.Collections.ObjectModel;
-    using System.Linq;
-
-    using SevenSoftware.Windows.Properties;
-
     /// <summary>Strongly typed collection for dialog controls.</summary>
     /// <typeparam name="T">The DialogControl</typeparam>
     public sealed class DialogControlCollection<T> : Collection<T> where T : DialogControl
@@ -20,7 +19,7 @@ namespace SevenSoftware.Windows.Dialogs
         /// <param name="host">The host.</param>
         internal DialogControlCollection(IDialogControlHost host)
         {
-            this.hostingDialog = host;
+            hostingDialog = host;
         }
 
         /// <summary>Defines the indexer that supports accessing controls by name.</summary>
@@ -39,7 +38,7 @@ namespace SevenSoftware.Windows.Dialogs
                     throw new ArgumentException(Resources.DialogCollectionControlNameNull, "name");
                 }
 
-                return this.Items.FirstOrDefault(x => x.Name == name);
+                return Items.FirstOrDefault(x => x.Name == name);
             }
         }
 
@@ -48,7 +47,7 @@ namespace SevenSoftware.Windows.Dialogs
         /// <returns>A DialogControl who's id matches the value of the <paramref name="id" /> parameter.</returns>
         internal DialogControl GetControlbyId(int id)
         {
-            return this.Items.FirstOrDefault(x => x.Id == id);
+            return Items.FirstOrDefault(x => x.Id == id);
         }
 
         /// <summary>Inserts an dialog control at the specified index.</summary>
@@ -58,7 +57,7 @@ namespace SevenSoftware.Windows.Dialogs
         protected override void InsertItem(int index, T control)
         {
             // Check for duplicates, lack of host, and during-show adds.
-            if (this.Items.Contains(control))
+            if (Items.Contains(control))
             {
                 throw new InvalidOperationException(Resources.DialogCollectionCannotHaveDuplicateNames);
             }
@@ -68,17 +67,17 @@ namespace SevenSoftware.Windows.Dialogs
                 throw new InvalidOperationException(Resources.DialogCollectionControlAlreadyHosted);
             }
 
-            if (!this.hostingDialog.IsCollectionChangeAllowed())
+            if (!hostingDialog.IsCollectionChangeAllowed())
             {
                 throw new InvalidOperationException(Resources.DialogCollectionModifyShowingDialog);
             }
 
             // Reparent, add control.
-            control.HostingDialog = this.hostingDialog;
+            control.HostingDialog = hostingDialog;
             base.InsertItem(index, control);
 
             // Notify that we've added a control.
-            this.hostingDialog.ApplyCollectionChanged();
+            hostingDialog.ApplyCollectionChanged();
         }
 
         /// <summary>Removes the control at the specified index.</summary>
@@ -87,18 +86,18 @@ namespace SevenSoftware.Windows.Dialogs
         protected override void RemoveItem(int index)
         {
             // Notify that we're about to remove a control. Throw if dialog showing.
-            if (!this.hostingDialog.IsCollectionChangeAllowed())
+            if (!hostingDialog.IsCollectionChangeAllowed())
             {
                 throw new InvalidOperationException(Resources.DialogCollectionModifyShowingDialog);
             }
 
-            DialogControl control = this.Items[index];
+            DialogControl control = Items[index];
 
             // Unparent and remove.
             control.HostingDialog = null;
             base.RemoveItem(index);
 
-            this.hostingDialog.ApplyCollectionChanged();
+            hostingDialog.ApplyCollectionChanged();
         }
     }
 }

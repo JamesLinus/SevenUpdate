@@ -1,11 +1,11 @@
 // <copyright file="ListViewExtensions.cs" project="SevenSoftware.Windows">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
+using System.Windows;
+using System.Windows.Controls;
+
 namespace SevenSoftware.Windows.Controls
 {
-    using System.Windows;
-    using System.Windows.Controls;
-
     /// <summary>Contains methods that extend the <c>ListView</c> control.</summary>
     public static class ListViewExtensions
     {

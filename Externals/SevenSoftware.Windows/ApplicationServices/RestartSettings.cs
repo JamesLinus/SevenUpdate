@@ -1,12 +1,11 @@
 // <copyright file="RestartSettings.cs" project="SevenSoftware.Windows" company="Microsoft Corporation">Microsoft Corporation</copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx" name="Microsoft Software License" />
 
+using System.Globalization;
+using SevenSoftware.Windows.Properties;
+
 namespace SevenSoftware.Windows.ApplicationServices
 {
-    using System.Globalization;
-
-    using SevenSoftware.Windows.Properties;
-
     /// <summary>Specifies the options for an application to be automatically restarted by Windows Error Reporting.</summary>
     /// <remarks>
     ///   Regardless of these settings, the application will not be restarted if it executed for less than 60 seconds
@@ -35,14 +34,14 @@ namespace SevenSoftware.Windows.ApplicationServices
         /// <value>A <see cref="string" /> object.</value>
         public string Command
         {
-            get { return this.command; }
+            get { return command; }
         }
 
         /// <summary>Gets the set of conditions when the application should not be restarted.</summary>
         /// <value>A set of <see cref="RestartRestrictions" /> values.</value>
         public RestartRestrictions Restrictions
         {
-            get { return this.restrictions; }
+            get { return restrictions; }
         }
 
         /// <summary>Returns a string representation of the current state of this object.</summary>
@@ -50,10 +49,7 @@ namespace SevenSoftware.Windows.ApplicationServices
         public override string ToString()
         {
             return string.Format(
-                CultureInfo.InvariantCulture, 
-                Resources.RestartSettingsFormatString, 
-                this.command, 
-                this.restrictions.ToString());
+                CultureInfo.InvariantCulture, Resources.RestartSettingsFormatString, command, restrictions.ToString());
         }
     }
 }

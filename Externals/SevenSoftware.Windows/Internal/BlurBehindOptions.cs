@@ -1,10 +1,10 @@
 // <copyright file="BlurBehindOptions.cs" project="SevenSoftware.Windows">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
+using System;
+
 namespace SevenSoftware.Windows.Internal
 {
-    using System;
-
     /// <summary>The blur behind flags/options.</summary>
     [Flags]
     public enum BlurBehindOptions : uint

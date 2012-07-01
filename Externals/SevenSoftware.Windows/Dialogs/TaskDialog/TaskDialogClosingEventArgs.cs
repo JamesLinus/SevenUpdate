@@ -1,10 +1,10 @@
 // <copyright file="TaskDialogClosingEventArgs.cs" project="SevenSoftware.Windows" company="Microsoft Corporation">Microsoft Corporation</copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx" name="Microsoft Software License" />
 
+using System.ComponentModel;
+
 namespace SevenSoftware.Windows.Dialogs.TaskDialog
 {
-    using System.ComponentModel;
-
     /// <summary>Data associated with <see cref="TaskDialog.Closing" /> event.</summary>
     public class TaskDialogClosingEventArgs : CancelEventArgs
     {

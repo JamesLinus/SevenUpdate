@@ -1,13 +1,13 @@
 // <copyright file="AdornerLabel.cs" project="SevenSoftware.Windows">Ben Dewey</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License" />
 
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Media;
+
 namespace SevenSoftware.Windows.Controls
 {
-    using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Documents;
-    using System.Windows.Media;
-
     /// <summary>The label to display on the <c>InfoTextBox</c>.</summary>
     public class AdornerLabel : Adorner
     {
@@ -20,7 +20,7 @@ namespace SevenSoftware.Windows.Controls
         /// <param name="labelStyle">The label style.</param>
         public AdornerLabel(UIElement adornedElement, string label, Style labelStyle) : base(adornedElement)
         {
-            this.textBlock = new TextBlock { Style = labelStyle, Text = label };
+            textBlock = new TextBlock { Style = labelStyle, Text = label };
         }
 
         /// <summary>Gets the number of visual child elements within this element.</summary>
@@ -38,7 +38,7 @@ namespace SevenSoftware.Windows.Controls
         /// <returns>The actual size used.</returns>
         protected override Size ArrangeOverride(Size finalSize)
         {
-            this.textBlock.Arrange(new Rect(finalSize));
+            textBlock.Arrange(new Rect(finalSize));
             return finalSize;
         }
 
@@ -50,7 +50,7 @@ namespace SevenSoftware.Windows.Controls
         /// <returns>The requested child element. This should not return <c>null</c>; if the provided index is out of range, an exception is thrown.</returns>
         protected override Visual GetVisualChild(int index)
         {
-            return this.textBlock;
+            return textBlock;
         }
 
         /// <summary>Implements any custom measuring behavior for the adorner.</summary>
@@ -58,7 +58,7 @@ namespace SevenSoftware.Windows.Controls
         /// <returns>A <c>T:System.Windows.Size</c> object representing the amount of layout space needed by the adorner.</returns>
         protected override Size MeasureOverride(Size constraint)
         {
-            this.textBlock.Measure(constraint);
+            textBlock.Measure(constraint);
             return constraint;
         }
     }

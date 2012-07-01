@@ -29,20 +29,20 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Gets or sets the state of the progress bar.</summary>
         public TaskDialogProgressBarState State
         {
-            get { return this.state; }
+            get { return state; }
 
             set
             {
-                this.CheckPropertyChangeAllowed("State");
-                this.state = value;
-                this.ApplyPropertyChange("State");
+                CheckPropertyChangeAllowed("State");
+                state = value;
+                ApplyPropertyChange("State");
             }
         }
 
         /// <summary>Resets the state of the control to normal.</summary>
         protected internal virtual void Reset()
         {
-            this.state = TaskDialogProgressBarState.Normal;
+            state = TaskDialogProgressBarState.Normal;
         }
     }
 }

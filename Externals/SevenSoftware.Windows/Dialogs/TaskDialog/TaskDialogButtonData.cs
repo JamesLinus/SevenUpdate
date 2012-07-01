@@ -1,10 +1,10 @@
 // <copyright file="TaskDialogButtonData.cs" project="SevenSoftware.Windows" company="Microsoft Corporation">Microsoft Corporation</copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx" name="Microsoft Software License" />
 
+using System.Runtime.InteropServices;
+
 namespace SevenSoftware.Windows.Dialogs.TaskDialog
 {
-    using System.Runtime.InteropServices;
-
     /// <summary>Contains the data for a <c>TaskDialogButton</c>.</summary>
     [StructLayout(LayoutKind.Sequential, CharSet = CharSet.Auto, Pack = 4)]
     internal struct TaskDialogButtonData
@@ -21,8 +21,8 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <param name="text">The text.</param>
         public TaskDialogButtonData(int buttonId, string text)
         {
-            this.ButtonId = buttonId;
-            this.ButtonText = text;
+            ButtonId = buttonId;
+            ButtonText = text;
         }
     }
 }

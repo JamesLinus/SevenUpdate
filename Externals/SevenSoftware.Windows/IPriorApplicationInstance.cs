@@ -1,10 +1,10 @@
 // <copyright file="IPriorApplicationInstance.cs" project="SevenSoftware.Windows">BladeWise</copyright>
 // <license href="http://www.microsoft.com/en-us/openness/licenses.aspx" name="Microsoft Public License" />
 
+using System.ServiceModel;
+
 namespace SevenSoftware.Windows
 {
-    using System.ServiceModel;
-
     /// <summary>Interface used to signal a prior instance of the application about the startup another instance.</summary>
     [ServiceContract]
     internal interface IPriorApplicationInstance

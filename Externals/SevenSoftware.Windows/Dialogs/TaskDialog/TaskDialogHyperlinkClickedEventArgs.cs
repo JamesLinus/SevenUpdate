@@ -1,10 +1,10 @@
 // <copyright file="TaskDialogHyperlinkClickedEventArgs.cs" project="SevenSoftware.Windows" company="Microsoft Corporation">Microsoft Corporation</copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx" name="Microsoft Software License" />
 
+using System;
+
 namespace SevenSoftware.Windows.Dialogs.TaskDialog
 {
-    using System;
-
     /// <summary>Defines event data associated with a HyperlinkClick event.</summary>
     public class TaskDialogHyperlinkClickedEventArgs : EventArgs
     {
@@ -15,7 +15,7 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <param name="linkText">The text of the hyperlink that was clicked.</param>
         public TaskDialogHyperlinkClickedEventArgs(string linkText)
         {
-            this.LinkText = linkText;
+            LinkText = linkText;
         }
 
         /// <summary>Gets or sets the text of the hyperlink that was clicked.</summary>

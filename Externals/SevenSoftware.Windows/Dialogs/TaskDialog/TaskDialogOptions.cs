@@ -1,10 +1,10 @@
 // <copyright file="TaskDialogOptions.cs" project="SevenSoftware.Windows" company="Microsoft Corporation">Microsoft Corporation</copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx" name="Microsoft Software License" />
 
+using System;
+
 namespace SevenSoftware.Windows.Dialogs.TaskDialog
 {
-    using System;
-
     /// <summary>Specifies the behavior of the task dialog.</summary>
     [Flags]
     internal enum TaskDialogOptions

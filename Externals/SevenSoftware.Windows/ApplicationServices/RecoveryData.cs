@@ -1,10 +1,10 @@
 // <copyright file="RecoveryData.cs" project="SevenSoftware.Windows" company="Microsoft Corporation">Microsoft Corporation</copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx" name="Microsoft Software License" />
 
+using System;
+
 namespace SevenSoftware.Windows.ApplicationServices
 {
-    using System;
-
     /// <summary>
     ///   The <see cref="Delegate" /> that represents the callback method invoked by the system when an
     ///   application has registered for application recovery.
@@ -28,8 +28,8 @@ namespace SevenSoftware.Windows.ApplicationServices
         /// <param name="state">The current state of the application.</param>
         public RecoveryData(RecoveryCallback callback, object state)
         {
-            this.Callback = callback;
-            this.State = state;
+            Callback = callback;
+            State = state;
         }
 
         /// <summary>Gets or sets a value that determines the recovery callback function.</summary>
@@ -41,9 +41,9 @@ namespace SevenSoftware.Windows.ApplicationServices
         /// <summary>Invokes the recovery callback function.</summary>
         public void Invoke()
         {
-            if (this.Callback != null)
+            if (Callback != null)
             {
-                this.Callback(this.State);
+                Callback(State);
             }
         }
     }

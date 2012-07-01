@@ -1,15 +1,14 @@
 // <copyright file="DirectoryInputRule.cs" project="SevenSoftware.Windows">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
+using System.Globalization;
+using System.IO;
+using System.Text.RegularExpressions;
+using System.Windows.Controls;
+using SevenSoftware.Windows.Properties;
+
 namespace SevenSoftware.Windows.ValidationRules
 {
-    using System.Globalization;
-    using System.IO;
-    using System.Text.RegularExpressions;
-    using System.Windows.Controls;
-
-    using SevenSoftware.Windows.Properties;
-
     /// <summary>Validates if the input is a directory.</summary>
     public class DirectoryInputRule : ValidationRule
     {
@@ -27,7 +26,7 @@ namespace SevenSoftware.Windows.ValidationRules
 
             if (string.IsNullOrWhiteSpace(input))
             {
-                return this.IsRequired
+                return IsRequired
                            ? new ValidationResult(false, Resources.FilePathInvalid) : new ValidationResult(true, null);
             }
 
@@ -40,7 +39,7 @@ namespace SevenSoftware.Windows.ValidationRules
             string directoryName = Path.GetDirectoryName(input);
             if (string.IsNullOrEmpty(directoryName))
             {
-                return this.IsRequired
+                return IsRequired
                            ? new ValidationResult(false, Resources.FilePathInvalid) : new ValidationResult(true, null);
             }
 

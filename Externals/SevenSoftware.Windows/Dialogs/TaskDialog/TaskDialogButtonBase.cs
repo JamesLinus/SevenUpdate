@@ -1,10 +1,10 @@
 // <copyright file="TaskDialogButtonBase.cs" project="SevenSoftware.Windows" company="Microsoft Corporation">Microsoft Corporation</copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx" name="Microsoft Software License" />
 
+using System;
+
 namespace SevenSoftware.Windows.Dialogs.TaskDialog
 {
-    using System;
-
     /// <summary>
     ///   Defines the abstract base class for task dialog buttons. Classes that inherit from this class will inherit the
     ///   Text property defined in this class.
@@ -54,13 +54,13 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Gets or sets a value indicating whether this button is the default button.</summary>
         public bool Default
         {
-            get { return this.defaultControl; }
+            get { return defaultControl; }
 
             set
             {
-                this.CheckPropertyChangeAllowed("Default");
-                this.defaultControl = value;
-                this.ApplyPropertyChange("Default");
+                CheckPropertyChangeAllowed("Default");
+                defaultControl = value;
+                ApplyPropertyChange("Default");
             }
         }
 
@@ -70,26 +70,26 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// </summary>
         public bool Enabled
         {
-            get { return this.enabled; }
+            get { return enabled; }
 
             set
             {
-                this.CheckPropertyChangeAllowed("Enabled");
-                this.enabled = value;
-                this.ApplyPropertyChange("Enabled");
+                CheckPropertyChangeAllowed("Enabled");
+                enabled = value;
+                ApplyPropertyChange("Enabled");
             }
         }
 
         /// <summary>Gets or sets the button text.</summary>
         public string Text
         {
-            get { return this.text; }
+            get { return text; }
 
             set
             {
-                this.CheckPropertyChangeAllowed("Text");
-                this.text = value;
-                this.ApplyPropertyChange("Text");
+                CheckPropertyChangeAllowed("Text");
+                text = value;
+                ApplyPropertyChange("Text");
             }
         }
 
@@ -97,21 +97,21 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <returns>A <see cref="string" />.</returns>
         public override string ToString()
         {
-            return this.text ?? string.Empty;
+            return text ?? string.Empty;
         }
 
         /// <summary>Raises the click event.</summary>
         internal void RaiseClickEvent()
         {
             // Only perform click if the button is enabled.
-            if (!this.enabled)
+            if (!enabled)
             {
                 return;
             }
 
-            if (this.Click != null)
+            if (Click != null)
             {
-                this.Click(this, EventArgs.Empty);
+                Click(this, EventArgs.Empty);
             }
         }
     }

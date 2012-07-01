@@ -1,13 +1,13 @@
 ﻿// <copyright file="VirtualizingCollection.cs" project="SevenSoftware.Windows">Paul McClean</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
+
 namespace SevenSoftware.Windows
 {
-    using System;
-    using System.Collections;
-    using System.Collections.Generic;
-    using System.Diagnostics;
-
     /// <summary>
     /// Specialized list implementation that provides data virtualization. The collection is divided up into pages,
     /// and pages are dynamically fetched from the IItemsProvider when required. Stale pages are removed after a
@@ -97,15 +97,15 @@ namespace SevenSoftware.Windows
         {
             get
             {
-                if (this.count == -1)
+                if (count == -1)
                 {
-                    this.LoadCount();
+                    LoadCount();
                 }
 
-                return this.count;
+                return count;
             }
 
-            protected set { this.count = value; }
+            protected set { count = value; }
         }
 
         /// <summary>
@@ -159,7 +159,7 @@ namespace SevenSoftware.Windows
         /// <value>The items provider.</value>
         IItemsProvider<T> ItemsProvider
         {
-            get { return this.itemsProvider; }
+            get { return itemsProvider; }
         }
 
         /// <summary>
@@ -168,7 +168,7 @@ namespace SevenSoftware.Windows
         /// <value>The size of the page.</value>
         int PageSize
         {
-            get { return this.pageSize; }
+            get { return pageSize; }
         }
 
         /// <summary>
@@ -177,7 +177,7 @@ namespace SevenSoftware.Windows
         /// <value>The page timeout.</value>
         long PageTimeout
         {
-            get { return this.pageTimeout; }
+            get { return pageTimeout; }
         }
 
         /// <summary>
@@ -191,35 +191,35 @@ namespace SevenSoftware.Windows
             get
             {
                 // determine which page and offset within page
-                int pageIndex = index / this.PageSize;
-                int pageOffset = index % this.PageSize;
+                int pageIndex = index / PageSize;
+                int pageOffset = index % PageSize;
 
                 // request primary page
-                this.RequestPage(pageIndex);
+                RequestPage(pageIndex);
 
                 // if accessing upper 50% then request next page
-                if (pageOffset > this.PageSize / 2 && pageIndex < this.Count / this.PageSize)
+                if (pageOffset > PageSize / 2 && pageIndex < Count / PageSize)
                 {
-                    this.RequestPage(pageIndex + 1);
+                    RequestPage(pageIndex + 1);
                 }
 
                 // if accessing lower 50% then request prev page
-                if (pageOffset < this.PageSize / 2 && pageIndex > 0)
+                if (pageOffset < PageSize / 2 && pageIndex > 0)
                 {
-                    this.RequestPage(pageIndex - 1);
+                    RequestPage(pageIndex - 1);
                 }
 
                 // remove stale pages
-                this.CleanUpPages();
+                CleanUpPages();
 
                 // defensive check in case of async load
-                if (this.pages[pageIndex] == null)
+                if (pages[pageIndex] == null)
                 {
                     return default(T);
                 }
 
                 // return requested item
-                return this.pages[pageIndex][pageOffset];
+                return pages[pageIndex][pageOffset];
             }
 
             set { throw new NotSupportedException(); }
@@ -308,7 +308,7 @@ namespace SevenSoftware.Windows
         /// </returns>
         public IEnumerator<T> GetEnumerator()
         {
-            for (int i = 0; i < this.Count; i++)
+            for (int i = 0; i < Count; i++)
             {
                 yield return this[i];
             }
@@ -389,7 +389,7 @@ namespace SevenSoftware.Windows
         /// <returns>true if the object is in the list; otherwise false.</returns>
         bool IList.Contains(object value)
         {
-            return this.Contains((T)value);
+            return Contains((T)value);
         }
 
         /// <summary>
@@ -409,7 +409,7 @@ namespace SevenSoftware.Windows
         /// <returns>The zero-based index of the first occurrence within the List.</returns>
         int IList.IndexOf(object value)
         {
-            return this.IndexOf((T)value);
+            return IndexOf((T)value);
         }
 
         /// <summary>
@@ -419,7 +419,7 @@ namespace SevenSoftware.Windows
         /// <param name="value">The object to insert.</param>
         void IList.Insert(int index, object value)
         {
-            this.Insert(index, (T)value);
+            Insert(index, (T)value);
         }
 
         /// <summary>
@@ -439,7 +439,7 @@ namespace SevenSoftware.Windows
         /// </returns>
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return this.GetEnumerator();
+            return GetEnumerator();
         }
 
         /// <summary>
@@ -448,7 +448,7 @@ namespace SevenSoftware.Windows
         /// <returns>The number of items from the collection</returns>
         protected int FetchCount()
         {
-            return this.ItemsProvider.Count;
+            return ItemsProvider.Count;
         }
 
         /// <summary>
@@ -458,7 +458,7 @@ namespace SevenSoftware.Windows
         /// <returns>The page from the index.</returns>
         protected IList<T> FetchPage(int pageIndex)
         {
-            return this.ItemsProvider.FetchRange(pageIndex * this.PageSize, this.PageSize);
+            return ItemsProvider.FetchRange(pageIndex * PageSize, PageSize);
         }
 
         /// <summary>
@@ -466,7 +466,7 @@ namespace SevenSoftware.Windows
         /// </summary>
         protected virtual void LoadCount()
         {
-            this.Count = this.FetchCount();
+            Count = FetchCount();
         }
 
         /// <summary>
@@ -475,7 +475,7 @@ namespace SevenSoftware.Windows
         /// <param name="pageIndex">Index of the page.</param>
         protected virtual void LoadPage(int pageIndex)
         {
-            this.PopulatePage(pageIndex, this.FetchPage(pageIndex));
+            PopulatePage(pageIndex, FetchPage(pageIndex));
         }
 
         /// <summary>
@@ -486,9 +486,9 @@ namespace SevenSoftware.Windows
         protected virtual void PopulatePage(int pageIndex, IList<T> page)
         {
             Trace.WriteLine("Page populated: " + pageIndex);
-            if (this.pages.ContainsKey(pageIndex))
+            if (pages.ContainsKey(pageIndex))
             {
-                this.pages[pageIndex] = page;
+                pages[pageIndex] = page;
             }
         }
 
@@ -499,16 +499,16 @@ namespace SevenSoftware.Windows
         /// <param name="pageIndex">Index of the page.</param>
         protected virtual void RequestPage(int pageIndex)
         {
-            if (!this.pages.ContainsKey(pageIndex))
+            if (!pages.ContainsKey(pageIndex))
             {
-                this.pages.Add(pageIndex, null);
-                this.pageTouchTimes.Add(pageIndex, DateTime.Now);
+                pages.Add(pageIndex, null);
+                pageTouchTimes.Add(pageIndex, DateTime.Now);
                 Trace.WriteLine("Added page: " + pageIndex);
-                this.LoadPage(pageIndex);
+                LoadPage(pageIndex);
             }
             else
             {
-                this.pageTouchTimes[pageIndex] = DateTime.Now;
+                pageTouchTimes[pageIndex] = DateTime.Now;
             }
         }
 
@@ -517,14 +517,14 @@ namespace SevenSoftware.Windows
         /// </summary>
         void CleanUpPages()
         {
-            var keys = new List<int>(this.pageTouchTimes.Keys);
+            var keys = new List<int>(pageTouchTimes.Keys);
             foreach (int key in keys)
             {
                 // page 0 is a special case, since WPF ItemsControl access the first item frequently
-                if (key != 0 && (DateTime.Now - this.pageTouchTimes[key]).TotalMilliseconds > this.PageTimeout)
+                if (key != 0 && (DateTime.Now - pageTouchTimes[key]).TotalMilliseconds > PageTimeout)
                 {
-                    this.pages.Remove(key);
-                    this.pageTouchTimes.Remove(key);
+                    pages.Remove(key);
+                    pageTouchTimes.Remove(key);
                     Trace.WriteLine("Removed Page: " + key);
                 }
             }

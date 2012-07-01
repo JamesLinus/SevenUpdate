@@ -1,17 +1,15 @@
 // <copyright file="AeroGlass.cs" project="SevenSoftware.Windows">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
+using System;
+using System.Windows;
+using System.Windows.Interop;
+using System.Windows.Media;
+using SevenSoftware.Windows.Internal;
+using Rect = SevenSoftware.Windows.Internal.Rect;
+
 namespace SevenSoftware.Windows
 {
-    using System;
-    using System.Windows;
-    using System.Windows.Interop;
-    using System.Windows.Media;
-
-    using SevenSoftware.Windows.Internal;
-
-    using Rect = SevenSoftware.Windows.Internal.Rect;
-
     /// <summary>Contains methods to allow use of Aero Glass.</summary>
     public static class AeroGlass
     {

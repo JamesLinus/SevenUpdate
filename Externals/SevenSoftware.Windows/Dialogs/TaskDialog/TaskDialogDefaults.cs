@@ -1,10 +1,10 @@
 // <copyright file="TaskDialogDefaults.cs" project="SevenSoftware.Windows" company="Microsoft Corporation">Microsoft Corporation</copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx" name="Microsoft Software License" />
 
+using SevenSoftware.Windows.Properties;
+
 namespace SevenSoftware.Windows.Dialogs.TaskDialog
 {
-    using SevenSoftware.Windows.Properties;
-
     /// <summary>The task dialog defaults</summary>
     internal static class TaskDialogDefaults
     {

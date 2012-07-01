@@ -1,11 +1,11 @@
 // <copyright file="DwmBlurBehind.cs" project="SevenSoftware.Windows">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
+using System;
+using System.Runtime.InteropServices;
+
 namespace SevenSoftware.Windows.Internal
 {
-    using System;
-    using System.Runtime.InteropServices;
-
     /// <summary>Specifies Desktop Window Manager (DWM) blur behind properties.</summary>
     [StructLayout(LayoutKind.Sequential)]
     internal struct DwmBlurBehind

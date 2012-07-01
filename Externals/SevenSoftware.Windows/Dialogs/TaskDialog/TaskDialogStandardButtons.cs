@@ -1,10 +1,10 @@
 // <copyright file="TaskDialogStandardButtons.cs" project="SevenSoftware.Windows" company="Microsoft Corporation">Microsoft Corporation</copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx" name="Microsoft Software License" />
 
+using System;
+
 namespace SevenSoftware.Windows.Dialogs.TaskDialog
 {
-    using System;
-
     /// <summary>Identifies one of the standard buttons that can be displayed via TaskDialog.</summary>
     [Flags]
     public enum TaskDialogStandardButtons

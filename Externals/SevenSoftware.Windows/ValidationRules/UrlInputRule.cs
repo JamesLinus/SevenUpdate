@@ -1,17 +1,16 @@
 // <copyright file="UrlInputRule.cs" project="SevenSoftware.Windows">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
+using System;
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.IO;
+using System.Text.RegularExpressions;
+using System.Windows.Controls;
+using SevenSoftware.Windows.Properties;
+
 namespace SevenSoftware.Windows.ValidationRules
 {
-    using System;
-    using System.Diagnostics.CodeAnalysis;
-    using System.Globalization;
-    using System.IO;
-    using System.Text.RegularExpressions;
-    using System.Windows.Controls;
-
-    using SevenSoftware.Windows.Properties;
-
     /// <summary>Validates if the input is a url.</summary>
     [SuppressMessage("Microsoft.StyleCop.CSharp.MaintainabilityRules", "SA1402:FileMayOnlyContainASingleClass", 
         Justification = "Validation Rule")]
@@ -31,13 +30,13 @@ namespace SevenSoftware.Windows.ValidationRules
 
             if (input == null)
             {
-                return this.IsRequired
+                return IsRequired
                            ? new ValidationResult(false, Resources.UrilInvalid) : new ValidationResult(true, null);
             }
 
             if (string.IsNullOrWhiteSpace(input))
             {
-                return this.IsRequired
+                return IsRequired
                            ? new ValidationResult(false, Resources.UrilInvalid) : new ValidationResult(true, null);
             }
 

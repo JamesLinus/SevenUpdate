@@ -1,14 +1,14 @@
 // <copyright file="InfoTextBox.cs" project="SevenSoftware.Windows">Ben Dewey</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License" />
 
+using System;
+using System.ComponentModel;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
+
 namespace SevenSoftware.Windows.Controls
 {
-    using System;
-    using System.ComponentModel;
-    using System.Windows;
-    using System.Windows.Controls;
-    using System.Windows.Documents;
-
     /// <summary>A <c>TextBox</c> that includes help text and error indicators.</summary>
     public sealed class InfoTextBox : TextBox
     {
@@ -41,7 +41,7 @@ namespace SevenSoftware.Windows.Controls
         /// <summary>Initializes a new instance of the <see cref="InfoTextBox" /> class.</summary>
         public InfoTextBox()
         {
-            if (this.Resources.Count != 0)
+            if (Resources.Count != 0)
             {
                 return;
             }
@@ -50,41 +50,41 @@ namespace SevenSoftware.Windows.Controls
                 {
                    Source = new Uri("/SevenSoftware.Windows;component/Resources/Dictionary.xaml", UriKind.Relative) 
                 };
-            this.Resources.MergedDictionaries.Add(resourceDictionary);
+            Resources.MergedDictionaries.Add(resourceDictionary);
         }
 
         /// <summary>Gets or sets a value indicating whether the input has a validation error.</summary>
         public bool HasError
         {
-            get { return (bool)this.GetValue(HasErrorProperty); }
+            get { return (bool)GetValue(HasErrorProperty); }
 
-            set { this.SetValue(HasErrorProperty, value); }
+            set { SetValue(HasErrorProperty, value); }
         }
 
         /// <summary>Gets or sets a value indicating whether the input has a validation warning.</summary>
         public bool HasWarning
         {
-            get { return (bool)this.GetValue(HasWarningProperty); }
+            get { return (bool)GetValue(HasWarningProperty); }
 
-            set { this.SetValue(HasWarningProperty, value); }
+            set { SetValue(HasWarningProperty, value); }
         }
 
         /// <summary>Gets or sets the note to display.</summary>
         /// <value>The note to display.</value>
         public string Note
         {
-            get { return (string)this.GetValue(NoteProperty); }
+            get { return (string)GetValue(NoteProperty); }
 
-            set { this.SetValue(NoteProperty, value); }
+            set { SetValue(NoteProperty, value); }
         }
 
         /// <summary>Gets or sets the note style.</summary>
         /// <value>The note style.</value>
         public Style NoteStyle
         {
-            get { return (Style)this.GetValue(NoteStyleProperty); }
+            get { return (Style)GetValue(NoteStyleProperty); }
 
-            set { this.SetValue(NoteStyleProperty, value); }
+            set { SetValue(NoteStyleProperty, value); }
         }
 
         /// <summary>Gets or sets a value indicating whether this instance has text.</summary>
@@ -98,10 +98,10 @@ namespace SevenSoftware.Windows.Controls
                     return true;
                 }
 
-                return (bool)this.GetValue(HasTextProperty);
+                return (bool)GetValue(HasTextProperty);
             }
 
-            set { this.SetValue(HasTextProperty, value); }
+            set { SetValue(HasTextProperty, value); }
         }
 
         /// <summary>Is called when a control template is applied.</summary>
@@ -109,22 +109,22 @@ namespace SevenSoftware.Windows.Controls
         {
             base.OnApplyTemplate();
 
-            this.myAdornerLayer = AdornerLayer.GetAdornerLayer(this);
-            this.myAdornerLabel = new AdornerLabel(this, this.Note, this.NoteStyle);
-            this.UpdateAdorner(this);
+            myAdornerLayer = AdornerLayer.GetAdornerLayer(this);
+            myAdornerLabel = new AdornerLabel(this, Note, NoteStyle);
+            UpdateAdorner(this);
 
             DependencyPropertyDescriptor focusProp = DependencyPropertyDescriptor.FromProperty(
                 IsFocusedProperty, typeof(FrameworkElement));
             if (focusProp != null)
             {
-                focusProp.AddValueChanged(this, delegate { this.UpdateAdorner(this); });
+                focusProp.AddValueChanged(this, delegate { UpdateAdorner(this); });
             }
 
             DependencyPropertyDescriptor containsTextProp = DependencyPropertyDescriptor.FromProperty(
                 HasTextProperty, typeof(InfoTextBox));
             if (containsTextProp != null)
             {
-                containsTextProp.AddValueChanged(this, delegate { this.UpdateAdorner(this); });
+                containsTextProp.AddValueChanged(this, delegate { UpdateAdorner(this); });
             }
         }
 
@@ -135,7 +135,7 @@ namespace SevenSoftware.Windows.Controls
         /// <param name="e">Provides data about the event.</param>
         protected override void OnDragEnter(DragEventArgs e)
         {
-            RemoveAdorners<AdornerLabel>(this.myAdornerLayer, this);
+            RemoveAdorners<AdornerLabel>(myAdornerLayer, this);
 
             base.OnDragEnter(e);
         }
@@ -147,7 +147,7 @@ namespace SevenSoftware.Windows.Controls
         /// <param name="e">Provides data about the event.</param>
         protected override void OnDragLeave(DragEventArgs e)
         {
-            this.UpdateAdorner(this);
+            UpdateAdorner(this);
 
             base.OnDragLeave(e);
         }
@@ -156,11 +156,11 @@ namespace SevenSoftware.Windows.Controls
         /// <param name="e">The arguments that are associated with the <see cref="E:System.Windows.Controls.Primitives.TextBoxBase.TextChanged" /> event.</param>
         protected override void OnTextChanged(TextChangedEventArgs e)
         {
-            this.HasText = !(this.Text != null && string.IsNullOrEmpty(this.Text));
+            HasText = !(Text != null && string.IsNullOrEmpty(Text));
 
-            if (this.HasText)
+            if (HasText)
             {
-                this.UpdateAdorner(this, true);
+                UpdateAdorner(this, true);
             }
 
             base.OnTextChanged(e);
@@ -235,17 +235,17 @@ namespace SevenSoftware.Windows.Controls
         /// <param name="hide">If set to <c>True</c> hide the adorner.</param>
         void UpdateAdorner(FrameworkElement element, bool hide = false)
         {
-            if (element == null || this.myAdornerLayer == null)
+            if (element == null || myAdornerLayer == null)
             {
                 return;
             }
 
-            this.myAdornerLabel = new AdornerLabel(this, this.Note, this.NoteStyle);
-            RemoveAdorners<AdornerLabel>(this.myAdornerLayer, element);
+            myAdornerLabel = new AdornerLabel(this, Note, NoteStyle);
+            RemoveAdorners<AdornerLabel>(myAdornerLayer, element);
 
             if (!((InfoTextBox)element).HasText && !element.IsFocused && !hide)
             {
-                this.myAdornerLayer.Add(this.myAdornerLabel);
+                myAdornerLayer.Add(myAdornerLabel);
             }
         }
     }

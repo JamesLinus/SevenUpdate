@@ -1,13 +1,13 @@
 // <copyright file="IndexToVisibilityConverter.cs" project="SevenSoftware.Windows">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
+using System;
+using System.Globalization;
+using System.Windows;
+using System.Windows.Data;
+
 namespace SevenSoftware.Windows.Converters
 {
-    using System;
-    using System.Globalization;
-    using System.Windows;
-    using System.Windows.Data;
-
     /// <summary>Converts the Int to Visibility.</summary>
     [ValueConversion(typeof(int), typeof(Visibility))]
     public class IndexToVisibilityConverter : IValueConverter

@@ -1,15 +1,14 @@
 // <copyright file="ApplicationRestartRecoveryManager.cs" project="SevenSoftware.Windows" company="Microsoft Corporation">Microsoft Corporation</copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx" name="Microsoft Software License" />
 
+using System;
+using System.ComponentModel;
+using System.Runtime.InteropServices;
+using SevenSoftware.Windows.Internal;
+using SevenSoftware.Windows.Properties;
+
 namespace SevenSoftware.Windows.ApplicationServices
 {
-    using System;
-    using System.ComponentModel;
-    using System.Runtime.InteropServices;
-
-    using SevenSoftware.Windows.Internal;
-    using SevenSoftware.Windows.Properties;
-
     /// <summary>
     ///   Provides access to the Application Restart and Recovery features available in Windows Vista or higher.
     ///   Application Restart and Recovery lets an application do some recovery work to save data before the process

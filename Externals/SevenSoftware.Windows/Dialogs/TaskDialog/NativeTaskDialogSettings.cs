@@ -1,12 +1,12 @@
 // <copyright file="NativeTaskDialogSettings.cs" project="SevenSoftware.Windows" company="Microsoft Corporation">Microsoft Corporation</copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx" name="Microsoft Software License" />
 
+using System;
+using System.Collections.Generic;
+using System.Runtime.InteropServices;
+
 namespace SevenSoftware.Windows.Dialogs.TaskDialog
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Runtime.InteropServices;
-
     /// <summary>
     ///   Encapsulates additional configuration needed by NativeTaskDialog that it can't get from the TASKDIALOGCONFIG
     ///   struct.
@@ -16,35 +16,35 @@ namespace SevenSoftware.Windows.Dialogs.TaskDialog
         /// <summary>Initializes a new instance of the <see cref="NativeTaskDialogSettings" /> class.</summary>
         internal NativeTaskDialogSettings()
         {
-            this.NativeConfiguration = new TaskDialogConfiguration();
+            NativeConfiguration = new TaskDialogConfiguration();
 
             // Apply standard settings.
-            this.NativeConfiguration.Size = (uint)Marshal.SizeOf(this.NativeConfiguration);
-            this.NativeConfiguration.ParentHandle = IntPtr.Zero;
-            this.NativeConfiguration.Instance = IntPtr.Zero;
-            this.NativeConfiguration.TaskDialogFlags = TaskDialogOptions.AllowCancel;
-            this.NativeConfiguration.CommonButtons = TaskDialogCommonButtons.Ok;
-            this.NativeConfiguration.MainIcon = new IconUnion(0);
-            this.NativeConfiguration.FooterIcon = new IconUnion(0);
-            this.NativeConfiguration.Width = TaskDialogDefaults.IdealWidth;
+            NativeConfiguration.Size = (uint)Marshal.SizeOf(NativeConfiguration);
+            NativeConfiguration.ParentHandle = IntPtr.Zero;
+            NativeConfiguration.Instance = IntPtr.Zero;
+            NativeConfiguration.TaskDialogFlags = TaskDialogOptions.AllowCancel;
+            NativeConfiguration.CommonButtons = TaskDialogCommonButtons.Ok;
+            NativeConfiguration.MainIcon = new IconUnion(0);
+            NativeConfiguration.FooterIcon = new IconUnion(0);
+            NativeConfiguration.Width = TaskDialogDefaults.IdealWidth;
 
             // Zero out all the custom button fields.
-            this.NativeConfiguration.ButtonCount = 0;
-            this.NativeConfiguration.RadioButtonCount = 0;
-            this.NativeConfiguration.Buttons = IntPtr.Zero;
-            this.NativeConfiguration.RadioButtons = IntPtr.Zero;
-            this.NativeConfiguration.DefaultButtonIndex = 0;
-            this.NativeConfiguration.DefaultRadioButtonIndex = 0;
+            NativeConfiguration.ButtonCount = 0;
+            NativeConfiguration.RadioButtonCount = 0;
+            NativeConfiguration.Buttons = IntPtr.Zero;
+            NativeConfiguration.RadioButtons = IntPtr.Zero;
+            NativeConfiguration.DefaultButtonIndex = 0;
+            NativeConfiguration.DefaultRadioButtonIndex = 0;
 
             // Various text defaults.
-            this.NativeConfiguration.WindowTitle = TaskDialogDefaults.Caption;
-            this.NativeConfiguration.MainInstruction = TaskDialogDefaults.MainInstruction;
-            this.NativeConfiguration.Content = TaskDialogDefaults.Content;
-            this.NativeConfiguration.VerificationText = null;
-            this.NativeConfiguration.ExpandedInformation = null;
-            this.NativeConfiguration.ExpandedControlText = null;
-            this.NativeConfiguration.CollapsedControlText = null;
-            this.NativeConfiguration.FooterText = null;
+            NativeConfiguration.WindowTitle = TaskDialogDefaults.Caption;
+            NativeConfiguration.MainInstruction = TaskDialogDefaults.MainInstruction;
+            NativeConfiguration.Content = TaskDialogDefaults.Content;
+            NativeConfiguration.VerificationText = null;
+            NativeConfiguration.ExpandedInformation = null;
+            NativeConfiguration.ExpandedControlText = null;
+            NativeConfiguration.CollapsedControlText = null;
+            NativeConfiguration.FooterText = null;
         }
 
         /// <summary>Gets or sets a collection of <c>TaskDialogButton</c>.</summary>

@@ -1,14 +1,13 @@
 // <copyright file="RequiredInputRule.cs" project="SevenSoftware.Windows">Robert Baker</copyright>
 // <license href="http://www.gnu.org/licenses/gpl-3.0.txt" name="GNU General Public License 3" />
 
+using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.Windows.Controls;
+using SevenSoftware.Windows.Properties;
+
 namespace SevenSoftware.Windows.ValidationRules
 {
-    using System.Diagnostics.CodeAnalysis;
-    using System.Globalization;
-    using System.Windows.Controls;
-
-    using SevenSoftware.Windows.Properties;
-
     /// <summary>The required input rule.</summary>
     [SuppressMessage("Microsoft.StyleCop.CSharp.DocumentationRules", "SA1606:ElementDocumentationMustHaveSummaryText", 
         Justification = "Validation Rule")]

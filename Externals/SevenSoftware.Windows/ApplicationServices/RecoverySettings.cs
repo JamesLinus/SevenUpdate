@@ -1,12 +1,11 @@
 // <copyright file="RecoverySettings.cs" project="SevenSoftware.Windows" company="Microsoft Corporation">Microsoft Corporation</copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx" name="Microsoft Software License" />
 
+using System.Globalization;
+using SevenSoftware.Windows.Properties;
+
 namespace SevenSoftware.Windows.ApplicationServices
 {
-    using System.Globalization;
-
-    using SevenSoftware.Windows.Properties;
-
     /// <summary>
     ///   Defines methods and properties for recovery settings, and specifies options for an application that attempts
     ///   to perform final actions after a fatal event, such as an unhandled exception.
@@ -39,8 +38,8 @@ namespace SevenSoftware.Windows.ApplicationServices
         /// <seealso cref="ApplicationRestartRecoveryManager" />
         public RecoverySettings(RecoveryData data, uint interval)
         {
-            this.recoveryData = data;
-            this.pingInterval = interval;
+            recoveryData = data;
+            pingInterval = interval;
         }
 
         /// <summary>
@@ -55,7 +54,7 @@ namespace SevenSoftware.Windows.ApplicationServices
         /// </remarks>
         public uint PingInterval
         {
-            get { return this.pingInterval; }
+            get { return pingInterval; }
         }
 
         /// <summary>
@@ -65,7 +64,7 @@ namespace SevenSoftware.Windows.ApplicationServices
         /// <value>A <see cref="RecoveryData" /> object.</value>
         public RecoveryData RecoveryData
         {
-            get { return this.recoveryData; }
+            get { return recoveryData; }
         }
 
         /// <summary>Returns a string representation of the current state of this object.</summary>
@@ -75,9 +74,9 @@ namespace SevenSoftware.Windows.ApplicationServices
             return string.Format(
                 CultureInfo.InvariantCulture, 
                 Resources.RecoverySettingsFormatString, 
-                this.recoveryData.Callback.Method, 
-                this.recoveryData.State, 
-                this.PingInterval);
+                recoveryData.Callback.Method, 
+                recoveryData.State, 
+                PingInterval);
         }
     }
 }

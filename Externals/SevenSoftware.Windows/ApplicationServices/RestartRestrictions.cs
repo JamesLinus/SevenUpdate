@@ -1,10 +1,10 @@
 // <copyright file="RestartRestrictions.cs" project="SevenSoftware.Windows" company="Microsoft Corporation">Microsoft Corporation</copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx" name="Microsoft Software License" />
 
+using System;
+
 namespace SevenSoftware.Windows.ApplicationServices
 {
-    using System;
-
     /// <summary>
     ///   Specifies the conditions when Windows Error Reporting should not restart an application that has registered
     ///   for automatic restart.

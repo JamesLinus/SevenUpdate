@@ -1,13 +1,12 @@
 // <copyright file="AppRestartRecoveryNativeMethods.cs" project="SevenSoftware.Windows" company="Microsoft Corporation">Microsoft Corporation</copyright>
 // <license href="http://code.msdn.microsoft.com/WindowsAPICodePack/Project/License.aspx" name="Microsoft Software License" />
 
+using System;
+using System.Runtime.InteropServices;
+using SevenSoftware.Windows.Internal;
+
 namespace SevenSoftware.Windows.ApplicationServices
 {
-    using System;
-    using System.Runtime.InteropServices;
-
-    using SevenSoftware.Windows.Internal;
-
     /// <summary>Provides native Win32 Methods to assist with Application recovery.</summary>
     internal static class AppRestartRecoveryNativeMethods
     {
