@@ -1,3 +1,5 @@
+Seven Update has been discontinued and is no longer in development.
+
 Seven Update SDK
 =============
 
@@ -117,7 +119,3 @@ You could also offer a special link on your website that tells Seven Update to d
     sevenupdate://pathtomysuafile.sua
 	
 The third option is double clicking on the SUA file which does the same thing as the 2nd option.
-
-Other Notes
------------
-Currently Seven Update uses SHA256 hashing to determine file updates. It also downloads the raw uncompressed files, which can be a waste of bandwidth. This will soon change to use binary patching with a easier deployment method. More on this can be found on the development blog at http://sevenupdate.com.

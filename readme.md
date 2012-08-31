@@ -1,3 +1,5 @@
+Seven Update has been discontinued and is no longer under development.
+
 Seven Update
 =============
 
@@ -25,7 +27,7 @@ On the Change Settings page you can configure automatic updates. It will also li
 The SDK is how you will create and manage updates. You start by creating a project and filling out your app information.
 Before you finish the first step you will need to pre-determine a public location where you will store the SUI file and app files.
 
-[View the SDK documentation for further information.][2]
+[View the SDK documentation for further information.][1]
 
 Files Types Explained
 ------
@@ -33,17 +35,4 @@ Files Types Explained
 * **SUA - Seven Update Application** - Contains data including the app name, install location, publisher information, and a location where to find the corresponding SUI file.
 * **SUL - Seven Update List** - Acts like a repository for SUA files. It's an array containing SUA items.
 
-
-Contributing
-------------
-VS 2010 or later with .NET 4 is required. Please also install Resharper and Stylecop and use the settings file found in the repo.
-
-1. Fork it.
-2. Create a branch (`git checkout -b sevenupdate`)
-3. Commit your changes (`git commit -am "My commit message"`)
-4. Push to the branch (`git push origin sevenupdate`)
-5. Create an [Issue][1] with a link to your branch
-6. Enjoy a refreshing Diet Coke and wait
-
-[1]: http://github.com/sevenalive/sevenupdate/issues
-[2]: https://github.com/sevenalive/sevenupdate/blob/master/sdk.readme.md
+[1]: https://github.com/sevenalive/sevenupdate/blob/master/sdk.readme.md
